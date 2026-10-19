@@ -3,7 +3,6 @@ address	type	value
 004100ec	string	0123456789abcdefghijklmnopqrstuvwxyz
 00418004	string	movie.ini
 0041800e	string	DEBUG
-00418014	string	HELPDESK
 0041801d	string	/HIRES
 00418024	string	DISPLAY_MODE
 00418031	string	HELPDESK
@@ -605,13 +604,21 @@ address	type	value
 0041c694	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
 0041c6d1	string	pal.cpp
 0041c6d9	string	 %s(%d) : could set entries (%s)\n
+0041c6fb	string	pal.cpp
 0041c703	string	 %s(%d) : palette was not initialized\n
+0041c72a	string	pal.cpp
 0041c732	string	 %s(%d) : illegal palette base entry (%d)\n
+0041c75d	string	pal.cpp
 0041c765	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+0041c7a2	string	pal.cpp
 0041c7aa	string	 %s(%d) : could set entries (%s)\n
+0041c7cc	string	pal.cpp
 0041c7d4	string	 %s(%d) : palette was not initialized\n
+0041c7fb	string	pal.cpp
 0041c803	string	 %s(%d) : illegal palette base entry (%d)\n
+0041c82e	string	pal.cpp
 0041c836	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+0041c873	string	pal.cpp
 0041c87b	string	 %s(%d) : illegal flag value %d\n
 0041c89c	string	pformat.cpp
 0041c8a8	string	 %s(%d) : error getting hdc of screen (%s)\n
