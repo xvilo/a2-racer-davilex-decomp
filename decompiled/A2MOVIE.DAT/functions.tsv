@@ -384,7 +384,7 @@ address	name	size	thunk	callers	callees	status
 0040f435	IOMode	85	false	1	1	ok
 0040f48a	SetIOMode	21	false	2	0	ok
 0040f49f	tell	61	false	2	3	ok
-0040f500	tell_tail	35	false	0	1	ok
+0040f500	FUN_0040f500	35	false	0	1	ok
 0040f535	CtrlHandlerIsNeeded	63	false	3	1	ok
 0040f574	StartCtrlHandler	44	false	1	1	ok
 0040f5a0	KillCtrlHandler	55	false	3	1	ok
@@ -551,7 +551,7 @@ address	name	size	thunk	callers	callees	status
 00414a61	initthread	7	false	1	1	ok
 00414a68	RegisterThreadData	63	false	0	0	ok
 00414aa7	Nan_Inf	146	false	2	0	ok
-00414b3c	Nan_Inf_tail	65	false	1	1	ok
+00414b3c	FUN_00414b3c	65	false	1	1	ok
 00414b81	IF_DLOG10	4	true	1	1	ok
 00414ba9	floor	60	false	1	1	ok
 00414be6	CHP	29	false	2	0	ok
@@ -581,10 +581,10 @@ address	name	size	thunk	callers	callees	status
 00415ca0	verify_pentium_fdiv_bug	85	false	0	0	ok
 00415cfb	rterrmsg	72	false	1	3	ok
 00415d43	matherr	47	false	1	4	ok
-00415d72	fputs_tail	5	true	1	0	ok
+00415d72	thunk_FUN_00415e23	5	true	1	0	ok
 00415d77	get_std_stream	31	false	1	0	ok
 00415d96	fputs	141	false	1	4	ok
-00415e23	fputs_tail	3	false	0	0	ok
+00415e23	FUN_00415e23	3	false	0	0	ok
 00416f38	ExitThread	6	true	1	0	ok
 00416f3e	CreateThread	6	true	1	0	ok
 00416f44	CreateEventA	6	true	1	0	ok

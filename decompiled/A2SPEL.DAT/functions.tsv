@@ -154,12 +154,12 @@ address	name	size	thunk	callers	callees	status
 00411ebb	FUN_00411ebb	93	false	2	3	ok
 00411f18	FUN_00411f18	82	false	1	2	ok
 00411f6a	FUN_00411f6a	62	false	1	2	ok
-00411fc7	caseD_0_tail	34	false	1	1	ok
+00411fc7	FUN_00411fc7	34	false	1	1	ok
 00411fe9	FUN_00411fe9	10	false	2	1	ok
 00411ff3	FUN_00411ff3	117	false	1	3	ok
-00412078	caseD_0_tail_2	54	false	1	1	ok
+00412078	FUN_00412078	54	false	1	1	ok
 004120ae	FUN_004120ae	71	false	1	2	ok
-00412101	caseD_0_tail_3	47	false	1	0	ok
+00412101	FUN_00412101	47	false	1	0	ok
 00412130	FUN_00412130	71	false	1	2	ok
 00412183	FUN_00412183	48	false	1	0	ok
 0041266a	FUN_0041266a	59	false	1	0	ok
@@ -392,7 +392,7 @@ address	name	size	thunk	callers	callees	status
 00422637	FUN_00422637	140	false	1	2	ok
 00422d1c	FUN_00422d1c	122	false	8	1	ok
 00422d96	FUN_00422d96	47	false	3	0	ok
-00422eac	set_xvga_palette_flag_tail	7	false	1	0	ok
+00422eac	FUN_00422eac	7	false	1	0	ok
 00422f84	FUN_00422f84	25	false	2	0	ok
 00422f9d	FUN_00422f9d	154	false	1	2	ok
 004232be	FUN_004232be	573	false	1	0	ok
@@ -436,14 +436,14 @@ address	name	size	thunk	callers	callees	status
 00425ec4	FUN_00425ec4	56	false	3	0	ok
 00425efc	FUN_00425efc	89	false	1	1	ok
 00425f55	FUN_00425f55	227	false	1	1	ok
-0042612d	CHP_tail	10	false	1	0	ok
+0042612d	FUN_0042612d	10	false	1	0	ok
 00426137	FUN_00426137	448	false	1	6	ok
 00426c74	FUN_00426c74	563	false	4	3	ok
 00426ea7	FUN_00426ea7	5	false	1	0	ok
 00426eac	FUN_00426eac	141	false	7	1	ok
 00426f39	FUN_00426f39	1241	false	1	3	ok
 00427414	FUN_00427414	74	false	1	0	ok
-00427698	CHP_tail_2	8	false	1	0	ok
+00427698	CHP_tail	8	false	1	0	ok
 00427c2a	FUN_00427c2a	558	false	5	7	ok
 00427e58	FUN_00427e58	196	false	1	5	ok
 00427f31	FUN_00427f31	21	false	4	1	ok
@@ -452,7 +452,7 @@ address	name	size	thunk	callers	callees	status
 00429085	rand	36	false	12	1	ok
 004290a9	srand	16	false	1	1	ok
 004290b9	time	47	false	7	2	ok
-004290e8	mktime_tail	5	true	2	0	ok
+004290e8	thunk_FUN_004311a9	5	true	2	0	ok
 004290f0	get_string_width	120	false	0	2	ok
 00429168	get_string_height	107	false	1	2	ok
 004291d3	win_print_xy	1329	false	0	11	ok
@@ -636,7 +636,7 @@ address	name	size	thunk	callers	callees	status
 00430fd0	getctime	101	false	1	1	ok
 00431035	mktime	340	false	2	4	ok
 00431189	FUN_00431189	21	false	1	1	ok
-004311a9	mktime_tail	12	false	0	1	ok
+004311a9	FUN_004311a9	12	false	0	1	ok
 004311b5	rewind	23	false	1	1	ok
 004311cc	c_blt_sprite	41	false	4	1	ok
 004311f5	FUN_004311f5	123	false	1	1	ok
@@ -742,7 +742,7 @@ address	name	size	thunk	callers	callees	status
 00437184	init_80x87	39	false	1	0	ok
 004371ab	verify_pentium_fdiv_bug	85	false	0	0	ok
 00437200	FUN_00437200	368	false	1	1	ok
-00438055	verify_pentium_fdiv_bug_tail	35	false	0	1	ok
+00438055	FUN_00438055	35	false	0	1	ok
 0043808a	CtrlHandlerIsNeeded	63	false	3	1	ok
 004380c9	StartCtrlHandler	44	false	1	1	ok
 004380f5	KillCtrlHandler	55	false	3	1	ok
@@ -907,7 +907,7 @@ address	name	size	thunk	callers	callees	status
 0043e4dd	draw_radiobutton	326	false	1	11	ok
 0043e623	RadioButtonWindowProc	310	false	0	8	ok
 0043e79a	Nan_Inf	146	false	2	0	ok
-0043e82e	Nan_Inf_tail	65	false	1	1	ok
+0043e82e	FUN_0043e82e	65	false	1	1	ok
 0043e873	IF_DLOG10	4	true	1	1	ok
 0043e89b	floor	60	false	1	1	ok
 0043e8d7	Scale	65	false	1	3	ok
@@ -922,7 +922,7 @@ address	name	size	thunk	callers	callees	status
 0043ef29	FUN_0043ef29	7	false	0	1	ok
 0043ef30	initthread	7	false	1	1	ok
 0043ef37	RegisterThreadData	63	false	0	0	ok
-0043ef76	CEndThread_tail	5	true	1	0	ok
+0043ef76	thunk_FUN_0043f45d	5	true	1	0	ok
 0043ef7b	get_std_stream	31	false	1	0	ok
 0043ef9a	fputs	141	false	1	4	ok
 0043f027	log87_err	60	false	1	1	ok
@@ -935,7 +935,7 @@ address	name	size	thunk	callers	callees	status
 0043f244	frexp	111	false	1	0	ok
 0043f35f	CBeginThread	212	false	0	9	ok
 0043f433	CEndThread	39	false	1	4	ok
-0043f45d	CEndThread_tail	3	false	0	0	ok
+0043f45d	FUN_0043f45d	3	false	0	0	ok
 004405da	ExitThread	6	true	1	0	ok
 004405e0	CreateThread	6	true	1	0	ok
 004405e6	CreateEventA	6	true	1	0	ok

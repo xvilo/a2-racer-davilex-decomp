@@ -71,7 +71,7 @@ public class ApplyWatcom extends GhidraScript {
 			if (args.length > 1) {
 				applyNames(new File(args[1]));
 			}
-			nameSharedTails();
+			nameSharedTails(args.length > 2 && args[2].equals("complete"));
 			assignConventions();
 		}
 	}
@@ -239,7 +239,7 @@ public class ApplyWatcom extends GhidraScript {
 	 * error exit. Ghidra splits such a block off as its own FUN_. A default-named function that
 	 * is only ever jumped to (never called) is named after the function it physically sits in.
 	 */
-	private void nameSharedTails() throws Exception {
+	private void nameSharedTails(boolean symbolsComplete) throws Exception {
 		int n = 0;
 		FunctionManager fm = currentProgram.getFunctionManager();
 		for (Function f : fm.getFunctions(true)) {
@@ -265,6 +265,9 @@ public class ApplyWatcom extends GhidraScript {
 				}
 				continue;
 			}
+			if (!symbolsComplete && !looksLikeTail(f)) {
+				continue; // probably a real function that is only ever tail-called
+			}
 			// Owner: the nearest preceding function with a real name.
 			Function owner = null;
 			FunctionIterator back = fm.getFunctions(f.getEntryPoint(), false);
@@ -287,6 +290,22 @@ public class ApplyWatcom extends GhidraScript {
 			n++;
 		}
 		println("ApplyWatcom post: " + n + " shared tails named after their owner");
+	}
+
+	/**
+	 * Without complete symbols a jump-only block may be a real function reached by tail calls.
+	 * A shared tail is entered by falling through from its owner, or starts with epilogue code.
+	 */
+	private boolean looksLikeTail(Function f) {
+		Instruction prev = currentProgram.getListing().getInstructionBefore(f.getEntryPoint());
+		boolean fallsThrough = prev != null && prev.getMaxAddress().next().equals(f.getEntryPoint()) &&
+			!prev.getFlowType().isTerminal() &&
+			!(prev.getFlowType().isJump() && prev.getFlowType().isUnConditional());
+		Instruction first = getInstructionAt(f.getEntryPoint());
+		String m = first == null ? "" : first.getMnemonicString().toUpperCase();
+		boolean epilogue = m.equals("POP") || m.equals("LEAVE") ||
+			(m.equals("ADD") && first.getDefaultOperandRepresentation(0).equalsIgnoreCase("ESP"));
+		return fallsThrough || epilogue;
 	}
 
 	// ---- post: calling conventions for everything else --------------------------------

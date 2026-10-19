@@ -36,6 +36,9 @@ for m in "${modules[@]}"; do
 	out="$ROOT/decompiled/$m"
 	names="$ROOT/build/names/$m.tsv"
 	mkdir -p "$out"
+	# A2MENU.DAT's debug info names every real function; the others are partial.
+	coverage=partial
+	[ "$m" = A2MENU.DAT ] && coverage=complete
 	# Hand-assigned names (symbols/manual/<module>.tsv) override recovered ones.
 	python3 -I "$ROOT/tools/merge_names.py" "$names" "$ROOT/symbols/$m.tsv" \
 		"$ROOT/symbols/manual/$m.tsv"
@@ -53,7 +56,7 @@ for m in "${modules[@]}"; do
 	"$GHIDRA_INSTALL_DIR/support/analyzeHeadless" "$ROOT/build/ghidra" "$m" \
 		-import "$bin" -loader PeLoader -scriptPath "$ROOT/tools" \
 		-preScript ApplyWatcom.java pre "$names" \
-		-postScript ApplyWatcom.java post "$names" \
+		-postScript ApplyWatcom.java post "$names" "$coverage" \
 		-postScript AutoNameVariables.java \
 		-postScript ExportDecompiled.java "$out" "$names" \
 		> "$ROOT/build/logs/$m.ghidra.log" 2>&1
