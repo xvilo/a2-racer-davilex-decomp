@@ -3,6 +3,7 @@ address	type	value
 004100ec	string	0123456789abcdefghijklmnopqrstuvwxyz
 00418004	string	movie.ini
 0041800e	string	DEBUG
+00418014	string	HELPDESK
 0041801d	string	/HIRES
 00418024	string	DISPLAY_MODE
 00418031	string	HELPDESK

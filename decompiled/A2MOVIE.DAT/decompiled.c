@@ -78,13 +78,15 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
 {
   uint uVar1;
   int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
-  uint uVar5;
+  int iVar3;
+  int iVar4;
+  char *pcVar5;
+  undefined4 uVar6;
+  uint uVar7;
   
   set_ini_filename(s_movie_ini_00418004);
-  uVar5 = 0;
-  uVar1 = read_ini_value_setting((char *)&debug_on,s_DEBUG_0041800e);
+  uVar7 = 0;
+  uVar1 = read_ini_value_setting(s_HELPDESK_00418014,s_DEBUG_0041800e);
   FUN_0040143c(0,(uint)(uVar1 != 0));
   iVar2 = FUN_00401010(lpCmdLine,s__HIRES_0041801d);
   if (iVar2 == 0) {
@@ -94,23 +96,23 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
     uVar1 = 2;
   }
   FUN_0040105f();
-  set_xvga_vars(2,0,0);
+  FUN_004017df(2,0);
   if (uVar1 == 0) {
-    set_xvga_vars(1,0x40,1);
-    iVar2 = 0;
-    uVar5 = 0;
+    FUN_004017df(1,0x40);
+    uVar1 = 0;
+    uVar7 = 0;
 LAB_00401137:
-    set_xvga_vars(0,iVar2,0);
+    FUN_004017df(0,uVar1);
   }
   else {
     if (uVar1 < 2) {
-      iVar2 = 3;
-      uVar5 = 1;
+      uVar1 = 3;
+      uVar7 = 1;
       goto LAB_00401137;
     }
     if (uVar1 == 2) {
-      iVar2 = 3;
-      uVar5 = 2;
+      uVar1 = 3;
+      uVar7 = 2;
       goto LAB_00401137;
     }
   }
@@ -129,24 +131,31 @@ LAB_00401137:
   else {
     iVar2 = 0xb;
   }
-  iVar2 = xvga_init_sound(0x14,iVar2);
-  if ((iVar2 != 0) && (iVar2 = xvga_init_sound(0x14,0xc), iVar2 != 0)) {
-    init_smacker((void *)0x0);
+  iVar3 = xvga_init_sound(0x14,iVar2);
+  iVar4 = 0;
+  if (iVar3 != 0) {
+    iVar2 = 0xc;
+    iVar3 = xvga_init_sound(0x14,0xc);
+    iVar4 = 0;
+    if (iVar3 != 0) {
+      iVar4 = init_smacker((void *)0x0);
+    }
   }
-  if (uVar5 == 0) {
-    uVar4 = 0x140;
-    iVar2 = 200;
+  if (uVar7 == 0) {
+    uVar6 = 0x140;
+    iVar4 = 200;
   }
   else {
-    if (2 < uVar5) goto LAB_00401228;
-    uVar4 = 0x280;
-    iVar2 = 0x1e0;
+    if (2 < uVar7) goto LAB_00401228;
+    uVar6 = 0x280;
+    iVar4 = 0x1e0;
   }
-  pcVar3 = file_path(&DAT_00421010,lpCmdLine);
-  FUN_00406225((int)pcVar3,0,0,uVar4,iVar2);
+  pcVar5 = file_path(&DAT_00421010,lpCmdLine);
+  iVar2 = 0;
+  iVar4 = FUN_00406225((int)pcVar5,0,0,uVar6,iVar4);
 LAB_00401228:
   xvga_exit_sound();
-  exit_xvga_lib();
+  FUN_0040152f(iVar4,iVar2);
   return 0;
 }
 
@@ -399,16 +408,16 @@ int __cdecl message(char *param_1)
 }
 
 
-/* ==== 0040152f exit_xvga_lib ==== */
+/* ==== 0040152f FUN_0040152f ==== */
 
-void __watcall exit_xvga_lib(void)
+void __watcall FUN_0040152f(undefined4 param_1,undefined4 param_2)
 
 {
   int iVar1;
   
-  exit_help();
+  FUN_00406a54(param_1,param_2);
   disable_all_mem_images();
-  if (xvga_dd_object_defined != 0) {
+  if (DAT_00421250 != 0) {
     xvga_exit_input();
     if (xvga_screen_defined != 0) {
       debugmsg(s_Releasing_screen_0041821e);
@@ -432,7 +441,7 @@ void __watcall exit_xvga_lib(void)
     debugmsg(s_Releasing_dd_object_00418262);
     (**(code **)(*(int *)xvga_dd_object + 8))(xvga_dd_object);
     xvga_dd_object = (IDirectDraw *)0x0;
-    xvga_dd_object_defined = 0;
+    DAT_00421250 = 0;
   }
   xvga_kill_timers();
   debugmsg(s_post_quit_00418277);
@@ -451,6 +460,7 @@ int __cdecl fatal_exit(char *param_1)
 
 {
   int iVar1;
+  undefined4 extraout_EDX;
   UINT *pUVar2;
   UINT *pUVar3;
   char local_1c8 [400];
@@ -458,7 +468,7 @@ int __cdecl fatal_exit(char *param_1)
   undefined1 *local_1c;
   
   local_1c = &stack0x00000008;
-  pUVar2 = &fatal_exit__mb_flags;
+  pUVar2 = &DAT_0041fa68;
   pUVar3 = local_38;
   for (iVar1 = 7; iVar1 != 0; iVar1 = iVar1 + -1) {
     *pUVar3 = *pUVar2;
@@ -472,8 +482,8 @@ int __cdecl fatal_exit(char *param_1)
   do {
     iVar1 = handle_win_msg();
   } while (iVar1 != 0);
-  MessageBoxExA((HWND)0x0,local_1c8,&DAT_0041828b,local_38[0],0);
-  exit_xvga_lib();
+  iVar1 = MessageBoxExA((HWND)0x0,local_1c8,&DAT_0041828b,local_38[0],0);
+  FUN_0040152f(iVar1,extraout_EDX);
   return 0;
 }
 
@@ -507,38 +517,39 @@ void __watcall FUN_004016e7(undefined4 param_1,undefined4 param_2)
 }
 
 
-/* ==== 004017df set_xvga_vars ==== */
+/* ==== 004017df FUN_004017df ==== */
 
-int __watcall set_xvga_vars(int param_1,int param_2,int param_3)
+undefined4 __watcall FUN_004017df(uint param_1,uint param_2)
 
 {
-  int extraout_EDX;
+  uint extraout_EDX;
+  int unaff_EBX;
   
   if (param_1 == 0) {
-    if ((param_2 < 0) || (0x12 < param_2)) {
+    if (((int)param_2 < 0) || (0x12 < (int)param_2)) {
       fatal_exit(s__s__d____error_predefined_screen_004182f6);
       param_2 = extraout_EDX;
     }
-    xvga_screen_mode = param_2;
+    DAT_0041f8e0 = param_2;
     xvga_screen_xsize = (&xvga_screen_modes)[param_2 * 5];
     xvga_screen_ysize = (&DAT_0041f900)[param_2 * 5];
     xvga_screen_bpp = (&DAT_0041f904)[param_2 * 5];
     xvga_allowmodex = *(int *)(&DAT_0041f908 + param_2 * 0x14);
     return 0;
   }
-  if (1 < (uint)param_1) {
+  if (1 < param_1) {
     if (param_1 != 2) {
       fatal_exit(s__s__d____unknown_variable___d__r_00418343);
       return 0;
     }
-    xvga_dd_guid = param_2;
+    DAT_0041f8f8 = param_2;
     return 0;
   }
-  if (param_3 != 1) {
-    xvga_coop_level = param_2;
+  if (unaff_EBX != 1) {
+    DAT_0041f8f0 = param_2;
     return 0;
   }
-  xvga_coop_level = xvga_coop_level | param_2;
+  DAT_0041f8f0 = DAT_0041f8f0 | param_2;
   return 0;
 }
 
@@ -755,15 +766,14 @@ uchar * __watcall get_surface_ptr_1(int param_1)
   
   if (param_1 == 0) {
     pIVar3 = xvga_screen;
-    if (xvga_screen_lock_ok == 0) {
+    if (DAT_0042123c == 0) {
       return (uchar *)0x0;
     }
   }
   else {
     pIVar3 = xvga_back_screen;
-    iVar1 = xvga_back_screen_lock_ok;
-    if (((uint)param_1 < 2) ||
-       (pIVar3 = xvga_buffer_screen, iVar1 = xvga_buffer_screen_lock_ok, param_1 == 2)) {
+    iVar1 = DAT_00421240;
+    if (((uint)param_1 < 2) || (pIVar3 = xvga_buffer_screen, iVar1 = DAT_00421244, param_1 == 2)) {
       if (iVar1 == 0) {
         return (uchar *)0x0;
       }
@@ -819,10 +829,9 @@ void __watcall reset_surface_ptr(int param_1,void *param_2)
   IDirectDrawSurface *unaff_EBX;
   
   pIVar2 = xvga_screen;
-  iVar1 = xvga_screen_lock_ok;
-  if (((param_1 == 0) ||
-      (pIVar2 = xvga_back_screen, iVar1 = xvga_back_screen_lock_ok, (uint)param_1 < 2)) ||
-     (pIVar2 = xvga_buffer_screen, iVar1 = xvga_buffer_screen_lock_ok, param_1 == 2)) {
+  iVar1 = DAT_0042123c;
+  if (((param_1 == 0) || (pIVar2 = xvga_back_screen, iVar1 = DAT_00421240, (uint)param_1 < 2)) ||
+     (pIVar2 = xvga_buffer_screen, iVar1 = DAT_00421244, param_1 == 2)) {
     unaff_EBX = pIVar2;
     if (iVar1 == 0) {
       return;
@@ -1012,7 +1021,7 @@ void __watcall FUN_004023b5(void)
       (**(code **)(*(int *)xvga_screen + 8))(xvga_screen);
       xvga_back_buffers = 0;
     }
-    xvga_screen_lock_ok = 1;
+    DAT_0042123c = 1;
     get_surface_ptr_3(xvga_screen,&xvga_screen_pitch);
     debugmsg(s_locking_inter_00418f29);
     reset_surface_ptr_1(xvga_screen,extraout_EDX);
@@ -1026,7 +1035,7 @@ LAB_004024e0:
     xvga_back_screen = (IDirectDrawSurface *)FUN_00401ee2();
     iVar2 = FUN_004021f8();
     if (iVar2 != 0) {
-      xvga_back_screen_lock_ok = 1;
+      DAT_00421240 = 1;
       puVar3 = get_surface_ptr_3(xvga_back_screen,&xvga_back_screen_pitch);
       reset_surface_ptr_1(xvga_back_screen,puVar3);
       pcVar5 = s_back_screen_locking_done_00418fcd;
@@ -1044,7 +1053,7 @@ LAB_004024e0:
     debugmsg(s_back_screen_locking_00418f91);
     iVar2 = FUN_004021f8();
     if (iVar2 != 0) {
-      xvga_back_screen_lock_ok = 1;
+      DAT_00421240 = 1;
       puVar3 = get_surface_ptr_3(xvga_back_screen,&xvga_back_screen_pitch);
       reset_surface_ptr_1(xvga_back_screen,puVar3);
       pcVar5 = s_back_screen_locking_done_00418fa6;
@@ -1058,7 +1067,7 @@ LAB_00402614:
     xvga_buffer_screen = (IDirectDrawSurface *)FUN_00401ee2();
     iVar2 = FUN_004021f8();
     if (iVar2 != 0) {
-      xvga_buffer_screen_lock_ok = 1;
+      DAT_00421244 = 1;
       puVar3 = get_surface_ptr_3(xvga_buffer_screen,&xvga_buffer_screen_pitch);
       reset_surface_ptr_1(xvga_buffer_screen,puVar3);
     }
@@ -1164,19 +1173,19 @@ undefined4 __watcall FUN_00402751(LPCSTR param_1,int param_2)
   debugmsg(s_starting_direct_draw_driver_sear_00419093);
   FUN_004095b3(extraout_EAX,extraout_EDX);
   debugmsg(s_Finished_search_004190b7);
-  if (xvga_dd_object_defined == 0) {
+  if (DAT_00421250 == 0) {
     debugmsg(s_create_direct_draw_object_004190c8);
-    p_Var2 = xvga_get_dd_guid(xvga_dd_guid);
+    p_Var2 = xvga_get_dd_guid(DAT_0041f8f8);
     lVar3 = DirectDrawCreate(p_Var2,&xvga_dd_object,0);
     if (lVar3 != 0) {
       dd_error_string(lVar3);
       fatal_exit(s__s__d____could_not_create_dd_obj_004190ef);
     }
-    xvga_dd_object_defined = 1;
+    DAT_00421250 = 1;
   }
   if (DAT_00421260 == 0) {
     debugmsg(s_set_cooperative_level_0041911a);
-    lVar3 = (**(code **)(*(int *)xvga_dd_object + 0x50))(xvga_dd_object,xvga_hwnd,xvga_coop_level);
+    lVar3 = (**(code **)(*(int *)xvga_dd_object + 0x50))(xvga_dd_object,xvga_hwnd,DAT_0041f8f0);
     if (lVar3 != 0) {
       dd_error_string(lVar3);
       fatal_exit(s__s__d____could_not_set_cooperati_0041913d);
@@ -1184,7 +1193,7 @@ undefined4 __watcall FUN_00402751(LPCSTR param_1,int param_2)
     DAT_00421260 = 1;
   }
   xvga_get_screen_mode_info();
-  iVar1 = xvga_test_mode_available(xvga_screen_mode);
+  iVar1 = xvga_test_mode_available(DAT_0041f8e0);
   if (iVar1 == 0) {
     debugmsg(s_could_not_find_mode_0041916d);
   }
@@ -4633,13 +4642,13 @@ uint __watcall doclose(int param_1,int unaff_EDX)
 }
 
 
-/* ==== 00406a54 exit_help ==== */
+/* ==== 00406a54 FUN_00406a54 ==== */
 
-void __watcall exit_help(void)
+void __watcall FUN_00406a54(undefined4 param_1,undefined4 param_2)
 
 {
   if (DAT_00421398 != (int *)0x0) {
-    (**(code **)(*DAT_00421398 + 8))(DAT_00421398);
+    (**(code **)(*DAT_00421398 + 8))(DAT_00421398,param_2);
   }
   return;
 }
@@ -10825,32 +10834,6 @@ LAB_0040d5d6:
 }
 
 
-/* ==== 0040d5de movie_play_finish ==== */
-
-void __watcall movie_play_finish(void)
-
-{
-  int in_EAX;
-  uint uVar1;
-  undefined4 unaff_EDX;
-  uint unaff_retaddr;
-  
-  *(undefined4 *)(in_EAX + 8) = unaff_EDX;
-  *(undefined4 *)(in_EAX + 0xc) = unaff_EDX;
-  uVar1 = unaff_retaddr & 3;
-  if (uVar1 != 0) {
-    *(undefined4 *)(in_EAX + 0x10) = unaff_EDX;
-    if (uVar1 != 1) {
-      *(undefined4 *)(in_EAX + 0x14) = unaff_EDX;
-      if (uVar1 != 2) {
-        *(undefined4 *)(in_EAX + 0x18) = unaff_EDX;
-      }
-    }
-  }
-  return;
-}
-
-
 /* ==== 0040d603 getctime ==== */
 
 undefined8 __watcall getctime(uint *param_1,undefined4 unaff_EDX)
@@ -14171,12 +14154,13 @@ int __watcall fflush(FILE *_File)
   int iVar2;
   undefined4 *extraout_ECX;
   DWORD extraout_EDX;
+  undefined4 unaff_EDX;
   int iVar3;
   DWORD unaff_EBX;
   LPCVOID unaff_EDX_01;
   
   if (_File == (FILE *)0x0) {
-    flushall();
+    FUN_00412cc5(0,unaff_EDX);
     return 0;
   }
   (*(code *)AccessFileH_1)();
@@ -16783,9 +16767,9 @@ LAB_00412ca3:
 }
 
 
-/* ==== 00412cc5 flushall ==== */
+/* ==== 00412cc5 FUN_00412cc5 ==== */
 
-int __watcall flushall(void)
+undefined8 __watcall FUN_00412cc5(undefined4 param_1,undefined4 param_2)
 
 {
   int iVar1;
@@ -16806,7 +16790,7 @@ int __watcall flushall(void)
     }
   }
   (*(code *)ReleaseIOB_1)();
-  return iVar2;
+  return CONCAT44(param_2,iVar2);
 }
 
 

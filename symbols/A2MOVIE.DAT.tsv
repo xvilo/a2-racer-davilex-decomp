@@ -1,7 +1,6 @@
 address	kind	name	cc	ret	params	dtype	mangled	evidence
 00401003	label	begtext			?		___begtext	reference
 0040109d	function	WinMain	__stdcall		?		_WinMain@16	reference
-004010c9	function	set_debugmsg_state	__watcall	void	int|int		W?set_debugmsg_state$n(ii)v	call
 0040123a	function	stricmp	__watcall		?		_stricmp_	pattern
 00401284	function	set_ini_filename	__watcall	void	char*		W?set_ini_filename$n(pna)v	pattern
 0040134d	function	write_ini_string_setting	__watcall	void	char*|char*|char*		W?write_ini_string_setting$n(pnapnapna)v	pattern
@@ -10,9 +9,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00401403	function	read_ini_string_setting	__watcall	void	char*|char*|char*|int		W?read_ini_string_setting$n(pnapnapnai)v	pattern
 00401448	function	debugmsg	__cdecl	void	char*		W?debugmsg$n(pnae)v	pattern
 004014db	function	message	__cdecl	int	char*		W?message$n(pnae)i	pattern
-0040152f	function	exit_xvga_lib	__watcall	void			W?exit_xvga_lib$n()v	call
 00401642	function	fatal_exit	__cdecl	int	char*		W?fatal_exit$n(pnae)i	call
-004017df	function	set_xvga_vars	__watcall	int	int|int|int		W?set_xvga_vars$n(iii)i	call
 0040184f	function	dd_error_string	__watcall	char*	long		W?dd_error_string$n(l)pna	pattern
 00401b37	function	get_surface_ptr	__watcall	uchar*	IDirectDrawSurface*		W?get_surface_ptr$n(pn$IDirectDrawSurface$$)pnuc	call
 00401b93	function	get_surface_ptr_1	__watcall	uchar*	int		W?get_surface_ptr$n(i)pnuc	call
@@ -125,7 +122,6 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00406935	function	hex	__watcall		?		__hex_	pattern
 00406941	function	MkTmpFile	__watcall		?		__MkTmpFile_	pattern
 004069a6	function	doclose	__watcall		?		__doclose_	pattern
-00406a54	function	exit_help	__watcall	void			W?exit_help$n()v	call
 00406e7e	function	check_help_keys	__watcall	int			W?check_help_keys$n()i	pattern
 00406ec5	function	get_free_help_key	__watcall	int			W?get_free_help_key$n()i	pattern
 00406ee9	function	clear_help_keys	__watcall	void			W?clear_help_keys$n()v	pattern
@@ -291,7 +287,6 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 0040d538	function	remove	__watcall		?		remove_	call
 0040d53d	function	rewind	__watcall		?		rewind_	pattern
 0040d560	label	STOSB			?		__STOSB	call
-0040d5de	function	movie_play_finish	__watcall	void			W?movie_play_finish$n()v	call
 0040d603	function	getctime	__watcall		?		__getctime_	pattern
 0040d668	function	mktime	__watcall		?		mktime_	pattern
 0040d7bc	function	strnicmp	__watcall		?		_strnicmp_	pattern
@@ -479,7 +474,6 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004129ec	function	draw_help_radiobutton	__watcall	void	fform_t*		W?draw_help_radiobutton$n(pn$__2e8n7fform_t$$)v	pattern
 00412a49	function	draw_radiobutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_radiobutton$n(pn$tagDRAWITEMSTRUCT$$)v	pattern
 00412b8f	function	RadioButtonWindowProc	__watcall	long	void*|uint|uint|long		W?RadioButtonWindowProc$n(pnvuiuil)l	pattern
-00412cc5	function	flushall	__watcall		?		flushall_	call
 00412cca	function	flushall_1	__watcall		?		__flushall_	pattern
 00412d05	function	getche	__watcall		?		getche_	pattern
 00412d27	function	EFG_Format	__watcall		?		_EFG_Format_	pattern
@@ -600,7 +594,6 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00417112	label	GetCurrentDirectoryA			?		_GetCurrentDirectoryA	call
 00417118	function	DirectSoundCreate	__stdcall		?		_DirectSoundCreate@12	call
 0041711e	function	DirectSoundEnumerateA	__stdcall		?		_DirectSoundEnumerateA@8	call
-00418014	data	debug_on			?	int	W?debug_on$ni	reference
 0041f5e8	data	IsTable			?		__IsTable	reference
 0041f6ec	data	diyr			?		___diyr	reference
 0041f706	data	dilyr			?		___dilyr	reference
@@ -608,16 +601,12 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 0041f748	data	BigPow10Table			?		__BigPow10Table	reference
 0041f798	data	Msgs			?		_Msgs	reference
 0041f7b4	data	ini_filename			?		W?ini_filename$n[]a	reference
-0041f8e0	data	xvga_screen_mode			?	int	W?xvga_screen_mode$ni	reference
 0041f8e4	data	xvga_screen_xsize			?	int	W?xvga_screen_xsize$ni	reference
 0041f8e8	data	xvga_screen_ysize			?	int	W?xvga_screen_ysize$ni	reference
 0041f8ec	data	xvga_screen_bpp			?	int	W?xvga_screen_bpp$ni	reference
-0041f8f0	data	xvga_coop_level			?	int	W?xvga_coop_level$ni	reference
 0041f8f4	data	xvga_back_buffers			?	int	W?xvga_back_buffers$ni	reference
-0041f8f8	data	xvga_dd_guid			?	int	W?xvga_dd_guid$ni	reference
 0041f8fc	data	xvga_screen_modes			?		W?xvga_screen_modes$n[]$screen_mode_t$$	reference
 0041fa64	data	debugmsg_toggle			?	int	W?debugmsg_toggle$ni	reference
-0041fa68	data	fatal_exit__mb_flags			?		W?$Wsi0dmb_flags$n[]i$:.0$:?fatal_exit$n(pnae)inx[]i	reference
 0041fa84	data	mouse_show			?	int	W?mouse_show$ni	reference
 0041fa88	data	mouse_old_xpos			?	int	W?mouse_old_xpos$ni	reference
 0041fa8c	data	mouse_old_ypos			?	int	W?mouse_old_ypos$ni	reference
@@ -738,11 +727,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00421230	data	xvga_screen_pitch			?	int	W?xvga_screen_pitch$ni	reference
 00421234	data	xvga_back_screen_pitch			?	int	W?xvga_back_screen_pitch$ni	reference
 00421238	data	xvga_buffer_screen_pitch			?	int	W?xvga_buffer_screen_pitch$ni	reference
-0042123c	data	xvga_screen_lock_ok			?	int	W?xvga_screen_lock_ok$ni	reference
-00421240	data	xvga_back_screen_lock_ok			?	int	W?xvga_back_screen_lock_ok$ni	reference
-00421244	data	xvga_buffer_screen_lock_ok			?	int	W?xvga_buffer_screen_lock_ok$ni	reference
 00421248	data	xvga_hwnd			?	void*	W?xvga_hwnd$npnv	reference
-00421250	data	xvga_dd_object_defined			?	int	W?xvga_dd_object_defined$ni	reference
 00421254	data	xvga_screen_defined			?	int	W?xvga_screen_defined$ni	reference
 00421258	data	xvga_back_screen_defined			?	int	W?xvga_back_screen_defined$ni	reference
 0042125c	data	xvga_buffer_screen_defined			?	int	W?xvga_buffer_screen_defined$ni	reference

@@ -6,9 +6,9 @@ Usage: match_functions.py <src.pe> <src-names.tsv> <dst.pe> <dst-names.tsv>
 1. Every named source function (bounded by the next code symbol) becomes a byte
    pattern with relocated dwords and rel32 call/jmp displacements masked out.
 2. Patterns that occur exactly once in the target's code name that location.
-3. Inside each matched pair, calls at the same offset name the callee, and relocated
-   dwords that point at named source symbols name the target address. Repeat until
-   nothing new is found.
+3. Inside each identical pair, calls at the same offset name the callee, and relocated
+   dwords that point at named source symbols name the target address. Only targets whose
+   whole masked body is identical propagate further. Repeat until nothing new is found.
 
 The output has names.tsv's columns plus 'evidence' (pattern | call | reference).
 """
@@ -110,6 +110,13 @@ def main(src_path, src_names, dst_path, dst_out):
     taken = set()   # src VAs already placed
     conflicts = []  # (dst VA, placed src, contradicting src, evidence)
 
+    def agrees(sva, dva, prefix=None):
+        """Unmasked bytes of the source function equal the target's (first `prefix` only)."""
+        body, mask, _ = masked(sva)
+        n = len(body) if prefix is None else min(prefix, len(body))
+        got = dst.read(dva, n)
+        return len(got) == n and all(m or b == g for b, g, m in zip(body[:n], got, mask[:n]))
+
     def place(dva, sva, why):
         if dva in found:
             if found[dva][0] != sva and by_addr[found[dva][0]][2] != by_addr[sva][2]:
@@ -151,11 +158,14 @@ def main(src_path, src_names, dst_path, dst_out):
                     st, dt = src.dword(sva + i), dst.dword(dva + i)
                     why = 'reference'
                 if st in by_addr and dt is not None and dst.off(dt) is not None:
+                    is_code = st in funcs or by_addr[st][1] == 'label'
+                    if is_code and not dst.in_code(dt):
+                        continue
                     if place(dt, st, why):
                         changed = True
-                        if st in funcs and st not in patterns:
-                            body, mask, fields2 = masked(st)
-                            patterns[st] = (body, mask, fields2)
+                        # Only identical bodies are trusted to carry their own calls further.
+                        if st in funcs and st not in patterns and agrees(st, dt):
+                            patterns[st] = masked(st)
 
     with open(dst_out, 'w') as f:
         f.write('\t'.join(header + ['evidence']) + '\n')

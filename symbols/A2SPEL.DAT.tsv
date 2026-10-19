@@ -1,7 +1,6 @@
 address	kind	name	cc	ret	params	dtype	mangled	evidence
 00401003	label	begtext			?		___begtext	reference
 004010d4	function	WinMain	__stdcall		?		_WinMain@16	reference
-004012a2	function	strupr	__watcall		?		_strupr_	call
 00408e70	function	init_anims	__watcall	int			W?init_anims$n()i	pattern
 00408ed3	function	init_anims_1	__watcall	int	int		W?init_anims$n(i)i	pattern
 00410688	function	load_infio	__watcall	void			W?load_infio$n()v	pattern
@@ -422,7 +421,6 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00432e78	function	mbsnextc	__watcall		?		_mbsnextc_	pattern
 00432eca	function	mbsinc	__watcall		?		_mbsinc_	pattern
 00432f10	function	mbsdec	__watcall		?		_mbsdec_	pattern
-00432f96	function	flushall	__watcall		?		flushall_	call
 00432f9b	function	flushall_1	__watcall		?		__flushall_	pattern
 00432fd6	function	getche	__watcall		?		getche_	pattern
 00436c98	label	MemAllocator			?		__MemAllocator	call

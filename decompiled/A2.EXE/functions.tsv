@@ -1,11 +1,8 @@
 address	name	size	thunk	callers	callees	status
 00401010	FUN_00401010	19	false	1	1	ok
 00401023	FUN_00401023	148	false	1	1	ok
-004010b7	FUN_004010b7	176	false	2	3	ok
-00401167	WinMain	236	false	0	7	ok
-00401253	srand	354	false	0	11	ok
-004013b6	strstr	62	false	1	1	ok
-004013f4	FUN_004013f4	15	false	1	0	ok
+004010b7	FUN_004010b7	176	false	1	3	ok
+00401167	WinMain	668	false	0	16	ok
 00401486	getcwd	121	false	1	4	ok
 004014ff	FUN_004014ff	14	false	1	1	ok
 0040150d	FUN_0040150d	10	false	1	1	ok

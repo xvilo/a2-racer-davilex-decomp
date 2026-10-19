@@ -2,7 +2,7 @@ address	name	size	thunk	callers	callees	status
 00401035	FUN_00401035	65	false	1	4	ok
 00401076	FUN_00401076	6	false	2	0	ok
 0040107c	FUN_0040107c	63	false	1	4	ok
-004010d4	WinMain	3360	false	0	81	ok
+004010d4	WinMain	3361	false	0	81	ok
 00401df5	FUN_00401df5	198	false	1	2	ok
 00401ebc	FUN_00401ebc	189	false	1	9	ok
 00401f79	FUN_00401f79	1119	false	1	8	ok
@@ -724,7 +724,7 @@ address	name	size	thunk	callers	callees	status
 00432e78	mbsnextc	82	false	0	0	ok
 00432eca	mbsinc	70	false	0	0	ok
 00432f10	mbsdec	134	false	1	0	ok
-00432f96	flushall	5	false	1	0	ok
+00432f96	FUN_00432f96	5	false	1	0	ok
 00432f9b	flushall_1	59	false	1	2	ok
 00432fd6	getche	34	false	1	2	ok
 00436bac	FUN_00436bac	95	false	1	0	ok

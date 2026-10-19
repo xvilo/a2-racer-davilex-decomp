@@ -29005,12 +29005,13 @@ int __watcall fflush(FILE *_File)
   int iVar2;
   undefined4 *extraout_ECX;
   DWORD extraout_EDX;
+  undefined4 unaff_EDX;
   int iVar3;
   DWORD unaff_EBX;
   LPCVOID unaff_EDX_01;
   
   if (_File == (FILE *)0x0) {
-    flushall();
+    FUN_00432f96(0,unaff_EDX);
     return 0;
   }
   (*(code *)AccessFileH_1)();
@@ -30655,9 +30656,9 @@ byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
 }
 
 
-/* ==== 00432f96 flushall ==== */
+/* ==== 00432f96 FUN_00432f96 ==== */
 
-int __watcall flushall(void)
+undefined8 __watcall FUN_00432f96(undefined4 param_1,undefined4 param_2)
 
 {
   int iVar1;
@@ -30678,7 +30679,7 @@ int __watcall flushall(void)
     }
   }
   (*(code *)ReleaseIOB_1)();
-  return iVar2;
+  return CONCAT44(param_2,iVar2);
 }
 
 

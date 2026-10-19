@@ -1,9 +1,6 @@
 address	kind	name	cc	ret	params	dtype	mangled	evidence
 00401003	label	begtext			?		___begtext	reference
 00401167	function	WinMain	__stdcall		?		_WinMain@16	reference
-00401253	function	srand	__watcall		?		srand_	call
-0040127d	function	debugmsg	__cdecl	void	char*		W?debugmsg$n(pnae)v	call
-004013b6	function	strstr	__watcall		?		strstr_	call
 00401486	function	getcwd	__watcall		?		getcwd_	pattern
 00401522	function	wstart2	__watcall		?		_wstart2_	pattern
 004015ab	function	set_errno_dos	__watcall		?		__set_errno_dos_	pattern
@@ -173,7 +170,6 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004049b4	label	ExitProcess			?		_ExitProcess	call
 004049ba	label	GetLastError			?		_GetLastError	call
 004049c0	label	GetCurrentDirectoryA			?		_GetCurrentDirectoryA	call
-0040513f	data	path_buffer2			?		W?path_buffer2$n[]a	reference
 0040543c	data	IsTable			?		__IsTable	reference
 004059d8	data	nheapbeg			?		___nheapbeg	reference
 004059dc	data	MiniHeapRover			?		___MiniHeapRover	reference
@@ -252,4 +248,3 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 0040617c	data	TDListSemaphore			?		_TDListSemaphore	reference
 0040618c	data	FListSemaphore			?		_FListSemaphore	reference
 004061a0	data	thread_data_list			?		___thread_data_list	reference
-004070d8	data	path_buffer			?		W?path_buffer$n[]a	reference

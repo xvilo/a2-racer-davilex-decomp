@@ -163,20 +163,19 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   int iVar4;
   BOOL BVar5;
   int iVar6;
-  WPARAM WVar7;
   LPCSTR extraout_EDX;
-  bool bVar8;
+  bool bVar7;
+  char *pcVar8;
   char *pcVar9;
-  char *pcVar10;
   HWND hWndParent;
   HMENU hMenu;
   LPVOID lpParam;
-  char acStack_c0 [100];
+  char local_c0 [100];
   WNDCLASSEXA local_5c;
-  tagMSG tStack_2c;
+  tagMSG local_2c;
   
   _DAT_00406010 = hInstance;
-  bVar8 = false;
+  bVar7 = false;
   if (hPrevInstance == (HINSTANCE)0x0) {
     local_5c.hInstance = hInstance;
     local_5c.cbSize = 0x30;
@@ -191,248 +190,77 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
     local_5c.cbWndExtra = 0;
     local_5c.hIconSm = LoadIconA(hInstance,(LPCSTR)0x7f00);
     AVar2 = RegisterClassExA(&local_5c);
-    if (AVar2 == 0) {
-      MessageBoxA((HWND)0x0,s_WinMain____RegisterClass___faile_0040511d,s_Err___7_CCWINMAP_0040510c,
-                  0x30);
-      iVar3 = FUN_004013f4();
-      return iVar3;
-    }
-    lpParam = (LPVOID)0x0;
-    hMenu = (HMENU)0x0;
-    hWndParent = (HWND)0x0;
-    iVar3 = GetSystemMetrics(1);
-    iVar4 = GetSystemMetrics(0);
-    pcVar10 = acStack_c0;
-    DAT_00406014 = CreateWindowExA(0x40000,s_A2MOTOR_00405140,&path_buffer2,0x80000000,0,0,iVar4,
-                                   iVar3,hWndParent,hMenu,hInstance,lpParam);
-    WVar7 = 0;
-    if (DAT_00406014 != (HWND)0x0) {
-      pcVar9 = s__FIRST_00405148;
+    if (AVar2 != 0) {
+      lpParam = (LPVOID)0x0;
+      hMenu = (HMENU)0x0;
+      hWndParent = (HWND)0x0;
+      iVar3 = GetSystemMetrics(1);
+      iVar4 = GetSystemMetrics(0);
+      pcVar9 = local_c0;
+      DAT_00406014 = CreateWindowExA(0x40000,s_A2MOTOR_00405140,&DAT_0040513f,0x80000000,0,0,iVar4,
+                                     iVar3,hWndParent,hMenu,hInstance,lpParam);
+      if (DAT_00406014 == (HWND)0x0) {
+        return 0;
+      }
+      pcVar8 = s__FIRST_00405148;
       ShowWindow(DAT_00406014,nShowCmd);
       do {
-        cVar1 = *pcVar9;
-        *pcVar10 = cVar1;
+        cVar1 = *pcVar8;
+        *pcVar9 = cVar1;
         if (cVar1 == '\0') break;
-        cVar1 = pcVar9[1];
+        cVar1 = pcVar8[1];
+        pcVar8 = pcVar8 + 2;
+        pcVar9[1] = cVar1;
         pcVar9 = pcVar9 + 2;
-        pcVar10[1] = cVar1;
-        pcVar10 = pcVar10 + 2;
       } while (cVar1 != '\0');
       FUN_004010b7(s_a2movie_dat_0040515b,s_a2intro_smk_0040514f);
-LAB_004012bd:
       do {
-        BVar5 = PeekMessageA(&tStack_2c,(HWND)0x0,0,0,1);
-        if (BVar5 == 0) {
-          if (!bVar8) {
-            iVar3 = FUN_004010b7(s_a2menu_dat_00405167,acStack_c0);
-            if (iVar3 == 0x28) {
-              FUN_004010b7(s_a2spel_dat_00405172,acStack_c0);
-              FUN_00401023();
-              iVar3 = FUN_00401010(&DAT_0040518e,extraout_EDX);
-              iVar4 = FUN_00401010(&DAT_0040519e,s_RACE_KLAAR_00405193);
-              iVar6 = FUN_00401010(&DAT_004051ab,s_POSITIE_004051a3);
-              if (((iVar3 == 5) && (iVar4 != 0)) && (iVar6 != 0)) {
-                pcVar10 = (char *)FUN_004010b7(s_a2movie_dat_004051ba,s_a2win_smk_004051b0);
-                pcVar10 = strstr(pcVar10,s_a2win_smk_004051b0);
-                return (int)pcVar10;
-              }
+        while( true ) {
+          BVar5 = PeekMessageA(&local_2c,(HWND)0x0,0,0,1);
+          if (BVar5 == 0) break;
+          iVar3 = TranslateAcceleratorA(DAT_00406014,(HACCEL)&local_2c,&local_2c);
+          if (iVar3 == 0) {
+            if (local_2c.message == 0x12) {
+              FUN_004010b7(s_a2movie_dat_004051d2,&DAT_004051c7);
+              return local_2c.wParam;
             }
-            else {
-              SendMessageA(DAT_00406014,0x10,0,0);
-              bVar8 = true;
-            }
+            TranslateMessage(&local_2c);
+            DispatchMessageA(&local_2c);
           }
-          pcVar10 = acStack_c0;
-          pcVar9 = &DAT_004051c6;
-          do {
-            cVar1 = *pcVar9;
-            *pcVar10 = cVar1;
-            if (cVar1 == '\0') break;
-            cVar1 = pcVar9[1];
-            pcVar9 = pcVar9 + 2;
-            pcVar10[1] = cVar1;
-            pcVar10 = pcVar10 + 2;
-          } while (cVar1 != '\0');
-          goto LAB_004012bd;
         }
-        iVar3 = TranslateAcceleratorA(DAT_00406014,(HACCEL)&tStack_2c,&tStack_2c);
-      } while (iVar3 != 0);
-      if (tStack_2c.message != 0x12) {
-        TranslateMessage(&tStack_2c);
-        DispatchMessageA(&tStack_2c);
-        goto LAB_004012bd;
-      }
-      FUN_004010b7(s_a2movie_dat_004051d2,&DAT_004051c7);
-      WVar7 = tStack_2c.wParam;
-    }
-  }
-  else {
-    WVar7 = 0;
-  }
-  return WVar7;
-}
-
-
-/* ==== 00401253 srand ==== */
-
-void __watcall srand(uint _Seed)
-
-{
-  char cVar1;
-  BOOL BVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  LPCSTR extraout_EDX;
-  int unaff_EBP;
-  char *pcVar6;
-  char *pcVar7;
-  int unaff_retaddr;
-  int in_stack_00000004;
-  int in_stack_00000008;
-  int in_stack_0000000c;
-  HWND in_stack_00000010;
-  HMENU in_stack_00000014;
-  HINSTANCE in_stack_00000018;
-  LPVOID in_stack_0000001c;
-  UINT in_stack_000000b8;
-  int in_stack_000000f0;
-  
-  pcVar7 = &stack0x00000020;
-  DAT_00406014 = CreateWindowExA(0x40000,s_A2MOTOR_00405140,&path_buffer2,0x80000000,unaff_retaddr,
-                                 in_stack_00000004,in_stack_00000008,in_stack_0000000c,
-                                 in_stack_00000010,in_stack_00000014,in_stack_00000018,
-                                 in_stack_0000001c);
-  if (DAT_00406014 != (HWND)0x0) {
-    pcVar6 = s__FIRST_00405148;
-    ShowWindow(DAT_00406014,in_stack_000000f0);
-    do {
-      cVar1 = *pcVar6;
-      *pcVar7 = cVar1;
-      if (cVar1 == '\0') break;
-      cVar1 = pcVar6[1];
-      pcVar6 = pcVar6 + 2;
-      pcVar7[1] = cVar1;
-      pcVar7 = pcVar7 + 2;
-    } while (cVar1 != '\0');
-    FUN_004010b7(s_a2movie_dat_0040515b,s_a2intro_smk_0040514f);
-LAB_004012bd:
-    do {
-      BVar2 = PeekMessageA((LPMSG)&stack0x000000b4,(HWND)0x0,0,0,1);
-      if (BVar2 == 0) {
-        if (unaff_EBP == 0) {
-          iVar3 = FUN_004010b7(s_a2menu_dat_00405167,&stack0x00000020);
+        if (!bVar7) {
+          iVar3 = FUN_004010b7(s_a2menu_dat_00405167,local_c0);
           if (iVar3 == 0x28) {
-            FUN_004010b7(s_a2spel_dat_00405172,&stack0x00000020);
+            FUN_004010b7(s_a2spel_dat_00405172,local_c0);
             FUN_00401023();
             iVar3 = FUN_00401010(&DAT_0040518e,extraout_EDX);
             iVar4 = FUN_00401010(&DAT_0040519e,s_RACE_KLAAR_00405193);
-            iVar5 = FUN_00401010(&DAT_004051ab,s_POSITIE_004051a3);
-            if (((iVar3 == 5) && (iVar4 != 0)) && (iVar5 != 0)) {
-              pcVar7 = (char *)FUN_004010b7(s_a2movie_dat_004051ba,s_a2win_smk_004051b0);
-              strstr(pcVar7,s_a2win_smk_004051b0);
-              return;
+            iVar6 = FUN_00401010(&DAT_004051ab,s_POSITIE_004051a3);
+            if (((iVar3 == 5) && (iVar4 != 0)) && (iVar6 != 0)) {
+              FUN_004010b7(s_a2movie_dat_004051ba,s_a2win_smk_004051b0);
             }
           }
           else {
             SendMessageA(DAT_00406014,0x10,0,0);
-            unaff_EBP = 1;
+            bVar7 = true;
           }
         }
-        pcVar7 = &stack0x00000020;
-        pcVar6 = &DAT_004051c6;
+        pcVar9 = local_c0;
+        pcVar8 = &DAT_004051c6;
         do {
-          cVar1 = *pcVar6;
-          *pcVar7 = cVar1;
+          cVar1 = *pcVar8;
+          *pcVar9 = cVar1;
           if (cVar1 == '\0') break;
-          cVar1 = pcVar6[1];
-          pcVar6 = pcVar6 + 2;
-          pcVar7[1] = cVar1;
-          pcVar7 = pcVar7 + 2;
+          cVar1 = pcVar8[1];
+          pcVar8 = pcVar8 + 2;
+          pcVar9[1] = cVar1;
+          pcVar9 = pcVar9 + 2;
         } while (cVar1 != '\0');
-        goto LAB_004012bd;
-      }
-      iVar3 = TranslateAcceleratorA(DAT_00406014,(HACCEL)&stack0x000000b4,(LPMSG)&stack0x000000b4);
-    } while (iVar3 != 0);
-    if (in_stack_000000b8 != 0x12) {
-      TranslateMessage((MSG *)&stack0x000000b4);
-      DispatchMessageA((MSG *)&stack0x000000b4);
-      goto LAB_004012bd;
+      } while( true );
     }
-    FUN_004010b7(s_a2movie_dat_004051d2,&DAT_004051c7);
+    MessageBoxA((HWND)0x0,s_WinMain____RegisterClass___faile_0040511d,s_Err___7_CCWINMAP_0040510c,
+                0x30);
   }
-  return;
-}
-
-
-/* ==== 004013b6 strstr ==== */
-
-char * __watcall strstr(char *_Str,char *_SubStr)
-
-{
-  char cVar1;
-  BOOL BVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  LPCSTR extraout_EDX;
-  int unaff_EBP;
-  char *pcVar6;
-  char *pcVar7;
-  UINT in_stack_00000098;
-  char *in_stack_0000009c;
-  
-  do {
-    pcVar6 = &DAT_004051c6;
-    pcVar7 = (char *)register0x00000010;
-    do {
-      cVar1 = *pcVar6;
-      *pcVar7 = cVar1;
-      if (cVar1 == '\0') break;
-      cVar1 = pcVar6[1];
-      pcVar6 = pcVar6 + 2;
-      pcVar7[1] = cVar1;
-      pcVar7 = pcVar7 + 2;
-    } while (cVar1 != '\0');
-    while (BVar2 = PeekMessageA((LPMSG)&stack0x00000094,(HWND)0x0,0,0,1), BVar2 != 0) {
-      iVar3 = TranslateAcceleratorA(DAT_00406014,(HACCEL)&stack0x00000094,(LPMSG)&stack0x00000094);
-      if (iVar3 == 0) {
-        if (in_stack_00000098 == 0x12) {
-          FUN_004010b7(s_a2movie_dat_004051d2,&DAT_004051c7);
-          return in_stack_0000009c;
-        }
-        TranslateMessage((MSG *)&stack0x00000094);
-        DispatchMessageA((MSG *)&stack0x00000094);
-      }
-    }
-    if (unaff_EBP == 0) {
-      iVar3 = FUN_004010b7(s_a2menu_dat_00405167,&stack0x00000000);
-      if (iVar3 == 0x28) {
-        FUN_004010b7(s_a2spel_dat_00405172,&stack0x00000000);
-        FUN_00401023();
-        iVar3 = FUN_00401010(&DAT_0040518e,extraout_EDX);
-        iVar4 = FUN_00401010(&DAT_0040519e,s_RACE_KLAAR_00405193);
-        iVar5 = FUN_00401010(&DAT_004051ab,s_POSITIE_004051a3);
-        if (((iVar3 == 5) && (iVar4 != 0)) && (iVar5 != 0)) {
-          pcVar7 = (char *)FUN_004010b7(s_a2movie_dat_004051ba,s_a2win_smk_004051b0);
-          pcVar7 = strstr(pcVar7,s_a2win_smk_004051b0);
-          return pcVar7;
-        }
-      }
-      else {
-        SendMessageA(DAT_00406014,0x10,0,0);
-        unaff_EBP = 1;
-      }
-    }
-  } while( true );
-}
-
-
-/* ==== 004013f4 FUN_004013f4 ==== */
-
-undefined4 __watcall FUN_004013f4(void)
-
-{
   return 0;
 }
 
