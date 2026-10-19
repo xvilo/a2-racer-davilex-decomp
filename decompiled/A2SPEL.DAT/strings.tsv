@@ -1281,7 +1281,9 @@ address	type	value
 00448fb6	string	 %s(%d) : unidentified focus error (%d).\n
 00448fe0	string	rcpcx.cpp
 00448fea	string	 %s(%d) : error reading\n
+00449003	string	rcpcx.cpp
 0044900d	string	 %s(%d) : error reading\n
+00449026	string	rcpcx.cpp
 00449030	string	 %s(%d) : blitting error (%s).
 0044904f	string	rcpcx.cpp
 00449059	string	 %s(%d) : error reading\n
@@ -1306,26 +1308,39 @@ address	type	value
 004491cb	string	creation succesfull\n
 004491e0	string	rcpcx.cpp
 004491ea	string	 %s(%d)  : closing\n
+004491fe	string	rcpcx.cpp
 00449208	string	 %s(%d) : error reading\n
+00449221	string	rcpcx.cpp
 0044922b	string	 %s(%d)  : header read]\n
+00449244	string	rcpcx.cpp
 0044924e	string	 %s(%d)  : no error header read]\n
 00449270	string	creating surface %d,%d\n
 00449288	string	creation succesfull\n
+0044929d	string	rcpcx.cpp
 004492a7	string	 %s(%d)  : closing\n
+004492bb	string	rcpcx.cpp
 004492c5	string	 %s(%d) : error reading\n
+004492de	string	rcpcx.cpp
 004492e8	string	 %s(%d)  : header read]\n
+00449301	string	rcpcx.cpp
 0044930b	string	 %s(%d)  : no error header read]\n
 0044932d	string	creation succesfull\n
 00449342	string	blitting to destination\n
+0044935b	string	rcpcx.cpp
 00449365	string	 %s(%d) : blitting error (%s)\n
 00449384	string	Release buffer surface\n
+0044939c	string	rcpcx.cpp
 004493a6	string	 %s(%d)  : closing\n
+004493ba	string	rcpcx.cpp
 004493c4	string	 %s(%d)  : header read]\n
+004493dd	string	rcpcx.cpp
 004493e7	string	 %s(%d)  : no error header read]\n
 00449409	string	creation succesfull\n
 0044941e	string	blitting to destination\n
+00449437	string	rcpcx.cpp
 00449441	string	 %s(%d) : blitting error (%s)\n
 00449460	string	Release buffer surface\n
+00449478	string	rcpcx.cpp
 00449482	string	 %s(%d)  : closing\n
 00449498	string	request failed because resources (like priority level) were already allocated
 004494e6	string	specified format is not supported
@@ -2552,12 +2567,19 @@ address	type	value
 00451ed8	string	Result too large
 00451ee9	string	Resource deadlock would occur
 00451f07	string	unknown error
+00451f18	string	help.cpp
 00451f21	string	 %s(%d) : failed to set color key(%s)\n
+00451f48	string	help.cpp
 00451f51	string	 %s(%d) : help grid blitting error
+00451f74	string	help.cpp
 00451f7d	string	 %s(%d) : help grid blitting error
+00451fa0	string	help.cpp
 00451fa9	string	 %s(%d) : help grid blitting error
+00451fcc	string	help.cpp
 00451fd5	string	 %s(%d) : (play_help) empty form or no form is active 
+0045200c	string	help.cpp
 00452015	string	 %s(%d) : (play_help) illegal form index found (%d)
+00452049	string	help.cpp
 00452052	string	 %s(%d) : (set_help_key) No free key availible max. : %d.
 0045208c	string	ddinput.cpp
 00452098	string	 %s(%d) : failed to create direct input object (%s)\n
