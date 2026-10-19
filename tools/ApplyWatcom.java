@@ -77,6 +77,7 @@ public class ApplyWatcom extends GhidraScript {
 				applyNames(new File(args[1]));
 			}
 			nameSharedTails(args.length > 2 && args[2].equals("complete"));
+			defineShortStrings();
 			assignConventions();
 		}
 	}
@@ -317,6 +318,83 @@ public class ApplyWatcom extends GhidraScript {
 		boolean epilogue = m.equals("POP") || m.equals("LEAVE") ||
 			(m.equals("ADD") && first.getDefaultOperandRepresentation(0).equalsIgnoreCase("ESP"));
 		return fallsThrough || epilogue;
+	}
+
+	// ---- post: short strings -----------------------------------------------------------
+
+	/**
+	 * Ghidra's string analyzer skips strings shorter than five characters, so literals such as
+	 * "\\", "rb" or "GAME" show up as DAT_ globals. Any undefined location that code refers to
+	 * and that holds a short NUL-terminated printable string becomes a string.
+	 */
+	private void defineShortStrings() throws Exception {
+		int n = 0;
+		ghidra.program.model.mem.Memory mem = currentProgram.getMemory();
+		// Candidate addresses: taken as a value (DATA, or PARAM when passed to a call) and never
+		// written (a written location is a buffer, not a constant).
+		Set<Address> taken = new HashSet<>(), written = new HashSet<>();
+		InstructionIterator ii = currentProgram.getListing().getInstructions(true);
+		while (ii.hasNext() && !monitor.isCancelled()) {
+			for (ghidra.program.model.symbol.Reference r : ii.next().getReferencesFrom()) {
+				ghidra.program.model.symbol.RefType t = r.getReferenceType();
+				if (t == ghidra.program.model.symbol.RefType.DATA ||
+					t == ghidra.program.model.symbol.RefType.PARAM) {
+					taken.add(r.getToAddress());
+				}
+				else if (t.isWrite()) {
+					written.add(r.getToAddress());
+				}
+			}
+		}
+		for (Address a : taken) {
+			if (written.contains(a) || !a.isMemoryAddress() || mem.getBlock(a) == null ||
+				mem.getBlock(a).isExecute() || getInstructionAt(a) != null) {
+				continue;
+			}
+			Data d = getDataAt(a);
+			boolean placeholder = d == null || !d.isDefined() ||
+				d.getDataType() instanceof Undefined;
+			if (!placeholder) {
+				continue;
+			}
+			int len = 0;
+			boolean ok = false;
+			for (; len < 64; len++) {
+				byte b;
+				try {
+					b = mem.getByte(a.add(len));
+				}
+				catch (Exception e) {
+					break;
+				}
+				if (b == 0) {
+					ok = len > 0;
+					break;
+				}
+				if ((b < 0x20 || b > 0x7e) && b != '\t' && b != '\n' && b != '\r') {
+					break;
+				}
+			}
+			if (!ok) {
+				continue;
+			}
+			try {
+				// Only placeholder data may be replaced; real typed data stops the string.
+				for (int k = 0; k <= len; k++) {
+					Data x = getDataAt(a.add(k));
+					if (x != null && x.isDefined() && !(x.getDataType() instanceof Undefined)) {
+						throw new IllegalStateException("typed data");
+					}
+				}
+				clearListing(a, a.add(len));
+				createAsciiString(a, len + 1);
+				n++;
+			}
+			catch (Exception e) {
+				// overlaps typed data; leave it
+			}
+		}
+		println("ApplyWatcom post: " + n + " short strings defined");
 	}
 
 	// ---- post: calling conventions for everything else --------------------------------

@@ -13,6 +13,7 @@ address	type	value
 0041805f	string	HELPDESK
 00418068	string	inifile.cpp
 00418074	string	(set_ini_filename) %s(%d) : filename has incorrect lenght.
+004180af	string	\\
 004180b1	string	inifile.cpp
 004180bd	string	(write_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
 00418109	string	inifile.cpp
@@ -21,6 +22,7 @@ address	type	value
 0041816c	string	(read_ini_value_setting) %s(%d) : No ini file set, use set_ini_filename .
 004181b6	string	inifile.cpp
 004181c2	string	(read_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
+00418210	string	at+
 00418214	string	debug.txt
 0041821e	string	Releasing screen\n
 00418230	string	Releasing buffer screen\n
@@ -28,6 +30,7 @@ address	type	value
 00418262	string	Releasing dd object\n
 00418277	string	post quit\n
 00418282	string	[%d] %s\n
+0041828b	string	Fout
 00418290	string	initlib.cpp
 0041829c	string	 %s(%d) : error flipping surfaces\n
 004182bf	string	initlib.cpp
@@ -164,10 +167,14 @@ address	type	value
 004192fe	string	initlib.cpp
 0041930a	string	 %s(%d) : could not set display mode (%s).
 00419338	string	x:%s\\%s
+00419340	string	\\
 00419342	string	x:\\%s
+00419348	string	NOCD
+0041934d	string	NOCD
 00419352	string	No cdrom was found in this system
 00419374	string	Incorrect cdrom was found: please insert the correct cdrom and restart the program\n
 004193ca	string	path=%s\n
+004193d3	string	r
 004193d5	string	failed goto path=%s\n
 004193ec	string	mouse.cpp
 004193f6	string	 %s(%d) : (get_mouse_type) mouse not initialised
@@ -232,6 +239,7 @@ address	type	value
 00419c79	string	%s, %s\n
 00419c81	string	SB16.VXD
 00419c8a	string	sb16 driver found %d\n
+00419ca0	string	.VXD
 00419ca5	string	secondary driver found %d\n
 00419cc0	string	sound.cpp
 00419cca	string	 %s(%d) : error creating sound buffer (%s)\n
@@ -288,6 +296,7 @@ address	type	value
 0041a25b	string	 %s(%d) : not enough memory to create sound buffers\n
 0041a290	string	 %s(%d) : error illegal sound mode selected\n
 0041a2bd	string	STEREO
+0041a2c4	string	MONO
 0041a2c9	string	setting sound format %dHz %dbits %s\n
 0041a2ee	string	init smacker\n
 0041a2fc	string	init smacker done\n
@@ -311,6 +320,7 @@ address	type	value
 0041a515	string	 %s(%d) : error illegal sound mode selected\n
 0041a542	string	setting 3d output format\n
 0041a55c	string	STEREO
+0041a563	string	MONO
 0041a568	string	setting sound format %dHz %dbits %s\n
 0041a58d	string	query interface\n
 0041a59e	string	sound.cpp
@@ -440,11 +450,11 @@ address	type	value
 0041b269	string	 %s(%d) : error set listener orientation\n
 0041b293	string	sound.cpp
 0041b29d	string	 %s(%d) : error set listener orientation\n
-0041b2cd	string	$@sound.cpp
+0041b2cf	string	sound.cpp
 0041b2d9	string	 %s(%d) : error set listener orientation\n
-0041b309	string	$@sound.cpp
+0041b30b	string	sound.cpp
 0041b315	string	 %s(%d) : error set listener orientation\n
-0041b345	string	$@sound.cpp
+0041b347	string	sound.cpp
 0041b351	string	 %s(%d) : error set listener orientation\n
 0041b37b	string	new 3d buffer used %d\n
 0041b392	string	sound.cpp
@@ -538,6 +548,8 @@ address	type	value
 0041bf01	string	 %s(%d) : index out of mem_image array failure %d\n
 0041bf34	string	sprite.cpp
 0041bf3f	string	 %s(%d) : index out of mem_image array failure %d\n
+0041bf72	string	rb
+0041bf75	string	rb
 0041bf78	string	sprite.cpp
 0041bf83	string	%s(%d) : index file seek error (probably wrong index %d)
 0041bfbc	string	converting to 16 bits\n
@@ -545,6 +557,7 @@ address	type	value
 0041bfea	string	pf none\n
 0041bff3	string	starting to show images 2\n
 0041c00e	string	done show images\n
+0041c020	string	rb
 0041c023	string	%s maxmemimages = %d\n
 0041c039	string	%s allocating images\n
 0041c04f	string	%s allocating image %d\n
@@ -645,6 +658,7 @@ address	type	value
 0041cac7	string	 s(%d) : error attempting to find cdrom before drive list was made\n
 0041cb0b	string	hwinfo.cpp
 0041cb16	string	 %s(%d) : error not enough memory to allocate a palette\n
+0041cb4f	string	%c:\\
 0041cb54	string	%s = UNAVAILABLE\n
 0041cb66	string	%s = UNAVAILABLE\n
 0041cb78	string	%s = NETWORK\n
@@ -672,7 +686,9 @@ address	type	value
 0041cda0	string	%s, %s\n
 0041cda8	string	DD3Dfx
 0041cdaf	string	dd3ddfx driver found %d\n
+0041cdc8	string	R3D
 0041cdcc	string	Righteous dd3ddfx driver found %d\n
+0041cdef	string	.VXD
 0041cdf4	string	secondary driver found %d\n
 0041ce0f	string	using 3dfx driver %d\n
 0041ce25	string	using unknown secondary driver %d\n
@@ -805,14 +821,17 @@ address	type	value
 0041de70	string	fileio.cpp
 0041de7b	string	 %s(%d) : warning : double call to init_fileio potential error.\n
 0041debc	string	init fileio\n
+0041dec9	string	rb
 0041decc	string	fileio.cpp
 0041ded7	string	%s(%d) : could not open <%s>
 0041def4	string	fileio.cpp
 0041deff	string	%s(%d) : could not open <%s>
 0041df1c	string	fileio.cpp
 0041df27	string	 %s(%d) : error not enough memory to allocate a file list\n
+0041df62	string	%s\n
 0041df66	string	fileio.cpp
 0041df71	string	 %s(%d) : error while reading file list\n
+0041df9a	string	rb
 0041df9d	string	fileio.cpp
 0041dfa8	string	%s(%d) : could not open <%s>
 0041dfc5	string	%s is %d bytes\n
@@ -833,10 +852,12 @@ address	type	value
 0041e0fa	string	%s(%d) : null ptr assignment !
 0041e119	string	fileio.cpp
 0041e124	string	%s(%d) : attempt at reading unopened file length
+0041e155	string	rb
 0041e158	string	fileio.cpp
 0041e163	string	 %s(%d)  : file open failed [%s]\n
 0041e185	string	fileio.cpp
 0041e190	string	 %s(%d)  : file open succeeded [%s]\n
+0041e1b5	string	rb
 0041e1b8	string	fileio.cpp
 0041e1c3	string	 %s(%d)  : file open failed [%s]\n
 0041e1e5	string	fileio.cpp
@@ -851,6 +872,7 @@ address	type	value
 0041e2af	string	 %s(%d) : unopened resource file access!
 0041e2d8	string	fileio.cpp
 0041e2e3	string	 %s(%d) : failure to free file list\n
+0041e308	string	con
 0041e30c	string	Joystick invalid params\n
 0041e325	string	Joystick invalid params\n
 0041e33e	string	Joystick invalid params\n
@@ -872,7 +894,7 @@ address	type	value
 0041e443	string	(set_joystick_keys) invalid joystick number (%d)\n
 0041e475	string	(set_joystick_keys) invalid joystick key type. (%d)\n
 0041e4aa	string	(set_joystick_sencesibility) invalid percentage must be between 0.05 and 1
-0041e4fc	string	?(get_joystick_position) invalid joystick number (%d)\n
+0041e4fd	string	(get_joystick_position) invalid joystick number (%d)\n
 0041e534	string	controls.cpp
 0041e541	string	 %s(%d) : (add_control_to_list) control is already in use (%d).
 0041e584	string	read from
@@ -889,6 +911,7 @@ address	type	value
 0041e733	string	\n\nClick on OK to terminate the application
 0041e760	string	Not enough memory to allocate file structures\r\n
 0041e790	string	Floating-point support not loaded\r\n
+0041e7b4	string	TZ
 0041e7b8	string	editbox.cpp
 0041e7c4	string	 %s(%d) : (set_edit_keys_allowed) string to long max. (%d).
 0041e800	string	abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.<,/?![]%$&*+-=>:;' 
@@ -904,8 +927,14 @@ address	type	value
 0041e99a	string	 %s(%d) : (edit_windows_box) number of lines may not be zero or negative (min. 1)
 0041e9ec	string	editbox.cpp
 0041e9f8	string	 %s(%d) : (edit_windows_box) number of chars may not be zero or negative 
+0041ea42	string	 
+0041ea44	string	 
 0041ea46	string	editbox.cpp
 0041ea52	string	 %s(%d) : (edit_windows_box) height of edit box (%d) to small for font height (%d) 
+0041eaa6	string	EDIT
+0041eaab	string	EDIT
+0041eab0	string	EDIT
+0041eab5	string	EDIT
 0041eaba	string	Unable to create a window for edit box (%d)
 0041eae8	string	buttons.cpp
 0041eaf4	string	 %s(%d) : (destroy_button) no valid window handle.
@@ -983,6 +1012,7 @@ address	type	value
 0041f472	string	 %s(%d) : illegal bkmode for font
 0041f494	string	font.cpp
 0041f49d	string	 %s(%d) : Font index out of bounds max (%d).\n
+0041f4dc	string	__bgnthd
 0041f509	string	acosh
 0041f518	string	log10
 0041f51e	string	atanh
@@ -995,6 +1025,8 @@ address	type	value
 0041f593	string	Underflow range error
 0041f5a9	string	Total loss of significance
 0041f5c4	string	Partial loss of significance
+0041f5e1	string	 in 
+0041fe70	string	a
 00422520	TerminatedCString	ADVAPI32.dll
 0042252d	TerminatedCString	KERNEL32.dll
 0042253a	TerminatedCString	USER32.dll

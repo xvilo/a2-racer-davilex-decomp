@@ -303,10 +303,10 @@ LAB_004014d6:
   }
   debugmsg(s_Initializing_opponent_map_struct_00441537);
   init_opponent_map(extraout_EAX_01,extraout_EDX_02);
-  debugmsg(&DAT_00441561);
+  debugmsg(s_OK_00441561);
   debugmsg(s_Initialising_drivers____00441565);
   init_drivers(opponent_count,extraout_EDX_03);
-  debugmsg(&DAT_0044157e);
+  debugmsg(s_OK_0044157e);
   init_active_opponent_list(opponent_count,extraout_EDX_04);
   debugmsg(s_Init_active_opponent_list_OK__00441582);
   debugmsg(s_Initializing_player_object_004415a1);
@@ -1474,8 +1474,8 @@ void __watcall update_camera_overhead(undefined4 param_1)
   int unaff_ECX;
   int iVar2;
   undefined4 unaff_EBX;
-  float10 chp;
-  undefined8 uVar3;
+  float10 fVar3;
+  undefined8 uVar4;
   float local_cc;
   float local_c8;
   float local_c4;
@@ -1514,24 +1514,24 @@ void __watcall update_camera_overhead(undefined4 param_1)
   local_38 = *(float *)(iVar2 + cos_table);
   local_30 = local_3c * (float)_DAT_00441c5f;
   local_34 = local_38 * (float)_DAT_00441c5f;
-  uVar3 = update_chunk_for_position(player_chunk,iVar2);
-  player_chunk = (int)uVar3;
+  uVar4 = update_chunk_for_position(player_chunk,iVar2);
+  player_chunk = (int)uVar4;
   _DAT_0045b240 = _DAT_00457714 - ABS(player_speed);
   if (_DAT_0045b240 < 1.0) {
     _DAT_0045b240 = 1.0;
   }
-  chp = road_height_at(DAT_0045772c,DAT_00457734);
-  DAT_00457730 = (float)(((chp + (float10)_DAT_0045b264) - (float10)DAT_00457730) /
+  fVar3 = road_height_at(DAT_0045772c,DAT_00457734);
+  DAT_00457730 = (float)(((fVar3 + (float10)_DAT_0045b264) - (float10)DAT_00457730) /
                          (float10)_DAT_0045b240 + (float10)DAT_00457730);
   local_64 = DAT_0045772c - local_30;
   local_78 = DAT_00457734 - local_34;
-  chp = road_height_at(local_64,local_78);
-  local_1c = (float)chp;
+  fVar3 = road_height_at(local_64,local_78);
+  local_1c = (float)fVar3;
   local_cc = DAT_0045772c + local_30;
   local_c4 = DAT_00457734 + local_34;
-  chp = road_height_at(local_cc,local_c4);
+  fVar3 = road_height_at(local_cc,local_c4);
   local_cc = local_cc - local_64;
-  local_c8 = (float)chp - local_1c;
+  local_c8 = (float)fVar3 - local_1c;
   local_c4 = local_c4 - local_78;
   normalize_vector(&local_cc);
   iVar2 = sin_table;
@@ -1542,26 +1542,26 @@ void __watcall update_camera_overhead(undefined4 param_1)
   local_9c = (double)_DAT_0045b258;
   _DAT_0045b258 = (local_c8 * (float)_DAT_00441c67 - _DAT_0045b258) / _DAT_0045b244 + _DAT_0045b258;
   uVar1 = DAT_0045b250 & 0x3ff;
-  chp = CHP();
-  DAT_0045b24c = (int)ROUND(chp);
+  fVar3 = CHP();
+  DAT_0045b24c = (int)ROUND(fVar3);
   local_60 = *(float *)(iVar2 + uVar1 * 4) * (float)_DAT_00441c6f;
   local_5c = *(float *)(cos_table + uVar1 * 4) * (float)_DAT_00441c6f;
   local_64 = DAT_0045772c - local_60;
   local_78 = DAT_00457734 - local_5c;
-  chp = road_height_at(local_64,local_78);
-  local_1c = (float)chp;
+  fVar3 = road_height_at(local_64,local_78);
+  local_1c = (float)fVar3;
   local_c0 = DAT_0045772c + local_60;
   local_b8 = DAT_00457734 + local_5c;
-  chp = road_height_at(local_c0,local_b8);
+  fVar3 = road_height_at(local_c0,local_b8);
   local_c0 = local_c0 - local_64;
-  local_bc = (float)chp - local_1c;
+  local_bc = (float)fVar3 - local_1c;
   local_b8 = local_b8 - local_78;
   normalize_vector(&local_c0);
   _DAT_0045b25c = (local_bc * (float)_DAT_00441c67 - _DAT_0045b25c) / _DAT_0045771c + _DAT_0045b25c;
   uVar1 = (DAT_0045b250 - DAT_0045b274) + 0x100 & 0x3ff;
   iVar2 = sin_table;
-  chp = CHP();
-  DAT_0045b254 = (int)ROUND(chp);
+  fVar3 = CHP();
+  DAT_0045b254 = (int)ROUND(fVar3);
   local_2c = *(float *)(iVar2 + uVar1 * 4);
   local_28 = *(float *)(cos_table + uVar1 * 4);
   local_40 = -(local_2c * _DAT_00457720 + DAT_0045772c);
@@ -1570,23 +1570,23 @@ void __watcall update_camera_overhead(undefined4 param_1)
                  DAT_0045b27c;
   DAT_0045b280 = (-(local_28 * _DAT_00457720 + DAT_00457734) - DAT_0045b280) * (float)_DAT_00441c77
                  + DAT_0045b280;
-  uVar3 = atan_lookup(DAT_0045b290,uVar1);
+  uVar4 = atan_lookup(DAT_0045b290,uVar1);
   iVar2 = DAT_0045b274 >> 0x1f;
   local_44 = DAT_0045b274 / 2;
   _DAT_0045b288 =
        (((float)(int)DAT_0045b250 - _DAT_0045b288) - (float)local_44) / _DAT_00457714 +
        _DAT_0045b288;
-  _DAT_0045b284 = ((float)(int)uVar3 - _DAT_0045b284) / _DAT_00457718 + _DAT_0045b284;
-  chp = CHP();
-  DAT_0045b294 = (int)ROUND(chp);
-  chp = CHP();
-  DAT_0045b298 = (int)ROUND(chp);
+  _DAT_0045b284 = ((float)(int)uVar4 - _DAT_0045b284) / _DAT_00457718 + _DAT_0045b284;
+  fVar3 = CHP();
+  DAT_0045b294 = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  DAT_0045b298 = (int)ROUND(fVar3);
   _DAT_0045b29c = 0;
   set_camera(0,iVar2,unaff_EBX,unaff_ECX,(int)DAT_0045b278,(int)DAT_0045b27c);
-  chp = CHP();
-  x_val = (int)ROUND(chp);
-  chp = CHP();
-  z_val = (int)ROUND(chp);
+  fVar3 = CHP();
+  x_val = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  z_val = (int)ROUND(fVar3);
   local_84 = (double)local_2c;
   if ((float)_DAT_00441c87 <= local_2c) {
     if (local_84 <= _DAT_00441c8f) {
@@ -1600,23 +1600,23 @@ void __watcall update_camera_overhead(undefined4 param_1)
     local_8c = (double)local_28;
   }
   update_visible_tiles(x_val,z_val);
-  chp = CHP();
-  local_50 = (int)ROUND(chp);
-  chp = CHP();
-  local_74 = (int)ROUND(chp);
-  chp = CHP();
-  local_70 = (int)ROUND(chp);
-  chp = CHP();
-  iStack_4c = (int)ROUND(chp);
-  chp = CHP();
-  iStack_48 = (int)ROUND(chp);
-  chp = CHP();
-  iStack_68 = (int)ROUND(chp);
+  fVar3 = CHP();
+  local_50 = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  local_74 = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  local_70 = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  iStack_4c = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  iStack_48 = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  iStack_68 = (int)ROUND(fVar3);
   set_view_quad(local_70,iStack_4c,local_50,local_74);
-  chp = CHP();
-  local_44 = (int)ROUND(chp);
-  chp = CHP();
-  local_44 = (int)ROUND(chp);
+  fVar3 = CHP();
+  local_44 = (int)ROUND(fVar3);
+  fVar3 = CHP();
+  local_44 = (int)ROUND(fVar3);
   get_road_height();
   DAT_0045b268 = -DAT_0045b24c;
   DAT_0045b26c = -DAT_0045b250;
@@ -1854,7 +1854,7 @@ int __watcall get_opponent_chunk(undefined4 param_1,undefined4 param_2)
   int unaff_EBX;
   
   if ((unaff_EBX < 0) || (opponent_count < unaff_EBX)) {
-    fatal_exit(s____s__d____illegal_opponent_inde_00441d4c + 1,param_1,param_2);
+    fatal_exit(s__s__d____illegal_opponent_index_n_00441d4d,param_1,param_2);
     param_1 = extraout_ECX;
     param_2 = extraout_EDX;
   }
@@ -2000,7 +2000,7 @@ undefined4 __watcall create_opponent(int param_1,undefined4 param_2)
   *(undefined4 *)(opponent_data + 0x50 + iVar1) = *(undefined4 *)(&DAT_00457990 + param_1 * 0x20);
   if (param_1 == 0xc) {
     set_ini_filename(s_a2_ini_004420b5);
-    ini_value_setting = read_ini_value_setting(&DAT_004420c8,s_POLICESPEED_004420bc);
+    ini_value_setting = read_ini_value_setting(s_RACE_004420c8,s_POLICESPEED_004420bc);
     *(float *)(iVar1 + 0x4c + opponent_data) = (float)(int)ini_value_setting;
     debugmsg(s_policespeed___d___5_2f_004420cd,ini_value_setting,
              (double)*(float *)(iVar1 + 0x4c + opponent_data));
@@ -2140,8 +2140,7 @@ void __watcall next_opponent_waypoint(int param_1,int param_2)
   chp = CHP();
   if (*(int *)(iVar2 + 0xd4) < 0) {
     if (*(int *)(iVar2 + 0xd0) < 0) {
-      fatal_exit(s__s__d____Illegal_waypoints_for_o_004421da,s__opponent_cpp_004421cc + 1,0x1cd,
-                 param_1);
+      fatal_exit(s__s__d____Illegal_waypoints_for_o_004421da,s_opponent_cpp_004421cd,0x1cd,param_1);
       param_1 = extraout_ECX;
     }
     iVar4 = param_1 * 0x100 + opponent_data;
@@ -2267,7 +2266,7 @@ undefined4 __watcall evaluate_opponent(void)
   float local_14;
   
   if (*(int *)((int)in_EAX * 0x100 + 0xe8 + opponent_data) == 0) {
-    debugmsg(s_D_opponent__d__called_for_object_00442275 + 2);
+    debugmsg(s_opponent__d__called_for_object___00442277);
   }
   else {
     get_opponent_chunk(s_opponent_cpp_004422a8,0x23d);
@@ -2283,7 +2282,7 @@ undefined4 __watcall evaluate_opponent(void)
     }
     debugmsg(s_Evaluating____004422b5);
     move_opponent_toward_target(extraout_ECX,afStack_28);
-    debugmsg(&DAT_004422c3);
+    debugmsg(s_OK_004422c3);
     iVar3 = extraout_ECX_00 * 0x100;
     piVar1 = (int *)(iVar3 + 0x28 + opponent_data);
     *piVar1 = *piVar1 + *(int *)(iVar3 + 0x2c + opponent_data);
@@ -2342,7 +2341,7 @@ void __watcall update_all_opponents(void)
       racer_val = *(int *)(active_opponent_list + local_20);
       iVar4 = racer_val * 0x100;
       lane_val = *(int *)(opponent_data + 200 + iVar4);
-      opponent_chunk = (int *)get_opponent_chunk(s__opponent_cpp_004422d2 + 1,0x27e);
+      opponent_chunk = (int *)get_opponent_chunk(s_opponent_cpp_004422d3,0x27e);
       clear_map_occupant(*opponent_chunk,lane_val);
       evaluate_opponent();
       opponent_chunk_2 = (undefined4 *)get_opponent_chunk(s_opponent_cpp_004422e0,0x285);
@@ -2581,7 +2580,7 @@ void __watcall scatter_traffic(int param_1,int param_2)
   int local_24;
   
   if (weg_data_loaded == 0) {
-    fatal_exit(s__s__d____weg_data_not_initialise_004425d9,s_D_opponent_cpp_004425ca + 2,0x3a7);
+    fatal_exit(s__s__d____weg_data_not_initialise_004425d9,s_opponent_cpp_004425cc,0x3a7);
   }
   iVar3 = param_1 << 8;
   local_24 = param_1;
@@ -4562,7 +4561,7 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
   if (file_exist_result != 0) {
     set_ini_filename(s_a2_ini_00443e7b);
     ini_value_setting_2 = read_ini_value_setting(s_HELPDESK_00443e88,s_SCALE_00443e82);
-    ini_value_setting = read_ini_value_setting(s_BONUS_00443e96,&DAT_00443e91);
+    ini_value_setting = read_ini_value_setting(s_BONUS_00443e96,s_TIME_00443e91);
     DAT_00459130 = ini_value_setting * 0x3c;
     ini_value_setting = read_ini_value_setting(s_TRACK_00443ea3,s_START1_00443e9c);
     DAT_00458d5c = ini_value_setting * 0x3c;
@@ -6978,7 +6977,7 @@ void __watcall draw_radar_contents_2(void)
   int local_1c;
   
   lane_val = DAT_0045b250;
-  opponent_chunk = (int *)get_opponent_chunk(s___radar_cpp_0044581d + 2,0x1a7);
+  opponent_chunk = (int *)get_opponent_chunk(s_radar_cpp_0044581f,0x1a7);
   chunk_val = *opponent_chunk;
   surface_ptr_3 = get_surface_ptr_3(radar_surface,local_48);
   surface_ptr_3_2 = surface_ptr_3;
@@ -7296,7 +7295,7 @@ void __watcall play_sound_effect(int effect,int loop)
   
   if (engine_sound_enabled != 0) {
     if ((effect < 0) || (0x2f < effect)) {
-      fatal_exit(s_CSNDFX_sample_out_of_bounds_00445895 + 1);
+      fatal_exit(s_SNDFX_sample_out_of_bounds_00445896);
       loop = extraout_ECX;
     }
     play_sound_buffer_2_result =
@@ -7387,39 +7386,39 @@ void __watcall load_infio(void)
     debugmsg(s__s__d____>_INFIO_INI_FILE____d_d_004458fc,s_infio_cpp_004458f2,0x45,
              s_INFIO_INI_004458e8);
     set_ini_filename(s_INFIO_INI_0044592c);
-    ini_value_setting = read_ini_value_setting(&DAT_00445941,s_RACE_KLAAR_00445936);
+    ini_value_setting = read_ini_value_setting(s_GAME_00445941,s_RACE_KLAAR_00445936);
     infio = SUB41(ini_value_setting,0);
-    DAT_004759d1 = read_ini_value_setting(&DAT_0044594b,&DAT_00445946);
-    ini_value_setting = read_ini_value_setting(&DAT_0044595c,s_ACTIVE_SLOT_00445950);
+    DAT_004759d1 = read_ini_value_setting(s_GAME_0044594b,s_TIJD_00445946);
+    ini_value_setting = read_ini_value_setting(s_GAME_0044595c,s_ACTIVE_SLOT_00445950);
     DAT_004759e9._0_2_ = (undefined2)ini_value_setting;
-    DAT_00475a1f = read_ini_value_setting(&DAT_00445966,&DAT_00445961);
-    ini_value_setting = read_ini_value_setting(&DAT_00445972,s_ETAPPE_0044596b);
+    DAT_00475a1f = read_ini_value_setting(s_GAME_00445966,s_GELD_00445961);
+    ini_value_setting = read_ini_value_setting(s_GAME_00445972,s_ETAPPE_0044596b);
     DAT_00475a07._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00445982,s_EINDE_DOOR_00445977);
+    ini_value_setting = read_ini_value_setting(s_GAME_00445982,s_EINDE_DOOR_00445977);
     race_positions._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_0044598f,s_POSITIE_00445987);
+    ini_value_setting = read_ini_value_setting(s_GAME_0044598f,s_POSITIE_00445987);
     race_positions._2_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_0044599c,s_RACER_1_00445994);
+    ini_value_setting = read_ini_value_setting(s_GAME_0044599c,s_RACER_1_00445994);
     DAT_00475a0f._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_004459a9,s_RACER_2_004459a1);
+    ini_value_setting = read_ini_value_setting(s_GAME_004459a9,s_RACER_2_004459a1);
     DAT_00475a0f._2_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_004459b6,s_RACER_3_004459ae);
+    ini_value_setting = read_ini_value_setting(s_GAME_004459b6,s_RACER_3_004459ae);
     DAT_00475a13._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_004459c3,s_RACER_4_004459bb);
+    ini_value_setting = read_ini_value_setting(s_GAME_004459c3,s_RACER_4_004459bb);
     DAT_00475a13._2_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_004459d0,s_RACER_5_004459c8);
+    ini_value_setting = read_ini_value_setting(s_GAME_004459d0,s_RACER_5_004459c8);
     _DAT_00475a17 = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_004459dc,s_TIJD_1_004459d5);
+    ini_value_setting = read_ini_value_setting(s_GAME_004459dc,s_TIJD_1_004459d5);
     DAT_004759d5 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_004459e8,s_TIJD_2_004459e1);
+    ini_value_setting = read_ini_value_setting(s_GAME_004459e8,s_TIJD_2_004459e1);
     DAT_004759d9 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_004459f4,s_TIJD_3_004459ed);
+    ini_value_setting = read_ini_value_setting(s_GAME_004459f4,s_TIJD_3_004459ed);
     DAT_004759dd = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00445a00,s_TIJD_4_004459f9);
+    ini_value_setting = read_ini_value_setting(s_GAME_00445a00,s_TIJD_4_004459f9);
     DAT_004759e1 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00445a0c,s_TIJD_5_00445a05);
+    ini_value_setting = read_ini_value_setting(s_GAME_00445a0c,s_TIJD_5_00445a05);
     DAT_004759e5 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00445a18,s_FINALE_00445a11);
+    ini_value_setting = read_ini_value_setting(s_GAME_00445a18,s_FINALE_00445a11);
     DAT_00475a19._0_2_ = (undefined2)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00445a27,s_BEDIENING_00445a1d);
     DAT_004759f1 = (undefined2)ini_value_setting;
@@ -7439,7 +7438,7 @@ void __watcall load_infio(void)
     DAT_004759e9._2_2_ = (undefined2)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00445ab2,s_RESOLUTIE_00445aa8);
     DAT_004759ed._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(s_OPTION_00445abe,&DAT_00445ab9);
+    ini_value_setting = read_ini_value_setting(s_OPTION_00445abe,s_VIEW_00445ab9);
     DAT_004759ed._2_2_ = (undefined2)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00445ad2,s_DISPLAY_MODE_00445ac5);
     DAT_004759ff = (undefined2)ini_value_setting;
@@ -7476,25 +7475,26 @@ void __watcall save_infio(void)
   
   debugmsg(s__s__d____>_SAVE_INFIO_<*_00445b8e,s_infio_cpp_00445b84,0x76);
   set_ini_filename(s_INFIO_INI_00445baa);
-  write_ini_value_setting(&DAT_00445bbf,extraout_EDX,(uint)(byte)infio);
-  write_ini_value_setting(&DAT_00445bc9,&DAT_00445bc4,DAT_004759d1);
-  write_ini_value_setting(&DAT_00445bda,s_ACTIVE_SLOT_00445bce,(int)(short)DAT_004759e9);
-  write_ini_value_setting(&DAT_00445be4,&DAT_00445bdf,DAT_00475a1f);
-  write_ini_value_setting(&DAT_00445bf0,s_ETAPPE_00445be9,(int)(short)DAT_00475a07);
-  write_ini_value_setting(&DAT_00445c00,s_EINDE_DOOR_00445bf5,(int)(short)race_positions);
-  write_ini_value_setting(&DAT_00445c0d,s_POSITIE_00445c05,(int)race_positions._2_2_);
-  write_ini_value_setting(&DAT_00445c1a,s_RACER_1_00445c12,(int)(short)DAT_00475a0f);
-  write_ini_value_setting(&DAT_00445c27,s_RACER_2_00445c1f,(int)DAT_00475a0f._2_2_);
-  write_ini_value_setting(&DAT_00445c34,s_RACER_3_00445c2c,(int)(short)DAT_00475a13);
-  write_ini_value_setting(&DAT_00445c41,s_RACER_4_00445c39,(int)DAT_00475a13._2_2_);
-  write_ini_value_setting(&DAT_00445c4e,s_RACER_5_00445c46,(int)_DAT_00475a17);
-  write_ini_value_setting(&DAT_00445c5a,s_TIJD_1_00445c53,DAT_004759d5);
-  write_ini_value_setting(&DAT_00445c66,s_TIJD_2_00445c5f,DAT_004759d9);
-  write_ini_value_setting(&DAT_00445c72,s_TIJD_3_00445c6b,DAT_004759dd);
-  write_ini_value_setting(&DAT_00445c7e,s_TIJD_4_00445c77,DAT_004759e1);
+  write_ini_value_setting(s_GAME_00445bbf,extraout_EDX,(uint)(byte)infio);
+  write_ini_value_setting(s_GAME_00445bc9,s_TIJD_00445bc4,DAT_004759d1);
+  write_ini_value_setting(s_GAME_00445bda,s_ACTIVE_SLOT_00445bce,(int)(short)DAT_004759e9);
+  write_ini_value_setting(s_GAME_00445be4,s_GELD_00445bdf,DAT_00475a1f);
+  write_ini_value_setting(s_GAME_00445bf0,s_ETAPPE_00445be9,(int)(short)DAT_00475a07);
+  write_ini_value_setting(s_GAME_00445c00,s_EINDE_DOOR_00445bf5,(int)(short)race_positions);
+  write_ini_value_setting(s_GAME_00445c0d,s_POSITIE_00445c05,(int)race_positions._2_2_);
+  write_ini_value_setting(s_GAME_00445c1a,s_RACER_1_00445c12,(int)(short)DAT_00475a0f);
+  write_ini_value_setting(s_GAME_00445c27,s_RACER_2_00445c1f,(int)DAT_00475a0f._2_2_);
+  write_ini_value_setting(s_GAME_00445c34,s_RACER_3_00445c2c,(int)(short)DAT_00475a13);
+  write_ini_value_setting(s_GAME_00445c41,s_RACER_4_00445c39,(int)DAT_00475a13._2_2_);
+  write_ini_value_setting(s_GAME_00445c4e,s_RACER_5_00445c46,(int)_DAT_00475a17);
+  write_ini_value_setting(s_GAME_00445c5a,s_TIJD_1_00445c53,DAT_004759d5);
+  write_ini_value_setting(s_GAME_00445c66,s_TIJD_2_00445c5f,DAT_004759d9);
+  write_ini_value_setting(s_GAME_00445c72,s_TIJD_3_00445c6b,DAT_004759dd);
+  write_ini_value_setting(s_GAME_00445c7e,s_TIJD_4_00445c77,DAT_004759e1);
   write_ini_value_setting
-            (&DAT_00445c8a,s_TIJD_5_00445c83,CONCAT22(DAT_004759e5._2_2_,(undefined2)DAT_004759e5));
-  write_ini_value_setting(&DAT_00445c96,s_FINALE_00445c8f,(int)(short)DAT_00475a19);
+            (s_GAME_00445c8a,s_TIJD_5_00445c83,CONCAT22(DAT_004759e5._2_2_,(undefined2)DAT_004759e5)
+            );
+  write_ini_value_setting(s_GAME_00445c96,s_FINALE_00445c8f,(int)(short)DAT_00475a19);
   write_ini_value_setting(s_CONTROL_00445ca5,s_BEDIENING_00445c9b,(int)DAT_004759f1);
   write_ini_value_setting(s_CONTROL_00445cb7,s_KEY_LINKS_00445cad,(int)DAT_004759f3);
   write_ini_value_setting(s_CONTROL_00445cca,s_KEY_RECHTS_00445cbf,(int)DAT_004759f5);
@@ -7504,7 +7504,7 @@ void __watcall save_infio(void)
   write_ini_value_setting(s_CONTROL_00445d10,s_KEY_ACTIE2_00445d05,(int)DAT_004759fb._2_2_);
   write_ini_value_setting(s_OPTION_00445d1f,s_GELUID_00445d18,(int)DAT_004759e9._2_2_);
   write_ini_value_setting(s_OPTION_00445d30,s_RESOLUTIE_00445d26,(int)(short)DAT_004759ed);
-  write_ini_value_setting(s_OPTION_00445d3c,&DAT_00445d37,(int)DAT_004759ed._2_2_);
+  write_ini_value_setting(s_OPTION_00445d3c,s_VIEW_00445d37,(int)DAT_004759ed._2_2_);
   write_ini_value_setting(s_OPTION_00445d50,s_DISPLAY_MODE_00445d43,(int)DAT_004759ff);
   write_ini_value_setting(s_OPTION_00445d5f,s_HORIZON_00445d57,(int)DAT_00475a01);
   write_ini_value_setting(s_OPTION_00445d6f,s_DASHBORD_00445d66,(int)DAT_00475a03);
@@ -7585,7 +7585,7 @@ int __watcall file_exist(char *filename_val)
   FILE *_File;
   int fclose_result;
   
-  _File = fopen(filename_val,&DAT_00445e88);
+  _File = fopen(filename_val,s_r_00445e88);
   fclose_result = 0;
   if (_File != (FILE *)0x0) {
     fclose_result = fclose(_File);
@@ -7614,7 +7614,7 @@ int __watcall file_size(char *filename_val)
   long extraout_EDX;
   int extraout_EDX_00;
   
-  _File = fopen(filename_val,&DAT_00445ed4);
+  _File = fopen(filename_val,s_rb_00445ed4);
   iVar1 = 0;
   if (_File != (FILE *)0x0) {
     iVar1 = fseek(_File,0,2);
@@ -7662,7 +7662,7 @@ int __watcall file_read(void *dst_buf,int count_val,char *filename_val)
   size_t extraout_EDX;
   size_t extraout_EDX_00;
   
-  _File = fopen(filename_val,&DAT_00445f6e);
+  _File = fopen(filename_val,s_rb_00445f6e);
   if (_File == (FILE *)0x0) {
     uVar1 = 1000;
   }
@@ -7704,7 +7704,7 @@ int __watcall file_write(void *str,int count_val,char *filename_val)
   size_t extraout_EDX;
   size_t extraout_EDX_00;
   
-  _File = fopen(filename_val,&DAT_00445fd0);
+  _File = fopen(filename_val,s_wb_00445fd0);
   if (_File == (FILE *)0x0) {
     fclose_result = 1000;
   }
@@ -8149,7 +8149,7 @@ int __watcall set_racer_start_position(int racer,int position)
   else {
     place_opponent(racer,iVar1,fVar2);
     set_ini_filename(s_a2_ini_0044624d);
-    ini_value_setting = read_ini_value_setting(&DAT_0044625f,s_RACERSPEED_00446254);
+    ini_value_setting = read_ini_value_setting(s_RACE_0044625f,s_RACERSPEED_00446254);
     iVar1 = opponent_data;
     *(float *)(driver_list + 8 + *(int *)(racer * 0x100 + 0xe0 + opponent_data) * 0x1c) =
          (float)(int)ini_value_setting;
@@ -8650,7 +8650,7 @@ undefined8 __watcall alloc_bonus_items(int param_1,undefined4 param_2)
       *(undefined1 *)puVar5 = *(undefined1 *)puVar4;
     }
     bonus_allocated = param_1;
-    debugmsg(&DAT_0044641b);
+    debugmsg(s_OK__0044641b);
   }
   uVar1 = 0;
 LAB_0041272f:
@@ -8874,11 +8874,11 @@ void __watcall draw_bonus_status(undefined4 param_1,undefined4 param_2)
   case 0:
     break;
   case 1:
-    sprintf(s_None_004465bd,&DAT_004465c7);
+    sprintf(s_None_004465bd,s_Time_004465c7);
     bonus_add_time();
     return;
   case 2:
-    sprintf(s_None_004465bd,&DAT_004465cc);
+    sprintf(s_None_004465bd,s_Fuel_004465cc);
     bonus_add_fuel();
     return;
   case 3:
@@ -9262,7 +9262,7 @@ undefined8 __watcall alloc_pionnen(int param_1,undefined4 param_2)
   undefined4 *puVar5;
   
   if (0 < param_1) {
-    debugmsg(s_lBAllocating__d_pion_objects____004468d2 + 2,param_1);
+    debugmsg(s_Allocating__d_pion_objects____004468d4,param_1);
     uBytes = (param_1 * 0xc - extraout_EDX) * 4;
     DAT_00475ad8 = LocalAlloc(0x40,uBytes);
     if (DAT_00475ad8 == (HLOCAL)0x0) {
@@ -9281,7 +9281,7 @@ undefined8 __watcall alloc_pionnen(int param_1,undefined4 param_2)
       }
     }
     DAT_00475adc = param_1;
-    debugmsg(&DAT_004468f2);
+    debugmsg(s_OK__004468f2);
   }
   uVar1 = 0;
 LAB_00413a56:
@@ -9743,7 +9743,7 @@ LAB_00414554:
     pcVar6 = pcVar6 + (uint)bVar7 * -2 + 1;
   } while (cVar1 != '\0');
   if (*(char *)(~uVar3 + 0x4591b2) != '\\') {
-    pcVar4 = &DAT_00446db3;
+    pcVar4 = s___00446db3;
     iVar2 = -1;
     pcVar6 = &ini_filename;
     do {
@@ -9887,7 +9887,7 @@ void __cdecl debugmsg(char *format,...)
   
   if (debugmsg_toggle == 1) {
     if (debugmsg_channel == 0) {
-      _File = fopen(s_debug_txt_00446f18,&DAT_00446f14);
+      _File = fopen(s_debug_txt_00446f18,s_at__00446f14);
       if (_File != (FILE *)0x0) {
         local_10[0] = &stack0x00000008;
         vsprintf(aCStack_330,format,(va_list)local_10);
@@ -9993,7 +9993,7 @@ int __cdecl fatal_exit(char *format,...)
   do {
     iVar1 = handle_win_msg();
   } while (iVar1 != 0);
-  MessageBoxExA((HWND)0x0,local_1c8,&DAT_00446f8f,local_38[0],0);
+  MessageBoxExA((HWND)0x0,local_1c8,s_Fout_00446f8f,local_38[0],0);
   exit_xvga_lib();
                     /* WARNING: Subroutine does not return */
   exit(0);
@@ -11394,7 +11394,7 @@ get_joystick_position(int param_1,int param_2,int param_3,int *param_4,int *para
       goto LAB_004165ab;
     }
   }
-  fatal_exit(s___get_joystick_position__invalid_0044822c + 1,param_1);
+  fatal_exit(s__get_joystick_position__invalid_j_0044822d,param_1);
 LAB_004165ab:
   iVar6 = param_1 * 0x5c;
   if (*(int *)(&joystickstate + iVar6) != 0) {
@@ -11484,14 +11484,14 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
   char local_108 [260];
   
   if (param_1 == (char *)0x0) {
-    cd_directory = &DAT_0044826c;
+    cd_directory = s___0044826c;
     sprintf(local_108,s_x___s_0044826e,param_2);
   }
   else {
     cd_directory = param_1;
     sprintf(local_108,s_x__s__s_00448264,param_1,param_2);
   }
-  env_value = getenv(&DAT_00448274);
+  env_value = getenv(s_NOCD_00448274);
   if (env_value == (char *)0x0) {
     iVar1 = xvga_get_first_cdrom();
     if (iVar1 == -1) {
@@ -11506,7 +11506,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     }
   }
   else {
-    env_value = getenv(&DAT_00448279);
+    env_value = getenv(s_NOCD_00448279);
     cd_drive = *env_value;
   }
   return;
@@ -11527,7 +11527,7 @@ char * __watcall file_path(char *filename_val,char *param_2)
   splitpath((byte *)param_2,local_10,local_210,abStack_310,local_110);
   makepath((byte *)filename_val,&DAT_004482cc,&DAT_004482cb,abStack_310,local_110);
   debugmsg(s_path__s_004482cd,filename_val);
-  _File = fopen(filename_val,&DAT_004482d6);
+  _File = fopen(filename_val,s_r_004482d6);
   if (_File == (FILE *)0x0) {
     makepath((byte *)filename_val,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_004482d8,filename_val);
@@ -11561,7 +11561,7 @@ int __watcall xvga_init_fileio(char *filename_val,char *filename_val_2)
   
   if (init_fileio_ok == 0) {
     debugmsg(s_init_fileio_0044833c);
-    res_fp = (__iobuf *)fopen(filename_val,&DAT_00448349);
+    res_fp = (__iobuf *)fopen(filename_val,s_rb_00448349);
     if ((FILE *)res_fp == (FILE *)0x0) {
       uVar7 = 0x29;
       pcVar6 = s_fileio_cpp_0044834c;
@@ -11596,7 +11596,7 @@ int __watcall xvga_init_fileio(char *filename_val,char *filename_val_2)
           pfVar5 = pfVar5 + 2;
         } while (fileio_t != (fileio_t)0x0);
         *(undefined4 *)(xvga_rc_files + iVar3 + 0x14) = local_24;
-        debugmsg(&DAT_004483e2,xvga_rc_files + iVar3);
+        debugmsg(s__s_004483e2,xvga_rc_files + iVar3);
         if (((byte)res_fp[0xc] & 0x20) != 0) {
           fatal_exit(s__s__d____error_while_reading_fil_004483f1,s_fileio_cpp_004483e6,0x50);
           return 0x3e9;
@@ -11604,7 +11604,7 @@ int __watcall xvga_init_fileio(char *filename_val,char *filename_val_2)
         iVar3 = iVar3 + 0x1c;
       }
       fclose((FILE *)res_fp);
-      data_fp = (__iobuf *)fopen(filename_val_2,&DAT_0044841a);
+      data_fp = (__iobuf *)fopen(filename_val_2,s_rb_0044841a);
       if ((FILE *)data_fp != (FILE *)0x0) {
         iVar1 = 0x1c;
         file_end_pos = filelength(((FILE *)data_fp)->_file);
@@ -11754,7 +11754,7 @@ __iobuf * __watcall xvga_src_fopen(char *param_1)
   char *format;
   
   if (init_fileio_ok == 0) {
-    pFVar1 = fopen(param_1,&DAT_004485d5);
+    pFVar1 = fopen(param_1,s_rb_004485d5);
     if (pFVar1 != (FILE *)0x0) {
       uVar6 = 0xd0;
       pcVar5 = s_fileio_cpp_00448605;
@@ -11785,7 +11785,7 @@ LAB_00416d46:
                iVar4,file_begin_pos,*(undefined4 *)(data_fp + 0x10),iVar2);
       return data_fp;
     }
-    pFVar1 = fopen(param_1,&DAT_00448635);
+    pFVar1 = fopen(param_1,s_rb_00448635);
     if (pFVar1 != (FILE *)0x0) {
       uVar6 = 0xf9;
       pcVar5 = s_fileio_cpp_00448665;
@@ -13608,7 +13608,7 @@ int enum_sound_info_callback(_GUID *param_1,char *param_2,char *param_3,void *pa
     }
     found = strrchr((char *)psVar5,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp((char *)psVar5,&DAT_00449704);
+      iVar1 = stricmp((char *)psVar5,s__VXD_00449704);
       if (iVar1 == 0) {
         debugmsg(s_secondary_driver_found__d_00449709,new_sound_info);
         secondary_driver_index = new_sound_info;
@@ -14230,7 +14230,7 @@ LAB_00419a37:
         return 0x2afa;
       }
       if (*(int *)(&DAT_004594b8 + iVar2) == 0) {
-        format_2 = &DAT_00449d28;
+        format_2 = s_MONO_00449d28;
       }
       else {
         format_2 = s_STEREO_00449d21;
@@ -14360,7 +14360,7 @@ LAB_00419d3a:
           return 0x2afa;
         }
         if (*(int *)(&DAT_004594b8 + iVar3) == 0) {
-          format_2 = &DAT_00449fc7;
+          format_2 = s_MONO_00449fc7;
         }
         else {
           format_2 = s_STEREO_00449fc0;
@@ -15477,7 +15477,7 @@ int __watcall set_3dlistener_distancefactor(float param_1)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x2c))(ds3d_listener,in_stack_00000004,0);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0044ad3d,s___sound_cpp_0044ad31 + 2,0x68e,
+      fatal_exit(s__s__d____error_set_listener_orie_0044ad3d,s_sound_cpp_0044ad33,0x68e,
                  ds_error_string_result);
     }
   }
@@ -15506,7 +15506,7 @@ int __watcall set_3dlistener_rollofffactor(float param_1)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x3c))(ds3d_listener,in_stack_00000004,0);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0044ad79,s___sound_cpp_0044ad6d + 2,0x6a6,
+      fatal_exit(s__s__d____error_set_listener_orie_0044ad79,s_sound_cpp_0044ad6f,0x6a6,
                  ds_error_string_result);
     }
   }
@@ -15526,7 +15526,7 @@ void __watcall execute_ds3d_settings(void)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x44))(ds3d_listener);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0044adb5,s___sound_cpp_0044ada9 + 2,0x6b7,
+      fatal_exit(s__s__d____error_set_listener_orie_0044adb5,s_sound_cpp_0044adab,0x6b7,
                  ds_error_string_result);
     }
   }
@@ -17447,7 +17447,7 @@ longlong __watcall alloc_weg_chunks(int param_1,uint param_2)
   
   if (DAT_00476568 != 0) {
     nfree((uint)weg_sections);
-    debugmsg(s_p_Freed_weg_chunks__reinitialzin_0044c9e1 + 2);
+    debugmsg(s_Freed_weg_chunks__reinitialzing_0044c9e3);
   }
   weg_sections = LocalAlloc(0x40,param_1 * 0x54);
   if (weg_sections == (HLOCAL)0x0) {
@@ -17495,7 +17495,7 @@ undefined4 __watcall load_weg_data(char *param_1,int param_2)
   int local_18;
   
   set_ini_filename(s_d3d_lib_0044ca3c);
-  ini_value_setting = read_ini_value_setting(&DAT_0044ca4d,s_COMPLETE_0044ca44);
+  ini_value_setting = read_ini_value_setting(s_WEG_0044ca4d,s_COMPLETE_0044ca44);
   init_tiles();
   pFVar2 = (FILE *)xvga_src_fopen(param_1);
   if (pFVar2 == (FILE *)0x0) {
@@ -21072,7 +21072,7 @@ void __watcall build_map_execute_buffers(undefined4 param_1)
     else {
       DAT_00476fe8 = DAT_00459874;
       if (DAT_00459874 == -1) {
-        fatal_exit(s__s__d____error_xvga_material_has_0044fa2e,s__mapexec_cpp_0044fa21 + 1,0xe7);
+        fatal_exit(s__s__d____error_xvga_material_has_0044fa2e,s_mapexec_cpp_0044fa22,0xe7);
         unaff_ECX = extraout_ECX;
         fVar2 = extraout_EDX;
       }
@@ -21241,7 +21241,7 @@ float10 __watcall road_height_at(float param_1,float param_2)
   float local_c;
   
   if (in_EAX == -1) {
-    debugmsg(s_>_chunk_error_0044fd02 + 2);
+    debugmsg(s_chunk_error_0044fd04);
     local_c = 0.0;
   }
   else {
@@ -21580,7 +21580,7 @@ longlong __watcall init_cameras(int param_1,uint param_2)
   DAT_004770e0 = LocalAlloc(0x40,(int)((ulonglong)uVar6 >> 0x20) * 0x5c);
   iVar3 = extraout_ECX;
   if (DAT_004770e0 == (HLOCAL)0x0) {
-    fatal_exit(s__s__d____not_enough_memory_for_c_00450350,s_P_camera_cpp_00450343 + 2,0x18d);
+    fatal_exit(s__s__d____not_enough_memory_for_c_00450350,s_camera_cpp_00450345,0x18d);
     iVar3 = extraout_ECX_00;
   }
   _DAT_004770dc = 0;
@@ -22885,9 +22885,9 @@ LAB_0042ab1d:
     iVar1 = 0;
   }
   else {
-    _File = fopen(filename_val,&DAT_0045127a);
+    _File = fopen(filename_val,s_rb_0045127a);
     if (_File != (FILE *)0x0) {
-      _File_00 = fopen(filename_val_2,&DAT_0045127d);
+      _File_00 = fopen(filename_val_2,s_rb_0045127d);
       if (_File_00 != (FILE *)0x0) {
         mem_image_usage = 0;
         local_38 = param_3;
@@ -23063,7 +23063,7 @@ int __watcall init_mem_images(char *filename_val,int param_2)
   byte local_1c [4];
   byte local_18 [4];
   
-  _File = fopen(filename_val,&DAT_00451328);
+  _File = fopen(filename_val,s_rb_00451328);
   if (_File == (FILE *)0x0) {
     iVar1 = 1000;
   }
@@ -24179,6 +24179,8 @@ undefined8 __watcall sqrt_checked(undefined4 param_1,undefined4 param_2)
 
 /* ==== 0042c2cd open_flags ==== */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 undefined8 __watcall open_flags(int param_1,undefined4 unaff_EDX_00)
 
 {
@@ -24208,7 +24210,7 @@ LAB_0042c33a:
     else {
       uVar4 = uVar2;
       if (*(char *)(param_1 + 2) != 't') {
-        bVar5 = fmode == 0x200;
+        bVar5 = ram0x00459b25 == 0x200;
 LAB_0042c338:
         if (bVar5) goto LAB_0042c33a;
       }
@@ -24230,7 +24232,7 @@ LAB_0042c376:
         uVar3 = uVar2;
         goto LAB_0042c338;
       }
-      if (fmode == 0x200) goto LAB_0042c376;
+      if (ram0x00459b25 == 0x200) goto LAB_0042c376;
     }
   }
   if ((tolower_result & 0xff) == 0x77) {
@@ -26783,7 +26785,7 @@ int __watcall xvga_init_drive_info(int param_1)
     max_xvga_drive_list = param_1;
     while( true ) {
       if (param_1 <= iVar3) break;
-      sprintf(local_7c,&DAT_0045256f,iVar4);
+      sprintf(local_7c,s__c___0045256f,iVar4);
       *(int *)(xvga_drive_list + iVar2) = iVar3;
       UVar1 = GetDriveTypeA(local_7c);
       switch(UVar1) {
@@ -27054,7 +27056,7 @@ int enum_dd_device(_GUID *param_1,char *param_2,char *param_3,void *param_4)
       pdVar5 = extraout_ECX;
       d3dfx_dd_driver_index = new_dd_info;
     }
-    iVar1 = strnicmp((char *)pdVar5,&DAT_004527e8,3);
+    iVar1 = strnicmp((char *)pdVar5,s_R3D_004527e8,3);
     if (iVar1 == 0) {
       debugmsg(s_Righteous_dd3ddfx_driver_found___004527ec,new_dd_info);
       pdVar5 = extraout_ECX_00;
@@ -27062,7 +27064,7 @@ int enum_dd_device(_GUID *param_1,char *param_2,char *param_3,void *param_4)
     }
     found = strrchr((char *)pdVar5,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp((char *)pdVar5,&DAT_0045280f);
+      iVar1 = stricmp((char *)pdVar5,s__VXD_0045280f);
       if (iVar1 == 0) {
         debugmsg(s_secondary_driver_found__d_00452814,new_dd_info);
         secondary_dd_driver_index = extraout_ECX_01;
@@ -29136,6 +29138,8 @@ int __cdecl open(char *_Filename,int _OpenFlag,...)
 
 /* ==== 004312da sopen ==== */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 int __cdecl sopen(char *_Filename,int _OpenFlag,int _ShareFlag,...)
 
 {
@@ -29169,7 +29173,7 @@ int __cdecl sopen(char *_Filename,int _OpenFlag,int _ShareFlag,...)
   GetNTShareAttr(_ShareFlag,&share_mode);
   dwFlagsAndAttributes = 0x80;
   if ((WindowsNewWindow == (code *)0x0) ||
-     (file_handle = stricmp(_Filename,&DAT_00453074), file_handle != 0)) {
+     (file_handle = stricmp(_Filename,s_con_00453074), file_handle != 0)) {
     if ((_OpenFlag & 0x20U) == 0) {
       if ((_OpenFlag & 0x40U) != 0) goto LAB_004313c0;
 LAB_004313d3:
@@ -29217,7 +29221,7 @@ LAB_004313c0:
     }
   }
   else {
-    NTGetFakeHandle(0,&DAT_00453074);
+    NTGetFakeHandle(0,s_con_00453074);
     file_handle = (*(code *)InitAccessH_1)();
     (*WindowsNewWindow)(0,file_handle,0xffffffff);
     unaff_EDX = extraout_EDX;
@@ -29235,7 +29239,7 @@ LAB_004313c0:
     unaff_EDX = unaff_EDX | 0x80;
   }
   if ((_OpenFlag & 0x300U) == 0) {
-    if (fmode != 0x200) goto LAB_0043147e;
+    if (ram0x00459b25 != 0x200) goto LAB_0043147e;
   }
   else if ((_OpenFlag & 0x200U) == 0) goto LAB_0043147e;
   unaff_EDX = unaff_EDX | 0x40;
@@ -29252,7 +29256,7 @@ undefined8 __watcall allocfp(undefined4 param_1,size_t unaff_EDX_00)
 {
   undefined4 *puVar1;
   undefined4 uVar2;
-  undefined4 *_Dst;
+  char *_Dst;
   undefined4 extraout_ECX;
   undefined4 unaff_EDX;
   uint uVar3;
@@ -29260,8 +29264,8 @@ undefined8 __watcall allocfp(undefined4 param_1,size_t unaff_EDX_00)
   
   (*(code *)AccessIOB_1)();
   if (ClosedStreams == (undefined4 *)0x0) {
-    for (_Dst = (undefined4 *)&iob; _Dst < &tmpfnext; _Dst = (undefined4 *)((int)_Dst + 0x1a)) {
-      if ((*(byte *)(_Dst + 3) & 3) == 0) {
+    for (_Dst = &iob; _Dst < tmpfnext; _Dst = _Dst + 0x1a) {
+      if ((_Dst[0xc] & 3U) == 0) {
         buffer = nmalloc(8,unaff_EDX);
         uVar2 = (undefined4)((ulonglong)buffer >> 0x20);
         puVar1 = (undefined4 *)buffer;
@@ -29281,17 +29285,17 @@ LAB_00431531:
       uVar2 = 0;
       goto LAB_00431543;
     }
-    _Dst = puVar1 + 2;
+    _Dst = (char *)(puVar1 + 2);
   }
   else {
-    _Dst = (undefined4 *)ClosedStreams[1];
-    uVar3 = (uint)((ushort)_Dst[3] & 0x4003 | 3);
+    _Dst = (char *)ClosedStreams[1];
+    uVar3 = (uint)((ushort)*(undefined4 *)(_Dst + 0xc) & 0x4003 | 3);
     puVar1 = ClosedStreams;
     ClosedStreams = (undefined4 *)*ClosedStreams;
   }
 LAB_00431506:
   memset(_Dst,0,0x1a);
-  _Dst[3] = uVar3;
+  *(uint *)(_Dst + 0xc) = uVar3;
   puVar1[1] = _Dst;
   *puVar1 = OpenStreams;
   OpenStreams = puVar1;
@@ -33285,7 +33289,7 @@ void __watcall tzset(void)
   int iStack_1c;
   int in_stack_ffffffec;
   
-  pbVar3 = (byte *)getenv(&DAT_00456414);
+  pbVar3 = (byte *)getenv(s_TZ_00456414);
   if (pbVar3 != (byte *)0x0) {
     _daylight = 0;
     uStack_20._0_2_ = 0x942b;
@@ -35497,7 +35501,7 @@ void __watcall rterrmsg(int param_1,uint unaff_EDX,undefined4 param_3,FILE *unaf
   std_stream = get_std_stream(2,unaff_EDX);
   _File = (FILE *)std_stream;
   fputs(*(char **)(&Msgs + param_1 * 4),_File);
-  fputs(&DAT_00456a31,_File);
+  fputs(s_in_00456a31,_File);
   fputs((char *)unaff_EDX,_File);
   fputc(10,_File);
   return;
@@ -35808,7 +35812,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
   HBRUSH pHVar3;
   HWND pHVar4;
   HINSTANCE hInstance;
-  LPCSTR lpClassName;
+  char *lpClassName;
   DWORD dwStyle;
   int X;
   int Y;
@@ -35825,9 +35829,9 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
   if (piVar1[2] < 1) {
     fatal_exit(s__s__d_____edit_windows_box__numb_00456c78,s_editbox_cpp_00456c6c,0xa2);
   }
-  iVar2 = get_string_height(&DAT_00456cc2,1);
+  iVar2 = get_string_height(s__00456cc2,1);
   if (iVar2 * piVar1[3] - piVar1[1] != 0 && piVar1[1] <= iVar2 * piVar1[3]) {
-    iVar2 = get_string_height(&DAT_00456cc4,1);
+    iVar2 = get_string_height(s__00456cc4,1);
     fatal_exit(s__s__d_____edit_windows_box__heig_00456cd2,s_editbox_cpp_00456cc6,0xa7,piVar1[1],
                iVar2);
   }
@@ -35841,7 +35845,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
       Y = *(int *)(param_1 + 4);
       X = *(int *)param_1;
       dwStyle = 0x50010000;
-      lpClassName = &DAT_00456d26;
+      lpClassName = s_EDIT_00456d26;
     }
     else {
       if (*(int *)(param_1 + 8) != 3) goto LAB_0043cbd7;
@@ -35852,7 +35856,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
       Y = *(int *)(param_1 + 4);
       X = *(int *)param_1;
       dwStyle = 0x50012000;
-      lpClassName = &DAT_00456d2b;
+      lpClassName = s_EDIT_00456d2b;
     }
   }
   else if (*(int *)(param_1 + 8) == 0) {
@@ -35863,7 +35867,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
     Y = *(int *)(param_1 + 4);
     X = *(int *)param_1;
     dwStyle = 0x50010004;
-    lpClassName = &DAT_00456d30;
+    lpClassName = s_EDIT_00456d30;
   }
   else {
     if (*(int *)(param_1 + 8) != 3) goto LAB_0043cbd7;
@@ -35874,7 +35878,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
     Y = *(int *)(param_1 + 4);
     X = *(int *)param_1;
     dwStyle = 0x50012004;
-    lpClassName = &DAT_00456d35;
+    lpClassName = s_EDIT_00456d35;
   }
   pHVar4 = CreateWindowExA(0,lpClassName,(LPCSTR)0x0,dwStyle,X,Y,nWidth,iVar2,xvga_hwnd,
                            (HMENU)param_2,hInstance,lpParam);
@@ -38280,7 +38284,10 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   byte bVar1;
   undefined8 nt_thread_init;
   char acStackY_1038 [4048];
-  undefined4 uStack_50;
+  char cStack_50;
+  char cStack_4f;
+  char cStack_4e;
+  char cStack_4d;
   undefined4 uStack_4c;
   char local_48 [24];
   undefined4 local_30;
@@ -38296,13 +38303,16 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   }
   local_30 = param_1;
   GetCurrentThread();
-  uStack_50 = DAT_004574e8;
-  (&uStack_4c)[(uint)bVar1 * -2] = (&DAT_004574ec)[(uint)bVar1 * -2];
+  cStack_50 = s___bgnthd_004574e8[0];
+  cStack_4f = s___bgnthd_004574e8[1];
+  cStack_4e = s___bgnthd_004574e8[2];
+  cStack_4d = s___bgnthd_004574e8[3];
+  (&uStack_4c)[(uint)bVar1 * -2] = *(undefined4 *)(s___bgnthd_004574e8 + (uint)bVar1 * -8 + 4);
   local_48[(uint)bVar1 * -8 + (uint)bVar1 * -8] =
-       (&DAT_004574f0)[(uint)bVar1 * -8 + (uint)bVar1 * -8];
+       s___bgnthd_004574e8[(uint)bVar1 * -8 + (uint)bVar1 * -8 + 8];
   _Val = GetCurrentThreadId();
   itoa(_Val,local_48,0x10);
-  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)&uStack_50);
+  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
   thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,unaff_EBX + 0xfffU & 0xfffff000,
                         (LPTHREAD_START_ROUTINE)&begin_thread_helper,&local_30,0,&local_14);
   if (thread == (HANDLE)0x0) {

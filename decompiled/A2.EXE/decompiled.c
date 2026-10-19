@@ -36,7 +36,7 @@ void __watcall build_infio_path(char *filename)
     pcVar6 = pcVar6 + (uint)bVar7 * -2 + 1;
   } while (cVar1 != '\0');
   if (*(char *)(~uVar2 + 0x405896) != '\\') {
-    pcVar4 = &DAT_00405004;
+    pcVar4 = s___00405004;
     iVar3 = -1;
     pcVar6 = &infio_path;
     do {
@@ -230,9 +230,9 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
           if (iVar3 == 0x28) {
             run_module(s_a2spel_dat_00405172,local_c0);
             build_infio_path(s_infio_ini_0040517d);
-            iVar3 = read_game_ini_int(&DAT_0040518e,s_ETAPPE_00405187);
-            iVar4 = read_game_ini_int(&DAT_0040519e,s_RACE_KLAAR_00405193);
-            game_ini_int = read_game_ini_int(&DAT_004051ab,s_POSITIE_004051a3);
+            iVar3 = read_game_ini_int(s_GAME_0040518e,s_ETAPPE_00405187);
+            iVar4 = read_game_ini_int(s_GAME_0040519e,s_RACE_KLAAR_00405193);
+            game_ini_int = read_game_ini_int(s_GAME_004051ab,s_POSITIE_004051a3);
             if (((iVar3 == 5) && (iVar4 != 0)) && (game_ini_int != 0)) {
               run_module(s_a2movie_dat_004051ba,s_a2win_smk_004051b0);
             }
@@ -577,14 +577,13 @@ intptr_t __watcall spawnve(int param_1,char *_Filename,char **_ArgList,char **_E
   undefined4 unaff_EDX_02;
   byte *unaff_EDX_03;
   undefined4 unaff_EDX_04;
-  undefined4 *puVar4;
-  undefined4 *extraout_EDX;
+  char *extraout_EDX;
   int *extraout_EDX_00;
-  byte bVar5;
-  undefined8 uVar6;
+  byte bVar4;
+  undefined8 uVar5;
   undefined8 stackavail_result;
-  int *piVar7;
-  undefined4 uVar8;
+  int *piVar6;
+  undefined4 uVar7;
   LPSTR alloca_stack_check_result [28];
   byte *local_50;
   byte *str1;
@@ -601,7 +600,7 @@ intptr_t __watcall spawnve(int param_1,char *_Filename,char **_ArgList,char **_E
   uint local_1c;
   byte *local_18;
   
-  bVar5 = 0;
+  bVar4 = 0;
   alloca_stack_check_result[0] = (LPSTR)alloca_stack_check();
   if ((LPSTR)0x1 < alloca_stack_check_result[0]) {
     set_errno(9,_Env);
@@ -612,13 +611,13 @@ intptr_t __watcall spawnve(int param_1,char *_Filename,char **_ArgList,char **_E
     return -1;
   }
   iVar1 = string_length(_Filename);
-  uVar6 = nmalloc(iVar1 + 0x10eU,iVar1 + 0x10eU);
-  iVar1 = (int)((ulonglong)uVar6 >> 0x20);
-  local_2c = (byte *)uVar6;
+  uVar5 = nmalloc(iVar1 + 0x10eU,iVar1 + 0x10eU);
+  iVar1 = (int)((ulonglong)uVar5 >> 0x20);
+  local_2c = (byte *)uVar5;
   local_18 = local_2c;
   if (local_2c == (byte *)0x0) {
     stackavail_result = stackavail(0,iVar1);
-    uVar6 = CONCAT44((int)((ulonglong)stackavail_result >> 0x20),local_2c);
+    uVar5 = CONCAT44((int)((ulonglong)stackavail_result >> 0x20),local_2c);
     if ((iVar1 + 3U & 0xfffffffc) < (uint)stackavail_result) {
       local_18 = (byte *)alloca_stack_check_result;
     }
@@ -630,16 +629,16 @@ intptr_t __watcall spawnve(int param_1,char *_Filename,char **_ArgList,char **_E
       return -1;
     }
   }
-  local_2c = (byte *)uVar6;
-  split_spawn_path(_Filename,local_18 + (int)((ulonglong)uVar6 >> 0x20) + -0x107);
+  local_2c = (byte *)uVar5;
+  split_spawn_path(_Filename,local_18 + (int)((ulonglong)uVar5 >> 0x20) + -0x107);
   (*(code *)Save8087)();
-  uVar6 = nmalloc(local_3c,unaff_EDX);
-  local_28 = (int *)uVar6;
+  uVar5 = nmalloc(local_3c,unaff_EDX);
+  local_28 = (int *)uVar5;
   local_20 = local_28;
   if (local_28 == (int *)0x0) {
-    uVar6 = stackavail(0,local_3c + 3 & 0xfffffffc);
-    unaff_EDX_00 = (uint)((ulonglong)uVar6 >> 0x20);
-    if (unaff_EDX_00 < (uint)uVar6) {
+    uVar5 = stackavail(0,local_3c + 3 & 0xfffffffc);
+    unaff_EDX_00 = (uint)((ulonglong)uVar5 >> 0x20);
+    if (unaff_EDX_00 < (uint)uVar5) {
       local_20 = (int *)alloca_stack_check_result;
     }
     else {
@@ -657,54 +656,54 @@ intptr_t __watcall spawnve(int param_1,char *_Filename,char **_ArgList,char **_E
   if (*str1 == 0) {
 LAB_004018e8:
     iVar1 = (*(code *)GetThreadPtr)();
-    uVar8 = extraout_ECX;
+    uVar7 = extraout_ECX;
     if ((*(int *)(iVar1 + 4) != 1) &&
-       (iVar1 = (*(code *)GetThreadPtr)(), uVar8 = extraout_ECX_00, *(int *)(iVar1 + 4) != 9))
+       (iVar1 = (*(code *)GetThreadPtr)(), uVar7 = extraout_ECX_00, *(int *)(iVar1 + 4) != 9))
     goto LAB_00401a34;
     iVar1 = string_length((char *)local_18);
     unaff_EDX_03 = local_18 + iVar1;
-    *(undefined4 *)unaff_EDX_03 = DAT_004051e5;
-    unaff_EDX_03[(uint)bVar5 * -8 + 4] = (&DAT_004051e9)[(uint)bVar5 * -8];
-    uVar6 = set_errno(0,unaff_EDX_03);
-    uVar6 = dospawn((int)uVar6,(int)((ulonglong)uVar6 >> 0x20),(int)local_44,uVar8,
+    *(undefined4 *)unaff_EDX_03 = s__com_004051e5._0_4_;
+    unaff_EDX_03[(uint)bVar4 * -8 + 4] = s__com_004051e5[(uint)bVar4 * -8 + 4];
+    uVar5 = set_errno(0,unaff_EDX_03);
+    uVar5 = dospawn((int)uVar5,(int)((ulonglong)uVar5 >> 0x20),(int)local_44,uVar7,
                     alloca_stack_check_result[0],local_18,local_20);
-    local_1c = (uint)uVar6;
-    uVar6 = (*(code *)GetThreadPtr)();
-    unaff_EDX_04 = (undefined4)((ulonglong)uVar6 >> 0x20);
-    uVar8 = extraout_ECX_01;
-    if (*(int *)((int)uVar6 + 4) != 1) {
-      uVar6 = (*(code *)GetThreadPtr)();
-      unaff_EDX_04 = (undefined4)((ulonglong)uVar6 >> 0x20);
-      uVar8 = extraout_ECX_02;
-      if (*(int *)((int)uVar6 + 4) != 9) goto LAB_00401a34;
+    local_1c = (uint)uVar5;
+    uVar5 = (*(code *)GetThreadPtr)();
+    unaff_EDX_04 = (undefined4)((ulonglong)uVar5 >> 0x20);
+    uVar7 = extraout_ECX_01;
+    if (*(int *)((int)uVar5 + 4) != 1) {
+      uVar5 = (*(code *)GetThreadPtr)();
+      unaff_EDX_04 = (undefined4)((ulonglong)uVar5 >> 0x20);
+      uVar7 = extraout_ECX_02;
+      if (*(int *)((int)uVar5 + 4) != 9) goto LAB_00401a34;
     }
-    uVar6 = set_errno(0,unaff_EDX_04);
-    puVar4 = (undefined4 *)((ulonglong)uVar6 >> 0x20);
-    *puVar4 = DAT_004051ea;
-    *(undefined1 *)(puVar4 + (uint)bVar5 * -2 + 1) = (&DAT_004051ee)[(uint)bVar5 * -8];
-    uVar6 = dospawn((int)uVar6,puVar4,(int)local_44,uVar8,alloca_stack_check_result[0],local_18,
+    uVar5 = set_errno(0,unaff_EDX_04);
+    pcVar2 = (char *)((ulonglong)uVar5 >> 0x20);
+    *(undefined4 *)pcVar2 = s__exe_004051ea._0_4_;
+    pcVar2[(uint)bVar4 * -8 + 4] = s__exe_004051ea[(uint)bVar4 * -8 + 4];
+    uVar5 = dospawn((int)uVar5,pcVar2,(int)local_44,uVar7,alloca_stack_check_result[0],local_18,
                     local_20);
-    local_1c = (uint)uVar6;
-    uVar6 = (*(code *)GetThreadPtr)();
-    uVar8 = (undefined4)((ulonglong)uVar6 >> 0x20);
-    if (*(int *)((int)uVar6 + 4) != 1) {
-      uVar6 = (*(code *)GetThreadPtr)();
-      uVar8 = (undefined4)((ulonglong)uVar6 >> 0x20);
-      if (*(int *)((int)uVar6 + 4) != 9) goto LAB_00401a34;
+    local_1c = (uint)uVar5;
+    uVar5 = (*(code *)GetThreadPtr)();
+    uVar7 = (undefined4)((ulonglong)uVar5 >> 0x20);
+    if (*(int *)((int)uVar5 + 4) != 1) {
+      uVar5 = (*(code *)GetThreadPtr)();
+      uVar7 = (undefined4)((ulonglong)uVar5 >> 0x20);
+      if (*(int *)((int)uVar5 + 4) != 9) goto LAB_00401a34;
     }
-    set_errno(0,uVar8);
-    *extraout_EDX = DAT_004051e0;
-    *(undefined1 *)(extraout_EDX + (uint)bVar5 * -2 + 1) = (&DAT_004051e4)[(uint)bVar5 * -8];
+    set_errno(0,uVar7);
+    *(undefined4 *)extraout_EDX = s__bat_004051e0._0_4_;
+    extraout_EDX[(uint)bVar4 * -8 + 4] = s__bat_004051e0[(uint)bVar4 * -8 + 4];
     iVar1 = path_exists((char *)local_18);
     if (iVar1 == 0) goto LAB_00401a34;
   }
   else {
-    iVar1 = stricmp((char *)str1,(char *)&DAT_004051e0);
+    iVar1 = stricmp((char *)str1,s__bat_004051e0);
     if (iVar1 != 0) {
-      uVar6 = set_errno(0,&DAT_004051e0);
-      uVar6 = dospawn((int)uVar6,(int)((ulonglong)uVar6 >> 0x20),(int)local_44,local_50,
+      uVar5 = set_errno(0,s__bat_004051e0);
+      uVar5 = dospawn((int)uVar5,(int)((ulonglong)uVar5 >> 0x20),(int)local_44,local_50,
                       alloca_stack_check_result[0],local_18,local_20);
-      local_1c = (uint)uVar6;
+      local_1c = (uint)uVar5;
       goto LAB_004018e8;
     }
     local_1c = 0xffffffff;
@@ -714,14 +713,14 @@ LAB_004018e8:
   nfree(local_30);
   local_30 = 0;
   build_command_line((int)local_18,extraout_EDX_00);
-  uVar8 = 0;
+  uVar7 = 0;
   pcVar2 = local_40;
-  piVar7 = local_20;
+  piVar6 = local_20;
   write_comspec_switch(pcVar2);
   pcVar3 = s_COMMAND_004051fb;
   env_value = getenv(s_COMSPEC_004051ef);
   local_1c = spawnl((int)env_value,(char *)0x0,(char *)local_20,1,alloca_stack_check_result[0],
-                    env_value,pcVar3,pcVar2,local_18,piVar7,uVar8);
+                    env_value,pcVar3,pcVar2,local_18,piVar6,uVar7);
 LAB_00401a34:
   nfree((uint)local_28);
   nfree((uint)local_2c);
@@ -4633,7 +4632,10 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   byte bVar1;
   undefined8 nt_thread_init;
   char acStackY_1038 [4048];
-  undefined4 uStack_50;
+  char cStack_50;
+  char cStack_4f;
+  char cStack_4e;
+  char cStack_4d;
   undefined4 uStack_4c;
   char local_48 [24];
   undefined4 local_30;
@@ -4649,13 +4651,16 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   }
   local_30 = param_1;
   GetCurrentThread();
-  uStack_50 = DAT_00405430;
-  (&uStack_4c)[(uint)bVar1 * -2] = (&DAT_00405434)[(uint)bVar1 * -2];
+  cStack_50 = s___bgnthd_00405430[0];
+  cStack_4f = s___bgnthd_00405430[1];
+  cStack_4e = s___bgnthd_00405430[2];
+  cStack_4d = s___bgnthd_00405430[3];
+  (&uStack_4c)[(uint)bVar1 * -2] = *(undefined4 *)(s___bgnthd_00405430 + (uint)bVar1 * -8 + 4);
   local_48[(uint)bVar1 * -8 + (uint)bVar1 * -8] =
-       (&DAT_00405438)[(uint)bVar1 * -8 + (uint)bVar1 * -8];
+       s___bgnthd_00405430[(uint)bVar1 * -8 + (uint)bVar1 * -8 + 8];
   _Val = GetCurrentThreadId();
   itoa(_Val,local_48,0x10);
-  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)&uStack_50);
+  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
   thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,unaff_EBX + 0xfffU & 0xfffff000,
                         (LPTHREAD_START_ROUTINE)&begin_thread_helper,&local_30,0,&local_14);
   if (thread == (HANDLE)0x0) {

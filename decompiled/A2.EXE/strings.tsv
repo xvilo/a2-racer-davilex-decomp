@@ -1,5 +1,6 @@
 address	type	value
 004047d8	string	0123456789abcdefghijklmnopqrstuvwxyz
+00405004	string	\\
 00405006	string	A2 MOTOR
 0040500f	string	Argument list exceeds 1024 bytes
 00405030	string	A2 MOTOR
@@ -21,13 +22,20 @@ address	type	value
 00405172	string	a2spel.dat
 0040517d	string	infio.ini
 00405187	string	ETAPPE
+0040518e	string	GAME
 00405193	string	RACE_KLAAR
+0040519e	string	GAME
 004051a3	string	POSITIE
+004051ab	string	GAME
 004051b0	string	a2win.smk
 004051ba	string	a2movie.dat
 004051c9	string	exit.smk
 004051d2	string	a2movie.dat
+004051e0	string	.bat
+004051e5	string	.com
+004051ea	string	.exe
 004051ef	string	COMSPEC
+004051f7	string	CMD
 004051fb	string	COMMAND
 00405204	string	read from
 0040520e	string	written
@@ -45,6 +53,7 @@ address	type	value
 004053f8	string	conin$
 004053ff	string	conout$
 00405408	string	Thread has no thread-specific data\r\n
+00405430	string	__bgnthd
 00405a38	string	Stack Overflow!\r\n
 00407278	TerminatedCString	GDI32.dll
 00407282	TerminatedCString	USER32.dll

@@ -89,7 +89,9 @@ address	type	value
 00441503	string	main.cpp
 0044150c	string	 %s(%d) : error loading map datafile (%s)\n
 00441537	string	Initializing opponent map structure......
+00441561	string	OK\n
 00441565	string	Initialising drivers...\n
+0044157e	string	OK\n
 00441582	string	Init active opponent list OK.\n
 004415a1	string	Initializing player object\n
 004415bd	string	Initializing dashboard\n
@@ -163,7 +165,7 @@ address	type	value
 00441bc8	string	mycontro.cpp
 00441bd5	string	 %s(%d) : unknown camera position %d\n
 00441d30	string	opptools.cpp
-00441d4c	string	@ %s(%d) : illegal opponent index nr %d\n
+00441d4d	string	 %s(%d) : illegal opponent index nr %d\n
 00441d75	string	 %s(%d) : illegal opponent chunk nr %d == %d\n
 00441da3	string	opponent.cpp
 00441db0	string	%s(%d) Invalid weg chunk value %d for opponent %d and lane %d.\n
@@ -190,6 +192,7 @@ address	type	value
 0044207a	string	%s(%d) : opponents not initialised while starting objects\n
 004420b5	string	a2.ini
 004420bc	string	POLICESPEED
+004420c8	string	RACE
 004420cd	string	policespeed =%d, %5.2f\n
 004420e5	string	opponent.cpp
 004420f2	string	%s(%d) : texture not loaded for cartype %d\n
@@ -198,7 +201,7 @@ address	type	value
 0044214c	string	Start_opponent completed\n
 00442170	string	L>opponent.cpp
 0044217f	string	%s(%d) : object3d not initialised while releasing opponents \n
-004421cc	string	?opponent.cpp
+004421cd	string	opponent.cpp
 004421da	string	%s(%d) : Illegal waypoints for opponent %d.\n
 00442207	string	opponent.cpp
 00442214	string	opponent.cpp
@@ -208,10 +211,11 @@ address	type	value
 00442248	string	opponent.cpp
 00442255	string	opponent.cpp
 00442262	string	opponent.cpp
-00442275	string	D@opponent(%d) called for object(%d) is not used!\n
+00442277	string	opponent(%d) called for object(%d) is not used!\n
 004422a8	string	opponent.cpp
 004422b5	string	Evaluating...
-004422d2	string	?opponent.cpp
+004422c3	string	OK\n
+004422d3	string	opponent.cpp
 004422e0	string	opponent.cpp
 004422ed	string	opponent.cpp
 004422fa	string	opponent.cpp
@@ -245,7 +249,7 @@ address	type	value
 00442582	string	placing opponent %d ok\n
 0044259a	string	opponent.cpp
 004425a7	string	Attempting to set driver...\n
-004425ca	string	D@opponent.cpp
+004425cc	string	opponent.cpp
 004425d9	string	%s(%d) : weg data not initialised while initializing opponents\n
 00442619	string	You know where\n
 00442629	string	opponent.cpp
@@ -366,14 +370,14 @@ address	type	value
 00442ef3	string	setting static object position\n
 00442f13	string	create execute buffer object..\n
 00442f33	string	done creating execute buffer object..\n
-00442f71	string	@statobj.cpp
+00442f72	string	statobj.cpp
 00442f7e	string	 %s(%d) : Illegal object number (%d)\n
 00442fa4	string	statobj.cpp
 00442fb0	string	 %s(%d) : D3DError Getting matrix : %s\n
 00442fd8	string	object pos = (%f , %f , %f)\n
 00442ff5	string	statobj.cpp
 00443001	string	 %s(%d) : D3DError Setting matrix : %s\n
-00443030	string	@statobj.cpp
+00443031	string	statobj.cpp
 0044303d	string	 %s(%d) : Illegal object number (%d)\n
 00443063	string	statobj.cpp
 0044306f	string	 %s(%d) : D3DError Getting matrix : %s\n
@@ -385,31 +389,31 @@ address	type	value
 00443109	string	 %s(%d) : D3DError Getting matrix : %s\n
 00443131	string	statobj.cpp
 0044313d	string	 %s(%d) : D3DError Setting matrix : %s\n
-0044316b	string	$@statobj.cpp
+0044316d	string	statobj.cpp
 00443179	string	 %s(%d) : Illegal object number (%d)\n
 0044319f	string	statobj.cpp
 004431ab	string	 %s(%d) : D3DError Getting matrix : %s\n
 004431d3	string	statobj.cpp
 004431df	string	 %s(%d) : D3DError Setting matrix : %s\n
-0044320d	string	$@statobj.cpp
+0044320f	string	statobj.cpp
 0044321b	string	 %s(%d) : Illegal object number (%d)\n
 00443241	string	statobj.cpp
 0044324d	string	 %s(%d) : D3DError Getting matrix : %s\n
 00443275	string	statobj.cpp
 00443281	string	 %s(%d) : D3DError Setting matrix : %s\n
-004432af	string	$@statobj.cpp
+004432b1	string	statobj.cpp
 004432bd	string	 %s(%d) : Illegal object number (%d)\n
 004432e3	string	statobj.cpp
 004432ef	string	 %s(%d) : D3DError Getting matrix : %s\n
 00443317	string	statobj.cpp
 00443323	string	 %s(%d) : D3DError Setting matrix : %s\n
-00443351	string	$@statobj.cpp
+00443353	string	statobj.cpp
 0044335f	string	 %s(%d) : Illegal object number (%d)\n
 00443385	string	statobj.cpp
 00443391	string	 %s(%d) : D3DError Getting matrix : %s\n
 004433b9	string	statobj.cpp
 004433c5	string	 %s(%d) : D3DError Setting matrix : %s\n
-004433f3	string	$@statobj.cpp
+004433f5	string	statobj.cpp
 00443401	string	 %s(%d) : Illegal object number (%d)\n
 00443427	string	statobj.cpp
 00443433	string	 %s(%d) : D3DError Getting matrix : %s\n
@@ -506,6 +510,7 @@ address	type	value
 00443e7b	string	a2.ini
 00443e82	string	SCALE
 00443e88	string	HELPDESK
+00443e91	string	TIME
 00443e96	string	BONUS
 00443e9c	string	START1
 00443ea3	string	TRACK
@@ -587,7 +592,7 @@ address	type	value
 004446f3	string	Driver set completed OK\n
 0044470c	string	driver.cpp
 00444717	string	%s(%d) Impossible heading!\n
-00444742	string	@driver.cpp
+00444743	string	driver.cpp
 0044474e	string	%s(%d) Cannot drive unused driver %d.\n
 00444775	string	driver.cpp
 00444780	string	%s(%d) Cannot drive unassigned driver %d.\n
@@ -612,7 +617,7 @@ address	type	value
 00444a73	string	Faster lane is best\nSWITCHING to faster lane...\n
 00444aa4	string	Current lane is one of the best...\n
 00444ac8	string	Normal exit covered...\n
-00444afe	string	"@driver.cpp
+00444b00	string	driver.cpp
 00444b0b	string	%s(%d) Cannot drive unused driver %d.\n
 00444b32	string	driver.cpp
 00444b3d	string	%s(%d) Cannot drive unassigned driver %d.\n
@@ -659,7 +664,7 @@ address	type	value
 004450d7	string	Do we crash in here somwhere?.....
 004450fa	string	No we don't.\n
 00445108	string	Normal exit covered for driver %d\n
-00445136	string	?driver.cpp
+00445137	string	driver.cpp
 00445142	string	%s(%d) Cannot drive unused driver %d.\n
 00445169	string	driver.cpp
 00445174	string	%s(%d) Cannot drive unassigned driver %d.\n
@@ -714,11 +719,11 @@ address	type	value
 004457df	string	radar.cpp
 004457e9	string	 %s(%d) : draw radar blitting error
 0044580d	string	radar.cpp
-0044581d	string	(@radar.cpp
+0044581f	string	radar.cpp
 00445834	string	sndfx.cpp
 0044583e	string	%s(%d) Illegal opponent nr %d (max=%d)\n
 00445866	string	changing pos object %d (%5.2f,%5.2f,%5.2f)\n
-00445895	string	CSNDFX sample out of bounds\n
+00445896	string	SNDFX sample out of bounds\n
 004458b8	string	infio.cpp
 004458c2	string	\n\n%s(%d): *> LOAD INFIO <*\n
 004458de	string	INFIO.INI
@@ -727,21 +732,41 @@ address	type	value
 004458fc	string	\n\n%s(%d): *> INFIO_INI_FILE = %d does exist <*\n
 0044592c	string	INFIO.INI
 00445936	string	RACE_KLAAR
+00445941	string	GAME
+00445946	string	TIJD
+0044594b	string	GAME
 00445950	string	ACTIVE_SLOT
+0044595c	string	GAME
+00445961	string	GELD
+00445966	string	GAME
 0044596b	string	ETAPPE
+00445972	string	GAME
 00445977	string	EINDE_DOOR
+00445982	string	GAME
 00445987	string	POSITIE
+0044598f	string	GAME
 00445994	string	RACER_1
+0044599c	string	GAME
 004459a1	string	RACER_2
+004459a9	string	GAME
 004459ae	string	RACER_3
+004459b6	string	GAME
 004459bb	string	RACER_4
+004459c3	string	GAME
 004459c8	string	RACER_5
+004459d0	string	GAME
 004459d5	string	TIJD_1
+004459dc	string	GAME
 004459e1	string	TIJD_2
+004459e8	string	GAME
 004459ed	string	TIJD_3
+004459f4	string	GAME
 004459f9	string	TIJD_4
+00445a00	string	GAME
 00445a05	string	TIJD_5
+00445a0c	string	GAME
 00445a11	string	FINALE
+00445a18	string	GAME
 00445a1d	string	BEDIENING
 00445a27	string	CONTROL
 00445a2f	string	KEY_LINKS
@@ -760,6 +785,7 @@ address	type	value
 00445aa1	string	OPTION
 00445aa8	string	RESOLUTIE
 00445ab2	string	OPTION
+00445ab9	string	VIEW
 00445abe	string	OPTION
 00445ac5	string	DISPLAY_MODE
 00445ad2	string	OPTION
@@ -783,21 +809,41 @@ address	type	value
 00445b8e	string	\n\n%s(%d): *> SAVE INFIO <*\n
 00445baa	string	INFIO.INI
 00445bb4	string	RACE_KLAAR
+00445bbf	string	GAME
+00445bc4	string	TIJD
+00445bc9	string	GAME
 00445bce	string	ACTIVE_SLOT
+00445bda	string	GAME
+00445bdf	string	GELD
+00445be4	string	GAME
 00445be9	string	ETAPPE
+00445bf0	string	GAME
 00445bf5	string	EINDE_DOOR
+00445c00	string	GAME
 00445c05	string	POSITIE
+00445c0d	string	GAME
 00445c12	string	RACER_1
+00445c1a	string	GAME
 00445c1f	string	RACER_2
+00445c27	string	GAME
 00445c2c	string	RACER_3
+00445c34	string	GAME
 00445c39	string	RACER_4
+00445c41	string	GAME
 00445c46	string	RACER_5
+00445c4e	string	GAME
 00445c53	string	TIJD_1
+00445c5a	string	GAME
 00445c5f	string	TIJD_2
+00445c66	string	GAME
 00445c6b	string	TIJD_3
+00445c72	string	GAME
 00445c77	string	TIJD_4
+00445c7e	string	GAME
 00445c83	string	TIJD_5
+00445c8a	string	GAME
 00445c8f	string	FINALE
+00445c96	string	GAME
 00445c9b	string	BEDIENING
 00445ca5	string	CONTROL
 00445cad	string	KEY_LINKS
@@ -816,6 +862,7 @@ address	type	value
 00445d1f	string	OPTION
 00445d26	string	RESOLUTIE
 00445d30	string	OPTION
+00445d37	string	VIEW
 00445d3c	string	OPTION
 00445d43	string	DISPLAY_MODE
 00445d50	string	OPTION
@@ -848,18 +895,22 @@ address	type	value
 00445e66	string	Uitgereden
 00445e71	string	Uitgereden
 00445e7c	string	Uitgereden
+00445e88	string	r
 00445e8a	string	bestand.cpp
 00445e96	string	%s(%d), unable to close file %s while checking its existance.
+00445ed4	string	rb
 00445ed7	string	bestand.cpp
 00445ee3	string	%s(%d): %s while doing file seek on %s
 00445f0a	string	bestand.cpp
 00445f16	string	%s(%d): %s while getting file tell from %s
 00445f41	string	bestand.cpp
 00445f4d	string	%s(%d): %s while closing file %s
+00445f6e	string	rb
 00445f71	string	bestand.cpp
 00445f7d	string	%s(%d), %s while reading from file %s
 00445fa3	string	bestand.cpp
 00445faf	string	%s(%d), %s while closing file %s
+00445fd0	string	wb
 00445fd3	string	bestand.cpp
 00445fdf	string	%s(%d), %s while writing to file %s
 00446003	string	bestand.cpp
@@ -887,6 +938,7 @@ address	type	value
 004461fc	string	%s(%d) : Starting racer %d:\n\tHeading: %d\tChunk: %d\tLane: %d\n\talloc_weg_ptr = %d\n
 0044624d	string	a2.ini
 00446254	string	RACERSPEED
+0044625f	string	RACE
 00446264	string	setracer.cpp
 00446271	string	%s(%d) : Illegal police index value %d.\n
 0044629a	string	setracer.cpp
@@ -901,6 +953,7 @@ address	type	value
 00446396	string	(get_racer_finish_time) invalid racer index (%d)\n
 004463c8	string	(get_racer_finish_time) invalid racer index (%d)\n
 004463fc	string	Allocating %d bonus objects...
+0044641b	string	OK.\n
 00446420	string	bonus.cpp
 0044642a	string	%s(%d) : Cannot set a bonus object of type 'None'.\n
 0044645e	string	bonus.cpp
@@ -919,6 +972,8 @@ address	type	value
 00446592	string	%s(%d) : InitBonus failed.\n
 004465ae	string	Last bonus: %s
 004465bd	string	None     
+004465c7	string	Time
+004465cc	string	Fuel
 004465d1	string	Money
 004465d7	string	bonus.cpp
 004465e1	string	%s(%d) : Illegal bonus type.\n
@@ -944,7 +999,8 @@ address	type	value
 0044683f	string	active.cpp
 0044684a	string	%s(%d) : PLEASE, use the 'init_active_opponent_list' method first, Sir!\n
 00446893	string	active.cpp
-004468d2	string	lBAllocating %d pion objects...
+004468d4	string	Allocating %d pion objects...
+004468f2	string	OK.\n
 004468f7	string	pion.cpp
 00446900	string	%s(%d) : Chunk value out of bounds.\n
 00446925	string	pion.cpp
@@ -986,6 +1042,7 @@ address	type	value
 00446d3f	string	 %s(%d) : (save_bmp) can't create file %s.
 00446d6c	string	inifile.cpp
 00446d78	string	(set_ini_filename) %s(%d) : filename has incorrect lenght.
+00446db3	string	\\
 00446db5	string	inifile.cpp
 00446dc1	string	(write_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
 00446e0d	string	inifile.cpp
@@ -994,6 +1051,7 @@ address	type	value
 00446e70	string	(read_ini_value_setting) %s(%d) : No ini file set, use set_ini_filename .
 00446eba	string	inifile.cpp
 00446ec6	string	(read_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
+00446f14	string	at+
 00446f18	string	debug.txt
 00446f22	string	Releasing screen\n
 00446f34	string	Releasing buffer screen\n
@@ -1001,6 +1059,7 @@ address	type	value
 00446f66	string	Releasing dd object\n
 00446f7b	string	post quit\n
 00446f86	string	[%d] %s\n
+00446f8f	string	Fout
 00446f94	string	initlib.cpp
 00446fa0	string	 %s(%d) : error flipping surfaces\n
 00446fc3	string	initlib.cpp
@@ -1157,24 +1216,31 @@ address	type	value
 00448173	string	(set_joystick_keys) invalid joystick number (%d)\n
 004481a5	string	(set_joystick_keys) invalid joystick key type. (%d)\n
 004481da	string	(set_joystick_sencesibility) invalid percentage must be between 0.05 and 1
-0044822c	string	?(get_joystick_position) invalid joystick number (%d)\n
+0044822d	string	(get_joystick_position) invalid joystick number (%d)\n
 00448264	string	x:%s\\%s
+0044826c	string	\\
 0044826e	string	x:\\%s
+00448274	string	NOCD
+00448279	string	NOCD
 0044827e	string	fatal error : no program cdrom was found\n
 004482a8	string	program installation check failed\n
 004482cd	string	path=%s\n
+004482d6	string	r
 004482d8	string	failed goto path=%s\n
 004482f0	string	fileio.cpp
 004482fb	string	 %s(%d) : warning : double call to init_fileio potential error.\n
 0044833c	string	init fileio\n
+00448349	string	rb
 0044834c	string	fileio.cpp
 00448357	string	%s(%d) : could not open <%s>
 00448374	string	fileio.cpp
 0044837f	string	%s(%d) : could not open <%s>
 0044839c	string	fileio.cpp
 004483a7	string	 %s(%d) : error not enough memory to allocate a file list\n
+004483e2	string	%s\n
 004483e6	string	fileio.cpp
 004483f1	string	 %s(%d) : error while reading file list\n
+0044841a	string	rb
 0044841d	string	fileio.cpp
 00448428	string	%s(%d) : could not open <%s>
 00448445	string	%s is %d bytes\n
@@ -1195,10 +1261,12 @@ address	type	value
 0044857a	string	%s(%d) : null ptr assignment !
 00448599	string	fileio.cpp
 004485a4	string	%s(%d) : attempt at reading unopened file length
+004485d5	string	rb
 004485d8	string	fileio.cpp
 004485e3	string	 %s(%d)  : file open failed [%s]\n
 00448605	string	fileio.cpp
 00448610	string	 %s(%d)  : file open succeeded [%s]\n
+00448635	string	rb
 00448638	string	fileio.cpp
 00448643	string	 %s(%d)  : file open failed [%s]\n
 00448665	string	fileio.cpp
@@ -1357,6 +1425,7 @@ address	type	value
 004496dd	string	%s, %s\n
 004496e5	string	SB16.VXD
 004496ee	string	sb16 driver found %d\n
+00449704	string	.VXD
 00449709	string	secondary driver found %d\n
 00449724	string	sound.cpp
 0044972e	string	 %s(%d) : error creating sound buffer (%s)\n
@@ -1413,6 +1482,7 @@ address	type	value
 00449cbf	string	 %s(%d) : not enough memory to create sound buffers\n
 00449cf4	string	 %s(%d) : error illegal sound mode selected\n
 00449d21	string	STEREO
+00449d28	string	MONO
 00449d2d	string	setting sound format %dHz %dbits %s\n
 00449d52	string	init smacker\n
 00449d60	string	init smacker done\n
@@ -1436,6 +1506,7 @@ address	type	value
 00449f79	string	 %s(%d) : error illegal sound mode selected\n
 00449fa6	string	setting 3d output format\n
 00449fc0	string	STEREO
+00449fc7	string	MONO
 00449fcc	string	setting sound format %dHz %dbits %s\n
 00449ff1	string	query interface\n
 0044a002	string	sound.cpp
@@ -1565,11 +1636,11 @@ address	type	value
 0044accd	string	 %s(%d) : error set listener orientation\n
 0044acf7	string	sound.cpp
 0044ad01	string	 %s(%d) : error set listener orientation\n
-0044ad31	string	$@sound.cpp
+0044ad33	string	sound.cpp
 0044ad3d	string	 %s(%d) : error set listener orientation\n
-0044ad6d	string	$@sound.cpp
+0044ad6f	string	sound.cpp
 0044ad79	string	 %s(%d) : error set listener orientation\n
-0044ada9	string	$@sound.cpp
+0044adab	string	sound.cpp
 0044adb5	string	 %s(%d) : error set listener orientation\n
 0044addf	string	new 3d buffer used %d\n
 0044adf6	string	sound.cpp
@@ -1836,11 +1907,12 @@ address	type	value
 0044c98c	string	wegtools.cpp
 0044c999	string	 %s(%d) : chunk %d out of array bounds [0..%d]\n
 0044c9c9	string	 weg chunk is -1\n
-0044c9e1	string	p@Freed weg chunks, reinitialzing\n
+0044c9e3	string	Freed weg chunks, reinitialzing\n
 0044ca04	string	weg.cpp
 0044ca0c	string	 %s(%d) : not enough memory for weg chunk (%d)\n
 0044ca3c	string	d3d.lib
 0044ca44	string	COMPLETE
+0044ca4d	string	WEG
 0044ca51	string	weg.cpp
 0044ca59	string	 %s(%d) : could not open weg data file: %s\n
 0044ca85	string	loading [%s], %d chunks\n
@@ -2218,7 +2290,7 @@ address	type	value
 0044f9ce	string	>>>>>exit tiles \n
 0044f9e8	string	mapexec.cpp
 0044f9f4	string	 %s(%d) : error reading weg map data\n
-0044fa21	string	@mapexec.cpp
+0044fa22	string	mapexec.cpp
 0044fa2e	string	 %s(%d) : error xvga material has not been initialized\n
 0044fa66	string	selected  %d\n
 0044fa74	string	discarded %d\n
@@ -2244,7 +2316,7 @@ address	type	value
 0044fcc2	string	generating map\n
 0044fcd2	string	generating vertex data\n
 0044fcea	string	exit map\n
-0044fd02	string	>@chunk error\n
+0044fd04	string	chunk error\n
 0044fd11	string	[%d:%5.2f (%5.2f,%5.2f)\n
 0044fd2a	string	mapexec.cpp
 0044fd36	string	%s(%d) : Too many vertices (%d) (max=%d)in map\n
@@ -2306,7 +2378,7 @@ address	type	value
 004502d4	string	 %s(%d) : D3DError moving camera : %s\n
 004502fb	string	camera.cpp
 00450306	string	 %s(%d) : D3DError moving camera : %s\n
-00450343	string	P?camera.cpp
+00450345	string	camera.cpp
 00450350	string	 %s(%d) : not enough memory for cameras array\n
 0045037f	string	camera.cpp
 0045038a	string	 %s(%d) : get new camera failed\n
@@ -2447,6 +2519,8 @@ address	type	value
 00451209	string	 %s(%d) : index out of mem_image array failure %d\n
 0045123c	string	sprite.cpp
 00451247	string	 %s(%d) : index out of mem_image array failure %d\n
+0045127a	string	rb
+0045127d	string	rb
 00451280	string	sprite.cpp
 0045128b	string	%s(%d) : index file seek error (probably wrong index %d)
 004512c4	string	converting to 16 bits\n
@@ -2454,6 +2528,7 @@ address	type	value
 004512f2	string	pf none\n
 004512fb	string	starting to show images 2\n
 00451316	string	done show images\n
+00451328	string	rb
 0045132b	string	%s maxmemimages = %d\n
 00451341	string	%s allocating images\n
 00451357	string	%s allocating image %d\n
@@ -2621,6 +2696,7 @@ address	type	value
 004524e7	string	 s(%d) : error attempting to find cdrom before drive list was made\n
 0045252b	string	hwinfo.cpp
 00452536	string	 %s(%d) : error not enough memory to allocate a palette\n
+0045256f	string	%c:\\
 00452574	string	%s = UNAVAILABLE\n
 00452586	string	%s = UNAVAILABLE\n
 00452598	string	%s = NETWORK\n
@@ -2648,7 +2724,9 @@ address	type	value
 004527c0	string	%s, %s\n
 004527c8	string	DD3Dfx
 004527cf	string	dd3ddfx driver found %d\n
+004527e8	string	R3D
 004527ec	string	Righteous dd3ddfx driver found %d\n
+0045280f	string	.VXD
 00452814	string	secondary driver found %d\n
 0045282f	string	using 3dfx driver %d\n
 00452845	string	using unknown secondary driver %d\n
@@ -2716,6 +2794,7 @@ address	type	value
 00453001	string	BeginScene failed in SetRenderState.\n%s
 00453029	string	Execute failed in SetRenderState.\n%s
 0045304e	string	EndScene failed in SetRenderState.\n%s
+00453074	string	con
 00453078	string	Floating-point support not loaded\r\n
 0045309c	string	forms.cpp
 004530a6	string	 %s(%d) : (dispatch_form_message) Unused control type found (%d) 
@@ -2974,6 +3053,7 @@ address	type	value
 004563c5	string	MessageBoxExA
 004563d3	string	Application Error: 
 004563e7	string	\n\nClick on OK to terminate the application
+00456414	string	TZ
 00456439	string	acosh
 00456448	string	log10
 0045644e	string	atanh
@@ -3016,6 +3096,7 @@ address	type	value
 004569e3	string	Underflow range error
 004569f9	string	Total loss of significance
 00456a14	string	Partial loss of significance
+00456a31	string	 in 
 00456a38	string	editbox.cpp
 00456a44	string	 %s(%d) : (set_edit_keys_allowed) string to long max. (%d).
 00456a80	string	abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.<,/?![]%$&*+-=>:;' 
@@ -3031,8 +3112,14 @@ address	type	value
 00456c1a	string	 %s(%d) : (edit_windows_box) number of lines may not be zero or negative (min. 1)
 00456c6c	string	editbox.cpp
 00456c78	string	 %s(%d) : (edit_windows_box) number of chars may not be zero or negative 
+00456cc2	string	 
+00456cc4	string	 
 00456cc6	string	editbox.cpp
 00456cd2	string	 %s(%d) : (edit_windows_box) height of edit box (%d) to small for font height (%d) 
+00456d26	string	EDIT
+00456d2b	string	EDIT
+00456d30	string	EDIT
+00456d35	string	EDIT
 00456d3a	string	Unable to create a window for edit box (%d)
 00456d68	string	buttons.cpp
 00456d74	string	 %s(%d) : (destroy_button) no valid window handle.
@@ -3084,6 +3171,7 @@ address	type	value
 0045745a	string	Unable to create a window for radiobutton (%d)
 00457489	string	radiobut.cpp
 00457496	string	 %s(%d) : (draw_radiobutton) no valid window handle, not in form.
+004574e8	string	__bgnthd
 00457758	string	motor.wav
 0045776b	string	motor1.wav
 0045777e	string	gearup.wav
@@ -3114,6 +3202,7 @@ address	type	value
 00459039	string	finish.wav
 00459048	string	loser.wav
 00459066	string	sp_r2.wav
+00459b24	string	a
 004845f0	TerminatedCString	WINMM.dll
 004845fa	TerminatedCString	ADVAPI32.dll
 00484607	TerminatedCString	GDI32.dll

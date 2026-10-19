@@ -266,7 +266,7 @@ int __watcall win_handle_menu(int param_1)
   int extraout_EDX;
   int extraout_EDX_00;
   
-  debugmsg(&DAT_004255fc);
+  debugmsg(s__004255fc);
   debugmsg(s__________________________________004255ff);
   debugmsg(s____>_DEBUG_MESSAGES_FOR_MENU_<*___00425622);
   debugmsg(s__________________________________00425645);
@@ -289,7 +289,7 @@ LAB_00401816:
   debugmsg(s__________________________________00425668);
   debugmsg(s____>_END_OF_DEBUG_MESSAGES_FOR_M_00425692);
   debugmsg(s__________________________________004256bc);
-  debugmsg(&DAT_004256e6);
+  debugmsg(s__004256e6);
   return extraout_EDX_00;
 }
 
@@ -302,7 +302,7 @@ int __watcall file_exist(char *filename)
   FILE *_File;
   int fclose_result;
   
-  _File = fopen(filename,&DAT_004256ec);
+  _File = fopen(filename,s_r_004256ec);
   fclose_result = 0;
   if (_File != (FILE *)0x0) {
     fclose_result = fclose(_File);
@@ -330,7 +330,7 @@ int __watcall file_size(char *filename)
   long extraout_EDX;
   int extraout_EDX_00;
   
-  _File = fopen(filename,&DAT_00425738);
+  _File = fopen(filename,s_rb_00425738);
   iVar1 = 0;
   if (_File != (FILE *)0x0) {
     iVar1 = fseek(_File,0,2);
@@ -378,7 +378,7 @@ int __watcall file_read(void *dst_buf,int count,char *filename)
   size_t extraout_EDX;
   size_t extraout_EDX_00;
   
-  _File = fopen(filename,&DAT_004257d2);
+  _File = fopen(filename,s_rb_004257d2);
   if (_File == (FILE *)0x0) {
     uVar1 = 1000;
   }
@@ -420,7 +420,7 @@ int __watcall file_write(void *str,int count,char *filename)
   size_t extraout_EDX;
   size_t extraout_EDX_00;
   
-  _File = fopen(filename,&DAT_00425834);
+  _File = fopen(filename,s_wb_00425834);
   if (_File == (FILE *)0x0) {
     fclose_result = 1000;
   }
@@ -1763,39 +1763,39 @@ void __watcall load_infio(void)
     debugmsg(s__s__d____>_INFIO_INI_FILE____d_d_00426a70,s_infio_cpp_00426a66,0x45,
              s_INFIO_INI_00426a5c);
     set_ini_filename(s_INFIO_INI_00426aa0);
-    ini_value_setting = read_ini_value_setting(&DAT_00426ab5,s_RACE_KLAAR_00426aaa);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426ab5,s_RACE_KLAAR_00426aaa);
     infio = SUB41(ini_value_setting,0);
-    DAT_00437edd = read_ini_value_setting(&DAT_00426abf,&DAT_00426aba);
-    ini_value_setting = read_ini_value_setting(&DAT_00426ad0,s_ACTIVE_SLOT_00426ac4);
+    DAT_00437edd = read_ini_value_setting(s_GAME_00426abf,s_TIJD_00426aba);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426ad0,s_ACTIVE_SLOT_00426ac4);
     DAT_00437ef5._0_2_ = (undefined2)ini_value_setting;
-    DAT_00437f2b = read_ini_value_setting(&DAT_00426ada,&DAT_00426ad5);
-    ini_value_setting = read_ini_value_setting(&DAT_00426ae6,s_ETAPPE_00426adf);
+    DAT_00437f2b = read_ini_value_setting(s_GAME_00426ada,s_GELD_00426ad5);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426ae6,s_ETAPPE_00426adf);
     DAT_00437f13._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426af6,s_EINDE_DOOR_00426aeb);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426af6,s_EINDE_DOOR_00426aeb);
     _DAT_00437f17 = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b03,s_POSITIE_00426afb);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b03,s_POSITIE_00426afb);
     DAT_00437f19._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b10,s_RACER_1_00426b08);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b10,s_RACER_1_00426b08);
     DAT_00437f19._2_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b1d,s_RACER_2_00426b15);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b1d,s_RACER_2_00426b15);
     DAT_00437f1d._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b2a,s_RACER_3_00426b22);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b2a,s_RACER_3_00426b22);
     DAT_00437f1d._2_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b37,s_RACER_4_00426b2f);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b37,s_RACER_4_00426b2f);
     DAT_00437f21._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b44,s_RACER_5_00426b3c);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b44,s_RACER_5_00426b3c);
     DAT_00437f21._2_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b50,s_TIJD_1_00426b49);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b50,s_TIJD_1_00426b49);
     DAT_00437ee1 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b5c,s_TIJD_2_00426b55);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b5c,s_TIJD_2_00426b55);
     DAT_00437ee5 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b68,s_TIJD_3_00426b61);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b68,s_TIJD_3_00426b61);
     DAT_00437ee9 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b74,s_TIJD_4_00426b6d);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b74,s_TIJD_4_00426b6d);
     DAT_00437eed = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b80,s_TIJD_5_00426b79);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b80,s_TIJD_5_00426b79);
     DAT_00437ef1 = (int)(short)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(&DAT_00426b8c,s_FINALE_00426b85);
+    ini_value_setting = read_ini_value_setting(s_GAME_00426b8c,s_FINALE_00426b85);
     DAT_00437f25._0_2_ = (undefined2)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426b9b,s_BEDIENING_00426b91);
     _DAT_00437efd = (undefined2)ini_value_setting;
@@ -1815,7 +1815,7 @@ void __watcall load_infio(void)
     DAT_00437ef5._2_2_ = (undefined2)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c26,s_RESOLUTIE_00426c1c);
     DAT_00437ef9._0_2_ = (undefined2)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(s_OPTION_00426c32,&DAT_00426c2d);
+    ini_value_setting = read_ini_value_setting(s_OPTION_00426c32,s_VIEW_00426c2d);
     DAT_00437ef9._2_2_ = (undefined2)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c46,s_DISPLAY_MODE_00426c39);
     DAT_00437f0b._0_2_ = (undefined2)ini_value_setting;
@@ -1852,25 +1852,26 @@ void __watcall save_infio(void)
   
   debugmsg(s__s__d____>_SAVE_INFIO_<*_00426d02,s_infio_cpp_00426cf8,0x76);
   set_ini_filename(s_INFIO_INI_00426d1e);
-  write_ini_value_setting(&DAT_00426d33,extraout_EDX,(uint)(byte)infio);
-  write_ini_value_setting(&DAT_00426d3d,&DAT_00426d38,DAT_00437edd);
-  write_ini_value_setting(&DAT_00426d4e,s_ACTIVE_SLOT_00426d42,(int)(short)DAT_00437ef5);
-  write_ini_value_setting(&DAT_00426d58,&DAT_00426d53,DAT_00437f2b);
-  write_ini_value_setting(&DAT_00426d64,s_ETAPPE_00426d5d,(int)(short)DAT_00437f13);
-  write_ini_value_setting(&DAT_00426d74,s_EINDE_DOOR_00426d69,(int)_DAT_00437f17);
-  write_ini_value_setting(&DAT_00426d81,s_POSITIE_00426d79,(int)(short)DAT_00437f19);
-  write_ini_value_setting(&DAT_00426d8e,s_RACER_1_00426d86,(int)DAT_00437f19._2_2_);
-  write_ini_value_setting(&DAT_00426d9b,s_RACER_2_00426d93,(int)(short)DAT_00437f1d);
-  write_ini_value_setting(&DAT_00426da8,s_RACER_3_00426da0,(int)DAT_00437f1d._2_2_);
-  write_ini_value_setting(&DAT_00426db5,s_RACER_4_00426dad,(int)(short)DAT_00437f21);
-  write_ini_value_setting(&DAT_00426dc2,s_RACER_5_00426dba,(int)DAT_00437f21._2_2_);
-  write_ini_value_setting(&DAT_00426dce,s_TIJD_1_00426dc7,DAT_00437ee1);
-  write_ini_value_setting(&DAT_00426dda,s_TIJD_2_00426dd3,DAT_00437ee5);
-  write_ini_value_setting(&DAT_00426de6,s_TIJD_3_00426ddf,DAT_00437ee9);
-  write_ini_value_setting(&DAT_00426df2,s_TIJD_4_00426deb,DAT_00437eed);
+  write_ini_value_setting(s_GAME_00426d33,extraout_EDX,(uint)(byte)infio);
+  write_ini_value_setting(s_GAME_00426d3d,s_TIJD_00426d38,DAT_00437edd);
+  write_ini_value_setting(s_GAME_00426d4e,s_ACTIVE_SLOT_00426d42,(int)(short)DAT_00437ef5);
+  write_ini_value_setting(s_GAME_00426d58,s_GELD_00426d53,DAT_00437f2b);
+  write_ini_value_setting(s_GAME_00426d64,s_ETAPPE_00426d5d,(int)(short)DAT_00437f13);
+  write_ini_value_setting(s_GAME_00426d74,s_EINDE_DOOR_00426d69,(int)_DAT_00437f17);
+  write_ini_value_setting(s_GAME_00426d81,s_POSITIE_00426d79,(int)(short)DAT_00437f19);
+  write_ini_value_setting(s_GAME_00426d8e,s_RACER_1_00426d86,(int)DAT_00437f19._2_2_);
+  write_ini_value_setting(s_GAME_00426d9b,s_RACER_2_00426d93,(int)(short)DAT_00437f1d);
+  write_ini_value_setting(s_GAME_00426da8,s_RACER_3_00426da0,(int)DAT_00437f1d._2_2_);
+  write_ini_value_setting(s_GAME_00426db5,s_RACER_4_00426dad,(int)(short)DAT_00437f21);
+  write_ini_value_setting(s_GAME_00426dc2,s_RACER_5_00426dba,(int)DAT_00437f21._2_2_);
+  write_ini_value_setting(s_GAME_00426dce,s_TIJD_1_00426dc7,DAT_00437ee1);
+  write_ini_value_setting(s_GAME_00426dda,s_TIJD_2_00426dd3,DAT_00437ee5);
+  write_ini_value_setting(s_GAME_00426de6,s_TIJD_3_00426ddf,DAT_00437ee9);
+  write_ini_value_setting(s_GAME_00426df2,s_TIJD_4_00426deb,DAT_00437eed);
   write_ini_value_setting
-            (&DAT_00426dfe,s_TIJD_5_00426df7,CONCAT22(DAT_00437ef1._2_2_,(undefined2)DAT_00437ef1));
-  write_ini_value_setting(&DAT_00426e0a,s_FINALE_00426e03,(int)(short)DAT_00437f25);
+            (s_GAME_00426dfe,s_TIJD_5_00426df7,CONCAT22(DAT_00437ef1._2_2_,(undefined2)DAT_00437ef1)
+            );
+  write_ini_value_setting(s_GAME_00426e0a,s_FINALE_00426e03,(int)(short)DAT_00437f25);
   write_ini_value_setting(s_CONTROL_00426e19,s_BEDIENING_00426e0f,(int)_DAT_00437efd);
   write_ini_value_setting(s_CONTROL_00426e2b,s_KEY_LINKS_00426e21,(int)DAT_00437eff);
   write_ini_value_setting(s_CONTROL_00426e3e,s_KEY_RECHTS_00426e33,(int)DAT_00437f01);
@@ -1880,7 +1881,7 @@ void __watcall save_infio(void)
   write_ini_value_setting(s_CONTROL_00426e84,s_KEY_ACTIE2_00426e79,(int)DAT_00437f07._2_2_);
   write_ini_value_setting(s_OPTION_00426e93,s_GELUID_00426e8c,(int)DAT_00437ef5._2_2_);
   write_ini_value_setting(s_OPTION_00426ea4,s_RESOLUTIE_00426e9a,(int)(short)DAT_00437ef9);
-  write_ini_value_setting(s_OPTION_00426eb0,&DAT_00426eab,(int)DAT_00437ef9._2_2_);
+  write_ini_value_setting(s_OPTION_00426eb0,s_VIEW_00426eab,(int)DAT_00437ef9._2_2_);
   write_ini_value_setting(s_OPTION_00426ec4,s_DISPLAY_MODE_00426eb7,(int)(short)DAT_00437f0b);
   write_ini_value_setting(s_OPTION_00426ed3,s_HORIZON_00426ecb,(int)DAT_00437f0b._2_2_);
   write_ini_value_setting(s_OPTION_00426ee3,s_DASHBORD_00426eda,(int)(short)DAT_00437f0f);
@@ -2068,11 +2069,11 @@ void __watcall mm_draw_info_text(int param_1,int param_2)
   iVar1 = param_1 + 0x205;
   win_bprintf(1,iVar1,param_2 + 0x8c,0x5a,s___16s_00427032,pcVar2);
   slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427038,0x119);
-  win_print_xy(1,iVar1,extraout_ECX + 0x9d,&DAT_00427043,
+  win_print_xy(1,iVar1,extraout_ECX + 0x9d,s___9d_00427043,
                *(undefined4 *)(&DAT_004372d4 + slot_check_index_result * 0x13c));
   slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427048,0x11d);
   pcVar2 = slot_tijd_string(slot_check_index_result);
-  win_print_xy(1,iVar1,extraout_ECX_00 + 0xae,&DAT_00427053,pcVar2);
+  win_print_xy(1,iVar1,extraout_ECX_00 + 0xae,s___6s_00427053,pcVar2);
   if (_control == 0) {
     pcVar2 = s_Toetsenbord_00427058;
   }
@@ -2085,7 +2086,7 @@ void __watcall mm_draw_info_text(int param_1,int param_2)
   else {
     pcVar2 = s_Onbekend_00427073;
   }
-  win_bprintf(1,param_1 + 0x205,extraout_ECX_01 + 0xbf,0x5a,&DAT_0042707c,pcVar2);
+  win_bprintf(1,param_1 + 0x205,extraout_ECX_01 + 0xbf,0x5a,s__s_0042707c,pcVar2);
   iVar1 = ram0x00437224 >> 0x10;
   if (iVar1 == 0) {
     pcVar2 = s_3D_Accelerator_0042707f;
@@ -2099,7 +2100,7 @@ void __watcall mm_draw_info_text(int param_1,int param_2)
   else {
     pcVar2 = s_Onbekend_004270a2;
   }
-  win_bprintf(1,param_1 + 0x205,extraout_ECX_02 + 0xd1,0x5a,&DAT_004270ab,pcVar2);
+  win_bprintf(1,param_1 + 0x205,extraout_ECX_02 + 0xd1,0x5a,s__s_004270ab,pcVar2);
   return;
 }
 
@@ -2561,24 +2562,24 @@ void __watcall mst_draw_selected_slot_info(int param_1)
     iVar1 = extraout_EDX;
   }
   iVar3 = param_1 * 8;
-  set_mem_image(1,iVar1,*(int *)(&mst_slot_list + iVar3),*(int *)(&DAT_00433064 + iVar3),2);
+  set_mem_image(1,iVar1,*(int *)(mst_slot_list + iVar3),*(int *)(&DAT_00433064 + iVar3),2);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xfafafa,0xfafafa);
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275ad,0x10f);
   pcVar2 = slot_naam_string(iVar1);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar3) + 10,*(int *)(&DAT_00433064 + iVar3),0x80,
+  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 10,*(int *)(&DAT_00433064 + iVar3),0x80,
               s___16s_004275b9,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275bf,0x114);
   pcVar2 = slot_level_string(iVar1);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar3) + 0x94,*(int *)(&DAT_00433064 + iVar3),0xfa,
+  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 0x94,*(int *)(&DAT_00433064 + iVar3),0xfa,
               s___16s_004275cb,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275d1,0x119);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar3) + 0xfe,*(int *)(&DAT_00433064 + iVar3),0xfa,
-              &DAT_004275dd,*(undefined4 *)(&DAT_004372d4 + iVar1 * 0x13c));
+  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 0xfe,*(int *)(&DAT_00433064 + iVar3),0xfa,
+              s__9d_004275dd,*(undefined4 *)(&DAT_004372d4 + iVar1 * 0x13c));
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275e1,0x11e);
   pcVar2 = slot_tijd_string(iVar1);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar3) + 0x189,*(int *)(&DAT_00433064 + iVar3),0x80,
-              &DAT_004275ed,pcVar2);
+  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 0x189,*(int *)(&DAT_00433064 + iVar3),0x80,
+              s___6s_004275ed,pcVar2);
   return;
 }
 
@@ -2609,7 +2610,7 @@ void __watcall mst_draw_slot_info(int param_1)
   iVar5 = param_1 * 8;
   debugmsg(s__d>__naam__s__level__d__tijd__d_004276a0,param_1,
            slot_check_index_result * 0x13c + 0x437296,iVar2,iVar1);
-  set_mem_image(1,iVar3,*(int *)(&mst_slot_list + iVar5),*(int *)(&DAT_00433064 + iVar5),2);
+  set_mem_image(1,iVar3,*(int *)(mst_slot_list + iVar5),*(int *)(&DAT_00433064 + iVar5),2);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_004276c2,0x12f);
   pcVar4 = slot_naam_string(iVar3);
   debugmsg(s_printing__s_004276ce,pcVar4);
@@ -2617,19 +2618,19 @@ void __watcall mst_draw_slot_info(int param_1)
   xvga_set_font_colors(2,0xafaff,0xafaff);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_004276dc,0x136);
   pcVar4 = slot_naam_string(iVar3);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar5) + 10,*(int *)(&DAT_00433064 + iVar5),0x80,
+  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 10,*(int *)(&DAT_00433064 + iVar5),0x80,
               s___16s_004276e8,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_004276ee,0x13b);
   pcVar4 = slot_level_string(iVar3);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar5) + 0x94,*(int *)(&DAT_00433064 + iVar5),0xfa,
+  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 0x94,*(int *)(&DAT_00433064 + iVar5),0xfa,
               s___16s_004276fa,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_00427700,0x140);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar5) + 0xfe,*(int *)(&DAT_00433064 + iVar5),0xfa,
-              &DAT_0042770c,*(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c));
+  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 0xfe,*(int *)(&DAT_00433064 + iVar5),0xfa,
+              s__9d_0042770c,*(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c));
   iVar3 = slot_check_index(param_1,extraout_EDX,0x145);
   pcVar4 = slot_tijd_string(iVar3);
-  win_bprintf(1,*(int *)(&mst_slot_list + iVar5) + 0x189,*(int *)(&DAT_00433064 + iVar5),0x80,
-              &DAT_0042771c,pcVar4);
+  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 0x189,*(int *)(&DAT_00433064 + iVar5),0x80,
+              s___6s_0042771c,pcVar4);
   return;
 }
 
@@ -2731,7 +2732,7 @@ void __watcall mst_open_screen(int param_1)
   debugmsg(s__s__d___mst_open_screen____initi_0042789e,s_m_start_cpp_00427892,0x1a9);
   mst_print_slot(extraout_ECX);
   debugmsg(s__s__d___mst_open_screen____initi_004278d6,s_m_start_cpp_004278ca,0x1ab);
-  activate_form((fform_t *)&mst_form);
+  activate_form((fform_t *)mst_form);
   return;
 }
 
@@ -2810,7 +2811,7 @@ LAB_00405647:
     snd_stop(&local_1c);
   }
   debugmsg(s__s__d___activate_form_004279ba,s_m_start_cpp_004279ae,0x1e0);
-  activate_form((fform_t *)&mst_form);
+  activate_form((fform_t *)mst_form);
   iVar3 = extraout_ECX_00;
   while (bVar1) {
     handle_form_result = handle_form();
@@ -2844,7 +2845,7 @@ LAB_00405647:
           mst_print_slot(iVar3);
         }
 LAB_004058a7:
-        activate_form((fform_t *)&mst_form);
+        activate_form((fform_t *)mst_form);
         goto LAB_00405aac;
       }
 LAB_00405810:
@@ -3090,7 +3091,7 @@ void __watcall print_keys(void)
       iVar2 = 0;
     }
     iVar3 = iVar3 + 1;
-    win_print_xy(0,(&config_key)[iVar2 * 6],(&DAT_0043374c)[iVar1 * 6],&DAT_00427b57,
+    win_print_xy(0,(&config_key)[iVar2 * 6],(&DAT_0043374c)[iVar1 * 6],s___8s_00427b57,
                  (&PTR_DAT_004335f4)[scan_2_ckey_result * 2]);
   } while (iVar3 < 4);
   show_mouse();
@@ -3313,7 +3314,7 @@ int __watcall config_keys(void)
   do {
     if (3 < iVar2) {
       snd_play(local_20,s_MC_10_wav_00427c03);
-      mc_print_text_bar(&DAT_00427c28,s_De_toetsen_zijn_ingesteld__00427c0d);
+      mc_print_text_bar(s__s_00427c28,s_De_toetsen_zijn_ingesteld__00427c0d);
       snd_wait(local_20);
       mc_animate_close_textbox();
       snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
@@ -4177,9 +4178,9 @@ void __watcall ms_print_score(single_score_t *param_1,int param_2,int param_3,in
     }
     xvga_set_font_colors(2,uVar4,uVar4);
     iVar6 = iVar6 + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar5,&DAT_00428440,iVar6);
-    win_bprintf(1,param_2 + 0x52,iVar5,0xb0,&DAT_00428444,extraout_ECX);
-    win_print_xy(1,param_2 + 0x10c,iVar5,&DAT_00428447,*(undefined4 *)(extraout_ECX_00 + 0x28));
+    win_print_xy(1,param_2 + 0x2c,iVar5,s__2d_00428440,iVar6);
+    win_bprintf(1,param_2 + 0x52,iVar5,0xb0,s__s_00428444,extraout_ECX);
+    win_print_xy(1,param_2 + 0x10c,iVar5,s__9d_00428447,*(undefined4 *)(extraout_ECX_00 + 0x28));
     uVar1 = (longlong)*(int *)(extraout_ECX_01 + 0x20) / 0x3c;
     win_print_xy(1,param_2 + 0x1e4,iVar5,s___2_2du__2_2dm__2_2ds_0042844b,
                  *(int *)(extraout_ECX_01 + 0x20) / 0xe10,
@@ -4227,11 +4228,11 @@ void __watcall ms_print_hiscore(single_score_t *param_1,int param_2,int param_3,
     }
     xvga_set_font_colors(2,uVar4,uVar4);
     iVar6 = iVar6 + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar5,&DAT_00428461,iVar6);
-    win_bprintf(1,param_2 + 0x52,iVar5,0x84,&DAT_00428464,extraout_ECX);
-    win_print_xy(1,param_2 + 0xe0,iVar5,&DAT_00428467,
+    win_print_xy(1,param_2 + 0x2c,iVar5,s__d_00428461,iVar6);
+    win_bprintf(1,param_2 + 0x52,iVar5,0x84,s__s_00428464,extraout_ECX);
+    win_print_xy(1,param_2 + 0xe0,iVar5,s__s_00428467,
                  (&level_naam)[*(int *)(extraout_ECX_00 + 0x22) >> 0x10]);
-    win_print_xy(1,param_2 + 0x162,iVar5,&DAT_0042846a,*(undefined4 *)(extraout_ECX_01 + 0x28));
+    win_print_xy(1,param_2 + 0x162,iVar5,s__9d_0042846a,*(undefined4 *)(extraout_ECX_01 + 0x28));
     uVar1 = (longlong)*(int *)(extraout_ECX_02 + 0x20) / 0x3c;
     win_print_xy(1,param_2 + 0x1e4,iVar5,s___2_2du__2_2dm__2_2ds_0042846e,
                  *(int *)(extraout_ECX_02 + 0x20) / 0xe10,
@@ -4463,9 +4464,10 @@ void __watcall mds_print_score(single_score_t *param_1,int param_2,int param_3,i
     }
     xvga_set_font_colors(2,uVar4,uVar4);
     iVar6 = iVar6 + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar5,&DAT_0042859d,iVar6);
-    win_bprintf(1,param_2 + 0x52,iVar5,0x84,&DAT_004285a1,extraout_ECX);
-    win_bprintf(1,param_2 + 0x10c,iVar5,0x96,&DAT_004285a4,*(undefined4 *)(extraout_ECX_00 + 0x28));
+    win_print_xy(1,param_2 + 0x2c,iVar5,s__2d_0042859d,iVar6);
+    win_bprintf(1,param_2 + 0x52,iVar5,0x84,s__s_004285a1,extraout_ECX);
+    win_bprintf(1,param_2 + 0x10c,iVar5,0x96,s__9d_004285a4,*(undefined4 *)(extraout_ECX_00 + 0x28))
+    ;
     uVar1 = (longlong)*(int *)(extraout_ECX_01 + 0x20) / 0x3c;
     win_print_xy(1,param_2 + 0x1e4,iVar5,s___2_2du__2_2dm__2_2ds_004285a8,
                  *(int *)(extraout_ECX_01 + 0x20) / 0xe10,
@@ -4513,9 +4515,9 @@ void __watcall mds_print_hiscore(single_score_t *param_1,int param_2,int param_3
     }
     xvga_set_font_colors(2,uVar4,uVar4);
     iVar6 = iVar6 + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar5,&DAT_004285be,iVar6);
-    win_bprintf(1,param_2 + 0x52,iVar5,0x84,&DAT_004285c2,extraout_ECX);
-    win_print_xy(1,param_2 + 0xe0,iVar5,&DAT_004285c5,
+    win_print_xy(1,param_2 + 0x2c,iVar5,s__2d_004285be,iVar6);
+    win_bprintf(1,param_2 + 0x52,iVar5,0x84,s__s_004285c2,extraout_ECX);
+    win_print_xy(1,param_2 + 0xe0,iVar5,s__s_004285c5,
                  (&level_naam)[*(int *)(extraout_ECX_00 + 0x22) >> 0x10]);
     uVar1 = (longlong)*(int *)(extraout_ECX_01 + 0x20) / 0x3c;
     win_print_xy(1,param_2 + 0x1e4,iVar5,s___2_2du__2_2dm__2_2ds_004285c8,
@@ -4661,24 +4663,24 @@ void __watcall mns_draw_selected_slot_info(int param_1)
     iVar1 = extraout_EDX;
   }
   iVar3 = param_1 * 8;
-  set_mem_image(2,iVar1,*(int *)(&mns_slot_list + iVar3),*(int *)(&DAT_00434290 + iVar3),2);
+  set_mem_image(2,iVar1,*(int *)(mns_slot_list + iVar3),*(int *)(&DAT_00434290 + iVar3),2);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xfafafa,0xfafafa);
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_004286f1,0x112);
   pcVar2 = slot_naam_string(iVar1);
-  win_bprintf(2,*(int *)(&mns_slot_list + iVar3) + 10,*(int *)(&DAT_00434290 + iVar3),0x80,
+  win_bprintf(2,*(int *)(mns_slot_list + iVar3) + 10,*(int *)(&DAT_00434290 + iVar3),0x80,
               s___16s_004286fd,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_00428703,0x116);
   pcVar2 = slot_level_string(iVar1);
-  win_print_xy(2,*(int *)(&mns_slot_list + iVar3) + 0x94,*(int *)(&DAT_00434290 + iVar3),
+  win_print_xy(2,*(int *)(mns_slot_list + iVar3) + 0x94,*(int *)(&DAT_00434290 + iVar3),
                s___16s_0042870f,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_00428715,0x11a);
-  win_print_xy(2,*(int *)(&mns_slot_list + iVar3) + 0xfe,*(int *)(&DAT_00434290 + iVar3),
-               &DAT_00428721,*(undefined4 *)(&DAT_004372d4 + iVar1 * 0x13c));
+  win_print_xy(2,*(int *)(mns_slot_list + iVar3) + 0xfe,*(int *)(&DAT_00434290 + iVar3),
+               s__9d_00428721,*(undefined4 *)(&DAT_004372d4 + iVar1 * 0x13c));
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_00428725,0x11e);
   pcVar2 = slot_tijd_string(iVar1);
-  win_print_xy(2,*(int *)(&mns_slot_list + iVar3) + 0x189,*(int *)(&DAT_00434290 + iVar3),
-               &DAT_00428731,pcVar2);
+  win_print_xy(2,*(int *)(mns_slot_list + iVar3) + 0x189,*(int *)(&DAT_00434290 + iVar3),
+               s___6s_00428731,pcVar2);
   return;
 }
 
@@ -4709,24 +4711,24 @@ void __watcall mns_draw_slot_info(int param_1)
   iVar5 = param_1 * 8;
   debugmsg(s__d>__naam__s__level__d__tijd__d_004287e4,param_1,
            slot_check_index_result * 0x13c + 0x437296,iVar2,iVar1);
-  set_mem_image(2,iVar3,*(int *)(&mns_slot_list + iVar5),*(int *)(&DAT_00434290 + iVar5),2);
+  set_mem_image(2,iVar3,*(int *)(mns_slot_list + iVar5),*(int *)(&DAT_00434290 + iVar5),2);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xafaff,0xafaff);
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_00428806,0x137);
   pcVar4 = slot_naam_string(iVar3);
-  win_bprintf(2,*(int *)(&mns_slot_list + iVar5) + 10,*(int *)(&DAT_00434290 + iVar5),0x80,
+  win_bprintf(2,*(int *)(mns_slot_list + iVar5) + 10,*(int *)(&DAT_00434290 + iVar5),0x80,
               s___16s_00428812,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_00428818,0x13b);
   pcVar4 = slot_level_string(iVar3);
-  win_print_xy(2,*(int *)(&mns_slot_list + iVar5) + 0x94,*(int *)(&DAT_00434290 + iVar5),
+  win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0x94,*(int *)(&DAT_00434290 + iVar5),
                s___16s_00428824,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_0042882a,0x13f);
-  win_print_xy(2,*(int *)(&mns_slot_list + iVar5) + 0xfe,*(int *)(&DAT_00434290 + iVar5),
-               &DAT_00428836,*(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c));
+  win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0xfe,*(int *)(&DAT_00434290 + iVar5),
+               s__9d_00428836,*(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c));
   iVar3 = slot_check_index(param_1,extraout_EDX,0x143);
   pcVar4 = slot_tijd_string(iVar3);
-  win_print_xy(2,*(int *)(&mns_slot_list + iVar5) + 0x189,*(int *)(&DAT_00434290 + iVar5),
-               &DAT_00428846,pcVar4);
+  win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0x189,*(int *)(&DAT_00434290 + iVar5),
+               s___6s_00428846,pcVar4);
   return;
 }
 
@@ -4795,7 +4797,7 @@ void __watcall mns_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   mns_print_slot(iVar1);
-  activate_form((fform_t *)&mns_form);
+  activate_form((fform_t *)mns_form);
   return;
 }
 
@@ -4894,7 +4896,7 @@ LAB_00408abd:
             snd_wait(&local_1c);
           }
 LAB_00408b79:
-          activate_form((fform_t *)&mns_form);
+          activate_form((fform_t *)mns_form);
           goto LAB_00408d72;
         }
 LAB_004089ed:
@@ -5054,8 +5056,8 @@ void __watcall mdt_display_stand(int param_1,int param_2,int param_3,int param_4
         puVar3 = (undefined4 *)puVar1;
       }
       xvga_set_font_colors(2,local_14,local_14);
-      win_print_xy(1,local_18,local_10,&DAT_00428bd4,iVar4);
-      win_print_xy(1,local_28,extraout_EDX,&DAT_00428bd7,puVar3);
+      win_print_xy(1,local_18,local_10,s__d_00428bd4,iVar4);
+      win_print_xy(1,local_28,extraout_EDX,s__s_00428bd7,puVar3);
       win_print_xy(1,local_1c,extraout_EDX,s___2_2du__2_2dm__2_2ds_00428bda,extraout_ECX / 0xe10,
                    (int)((longlong)
                          ((ulonglong)(uint)((int)((longlong)extraout_ECX / 0x3c) >> 0x1f) << 0x20 |
@@ -5258,8 +5260,8 @@ void __watcall mdc_display_huidige_stand(int param_1,int param_2,int param_3)
     }
     xvga_set_font_colors(2,uVar2,uVar2);
     local_18 = local_18 + 1;
-    win_print_xy(1,param_1 + 0x2c,iVar4,&DAT_00428d79,local_18);
-    win_print_xy(1,param_1 + 0x52,iVar4,&DAT_00428d7c,*(undefined4 *)(&DAT_00437f34 + extraout_ECX))
+    win_print_xy(1,param_1 + 0x2c,iVar4,s__d_00428d79,local_18);
+    win_print_xy(1,param_1 + 0x52,iVar4,s__s_00428d7c,*(undefined4 *)(&DAT_00437f34 + extraout_ECX))
     ;
     win_print_xy(1,param_1 + 0x1e4,iVar4,s___2_2du__2_2dm__2_2ds_00428d7f,
                  *(int *)(&mdc_stand_list + extraout_ECX_00) / 0xe10,
@@ -5437,7 +5439,7 @@ int __watcall use_mm_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mm_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mm_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00428f07);
   filename = file_path(&buffer1,s_a2mrc_img_00428f11);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5459,7 +5461,7 @@ int __watcall free_mm_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00428f28,s_menuanim_cpp_00428f1b,0x3b2);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mm_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mm_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5480,7 +5482,7 @@ int __watcall use_mc_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mc_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mc_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00428f89);
   filename = file_path(&buffer1,s_a2mrc_img_00428f93);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5502,7 +5504,7 @@ int __watcall free_mc_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00428faa,s_menuanim_cpp_00428f9d,0x3cb);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mc_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mc_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5523,7 +5525,7 @@ int __watcall use_mo_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mo_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mo_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042900b);
   filename = file_path(&buffer1,s_a2mrc_img_00429015);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5545,7 +5547,7 @@ int __watcall free_mo_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___0042902c,s_menuanim_cpp_0042901f,0x3e4);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mo_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mo_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5566,7 +5568,7 @@ int __watcall use_ms_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&ms_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)ms_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042908d);
   filename = file_path(&buffer1,s_a2mrc_img_00429097);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5588,7 +5590,7 @@ int __watcall free_ms_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004290ae,s_menuanim_cpp_004290a1,0x3fd);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&ms_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)ms_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5652,7 +5654,7 @@ int __watcall use_reqvraag_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&reqvraag_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)reqvraag_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429191);
   filename = file_path(&buffer1,s_a2mrc_img_0042919b);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5674,7 +5676,7 @@ int __watcall free_reqvraag_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004291b2,s_menuanim_cpp_004291a5,0x42f);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&reqvraag_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)reqvraag_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5695,7 +5697,7 @@ int __watcall use_reqinput_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&reqinput_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)reqinput_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429213);
   filename = file_path(&buffer1,s_a2mrc_img_0042921d);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5717,7 +5719,7 @@ int __watcall free_reqinput_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429234,s_menuanim_cpp_00429227,0x448);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&reqinput_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)reqinput_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5781,7 +5783,7 @@ int __watcall use_mds_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mds_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mds_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429317);
   filename = file_path(&buffer1,s_a2mrc_img_00429321);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5803,7 +5805,7 @@ int __watcall free_mds_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429338,s_menuanim_cpp_0042932b,0x47a);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mds_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mds_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5824,7 +5826,7 @@ int __watcall use_mdt_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mdt_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mdt_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429399);
   filename = file_path(&buffer1,s_a2mrc_img_004293a3);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5846,7 +5848,7 @@ int __watcall free_mdt_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004293ba,s_menuanim_cpp_004293ad,0x493);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mdt_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mdt_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -5867,7 +5869,7 @@ int __watcall use_mdc_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mdc_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mdc_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042941b);
   filename = file_path(&buffer1,s_a2mrc_img_00429425);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -5889,7 +5891,7 @@ int __watcall free_mdc_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___0042943c,s_menuanim_cpp_0042942f,0x4ac);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mdc_menu_cfg);
+  add_array_to_anim_base((anim_t *)&anims,(long *)mdc_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -6500,7 +6502,7 @@ void __cdecl win_printwrapped(int param_1,int param_2,int param_3,int param_4,ch
     else {
 LAB_0040abd1:
       iVar5 = local_1c;
-      local_1c = get_string_height(&DAT_004298c9,1);
+      local_1c = get_string_height(s_H_004298c9,1);
       local_1c = iVar5 + local_1c;
       format = txt_crop_word(local_6c);
       uVar3 = 0xffffffff;
@@ -7064,7 +7066,7 @@ LAB_0040bc04:
     pcVar6 = pcVar6 + (uint)bVar7 * -2 + 1;
   } while (cVar1 != '\0');
   if (*(char *)((int)&movie_on + ~uVar3 + 2) != '\\') {
-    pcVar4 = &DAT_00429d0b;
+    pcVar4 = s___00429d0b;
     iVar2 = -1;
     pcVar6 = &ini_filename;
     do {
@@ -7208,7 +7210,7 @@ void __cdecl debugmsg(char *format,...)
   
   if (debugmsg_toggle == 1) {
     if (debugmsg_channel == 0) {
-      _File = fopen(s_debug_txt_00429e70,&DAT_00429e6c);
+      _File = fopen(s_debug_txt_00429e70,s_at__00429e6c);
       if (_File != (FILE *)0x0) {
         local_10[0] = &stack0x00000008;
         vsprintf(aCStack_330,format,(va_list)local_10);
@@ -7314,7 +7316,7 @@ int __cdecl fatal_exit(char *format,...)
   do {
     iVar1 = handle_win_msg();
   } while (iVar1 != 0);
-  MessageBoxExA((HWND)0x0,local_1c8,&DAT_00429ee7,local_38[0],0);
+  MessageBoxExA((HWND)0x0,local_1c8,s_Fout_00429ee7,local_38[0],0);
   exit_xvga_lib();
                     /* WARNING: Subroutine does not return */
   exit(0);
@@ -8553,7 +8555,7 @@ int enum_sound_info_callback(_GUID *param_1,char *param_2,char *param_3,void *pa
     }
     found = strrchr((char *)str,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp_1((byte *)str,&DAT_0042b200);
+      iVar1 = stricmp_1((byte *)str,(byte *)s__VXD_0042b200);
       if (iVar1 == 0) {
         debugmsg(s_secondary_driver_found__d_0042b205,new_sound_info);
         secondary_driver_index = new_sound_info;
@@ -9175,7 +9177,7 @@ LAB_0040dfe7:
         return 0x2afa;
       }
       if (*(int *)(&DAT_00435d0c + iVar2) == 0) {
-        format_2 = &DAT_0042b824;
+        format_2 = s_MONO_0042b824;
       }
       else {
         format_2 = s_STEREO_0042b81d;
@@ -9305,7 +9307,7 @@ LAB_0040e2ea:
           return 0x2afa;
         }
         if (*(int *)(&DAT_00435d0c + iVar3) == 0) {
-          format_2 = &DAT_0042bac3;
+          format_2 = s_MONO_0042bac3;
         }
         else {
           format_2 = s_STEREO_0042babc;
@@ -10422,7 +10424,7 @@ int __watcall set_3dlistener_distancefactor(float param_1)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x2c))(ds3d_listener,in_stack_00000004,0);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0042c839,s___sound_cpp_0042c82d + 2,0x68e,
+      fatal_exit(s__s__d____error_set_listener_orie_0042c839,s_sound_cpp_0042c82f,0x68e,
                  ds_error_string_result);
     }
   }
@@ -10451,7 +10453,7 @@ int __watcall set_3dlistener_rollofffactor(float param_1)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x3c))(ds3d_listener,in_stack_00000004,0);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0042c875,s___sound_cpp_0042c869 + 2,0x6a6,
+      fatal_exit(s__s__d____error_set_listener_orie_0042c875,s_sound_cpp_0042c86b,0x6a6,
                  ds_error_string_result);
     }
   }
@@ -10471,7 +10473,7 @@ void __watcall execute_ds3d_settings(void)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x44))(ds3d_listener);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0042c8b1,s___sound_cpp_0042c8a5 + 2,0x6b7,
+      fatal_exit(s__s__d____error_set_listener_orie_0042c8b1,s_sound_cpp_0042c8a7,0x6b7,
                  ds_error_string_result);
     }
   }
@@ -10758,14 +10760,14 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
   char local_108 [260];
   
   if (param_1 == (char *)0x0) {
-    cd_directory = &DAT_0042cb00;
+    cd_directory = s___0042cb00;
     sprintf(local_108,s_x___s_0042cb02,param_2);
   }
   else {
     cd_directory = param_1;
     sprintf(local_108,s_x__s__s_0042caf8,param_1,param_2);
   }
-  env_value = getenv(&DAT_0042cb08);
+  env_value = getenv(s_NOCD_0042cb08);
   if (env_value == (char *)0x0) {
     first_cdrom = xvga_get_first_cdrom();
     if (first_cdrom == -1) {
@@ -10780,7 +10782,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     }
   }
   else {
-    env_value = getenv(&DAT_0042cb0d);
+    env_value = getenv(s_NOCD_0042cb0d);
     cd_drive = *env_value;
   }
   return;
@@ -10801,7 +10803,7 @@ char * __watcall file_path(char *filename,char *param_2)
   splitpath((byte *)param_2,local_10,local_210,abStack_310,local_110);
   makepath((byte *)filename,&DAT_0042cb60,&DAT_0042cb5f,abStack_310,local_110);
   debugmsg(s_path__s_0042cb61,filename);
-  _File = fopen(filename,&DAT_0042cb6a);
+  _File = fopen(filename,s_r_0042cb6a);
   if (_File == (FILE *)0x0) {
     makepath((byte *)filename,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_0042cb6c,filename);
@@ -10835,7 +10837,7 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
   
   if (init_fileio_ok == 0) {
     debugmsg(s_init_fileio_0042cbd0);
-    res_fp = (__iobuf *)fopen(filename,&DAT_0042cbdd);
+    res_fp = (__iobuf *)fopen(filename,s_rb_0042cbdd);
     if ((FILE *)res_fp == (FILE *)0x0) {
       uVar7 = 0x29;
       pcVar6 = s_fileio_cpp_0042cbe0;
@@ -10870,7 +10872,7 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
           pfVar5 = pfVar5 + 2;
         } while (fileio_t != (fileio_t)0x0);
         *(undefined4 *)(xvga_rc_files + iVar3 + 0x14) = local_24;
-        debugmsg(&DAT_0042cc76,xvga_rc_files + iVar3);
+        debugmsg(s__s_0042cc76,xvga_rc_files + iVar3);
         if (((byte)res_fp[0xc] & 0x20) != 0) {
           fatal_exit(s__s__d____error_while_reading_fil_0042cc85,s_fileio_cpp_0042cc7a,0x50);
           return 0x3e9;
@@ -10878,7 +10880,7 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
         iVar3 = iVar3 + 0x1c;
       }
       fclose((FILE *)res_fp);
-      data_fp = (__iobuf *)fopen(filename_2,&DAT_0042ccae);
+      data_fp = (__iobuf *)fopen(filename_2,s_rb_0042ccae);
       if ((FILE *)data_fp != (FILE *)0x0) {
         iVar1 = 0x1c;
         file_end_pos = filelength(((FILE *)data_fp)->_file);
@@ -11028,7 +11030,7 @@ __iobuf * __watcall xvga_src_fopen(char *filename)
   char *format;
   
   if (init_fileio_ok == 0) {
-    pFVar1 = fopen(filename,&DAT_0042ce69);
+    pFVar1 = fopen(filename,s_rb_0042ce69);
     if (pFVar1 != (FILE *)0x0) {
       uVar6 = 0xd0;
       pcVar5 = s_fileio_cpp_0042ce99;
@@ -11059,7 +11061,7 @@ LAB_00410422:
                ,iVar4,file_begin_pos,*(undefined4 *)(data_fp + 0x10),iVar2);
       return data_fp;
     }
-    pFVar1 = fopen(filename,&DAT_0042cec9);
+    pFVar1 = fopen(filename,s_rb_0042cec9);
     if (pFVar1 != (FILE *)0x0) {
       uVar6 = 0xf9;
       pcVar5 = s_fileio_cpp_0042cef9;
@@ -12467,9 +12469,9 @@ LAB_00411e55:
     iVar1 = 0;
   }
   else {
-    _File = fopen(filename,&DAT_0042dd86);
+    _File = fopen(filename,s_rb_0042dd86);
     if (_File != (FILE *)0x0) {
-      _File_00 = fopen(filename_2,&DAT_0042dd89);
+      _File_00 = fopen(filename_2,s_rb_0042dd89);
       if (_File_00 != (FILE *)0x0) {
         mem_image_usage = 0;
         local_38 = param_3;
@@ -12645,7 +12647,7 @@ int __watcall init_mem_images(char *filename,int param_2)
   byte local_1c [4];
   byte local_18 [4];
   
-  _File = fopen(filename,&DAT_0042de34);
+  _File = fopen(filename,s_rb_0042de34);
   if (_File == (FILE *)0x0) {
     iVar1 = 1000;
   }
@@ -13278,6 +13280,8 @@ int __watcall get_free_font_index(void)
 
 /* ==== 0041313c open_flags ==== */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 undefined8 __watcall open_flags(byte *param_1,undefined4 unaff_EDX)
 
 {
@@ -13307,7 +13311,7 @@ LAB_004131a9:
     else {
       uVar4 = uVar2;
       if (param_1[2] != 0x74) {
-        bVar5 = fmode == 0x200;
+        bVar5 = ram0x004361e9 == 0x200;
 LAB_004131a7:
         if (bVar5) goto LAB_004131a9;
       }
@@ -13329,7 +13333,7 @@ LAB_004131e5:
         uVar3 = uVar2;
         goto LAB_004131a7;
       }
-      if (fmode == 0x200) goto LAB_004131e5;
+      if (ram0x004361e9 == 0x200) goto LAB_004131e5;
     }
   }
   if ((tolower_1_result & 0xff) == 0x77) {
@@ -14409,7 +14413,7 @@ get_joystick_position(int param_1,int param_2,int param_3,int *param_4,int *para
       goto LAB_004142b7;
     }
   }
-  fatal_exit(s___get_joystick_position__invalid_0042e3ec + 1,param_1);
+  fatal_exit(s__get_joystick_position__invalid_j_0042e3ed,param_1);
 LAB_004142b7:
   iVar6 = param_1 * 0x5c;
   if (*(int *)(&joystickstate + iVar6) != 0) {
@@ -17765,7 +17769,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
   HBRUSH pHVar3;
   HWND pHVar4;
   HINSTANCE hInstance;
-  LPCSTR lpClassName;
+  char *lpClassName;
   DWORD dwStyle;
   int X;
   int Y;
@@ -17782,9 +17786,9 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
   if (piVar1[2] < 1) {
     fatal_exit(s__s__d_____edit_windows_box__numb_0042fd8c,s_editbox_cpp_0042fd80,0xa2);
   }
-  iVar2 = get_string_height(&DAT_0042fdd6,1);
+  iVar2 = get_string_height(s__0042fdd6,1);
   if (iVar2 * piVar1[3] - piVar1[1] != 0 && piVar1[1] <= iVar2 * piVar1[3]) {
-    iVar2 = get_string_height(&DAT_0042fdd8,1);
+    iVar2 = get_string_height(s__0042fdd8,1);
     fatal_exit(s__s__d_____edit_windows_box__heig_0042fde6,s_editbox_cpp_0042fdda,0xa7,piVar1[1],
                iVar2);
   }
@@ -17798,7 +17802,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
       Y = *(int *)(param_1 + 4);
       X = *(int *)param_1;
       dwStyle = 0x50010000;
-      lpClassName = &DAT_0042fe3a;
+      lpClassName = s_EDIT_0042fe3a;
     }
     else {
       if (*(int *)(param_1 + 8) != 3) goto LAB_0041819b;
@@ -17809,7 +17813,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
       Y = *(int *)(param_1 + 4);
       X = *(int *)param_1;
       dwStyle = 0x50012000;
-      lpClassName = &DAT_0042fe3f;
+      lpClassName = s_EDIT_0042fe3f;
     }
   }
   else if (*(int *)(param_1 + 8) == 0) {
@@ -17820,7 +17824,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
     Y = *(int *)(param_1 + 4);
     X = *(int *)param_1;
     dwStyle = 0x50010004;
-    lpClassName = &DAT_0042fe44;
+    lpClassName = s_EDIT_0042fe44;
   }
   else {
     if (*(int *)(param_1 + 8) != 3) goto LAB_0041819b;
@@ -17831,7 +17835,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
     Y = *(int *)(param_1 + 4);
     X = *(int *)param_1;
     dwStyle = 0x50012004;
-    lpClassName = &DAT_0042fe49;
+    lpClassName = s_EDIT_0042fe49;
   }
   pHVar4 = CreateWindowExA(0,lpClassName,(LPCSTR)0x0,dwStyle,X,Y,nWidth,iVar2,xvga_hwnd,
                            (HMENU)param_2,hInstance,lpParam);
@@ -19133,7 +19137,7 @@ int __watcall xvga_init_drive_info(int param_1)
     max_xvga_drive_list = param_1;
     while( true ) {
       if (param_1 <= iVar3) break;
-      sprintf(local_7c,&DAT_00430967,iVar4);
+      sprintf(local_7c,s__c___00430967,iVar4);
       *(int *)(xvga_drive_list + iVar2) = iVar3;
       UVar1 = GetDriveTypeA(local_7c);
       switch(UVar1) {
@@ -19404,7 +19408,7 @@ int enum_dd_device(_GUID *param_1,char *param_2,char *param_3,void *param_4)
       str = extraout_ECX_00;
       d3dfx_dd_driver_index = new_dd_info;
     }
-    iVar1 = strnicmp_1((byte *)str,&DAT_00430be0,3);
+    iVar1 = strnicmp_1((byte *)str,s_R3D_00430be0,3);
     if (iVar1 == 0) {
       debugmsg(s_Righteous_dd3ddfx_driver_found___00430be4,new_dd_info);
       str = extraout_ECX_01;
@@ -19412,7 +19416,7 @@ int enum_dd_device(_GUID *param_1,char *param_2,char *param_3,void *param_4)
     }
     found = strrchr((char *)str,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp_1((byte *)str,&DAT_00430c07);
+      iVar1 = stricmp_1((byte *)str,(byte *)s__VXD_00430c07);
       if (iVar1 == 0) {
         debugmsg(s_secondary_driver_found__d_00430c0c,new_dd_info);
         secondary_dd_driver_index = extraout_ECX_02;
@@ -22072,6 +22076,8 @@ int __cdecl open(char *_Filename,int _OpenFlag,...)
 
 /* ==== 0041c652 sopen ==== */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 int __cdecl sopen(char *_Filename,int _OpenFlag,int _ShareFlag,...)
 
 {
@@ -22105,7 +22111,7 @@ int __cdecl sopen(char *_Filename,int _OpenFlag,int _ShareFlag,...)
   GetNTShareAttr(_ShareFlag,&share_mode);
   dwFlagsAndAttributes = 0x80;
   if ((WindowsNewWindow == (code *)0x0) ||
-     (file_handle = stricmp_1((byte *)_Filename,&DAT_00431754), file_handle != 0)) {
+     (file_handle = stricmp_1((byte *)_Filename,(byte *)s_con_00431754), file_handle != 0)) {
     if ((_OpenFlag & 0x20U) == 0) {
       if ((_OpenFlag & 0x40U) != 0) goto LAB_0041c738;
 LAB_0041c74b:
@@ -22153,7 +22159,7 @@ LAB_0041c738:
     }
   }
   else {
-    NTGetFakeHandle(0,&DAT_00431754);
+    NTGetFakeHandle(0,s_con_00431754);
     file_handle = (*(code *)InitAccessH_1)();
     (*WindowsNewWindow)(0,file_handle,0xffffffff);
     unaff_EDX = extraout_EDX;
@@ -22171,7 +22177,7 @@ LAB_0041c738:
     unaff_EDX = unaff_EDX | 0x80;
   }
   if ((_OpenFlag & 0x300U) == 0) {
-    if (fmode != 0x200) goto LAB_0041c7f6;
+    if (ram0x004361e9 != 0x200) goto LAB_0041c7f6;
   }
   else if ((_OpenFlag & 0x200U) == 0) goto LAB_0041c7f6;
   unaff_EDX = unaff_EDX | 0x40;
@@ -22188,15 +22194,15 @@ undefined8 __watcall allocfp(undefined4 param_1,size_t unaff_EDX)
 {
   undefined4 *buffer;
   undefined4 uVar1;
-  undefined4 *_Dst;
+  char *_Dst;
   undefined4 extraout_ECX;
   undefined4 unaff_EDX_00;
   uint uVar2;
   
   (*(code *)AccessIOB_1)();
   if (ClosedStreams == (undefined4 *)0x0) {
-    for (_Dst = (undefined4 *)&iob; _Dst < &tmpfnext; _Dst = (undefined4 *)((int)_Dst + 0x1a)) {
-      if ((*(byte *)(_Dst + 3) & 3) == 0) {
+    for (_Dst = &iob; _Dst < tmpfnext; _Dst = _Dst + 0x1a) {
+      if ((_Dst[0xc] & 3U) == 0) {
         buffer = malloc(8);
         if (buffer == (undefined4 *)0x0) goto LAB_0041c8a9;
         uVar2 = 3;
@@ -22212,17 +22218,17 @@ LAB_0041c8a9:
       uVar1 = 0;
       goto LAB_0041c8bb;
     }
-    _Dst = buffer + 2;
+    _Dst = (char *)(buffer + 2);
   }
   else {
-    _Dst = (undefined4 *)ClosedStreams[1];
-    uVar2 = (uint)((ushort)_Dst[3] & 0x4003 | 3);
+    _Dst = (char *)ClosedStreams[1];
+    uVar2 = (uint)((ushort)*(undefined4 *)(_Dst + 0xc) & 0x4003 | 3);
     buffer = ClosedStreams;
     ClosedStreams = (undefined4 *)*ClosedStreams;
   }
 LAB_0041c87e:
   memset(_Dst,0,0x1a);
-  _Dst[3] = uVar2;
+  *(uint *)(_Dst + 0xc) = uVar2;
   buffer[1] = _Dst;
   *buffer = OpenStreams;
   OpenStreams = buffer;
@@ -25100,7 +25106,7 @@ void __watcall tzset(void)
   int iStack_1c;
   int in_stack_ffffffec;
   
-  pbVar3 = (byte *)getenv(&DAT_00431c20);
+  pbVar3 = (byte *)getenv(s_TZ_00431c20);
   if (pbVar3 != (byte *)0x0) {
     _daylight = 0;
     uStack_20._0_2_ = 0xf1ed;
@@ -29553,7 +29559,10 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   byte bVar2;
   undefined8 nt_thread_init;
   char acStackY_1038 [4048];
-  undefined4 uStack_50;
+  char cStack_50;
+  char cStack_4f;
+  char cStack_4e;
+  char cStack_4d;
   undefined4 uStack_4c;
   char local_48 [24];
   undefined4 local_30;
@@ -29569,13 +29578,16 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   }
   local_30 = param_1;
   GetCurrentThread();
-  uStack_50 = DAT_00431eb4;
-  (&uStack_4c)[(uint)bVar2 * -2] = (&DAT_00431eb8)[(uint)bVar2 * -2];
+  cStack_50 = s___bgnthd_00431eb4[0];
+  cStack_4f = s___bgnthd_00431eb4[1];
+  cStack_4e = s___bgnthd_00431eb4[2];
+  cStack_4d = s___bgnthd_00431eb4[3];
+  (&uStack_4c)[(uint)bVar2 * -2] = *(undefined4 *)(s___bgnthd_00431eb4 + (uint)bVar2 * -8 + 4);
   local_48[(uint)bVar2 * -8 + (uint)bVar2 * -8] =
-       (&DAT_00431ebc)[(uint)bVar2 * -8 + (uint)bVar2 * -8];
+       s___bgnthd_00431eb4[(uint)bVar2 * -8 + (uint)bVar2 * -8 + 8];
   DVar1 = GetCurrentThreadId();
   itoa_1(DVar1,local_48,0x10);
-  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)&uStack_50);
+  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
   thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,unaff_EBX + 0xfffU & 0xfffff000,
                         (LPTHREAD_START_ROUTINE)&begin_thread_helper,&local_30,0,&local_14);
   if (thread == (HANDLE)0x0) {
@@ -30249,7 +30261,7 @@ void __watcall rterrmsg(int param_1,uint unaff_EDX,undefined4 param_3,FILE *unaf
   std_stream = get_std_stream(2,unaff_EDX);
   _File = (FILE *)std_stream;
   fputs(*(char **)(&Msgs + param_1 * 4),_File);
-  fputs(&DAT_00431fb9,_File);
+  fputs(s_in_00431fb9,_File);
   fputs((char *)unaff_EDX,_File);
   fputc(10,_File);
   return;

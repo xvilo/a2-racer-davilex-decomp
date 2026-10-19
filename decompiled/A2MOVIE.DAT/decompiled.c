@@ -220,7 +220,7 @@ LAB_004012c0:
     pcVar6 = pcVar6 + (uint)bVar7 * -2 + 1;
   } while (cVar1 != '\0');
   if (*(char *)(~uVar3 + 0x41f7b2) != '\\') {
-    pcVar4 = &DAT_004180af;
+    pcVar4 = s___004180af;
     iVar2 = -1;
     pcVar6 = &ini_filename;
     do {
@@ -364,7 +364,7 @@ void __cdecl debugmsg(char *format,...)
   
   if (debugmsg_toggle == 1) {
     if (debugmsg_channel == 0) {
-      _File = fopen(s_debug_txt_00418214,&DAT_00418210);
+      _File = fopen(s_debug_txt_00418214,s_at__00418210);
       if (_File != (FILE *)0x0) {
         local_10[0] = &stack0x00000008;
         vsprintf(aCStack_330,format,(va_list)local_10);
@@ -471,7 +471,7 @@ int __cdecl fatal_exit(char *format,...)
   do {
     iVar1 = handle_win_msg();
   } while (iVar1 != 0);
-  MessageBoxExA((HWND)0x0,local_1c8,&DAT_0041828b,local_38[0],0);
+  MessageBoxExA((HWND)0x0,local_1c8,s_Fout_0041828b,local_38[0],0);
   exit_xvga_lib();
   return 0;
 }
@@ -1247,14 +1247,14 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
   char local_108 [260];
   
   if (param_1 == (char *)0x0) {
-    cd_directory = &DAT_00419340;
+    cd_directory = s___00419340;
     sprintf(local_108,s_x___s_00419342,param_2);
   }
   else {
     cd_directory = param_1;
     sprintf(local_108,s_x__s__s_00419338,param_1,param_2);
   }
-  env_value = getenv(&DAT_00419348);
+  env_value = getenv(s_NOCD_00419348);
   if (env_value == (char *)0x0) {
     iVar1 = xvga_get_first_cdrom();
     if (iVar1 == -1) {
@@ -1269,7 +1269,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     }
   }
   else {
-    env_value = getenv(&DAT_0041934d);
+    env_value = getenv(s_NOCD_0041934d);
     cd_drive = *env_value;
   }
   return;
@@ -1290,7 +1290,7 @@ char * __watcall file_path(char *filename,char *param_2)
   splitpath((byte *)param_2,local_10,local_210,abStack_310,local_110);
   makepath((byte *)filename,&DAT_004193c9,&DAT_004193c8,abStack_310,local_110);
   debugmsg(s_path__s_004193ca,filename);
-  _File = fopen(filename,&DAT_004193d3);
+  _File = fopen(filename,s_r_004193d3);
   if (_File == (FILE *)0x0) {
     makepath((byte *)filename,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_004193d5,filename);
@@ -1935,7 +1935,7 @@ int enum_sound_info_callback(_GUID *param_1,char *param_2,char *param_3,void *pa
     }
     found = strrchr((char *)psVar5,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp((char *)psVar5,&DAT_00419ca0);
+      iVar1 = stricmp((char *)psVar5,s__VXD_00419ca0);
       if (iVar1 == 0) {
         debugmsg(s_secondary_driver_found__d_00419ca5,new_sound_info);
         secondary_driver_index = new_sound_info;
@@ -2557,7 +2557,7 @@ LAB_00403f77:
         return 0x2afa;
       }
       if (*(int *)(&DAT_0041fab0 + iVar2) == 0) {
-        format_2 = &DAT_0041a2c4;
+        format_2 = s_MONO_0041a2c4;
       }
       else {
         format_2 = s_STEREO_0041a2bd;
@@ -2687,7 +2687,7 @@ LAB_0040427a:
           return 0x2afa;
         }
         if (*(int *)(&DAT_0041fab0 + iVar3) == 0) {
-          format_2 = &DAT_0041a563;
+          format_2 = s_MONO_0041a563;
         }
         else {
           format_2 = s_STEREO_0041a55c;
@@ -3804,7 +3804,7 @@ int __watcall set_3dlistener_distancefactor(float param_1)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x2c))(ds3d_listener,in_stack_00000004,0);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0041b2d9,s___sound_cpp_0041b2cd + 2,0x68e,
+      fatal_exit(s__s__d____error_set_listener_orie_0041b2d9,s_sound_cpp_0041b2cf,0x68e,
                  ds_error_string_result);
     }
   }
@@ -3833,7 +3833,7 @@ int __watcall set_3dlistener_rollofffactor(float param_1)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x3c))(ds3d_listener,in_stack_00000004,0);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0041b315,s___sound_cpp_0041b309 + 2,0x6a6,
+      fatal_exit(s__s__d____error_set_listener_orie_0041b315,s_sound_cpp_0041b30b,0x6a6,
                  ds_error_string_result);
     }
   }
@@ -3853,7 +3853,7 @@ void __watcall execute_ds3d_settings(void)
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x44))(ds3d_listener);
     if (lVar1 != 0) {
       ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0041b351,s___sound_cpp_0041b345 + 2,0x6b7,
+      fatal_exit(s__s__d____error_set_listener_orie_0041b351,s_sound_cpp_0041b347,0x6b7,
                  ds_error_string_result);
     }
   }
@@ -4473,6 +4473,8 @@ void __watcall wcpp_2_pure_error(void)
 
 /* ==== 004065de open_flags ==== */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 undefined8 __watcall open_flags(int param_1,undefined4 unaff_EDX_00)
 
 {
@@ -4502,7 +4504,7 @@ LAB_0040664b:
     else {
       uVar4 = uVar2;
       if (*(char *)(param_1 + 2) != 't') {
-        bVar5 = fmode == 0x200;
+        bVar5 = ram0x0041fe71 == 0x200;
 LAB_00406649:
         if (bVar5) goto LAB_0040664b;
       }
@@ -4524,7 +4526,7 @@ LAB_00406687:
         uVar3 = uVar2;
         goto LAB_00406649;
       }
-      if (fmode == 0x200) goto LAB_00406687;
+      if (ram0x0041fe71 == 0x200) goto LAB_00406687;
     }
   }
   if ((tolower_result & 0xff) == 0x77) {
@@ -5464,9 +5466,9 @@ LAB_00407a99:
     iVar1 = 0;
   }
   else {
-    _File = fopen(filename,&DAT_0041bf72);
+    _File = fopen(filename,s_rb_0041bf72);
     if (_File != (FILE *)0x0) {
-      _File_00 = fopen(filename_2,&DAT_0041bf75);
+      _File_00 = fopen(filename_2,s_rb_0041bf75);
       if (_File_00 != (FILE *)0x0) {
         mem_image_usage = 0;
         local_38 = param_3;
@@ -5642,7 +5644,7 @@ int __watcall init_mem_images(char *filename,int param_2)
   byte local_1c [4];
   byte local_18 [4];
   
-  _File = fopen(filename,&DAT_0041c020);
+  _File = fopen(filename,s_rb_0041c020);
   if (_File == (FILE *)0x0) {
     iVar1 = 1000;
   }
@@ -6794,7 +6796,7 @@ int __watcall xvga_init_drive_info(int param_1)
     max_xvga_drive_list = param_1;
     while( true ) {
       if (param_1 <= iVar3) break;
-      sprintf(local_7c,&DAT_0041cb4f,iVar4);
+      sprintf(local_7c,s__c___0041cb4f,iVar4);
       *(int *)(xvga_drive_list + iVar2) = iVar3;
       UVar1 = GetDriveTypeA(local_7c);
       switch(UVar1) {
@@ -7065,7 +7067,7 @@ int enum_dd_device(_GUID *param_1,char *param_2,char *param_3,void *param_4)
       pdVar5 = extraout_ECX;
       d3dfx_dd_driver_index = new_dd_info;
     }
-    iVar1 = strnicmp((char *)pdVar5,&DAT_0041cdc8,3);
+    iVar1 = strnicmp((char *)pdVar5,s_R3D_0041cdc8,3);
     if (iVar1 == 0) {
       debugmsg(s_Righteous_dd3ddfx_driver_found___0041cdcc,new_dd_info);
       pdVar5 = extraout_ECX_00;
@@ -7073,7 +7075,7 @@ int enum_dd_device(_GUID *param_1,char *param_2,char *param_3,void *param_4)
     }
     found = strrchr((char *)pdVar5,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp((char *)pdVar5,&DAT_0041cdef);
+      iVar1 = stricmp((char *)pdVar5,s__VXD_0041cdef);
       if (iVar1 == 0) {
         debugmsg(s_secondary_driver_found__d_0041cdf4,new_dd_info);
         secondary_dd_driver_index = extraout_ECX_01;
@@ -8959,7 +8961,7 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
   
   if (init_fileio_ok == 0) {
     debugmsg(s_init_fileio_0041debc);
-    res_fp = (__iobuf *)fopen(filename,&DAT_0041dec9);
+    res_fp = (__iobuf *)fopen(filename,s_rb_0041dec9);
     if ((FILE *)res_fp == (FILE *)0x0) {
       uVar7 = 0x29;
       pcVar6 = s_fileio_cpp_0041decc;
@@ -8994,7 +8996,7 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
           pfVar5 = pfVar5 + 2;
         } while (fileio_t != (fileio_t)0x0);
         *(undefined4 *)(xvga_rc_files + iVar3 + 0x14) = local_24;
-        debugmsg(&DAT_0041df62,xvga_rc_files + iVar3);
+        debugmsg(s__s_0041df62,xvga_rc_files + iVar3);
         if (((byte)res_fp[0xc] & 0x20) != 0) {
           fatal_exit(s__s__d____error_while_reading_fil_0041df71,s_fileio_cpp_0041df66,0x50);
           return 0x3e9;
@@ -9002,7 +9004,7 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
         iVar3 = iVar3 + 0x1c;
       }
       fclose((FILE *)res_fp);
-      data_fp = (__iobuf *)fopen(filename_2,&DAT_0041df9a);
+      data_fp = (__iobuf *)fopen(filename_2,s_rb_0041df9a);
       if ((FILE *)data_fp != (FILE *)0x0) {
         iVar1 = 0x1c;
         file_end_pos = filelength(((FILE *)data_fp)->_file);
@@ -9152,7 +9154,7 @@ __iobuf * __watcall xvga_src_fopen(char *param_1)
   char *format;
   
   if (init_fileio_ok == 0) {
-    pFVar1 = fopen(param_1,&DAT_0041e155);
+    pFVar1 = fopen(param_1,s_rb_0041e155);
     if (pFVar1 != (FILE *)0x0) {
       uVar6 = 0xd0;
       pcVar5 = s_fileio_cpp_0041e185;
@@ -9183,7 +9185,7 @@ LAB_0040b9ee:
                iVar4,file_begin_pos,*(undefined4 *)(data_fp + 0x10),iVar2);
       return data_fp;
     }
-    pFVar1 = fopen(param_1,&DAT_0041e1b5);
+    pFVar1 = fopen(param_1,s_rb_0041e1b5);
     if (pFVar1 != (FILE *)0x0) {
       uVar6 = 0xf9;
       pcVar5 = s_fileio_cpp_0041e1e5;
@@ -9679,6 +9681,8 @@ int __cdecl open(char *_Filename,int _OpenFlag,...)
 
 /* ==== 0040c067 sopen ==== */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 int __cdecl sopen(char *_Filename,int _OpenFlag,int _ShareFlag,...)
 
 {
@@ -9712,7 +9716,7 @@ int __cdecl sopen(char *_Filename,int _OpenFlag,int _ShareFlag,...)
   GetNTShareAttr(_ShareFlag,&share_mode);
   dwFlagsAndAttributes = 0x80;
   if ((WindowsNewWindow == (code *)0x0) ||
-     (file_handle = stricmp(_Filename,&DAT_0041e308), file_handle != 0)) {
+     (file_handle = stricmp(_Filename,s_con_0041e308), file_handle != 0)) {
     if ((_OpenFlag & 0x20U) == 0) {
       if ((_OpenFlag & 0x40U) != 0) goto LAB_0040c14d;
 LAB_0040c160:
@@ -9760,7 +9764,7 @@ LAB_0040c14d:
     }
   }
   else {
-    NTGetFakeHandle(0,&DAT_0041e308);
+    NTGetFakeHandle(0,s_con_0041e308);
     file_handle = (*(code *)InitAccessH_1)();
     (*WindowsNewWindow)(0,file_handle,0xffffffff);
     unaff_EDX = extraout_EDX;
@@ -9778,7 +9782,7 @@ LAB_0040c14d:
     unaff_EDX = unaff_EDX | 0x80;
   }
   if ((_OpenFlag & 0x300U) == 0) {
-    if (fmode != 0x200) goto LAB_0040c20b;
+    if (ram0x0041fe71 != 0x200) goto LAB_0040c20b;
   }
   else if ((_OpenFlag & 0x200U) == 0) goto LAB_0040c20b;
   unaff_EDX = unaff_EDX | 0x40;
@@ -9795,7 +9799,7 @@ undefined8 __watcall allocfp(undefined4 param_1,size_t unaff_EDX_00)
 {
   undefined4 *puVar1;
   undefined4 uVar2;
-  undefined4 *_Dst;
+  char *_Dst;
   undefined4 extraout_ECX;
   undefined4 unaff_EDX;
   uint uVar3;
@@ -9803,8 +9807,8 @@ undefined8 __watcall allocfp(undefined4 param_1,size_t unaff_EDX_00)
   
   (*(code *)AccessIOB_1)();
   if (ClosedStreams == (undefined4 *)0x0) {
-    for (_Dst = (undefined4 *)&iob; _Dst < &tmpfnext; _Dst = (undefined4 *)((int)_Dst + 0x1a)) {
-      if ((*(byte *)(_Dst + 3) & 3) == 0) {
+    for (_Dst = &iob; _Dst < tmpfnext; _Dst = _Dst + 0x1a) {
+      if ((_Dst[0xc] & 3U) == 0) {
         buffer = nmalloc(8,unaff_EDX);
         uVar2 = (undefined4)((ulonglong)buffer >> 0x20);
         puVar1 = (undefined4 *)buffer;
@@ -9824,17 +9828,17 @@ LAB_0040c2be:
       uVar2 = 0;
       goto LAB_0040c2d0;
     }
-    _Dst = puVar1 + 2;
+    _Dst = (char *)(puVar1 + 2);
   }
   else {
-    _Dst = (undefined4 *)ClosedStreams[1];
-    uVar3 = (uint)((ushort)_Dst[3] & 0x4003 | 3);
+    _Dst = (char *)ClosedStreams[1];
+    uVar3 = (uint)((ushort)*(undefined4 *)(_Dst + 0xc) & 0x4003 | 3);
     puVar1 = ClosedStreams;
     ClosedStreams = (undefined4 *)*ClosedStreams;
   }
 LAB_0040c293:
   memset(_Dst,0,0x1a);
-  _Dst[3] = uVar3;
+  *(uint *)(_Dst + 0xc) = uVar3;
   puVar1[1] = _Dst;
   *puVar1 = OpenStreams;
   OpenStreams = puVar1;
@@ -12310,7 +12314,7 @@ get_joystick_position(int param_1,int param_2,int param_3,int *param_4,int *para
       goto LAB_0040e5d3;
     }
   }
-  fatal_exit(s___get_joystick_position__invalid_0041e4fc + 1,param_1);
+  fatal_exit(s__get_joystick_position__invalid_j_0041e4fd,param_1);
 LAB_0040e5d3:
   iVar6 = param_1 * 0x5c;
   if (*(int *)(&joystickstate + iVar6) != 0) {
@@ -15067,7 +15071,7 @@ void __watcall tzset(void)
   int iStack_1c;
   int in_stack_ffffffec;
   
-  pbVar3 = (byte *)getenv(&DAT_0041e7b4);
+  pbVar3 = (byte *)getenv(s_TZ_0041e7b4);
   if (pbVar3 != (byte *)0x0) {
     _daylight = 0;
     uStack_20._0_2_ = 0xa23;
@@ -15674,7 +15678,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
   HBRUSH pHVar3;
   HWND pHVar4;
   HINSTANCE hInstance;
-  LPCSTR lpClassName;
+  char *lpClassName;
   DWORD dwStyle;
   int X;
   int Y;
@@ -15691,9 +15695,9 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
   if (piVar1[2] < 1) {
     fatal_exit(s__s__d_____edit_windows_box__numb_0041e9f8,s_editbox_cpp_0041e9ec,0xa2);
   }
-  iVar2 = get_string_height(&DAT_0041ea42,1);
+  iVar2 = get_string_height(s__0041ea42,1);
   if (iVar2 * piVar1[3] - piVar1[1] != 0 && piVar1[1] <= iVar2 * piVar1[3]) {
-    iVar2 = get_string_height(&DAT_0041ea44,1);
+    iVar2 = get_string_height(s__0041ea44,1);
     fatal_exit(s__s__d_____edit_windows_box__heig_0041ea52,s_editbox_cpp_0041ea46,0xa7,piVar1[1],
                iVar2);
   }
@@ -15707,7 +15711,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
       Y = *(int *)(param_1 + 4);
       X = *(int *)param_1;
       dwStyle = 0x50010000;
-      lpClassName = &DAT_0041eaa6;
+      lpClassName = s_EDIT_0041eaa6;
     }
     else {
       if (*(int *)(param_1 + 8) != 3) goto LAB_00411143;
@@ -15718,7 +15722,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
       Y = *(int *)(param_1 + 4);
       X = *(int *)param_1;
       dwStyle = 0x50012000;
-      lpClassName = &DAT_0041eaab;
+      lpClassName = s_EDIT_0041eaab;
     }
   }
   else if (*(int *)(param_1 + 8) == 0) {
@@ -15729,7 +15733,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
     Y = *(int *)(param_1 + 4);
     X = *(int *)param_1;
     dwStyle = 0x50010004;
-    lpClassName = &DAT_0041eab0;
+    lpClassName = s_EDIT_0041eab0;
   }
   else {
     if (*(int *)(param_1 + 8) != 3) goto LAB_00411143;
@@ -15740,7 +15744,7 @@ void __watcall create_edit_box(fform_t *param_1,int param_2)
     Y = *(int *)(param_1 + 4);
     X = *(int *)param_1;
     dwStyle = 0x50012004;
-    lpClassName = &DAT_0041eab5;
+    lpClassName = s_EDIT_0041eab5;
   }
   pHVar4 = CreateWindowExA(0,lpClassName,(LPCSTR)0x0,dwStyle,X,Y,nWidth,iVar2,xvga_hwnd,
                            (HMENU)param_2,hInstance,lpParam);
@@ -19454,7 +19458,10 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   byte bVar1;
   undefined8 nt_thread_init;
   char acStackY_1038 [4048];
-  undefined4 uStack_50;
+  char cStack_50;
+  char cStack_4f;
+  char cStack_4e;
+  char cStack_4d;
   undefined4 uStack_4c;
   char local_48 [24];
   undefined4 local_30;
@@ -19470,13 +19477,16 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   }
   local_30 = param_1;
   GetCurrentThread();
-  uStack_50 = DAT_0041f4dc;
-  (&uStack_4c)[(uint)bVar1 * -2] = (&DAT_0041f4e0)[(uint)bVar1 * -2];
+  cStack_50 = s___bgnthd_0041f4dc[0];
+  cStack_4f = s___bgnthd_0041f4dc[1];
+  cStack_4e = s___bgnthd_0041f4dc[2];
+  cStack_4d = s___bgnthd_0041f4dc[3];
+  (&uStack_4c)[(uint)bVar1 * -2] = *(undefined4 *)(s___bgnthd_0041f4dc + (uint)bVar1 * -8 + 4);
   local_48[(uint)bVar1 * -8 + (uint)bVar1 * -8] =
-       (&DAT_0041f4e4)[(uint)bVar1 * -8 + (uint)bVar1 * -8];
+       s___bgnthd_0041f4dc[(uint)bVar1 * -8 + (uint)bVar1 * -8 + 8];
   _Val = GetCurrentThreadId();
   itoa(_Val,local_48,0x10);
-  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)&uStack_50);
+  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
   thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,unaff_EBX + 0xfffU & 0xfffff000,
                         (LPTHREAD_START_ROUTINE)&begin_thread_helper,&local_30,0,&local_14);
   if (thread == (HANDLE)0x0) {
@@ -20136,7 +20146,7 @@ void __watcall rterrmsg(int param_1,uint unaff_EDX,undefined4 param_3,FILE *unaf
   std_stream = get_std_stream(2,unaff_EDX);
   _File = (FILE *)std_stream;
   fputs(*(char **)(&Msgs + param_1 * 4),_File);
-  fputs(&DAT_0041f5e1,_File);
+  fputs(s_in_0041f5e1,_File);
   fputs((char *)unaff_EDX,_File);
   fputc(10,_File);
   return;

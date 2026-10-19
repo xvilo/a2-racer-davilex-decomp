@@ -82,24 +82,30 @@ address	type	value
 004255c5	string	\tSave_scoredbase()\n
 004255d9	string	\tSave_infio()\n
 004255e8	string	\tClear_help_keys()\n
+004255fc	string	\n\n
 004255ff	string	---------------------------------\n
 00425622	string	- *> DEBUG MESSAGES FOR MENU <* -\n
 00425645	string	---------------------------------\n
 00425668	string	----------------------------------------\n
 00425692	string	- *> END OF DEBUG MESSAGES FOR MENU <* -\n
 004256bc	string	----------------------------------------\n
+004256e6	string	\n\n
+004256ec	string	r
 004256ee	string	bestand.cpp
 004256fa	string	%s(%d), unable to close file %s while checking its existance.
+00425738	string	rb
 0042573b	string	bestand.cpp
 00425747	string	%s(%d): %s while doing file seek on %s
 0042576e	string	bestand.cpp
 0042577a	string	%s(%d): %s while getting file tell from %s
 004257a5	string	bestand.cpp
 004257b1	string	%s(%d): %s while closing file %s
+004257d2	string	rb
 004257d5	string	bestand.cpp
 004257e1	string	%s(%d), %s while reading from file %s
 00425807	string	bestand.cpp
 00425813	string	%s(%d), %s while closing file %s
+00425834	string	wb
 00425837	string	bestand.cpp
 00425843	string	%s(%d), %s while writing to file %s
 00425867	string	bestand.cpp
@@ -383,21 +389,41 @@ address	type	value
 00426a70	string	\n\n%s(%d): *> INFIO_INI_FILE = %d does exist <*\n
 00426aa0	string	INFIO.INI
 00426aaa	string	RACE_KLAAR
+00426ab5	string	GAME
+00426aba	string	TIJD
+00426abf	string	GAME
 00426ac4	string	ACTIVE_SLOT
+00426ad0	string	GAME
+00426ad5	string	GELD
+00426ada	string	GAME
 00426adf	string	ETAPPE
+00426ae6	string	GAME
 00426aeb	string	EINDE_DOOR
+00426af6	string	GAME
 00426afb	string	POSITIE
+00426b03	string	GAME
 00426b08	string	RACER_1
+00426b10	string	GAME
 00426b15	string	RACER_2
+00426b1d	string	GAME
 00426b22	string	RACER_3
+00426b2a	string	GAME
 00426b2f	string	RACER_4
+00426b37	string	GAME
 00426b3c	string	RACER_5
+00426b44	string	GAME
 00426b49	string	TIJD_1
+00426b50	string	GAME
 00426b55	string	TIJD_2
+00426b5c	string	GAME
 00426b61	string	TIJD_3
+00426b68	string	GAME
 00426b6d	string	TIJD_4
+00426b74	string	GAME
 00426b79	string	TIJD_5
+00426b80	string	GAME
 00426b85	string	FINALE
+00426b8c	string	GAME
 00426b91	string	BEDIENING
 00426b9b	string	CONTROL
 00426ba3	string	KEY_LINKS
@@ -416,6 +442,7 @@ address	type	value
 00426c15	string	OPTION
 00426c1c	string	RESOLUTIE
 00426c26	string	OPTION
+00426c2d	string	VIEW
 00426c32	string	OPTION
 00426c39	string	DISPLAY_MODE
 00426c46	string	OPTION
@@ -439,21 +466,41 @@ address	type	value
 00426d02	string	\n\n%s(%d): *> SAVE INFIO <*\n
 00426d1e	string	INFIO.INI
 00426d28	string	RACE_KLAAR
+00426d33	string	GAME
+00426d38	string	TIJD
+00426d3d	string	GAME
 00426d42	string	ACTIVE_SLOT
+00426d4e	string	GAME
+00426d53	string	GELD
+00426d58	string	GAME
 00426d5d	string	ETAPPE
+00426d64	string	GAME
 00426d69	string	EINDE_DOOR
+00426d74	string	GAME
 00426d79	string	POSITIE
+00426d81	string	GAME
 00426d86	string	RACER_1
+00426d8e	string	GAME
 00426d93	string	RACER_2
+00426d9b	string	GAME
 00426da0	string	RACER_3
+00426da8	string	GAME
 00426dad	string	RACER_4
+00426db5	string	GAME
 00426dba	string	RACER_5
+00426dc2	string	GAME
 00426dc7	string	TIJD_1
+00426dce	string	GAME
 00426dd3	string	TIJD_2
+00426dda	string	GAME
 00426ddf	string	TIJD_3
+00426de6	string	GAME
 00426deb	string	TIJD_4
+00426df2	string	GAME
 00426df7	string	TIJD_5
+00426dfe	string	GAME
 00426e03	string	FINALE
+00426e0a	string	GAME
 00426e0f	string	BEDIENING
 00426e19	string	CONTROL
 00426e21	string	KEY_LINKS
@@ -472,6 +519,7 @@ address	type	value
 00426e93	string	OPTION
 00426e9a	string	RESOLUTIE
 00426ea4	string	OPTION
+00426eab	string	VIEW
 00426eb0	string	OPTION
 00426eb7	string	DISPLAY_MODE
 00426ec4	string	OPTION
@@ -509,15 +557,19 @@ address	type	value
 00427027	string	m_main.cpp
 00427032	string	%-16s
 00427038	string	m_main.cpp
+00427043	string	%-9d
 00427048	string	m_main.cpp
+00427053	string	%-6s
 00427058	string	Toetsenbord
 00427064	string	Joypad 1
 0042706d	string	Stuur
 00427073	string	Onbekend
+0042707c	string	%s
 0042707f	string	3D Accelerator
 0042708e	string	320 x 200
 00427098	string	640 x 480
 004270a2	string	Onbekend
+004270ab	string	%s
 004270ae	string	\n\n *> DISPLAY_INFO %d<*\n
 004270c7	string	*> END DISPLAY_INFO <*\n
 004270df	string	%s(%d), mm_af_image() : Could not load frame %d of ANIM %d\n
@@ -591,7 +643,9 @@ address	type	value
 004275bf	string	m_start.cpp
 004275cb	string	%-16s
 004275d1	string	m_start.cpp
+004275dd	string	%9d
 004275e1	string	m_start.cpp
+004275ed	string	%-6s
 004275f2	string	m_start.cpp
 004275fe	string	%s(%d): mst_draw_slot_info(%d), initializing\n
 0042762c	string	m_start.cpp
@@ -607,7 +661,9 @@ address	type	value
 004276ee	string	m_start.cpp
 004276fa	string	%-16s
 00427700	string	m_start.cpp
+0042770c	string	%9d
 00427710	string	m_start.cpp
+0042771c	string	%-6s
 00427721	string	m_start.cpp
 0042772d	string	%s(%d): mst_print_slot(), initializing\n
 00427755	string	m_start.cpp
@@ -656,6 +712,7 @@ address	type	value
 00427b30	string	m_bedien.cpp
 00427b3d	string	m_bedien.cpp
 00427b4a	string	m_bedien.cpp
+00427b57	string	%-8s
 00427b5c	string	m_bedien.cpp
 00427b69	string	m_bedien.cpp
 00427b76	string	m_bedien.cpp
@@ -667,6 +724,7 @@ address	type	value
 00427bc2	string	Deze toets, <%s>, is eerder gedefinieerd. Kies een andere toets.
 00427c03	string	MC_10.wav
 00427c0d	string	De toetsen zijn ingesteld.
+00427c28	string	%s
 00427c2b	string	m_bedien.cpp
 00427c38	string	%s(%d) : illegal keyboard frame image %d of ANIM %d.
 00427c6d	string	m_bedien.cpp
@@ -783,7 +841,14 @@ address	type	value
 004283a1	string	m_opties.cpp
 004283ae	string	\n\n%s(%d) : *> STOP MENU OPTIES <*\n
 00428404	string	%s(%d), ms_af_image() : Could not load frame %d of ANIM %d\n
+00428440	string	%2d
+00428444	string	%s
+00428447	string	%9d
 0042844b	string	%#2.2du%#2.2dm%#2.2ds
+00428461	string	%d
+00428464	string	%s
+00428467	string	%s
+0042846a	string	%9d
 0042846e	string	%#2.2du%#2.2dm%#2.2ds
 00428484	string	m_score.cpp
 00428490	string	m_score.cpp
@@ -800,7 +865,13 @@ address	type	value
 0042854a	string	click3.wav
 00428555	string	click3.wav
 00428560	string	%s(%d), mds_af_image() : Could not load frame %d of ANIM %d\n
+0042859d	string	%2d
+004285a1	string	%s
+004285a4	string	%9d
 004285a8	string	%#2.2du%#2.2dm%#2.2ds
+004285be	string	%2d
+004285c2	string	%s
+004285c5	string	%s
 004285c8	string	%#2.2du%#2.2dm%#2.2ds
 004285de	string	m_dscore.cpp
 004285eb	string	m_dscore.cpp
@@ -819,7 +890,9 @@ address	type	value
 00428703	string	m_nsplr.cpp
 0042870f	string	%-16s
 00428715	string	m_nsplr.cpp
+00428721	string	%9d
 00428725	string	m_nsplr.cpp
+00428731	string	%-6s
 00428736	string	m_nsplr.cpp
 00428742	string	%s(%d): mns_draw_slot_info(%d), initializing\n
 00428770	string	m_nsplr.cpp
@@ -833,7 +906,9 @@ address	type	value
 00428818	string	m_nsplr.cpp
 00428824	string	%-16s
 0042882a	string	m_nsplr.cpp
+00428836	string	%9d
 0042883a	string	m_nsplr.cpp
+00428846	string	%-6s
 0042884b	string	m_nsplr.cpp
 00428857	string	%s(%d): mns_reselect_slot(), initializing\n
 00428882	string	m_nsplr.cpp
@@ -887,6 +962,8 @@ address	type	value
 00428bb0	string	m_stand.cpp
 00428bbc	string	m_stand.cpp
 00428bc8	string	m_stand.cpp
+00428bd4	string	%d
+00428bd7	string	%s
 00428bda	string	%#2.2du%#2.2dm%#2.2ds
 00428bf0	string	m_stand.cpp
 00428bfc	string	%s(%d) : Could not load mdt_menu_cfg\n
@@ -909,6 +986,8 @@ address	type	value
 00428d1c	string	m_clas.cpp
 00428d27	string	m_clas.cpp
 00428d32	string	\t\tDone initializing current score to level score list and start qsort\n
+00428d79	string	%d
+00428d7c	string	%s
 00428d7f	string	%#2.2du%#2.2dm%#2.2ds
 00428d95	string	m_clas.cpp
 00428da0	string	TStand2.pcx
@@ -1034,6 +1113,7 @@ address	type	value
 0042985b	string	%s(%d) : ENTER DETECTED for editbox %s\n\n
 00429884	string	Speler
 0042988c	string	\twin_printwrapped ( focus=%d, x=%d, y=%d, maxw+%d, str=%s )\n
+004298c9	string	H
 004298cb	string	\twin_bprintf ( focus=%d, x=%d, y=%d, maxw+%d, str=%s )\n
 00429904	string	spel.cpp
 0042990d	string	spel.cpp
@@ -1120,6 +1200,7 @@ address	type	value
 00429cac	string	snd_buffer is busy %d\n
 00429cc4	string	inifile.cpp
 00429cd0	string	(set_ini_filename) %s(%d) : filename has incorrect lenght.
+00429d0b	string	\\
 00429d0d	string	inifile.cpp
 00429d19	string	(write_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
 00429d65	string	inifile.cpp
@@ -1128,6 +1209,7 @@ address	type	value
 00429dc8	string	(read_ini_value_setting) %s(%d) : No ini file set, use set_ini_filename .
 00429e12	string	inifile.cpp
 00429e1e	string	(read_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
+00429e6c	string	at+
 00429e70	string	debug.txt
 00429e7a	string	Releasing screen\n
 00429e8c	string	Releasing buffer screen\n
@@ -1135,6 +1217,7 @@ address	type	value
 00429ebe	string	Releasing dd object\n
 00429ed3	string	post quit\n
 00429ede	string	[%d] %s\n
+00429ee7	string	Fout
 00429eec	string	initlib.cpp
 00429ef8	string	 %s(%d) : error flipping surfaces\n
 00429f1b	string	initlib.cpp
@@ -1285,6 +1368,7 @@ address	type	value
 0042b1d9	string	%s, %s\n
 0042b1e1	string	SB16.VXD
 0042b1ea	string	sb16 driver found %d\n
+0042b200	string	.VXD
 0042b205	string	secondary driver found %d\n
 0042b220	string	sound.cpp
 0042b22a	string	 %s(%d) : error creating sound buffer (%s)\n
@@ -1341,6 +1425,7 @@ address	type	value
 0042b7bb	string	 %s(%d) : not enough memory to create sound buffers\n
 0042b7f0	string	 %s(%d) : error illegal sound mode selected\n
 0042b81d	string	STEREO
+0042b824	string	MONO
 0042b829	string	setting sound format %dHz %dbits %s\n
 0042b84e	string	init smacker\n
 0042b85c	string	init smacker done\n
@@ -1364,6 +1449,7 @@ address	type	value
 0042ba75	string	 %s(%d) : error illegal sound mode selected\n
 0042baa2	string	setting 3d output format\n
 0042babc	string	STEREO
+0042bac3	string	MONO
 0042bac8	string	setting sound format %dHz %dbits %s\n
 0042baed	string	query interface\n
 0042bafe	string	sound.cpp
@@ -1493,11 +1579,11 @@ address	type	value
 0042c7c9	string	 %s(%d) : error set listener orientation\n
 0042c7f3	string	sound.cpp
 0042c7fd	string	 %s(%d) : error set listener orientation\n
-0042c82d	string	$@sound.cpp
+0042c82f	string	sound.cpp
 0042c839	string	 %s(%d) : error set listener orientation\n
-0042c869	string	$@sound.cpp
+0042c86b	string	sound.cpp
 0042c875	string	 %s(%d) : error set listener orientation\n
-0042c8a5	string	$@sound.cpp
+0042c8a7	string	sound.cpp
 0042c8b1	string	 %s(%d) : error set listener orientation\n
 0042c8db	string	new 3d buffer used %d\n
 0042c8f2	string	sound.cpp
@@ -1520,22 +1606,29 @@ address	type	value
 0042cabf	string	sound.cpp
 0042cac9	string	 %s(%d) : error releasing sound buffer (%s)\n
 0042caf8	string	x:%s\\%s
+0042cb00	string	\\
 0042cb02	string	x:\\%s
+0042cb08	string	NOCD
+0042cb0d	string	NOCD
 0042cb12	string	fatal error : no program cdrom was found\n
 0042cb3c	string	program installation check failed\n
 0042cb61	string	path=%s\n
+0042cb6a	string	r
 0042cb6c	string	failed goto path=%s\n
 0042cb84	string	fileio.cpp
 0042cb8f	string	 %s(%d) : warning : double call to init_fileio potential error.\n
 0042cbd0	string	init fileio\n
+0042cbdd	string	rb
 0042cbe0	string	fileio.cpp
 0042cbeb	string	%s(%d) : could not open <%s>
 0042cc08	string	fileio.cpp
 0042cc13	string	%s(%d) : could not open <%s>
 0042cc30	string	fileio.cpp
 0042cc3b	string	 %s(%d) : error not enough memory to allocate a file list\n
+0042cc76	string	%s\n
 0042cc7a	string	fileio.cpp
 0042cc85	string	 %s(%d) : error while reading file list\n
+0042ccae	string	rb
 0042ccb1	string	fileio.cpp
 0042ccbc	string	%s(%d) : could not open <%s>
 0042ccd9	string	%s is %d bytes\n
@@ -1556,10 +1649,12 @@ address	type	value
 0042ce0e	string	%s(%d) : null ptr assignment !
 0042ce2d	string	fileio.cpp
 0042ce38	string	%s(%d) : attempt at reading unopened file length
+0042ce69	string	rb
 0042ce6c	string	fileio.cpp
 0042ce77	string	 %s(%d)  : file open failed [%s]\n
 0042ce99	string	fileio.cpp
 0042cea4	string	 %s(%d)  : file open succeeded [%s]\n
+0042cec9	string	rb
 0042cecc	string	fileio.cpp
 0042ced7	string	 %s(%d)  : file open failed [%s]\n
 0042cef9	string	fileio.cpp
@@ -1676,6 +1771,8 @@ address	type	value
 0042dd15	string	 %s(%d) : index out of mem_image array failure %d\n
 0042dd48	string	sprite.cpp
 0042dd53	string	 %s(%d) : index out of mem_image array failure %d\n
+0042dd86	string	rb
+0042dd89	string	rb
 0042dd8c	string	sprite.cpp
 0042dd97	string	%s(%d) : index file seek error (probably wrong index %d)
 0042ddd0	string	converting to 16 bits\n
@@ -1683,6 +1780,7 @@ address	type	value
 0042ddfe	string	pf none\n
 0042de07	string	starting to show images 2\n
 0042de22	string	done show images\n
+0042de34	string	rb
 0042de37	string	%s maxmemimages = %d\n
 0042de4d	string	%s allocating images\n
 0042de63	string	%s allocating image %d\n
@@ -1747,7 +1845,7 @@ address	type	value
 0042e333	string	(set_joystick_keys) invalid joystick number (%d)\n
 0042e365	string	(set_joystick_keys) invalid joystick key type. (%d)\n
 0042e39a	string	(set_joystick_sencesibility) invalid percentage must be between 0.05 and 1
-0042e3ec	string	?(get_joystick_position) invalid joystick number (%d)\n
+0042e3ed	string	(get_joystick_position) invalid joystick number (%d)\n
 0042e424	string	(keyispressed) illegal device requested (%d)
 0042e454	string	msg.cpp
 0042e45c	string	 %s(%d) : DESTROY MESSAGE\n
@@ -1969,8 +2067,14 @@ address	type	value
 0042fd2e	string	 %s(%d) : (edit_windows_box) number of lines may not be zero or negative (min. 1)
 0042fd80	string	editbox.cpp
 0042fd8c	string	 %s(%d) : (edit_windows_box) number of chars may not be zero or negative 
+0042fdd6	string	 
+0042fdd8	string	 
 0042fdda	string	editbox.cpp
 0042fde6	string	 %s(%d) : (edit_windows_box) height of edit box (%d) to small for font height (%d) 
+0042fe3a	string	EDIT
+0042fe3f	string	EDIT
+0042fe44	string	EDIT
+0042fe49	string	EDIT
 0042fe4e	string	Unable to create a window for edit box (%d)
 0042fe7c	string	pure virtual function called!
 0042fe9c	string	ddinput.cpp
@@ -2069,6 +2173,7 @@ address	type	value
 004308df	string	 s(%d) : error attempting to find cdrom before drive list was made\n
 00430923	string	hwinfo.cpp
 0043092e	string	 %s(%d) : error not enough memory to allocate a palette\n
+00430967	string	%c:\\
 0043096c	string	%s = UNAVAILABLE\n
 0043097e	string	%s = UNAVAILABLE\n
 00430990	string	%s = NETWORK\n
@@ -2096,7 +2201,9 @@ address	type	value
 00430bb8	string	%s, %s\n
 00430bc0	string	DD3Dfx
 00430bc7	string	dd3ddfx driver found %d\n
+00430be0	string	R3D
 00430be4	string	Righteous dd3ddfx driver found %d\n
+00430c07	string	.VXD
 00430c0c	string	secondary driver found %d\n
 00430c27	string	using 3dfx driver %d\n
 00430c3d	string	using unknown secondary driver %d\n
@@ -2180,6 +2287,7 @@ address	type	value
 004316d6	string	Unable to create a window for radiobutton (%d)
 00431705	string	radiobut.cpp
 00431712	string	 %s(%d) : (draw_radiobutton) no valid window handle, not in form.
+00431754	string	con
 00431758	string	(wipe_vrollbarup) illegal call -> use handle_wipes
 0043178b	string	(wipe_vrollbardown) illegal call -> use handle_wipes
 004317c0	string	(wipe_draw_pixel_grid) illegal call -> use handle_wipes
@@ -2216,6 +2324,7 @@ address	type	value
 00431bb1	string	 %s(%d) : wipe_luxafle_horizontal blitting error
 00431be2	string	wipeluxa.cpp
 00431bef	string	 %s(%d) : wipe_luxafle_horizontal blitting error
+00431c20	string	TZ
 00431c24	string	read from
 00431c2e	string	written
 00431c36	string	The instruction at %08lx referenced memory at %08lx\nThe memory could not be %s
@@ -2234,6 +2343,7 @@ address	type	value
 00431e6c	string	conin$
 00431e73	string	conout$
 00431e7c	string	Thread has no thread-specific data\r\n
+00431eb4	string	__bgnthd
 00431ee1	string	acosh
 00431ef0	string	log10
 00431ef6	string	atanh
@@ -2246,6 +2356,8 @@ address	type	value
 00431f6b	string	Underflow range error
 00431f81	string	Total loss of significance
 00431f9c	string	Partial loss of significance
+00431fb9	string	 in 
+00432198	string	en
 004321c0	string	David
 004321ec	string	Rogier
 00432270	string	Richard
@@ -2286,6 +2398,20 @@ address	type	value
 00432cc0	string	Richard
 00432cec	string	Brian
 00432d44	string	Milan
+00433060	string	B
+004331b0	string	o
+0043428c	string	B
+004343dc	string	P
+00435324	string	&
+0043537c	string	4
+004353b8	string	6
+00435414	string	Q
+00435434	string	\r
+00435444	string	\n
+0043546c	string	K
+00435474	string	L
+0043547c	string	M
+004361e8	string	a
 00443528	TerminatedCString	ADVAPI32.dll
 00443535	TerminatedCString	WINMM.dll
 0044353f	TerminatedCString	GDI32.dll
