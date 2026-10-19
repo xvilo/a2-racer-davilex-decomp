@@ -1,16 +1,29 @@
 // Headless Ghidra script: decompile every function of the current program.
 // Usage (via tools/decompile_all.sh):
-//   analyzeHeadless <proj> <name> -import <bin> -postScript ExportDecompiled.java <outdir>
-// Writes <outdir>/decompiled.c, functions.tsv and strings.tsv.
+//   analyzeHeadless <proj> <name> -import <bin> -postScript ExportDecompiled.java <outdir> [names.tsv]
+// Writes <outdir>/decompiled.c, functions.tsv and strings.tsv. Rows of kind "local" in
+// names.tsv rename a decompiler variable first (address = function entry, dtype = old name).
 //@category A2Racer
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import ghidra.app.decompiler.DecompInterface;
 import ghidra.app.decompiler.DecompileOptions;
 import ghidra.app.decompiler.DecompileResults;
 import ghidra.app.script.GhidraScript;
+import ghidra.program.model.address.Address;
+import ghidra.program.model.pcode.HighFunction;
+import ghidra.program.model.pcode.HighFunctionDBUtil;
+import ghidra.program.model.pcode.HighSymbol;
+import ghidra.program.model.symbol.SourceType;
 import ghidra.program.model.listing.Data;
 import ghidra.program.model.listing.DataIterator;
 import ghidra.program.model.listing.Function;
@@ -23,11 +36,14 @@ public class ExportDecompiled extends GhidraScript {
 		String[] args = getScriptArgs();
 		File outDir = new File(args.length > 0 ? args[0] : ".");
 		outDir.mkdirs();
+		Map<Address, List<String[]>> renames = args.length > 1 ? readRenames(new File(args[1]))
+				: new HashMap<>();
+		int renamed = 0;
 
 		DecompInterface decomp = new DecompInterface();
 		decomp.setOptions(new DecompileOptions());
 		decomp.toggleCCode(true);
-		decomp.toggleSyntaxTree(false);
+		decomp.toggleSyntaxTree(true);
 		decomp.setSimplificationStyle("decompile");
 		if (!decomp.openProgram(currentProgram)) {
 			throw new RuntimeException("Decompiler failed to open program: " + decomp.getLastMessage());
@@ -47,6 +63,11 @@ public class ExportDecompiled extends GhidraScript {
 				c.println();
 				c.println("/* ==== " + f.getEntryPoint() + " " + f.getName() + " ==== */");
 				DecompileResults r = decomp.decompileFunction(f, 120, monitor);
+				List<String[]> want = renames.get(f.getEntryPoint());
+				if (want != null && r != null && r.getHighFunction() != null) {
+					renamed += rename(r.getHighFunction(), want);
+					r = decomp.decompileFunction(f, 120, monitor);
+				}
 				if (r != null && r.decompileCompleted() && r.getDecompiledFunction() != null) {
 					c.print(r.getDecompiledFunction().getC());
 					status = "ok";
@@ -79,6 +100,45 @@ public class ExportDecompiled extends GhidraScript {
 				}
 			}
 		}
-		println("ExportDecompiled: " + ok + " functions decompiled, " + failed + " failed -> " + outDir);
+		println("ExportDecompiled: " + ok + " functions decompiled, " + failed + " failed, " +
+			renamed + " variables renamed -> " + outDir);
+	}
+
+	private Map<Address, List<String[]>> readRenames(File tsv) throws Exception {
+		Map<Address, List<String[]>> m = new HashMap<>();
+		try (BufferedReader r = new BufferedReader(new FileReader(tsv))) {
+			String line;
+			while ((line = r.readLine()) != null) {
+				String[] c = line.split("\t", -1);
+				if (c.length > 6 && c[1].equals("local")) {
+					m.computeIfAbsent(toAddr(c[0]), k -> new ArrayList<>())
+							.add(new String[] { c[6], c[2] });
+				}
+			}
+		}
+		return m;
+	}
+
+	/** Renames decompiler variables (old -> new); returns how many were applied. */
+	private int rename(HighFunction hf, List<String[]> want) {
+		int n = 0;
+		for (String[] w : want) {
+			Iterator<HighSymbol> it = hf.getLocalSymbolMap().getSymbols();
+			while (it.hasNext()) {
+				HighSymbol sym = it.next();
+				if (sym.getName().equals(w[0])) {
+					try {
+						HighFunctionDBUtil.updateDBVariable(sym, w[1], null, SourceType.USER_DEFINED);
+						n++;
+					}
+					catch (Exception e) {
+						printerr("ExportDecompiled: " + hf.getFunction().getName() + ": cannot rename " +
+							w[0] + " -> " + w[1] + ": " + e.getMessage());
+					}
+					break;
+				}
+			}
+		}
+		return n;
 	}
 }
