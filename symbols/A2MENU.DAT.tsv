@@ -1,0 +1,1543 @@
+address	kind	name	cc	ret	params	dtype	mangled
+00401003	label	begtext			?		___begtext
+00401010	function	main_init_settings	__watcall	void			W?main_init_settings$n()v
+0040107b	function	main_init_sound	__watcall	void			W?main_init_sound$n()v
+00401218	function	WinMain	__stdcall		?		_WinMain@16
+004014c8	function	win_open_menu	__watcall	int			W?win_open_menu$n()i
+004016c9	function	win_close_menu	__watcall	int			W?win_close_menu$n()i
+004017b6	function	win_handle_menu	__watcall	int	int		W?win_handle_menu$n(i)i
+00401864	function	file_exist	__watcall	int	char*		W?file_exist$n(pna)i
+0040189c	function	file_size	__watcall	int	char*		W?file_size$n(pna)i
+0040194b	function	file_read	__watcall	int	void*|int|char*		W?file_read$n(pnvipna)i
+004019f0	function	file_write	__watcall	int	void*|int|char*		W?file_write$n(pnvipna)i
+00401a98	function	file_delete	__watcall	void	char*		W?file_delete$n(pna)v
+00401aa0	function	load_tmp_optie	__watcall	void	char*		W?load_tmp_optie$n(pna)v
+00401afe	function	init_optie	__watcall	void			W?init_optie$n()v
+00401bb3	function	save_optie	__watcall	void			W?save_optie$n()v
+00401bb8	function	save_tmp_optie	__watcall	void	char*		W?save_tmp_optie$n(pna)v
+00401c00	function	load_tmp_bedien	__watcall	void	char*		W?load_tmp_bedien$n(pna)v
+00401c5e	function	init_bedien	__watcall	void			W?init_bedien$n()v
+00401d30	function	save_bedien	__watcall	void			W?save_bedien$n()v
+00401d49	function	save_tmp_bedien	__watcall	void	char*		W?save_tmp_bedien$n(pna)v
+00401d90	function	slot_check_index	__watcall	int	int|char*|int		W?slot_check_index$n(ipnai)i
+00401db2	function	slot_check_level	__watcall	int	int|char*|int		W?slot_check_level$n(ipnai)i
+00401dd4	function	create_slot	__watcall	void	int|char*		W?create_slot$n(ipna)v
+00402267	function	clear_slot	__watcall	void	int		W?clear_slot$n(i)v
+00402601	function	reset_slot	__watcall	void	int		W?reset_slot$n(i)v
+00402979	function	load_tmp_slotdbase	__watcall	void	char*		W?load_tmp_slotdbase$n(pna)v
+004029de	function	init_slotdbase	__watcall	void			W?init_slotdbase$n()v
+00402b34	function	save_slotdbase	__watcall	void			W?save_slotdbase$n()v
+00402b50	function	save_tmp_slotdbase	__watcall	void	char*		W?save_tmp_slotdbase$n(pna)v
+00402b9f	function	get_last_saved_slot	__watcall	int			W?get_last_saved_slot$n()i
+00402c46	function	set_active_slot	__watcall	void	int		W?set_active_slot$n(i)v
+00402d21	function	update_active_slot_optie	__watcall	void			W?update_active_slot_optie$n()v
+00402dce	function	update_active_slot_bediening	__watcall	void			W?update_active_slot_bediening$n()v
+00402e7e	function	slot_naam_string	__watcall	char*	int		W?slot_naam_string$n(i)pna
+00402eee	function	slot_level_string	__watcall	char*	int		W?slot_level_string$n(i)pna
+00402f64	function	slot_tijd_string	__watcall	char*	int		W?slot_tijd_string$n(i)pna
+00403081	function	slot_count_total_tijd	__watcall	int	int|int		W?slot_count_total_tijd$n(ii)i
+00403124	function	slot_count_total_tijd_speler	__watcall	int	int|int		W?slot_count_total_tijd_speler$n(ii)i
+00403310	function	check_score_index	__watcall	int	int|char*|int		W?check_score_index$n(ipnai)i
+00403332	function	check_score_level	__watcall	int	int|char*|int		W?check_score_level$n(ipnai)i
+00403354	function	load_tmp_scoredbase	__watcall	void	char*		W?load_tmp_scoredbase$n(pna)v
+004033b9	function	init_scoredbase	__watcall	void			W?init_scoredbase$n()v
+0040346b	function	save_scoredbase	__watcall	void			W?save_scoredbase$n()v
+00403487	function	save_tmp_scoredbase	__watcall	void	char*		W?save_tmp_scoredbase$n(pna)v
+004034d6	function	get_last_entered_hiscore	__watcall	int			W?get_last_entered_hiscore$n()i
+00403510	function	get_last_entered_levelscore	__watcall	int	int		W?get_last_entered_levelscore$n(i)i
+00403568	function	compare_score	__watcall	int	void*|void*		W?compare_score$n(pnxvpnxv)i
+004035a2	function	add_new_hiscore	__watcall	int	char*|int|int|int		W?add_new_hiscore$n(pnaiii)i
+00403720	function	add_new_levelscore	__watcall	int	char*|int|int|int		W?add_new_levelscore$n(pnaiii)i
+004038f4	function	load_infio	__watcall	void			W?load_infio$n()v
+00403c46	function	save_infio	__watcall	void			W?save_infio$n()v
+00403f9b	function	init_infio	__watcall	void			W?init_infio$n()v
+00404100	function	make_bmp_screen_shot	__watcall	void			W?make_bmp_screen_shot$n()v
+00404101	function	wait_escape_pressed	__watcall	void			W?wait_escape_pressed$n()v
+00404116	function	wait_enter_pressed	__watcall	void			W?wait_enter_pressed$n()v
+0040412b	function	wait_cursor_up_pressed	__watcall	void			W?wait_cursor_up_pressed$n()v
+00404140	function	wait_cursor_down_pressed	__watcall	void			W?wait_cursor_down_pressed$n()v
+00404155	function	mm_wait_snd	__watcall	void	int*		W?mm_wait_snd$n(pni)v
+00404196	function	mm_draw_info_text	__watcall	void	int|int		W?mm_draw_info_text$n(ii)v
+004042ea	function	mm_display_info	__watcall	void			W?mm_display_info$n()v
+004043be	function	mm_af_image	__watcall	int	int|int|char*|int		W?mm_af_image$n(iipnai)i
+00404400	function	mm_animate_buttons	__watcall	void			W?mm_animate_buttons$n()v
+00404564	function	mm_animate_map	__watcall	void	int		W?mm_animate_map$n(i)v
+00404610	function	mm_open_screen	__watcall	int	int		W?mm_open_screen$n(i)i
+00404724	function	mm_close_screen	__watcall	void	int		W?mm_close_screen$n(i)v
+00404798	function	mm_handle_tmp_hiscore	__watcall	void			W?mm_handle_tmp_hiscore$n()v
+004048df	function	mm_handle_opnieuw_spel	__watcall	void			W?mm_handle_opnieuw_spel$n()v
+00404a74	function	menu_main	__watcall	int	int		W?menu_main$n(i)i
+00404f10	function	mst_draw_selected_slot_info	__watcall	void	int		W?mst_draw_selected_slot_info$n(i)v
+00405090	function	mst_draw_slot_info	__watcall	void	int		W?mst_draw_slot_info$n(i)v
+004052e8	function	mst_reselect_slot	__watcall	void	int|int		W?mst_reselect_slot$n(ii)v
+0040537f	function	mst_print_slot	__watcall	void	int		W?mst_print_slot$n(i)v
+00405429	function	mst_handle_intro	__watcall	void	int		W?mst_handle_intro$n(i)v
+004054d9	function	mst_open_screen	__watcall	void	int		W?mst_open_screen$n(i)v
+00405598	function	mst_close_screen	__watcall	void			W?mst_close_screen$n()v
+004055ed	function	menu_start	__watcall	int	int		W?menu_start$n(i)i
+00405ab8	function	mc_af_image	__watcall	int	int|int|char*|int		W?mc_af_image$n(iipnai)i
+00405afa	function	mc_clear_text_bar	__watcall	void			W?mc_clear_text_bar$n()v
+00405b39	function	mc_print_text_bar	__cdecl	void	char*		W?mc_print_text_bar$n(pnae)v
+00405c0e	function	scan_2_ckey	__watcall	int	int		W?scan_2_ckey$n(i)i
+00405c35	function	load_ckey	__watcall	void			W?load_ckey$n()v
+00405c67	function	save_ckey	__watcall	void			W?save_ckey$n()v
+00405c96	function	print_keys	__watcall	void			W?print_keys$n()v
+00405dac	function	clear_keys	__watcall	void			W?clear_keys$n()v
+00405e2a	function	clear_all_ckey	__watcall	void			W?clear_all_ckey$n()v
+00405e57	function	ckey_defined	__watcall	int	int		W?ckey_defined$n(i)i
+00405e7f	function	ckey_new_define	__watcall	int	int		W?ckey_new_define$n(i)i
+00405eb2	function	mb_read_key	__watcall	int			W?mb_read_key$n()i
+00405f26	function	mc_animate_open_textbox	__watcall	void			W?mc_animate_open_textbox$n()v
+00405f8d	function	mc_animate_close_textbox	__watcall	void			W?mc_animate_close_textbox$n()v
+00405fec	function	config_keys	__watcall	int			W?config_keys$n()i
+004061fb	function	display_keys	__watcall	void			W?display_keys$n()v
+0040629a	function	display_joystick	__watcall	void			W?display_joystick$n()v
+0040631e	function	display_stuur	__watcall	void			W?display_stuur$n()v
+00406363	function	mc_display_controls	__watcall	void			W?mc_display_controls$n()v
+004063f8	function	mc_animate_buttons	__watcall	void			W?mc_animate_buttons$n()v
+00406491	function	mc_open_screen	__watcall	int			W?mc_open_screen$n()i
+00406527	function	mc_close_screen	__watcall	void			W?mc_close_screen$n()v
+0040654d	function	menu_bedien	__watcall	int			W?menu_bedien$n()i
+00406898	function	mo_af_image	__watcall	int	int|int|char*|int		W?mo_af_image$n(iipnai)i
+004068f2	function	mc_active_form	__watcall	void			W?mc_active_form$n()v
+00406919	function	mc_display_geluid	__watcall	void			W?mc_display_geluid$n()v
+00406b09	function	mc_display_horizon	__watcall	void			W?mc_display_horizon$n()v
+00406c0b	function	mc_display_detail	__watcall	void			W?mc_display_detail$n()v
+00406d12	function	mc_display_dashbord	__watcall	void			W?mc_display_dashbord$n()v
+00406e14	function	mc_display_inhoud	__watcall	void			W?mc_display_inhoud$n()v
+00406eb0	function	mc_display_snd_setting	__watcall	void			W?mc_display_snd_setting$n()v
+00406fe2	function	mc_display_tableau	__watcall	void			W?mc_display_tableau$n()v
+0040707b	function	mo_animate_buttons	__watcall	void			W?mo_animate_buttons$n()v
+00407114	function	mo_open_screen	__watcall	int			W?mo_open_screen$n()i
+0040718b	function	mo_close_screen	__watcall	void			W?mo_close_screen$n()v
+00407242	function	menu_opties	__watcall	int	int*|char*		W?menu_opties$n(pnipna)i
+00407880	function	ms_af_image	__watcall	int	int|int|char*|int		W?ms_af_image$n(iipnai)i
+004078dc	function	ms_get_current_display	__watcall	int	int		W?ms_get_current_display$n(i)i
+00407910	function	ms_print_score	__watcall	void	single_score_t*|int|int|int		W?ms_print_score$n(pn$single_score_t$$iii)v
+00407a2f	function	ms_print_hiscore	__watcall	void	single_score_t*|int|int|int		W?ms_print_hiscore$n(pn$single_score_t$$iii)v
+00407b7b	function	ms_display_score	__watcall	void	int		W?ms_display_score$n(i)v
+00407d33	function	ms_open_screen	__watcall	void	int		W?ms_open_screen$n(i)v
+00407dc2	function	ms_close_screen	__watcall	void			W?ms_close_screen$n()v
+00407de8	function	menu_score	__watcall	int	int		W?menu_score$n(i)i
+00407ed0	function	mds_af_image	__watcall	int	int|int|char*|int		W?mds_af_image$n(iipnai)i
+00407f2c	function	mds_get_current_display	__watcall	int	int		W?mds_get_current_display$n(i)i
+00407f60	function	mds_print_score	__watcall	void	single_score_t*|int|int|int		W?mds_print_score$n(pn$single_score_t$$iii)v
+0040808e	function	mds_print_hiscore	__watcall	void	single_score_t*|int|int|int		W?mds_print_hiscore$n(pn$single_score_t$$iii)v
+004081c0	function	mds_display_score	__watcall	void	int		W?mds_display_score$n(i)v
+00408312	function	mds_open_screen	__watcall	void	int		W?mds_open_screen$n(i)v
+004083ac	function	mds_close_screen	__watcall	void			W?mds_close_screen$n()v
+004083f7	function	menu_display_score	__watcall	void	int		W?menu_display_score$n(i)v
+0040845c	function	mns_draw_selected_slot_info	__watcall	void	int		W?mns_draw_selected_slot_info$n(i)v
+004085cd	function	mns_draw_slot_info	__watcall	void	int		W?mns_draw_slot_info$n(i)v
+004087f4	function	mns_reselect_slot	__watcall	void	int|int		W?mns_reselect_slot$n(ii)v
+0040884c	function	mns_print_slot	__watcall	void	int		W?mns_print_slot$n(i)v
+004088b8	function	mns_open_screen	__watcall	void	int		W?mns_open_screen$n(i)v
+00408940	function	mns_close_screen	__watcall	void			W?mns_close_screen$n()v
+00408970	function	menu_nieuwesplr	__watcall	int			W?menu_nieuwesplr$n()i
+00408d7c	function	mdt_display_stand	__watcall	void	int|int|int|int		W?mdt_display_stand$n(iiii)v
+004091ad	function	mdt_display_score	__watcall	void	int		W?mdt_display_score$n(i)v
+00409243	function	mdt_open_screen	__watcall	void	int		W?mdt_open_screen$n(i)v
+004092da	function	mdt_close_screen	__watcall	void			W?mdt_close_screen$n()v
+00409325	function	menu_display_stand	__watcall	void	int		W?menu_display_stand$n(i)v
+00409384	function	mdc_compare_score	__watcall	int	void*|void*		W?mdc_compare_score$n(pnxvpnxv)i
+004093b3	function	mdc_create_huidige_stand	__watcall	void			W?mdc_create_huidige_stand$n()v
+0040956e	function	mdc_display_huidige_stand	__watcall	void	int|int|int		W?mdc_display_huidige_stand$n(iii)v
+004096a8	function	mdc_display_score	__watcall	void			W?mdc_display_score$n()v
+00409739	function	mdc_open_screen	__watcall	void			W?mdc_open_screen$n()v
+004097f7	function	mdc_close_screen	__watcall	void			W?mdc_close_screen$n()v
+00409842	function	menu_display_classe	__watcall	void			W?menu_display_classe$n()v
+004098a0	function	init_anims	__watcall	int			W?init_anims$n()i
+00409903	function	init_anims_1	__watcall	int	int		W?init_anims$n(i)i
+0040994a	function	use_mm_menu_cfg_anims	__watcall	int			W?use_mm_menu_cfg_anims$n()i
+004099ce	function	free_mm_menu_cfg_anims	__watcall	int			W?free_mm_menu_cfg_anims$n()i
+00409a11	function	use_mc_menu_cfg_anims	__watcall	int			W?use_mc_menu_cfg_anims$n()i
+00409a95	function	free_mc_menu_cfg_anims	__watcall	int			W?free_mc_menu_cfg_anims$n()i
+00409ac5	function	use_mo_menu_cfg_anims	__watcall	int			W?use_mo_menu_cfg_anims$n()i
+00409b49	function	free_mo_menu_cfg_anims	__watcall	int			W?free_mo_menu_cfg_anims$n()i
+00409b79	function	use_ms_menu_cfg_anims	__watcall	int			W?use_ms_menu_cfg_anims$n()i
+00409bfd	function	free_ms_menu_cfg_anims	__watcall	int			W?free_ms_menu_cfg_anims$n()i
+00409c2d	function	use_reqwarn_cfg_anims	__watcall	int			W?use_reqwarn_cfg_anims$n()i
+00409cb1	function	free_reqwarn_cfg_anims	__watcall	int			W?free_reqwarn_cfg_anims$n()i
+00409ce1	function	use_reqvraag_cfg_anims	__watcall	int			W?use_reqvraag_cfg_anims$n()i
+00409d65	function	free_reqvraag_cfg_anims	__watcall	int			W?free_reqvraag_cfg_anims$n()i
+00409d95	function	use_reqinput_cfg_anims	__watcall	int			W?use_reqinput_cfg_anims$n()i
+00409e19	function	free_reqinput_cfg_anims	__watcall	int			W?free_reqinput_cfg_anims$n()i
+00409e49	function	use_mst_menu_cfg_anims	__watcall	int			W?use_mst_menu_cfg_anims$n()i
+00409ecd	function	free_mst_menu_cfg_anims	__watcall	int			W?free_mst_menu_cfg_anims$n()i
+00409efd	function	use_mds_menu_cfg_anims	__watcall	int			W?use_mds_menu_cfg_anims$n()i
+00409f81	function	free_mds_menu_cfg_anims	__watcall	int			W?free_mds_menu_cfg_anims$n()i
+00409fb1	function	use_mdt_menu_cfg_anims	__watcall	int			W?use_mdt_menu_cfg_anims$n()i
+0040a035	function	free_mdt_menu_cfg_anims	__watcall	int			W?free_mdt_menu_cfg_anims$n()i
+0040a065	function	use_mdc_menu_cfg_anims	__watcall	int			W?use_mdc_menu_cfg_anims$n()i
+0040a0e9	function	free_mdc_menu_cfg_anims	__watcall	int			W?free_mdc_menu_cfg_anims$n()i
+0040a119	function	use_mns_menu_cfg_anims	__watcall	int			W?use_mns_menu_cfg_anims$n()i
+0040a19d	function	free_mns_menu_cfg_anims	__watcall	int			W?free_mns_menu_cfg_anims$n()i
+0040a1d0	function	reqw_open	__watcall	void	char*		W?reqw_open$n(pna)v
+0040a2b6	function	reqw_close	__watcall	void			W?reqw_close$n()v
+0040a308	function	req_warning	__cdecl	int	char*		W?req_warning$n(pnae)i
+0040a3a4	function	reqv_stop_snd	__watcall	void	int*		W?reqv_stop_snd$n(pni)v
+0040a401	function	reqv_wait_snd	__watcall	void	int*		W?reqv_wait_snd$n(pni)v
+0040a433	function	reqv_open	__watcall	void	char*		W?reqv_open$n(pna)v
+0040a51f	function	reqv_close	__watcall	void			W?reqv_close$n()v
+0040a571	function	req_vraag	__cdecl	int	char*		W?req_vraag$n(pnae)i
+0040a658	function	reqi_stop_snd	__watcall	void	int*		W?reqi_stop_snd$n(pni)v
+0040a6b5	function	reqi_wait_snd	__watcall	void	int*		W?reqi_wait_snd$n(pni)v
+0040a6e7	function	reqi_open	__watcall	void	char*		W?reqi_open$n(pna)v
+0040a7fd	function	reqi_close	__watcall	void			W?reqi_close$n()v
+0040a85e	function	req_input	__cdecl	int	char*|int|char*		W?req_input$n(pnaipnae)i
+0040aa20	function	txt_get_word	__watcall	int	char*|char*		W?txt_get_word$n(pnapna)i
+0040aa73	function	txt_check_newline	__watcall	int	char*		W?txt_check_newline$n(pna)i
+0040aaa3	function	txt_crop_word	__watcall	char*	char*		W?txt_crop_word$n(pna)pna
+0040aac3	function	win_printwrapped	__cdecl	void	int|int|int|int|char*		W?win_printwrapped$n(iiiipnae)v
+0040ac58	function	win_bprintf	__cdecl	void	int|int|int|int|char*		W?win_bprintf$n(iiiipnae)v
+0040ad6c	function	reset_infio	__watcall	void			W?reset_infio$n()v
+0040b288	function	handle_game	__watcall	int			W?handle_game$n()i
+0040b92c	function	movie_play_finish	__watcall	void			W?movie_play_finish$n()v
+0040b92c	function	movie_play_intro	__watcall	void			W?movie_play_intro$n()v
+0040b92c	function	movie_play_outtro	__watcall	void			W?movie_play_outtro$n()v
+0040b930	function	snd_valid_buffer	__watcall	int	int		W?snd_valid_buffer$n(i)i
+0040b945	function	snd_stop	__watcall	void	int*		W?snd_stop$n(pni)v
+0040b9a9	function	snd_play	__watcall	void	int*|char*		W?snd_play$n(pnipna)v
+0040ba14	function	snd_play_looping	__watcall	void	int*|char*		W?snd_play_looping$n(pnipna)v
+0040ba82	function	snd_wait	__watcall	void	int*		W?snd_wait$n(pni)v
+0040bad8	function	snd_fade_out	__watcall	int	int*		W?snd_fade_out$n(pni)i
+0040bb4f	function	snd_set_volume	__watcall	int	int*|int		W?snd_set_volume$n(pnii)i
+0040bb8f	function	snd_get_volume	__watcall	int	int*		W?snd_get_volume$n(pni)i
+0040bbc8	function	set_ini_filename	__watcall	void	char*		W?set_ini_filename$n(pna)v
+0040bc91	function	write_ini_string_setting	__watcall	void	char*|char*|char*		W?write_ini_string_setting$n(pnapnapna)v
+0040bcc2	function	write_ini_value_setting	__watcall	void	char*|char*|int		W?write_ini_value_setting$n(pnapnai)v
+0040bd13	function	read_ini_value_setting	__watcall	uint	char*|char*		W?read_ini_value_setting$n(pnapna)ui
+0040bd47	function	read_ini_string_setting	__watcall	void	char*|char*|char*|int		W?read_ini_string_setting$n(pnapnapnai)v
+0040bd80	function	set_debugmsg_state	__watcall	void	int|int		W?set_debugmsg_state$n(ii)v
+0040bd8c	function	debugmsg	__cdecl	void	char*		W?debugmsg$n(pnae)v
+0040be1f	function	message	__cdecl	int	char*		W?message$n(pnae)i
+0040be73	function	exit_xvga_lib	__watcall	void			W?exit_xvga_lib$n()v
+0040bf81	function	fatal_exit	__cdecl	int	char*		W?fatal_exit$n(pnae)i
+0040c02d	function	xvga_flip_page	__watcall	void			W?xvga_flip_page$n()v
+0040c125	function	set_xvga_vars	__watcall	int	int|int|int		W?set_xvga_vars$n(iii)i
+0040c168	function	get_xvga_vars	__watcall	int	int		W?get_xvga_vars$n(i)i
+0040c195	function	dd_error_string	__watcall	char*	long		W?dd_error_string$n(l)pna
+0040c47d	function	get_surface_ptr	__watcall	uchar*	IDirectDrawSurface*		W?get_surface_ptr$n(pn$IDirectDrawSurface$$)pnuc
+0040c4d9	function	get_surface_ptr_1	__watcall	uchar*	int		W?get_surface_ptr$n(i)pnuc
+0040c5a7	function	get_surface_ptr_2	__watcall	uchar*	int|int*		W?get_surface_ptr$n(ipni)pnuc
+0040c67d	function	get_surface_ptr_3	__watcall	uchar*	IDirectDrawSurface*|int*		W?get_surface_ptr$n(pn$IDirectDrawSurface$$pni)pnuc
+0040c6e1	function	reset_surface_ptr	__watcall	void	int|void*		W?reset_surface_ptr$n(ipnv)v
+0040c776	function	reset_surface_ptr_1	__watcall	void	IDirectDrawSurface*|void*		W?reset_surface_ptr$n(pn$IDirectDrawSurface$$pnv)v
+0040c7a8	function	create_surface	__watcall	IDirectDrawSurface*	int|int		W?create_surface$n(ii)pn$IDirectDrawSurface$$
+0040c828	function	create_surface_1	__watcall	IDirectDrawSurface*	int|int|int		W?create_surface$n(iii)pn$IDirectDrawSurface$$
+0040c8a3	function	create_surface_2	__watcall	IDirectDrawSurface*	int|int|int|int		W?create_surface$n(iiii)pn$IDirectDrawSurface$$
+0040c91c	function	create_surface_3	__watcall	IDirectDrawSurface*	int|int|int|int|int		W?create_surface$n(iiiii)pn$IDirectDrawSurface$$
+0040c9ab	function	create_surface_4	__watcall	IDirectDrawSurface*	int|int|int|_DDPIXELFORMAT*		W?create_surface$n(iiipn$_DDPIXELFORMAT$$)pn$IDirectDrawSurface$$
+0040ca38	function	create_surface_5	__watcall	IDirectDrawSurface*	int|int|int|_DDPIXELFORMAT*|int		W?create_surface$n(iiipn$_DDPIXELFORMAT$$i)pn$IDirectDrawSurface$$
+0040cad6	function	get_surface_info	__watcall	void	IDirectDrawSurface*|int*|int*		W?get_surface_info$n(pn$IDirectDrawSurface$$pnipni)v
+0040cb3e	function	xvga_check_lock_ability	__watcall	int	int		W?xvga_check_lock_ability$n(i)i
+0040cbe5	function	do_screen_update	__watcall	void			W?do_screen_update$n()v
+0040cc30	function	do_store_screen	__watcall	void			W?do_store_screen$n()v
+0040cc72	function	do_back_screen_update	__watcall	void			W?do_back_screen_update$n()v
+0040ccbd	function	clear_screen	__watcall	void	int|int		W?clear_screen$n(ii)v
+0040ccfb	function	init_lib_surfaces	__watcall	void			W?init_lib_surfaces$n()v
+0040d007	function	exit_lib_surfaces	__watcall	void			W?exit_lib_surfaces$n()v
+0040d097	function	init_xvga_lib	__watcall	int	void*|int|char*|char*		W?init_xvga_lib$n(pnvipnapna)i
+0040d349	function	set_xvga_resolution	__watcall	int	int		W?set_xvga_resolution$n(i)i
+0040d473	function	reset_xvga_resolution	__watcall	int			W?reset_xvga_resolution$n()i
+0040d4a8	function	ds_error_string	__watcall	char*	long		W?ds_error_string$n(l)pna
+0040d548	function	xvga_init_sound_info	__watcall	int	int		W?xvga_init_sound_info$n(i)i
+0040d5b1	function	get_new_sound_info	__watcall	int			W?get_new_sound_info$n()i
+0040d5d1	function	enum_sound_info_callback	__watcall	int	_GUID*|char*|char*|void*		W?enum_sound_info_callback$n(pn$_GUID$$pnapnapnv)i
+0040d6e8	function	xvga_get_sound_info	__watcall	int			W?xvga_get_sound_info$n()i
+0040d708	function	set_output_format	__watcall	int	int|int|int|int		W?set_output_format$n(iiii)i
+0040d821	function	set_3d_output_format	__watcall	int	int|int|int|int		W?set_3d_output_format$n(iiii)i
+0040d937	function	create_sound_buffer	__watcall	IDirectSoundBuffer*	int|int|int|int|int		W?create_sound_buffer$n(iiiii)pn$IDirectSoundBuffer$$
+0040d9f7	function	create_3d_sound_buffer	__watcall	int	IDirectSoundBuffer**|IDirectSound3DBuffer**|int|int|int|int|int		W?create_3d_sound_buffer$n(pnpn$IDirectSoundBuffer$$pnpn$IDirectSound3DBuffer$$iiiii)i
+0040dae7	label	W_duplicate_sound_buffer_n_pn_IDirectSoundBuffer___pn_1_			?		W?duplicate_sound_buffer$n(pn$IDirectSoundBuffer$$)pn$1$
+0040db28	function	sound_buffer_busy	__watcall	int	int		W?sound_buffer_busy$n(i)i
+0040dbbf	function	stop_sound_buffer	__watcall	int	int		W?stop_sound_buffer$n(i)i
+0040dcc8	function	stop_all_sound_buffers	__watcall	int			W?stop_all_sound_buffers$n()i
+0040dcff	function	delete_all_sound_buffers	__watcall	int			W?delete_all_sound_buffers$n()i
+0040dd71	function	search_sound_buffer	__watcall	int	char*|int|int|int		W?search_sound_buffer$n(pnaiii)i
+0040ddc0	function	get_free_buffer	__watcall	int			W?get_free_buffer$n()i
+0040de01	function	get_free_buffer_1	__watcall	int	int		W?get_free_buffer$n(i)i
+0040de54	function	delete_sound_buffer	__watcall	int	int		W?delete_sound_buffer$n(i)i
+0040df11	function	xvga_exit_sound	__watcall	void			W?xvga_exit_sound$n()v
+0040df63	function	xvga_init_sound	__watcall	int	int|int		W?xvga_init_sound$n(ii)i
+0040e265	function	xvga_init_sound_1	__watcall	int	int|int|int		W?xvga_init_sound$n(iii)i
+0040e5e9	function	set_sound_buffer_freq	__watcall	int	int|int		W?set_sound_buffer_freq$n(ii)i
+0040e692	function	get_sound_buffer_freq	__watcall	int	int		W?get_sound_buffer_freq$n(i)i
+0040e716	function	set_sound_buffer_vol	__watcall	int	int|int		W?set_sound_buffer_vol$n(ii)i
+0040e7bf	function	get_sound_buffer_vol	__watcall	int	int		W?get_sound_buffer_vol$n(i)i
+0040e83d	function	set_sound_buffer_pan	__watcall	int	int|int		W?set_sound_buffer_pan$n(ii)i
+0040e912	function	get_sound_buffer_pan	__watcall	int	int		W?get_sound_buffer_pan$n(i)i
+0040e9b9	function	load_sound_buffer_data	__watcall	int	int|__iobuf*|int|int		W?load_sound_buffer_data$n(ipn$__iobuf$$ii)i
+0040eac7	function	load_wave_file	__watcall	int	char*|int		W?load_wave_file$n(pnai)i
+0040ec34	function	play_sound_buffer	__watcall	int	int|int		W?play_sound_buffer$n(ii)i
+0040ecd3	function	play_sound_buffer_1	__watcall	int	char*|int		W?play_sound_buffer$n(pnai)i
+0040eeb3	function	play_sound_buffer_2	__watcall	int	char*|int|int		W?play_sound_buffer$n(pnaii)i
+0040f0a3	function	load_sound_buffer	__watcall	int	char*|int		W?load_sound_buffer$n(pnai)i
+0040f237	function	set_3dsound_buffer_pos	__watcall	int	int|float|float|float		W?set_3dsound_buffer_pos$n(ibbb)i
+0040f2eb	function	set_3dsound_buffer_pos_1	__watcall	int	int|_D3DVECTOR*		W?set_3dsound_buffer_pos$n(ipn$_D3DVECTOR$$)i
+0040f396	function	set_3dsound_buffer_velocity	__watcall	int	int|_D3DVECTOR*		W?set_3dsound_buffer_velocity$n(ipn$_D3DVECTOR$$)i
+0040f441	function	set_3dsound_buffer_velocity_1	__watcall	int	int|float|float|float		W?set_3dsound_buffer_velocity$n(ibbb)i
+0040f4f2	function	get_3dsound_buffer_pos	__watcall	int	int|float*|float*|float*		W?get_3dsound_buffer_pos$n(ipnbpnbpnb)i
+0040f5b7	function	get_3dsound_buffer_pos_1	__watcall	int	int|_D3DVECTOR*		W?get_3dsound_buffer_pos$n(ipn$_D3DVECTOR$$)i
+0040f65c	function	set_3dlistener_pos	__watcall	int	float|float|float		W?set_3dlistener_pos$n(bbb)i
+0040f6a8	function	set_3dlistener_velocity	__watcall	int	float|float|float		W?set_3dlistener_velocity$n(bbb)i
+0040f6e7	function	set_3dlistener_pos_1	__watcall	int	_D3DVECTOR*		W?set_3dlistener_pos$n(pn$_D3DVECTOR$$)i
+0040f730	function	set_3dlistener_velocity_1	__watcall	int	_D3DVECTOR*		W?set_3dlistener_velocity$n(pn$_D3DVECTOR$$)i
+0040f76d	function	get_3dlistener_pos	__watcall	int	_D3DVECTOR*		W?get_3dlistener_pos$n(pn$_D3DVECTOR$$)i
+0040f7a2	function	get_3dlistener_velocity	__watcall	int	_D3DVECTOR*		W?get_3dlistener_velocity$n(pn$_D3DVECTOR$$)i
+0040f7e2	function	get_3dlistener_pos_1	__watcall	int	float*|float*|float*		W?get_3dlistener_pos$n(pnbpnbpnb)i
+0040f83e	function	get_3dlistener_velocity_1	__watcall	int	float*|float*|float*		W?get_3dlistener_velocity$n(pnbpnbpnb)i
+0040f87a	label	W_set_3dlistener_orientation_n_pn__D3DVECTOR__pn_1__i			?		W?set_3dlistener_orientation$n(pn$_D3DVECTOR$$pn$1$)i
+0040f8c9	function	set_3dlistener_orientation	__watcall	int	float|float|float|float|float|float		W?set_3dlistener_orientation$n(bbbbbb)i
+0040f921	function	set_3dlistener_dopplerfactor	__watcall	int	float		W?set_3dlistener_dopplerfactor$n(b)i
+0040f991	function	set_3dlistener_distancefactor	__watcall	int	float		W?set_3dlistener_distancefactor$n(b)i
+0040f9f3	function	set_3dlistener_rollofffactor	__watcall	int	float		W?set_3dlistener_rollofffactor$n(b)i
+0040fa5c	function	execute_ds3d_settings	__watcall	void			W?execute_ds3d_settings$n()v
+0040fa96	function	play_3dsound_buffer	__watcall	int	char*|int|float|float|float		W?play_3dsound_buffer$n(pnaibbb)i
+0040fc86	function	load_3dsound_buffer	__watcall	int	char*|int|float|float|float		W?load_3dsound_buffer$n(pnaibbb)i
+0040fd0d	function	stop_3dsound_buffer	__watcall	int	int		W?stop_3dsound_buffer$n(i)i
+0040fe06	function	strupr	__watcall		?		_strupr_
+0040fe06	function	strupr_1	__watcall		?		strupr_
+0040fe2b	function	time	__watcall		?		time_
+0040fe5a	function	initrandnext	__watcall		?		initrandnext_
+0040fe64	function	rand	__watcall		?		rand_
+0040fe88	function	srand	__watcall		?		srand_
+0040fe98	function	xvga_locate_cdrom	__watcall	void	char*|char*		W?xvga_locate_cdrom$n(pnapna)v
+0040ff41	function	file_path	__watcall	char*	char*|char*		W?file_path$n(pnapna)pna
+0040ffe4	function	xvga_init_fileio	__watcall	int	char*|char*		W?xvga_init_fileio$n(pnapna)i
+00410259	function	xvga_src_fseek	__watcall	int	__iobuf*|int|int		W?xvga_src_fseek$n(pn$__iobuf$$ii)i
+00410360	function	xvga_src_filelength	__watcall	ulong	__iobuf*		W?xvga_src_filelength$n(pn$__iobuf$$)ul
+004103d2	function	xvga_src_fopen	__watcall	__iobuf*	char*		W?xvga_src_fopen$n(pna)pn$__iobuf$$
+00410500	function	xvga_src_fclose	__watcall	void	__iobuf*		W?xvga_src_fclose$n(pn$__iobuf$$)v
+00410575	function	xvga_exit_fileio	__watcall	void			W?xvga_exit_fileio$n()v
+004105c4	function	init_controls	__watcall	void			W?init_controls$n()v
+004106d2	function	clear_control_list	__watcall	void			W?clear_control_list$n()v
+004106e9	label	W_add_control_to_list_n_ipn_pn___2e8n7fform_t__i_vpn_pn_1__vpn_pn_1_i_ipn_pn_1__vpn_pn_1__vpn_pnvuiuil_l_v			?		W?add_control_to_list$n(ipn(pn$__2e8n7fform_t$$i)vpn(pn$1$)vpn(pn$1$i)ipn(pn$1$)vpn(pn$1$)vpn(pnvuiuil)l)v
+0041075c	function	get_mouse_type	__watcall	int			W?get_mouse_type$n()i
+0041077f	function	set_mouse_type	__watcall	void	int		W?set_mouse_type$n(i)v
+004107c8	function	init_mouse	__watcall	int			W?init_mouse$n()i
+00410831	function	release_mouse	__watcall	int			W?release_mouse$n()i
+0041084e	function	hide_mouse	__watcall	void			W?hide_mouse$n()v
+00410876	function	get_mouse_on	__watcall	int			W?get_mouse_on$n()i
+00410891	function	mouse_on	__watcall	void			W?mouse_on$n()v
+004108c4	function	show_mouse	__watcall	void			W?show_mouse$n()v
+004108ee	function	mouse_off	__watcall	void			W?mouse_off$n()v
+00410927	function	set_mouse_anim	__watcall	void	int|int|char		W?set_mouse_anim$n(iia)v
+00410a51	function	get_mouse_anim	__watcall	void	int*|int*|char*		W?get_mouse_anim$n(pnipnipna)v
+00410acd	function	set_mouse_pos	__watcall	void	int|int		W?set_mouse_pos$n(ii)v
+00410afd	function	get_mouse_pos	__watcall	void	int*|int*|int*		W?get_mouse_pos$n(pnipnipni)v
+00410b6e	function	set_mouse_hotspot	__watcall	void	int|int		W?set_mouse_hotspot$n(ii)v
+00410b9f	function	get_mouse_hotspot	__watcall	void	int*|int*		W?get_mouse_hotspot$n(pnipni)v
+00410bd3	function	draw_mouse	__watcall	void			W?draw_mouse$n()v
+00410cb6	function	handle_mouse	__watcall	int			W?handle_mouse$n()i
+00410d48	function	exit_help	__watcall	void			W?exit_help$n()v
+00410d69	function	init_help	__watcall	void			W?init_help$n()v
+00410e84	function	draw_grid	__watcall	void	int		W?draw_grid$n(i)v
+0041105f	function	play_help	__watcall	void	help_t*|int		W?play_help$n(pn$__1uqkethelp_t$$i)v
+0041117c	function	check_help_keys	__watcall	int			W?check_help_keys$n()i
+004111c3	function	get_free_help_key	__watcall	int			W?get_free_help_key$n()i
+004111e7	function	clear_help_keys	__watcall	void			W?clear_help_keys$n()v
+004111ff	function	set_help_key	__watcall	void	int		W?set_help_key$n(i)v
+00411230	function	strstr	__watcall		?		strstr_
+004112f0	function	get_mem_xsize	__watcall	int*	char*|int|int		W?get_mem_xsize$n(pnaii)pni
+00411365	function	get_mem_ysize	__watcall	int*	char*|int|int		W?get_mem_ysize$n(pnaii)pni
+004113dc	function	get_mem_mx	__watcall	int*	char*|int|int		W?get_mem_mx$n(pnaii)pni
+0041142b	function	get_mem_my	__watcall	int*	char*|int|int		W?get_mem_my$n(pnaii)pni
+0041147a	function	free_sprites	__watcall	void			W?free_sprites$n()v
+004114a1	function	alloc_sprites	__watcall	int	int		W?alloc_sprites$n(i)i
+00411542	function	set_sprite_image	__watcall	void	int|int		W?set_sprite_image$n(ii)v
+004115a0	function	get_sprite_image	__watcall	int	int		W?get_sprite_image$n(i)i
+00411600	function	alloc_mem_images	__watcall	int	int		W?alloc_mem_images$n(i)i
+00411677	function	alloc_mem_images_1	__watcall	int	int|int		W?alloc_mem_images$n(ii)i
+00411714	function	free_mem_images	__watcall	int			W?free_mem_images$n()i
+0041177d	function	alloc_mem_image	__watcall	int	int		W?alloc_mem_image$n(i)i
+00411956	function	free_mem_image	__watcall	int	int		W?free_mem_image$n(i)i
+00411a05	function	lock_mem_image	__watcall	int	int		W?lock_mem_image$n(i)i
+00411a56	function	lock_mem_image_1	__watcall	int	int|int*		W?lock_mem_image$n(ipni)i
+00411aab	function	unlock_mem_image	__watcall	int	int		W?unlock_mem_image$n(i)i
+00411af0	function	use_mem_images	__watcall	int	char*|char*|long*		W?use_mem_images$n(pnapnapnl)i
+00411e5f	function	disable_mem_images	__watcall	int	long*		W?disable_mem_images$n(pnl)i
+00411e83	function	disable_all_mem_images	__watcall	int			W?disable_all_mem_images$n()i
+00411ea5	function	show_mem_images	__watcall	int			W?show_mem_images$n()i
+00411f5e	function	init_mem_images	__watcall	int	char*|int		W?init_mem_images$n(pnai)i
+004122e2	function	wstart2	__watcall		?		_wstart2_
+00412360	function	get_string_width	__watcall	int	char*|int		W?get_string_width$n(pnai)i
+004123d8	function	get_string_height	__watcall	int	char*|int		W?get_string_height$n(pnai)i
+00412443	function	win_print_xy	__cdecl	int	int|int|int|char*		W?win_print_xy$n(iiipnae)i
+00412974	function	win_print_xy_1	__cdecl	int	int|int|int|ulong|ulong|char*		W?win_print_xy$n(iiiululpnae)i
+00412e6f	function	xvga_load_select_font	__watcall	int	char*|int|int|int		W?xvga_load_select_font$n(pnaiii)i
+00412eb0	function	xvga_load_font	__watcall	int	int|char*|int|int|int		W?xvga_load_font$n(ipnaiii)i
+00412f40	function	xvga_select_font	__watcall	int	int		W?xvga_select_font$n(i)i
+00412fa2	function	xvga_set_font_colors	__watcall	void	int|ulong|ulong		W?xvga_set_font_colors$n(iulul)v
+00412fda	function	xvga_set_font_bkmode	__watcall	void	int|int		W?xvga_set_font_bkmode$n(ii)v
+00413042	function	xvga_free_font	__watcall	void	int		W?xvga_free_font$n(i)v
+004130b5	function	xvga_release_fonts	__watcall	void			W?xvga_release_fonts$n()v
+004130fb	function	xvga_get_active_font	__watcall	void*			W?xvga_get_active_font$n()pnv
+00413118	function	get_free_font_index	__watcall	int			W?get_free_font_index$n()i
+0041313c	function	open_flags	__watcall		?		__open_flags_
+0041320d	function	doopen	__watcall		?		__doopen_
+004132d1	function	fsopen	__watcall		?		_fsopen_
+0041330a	function	fopen	__watcall		?		fopen_
+00413314	function	close_file	__watcall		?		close_file_
+0041338e	function	freopen	__watcall		?		freopen_
+004133f6	function	fclose	__watcall		?		fclose_
+00413435	function	shutdown_stream	__watcall		?		__shutdown_stream_
+0041344a	function	hex	__watcall		?		__hex_
+00413456	function	MkTmpFile	__watcall		?		__MkTmpFile_
+004134bb	function	doclose	__watcall		?		__doclose_
+00413566	function	update_buffer	__watcall		?		__update_buffer_
+004135a8	function	fseek	__watcall		?		fseek_
+0041369c	function	get_errno_ptr	__watcall		?		__get_errno_ptr_
+004136a6	function	get_doserrno_ptr	__watcall		?		__get_doserrno_ptr_
+004136b0	function	strerror	__watcall		?		strerror_
+004136c7	function	ftell	__watcall		?		ftell_
+00413718	function	fread	__watcall		?		fread_
+00413917	function	fwrite	__watcall		?		fwrite_
+00413afd	function	remove	__watcall		?		remove_
+00413b04	function	get_number_of_joysticks_supported	__watcall	int			W?get_number_of_joysticks_supported$n()i
+00413b10	function	get_attached_joysticks	__watcall	int			W?get_attached_joysticks$n()i
+00413c02	function	calibrate_joysticks	__watcall	void			W?calibrate_joysticks$n()v
+00413f40	function	clear_joystick_key_down_state	__watcall	void	int		W?clear_joystick_key_down_state$n(i)v
+00413f89	function	check_joystick_movement	__watcall	void	int|int|int|int		W?check_joystick_movement$n(iiii)v
+004140e5	function	handle_joystick	__watcall	void			W?handle_joystick$n()v
+004141c8	function	set_joystick_keys	__watcall	void	int|int|int		W?set_joystick_keys$n(iii)v
+0041421c	function	set_joystick_sensibility	__watcall	void	double		W?set_joystick_sensibility$n(d)v
+00414258	function	get_joystick_position	__watcall	int	int|int|int|int*|int*|int*		W?get_joystick_position$n(iiipnipnipni)i
+00414488	function	check_joystick_keys	__watcall	int	int		W?check_joystick_keys$n(i)i
+004144c6	function	strncpy	__watcall		?		strncpy_
+004144eb	function	buf_putc	__watcall		?		buf_putc_
+0041450a	function	vbprintf	__watcall		?		_vbprintf_
+00414533	function	bprintf	__watcall		?		_bprintf_
+0041455a	function	strncmp	__watcall		?		strncmp_
+00414583	function	byteswap	__watcall		?		byteswap_
+004145a9	function	med3	__watcall		?		med3_
+00414601	function	qsort	__watcall		?		qsort_
+00414a3c	function	keyispressed	__watcall	int	int		W?keyispressed$n(i)i
+00414a8b	function	keyispressed_1	__watcall	int	int|int		W?keyispressed$n(ii)i
+00414af8	function	handle_win_msg	__watcall	int			W?handle_win_msg$n()i
+00414b3f	function	handle_quit_msg	__watcall	int			W?handle_quit_msg$n()i
+00414b89	function	WindowProc	__watcall	long	void*|uint|uint|long		W?WindowProc$n(pnvuiuil)l
+00414c98	function	get_clipping_limit	__watcall	void	int*|int*|int*|int*		W?get_clipping_limit$n(pnipnipnipni)v
+00414cb8	function	set_clipping_limit	__watcall	void	int|int|int|int		W?set_clipping_limit$n(iiii)v
+00414d4f	function	blt_scr_2_scr	__watcall	void	int|int|int|int|int|int|int		W?blt_scr_2_scr$n(iiiiiii)v
+00414f78	function	set_char	__watcall	void	int|char*|int|int|int|int|int		W?set_char$n(ipnaiiiii)v
+00415158	function	blt_char	__watcall	void	char*|char*|int|int|int|int|int		W?blt_char$n(pnapnaiiiii)v
+00415268	function	set_mem_image	__watcall	void	int|int|int|int|int		W?set_mem_image$n(iiiii)v
+0041590a	function	blt_mem_image	__watcall	void	char*|int|int|int|int|int		W?blt_mem_image$n(pnaiiiii)v
+00415a84	function	init_animations	__watcall	int	anim_t*		W?init_animations$n(pn$anim_t$$)i
+00415b06	function	alloc_animations	__watcall	int	int		W?alloc_animations$n(i)i
+00415b70	function	read_pcx_8_to_16_line	__watcall	int	short*|__iobuf*|int		W?read_pcx_8_to_16_line$n(pnspn$__iobuf$$i)i
+00415bf1	function	read_pcx_8_to_24_line	__watcall	int	pf_24_t*|__iobuf*|int		W?read_pcx_8_to_24_line$n(pn$pf_24_t$$pn$__iobuf$$i)i
+00415c87	function	read_pcx_line	__watcall	int	uchar*|__iobuf*|int		W?read_pcx_line$n(pnucpn$__iobuf$$i)i
+00415cda	function	unpack_pcx_file_screen	__watcall	void	__iobuf*|int|int		W?unpack_pcx_file_screen$n(pn$__iobuf$$ii)v
+00415dc9	function	unpack_pcx_file_screen_1	__watcall	void	int|__iobuf*|int|int		W?unpack_pcx_file_screen$n(ipn$__iobuf$$ii)v
+00415efc	function	unpack_pcx_file_surface	__watcall	void	IDirectDrawSurface*|__iobuf*|int|int		W?unpack_pcx_file_surface$n(pn$IDirectDrawSurface$$pn$__iobuf$$ii)v
+00415fd7	function	load_pcx_file_palette	__watcall	int	char*|int		W?load_pcx_file_palette$n(pnai)i
+0041609e	function	get_pcx_info	__watcall	int	char*|int*|int*		W?get_pcx_info$n(pnapnipni)i
+0041610e	function	load_pcx_file	__watcall	int	char*|int		W?load_pcx_file$n(pnai)i
+00416333	function	load_pcx_file_1	__watcall	int	int|char*|int		W?load_pcx_file$n(ipnai)i
+004164ee	function	load_pcx_file_surface	__watcall	IDirectDrawSurface*	char*|int*|int*		W?load_pcx_file_surface$n(pnapnipni)pn$IDirectDrawSurface$$
+004166dd	function	load_pcx_file_surface_1	__watcall	IDirectDrawSurface*	char*|int*|int*|int|_DDPIXELFORMAT*		W?load_pcx_file_surface$n(pnapnipniipn$_DDPIXELFORMAT$$)pn$IDirectDrawSurface$$
+004168d8	function	load_pcx_file_surface_2	__watcall	IDirectDrawSurface*	char*|int*|int*|int		W?load_pcx_file_surface$n(pnapnipnii)pn$IDirectDrawSurface$$
+00416ad3	function	load_pcx_file_surface_3	__watcall	int	char*|IDirectDrawSurface*|int		W?load_pcx_file_surface$n(pnapn$IDirectDrawSurface$$i)i
+00416d60	function	load_pcx_file_surface_4	__watcall	int	char*|IDirectDrawSurface*|int|int|int		W?load_pcx_file_surface$n(pnapn$IDirectDrawSurface$$iii)i
+00416f44	function	reset_anim_base	__watcall	void			W?reset_anim_base$n()v
+00416f6f	function	add_anim_base	__watcall	void	anim_t*		W?add_anim_base$n(pn$anim_t$$)v
+00416fc3	function	add_array_to_anim_base	__watcall	void	anim_t*|long*		W?add_array_to_anim_base$n(pn$anim_t$$pnl)v
+00416fe0	function	add_demi_array_to_anim_base	__watcall	void	anim_t*|long*		W?add_demi_array_to_anim_base$n(pn$anim_t$$pnl)v
+0041703c	function	handle_wipe	__watcall	void	int|int|int		W?handle_wipe$n(iii)v
+0041707c	function	handle_wipe_1	__watcall	void	int|int|int|int|int|int|int		W?handle_wipe$n(iiiiiii)v
+00417207	function	copyblock_tosurface	__watcall	void	uchar*|uchar*|int|int|int|int|int|int		W?copyblock_tosurface$n(pnucpnuciiiiii)v
+0041731c	function	dispatch_form_message	__watcall	long	void*|uint|uint|long		W?dispatch_form_message$n(pnvuiuil)l
+00417387	function	set_next_control_focus	__watcall	void	void*		W?set_next_control_focus$n(pnv)v
+004173bd	function	set_previous_control_focus	__watcall	void	void*		W?set_previous_control_focus$n(pnv)v
+00417404	function	set_control_state	__watcall	void	int|int		W?set_control_state$n(ii)v
+00417517	function	enable_control	__watcall	void	int		W?enable_control$n(i)v
+0041759e	function	disable_control	__watcall	void	int		W?disable_control$n(i)v
+00417619	function	get_control_focus	__watcall	int			W?get_control_focus$n()i
+0041762a	function	focus_control	__watcall	void	int		W?focus_control$n(i)v
+004176af	function	get_control_image_index	__watcall	int	int|int		W?get_control_image_index$n(ii)i
+004176ee	function	check_control_position	__watcall	void	int|int|int|int|int		W?check_control_position$n(iiiii)v
+00417797	function	get_previous_control_index	__watcall	int	int|int		W?get_previous_control_index$n(ii)i
+004177ff	function	get_next_control_index	__watcall	int	int|int		W?get_next_control_index$n(ii)i
+00417876	function	get_numberofcontrols_inform	__watcall	int			W?get_numberofcontrols_inform$n()i
+0041787c	function	get_old_control_state	__watcall	int	int		W?get_old_control_state$n(i)i
+004178ca	function	get_control_type	__watcall	int	int		W?get_control_type$n(i)i
+00417918	function	get_control_state	__watcall	int	int		W?get_control_state$n(i)i
+00417966	function	get_control_hwnd	__watcall	void*	int		W?get_control_hwnd$n(i)pnv
+004179b4	function	get_control_x	__watcall	int	int		W?get_control_x$n(i)i
+00417a01	function	get_control_y	__watcall	int	int		W?get_control_y$n(i)i
+00417a4f	function	get_control_index	__watcall	int	void*		W?get_control_index$n(pnv)i
+00417a99	function	get_control_pointer	__watcall	void*	void*		W?get_control_pointer$n(pnv)pnv
+00417ad9	function	get_control_pointer_1	__watcall	void*	int		W?get_control_pointer$n(i)pnv
+00417b1c	function	call_help_function	__watcall	void	int		W?call_help_function$n(i)v
+00417bd4	function	destroy_form	__watcall	void			W?destroy_form$n()v
+00417c4a	function	activate_form	__watcall	void	fform_t*		W?activate_form$n(pn$__2e8n7fform_t$$)v
+00417cf6	function	draw_form_animfocus_buttons	__watcall	int			W?draw_form_animfocus_buttons$n()i
+00417d3e	function	check_form_key_pressed	__watcall	void	int		W?check_form_key_pressed$n(i)v
+00417e8e	function	handle_form	__watcall	int			W?handle_form$n()i
+00417f09	function	wait_form_key_released	__watcall	void			W?wait_form_key_released$n()v
+00417f2c	function	init_edit_box	__watcall	void			W?init_edit_box$n()v
+00417f39	function	clear_edit_keys_allowed	__watcall	void			W?clear_edit_keys_allowed$n()v
+00417f3e	function	set_edit_keys_allowed	__watcall	void	char*		W?set_edit_keys_allowed$n(pna)v
+00417f93	function	get_edit_box_text	__watcall	void	int|char*|int		W?get_edit_box_text$n(ipnai)v
+00417fdc	function	set_edit_box_colors	__watcall	void	fedit_box_t*|ulong|ulong|ulong|ulong		W?set_edit_box_colors$n(pn$__2u792fedit_box_t$$ulululul)v
+00418035	function	draw_help_editbox	__watcall	void	fform_t*		W?draw_help_editbox$n(pn$__2e8n7fform_t$$)v
+00418073	function	destroy_edit_box	__watcall	void	fform_t*		W?destroy_edit_box$n(pn$__2e8n7fform_t$$)v
+004180c2	function	create_edit_box	__watcall	void	fform_t*|int		W?create_edit_box$n(pn$__2e8n7fform_t$$i)v
+00418342	function	set_windows_edit_box_colors	__watcall	long	void*|void*		W?set_windows_edit_box_colors$n(pnvpnv)l
+004183a7	function	EditWindowProc	__watcall	long	void*|uint|uint|long		W?EditWindowProc$n(pnvuiuil)l
+004184f2	function	getcwd	__watcall		?		getcwd_
+0041856b	label	Alphabet			?		_Alphabet
+00418590	function	utoa	__watcall		?		utoa_
+004185da	function	itoa	__watcall		?		_itoa_
+004185da	function	itoa_1	__watcall		?		itoa_
+004185f5	function	wcpp_2_pure_error	__watcall		?		__wcpp_2_pure_error__
+0041861a	function	mem_putc	__watcall		?		mem_putc_
+0041862d	function	vsprintf	__watcall		?		vsprintf_
+00418642	function	fprintf	__watcall		?		fprintf_
+00418664	function	xvga_init_input	__watcall	int	void*|int		W?xvga_init_input$n(pnvi)i
+00418792	function	xvga_input_setup	__watcall	void	int		W?xvga_input_setup$n(i)v
+00418828	function	get_key_state	__watcall	int	int		W?get_key_state$n(i)i
+00418889	function	xvga_exit_input	__watcall	void			W?xvga_exit_input$n()v
+004188fc	function	xvga_init_timer	__watcall	int	int		W?xvga_init_timer$n(i)i
+00418990	function	xvga_get_free_timer	__watcall	int			W?xvga_get_free_timer$n()i
+004189f8	function	xvga_set_timer	__watcall	int	void*|int|int		W?xvga_set_timer$n(pn()iii)i
+00418a9e	function	xvga_unset_timer	__watcall	int	int		W?xvga_unset_timer$n(i)i
+00418b0c	function	xvga_kill_timers	__watcall	int			W?xvga_kill_timers$n()i
+00418b53	function	xvga_handle_timers	__watcall	int	int		W?xvga_handle_timers$n(i)i
+00418b95	function	null_int23_exit	__watcall		?		__null_int23_exit_
+00418b95	function	null_exit_rtn	__watcall		?		_null_exit_rtn_
+00418b96	function	exit	__watcall		?		exit_
+00418bae	function	exit_1	__watcall		?		_exit_
+00418be0	function	memset	__watcall		?		memset_
+00418bf8	function	xvga_palette_ignore	__watcall	int			W?xvga_palette_ignore$n()i
+00418bfe	function	init_xvga_palette	__watcall	int			W?init_xvga_palette$n()i
+00418cc7	function	exit_xvga_palette	__watcall	void			W?exit_xvga_palette$n()v
+00418cea	function	attach_xvga_palette	__watcall	void	int		W?attach_xvga_palette$n(i)v
+00418de3	function	set_xvga_palette	__watcall	int	tagPALETTEENTRY*|int|int		W?set_xvga_palette$n(pn$tagPALETTEENTRY$$ii)i
+00418e8c	function	get_xvga_palette	__watcall	int	tagPALETTEENTRY*|int|int		W?get_xvga_palette$n(pn$tagPALETTEENTRY$$ii)i
+00418f38	function	set_xvga_palette_flag	__watcall	void	tagPALETTEENTRY*|int|int|int|int		W?set_xvga_palette_flag$n(pn$tagPALETTEENTRY$$iiii)v
+00419014	function	set_conversion_mode	__watcall	void	int		W?set_conversion_mode$n(i)v
+0041901a	function	get_conversion_mode	__watcall	int			W?get_conversion_mode$n()i
+00419020	function	set_hdc_pixel	__watcall	void	int|int|int|ulong		W?set_hdc_pixel$n(iiiul)v
+0041909d	function	set_hdc_pixel_1	__watcall	void	IDirectDrawSurface*|int|int|ulong		W?set_hdc_pixel$n(pn$IDirectDrawSurface$$iiul)v
+004190d5	function	get_hdc_pixel	__watcall	ulong	int|int|int		W?get_hdc_pixel$n(iii)ul
+00419151	function	get_hdc_pixel_1	__watcall	ulong	IDirectDrawSurface*|int|int		W?get_hdc_pixel$n(pn$IDirectDrawSurface$$ii)ul
+0041917c	function	get_color_format	__watcall	ulong	IDirectDrawSurface*|ulong		W?get_color_format$n(pn$IDirectDrawSurface$$ul)ul
+0041920d	function	set_surface_color_key	__watcall	void	IDirectDrawSurface*|ulong		W?set_surface_color_key$n(pn$IDirectDrawSurface$$ul)v
+00419253	function	translate_pixel	__watcall	int	int|int		W?translate_pixel$n(ii)i
+00419388	function	translate_pixel_1	__watcall	void	int|int|void*		W?translate_pixel$n(iipnv)v
+00419528	function	get_xvga_pixel_format	__watcall	void			W?get_xvga_pixel_format$n()v
+00419664	function	xvga_get_first_cdrom	__watcall	int			W?xvga_get_first_cdrom$n()i
+004196d4	function	xvga_init_drive_info	__watcall	int	int		W?xvga_init_drive_info$n(i)i
+00419833	function	xvga_get_system_info	__watcall	int			W?xvga_get_system_info$n()i
+00419a4b	function	search_screen_mode_index	__watcall	int	int|int|int		W?search_screen_mode_index$n(iii)i
+00419a87	function	test_screen_modes_available	__watcall	int			W?test_screen_modes_available$n()i
+00419aa7	function	xvga_init_dd_info	__watcall	int	int		W?xvga_init_dd_info$n(i)i
+00419b10	function	get_new_dd_info	__watcall	int			W?get_new_dd_info$n()i
+00419b30	function	enum_dd_device	__watcall	int	_GUID*|char*|char*|void*		W?enum_dd_device$n(pn$_GUID$$pnapnapnv)i
+00419c87	function	xvga_get_dd_info	__watcall	int			W?xvga_get_dd_info$n()i
+00419ca7	function	xvga_get_dd_guid	__watcall	_GUID*	int		W?xvga_get_dd_guid$n(i)pn$_GUID$$
+00419d4d	function	mode_available_callback_func	__watcall	long	_DDSURFACEDESC*|void*		W?mode_available_callback_func$n(pn$_DDSURFACEDESC$$pnv)l
+00419d99	function	xvga_get_screen_mode_info	__watcall	int			W?xvga_get_screen_mode_info$n()i
+00419df1	function	xvga_test_mode_available	__watcall	int	int		W?xvga_test_mode_available$n(i)i
+00419e24	function	stricmp	__watcall		?		_stricmp_
+00419e24	function	strcmpi	__watcall		?		strcmpi_
+00419e24	function	stricmp_1	__watcall		?		stricmp_
+00419e6b	function	strrchr	__watcall		?		strrchr_
+00419e88	function	init_smacker	__watcall	int	void*		W?init_smacker$n(pnv)i
+00419f26	function	set_smack_palette	__watcall	void	int		W?set_smack_palette$n(i)v
+00419fb5	function	play_check_smacker	__watcall	void			W?play_check_smacker$n()v
+0041a019	function	do_play_smacker	__watcall	void	int|int|int		W?do_play_smacker$n(iii)v
+0041a0f8	function	do_play_scale_smacker	__watcall	void	int|int|int|int|int		W?do_play_scale_smacker$n(iiiii)v
+0041a1ee	function	check_smacker_keys	__watcall	void			W?check_smacker_keys$n()v
+0041a273	function	play_smacker	__watcall	int	char*|int|int|int|int|char|int		W?play_smacker$n(pnaiiiiai)i
+0041a3f1	function	get_free_smacker_key	__watcall	int			W?get_free_smacker_key$n()i
+0041a417	function	clear_smacker_keys	__watcall	void			W?clear_smacker_keys$n()v
+0041a431	function	set_smacker_key	__watcall	void	int|int		W?set_smacker_key$n(ii)v
+0041a486	label	init_387_emulator			?		__init_387_emulator
+0041a487	label	fini_387_emulator			?		__fini_387_emulator
+0041a488	function	getctime	__watcall		?		__getctime_
+0041a4ed	function	mktime	__watcall		?		mktime_
+0041a641	function	threadid	__watcall		?		__threadid_
+0041a64d	function	SingleThread	__watcall		?		__SingleThread_
+0041a652	function	NullAccHeapRtn	__watcall		?		__NullAccHeapRtn_
+0041a652	function	NullAccIOBRtn	__watcall		?		__NullAccIOBRtn_
+0041a652	function	NullAccTDListRtn	__watcall		?		__NullAccTDListRtn_
+0041a652	function	NullAccessRtn	__watcall		?		__NullAccessRtn_
+0041a652	function	NullExitRtn	__watcall		?		__NullExitRtn_
+0041a653	function	DefInitAccessH	__watcall		?		__DefInitAccessH_
+0041a658	function	DefFiniAccessH	__watcall		?		__DefFiniAccessH_
+0041a65d	function	NTInit	__watcall		?		__NTInit_
+0041a784	function	NTMainInit	__watcall		?		__NTMainInit_
+0041a7ca	function	exit_2	__watcall		?		__exit_
+0041a7e9	function	mem_putc_1	__watcall		?		mem_putc_
+0041a7fc	function	sprintf	__watcall		?		sprintf_
+0041a82c	function	getenv	__watcall		?		getenv_
+0041a88d	function	access	__watcall		?		_access_
+0041a88d	function	access_1	__watcall		?		access_
+0041a8bf	function	copypart	__watcall		?		copypart_
+0041a8f5	function	splitpath	__watcall		?		_splitpath_
+0041a9ce	function	pickup	__watcall		?		pickup_
+0041a9e2	function	makepath	__watcall		?		_makepath_
+0041abcd	function	filelength	__watcall		?		filelength_
+0041ac28	function	check_button_hotkey	__watcall	int	fform_t*|int		W?check_button_hotkey$n(pn$__2e8n7fform_t$$i)i
+0041ac3e	function	draw_focus_anim_button	__watcall	void	fform_t*		W?draw_focus_anim_button$n(pn$__2e8n7fform_t$$)v
+0041acde	function	destroy_button	__watcall	void	fform_t*		W?destroy_button$n(pn$__2e8n7fform_t$$)v
+0041ad0a	function	create_button	__watcall	void	fform_t*|int		W?create_button$n(pn$__2e8n7fform_t$$i)v
+0041ae63	function	draw_help_button	__watcall	void	fform_t*		W?draw_help_button$n(pn$__2e8n7fform_t$$)v
+0041aeef	function	draw_button	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_button$n(pn$tagDRAWITEMSTRUCT$$)v
+0041afe2	function	ButtonWindowProc	__watcall	long	void*|uint|uint|long		W?ButtonWindowProc$n(pnvuiuil)l
+0041b124	function	check_togglebutton_hotkey	__watcall	int	fform_t*|int		W?check_togglebutton_hotkey$n(pn$__2e8n7fform_t$$i)i
+0041b13a	function	get_togglebutton_togglestate	__watcall	int	int		W?get_togglebutton_togglestate$n(i)i
+0041b18c	function	set_togglebutton_togglestate	__watcall	void	int|int		W?set_togglebutton_togglestate$n(ii)v
+0041b21a	function	destroy_togglebutton	__watcall	void	fform_t*		W?destroy_togglebutton$n(pn$__2e8n7fform_t$$)v
+0041b246	function	create_togglebutton	__watcall	void	fform_t*|int		W?create_togglebutton$n(pn$__2e8n7fform_t$$i)v
+0041b322	function	draw_help_togglebutton	__watcall	void	fform_t*		W?draw_help_togglebutton$n(pn$__2e8n7fform_t$$)v
+0041b386	function	draw_togglebutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_togglebutton$n(pn$tagDRAWITEMSTRUCT$$)v
+0041b4ba	function	ToggleButtonWindowProc	__watcall	long	void*|uint|uint|long		W?ToggleButtonWindowProc$n(pnvuiuil)l
+0041b5f8	function	check_areabutton_hotkey	__watcall	int	fform_t*|int		W?check_areabutton_hotkey$n(pn$__2e8n7fform_t$$i)i
+0041b60e	function	destroy_areabutton	__watcall	void	fform_t*		W?destroy_areabutton$n(pn$__2e8n7fform_t$$)v
+0041b63a	function	create_areabutton	__watcall	void	fform_t*|int		W?create_areabutton$n(pn$__2e8n7fform_t$$i)v
+0041b79e	function	draw_help_areabutton	__watcall	void	fform_t*		W?draw_help_areabutton$n(pn$__2e8n7fform_t$$)v
+0041b7dc	function	draw_areabutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_areabutton$n(pn$tagDRAWITEMSTRUCT$$)v
+0041b81d	function	AreaButtonWindowProc	__watcall	long	void*|uint|uint|long		W?AreaButtonWindowProc$n(pnvuiuil)l
+0041b920	function	check_animbutton_hotkey	__watcall	int	fform_t*|int		W?check_animbutton_hotkey$n(pn$__2e8n7fform_t$$i)i
+0041b936	function	destroy_animbutton	__watcall	void	fform_t*		W?destroy_animbutton$n(pn$__2e8n7fform_t$$)v
+0041b962	function	create_animbutton	__watcall	void	fform_t*|int		W?create_animbutton$n(pn$__2e8n7fform_t$$i)v
+0041ba4c	function	draw_animation_animbutton	__watcall	void	int|int|int|int		W?draw_animation_animbutton$n(iiii)v
+0041bb38	function	draw_help_animbutton	__watcall	void	fform_t*		W?draw_help_animbutton$n(pn$__2e8n7fform_t$$)v
+0041bc3c	function	draw_animbutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_animbutton$n(pn$tagDRAWITEMSTRUCT$$)v
+0041be27	function	AnimButtonWindowProc	__watcall	long	void*|uint|uint|long		W?AnimButtonWindowProc$n(pnvuiuil)l
+0041bf8c	function	check_radiobutton_hotkey	__watcall	int	fform_t*|int		W?check_radiobutton_hotkey$n(pn$__2e8n7fform_t$$i)i
+0041bfa2	function	destroy_radiobutton	__watcall	void	fform_t*		W?destroy_radiobutton$n(pn$__2e8n7fform_t$$)v
+0041bfce	function	create_radiobutton	__watcall	void	fform_t*|int		W?create_radiobutton$n(pn$__2e8n7fform_t$$i)v
+0041c0d8	function	unselect_radiobutton	__watcall	void	int		W?unselect_radiobutton$n(i)v
+0041c178	function	draw_help_radiobutton	__watcall	void	fform_t*		W?draw_help_radiobutton$n(pn$__2e8n7fform_t$$)v
+0041c1d5	function	draw_radiobutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_radiobutton$n(pn$tagDRAWITEMSTRUCT$$)v
+0041c31b	function	RadioButtonWindowProc	__watcall	long	void*|uint|uint|long		W?RadioButtonWindowProc$n(pnvuiuil)l
+0041c451	function	nfree	__watcall		?		_nfree_
+0041c451	function	free	__watcall		?		free_
+0041c4df	function	rewind	__watcall		?		rewind_
+0041c4f6	label	WinMain_1			?		__WinMain
+0041c5e8	function	tolower	__watcall		?		_tolower_
+0041c5e8	function	tolower_1	__watcall		?		tolower_
+0041c5f6	function	set_EDOM	__watcall		?		__set_EDOM_
+0041c5fb	function	set_errno	__watcall		?		__set_errno_
+0041c609	function	set_ERANGE	__watcall		?		__set_ERANGE_
+0041c610	function	set_EINVAL	__watcall		?		__set_EINVAL_
+0041c620	function	set_doserrno	__watcall		?		__set_doserrno_
+0041c62e	function	open	__watcall		?		open_
+0041c652	function	sopen	__watcall		?		sopen_
+0041c809	function	allocfp	__watcall		?		__allocfp_
+0041c8c1	function	freefp	__watcall		?		__freefp_
+0041c8fa	function	purgefp	__watcall		?		__purgefp_
+0041c918	function	chktty	__watcall		?		__chktty_
+0041c94a	function	getpid	__watcall		?		getpid_
+0041c954	function	flush	__watcall		?		__flush_
+0041ca3e	function	lseek	__watcall		?		_lseek_
+0041ca3e	function	lseek_1	__watcall		?		lseek_
+0041ca78	function	close	__watcall		?		__close_
+0041cae7	function	tell	__watcall		?		tell_
+0041cb24	function	fflush	__watcall		?		fflush_
+0041cb34	function	ioalloc	__watcall		?		__ioalloc_
+0041cbab	function	qread	__watcall		?		__qread_
+0041cc1f	function	fgetc	__watcall		?		fgetc_
+0041ccbd	function	filbuf	__watcall		?		__filbuf_
+0041ccec	function	fill_buffer	__watcall		?		__fill_buffer_
+0041cd98	function	qwrite	__watcall		?		__qwrite_
+0041ce3e	function	fputc	__watcall		?		fputc_
+0041cf01	function	unlink	__watcall		?		unlink_
+0041cf1a	function	prtf	__watcall		?		__prtf_
+0041d2b9	function	getprintspecs	__watcall		?		getprintspecs_
+0041d3f7	function	evalflags	__watcall		?		evalflags_
+0041d456	function	far_strlen	__watcall		?		far_strlen_
+0041d47a	function	far_other_strlen	__watcall		?		far_other_strlen_
+0041d49d	function	fmt4hex	__watcall		?		fmt4hex_
+0041d4fb	function	FixedPoint_Format	__watcall		?		FixedPoint_Format_
+0041d5f0	function	float_format	__watcall		?		float_format_
+0041d5f7	function	formstring	__watcall		?		formstring_
+0041dae0	function	zupstr	__watcall		?		zupstr_
+0041daf8	function	c_blt_sprite	__watcall		?		c_blt_sprite_
+0041db24	function	wipe_vrollbarup	__watcall	void	int|int|int|int|int		W?wipe_vrollbarup$n(iiiii)v
+0041dcce	function	wipe_vrollbardown	__watcall	void	int|int|int|int|int		W?wipe_vrollbardown$n(iiiii)v
+0041de54	function	wipe_draw_pixel_grid	__watcall	void	int|int|int|int|int|int		W?wipe_draw_pixel_grid$n(iiiiii)v
+0041e048	function	wipe_pixelfade_full	__watcall	void	int|int|int|int|int|int		W?wipe_pixelfade_full$n(iiiiii)v
+0041e0b4	function	wipe_scroll_in_left	__watcall	void	int|int|int|int|int|int		W?wipe_scroll_in_left$n(iiiiii)v
+0041e1c1	function	wipe_scroll_in_right	__watcall	void	int|int|int|int|int|int		W?wipe_scroll_in_right$n(iiiiii)v
+0041e2d5	function	wipe_scroll_in_top	__watcall	void	int|int|int|int|int|int		W?wipe_scroll_in_top$n(iiiiii)v
+0041e3e0	function	wipe_scroll_in_bottom	__watcall	void	int|int|int|int|int|int		W?wipe_scroll_in_bottom$n(iiiiii)v
+0041e4e4	function	wipe_luxaflex_horizontal	__watcall	void	int|int|int|int|int|int		W?wipe_luxaflex_horizontal$n(iiiiii)v
+0041e5f0	function	wipe_luxaflex_verticale	__watcall	void	int|int|int|int|int|int		W?wipe_luxaflex_verticale$n(iiiiii)v
+0041e71a	function	dosret0	__watcall		?		_dosret0_
+0041e721	function	dosretax	__watcall		?		_dosretax_
+0041e725	function	set_errno_dos	__watcall		?		__set_errno_dos_
+0041e776	function	set_errno_nt	__watcall		?		__set_errno_nt_
+0041e785	function	nmalloc	__watcall		?		_nmalloc_
+0041e785	function	malloc	__watcall		?		malloc_
+0041e874	function	wcpp_2_fatal_runtime_error	__watcall		?		__wcpp_2_fatal_runtime_error__
+0041e891	function	file_putc	__watcall		?		file_putc_
+0041e8a2	function	fprtf	__watcall		?		__fprtf_
+0041e940	label	STOSB			?		__STOSB
+0041e977	label	STOSD			?		__STOSD
+0041e9e3	function	strnicmp	__watcall		?		_strnicmp_
+0041e9e3	function	strnicmp_1	__watcall		?		strnicmp_
+0041ea36	function	setEFGfmt	__watcall		?		__setEFGfmt_
+0041ea51	function	save_8087	__watcall		?		__save_8087_
+0041ea56	function	rest_8087	__watcall		?		__rest_8087_
+0041ea5a	function	init_8087	__watcall		?		__init_8087_
+0041ea8b	function	fpreset	__watcall		?		_fpreset_
+0041ea95	function	chk8087	__watcall		?		__chk8087_
+0041eadf	label	null_FPE_rtn			?		__null_FPE_rtn
+0041eae0	function	leapyear	__watcall		?		__leapyear_
+0041eb1b	function	calc_yday	__watcall		?		calc_yday_
+0041ec00	function	check_order	__watcall		?		check_order_
+0041ec34	function	isindst	__watcall		?		__isindst_
+0041eef7	function	time_less	__watcall		?		time_less_
+0041ef27	function	brktime	__watcall		?		__brktime_
+0041f03c	function	gmtime	__watcall		?		_gmtime_
+0041f05a	function	gmtime_1	__watcall		?		gmtime_
+0041f071	function	CacheOSTZ	__watcall		?		__CacheOSTZ_
+0041f0c5	function	tryOSTimeZone	__watcall		?		tryOSTimeZone_
+0041f1bb	function	tzset	__watcall		?		tzset_
+0041f1cd	function	parse_tz	__watcall		?		__parse_tz_
+0041f204	function	parse_time	__watcall		?		parse_time_
+0041f228	function	parse_offset	__watcall		?		parse_offset_
+0041f351	function	parse_rule	__watcall		?		parse_rule_
+0041f523	label	CtrlSignalHandler			?		_CtrlSignalHandler
+0041f57c	function	CtrlHandlerIsNeeded	__watcall		?		CtrlHandlerIsNeeded_
+0041f5bb	function	StartCtrlHandler	__watcall		?		StartCtrlHandler_
+0041f5e7	function	KillCtrlHandler	__watcall		?		KillCtrlHandler_
+0041f61e	function	sigabort	__watcall		?		__sigabort_
+0041f623	function	raise	__watcall		?		raise_
+0041f65c	function	sigfpe_handler	__watcall		?		__sigfpe_handler_
+0041f6a3	function	signal	__watcall		?		signal_
+0041f788	function	SigInit	__watcall		?		__SigInit_
+0041f7b5	function	SigFini	__watcall		?		__SigFini_
+0041f7d3	label	ExceptionFilter			?		___ExceptionFilter
+0041fb86	function	NewExceptionHandler	__watcall		?		__NewExceptionHandler_
+0041fbc4	function	DoneExceptionHandler	__watcall		?		__DoneExceptionHandler_
+0041fc13	function	NTAtMaxFiles	__watcall		?		__NTAtMaxFiles_
+0041fc58	function	NTAddFileHandle	__watcall		?		__NTAddFileHandle_
+0041fcd1	function	NTAddSpecificFileHandle	__watcall		?		__NTAddSpecificFileHandle_
+0041fd6d	function	NTRemoveFileHandle	__watcall		?		__NTRemoveFileHandle_
+0041fd99	function	NTInitFileHandles	__watcall		?		__NTInitFileHandles_
+0041fdd0	function	NTGetFakeHandle	__watcall		?		__NTGetFakeHandle_
+0041fde2	function	nullSema4Rtn	__watcall		?		nullSema4Rtn_
+0041fde3	function	CloseSemaphore	__watcall		?		__CloseSemaphore_
+0041fe0f	function	AccessIOB	__watcall		?		__AccessIOB_
+0041fe19	function	ReleaseIOB	__watcall		?		__ReleaseIOB_
+0041fe23	function	AccessFileH	__watcall		?		__AccessFileH_
+0041fe30	function	ReleaseFileH	__watcall		?		__ReleaseFileH_
+0041fe40	function	InitAccessH	__watcall		?		__InitAccessH_
+0041fe45	function	FiniAccessH	__watcall		?		__FiniAccessH_
+0041fe61	function	AccessNHeap	__watcall		?		__AccessNHeap_
+0041fe68	function	ReleaseNHeap	__watcall		?		__ReleaseNHeap_
+0041fe72	function	AccessFHeap	__watcall		?		__AccessFHeap_
+0041fe79	function	ReleaseFHeap	__watcall		?		__ReleaseFHeap_
+0041fe83	function	AccessTDList	__watcall		?		__AccessTDList_
+0041fe8a	function	ReleaseTDList	__watcall		?		__ReleaseTDList_
+0041fe91	function	AccessFList	__watcall		?		__AccessFList_
+0041fe96	function	AccessSemaphore	__watcall		?		__AccessSemaphore_
+0041fef3	function	ReleaseFList	__watcall		?		__ReleaseFList_
+0041fef8	function	ReleaseSemaphore	__watcall		?		__ReleaseSemaphore_
+0041ff1d	function	MultipleThread	__watcall		?		__MultipleThread_
+0041ff3d	function	InitThreadData	__watcall		?		__InitThreadData_
+0041ff7c	function	NTThreadInit	__watcall		?		__NTThreadInit_
+0041ffc8	function	NTAddThread	__watcall		?		__NTAddThread_
+00420015	function	NTRemoveThread	__watcall		?		__NTRemoveThread_
+00420062	function	ThreadExit	__watcall		?		__ThreadExit_
+0042006c	function	NTThreadFini	__watcall		?		__NTThreadFini_
+0042008c	function	InitMultipleThread	__watcall		?		__InitMultipleThread_
+004201a5	function	FiniSema4s	__watcall		?		__FiniSema4s_
+00420210	function	strdup	__watcall		?		_strdup_
+00420210	function	strdup_1	__watcall		?		strdup_
+00420256	label	InitRtns			?		__InitRtns
+004202a1	label	FiniRtns			?		__FiniRtns
+004202f0	function	mbsnccnt	__watcall		?		_mbsnccnt_
+0042032e	function	mbsnbcnt	__watcall		?		_mbsnbcnt_
+0042035f	function	mbsninc	__watcall		?		_mbsninc_
+00420378	function	mbsninc_1	__watcall		?		__mbsninc_
+004203bd	function	mbscat	__watcall		?		_mbscat_
+0042040e	function	mbscpy	__watcall		?		_mbscpy_
+0042042d	function	mbsdup	__watcall		?		_mbsdup_
+0042046e	function	mbsncat	__watcall		?		_mbsncat_
+004204cb	function	mbsnbcat	__watcall		?		_mbsnbcat_
+004205bd	function	mbsncpy	__watcall		?		_mbsncpy_
+004205dc	function	mbsnbcpy	__watcall		?		_mbsnbcpy_
+00420690	function	mbptov	__watcall		?		_mbptov_
+004206ce	function	mbvtop	__watcall		?		_mbvtop_
+004206e8	function	mbvtop_1	__watcall		?		__mbvtop_
+0042071c	function	checkIsDBCS	__watcall		?		__checkIsDBCS_
+0042074d	function	mbgetcode	__watcall		?		_mbgetcode_
+004207ba	function	mbsnextc	__watcall		?		_mbsnextc_
+0042080c	function	mbsinc	__watcall		?		_mbsinc_
+00420852	function	mbsdec	__watcall		?		_mbsdec_
+004208d8	label	MemAllocator			?		__MemAllocator
+00420980	label	MemFree			?		__MemFree
+00420a8b	function	RegisterThreadDataSize	__watcall		?		__RegisterThreadDataSize_
+00420aa0	function	stackavail	__watcall		?		stackavail_
+00420acf	function	CommonInit	__watcall		?		__CommonInit_
+00420ada	function	GetNTCreateAttr	__watcall		?		__GetNTCreateAttr_
+00420b07	function	GetNTAccessAttr	__watcall		?		__GetNTAccessAttr_
+00420b33	function	GetNTShareAttr	__watcall		?		__GetNTShareAttr_
+00420b62	function	isatty	__watcall		?		isatty_
+00420ba3	function	IOMode	__watcall		?		__IOMode_
+00420bf8	function	SetIOMode	__watcall		?		__SetIOMode_
+00420c0d	function	InitFiles	__watcall		?		__InitFiles_
+00420c84	function	full_io_exit	__watcall		?		__full_io_exit_
+00420c90	function	fcloseall	__watcall		?		fcloseall_
+00420c95	function	docloseall	__watcall		?		docloseall_
+00420ced	function	flushall	__watcall		?		flushall_
+00420cf2	function	flushall_1	__watcall		?		__flushall_
+00420d2d	function	getche	__watcall		?		getche_
+00420d4f	function	no_support_loaded	__watcall		?		_no_support_loaded_
+00420d61	label	Alphabet_1			?		_Alphabet
+00420d86	function	ultoa	__watcall		?		ultoa_
+00420dd0	function	ltoa	__watcall		?		_ltoa_
+00420dd0	function	ltoa_1	__watcall		?		ltoa_
+00420deb	function	toupper	__watcall		?		_toupper_
+00420deb	function	toupper_1	__watcall		?		toupper_
+00420dfc	label	blt_sprite			?		_blt_sprite
+00420e57	function	LinkUpNewMHeap	__watcall		?		__LinkUpNewMHeap_
+00420ecb	function	CreateNewNHeap	__watcall		?		__CreateNewNHeap_
+00420f5b	function	ExpandDGROUP	__watcall		?		__ExpandDGROUP_
+00420f6c	function	AdjustAmount	__watcall		?		__AdjustAmount_
+00420fb6	function	nmemneed	__watcall		?		__nmemneed_
+00420fb9	function	EnterWVIDEO	__watcall		?		__EnterWVIDEO_
+00420fdf	function	exit_with_msg	__watcall		?		__exit_with_msg_
+00421016	function	fatal_runtime_error	__watcall		?		__fatal_runtime_error_
+00421033	function	EFG_Format	__watcall		?		_EFG_Format_
+0042111d	function	forcedecpt	__watcall		?		forcedecpt_
+0042117c	function	cnvs2d	__watcall		?		__cnvs2d_
+0042118a	function	do_nothing	__watcall		?		_do_nothing_
+0042118c	label	init_80x87			?		__init_80x87
+004211b3	function	abort	__watcall		?		abort_
+004211b9	function	terminate	__watcall		?		__terminate_
+004211cb	function	control87	__watcall		?		_control87_
+0042121e	function	NTRealKey	__watcall		?		__NTRealKey_
+0042124a	function	initConsoleHandles	__watcall		?		initConsoleHandles_
+004212b3	function	NTConsoleInput	__watcall		?		__NTConsoleInput_
+004212be	function	NTConsoleOutput	__watcall		?		__NTConsoleOutput_
+004212c9	function	nrealloc	__watcall		?		_nrealloc_
+004212c9	function	realloc	__watcall		?		realloc_
+00421343	function	GetThreadData	__watcall		?		__GetThreadData_
+0042137a	function	AddThreadData	__watcall		?		__AddThreadData_
+004213db	function	RemoveThreadData	__watcall		?		__RemoveThreadData_
+00421425	function	FreeThreadDataList	__watcall		?		__FreeThreadDataList_
+0042144e	function	calloc	__watcall		?		calloc_
+00421466	function	FiniThreadProcessing	__watcall		?		__FiniThreadProcessing_
+0042146b	function	setenvp	__watcall		?		__setenvp_
+00421523	function	strncat	__watcall		?		strncat_
+00421562	function	do_getch	__watcall		?		do_getch_
+0042166d	function	getch	__watcall		?		getch_
+004216e3	function	putch	__watcall		?		putch_
+00421745	function	heapenable	__watcall		?		_heapenable_
+00421766	function	heapmin	__watcall		?		_heapmin_
+00421766	function	heapshrink	__watcall		?		_heapshrink_
+00421766	function	nheapmin	__watcall		?		_nheapmin_
+00421766	function	nheapshrink	__watcall		?		_nheapshrink_
+0042177a	function	ReturnMemToSystem	__watcall		?		__ReturnMemToSystem_
+004217d8	function	ReleaseMiniHeap	__watcall		?		__ReleaseMiniHeap_
+0042182b	function	SetMaxPrec	__watcall		?		_SetMaxPrec_
+00421831	function	DoEFormat	__watcall		?		DoEFormat_
+004218d4	function	DoFFormat	__watcall		?		DoFFormat_
+00421937	function	AdjField	__watcall		?		AdjField_
+004219a8	function	FtoS	__watcall		?		_FtoS_
+00421be2	function	strtod	__watcall		?		strtod_
+00421dd5	function	msize	__watcall		?		_msize_
+00421dd5	function	nmsize	__watcall		?		_nmsize_
+00421dde	function	expand	__watcall		?		_expand_
+00421dde	function	nexpand	__watcall		?		_nexpand_
+00421e18	function	HeapManager_expand	__watcall		?		__HeapManager_expand_
+00421fb6	function	CInitThread	__watcall		?		__CInitThread_
+00421fb9	function	beginthread	__watcall		?		_beginthread_
+00421fc0	function	endthread	__watcall		?		_endthread_
+00421fc7	function	initthread	__watcall		?		__initthread_
+00421fce	function	RegisterThreadData	__watcall		?		__RegisterThreadData_
+0042200d	function	Nan_Inf	__watcall		?		__Nan_Inf_
+004220a0	label	IF_DLOG			?		IF@DLOG
+004220a0	label	IF_LOG			?		IF@LOG
+004220e3	label	IF_DLOG2			?		IF@DLOG2
+004220e3	label	IF_LOG2			?		IF@LOG2
+004220e7	label	IF_DLOG10			?		IF@DLOG10
+004220e7	label	IF_LOG10			?		IF@LOG10
+004220eb	function	log	__watcall		?		log_
+004220f7	function	log10	__watcall		?		log10_
+00422103	function	log2	__watcall		?		log2_
+0042210f	function	floor	__watcall		?		floor_
+0042214c	label	CHP			?		__CHP
+00422169	function	Scale	__watcall		?		_Scale_
+004221aa	function	Scale10V	__watcall		?		_Scale10V_
+004222c7	function	cvt	__watcall		?		__cvt_
+004224a4	label	ModF			?		__ModF
+00422534	label	ZBuf2F			?		__ZBuf2F
+004225d0	label	begin_thread_helper			?		_begin_thread_helper
+0042267c	function	CBeginThread	__watcall		?		__CBeginThread_
+00422750	function	CEndThread	__watcall		?		__CEndThread_
+0042277a	function	log87_err	__watcall		?		__log87_err_
+004227b6	function	modf	__watcall		?		modf_
+004227d0	label	CmpBigInt			?		__CmpBigInt
+0042280a	label	Rnd2Int			?		__Rnd2Int
+00422875	label	Bin2String			?		__Bin2String
+00422998	label	fdiv_main_routine			?		fdiv_main_routine
+00422aaf	label	fdiv_fpr			?		__fdiv_fpr
+00422f4b	label	fdivp_sti_st			?		__fdivp_sti_st
+00422f5e	label	fdivrp_sti_st			?		__fdivrp_sti_st
+00422f71	label	fdiv_chk			?		__fdiv_chk
+00422f84	label	fdiv_m32			?		__fdiv_m32
+00422fd0	label	fdiv_m64			?		__fdiv_m64
+0042301c	label	fdiv_m32r			?		__fdiv_m32r
+00423068	label	fdiv_m64r			?		__fdiv_m64r
+004230b4	function	frexp	__watcall		?		frexp_
+00423123	function	math1err	__watcall		?		__math1err_
+0042312d	function	math2err	__watcall		?		__math2err_
+00423208	function	verify_pentium_fdiv_bug	__watcall		?		verify_pentium_fdiv_bug_
+0042325d	function	set_matherr	__watcall		?		_set_matherr_
+00423263	function	rterrmsg	__watcall		?		__rterrmsg_
+004232ab	function	matherr	__watcall		?		_matherr_
+004232da	label	matherr_1			?		__matherr
+004232df	function	get_std_stream	__watcall		?		__get_std_stream_
+004232fe	function	fputs	__watcall		?		fputs_
+0042338b	function	matherr_2	__watcall		?		matherr_
+00424390	label	c_dfDIKeyboard			?		_c_dfDIKeyboard
+004243a8	function	Sleep	__stdcall		?		_Sleep@4
+004243ae	function	EndPaint	__stdcall		?		_EndPaint@8
+004243b4	function	BeginPaint	__stdcall		?		_BeginPaint@8
+004243ba	function	GetSystemInfo	__stdcall		?		_GetSystemInfo@4
+004243c0	function	GlobalMemoryStatus	__stdcall		?		_GlobalMemoryStatus@4
+004243c6	function	GetUserNameA	__stdcall		?		_GetUserNameA@8
+004243cc	function	GetComputerNameA	__stdcall		?		_GetComputerNameA@8
+004243d2	function	GetDriveTypeA	__stdcall		?		_GetDriveTypeA@4
+004243d8	function	GetPixel	__stdcall		?		_GetPixel@12
+004243de	function	SetPixel	__stdcall		?		_SetPixel@16
+004243e4	function	KillTimer	__stdcall		?		_KillTimer@8
+004243ea	function	SetTimer	__stdcall		?		_SetTimer@16
+004243f0	function	CallWindowProcA	__stdcall		?		_CallWindowProcA@20
+004243f6	function	GetKeyState	__stdcall		?		_GetKeyState@4
+004243fc	function	InvalidateRect	__stdcall		?		_InvalidateRect@12
+00424402	function	GetWindowLongA	__stdcall		?		_GetWindowLongA@8
+00424408	function	SetWindowLongA	__stdcall		?		_SetWindowLongA@12
+0042440e	function	DestroyWindow	__stdcall		?		_DestroyWindow@4
+00424414	function	CreateSolidBrush	__stdcall		?		_CreateSolidBrush@4
+0042441a	function	SendMessageA	__stdcall		?		_SendMessageA@16
+00424420	function	EnableWindow	__stdcall		?		_EnableWindow@8
+00424426	function	DefWindowProcA	__stdcall		?		_DefWindowProcA@16
+0042442c	function	PostQuitMessage	__stdcall		?		_PostQuitMessage@4
+00424432	function	DispatchMessageA	__stdcall		?		_DispatchMessageA@4
+00424438	function	TranslateMessage	__stdcall		?		_TranslateMessage@4
+0042443e	function	PeekMessageA	__stdcall		?		_PeekMessageA@20
+00424444	function	GetAsyncKeyState	__stdcall		?		_GetAsyncKeyState@4
+0042444a	function	joyGetDevCapsA	__stdcall		?		_joyGetDevCapsA@12
+00424450	function	joyGetPosEx	__stdcall		?		_joyGetPosEx@8
+00424456	function	joyGetNumDevs	__stdcall		?		_joyGetNumDevs@0
+0042445c	function	DeleteObject	__stdcall		?		_DeleteObject@4
+00424462	function	CreateFontA	__stdcall		?		_CreateFontA@56
+00424468	function	TextOutA	__stdcall		?		_TextOutA@20
+0042446e	function	ExtTextOutA	__stdcall		?		_ExtTextOutA@32
+00424474	function	SetRect	__stdcall		?		_SetRect@20
+0042447a	function	lstrlenA	__stdcall		?		_lstrlenA@4
+00424480	function	SetBkMode	__stdcall		?		_SetBkMode@8
+00424486	function	SetBkColor	__stdcall		?		_SetBkColor@8
+0042448c	function	SetTextColor	__stdcall		?		_SetTextColor@8
+00424492	function	GetTextExtentPoint32A	__stdcall		?		_GetTextExtentPoint32A@16
+00424498	function	SelectObject	__stdcall		?		_SelectObject@8
+0042449e	function	SetFocus	__stdcall		?		_SetFocus@4
+004244a4	function	GetFocus	__stdcall		?		_GetFocus@0
+004244aa	function	SetCursor	__stdcall		?		_SetCursor@4
+004244b0	function	GetCursorPos	__stdcall		?		_GetCursorPos@4
+004244b6	function	SetCursorPos	__stdcall		?		_SetCursorPos@8
+004244bc	function	ShowCursor	__stdcall		?		_ShowCursor@4
+004244c2	function	LoadCursorA	__stdcall		?		_LoadCursorA@8
+004244c8	function	LocalFree	__stdcall		?		_LocalFree@4
+004244ce	function	LocalReAlloc	__stdcall		?		_LocalReAlloc@12
+004244d4	function	LocalAlloc	__stdcall		?		_LocalAlloc@8
+004244da	function	UpdateWindow	__stdcall		?		_UpdateWindow@4
+004244e0	function	CreateWindowExA	__stdcall		?		_CreateWindowExA@48
+004244e6	function	GetSystemMetrics	__stdcall		?		_GetSystemMetrics@4
+004244ec	function	RegisterClassA	__stdcall		?		_RegisterClassA@4
+004244f2	function	LoadIconA	__stdcall		?		_LoadIconA@8
+004244f8	function	MessageBoxExA	__stdcall		?		_MessageBoxExA@20
+004244fe	function	ShowWindow	__stdcall		?		_ShowWindow@8
+00424504	function	PostMessageA	__stdcall		?		_PostMessageA@16
+0042450a	function	MessageBoxA	__stdcall		?		_MessageBoxA@16
+00424510	function	OutputDebugStringA	__stdcall		?		_OutputDebugStringA@4
+00424516	function	GetPrivateProfileStringA	__stdcall		?		_GetPrivateProfileStringA@24
+0042451c	function	GetPrivateProfileIntA	__stdcall		?		_GetPrivateProfileIntA@16
+00424522	function	WritePrivateProfileStringA	__stdcall		?		_WritePrivateProfileStringA@16
+00424528	function	GetTickCount	__stdcall		?		_GetTickCount@0
+0042452e	label	ExitThread			?		_ExitThread
+00424534	label	CreateThread			?		_CreateThread
+0042453a	label	CreateEventA			?		_CreateEventA
+00424540	label	GetCurrentThread			?		_GetCurrentThread
+00424546	label	SetEvent			?		_SetEvent
+0042454c	label	VirtualFree			?		_VirtualFree
+00424552	label	WriteConsoleA			?		_WriteConsoleA
+00424558	label	SetConsoleMode			?		_SetConsoleMode
+0042455e	label	GetConsoleMode			?		_GetConsoleMode
+00424564	label	ReadConsoleInputA			?		_ReadConsoleInputA
+0042456a	label	VirtualAlloc			?		_VirtualAlloc
+00424570	label	GetFileType			?		_GetFileType
+00424576	label	GetCPInfo			?		_GetCPInfo
+0042457c	label	TlsFree			?		_TlsFree
+00424582	label	TlsSetValue			?		_TlsSetValue
+00424588	label	TlsAlloc			?		_TlsAlloc
+0042458e	label	TlsGetValue			?		_TlsGetValue
+00424594	label	ReleaseMutex			?		_ReleaseMutex
+0042459a	label	WaitForSingleObject			?		_WaitForSingleObject
+004245a0	label	CreateMutexA			?		_CreateMutexA
+004245a6	label	GetCurrentThreadId			?		_GetCurrentThreadId
+004245ac	label	GetStdHandle			?		_GetStdHandle
+004245b2	label	SetStdHandle			?		_SetStdHandle
+004245b8	label	GetProcAddress			?		_GetProcAddress
+004245be	label	LoadLibraryA			?		_LoadLibraryA
+004245c4	label	GetActiveWindow			?		_GetActiveWindow
+004245ca	label	wsprintfA			?		_wsprintfA
+004245d0	label	SetConsoleCtrlHandler			?		_SetConsoleCtrlHandler
+004245d6	label	GetTimeZoneInformation			?		_GetTimeZoneInformation
+004245dc	function	SmackClose	__stdcall		?		_SmackClose@4
+004245e2	function	SmackOpen	__stdcall		?		_SmackOpen@12
+004245e8	function	SmackDoFrame	__stdcall		?		_SmackDoFrame@4
+004245ee	function	SmackToBuffer	__stdcall		?		_SmackToBuffer@28
+004245f4	function	SmackWait	__stdcall		?		_SmackWait@4
+004245fa	function	SmackNextFrame	__stdcall		?		_SmackNextFrame@4
+00424600	function	SmackColorRemap	__stdcall		?		_SmackColorRemap@16
+00424606	function	SmackSoundUseDirectSound	__stdcall		?		_SmackSoundUseDirectSound@4
+0042460c	label	GetLastError			?		_GetLastError
+00424612	label	DeleteFileA			?		_DeleteFileA
+00424618	label	WriteFile			?		_WriteFile
+0042461e	label	ReadFile			?		_ReadFile
+00424624	label	CloseHandle			?		_CloseHandle
+0042462a	label	SetFilePointer			?		_SetFilePointer
+00424630	label	GetCurrentProcessId			?		_GetCurrentProcessId
+00424636	label	CreateFileA			?		_CreateFileA
+0042463c	label	GetFileAttributesA			?		_GetFileAttributesA
+00424642	label	GetModuleHandleA			?		_GetModuleHandleA
+00424648	label	GetVersion			?		_GetVersion
+0042464e	label	GetCommandLineA			?		_GetCommandLineA
+00424654	label	GetModuleFileNameA			?		_GetModuleFileNameA
+0042465a	label	GetEnvironmentStrings			?		_GetEnvironmentStrings
+00424660	label	ExitProcess			?		_ExitProcess
+00424666	label	GetLocalTime			?		_GetLocalTime
+0042466c	function	DirectDrawEnumerateA	__stdcall		?		_DirectDrawEnumerateA@8
+00424672	function	DirectInputCreateA	__stdcall		?		_DirectInputCreateA@16
+00424678	label	GetCurrentDirectoryA			?		_GetCurrentDirectoryA
+0042467e	function	DirectSoundCreate	__stdcall		?		_DirectSoundCreate@12
+00424684	function	DirectSoundEnumerateA	__stdcall		?		_DirectSoundEnumerateA@8
+0042468a	function	DirectDrawCreate	__stdcall		?		_DirectDrawCreate@12
+00425000	data	nullarea			?		__nullarea
+00431fc0	data	diyr			?		___diyr
+00431fda	data	dilyr			?		___dilyr
+00431ff4	data	IsTable			?		__IsTable
+00432118	data	HugeValue			?		__HugeValue
+00432120	data	BigPow10Table			?		__BigPow10Table
+00432170	data	Msgs			?		_Msgs
+0043218c	data	msghandle			?	int	W?msghandle$ni
+00432190	data	active_slot			?	int	W?active_slot$ni
+00432194	data	score_list			?	score_t	W?score_list$n$score_t$$
+00432d9c	data	level_naam			?		W?level_naam$n[]pna
+00432dc4	data	toets_define			?		W?toets_define$n[]s
+00432dd0	data	mm_buttons			?		W?mm_buttons$n[]$__m9tmqbutton_t$$
+00432e78	data	mm_form			?		W?mm_form$n[]$__2e8n7fform_t$$
+00432f74	data	mm_help			?		W?mm_help$n[]$__1uqkethelp_t$$
+00432fb4	data	mm_tune			?		W?mm_tune$n[]pna
+00432fcc	data	mm_tune_buffer			?	int	W?mm_tune_buffer$ni
+00432fd0	data	mm_entree_anim_tabel			?		W?mm_entree_anim_tabel$n[][12]s
+00433060	data	mst_slot_list			?		W?mst_slot_list$n[]$mst_slot_t$$
+004330b0	data	mst_buttons			?		W?mst_buttons$n[]$__m9tmqbutton_t$$
+00433104	data	mst_areabuttons			?		W?mst_areabuttons$n[]$__4cup74areabutton_t$$
+004331b0	data	mst_form			?		W?mst_form$n[]$__2e8n7fform_t$$
+00433354	data	mst_help			?		W?mst_help$n[]$__1uqkethelp_t$$
+00433374	data	mc_buttons			?		W?mc_buttons$n[]$__m9tmqbutton_t$$
+004333c8	data	mc_areabuttons			?		W?mc_areabuttons$n[]$__4cup74areabutton_t$$
+004333fc	data	mc_form			?		W?mc_form$n[]$__2e8n7fform_t$$
+004334dc	data	mc_form_joy			?		W?mc_form_joy$n[]$__2e8n7fform_t$$
+004335a0	data	mc_help			?		W?mc_help$n[]$__1uqkethelp_t$$
+004335d0	data	mc_help2			?		W?mc_help2$n[]$__1uqkethelp_t$$
+004335f0	data	key_list			?		W?key_list$n[]$mc_keyset_t$$
+00433748	data	config_key			?		W?config_key$n[]$mc_config_key_t$$
+004337d8	data	mc_instel_wav			?		W?mc_instel_wav$n[]pna
+004337e8	data	mc_entree_anim_tabel			?		W?mc_entree_anim_tabel$n[][8]s
+00433808	data	mo_buttons			?		W?mo_buttons$n[]$__m9tmqbutton_t$$
+00433848	data	mo_areabuttons			?		W?mo_areabuttons$n[]$__4cup74areabutton_t$$
+0043397c	data	mo_form_3D			?		W?mo_form_3D$n[]$__2e8n7fform_t$$
+00433bc8	data	mo_form_320			?		W?mo_form_320$n[]$__2e8n7fform_t$$
+00433e14	data	mo_form_640			?		W?mo_form_640$n[]$__2e8n7fform_t$$
+00434060	data	mo_help			?		W?mo_help$n[]$__1uqkethelp_t$$
+00434090	data	mo_entree_anim_tabel			?		W?mo_entree_anim_tabel$n[][8]s
+004340b0	data	ms_buttons			?		W?ms_buttons$n[]$__m9tmqbutton_t$$
+004340c8	data	ms_areabuttons			?		W?ms_areabuttons$n[]$__4cup74areabutton_t$$
+00434140	data	ms_form			?		W?ms_form$n[]$__2e8n7fform_t$$
+0043423c	data	mds_buttons			?		W?mds_buttons$n[]$__m9tmqbutton_t$$
+00434254	data	mds_form			?		W?mds_form$n[]$__2e8n7fform_t$$
+0043428c	data	mns_slot_list			?		W?mns_slot_list$n[]$mns_slot_t$$
+004342dc	data	mns_buttons			?		W?mns_buttons$n[]$__m9tmqbutton_t$$
+00434330	data	mns_areabuttons			?		W?mns_areabuttons$n[]$__4cup74areabutton_t$$
+004343dc	data	mns_form			?		W?mns_form$n[]$__2e8n7fform_t$$
+00434580	data	mns_help			?		W?mns_help$n[]$__1uqkethelp_t$$
+004345a0	data	mdt_buttons			?		W?mdt_buttons$n[]$__m9tmqbutton_t$$
+004345b8	data	mdt_form			?		W?mdt_form$n[]$__2e8n7fform_t$$
+004345f0	data	mdt_stand_pcx			?		W?mdt_stand_pcx$n[]pna
+00434608	data	mdt_display_stand__leeg			?		W?$Wsi09leeg$n[]a$:.0$:?mdt_display_stand$n(iiii)vnx[]a
+0043460c	data	mdc_buttons			?		W?mdc_buttons$n[]$__m9tmqbutton_t$$
+00434624	data	mdc_form			?		W?mdc_form$n[]$__2e8n7fform_t$$
+0043465c	data	mns_regel			?		W?mns_regel$n[]$frame_t$$
+0043466c	data	mns_ok			?		W?mns_ok$n[]$frame_t$$
+0043468c	data	mns_verwijder			?		W?mns_verwijder$n[]$frame_t$$
+004346ac	data	mns_help_1			?		W?mns_help$n[]$frame_t$$
+004346cc	data	mns_annul			?		W?mns_annul$n[]$frame_t$$
+004346ec	data	mst_regel			?		W?mst_regel$n[]$frame_t$$
+004346fc	data	mst_ok			?		W?mst_ok$n[]$frame_t$$
+0043471c	data	mst_verwijder			?		W?mst_verwijder$n[]$frame_t$$
+0043473c	data	mst_einde			?		W?mst_einde$n[]$frame_t$$
+0043475c	data	mst_help_1			?		W?mst_help$n[]$frame_t$$
+0043477c	data	reqi_ok			?		W?reqi_ok$n[]$frame_t$$
+0043479c	data	reqi_annul			?		W?reqi_annul$n[]$frame_t$$
+004347bc	data	reqi_window			?		W?reqi_window$n[]$frame_t$$
+004347c4	data	reqv_ja			?		W?reqv_ja$n[]$frame_t$$
+004347e4	data	reqv_nee			?		W?reqv_nee$n[]$frame_t$$
+00434804	data	reqv_window			?		W?reqv_window$n[]$frame_t$$
+0043480c	data	reqw_ok			?		W?reqw_ok$n[]$frame_t$$
+0043482c	data	reqw_window			?		W?reqw_window$n[]$frame_t$$
+00434834	data	mm_help_1			?		W?mm_help$n[]$frame_t$$
+00434854	data	mm_einde			?		W?mm_einde$n[]$frame_t$$
+00434874	data	mm_start			?		W?mm_start$n[]$frame_t$$
+00434894	data	mm_bediening			?		W?mm_bediening$n[]$frame_t$$
+004348b4	data	mm_opties			?		W?mm_opties$n[]$frame_t$$
+004348d4	data	mm_opnieuw			?		W?mm_opnieuw$n[]$frame_t$$
+004348f4	data	mm_hiscore			?		W?mm_hiscore$n[]$frame_t$$
+00434914	data	mm_nieuwspel			?		W?mm_nieuwspel$n[]$frame_t$$
+00434934	data	mma1_start			?		W?mma1_start$n[]$frame_t$$
+00434974	data	mma1_bediening			?		W?mma1_bediening$n[]$frame_t$$
+004349b4	data	mma1_opties			?		W?mma1_opties$n[]$frame_t$$
+004349f4	data	mma1_opnieuw			?		W?mma1_opnieuw$n[]$frame_t$$
+00434a34	data	mma1_hiscore			?		W?mma1_hiscore$n[]$frame_t$$
+00434a74	data	mma1_nieuwspel			?		W?mma1_nieuwspel$n[]$frame_t$$
+00434ab4	data	mma2_start			?		W?mma2_start$n[]$frame_t$$
+00434afc	data	mma2_bediening			?		W?mma2_bediening$n[]$frame_t$$
+00434b44	data	mma2_opties			?		W?mma2_opties$n[]$frame_t$$
+00434b8c	data	mma2_opnieuw			?		W?mma2_opnieuw$n[]$frame_t$$
+00434bd4	data	mma2_hiscore			?		W?mma2_hiscore$n[]$frame_t$$
+00434c1c	data	mma2_nieuwspel			?		W?mma2_nieuwspel$n[]$frame_t$$
+00434c64	data	mm_map			?		W?mm_map$n[]$frame_t$$
+00434c94	data	mca_textbox			?		W?mca_textbox$n[]$frame_t$$
+00434cd4	data	mc_ok			?		W?mc_ok$n[]$frame_t$$
+00434cf4	data	mc_annuleren			?		W?mc_annuleren$n[]$frame_t$$
+00434d14	data	mca1_ok			?		W?mca1_ok$n[]$frame_t$$
+00434d54	data	mca1_annuleren			?		W?mca1_annuleren$n[]$frame_t$$
+00434d94	data	mca2_ok			?		W?mca2_ok$n[]$frame_t$$
+00434ddc	data	mca2_annuleren			?		W?mca2_annuleren$n[]$frame_t$$
+00434e24	data	mc_keyboard			?		W?mc_keyboard$n[]$frame_t$$
+00434e4c	data	mc_joystick			?		W?mc_joystick$n[]$frame_t$$
+00434e74	data	mc_stuur			?		W?mc_stuur$n[]$frame_t$$
+00434e9c	data	mc_instellen			?		W?mc_instellen$n[]$frame_t$$
+00434ebc	data	mc_help_1			?		W?mc_help$n[]$frame_t$$
+00434edc	data	mc_control			?		W?mc_control$n[]$frame_t$$
+00434efc	data	mc_kb_slot			?		W?mc_kb_slot$n[]$frame_t$$
+00434f04	data	mo_tablet			?		W?mo_tablet$n[]$frame_t$$
+00434f1c	data	mo_snd_bord			?		W?mo_snd_bord$n[]$frame_t$$
+00434f2c	data	mo_light_on			?		W?mo_light_on$n[]$frame_t$$
+00434f54	data	mo_light_off			?		W?mo_light_off$n[]$frame_t$$
+00434f7c	data	mo_arrow_left			?		W?mo_arrow_left$n[]$frame_t$$
+00434f9c	data	mo_arrow_right			?		W?mo_arrow_right$n[]$frame_t$$
+00434fbc	data	mo_radio			?		W?mo_radio$n[]$frame_t$$
+00434fcc	data	mo_ok			?		W?mo_ok$n[]$frame_t$$
+00434fec	data	mo_annuleren			?		W?mo_annuleren$n[]$frame_t$$
+0043500c	data	mo_help_1			?		W?mo_help$n[]$frame_t$$
+0043502c	data	moa1_ok			?		W?moa1_ok$n[]$frame_t$$
+0043506c	data	moa1_annuleren			?		W?moa1_annuleren$n[]$frame_t$$
+004350ac	data	moa2_ok			?		W?moa2_ok$n[]$frame_t$$
+004350f4	data	moa2_annuleren			?		W?moa2_annuleren$n[]$frame_t$$
+0043513c	data	mo_txt_geluid			?		W?mo_txt_geluid$n[]$frame_t$$
+00435164	data	mo_txt_detail			?		W?mo_txt_detail$n[]$frame_t$$
+0043517c	data	mo_txt_horizon			?		W?mo_txt_horizon$n[]$frame_t$$
+00435194	data	mo_txt_dashbord			?		W?mo_txt_dashbord$n[]$frame_t$$
+004351ac	data	mo_txt_camera			?		W?mo_txt_camera$n[]$frame_t$$
+004351cc	data	mo_view			?		W?mo_view$n[]$frame_t$$
+004351ec	data	mo_geluid			?		W?mo_geluid$n[]$frame_t$$
+0043521c	data	mo_resolutie			?		W?mo_resolutie$n[]$frame_t$$
+0043523c	data	mds_terug			?		W?mds_terug$n[]$frame_t$$
+0043525c	data	mdt_terug			?		W?mdt_terug$n[]$frame_t$$
+0043527c	data	mdc_terug			?		W?mdc_terug$n[]$frame_t$$
+0043529c	data	ms_terug			?		W?ms_terug$n[]$frame_t$$
+004352bc	data	ms_help			?		W?ms_help$n[]$frame_t$$
+004352dc	data	ms_bord_score			?		W?ms_bord_score$n[]$frame_t$$
+00435314	data	ms_bord_head			?		W?ms_bord_head$n[]$frame_t$$
+00435324	data	mm_menu_cfg			?		W?mm_menu_cfg$n[]l
+0043537c	data	mc_menu_cfg			?		W?mc_menu_cfg$n[]l
+004353b8	data	mo_menu_cfg			?		W?mo_menu_cfg$n[]l
+00435414	data	ms_menu_cfg			?		W?ms_menu_cfg$n[]l
+00435428	data	reqwarn_cfg			?		W?reqwarn_cfg$n[]l
+00435434	data	reqvraag_cfg			?		W?reqvraag_cfg$n[]l
+00435444	data	reqinput_cfg			?		W?reqinput_cfg$n[]l
+00435454	data	mst_menu_cfg			?		W?mst_menu_cfg$n[]l
+0043546c	data	mds_menu_cfg			?		W?mds_menu_cfg$n[]l
+00435474	data	mdt_menu_cfg			?		W?mdt_menu_cfg$n[]l
+0043547c	data	mdc_menu_cfg			?		W?mdc_menu_cfg$n[]l
+00435484	data	mns_menu_cfg			?		W?mns_menu_cfg$n[]l
+0043549c	data	anims			?		W?anims$n[]$anim_t$$
+00435880	data	reqw_buttons			?		W?reqw_buttons$n[]$__m9tmqbutton_t$$
+00435898	data	reqw_form			?		W?reqw_form$n[]$__2e8n7fform_t$$
+004358d0	data	reqv_buttons			?		W?reqv_buttons$n[]$__m9tmqbutton_t$$
+004358fc	data	reqv_form			?		W?reqv_form$n[]$__2e8n7fform_t$$
+00435950	data	reqi_buttons			?		W?reqi_buttons$n[]$__m9tmqbutton_t$$
+0043597c	data	reqi_edit_box			?		W?reqi_edit_box$n[]$__2u792fedit_box_t$$
+004359a8	data	reqi_form			?		W?reqi_form$n[]$__2e8n7fform_t$$
+00435a18	data	speler_namen			?		W?speler_namen$n[]pna
+00435a30	data	movie_on			?	int	W?movie_on$ni
+00435a34	data	ini_filename			?		W?ini_filename$n[]a
+00435b60	data	xvga_screen_mode			?	int	W?xvga_screen_mode$ni
+00435b64	data	xvga_screen_xsize			?	int	W?xvga_screen_xsize$ni
+00435b68	data	xvga_screen_ysize			?	int	W?xvga_screen_ysize$ni
+00435b6c	data	xvga_screen_bpp			?	int	W?xvga_screen_bpp$ni
+00435b70	data	xvga_coop_level			?	int	W?xvga_coop_level$ni
+00435b74	data	xvga_back_buffers			?	int	W?xvga_back_buffers$ni
+00435b78	data	xvga_dd_guid			?	int	W?xvga_dd_guid$ni
+00435b7c	data	xvga_screen_modes			?		W?xvga_screen_modes$n[]$screen_mode_t$$
+00435ce4	data	debugmsg_toggle			?	int	W?debugmsg_toggle$ni
+00435ce8	data	fatal_exit__mb_flags			?		W?$Wsi0dmb_flags$n[]i$:.0$:?fatal_exit$n(pnae)inx[]i
+00435d04	data	sound_modes			?		W?sound_modes$n[]$sound_mode_t$$
+00435de4	data	sb16_driver_index			?	int	W?sb16_driver_index$ni
+00435de8	data	secondary_driver_index			?	int	W?secondary_driver_index$ni
+00435dec	data	mouse_show			?	int	W?mouse_show$ni
+00435df0	data	mouse_old_xpos			?	int	W?mouse_old_xpos$ni
+00435df4	data	mouse_old_ypos			?	int	W?mouse_old_ypos$ni
+00435df8	data	mouse_old_width			?	int	W?mouse_old_width$ni
+00435dfc	data	mouse_old_height			?	int	W?mouse_old_height$ni
+00435e00	data	mouse_old_image			?	int	W?mouse_old_image$ni
+00435e04	data	mouse_anim			?	int	W?mouse_anim$ni
+00435e08	data	mouse_frame			?	int	W?mouse_frame$ni
+00435e0c	data	mouse_type			?	int	W?mouse_type$ni
+00435e10	data	grid			?		W?grid$n[]uc
+00435e58	data	help_stop_keys			?		W?help_stop_keys$n[]i
+00435e8c	data	max_mem_image_ptr			?	int	W?max_mem_image_ptr$ni
+00435e90	data	mem_image_color_key			?	_DDCOLORKEY	W?mem_image_color_key$n$_DDCOLORKEY$$
+00435e98	data	xvga_font_index			?	int	W?xvga_font_index$ni
+00435e9c	data	xvga_fonts			?		W?xvga_fonts$n[]$__3etm0cfont_t$$
+00435f1c	data	sys_nerr			?		_sys_nerr
+00435f20	data	sys_errlist			?		_sys_errlist
+00435f60	data	joysticksencesibility			?	double	W?joysticksencesibility$nd
+00435f68	data	max_anim_ptr			?	int	W?max_anim_ptr$ni
+00435f6c	data	form_anim_timer			?	int	W?form_anim_timer$ni
+00435f70	data	selected_control			?	int	W?selected_control$ni
+00435f74	data	control_keypressed			?	int	W?control_keypressed$ni
+00435f78	data	EditWindowProc__key			?		W?$Wsi08key$n[]a$:.0$:?EditWindowProc$n(pnvuiuil)lnx[]a
+00435f7c	data	atexit			?		___atexit
+00435f80	data	int23_exit			?		___int23_exit
+00435f84	data	FPE_handler_exit			?		___FPE_handler_exit
+00435f88	data	secondary_dd_driver_index			?	int	W?secondary_dd_driver_index$ni
+00435f8c	data	d3dfx_dd_driver_index			?	int	W?d3dfx_dd_driver_index$ni
+00435f90	data	8087			?		__8087
+00435f91	data	real87			?		__real87
+00435f94	data	TlsIndex			?		___TlsIndex
+00435f98	data	GetThreadPtr			?		___GetThreadPtr
+00435f9c	data	AccessFileH_1			?		__AccessFileH
+00435fa0	data	ReleaseFileH_1			?		__ReleaseFileH
+00435fa4	data	InitAccessH_1			?		__InitAccessH
+00435fa8	data	FiniAccessH_1			?		__FiniAccessH
+00435fac	data	AccessIOB_1			?		__AccessIOB
+00435fb0	data	ReleaseIOB_1			?		__ReleaseIOB
+00435fb4	data	AccessNHeap_1			?		__AccessNHeap
+00435fb8	data	AccessFHeap_1			?		__AccessFHeap
+00435fbc	data	ReleaseNHeap_1			?		__ReleaseNHeap
+00435fc0	data	ReleaseFHeap_1			?		__ReleaseFHeap
+00435fc4	data	AccessTDList_1			?		__AccessTDList
+00435fc8	data	ReleaseTDList_1			?		__ReleaseTDList
+00435fcc	data	AccessFList_1			?		__AccessFList
+00435fd0	data	ReleaseFList_1			?		__ReleaseFList
+00435fd4	data	ThreadExitRtn			?		__ThreadExitRtn
+00435fd8	data	sig_init_rtn			?		___sig_init_rtn
+00435fdc	data	sig_fini_rtn			?		___sig_fini_rtn
+00435fe0	data	iob			?		___iob
+004361e8	data	tmpfnext			?		___tmpfnext
+004361e9	data	fmode			?		__fmode
+004361ed	data	force			?		_force
+004361f4	data	WindowsIsWindowedHandle			?		__WindowsIsWindowedHandle
+004361f8	data	WindowsRemoveWindowedHandle			?		__WindowsRemoveWindowedHandle
+004361fc	data	WindowsNewWindow			?		__WindowsNewWindow
+00436200	data	WindowsCloseWindow			?		__WindowsCloseWindow
+00436204	data	WindowsSetAbout			?		__WindowsSetAbout
+00436208	data	WindowsSetAppTitle			?		__WindowsSetAppTitle
+0043620c	data	WindowsSetConTitle			?		__WindowsSetConTitle
+00436210	data	WindowsDestroyOnClose			?		__WindowsDestroyOnClose
+00436214	data	WindowsYieldControl			?		__WindowsYieldControl
+00436218	data	WindowsShutDown			?		__WindowsShutDown
+0043621c	data	WindowsStdin			?		__WindowsStdin
+00436220	data	WindowsStdout			?		__WindowsStdout
+00436224	data	WindowsKbhit			?		__WindowsKbhit
+00436228	data	WindowsGetch			?		__WindowsGetch
+0043622c	data	WindowsGetche			?		__WindowsGetche
+00436230	data	WindowsPutch			?		__WindowsPutch
+00436234	data	WindowExitRtn			?		__WindowExitRtn
+00436238	data	roll_tabledraw			?		W?roll_tabledraw$n[]i
+00436330	data	raster			?		W?raster$n[]$__1ps8pgrid_t$$
+00436370	data	xlat			?		_xlat
+00436384	data	nheapbeg			?		___nheapbeg
+00436388	data	MiniHeapRover			?		___MiniHeapRover
+0043638c	data	LargestSizeB4MiniHeapRover			?		___LargestSizeB4MiniHeapRover
+00436390	data	wint_pure_error_flag			?		__wint_pure_error_flag
+00436392	data	wint_undef_vfun_flag			?		__wint_undef_vfun_flag
+00436394	data	wint_module_init			?		__wint_module_init
+00436398	data	dynend			?		__dynend
+0043639c	data	curbrk			?		__curbrk
+004363a0	data	LpCmdLine			?		__LpCmdLine
+004363a4	data	LpPgmName			?		__LpPgmName
+004363a8	data	LpDllName			?		__LpDllName
+004363ac	data	psp			?		__psp
+004363b0	data	STACKLOW			?		__STACKLOW
+004363b0	data	x386_stacklow			?		__x386_stacklow
+004363b4	data	STACKTOP			?		__STACKTOP
+004363b8	data	ASTACKSIZ			?		__ASTACKSIZ
+004363bc	data	ASTACKPTR			?		__ASTACKPTR
+004363c0	data	cbyte			?		__cbyte
+004363c4	data	cbyte2			?		__cbyte2
+004363c8	data	child			?		__child
+004363cc	data	no87			?		__no87
+004363ce	data	Extender			?		__Extender
+004363cf	data	ExtenderSubtype			?		__ExtenderSubtype
+004363d0	data	X32VM			?		__X32VM
+004363d1	data	Envptr			?		__Envptr
+004363d5	data	Envseg			?		__Envseg
+004363d7	data	osmajor			?		__osmajor
+004363d8	data	osminor			?		__osminor
+004363d9	data	osbuild			?		__osbuild
+004363db	data	FPE_handler			?		__FPE_handler
+004363db	data	FPE_handler_1			?		___FPE_handler
+004363e0	data	start_dst			?		___start_dst
+00436404	data	end_dst			?		___end_dst
+00436428	data	timezone			?		_timezone
+0043642c	data	dst_adjust			?		___dst_adjust
+00436430	data	daylight			?		_daylight
+00436434	data	stzone			?		_stzone
+00436453	data	dtzone			?		_dtzone
+00436472	data	tzname			?		_tzname
+0043647a	data	tzFlag			?		_tzFlag
+00436480	data	SignalTable			?		_SignalTable
+004364e8	data	CtrlHandlerRunning			?		_CtrlHandlerRunning
+004364ec	data	fakeHandle			?		_fakeHandle
+004364f0	data	AccessSema4			?		___AccessSema4
+004364f4	data	ReleaseSema4			?		___ReleaseSema4
+004364f8	data	CloseSema4			?		___CloseSema4
+004364fc	data	environ			?		_environ
+00436500	data	env_mask			?		___env_mask
+00436504	data	IsDBCS			?		___IsDBCS
+00436508	data	MBCSIsTable			?		___MBCSIsTable
+0043660c	data	ThreadDataSize			?		___ThreadDataSize
+00436610	data	umaskval			?		___umaskval
+00436614	data	NFiles			?		___NFiles
+00436618	data	init_mode			?		___init_mode
+00436668	data	iomode			?		__iomode
+0043666c	data	EFG_printf			?		___EFG_printf
+00436670	data	EFG_scanf			?		___EFG_scanf
+00436674	data	WD_Present			?		___WD_Present
+00436678	data	Save8087			?		___Save8087
+0043667c	data	Rest8087			?		___Rest8087
+00436680	data	8087cw			?		__8087cw
+00436684	data	abort_1			?		___abort
+00436688	data	console_in			?		_console_in
+0043668c	data	console_out			?		_console_out
+00436690	data	amblksiz			?		__amblksiz
+00436698	data	heap_enabled			?		___heap_enabled
+0043669c	data	MaxPrec			?		_MaxPrec
+004366a0	data	BeginThread			?		___BeginThread
+004366a4	data	EndThread			?		___EndThread
+004366a8	data	InitThread			?		___InitThread
+004366ac	data	chipbug			?		___chipbug
+004366ac	data	chipbug_1			?		__chipbug
+004366b0	data	MathFuncNames			?		_MathFuncNames
+0043670c	data	RWD_matherr			?		__RWD_matherr
+00436710	data	IID_IDirectSound3DBuffer			?		_IID_IDirectSound3DBuffer
+00436720	data	IID_IDirectSound3DListener			?		_IID_IDirectSound3DListener
+00436730	data	GUID_SysKeyboard			?		_GUID_SysKeyboard
+00436740	data	GUID_Key			?		_GUID_Key
+0043676e	data	anon163			?		___anon163
+00436774	data	anon42			?		___anon42
+00436786	data	AccessSema4Fini			?		___AccessSema4Fini
+00437010	data	debug_on			?	int	W?debug_on$ni
+00437014	data	sndformaat			?	int	W?sndformaat$ni
+00437018	data	path_buffer			?		W?path_buffer$n[]a
+0043711c	data	path_buffer2			?		W?path_buffer2$n[]a
+00437220	data	opties			?	opties_t	W?opties$n$opties_t$$
+00437234	data	available_joy			?	int	W?available_joy$ni
+00437238	data	control			?	bedien_t	W?control$n$bedien_t$$
+0043725c	data	slot_list			?		W?slot_list$n[]$slot_t$$
+00437eb4	data	slot_str_buffer			?		W?slot_str_buffer$n[]a
+00437ed4	data	slots_already_loaded			?	int	W?slots_already_loaded$ni
+00437ed8	data	score_already_loaded			?	int	W?score_already_loaded$ni
+00437edc	data	infio			?	infio_t	W?infio$n$infio_t$$
+00437f30	data	mdc_stand_list			?		W?mdc_stand_list$n[]$mdc_stand_t$$
+00437f8c	data	buffer1			?		W?buffer1$n[]a
+00438054	data	buffer2			?		W?buffer2$n[]a
+0043811c	data	init_anims_ok			?	int	W?init_anims_ok$ni
+00438120	data	mysnd_state			?	short	W?mysnd_state$ns
+00438124	data	ini_file_init_ok			?	int	W?ini_file_init_ok$ni
+00438128	data	xvga_dd_object			?	IDirectDraw*	W?xvga_dd_object$npn$IDirectDraw$$
+0043812c	data	xvga_dd2_object			?	IDirectDraw2*	W?xvga_dd2_object$npn$IDirectDraw2$$
+00438130	data	xvga_screen			?	IDirectDrawSurface*	W?xvga_screen$npn$IDirectDrawSurface$$
+00438134	data	xvga_back_screen			?	IDirectDrawSurface*	W?xvga_back_screen$npn$IDirectDrawSurface$$
+00438138	data	xvga_buffer_screen			?	IDirectDrawSurface*	W?xvga_buffer_screen$npn$IDirectDrawSurface$$
+0043813c	data	xvga_screen_pitch			?	int	W?xvga_screen_pitch$ni
+00438140	data	xvga_back_screen_pitch			?	int	W?xvga_back_screen_pitch$ni
+00438144	data	xvga_buffer_screen_pitch			?	int	W?xvga_buffer_screen_pitch$ni
+00438148	data	xvga_screen_lock_ok			?	int	W?xvga_screen_lock_ok$ni
+0043814c	data	xvga_back_screen_lock_ok			?	int	W?xvga_back_screen_lock_ok$ni
+00438150	data	xvga_buffer_screen_lock_ok			?	int	W?xvga_buffer_screen_lock_ok$ni
+00438154	data	xvga_hwnd			?	void*	W?xvga_hwnd$npnv
+00438158	data	xvga_hwnd_set			?	int	W?xvga_hwnd_set$ni
+0043815c	data	xvga_dd_object_defined			?	int	W?xvga_dd_object_defined$ni
+00438160	data	xvga_screen_defined			?	int	W?xvga_screen_defined$ni
+00438164	data	xvga_back_screen_defined			?	int	W?xvga_back_screen_defined$ni
+00438168	data	xvga_buffer_screen_defined			?	int	W?xvga_buffer_screen_defined$ni
+0043816c	data	xvga_coop_level_set			?	int	W?xvga_coop_level_set$ni
+00438170	data	xvga_allowmodex			?	int	W?xvga_allowmodex$ni
+00438174	data	debugmsg_channel			?	int	W?debugmsg_channel$ni
+00438178	data	screen_hdc			?	void*	W?screen_hdc$npnv
+0043817c	data	xvga_ds_object			?	IDirectSound*	W?xvga_ds_object$npn$IDirectSound$$
+00438180	data	ds_primary			?	IDirectSoundBuffer*	W?ds_primary$npn$IDirectSoundBuffer$$
+00438184	data	ds3d_listener			?	IDirectSound3DListener*	W?ds3d_listener$npn$IDirectSound3DListener$$
+00438188	data	max_3d_sound_buffers			?	int	W?max_3d_sound_buffers$ni
+0043818c	data	init_3d_sound_ok			?	int	W?init_3d_sound_ok$ni
+00438190	data	ds3d_buffers			?	IDirectSound3DBuffer*	W?ds3d_buffers$npn$IDirectSound3DBuffer$$
+00438194	data	xvga_sound_buffer			?	snd_buf_t*	W?xvga_sound_buffer$npn$snd_buf_t$$
+00438198	data	max_sound_buffers			?	int	W?max_sound_buffers$ni
+0043819c	data	init_sound_buffers_ok			?	int	W?init_sound_buffers_ok$ni
+004381a0	data	sound_info_ptr			?	sound_info_t*	W?sound_info_ptr$npn$sound_info_t$$
+004381a4	data	max_sound_info_ptr			?	int	W?max_sound_info_ptr$ni
+004381a8	data	sound_info_alloc_ptr			?	int	W?sound_info_alloc_ptr$ni
+004381ac	data	init_sound_info_ok			?	int	W?init_sound_info_ok$ni
+004381b0	data	init_sound_ok			?	int	W?init_sound_ok$ni
+004381b4	data	snd_object_create			?	int	W?snd_object_create$ni
+004381b8	data	snd_coop_level_set			?	int	W?snd_coop_level_set$ni
+004381bc	data	snd_buffer_alloc			?	int	W?snd_buffer_alloc$ni
+004381c0	data	snd_format_set			?	int	W?snd_format_set$ni
+004381c4	data	cd_directory			?	char*	W?cd_directory$npna
+004381c8	data	cd_drive			?		W?cd_drive$n[]a
+004381cc	data	res_fp			?	__iobuf*	W?res_fp$npn$__iobuf$$
+004381d0	data	data_fp			?	__iobuf*	W?data_fp$npn$__iobuf$$
+004381d4	data	file_begin_pos			?	long	W?file_begin_pos$nl
+004381d8	data	file_end_pos			?	long	W?file_end_pos$nl
+004381dc	data	xvga_rc_files			?	fileio_t*	W?xvga_rc_files$npn$fileio_t$$
+004381e0	data	max_xvga_rc_files			?	int	W?max_xvga_rc_files$ni
+004381e4	data	init_fileio_ok			?	int	W?init_fileio_ok$ni
+004381e8	data	control_list			?		W?control_list$n[]$__93rdtcontrols_t$$
+004382e4	data	mouse_init_ok			?	int	W?mouse_init_ok$ni
+004382e8	data	mouse_on_off			?	int	W?mouse_on_off$ni
+004382ec	data	mouse_anim_set			?	int	W?mouse_anim_set$ni
+004382f0	data	mouse_xpos			?	int	W?mouse_xpos$ni
+004382f4	data	mouse_ypos			?	int	W?mouse_ypos$ni
+004382f8	data	mouse_hotspot_x			?	int	W?mouse_hotspot_x$ni
+004382fc	data	mouse_hotspot_y			?	int	W?mouse_hotspot_y$ni
+00438300	data	mouse_image			?	int	W?mouse_image$ni
+00438304	data	mouse_loop			?	char	W?mouse_loop$na
+00438308	data	mouse_windows_cursor			?	void*	W?mouse_windows_cursor$npnv
+0043830c	data	helpgrid			?	IDirectDrawSurface*	W?helpgrid$npn$IDirectDrawSurface$$
+00438310	data	xvga_mem_images			?	mem_image_t*	W?xvga_mem_images$npn$mem_image_t$$
+00438314	data	mem_image_usage			?	int	W?mem_image_usage$ni
+00438318	data	alloc_mem_images_ok			?	int	W?alloc_mem_images_ok$ni
+0043831c	data	init_mem_images_ok			?	int	W?init_mem_images_ok$ni
+00438320	data	xvga_sprites			?	sprite_t*	W?xvga_sprites$npn$sprite_t$$
+00438324	data	max_sprite_ptr			?	int	W?max_sprite_ptr$ni
+00438328	data	init_sprites_ok			?	int	W?init_sprites_ok$ni
+0043832c	data	xvga_font_set			?	int	W?xvga_font_set$ni
+00438330	data	joystickinfo			?	joyinfoex_tag	W?joystickinfo$n$joyinfoex_tag$$
+00438364	data	joystickstate			?		W?joystickstate$n[]$__ajdnjjoystickstate_t$$
+00438478	data	clipping_on			?	int	W?clipping_on$ni
+0043847c	data	clip_limit_set			?	int	W?clip_limit_set$ni
+00438480	data	clip_tx			?	int	W?clip_tx$ni
+00438484	data	clip_ty			?	int	W?clip_ty$ni
+00438488	data	clip_bx			?	int	W?clip_bx$ni
+0043848c	data	clip_by			?	int	W?clip_by$ni
+00438490	data	xvga_anims			?	anim_t*	W?xvga_anims$npn$anim_t$$
+00438494	data	init_animation_ok			?	int	W?init_animation_ok$ni
+00438498	data	xvga_lib_pal			?		W?xvga_lib_pal$n[]uc
+00438798	data	anim_base			?		W?anim_base$n[]l
+004423d8	data	anim_base_ptr			?	long	W?anim_base_ptr$nl
+004423dc	data	reset_anim_base_ok			?	char	W?reset_anim_base_ok$na
+004423e0	data	called_true_handle_wipe			?	int	W?called_true_handle_wipe$ni
+004423e4	data	form_anim_counter			?	int	W?form_anim_counter$ni
+004423e8	data	nmb_of_controls			?	int	W?nmb_of_controls$ni
+004423ec	data	activeform			?	fform_t*	W?activeform$npn$__2e8n7fform_t$$
+004423f0	data	formdis			?	tagDRAWITEMSTRUCT	W?formdis$n$tagDRAWITEMSTRUCT$$
+00442420	data	init_edit_box_ok			?	char	W?init_edit_box_ok$na
+00442424	data	allowed_edit_keys			?		W?allowed_edit_keys$n[]a
+004425b4	data	old_edit_windowproc			?	long	W?old_edit_windowproc$nl
+004425b8	data	xvga_di_object			?	IDirectInputA*	W?xvga_di_object$npn$IDirectInputA$$
+004425bc	data	xvga_di_keyboard			?	IDirectInputDeviceA*	W?xvga_di_keyboard$npn$IDirectInputDeviceA$$
+004425c0	data	xvga_di_mouse			?	IDirectInputDeviceA*	W?xvga_di_mouse$npn$IDirectInputDeviceA$$
+004425c4	data	xvga_init_input_ok			?	int	W?xvga_init_input_ok$ni
+004425c8	data	xvga_init_keyboard_ok			?	int	W?xvga_init_keyboard_ok$ni
+004425cc	data	xvga_init_mouse_ok			?	int	W?xvga_init_mouse_ok$ni
+004425d0	data	xvga_keyboard_state			?		W?xvga_keyboard_state$n[]uc
+004426d0	data	xvga_timer_ptr			?	xvga_timer_t*	W?xvga_timer_ptr$npn$xvga_timer_t$$
+004426d4	data	xvga_max_timers			?	int	W?xvga_max_timers$ni
+004426d8	data	xvga_timer_init_ok			?	int	W?xvga_timer_init_ok$ni
+004426dc	data	xvga_dd_palette			?	IDirectDrawPalette*	W?xvga_dd_palette$npn$IDirectDrawPalette$$
+004426e0	data	xvga_lib_palette			?	tagPALETTEENTRY*	W?xvga_lib_palette$npn$tagPALETTEENTRY$$
+004426e4	data	palette_init_ok			?	int	W?palette_init_ok$ni
+004426e8	data	palette_ignore			?	int	W?palette_ignore$ni
+004426ec	data	xvga_pixel_format			?	_DDPIXELFORMAT	W?xvga_pixel_format$n$_DDPIXELFORMAT$$
+0044270c	data	get_xvga_pixel_format_ok			?	int	W?get_xvga_pixel_format_ok$ni
+00442710	data	xvga_screen_r			?	int	W?xvga_screen_r$ni
+00442714	data	xvga_screen_g			?	int	W?xvga_screen_g$ni
+00442718	data	xvga_screen_b			?	int	W?xvga_screen_b$ni
+0044271c	data	xvga_screen_r_bitmask			?	int	W?xvga_screen_r_bitmask$ni
+00442720	data	xvga_screen_g_bitmask			?	int	W?xvga_screen_g_bitmask$ni
+00442724	data	xvga_screen_b_bitmask			?	int	W?xvga_screen_b_bitmask$ni
+00442728	data	xvga_screen_r_shift			?	int	W?xvga_screen_r_shift$ni
+0044272c	data	xvga_screen_g_shift			?	int	W?xvga_screen_g_shift$ni
+00442730	data	xvga_screen_b_shift			?	int	W?xvga_screen_b_shift$ni
+00442734	data	xvga_screen_r_pos			?	int	W?xvga_screen_r_pos$ni
+00442738	data	xvga_screen_g_pos			?	int	W?xvga_screen_g_pos$ni
+0044273c	data	xvga_screen_b_pos			?	int	W?xvga_screen_b_pos$ni
+00442740	data	pf_conversion_mode			?	int	W?pf_conversion_mode$ni
+00442744	data	xvga_mouse_present			?	int	W?xvga_mouse_present$ni
+00442748	data	xvga_network_present			?	int	W?xvga_network_present$ni
+0044274c	data	xvga_slow_machine			?	int	W?xvga_slow_machine$ni
+00442750	data	xvga_boot_mode			?	int	W?xvga_boot_mode$ni
+00442754	data	xvga_processor_type			?	int	W?xvga_processor_type$ni
+00442758	data	xvga_phys_mem			?	int	W?xvga_phys_mem$ni
+0044275c	data	xvga_phys_mem_free			?	int	W?xvga_phys_mem_free$ni
+00442760	data	xvga_mem_usage			?	int	W?xvga_mem_usage$ni
+00442764	data	xvga_computer_name			?		W?xvga_computer_name$n[]uc
+0044278c	data	xvga_user_name			?		W?xvga_user_name$n[]uc
+004427b4	data	xvga_drive_list			?	drive_info_t*	W?xvga_drive_list$npn$drive_info_t$$
+004427b8	data	max_xvga_drive_list			?	int	W?max_xvga_drive_list$ni
+004427bc	data	init_drive_list_ok			?	int	W?init_drive_list_ok$ni
+004427c0	data	dd_info_ptr			?	dd_info_t*	W?dd_info_ptr$npn$dd_info_t$$
+004427c4	data	max_dd_info_ptr			?	int	W?max_dd_info_ptr$ni
+004427c8	data	dd_info_alloc_ptr			?	int	W?dd_info_alloc_ptr$ni
+004427cc	data	init_dd_info_ok			?	int	W?init_dd_info_ok$ni
+004427d0	data	init_smacker_ok			?	int	W?init_smacker_ok$ni
+004427d4	data	smkfile			?	SmackTag*	W?smkfile$npn$SmackTag$$
+004427d8	data	smacker_paused			?	int	W?smacker_paused$ni
+004427dc	data	smacker_playing			?	int	W?smacker_playing$ni
+004427e0	data	smk_action_keys			?		W?smk_action_keys$n[]$__5lcqt3KEYACTIONS_STRUCT$$
+00442880	data	Is_DLL			?		___Is_DLL
+00442884	data	FirstThreadData			?		___FirstThreadData
+00442888	data	old_button_windowproc			?	long	W?old_button_windowproc$nl
+0044288c	data	dis			?	tagDRAWITEMSTRUCT	W?dis$n$tagDRAWITEMSTRUCT$$
+004428bc	data	old_togglebutton_windowproc			?	long	W?old_togglebutton_windowproc$nl
+004428c0	data	tggldis			?	tagDRAWITEMSTRUCT	W?tggldis$n$tagDRAWITEMSTRUCT$$
+004428f0	data	old_areabutton_windowproc			?	long	W?old_areabutton_windowproc$nl
+004428f4	data	old_animbutton_windowproc			?	long	W?old_animbutton_windowproc$nl
+004428f8	data	dis_1			?	tagDRAWITEMSTRUCT	W?dis$n$tagDRAWITEMSTRUCT$$
+00442928	data	old_radiobutton_windowproc			?	long	W?old_radiobutton_windowproc$nl
+0044292c	data	dis_2			?	tagDRAWITEMSTRUCT	W?dis$n$tagDRAWITEMSTRUCT$$
+0044295c	data	MiniHeapFreeRover			?		___MiniHeapFreeRover
+00442960	data	WinMainProc			?		__WinMainProc
+00442964	data	ClosedStreams			?		___ClosedStreams
+00442968	data	OpenStreams			?		___OpenStreams
+0044296c	data	ExceptionHandled			?		___ExceptionHandled
+00442970	data	topFileID			?		_topFileID
+00442974	data	FileHandleIDs			?		___FileHandleIDs
+00442978	data	IOBSemaphore			?		_IOBSemaphore
+00442988	data	FHeapSemaphore			?		_FHeapSemaphore
+00442998	data	FileSemaphores			?		_FileSemaphores
+00442a98	data	NHeapSemaphore			?		_NHeapSemaphore
+00442aa8	data	InitSemaphore			?		_InitSemaphore
+00442ab8	data	TDListSemaphore			?		_TDListSemaphore
+00442ac8	data	FListSemaphore			?		_FListSemaphore
+00442adc	data	nheap_clean			?		___nheap_clean
+00442add	data	fheap_clean			?		___fheap_clean
+00442ae0	data	thread_data_list			?		___thread_data_list

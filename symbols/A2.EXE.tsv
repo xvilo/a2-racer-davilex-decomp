@@ -1,0 +1,255 @@
+address	kind	name	cc	ret	params	dtype	mangled	evidence
+00401003	label	begtext			?		___begtext	reference
+00401167	function	WinMain	__stdcall		?		_WinMain@16	reference
+00401253	function	srand	__watcall		?		srand_	call
+0040127d	function	debugmsg	__cdecl	void	char*		W?debugmsg$n(pnae)v	call
+004013b6	function	strstr	__watcall		?		strstr_	call
+00401486	function	getcwd	__watcall		?		getcwd_	pattern
+00401522	function	wstart2	__watcall		?		_wstart2_	pattern
+004015ab	function	set_errno_dos	__watcall		?		__set_errno_dos_	pattern
+004015fc	function	set_errno_nt	__watcall		?		__set_errno_nt_	call
+0040160b	function	nmalloc	__watcall		?		_nmalloc_	pattern
+004016ff	function	set_errno	__watcall		?		__set_errno_	pattern
+00401714	function	set_EINVAL	__watcall		?		__set_EINVAL_	pattern
+00401724	function	set_doserrno	__watcall		?		__set_doserrno_	pattern
+00401a7f	function	NTInit	__watcall		?		__NTInit_	pattern
+00401ba6	function	NTMainInit	__watcall		?		__NTMainInit_	pattern
+00401bec	function	exit_2	__watcall		?		__exit_	pattern
+00401c0b	label	WinMain_1			?		__WinMain	call
+00401cfc	label	MemAllocator			?		__MemAllocator	call
+00401da4	label	MemFree			?		__MemFree	call
+00401eaf	function	LinkUpNewMHeap	__watcall		?		__LinkUpNewMHeap_	pattern
+00401f23	function	CreateNewNHeap	__watcall		?		__CreateNewNHeap_	pattern
+00401fb3	function	ExpandDGROUP	__watcall		?		__ExpandDGROUP_	call
+00401fc4	function	AdjustAmount	__watcall		?		__AdjustAmount_	pattern
+0040200e	function	nmemneed	__watcall		?		__nmemneed_	call
+00402011	function	setenvp	__watcall		?		__setenvp_	pattern
+004020c9	function	access	__watcall		?		_access_	pattern
+004022d7	function	stackavail	__watcall		?		stackavail_	pattern
+00402306	function	nfree	__watcall		?		_nfree_	pattern
+004024c2	function	pickup	__watcall		?		pickup_	pattern
+004024d6	function	makepath	__watcall		?		_makepath_	pattern
+004026c1	function	stricmp	__watcall		?		_stricmp_	pattern
+00402846	function	getenv	__watcall		?		getenv_	pattern
+004028c5	label	CtrlSignalHandler			?		_CtrlSignalHandler	reference
+0040291e	function	CtrlHandlerIsNeeded	__watcall		?		CtrlHandlerIsNeeded_	pattern
+0040295d	function	StartCtrlHandler	__watcall		?		StartCtrlHandler_	pattern
+00402989	function	KillCtrlHandler	__watcall		?		KillCtrlHandler_	pattern
+004029c0	function	sigabort	__watcall		?		__sigabort_	reference
+004029c5	function	raise	__watcall		?		raise_	pattern
+004029fe	function	sigfpe_handler	__watcall		?		__sigfpe_handler_	pattern
+00402a45	function	signal	__watcall		?		signal_	pattern
+00402b2a	function	SigInit	__watcall		?		__SigInit_	pattern
+00402b75	label	ExceptionFilter			?		___ExceptionFilter	reference
+00402f28	function	NewExceptionHandler	__watcall		?		__NewExceptionHandler_	pattern
+00402f66	function	DoneExceptionHandler	__watcall		?		__DoneExceptionHandler_	pattern
+00402fb5	function	NTAtMaxFiles	__watcall		?		__NTAtMaxFiles_	pattern
+00402ffa	function	NTAddFileHandle	__watcall		?		__NTAddFileHandle_	pattern
+00403073	function	NTAddSpecificFileHandle	__watcall		?		__NTAddSpecificFileHandle_	pattern
+0040310f	function	NTRemoveFileHandle	__watcall		?		__NTRemoveFileHandle_	pattern
+0040313b	function	NTInitFileHandles	__watcall		?		__NTInitFileHandles_	pattern
+00403172	function	NTGetFakeHandle	__watcall		?		__NTGetFakeHandle_	pattern
+00403185	function	CloseSemaphore	__watcall		?		__CloseSemaphore_	pattern
+004031b1	function	AccessIOB	__watcall		?		__AccessIOB_	reference
+004031bb	function	ReleaseIOB	__watcall		?		__ReleaseIOB_	reference
+004031c5	function	AccessFileH	__watcall		?		__AccessFileH_	reference
+004031d2	function	ReleaseFileH	__watcall		?		__ReleaseFileH_	reference
+004031e2	function	InitAccessH	__watcall		?		__InitAccessH_	reference
+004031e7	function	FiniAccessH	__watcall		?		__FiniAccessH_	pattern
+00403203	function	AccessNHeap	__watcall		?		__AccessNHeap_	reference
+0040320a	function	ReleaseNHeap	__watcall		?		__ReleaseNHeap_	reference
+00403214	function	AccessFHeap	__watcall		?		__AccessFHeap_	reference
+0040321b	function	ReleaseFHeap	__watcall		?		__ReleaseFHeap_	reference
+00403225	function	AccessTDList	__watcall		?		__AccessTDList_	reference
+0040322c	function	ReleaseTDList	__watcall		?		__ReleaseTDList_	reference
+00403233	function	AccessFList	__watcall		?		__AccessFList_	reference
+00403238	function	AccessSemaphore	__watcall		?		__AccessSemaphore_	pattern
+00403295	function	ReleaseFList	__watcall		?		__ReleaseFList_	reference
+0040329a	function	ReleaseSemaphore	__watcall		?		__ReleaseSemaphore_	pattern
+004032bf	function	MultipleThread	__watcall		?		__MultipleThread_	pattern
+004032df	function	InitThreadData	__watcall		?		__InitThreadData_	pattern
+0040331e	function	NTThreadInit	__watcall		?		__NTThreadInit_	pattern
+0040336a	function	NTAddThread	__watcall		?		__NTAddThread_	pattern
+004033b7	function	NTRemoveThread	__watcall		?		__NTRemoveThread_	pattern
+00403404	function	ThreadExit	__watcall		?		__ThreadExit_	reference
+0040340e	function	NTThreadFini	__watcall		?		__NTThreadFini_	pattern
+0040342e	function	InitMultipleThread	__watcall		?		__InitMultipleThread_	pattern
+00403547	function	FiniSema4s	__watcall		?		__FiniSema4s_	pattern
+004035b3	function	strdup	__watcall		?		_strdup_	pattern
+004035f8	label	InitRtns			?		__InitRtns	call
+00403643	label	FiniRtns			?		__FiniRtns	call
+00403692	function	RegisterThreadDataSize	__watcall		?		__RegisterThreadDataSize_	pattern
+004036b0	function	memset	__watcall		?		memset_	pattern
+004036d4	function	exit	__watcall		?		exit_	pattern
+004036ec	function	exit_1	__watcall		?		_exit_	pattern
+00403712	function	heapenable	__watcall		?		_heapenable_	pattern
+00403733	function	heapmin	__watcall		?		_heapmin_	call
+00403747	function	ReturnMemToSystem	__watcall		?		__ReturnMemToSystem_	pattern
+004037a5	function	ReleaseMiniHeap	__watcall		?		__ReleaseMiniHeap_	pattern
+004037f8	function	exit_with_msg	__watcall		?		__exit_with_msg_	pattern
+0040382f	function	wcpp_2_fatal_runtime_error	__watcall		?		__wcpp_2_fatal_runtime_error__	pattern
+0040386b	function	mbsnccnt	__watcall		?		_mbsnccnt_	pattern
+004038a9	function	mbsnbcnt	__watcall		?		_mbsnbcnt_	pattern
+004038da	function	mbsninc	__watcall		?		_mbsninc_	pattern
+004038f3	function	mbsninc_1	__watcall		?		__mbsninc_	pattern
+00403938	function	mbscat	__watcall		?		_mbscat_	pattern
+00403989	function	mbscpy	__watcall		?		_mbscpy_	pattern
+004039a8	function	mbsdup	__watcall		?		_mbsdup_	pattern
+004039e9	function	mbsncat	__watcall		?		_mbsncat_	pattern
+00403a46	function	mbsnbcat	__watcall		?		_mbsnbcat_	pattern
+00403b38	function	mbsncpy	__watcall		?		_mbsncpy_	pattern
+00403b57	function	mbsnbcpy	__watcall		?		_mbsnbcpy_	pattern
+00403c0b	function	mbptov	__watcall		?		_mbptov_	pattern
+00403c49	function	mbvtop	__watcall		?		_mbvtop_	pattern
+00403c63	function	mbvtop_1	__watcall		?		__mbvtop_	pattern
+00403c97	function	checkIsDBCS	__watcall		?		__checkIsDBCS_	pattern
+00403cc8	function	mbgetcode	__watcall		?		_mbgetcode_	pattern
+00403d35	function	mbsnextc	__watcall		?		_mbsnextc_	pattern
+00403d87	function	mbsinc	__watcall		?		_mbsinc_	pattern
+00403dcd	function	mbsdec	__watcall		?		_mbsdec_	pattern
+00403e53	function	strnicmp	__watcall		?		_strnicmp_	pattern
+00403eac	function	terminate	__watcall		?		__terminate_	pattern
+00403ebe	function	control87	__watcall		?		_control87_	pattern
+00403f11	function	save_8087	__watcall		?		__save_8087_	reference
+00403f16	function	rest_8087	__watcall		?		__rest_8087_	reference
+00403f1a	function	init_8087	__watcall		?		__init_8087_	pattern
+00403f55	function	chk8087	__watcall		?		__chk8087_	pattern
+00403f9f	function	NTRealKey	__watcall		?		__NTRealKey_	pattern
+00403fcb	function	initConsoleHandles	__watcall		?		initConsoleHandles_	pattern
+0040404a	function	IOMode	__watcall		?		__IOMode_	pattern
+0040409f	function	SetIOMode	__watcall		?		__SetIOMode_	pattern
+004040b4	function	nrealloc	__watcall		?		_nrealloc_	pattern
+0040412e	function	GetThreadData	__watcall		?		__GetThreadData_	pattern
+00404165	function	AddThreadData	__watcall		?		__AddThreadData_	pattern
+004041c6	function	RemoveThreadData	__watcall		?		__RemoveThreadData_	pattern
+00404210	function	FreeThreadDataList	__watcall		?		__FreeThreadDataList_	pattern
+00404239	function	calloc	__watcall		?		calloc_	pattern
+00404251	function	FiniThreadProcessing	__watcall		?		__FiniThreadProcessing_	call
+00404260	label	STOSB			?		__STOSB	call
+00404303	function	EnterWVIDEO	__watcall		?		__EnterWVIDEO_	pattern
+00404329	function	strncat	__watcall		?		strncat_	pattern
+00404368	function	strncpy	__watcall		?		strncpy_	pattern
+0040438e	label	init_80x87			?		__init_80x87	call
+004043b5	function	isatty	__watcall		?		isatty_	pattern
+004043f6	function	msize	__watcall		?		_msize_	call
+004043ff	function	expand	__watcall		?		_expand_	pattern
+00404439	function	HeapManager_expand	__watcall		?		__HeapManager_expand_	pattern
+004045e8	function	initthread	__watcall		?		__initthread_	call
+004045ef	function	RegisterThreadData	__watcall		?		__RegisterThreadData_	pattern
+0040462e	label	begin_thread_helper			?		_begin_thread_helper	reference
+004046da	function	CBeginThread	__watcall		?		__CBeginThread_	pattern
+004047ae	function	CEndThread	__watcall		?		__CEndThread_	pattern
+004047d8	label	Alphabet			?		_Alphabet	reference
+004047fd	function	utoa	__watcall		?		utoa_	pattern
+00404847	function	itoa	__watcall		?		_itoa_	pattern
+004048dc	label	ExitThread			?		_ExitThread	call
+004048e2	label	CreateThread			?		_CreateThread	call
+004048e8	label	CreateEventA			?		_CreateEventA	call
+004048ee	label	GetCurrentThread			?		_GetCurrentThread	call
+004048fa	label	GetFileType			?		_GetFileType	call
+00404900	label	CreateFileA			?		_CreateFileA	call
+00404906	label	GetCPInfo			?		_GetCPInfo	call
+0040490c	label	VirtualFree			?		_VirtualFree	call
+00404912	label	TlsFree			?		_TlsFree	call
+00404918	label	TlsSetValue			?		_TlsSetValue	call
+0040491e	label	TlsAlloc			?		_TlsAlloc	call
+00404924	label	TlsGetValue			?		_TlsGetValue	call
+0040492a	label	ReleaseMutex			?		_ReleaseMutex	call
+00404930	label	CreateMutexA			?		_CreateMutexA	call
+00404936	label	GetCurrentThreadId			?		_GetCurrentThreadId	call
+0040493c	label	GetStdHandle			?		_GetStdHandle	call
+00404942	label	SetStdHandle			?		_SetStdHandle	call
+00404948	label	WriteFile			?		_WriteFile	call
+00404966	label	SetConsoleCtrlHandler			?		_SetConsoleCtrlHandler	call
+0040496c	label	CloseHandle			?		_CloseHandle	call
+00404972	label	WaitForSingleObject			?		_WaitForSingleObject	call
+0040498a	label	GetFileAttributesA			?		_GetFileAttributesA	call
+00404990	label	VirtualAlloc			?		_VirtualAlloc	call
+00404996	label	GetModuleHandleA			?		_GetModuleHandleA	call
+0040499c	label	GetVersion			?		_GetVersion	call
+004049a2	label	GetCommandLineA			?		_GetCommandLineA	call
+004049a8	label	GetModuleFileNameA			?		_GetModuleFileNameA	call
+004049ae	label	GetEnvironmentStrings			?		_GetEnvironmentStrings	call
+004049b4	label	ExitProcess			?		_ExitProcess	call
+004049ba	label	GetLastError			?		_GetLastError	call
+004049c0	label	GetCurrentDirectoryA			?		_GetCurrentDirectoryA	call
+0040513f	data	path_buffer2			?		W?path_buffer2$n[]a	reference
+0040543c	data	IsTable			?		__IsTable	reference
+004059d8	data	nheapbeg			?		___nheapbeg	reference
+004059dc	data	MiniHeapRover			?		___MiniHeapRover	reference
+004059e0	data	LargestSizeB4MiniHeapRover			?		___LargestSizeB4MiniHeapRover	reference
+004059e4	data	environ			?		_environ	reference
+004059e8	data	env_mask			?		___env_mask	reference
+004059ec	data	TlsIndex			?		___TlsIndex	reference
+004059f0	data	GetThreadPtr			?		___GetThreadPtr	reference
+004059f4	data	AccessFileH_1			?		__AccessFileH	reference
+004059f8	data	ReleaseFileH_1			?		__ReleaseFileH	reference
+004059fc	data	InitAccessH_1			?		__InitAccessH	reference
+00405a00	data	FiniAccessH_1			?		__FiniAccessH	reference
+00405a04	data	AccessIOB_1			?		__AccessIOB	reference
+00405a08	data	ReleaseIOB_1			?		__ReleaseIOB	reference
+00405a0c	data	AccessNHeap_1			?		__AccessNHeap	reference
+00405a10	data	AccessFHeap_1			?		__AccessFHeap	reference
+00405a14	data	ReleaseNHeap_1			?		__ReleaseNHeap	reference
+00405a18	data	ReleaseFHeap_1			?		__ReleaseFHeap	reference
+00405a1c	data	AccessTDList_1			?		__AccessTDList	reference
+00405a20	data	ReleaseTDList_1			?		__ReleaseTDList	reference
+00405a24	data	AccessFList_1			?		__AccessFList	reference
+00405a28	data	ReleaseFList_1			?		__ReleaseFList	reference
+00405a2c	data	ThreadExitRtn			?		__ThreadExitRtn	reference
+00405a30	data	sig_init_rtn			?		___sig_init_rtn	reference
+00405a34	data	sig_fini_rtn			?		___sig_fini_rtn	reference
+00405a4c	data	Save8087			?		___Save8087	reference
+00405a50	data	Rest8087			?		___Rest8087	reference
+00405a54	data	SignalTable			?		_SignalTable	reference
+00405abc	data	CtrlHandlerRunning			?		_CtrlHandlerRunning	reference
+00405ac0	data	fakeHandle			?		_fakeHandle	reference
+00405ac4	data	AccessSema4			?		___AccessSema4	reference
+00405ac8	data	ReleaseSema4			?		___ReleaseSema4	reference
+00405acc	data	CloseSema4			?		___CloseSema4	reference
+00405ad4	data	curbrk			?		__curbrk	reference
+00405ad8	data	LpCmdLine			?		__LpCmdLine	reference
+00405adc	data	LpPgmName			?		__LpPgmName	reference
+00405ae0	data	LpDllName			?		__LpDllName	reference
+00405b04	data	no87			?		__no87	reference
+00405b09	data	Envptr			?		__Envptr	reference
+00405b0f	data	osmajor			?		__osmajor	reference
+00405b10	data	osminor			?		__osminor	reference
+00405b11	data	osbuild			?		__osbuild	reference
+00405b18	data	ThreadDataSize			?		___ThreadDataSize	reference
+00405b1c	data	atexit			?		___atexit	reference
+00405b20	data	int23_exit			?		___int23_exit	reference
+00405b24	data	FPE_handler_exit			?		___FPE_handler_exit	reference
+00405b28	data	heap_enabled			?		___heap_enabled	reference
+00405b2c	data	amblksiz			?		__amblksiz	reference
+00405b30	data	IsDBCS			?		___IsDBCS	reference
+00405c38	data	abort_1			?		___abort	reference
+00405c3c	data	console_in			?		_console_in	reference
+00405c40	data	console_out			?		_console_out	reference
+00405c44	data	NFiles			?		___NFiles	reference
+00405c98	data	iomode			?		__iomode	reference
+00405cdc	data	WindowExitRtn			?		__WindowExitRtn	reference
+00405ce0	data	WD_Present			?		___WD_Present	reference
+00405ce4	data	8087			?		__8087	reference
+00405ce5	data	real87			?		__real87	reference
+00405ce8	data	8087cw			?		__8087cw	reference
+00405cec	data	BeginThread			?		___BeginThread	reference
+00405cf0	data	EndThread			?		___EndThread	reference
+00405cf4	data	InitThread			?		___InitThread	reference
+0040601c	data	Is_DLL			?		___Is_DLL	reference
+00406020	data	FirstThreadData			?		___FirstThreadData	reference
+00406024	data	WinMainProc			?		__WinMainProc	reference
+00406028	data	nheap_clean			?		___nheap_clean	reference
+00406029	data	fheap_clean			?		___fheap_clean	reference
+0040602c	data	MiniHeapFreeRover			?		___MiniHeapFreeRover	reference
+00406034	data	topFileID			?		_topFileID	reference
+00406038	data	FileHandleIDs			?		___FileHandleIDs	reference
+0040603c	data	IOBSemaphore			?		_IOBSemaphore	reference
+0040604c	data	FHeapSemaphore			?		_FHeapSemaphore	reference
+0040605c	data	FileSemaphores			?		_FileSemaphores	reference
+0040615c	data	NHeapSemaphore			?		_NHeapSemaphore	reference
+0040616c	data	InitSemaphore			?		_InitSemaphore	reference
+0040617c	data	TDListSemaphore			?		_TDListSemaphore	reference
+0040618c	data	FListSemaphore			?		_FListSemaphore	reference
+004061a0	data	thread_data_list			?		___thread_data_list	reference
+004070d8	data	path_buffer			?		W?path_buffer$n[]a	reference
