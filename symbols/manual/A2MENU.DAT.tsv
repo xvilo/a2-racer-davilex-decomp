@@ -1,0 +1,7 @@
+# Hand-assigned names for A2MENU.DAT. Columns as in tools/watcom_names.py.
+address	kind	name	cc	ret	params	dtype	mangled
+# Floating-point runtime helpers without their own symbol
+0042257f	function	normalize_mantissa_64					
+# Bin2String reaches this inline constant table with a call (to get its address); it is data, not code
+004228df	function	bin2string_inline_table					
+00422994	function	bin2string_inline_table_2					

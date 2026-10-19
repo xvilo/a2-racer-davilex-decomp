@@ -356,9 +356,9 @@ void __watcall create_slot(int param_1,char *param_2)
 }
 
 
-/* ==== 0040225e FUN_0040225e ==== */
+/* ==== 0040225e create_slot_tail ==== */
 
-void __watcall FUN_0040225e(void)
+void __watcall create_slot_tail(void)
 
 {
   return;
@@ -595,7 +595,7 @@ int __watcall slot_count_total_tijd_speler(int param_1,int param_2)
       }
     }
   }
-  iVar1 = FUN_0040225e();
+  iVar1 = create_slot_tail();
   return iVar1;
 }
 
@@ -971,9 +971,9 @@ void __watcall mm_animate_buttons(void)
 }
 
 
-/* ==== 0040455d FUN_0040455d ==== */
+/* ==== 0040455d mm_animate_buttons_tail ==== */
 
-void __watcall FUN_0040455d(void)
+void __watcall mm_animate_buttons_tail(void)
 
 {
   return;
@@ -1122,7 +1122,7 @@ LAB_00404c7a:
     snd_wait(&iStack_1c);
     mm_close_screen(1);
     snd_stop(&mm_tune_buffer);
-    iVar2 = FUN_0040455d();
+    iVar2 = mm_animate_buttons_tail();
     return iVar2;
   }
   handle_form_result = handle_form();
@@ -1319,9 +1319,9 @@ void __watcall mst_draw_selected_slot_info(int param_1)
 }
 
 
-/* ==== 00405089 FUN_00405089 ==== */
+/* ==== 00405089 mst_draw_selected_slot_info_tail ==== */
 
-void __watcall FUN_00405089(void)
+void __watcall mst_draw_selected_slot_info_tail(void)
 
 {
   return;
@@ -3417,9 +3417,9 @@ int __watcall free_mm_menu_cfg_anims(void)
 }
 
 
-/* ==== 004099f9 FUN_004099f9 ==== */
+/* ==== 004099f9 free_mm_menu_cfg_anims_tail ==== */
 
-longlong __watcall FUN_004099f9(undefined4 param_1,long *param_2)
+longlong __watcall free_mm_menu_cfg_anims_tail(undefined4 param_1,long *param_2)
 
 {
   uint unaff_retaddr;
@@ -3600,15 +3600,15 @@ int __watcall free_reqwarn_cfg_anims(void)
 
 {
   undefined4 in_EAX;
-  longlong lVar1;
+  longlong free_mm_menu_cfg_anims_tail_result;
   
   if (init_anims_ok == 0) {
                     /* WARNING: Subroutine does not return */
     fatal_exit(s__s__d____please_call_init_anims___00429130);
   }
   reset_anim_base();
-  lVar1 = FUN_004099f9(in_EAX,(long *)&reqwarn_cfg);
-  return (int)lVar1;
+  free_mm_menu_cfg_anims_tail_result = free_mm_menu_cfg_anims_tail(in_EAX,(long *)&reqwarn_cfg);
+  return (int)free_mm_menu_cfg_anims_tail_result;
 }
 
 
@@ -3647,15 +3647,15 @@ int __watcall free_reqvraag_cfg_anims(void)
 
 {
   undefined4 in_EAX;
-  longlong lVar1;
+  longlong free_mm_menu_cfg_anims_tail_result;
   
   if (init_anims_ok == 0) {
                     /* WARNING: Subroutine does not return */
     fatal_exit(s__s__d____please_call_init_anims___004291b2);
   }
   reset_anim_base();
-  lVar1 = FUN_004099f9(in_EAX,(long *)&reqvraag_cfg);
-  return (int)lVar1;
+  free_mm_menu_cfg_anims_tail_result = free_mm_menu_cfg_anims_tail(in_EAX,(long *)&reqvraag_cfg);
+  return (int)free_mm_menu_cfg_anims_tail_result;
 }
 
 
@@ -3694,15 +3694,15 @@ int __watcall free_reqinput_cfg_anims(void)
 
 {
   undefined4 in_EAX;
-  longlong lVar1;
+  longlong free_mm_menu_cfg_anims_tail_result;
   
   if (init_anims_ok == 0) {
                     /* WARNING: Subroutine does not return */
     fatal_exit(s__s__d____please_call_init_anims___00429234);
   }
   reset_anim_base();
-  lVar1 = FUN_004099f9(in_EAX,(long *)&reqinput_cfg);
-  return (int)lVar1;
+  free_mm_menu_cfg_anims_tail_result = free_mm_menu_cfg_anims_tail(in_EAX,(long *)&reqinput_cfg);
+  return (int)free_mm_menu_cfg_anims_tail_result;
 }
 
 
@@ -5247,39 +5247,39 @@ uchar * __watcall get_surface_ptr_1(int param_1)
   uchar *puVar1;
   size_t unaff_EDX;
   undefined4 unaff_EBX;
-  undefined8 uVar2;
+  undefined8 surface_ptr_1_tail_2;
   
   if (param_1 == 0) {
     if (xvga_screen_lock_ok == 0) {
       return (uchar *)0x0;
     }
-    uVar2 = FUN_0040c548(0,unaff_EDX,unaff_EBX,xvga_screen);
-    return (uchar *)uVar2;
+    surface_ptr_1_tail_2 = get_surface_ptr_1_tail_2(0,unaff_EDX,unaff_EBX,xvga_screen);
+    return (uchar *)surface_ptr_1_tail_2;
   }
   if ((uint)param_1 < 2) {
     if (xvga_back_screen_lock_ok != 0) {
-      uVar2 = FUN_0040c548(param_1,unaff_EDX,unaff_EBX,xvga_back_screen);
-      return (uchar *)uVar2;
+      surface_ptr_1_tail_2 = get_surface_ptr_1_tail_2(param_1,unaff_EDX,unaff_EBX,xvga_back_screen);
+      return (uchar *)surface_ptr_1_tail_2;
     }
   }
   else {
     if (param_1 != 2) {
-      puVar1 = (uchar *)FUN_0040c530();
+      puVar1 = (uchar *)get_surface_ptr_1_tail();
       return puVar1;
     }
     if (xvga_buffer_screen_lock_ok != 0) {
-      uVar2 = FUN_0040c548(2,unaff_EDX,unaff_EBX,xvga_buffer_screen);
-      return (uchar *)uVar2;
+      surface_ptr_1_tail_2 = get_surface_ptr_1_tail_2(2,unaff_EDX,unaff_EBX,xvga_buffer_screen);
+      return (uchar *)surface_ptr_1_tail_2;
     }
   }
-  puVar1 = (uchar *)FUN_0040c595();
+  puVar1 = (uchar *)get_surface_ptr_1_tail_3();
   return puVar1;
 }
 
 
-/* ==== 0040c530 FUN_0040c530 ==== */
+/* ==== 0040c530 get_surface_ptr_1_tail ==== */
 
-void __watcall FUN_0040c530(void)
+void __watcall get_surface_ptr_1_tail(void)
 
 {
                     /* WARNING: Subroutine does not return */
@@ -5287,9 +5287,10 @@ void __watcall FUN_0040c530(void)
 }
 
 
-/* ==== 0040c548 FUN_0040c548 ==== */
+/* ==== 0040c548 get_surface_ptr_1_tail_2 ==== */
 
-undefined8 __watcall FUN_0040c548(int param_1,size_t param_2,undefined4 param_3,int *param_4)
+undefined8 __watcall
+get_surface_ptr_1_tail_2(int param_1,size_t param_2,undefined4 param_3,int *param_4)
 
 {
   long lVar1;
@@ -5307,9 +5308,9 @@ undefined8 __watcall FUN_0040c548(int param_1,size_t param_2,undefined4 param_3,
 }
 
 
-/* ==== 0040c595 FUN_0040c595 ==== */
+/* ==== 0040c595 get_surface_ptr_1_tail_3 ==== */
 
-void __watcall FUN_0040c595(void)
+void __watcall get_surface_ptr_1_tail_3(void)
 
 {
   return;
@@ -5634,7 +5635,7 @@ int __watcall xvga_check_lock_ability(int param_1)
   undefined4 local_7c [27];
   
   if ((xvga_allowmodex != 0) && (param_1 == 0)) {
-    iVar1 = FUN_0040c595();
+    iVar1 = get_surface_ptr_1_tail_3();
     return iVar1;
   }
   pIVar2 = xvga_screen;
@@ -5647,10 +5648,10 @@ int __watcall xvga_check_lock_ability(int param_1)
   local_7c[0] = 0x6c;
   iVar1 = (**(code **)(*(int *)pIVar2 + 100))(pIVar2,0,local_7c,1,0);
   if ((iVar1 == 0) && (iVar1 = (**(code **)(*(int *)pIVar2 + 0x80))(pIVar2,0), iVar1 == 0)) {
-    iVar1 = FUN_0040c595();
+    iVar1 = get_surface_ptr_1_tail_3();
     return iVar1;
   }
-  iVar1 = FUN_0040c595();
+  iVar1 = get_surface_ptr_1_tail_3();
   return iVar1;
 }
 
@@ -6251,9 +6252,9 @@ int __watcall stop_sound_buffer(int param_1)
 }
 
 
-/* ==== 0040dcbb FUN_0040dcbb ==== */
+/* ==== 0040dcbb stop_sound_buffer_tail ==== */
 
-undefined8 __watcall FUN_0040dcbb(undefined4 param_1,undefined4 param_2)
+undefined8 __watcall stop_sound_buffer_tail(undefined4 param_1,undefined4 param_2)
 
 {
   undefined4 in_stack_00000008;
@@ -6880,9 +6881,9 @@ int __watcall play_sound_buffer_1(char *param_1,int param_2)
 }
 
 
-/* ==== 0040eea8 FUN_0040eea8 ==== */
+/* ==== 0040eea8 play_sound_buffer_1_tail ==== */
 
-void __watcall FUN_0040eea8(void)
+void __watcall play_sound_buffer_1_tail(void)
 
 {
   return;
@@ -7000,12 +7001,12 @@ int __watcall load_sound_buffer(char *param_1,int param_2)
   }
   if ((param_2 & 4U) != 0) {
     *(undefined4 *)(xvga_sound_buffer + iVar3 * 0x40 + 0x38) = 1000000;
-    iVar2 = FUN_0040eea8();
+    iVar2 = play_sound_buffer_1_tail();
     return iVar2;
   }
   *(int *)(xvga_sound_buffer + iVar3 * 0x40 + 0x38) =
        *(int *)(xvga_sound_buffer + iVar3 * 0x40 + 0x38) + 1;
-  iVar2 = FUN_0040eea8();
+  iVar2 = play_sound_buffer_1_tail();
   return iVar2;
 }
 
@@ -7541,8 +7542,8 @@ int __watcall stop_3dsound_buffer(int param_1)
   long lVar2;
   undefined4 extraout_EDX;
   int iVar3;
-  undefined8 uVar4;
-  int *piVar5;
+  undefined8 stop_sound_buffer_tail_result;
+  int *piVar4;
   undefined1 auStack_14 [4];
   
   if (init_sound_ok != 0) {
@@ -7551,14 +7552,14 @@ int __watcall stop_3dsound_buffer(int param_1)
       fatal_exit(s__s__d____illegal_sound_buffer_in_0042ca55);
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
-      piVar5 = *(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28);
-      lVar2 = (**(code **)(*piVar5 + 0x24))(piVar5,auStack_14);
+      piVar4 = *(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28);
+      lVar2 = (**(code **)(*piVar4 + 0x24))(piVar4,auStack_14);
       if (lVar2 != 0) {
         ds_error_string(lVar2);
                     /* WARNING: Subroutine does not return */
         fatal_exit(s__s__d____getting_sound_status_fa_0042ca90);
       }
-      if (((uint)piVar5 & 1) == 1) {
+      if (((uint)piVar4 & 1) == 1) {
         lVar2 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28) + 0x48))
                           (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28));
         if (lVar2 != 0) {
@@ -7573,8 +7574,8 @@ int __watcall stop_3dsound_buffer(int param_1)
                   (*(int **)(xvga_sound_buffer + iVar3 + 0x28));
         psVar1 = xvga_sound_buffer;
         *(undefined4 *)(xvga_sound_buffer + iVar3 + 0x30) = 0;
-        uVar4 = FUN_0040dcbb(psVar1,extraout_EDX);
-        return (int)uVar4;
+        stop_sound_buffer_tail_result = stop_sound_buffer_tail(psVar1,extraout_EDX);
+        return (int)stop_sound_buffer_tail_result;
       }
     }
   }
@@ -9319,9 +9320,9 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format)
   IDirectDrawSurface *pIVar1;
   int iVar2;
   UINT UVar3;
-  longlong lVar4;
-  tagSIZE *ptVar5;
-  INT *pIVar6;
+  longlong win_print_xy_tail_result;
+  tagSIZE *ptVar4;
+  INT *pIVar5;
   IDirectDrawSurface *pIStack_200;
   undefined1 *puStack_1fc;
   char acStack_1f8 [392];
@@ -9359,13 +9360,13 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format)
         SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
         SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
         SetBkMode(pHStack_24,*(int *)(xvga_font_index * 0x10 + 0x435ea0));
-        ptVar5 = &size_2;
+        ptVar4 = &size_2;
         iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-        GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar5);
+        GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar4);
         SetRect(&tStack_50,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
-        pIVar6 = (INT *)0x0;
+        pIVar5 = (INT *)0x0;
         UVar3 = lstrlenA((LPCSTR)&pIStack_200);
-        ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_50,(LPCSTR)&pIStack_200,UVar3,pIVar6);
+        ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_50,(LPCSTR)&pIStack_200,UVar3,pIVar5);
         pIVar1 = xvga_screen;
       }
       goto LAB_0041264f;
@@ -9391,13 +9392,13 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format)
         SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
         SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
         SetBkMode(pHStack_24,*(int *)(xvga_font_index * 0x10 + 0x435ea0));
-        ptVar5 = &size_3;
+        ptVar4 = &size_3;
         iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-        GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar5);
+        GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar4);
         SetRect(&tStack_60,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
-        pIVar6 = (INT *)0x0;
+        pIVar5 = (INT *)0x0;
         UVar3 = lstrlenA((LPCSTR)&pIStack_200);
-        ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_60,(LPCSTR)&pIStack_200,UVar3,pIVar6);
+        ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_60,(LPCSTR)&pIStack_200,UVar3,pIVar5);
         pIVar1 = xvga_back_screen;
       }
       goto LAB_0041264f;
@@ -9429,28 +9430,28 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format)
         SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
         SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
         SetBkMode(pHStack_24,*(int *)(xvga_font_index * 0x10 + 0x435ea0));
-        ptVar5 = &size;
+        ptVar4 = &size;
         iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-        GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar5);
+        GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar4);
         SetRect(&tStack_70,param_2,param_3,size.cx + param_2,size.cy + param_3);
-        pIVar6 = (INT *)0x0;
+        pIVar5 = (INT *)0x0;
         UVar3 = lstrlenA((LPCSTR)&pIStack_200);
-        ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_70,(LPCSTR)&pIStack_200,UVar3,pIVar6);
+        ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_70,(LPCSTR)&pIStack_200,UVar3,pIVar5);
         pIVar1 = xvga_buffer_screen;
       }
 LAB_0041264f:
       (**(code **)(*(int *)pIVar1 + 0x68))(pIVar1,pHStack_24);
-      lVar4 = FUN_004124bf();
-      return (int)lVar4;
+      win_print_xy_tail_result = win_print_xy_tail();
+      return (int)win_print_xy_tail_result;
     }
   }
   return 0;
 }
 
 
-/* ==== 004124bf FUN_004124bf ==== */
+/* ==== 004124bf win_print_xy_tail ==== */
 
-longlong __watcall FUN_004124bf(void)
+longlong __watcall win_print_xy_tail(void)
 
 {
   uint in_stack_000001ec;
@@ -9459,9 +9460,9 @@ longlong __watcall FUN_004124bf(void)
 }
 
 
-/* ==== 004124c7 FUN_004124c7 ==== */
+/* ==== 004124c7 win_print_xy_tail_2 ==== */
 
-void __watcall FUN_004124c7(void)
+void __watcall win_print_xy_tail_2(void)
 
 {
   return;
@@ -9577,7 +9578,7 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
     (**(code **)(*(int *)pIVar1 + 0x68))(pIVar1,local_20);
   }
 LAB_004129f9:
-  iVar2 = FUN_004124c7();
+  iVar2 = win_print_xy_tail_2();
   return iVar2;
 }
 
@@ -9720,7 +9721,7 @@ void __watcall xvga_release_fonts(void)
   } while (iVar1 != 0x50);
   xvga_font_set = 0;
   xvga_font_index = -1;
-  FUN_004124c7();
+  win_print_xy_tail_2();
   return;
 }
 
@@ -13632,9 +13633,9 @@ void __watcall activate_form(fform_t *param_1)
 }
 
 
-/* ==== 00417cef FUN_00417cef ==== */
+/* ==== 00417cef activate_form_tail ==== */
 
-void __watcall FUN_00417cef(void)
+void __watcall activate_form_tail(void)
 
 {
   return;
@@ -13672,34 +13673,34 @@ void __watcall check_form_key_pressed(int param_1)
     if (0x25 < (uint)param_1) {
       if ((uint)param_1 < 0x27) {
         selected_control = 0x2711;
-        FUN_00417cef();
+        activate_form_tail();
         return;
       }
       if ((uint)param_1 < 0x28) {
         selected_control = 0x2714;
-        FUN_00417cef();
+        activate_form_tail();
         return;
       }
       if (param_1 == 0x28) {
         selected_control = 0x2712;
-        FUN_00417cef();
+        activate_form_tail();
         return;
       }
-      FUN_00417cef();
+      activate_form_tail();
       return;
     }
     if (0x1a < (uint)param_1) {
       if ((uint)param_1 < 0x1c) {
         selected_control = 10000;
-        FUN_00417cef();
+        activate_form_tail();
         return;
       }
       if (param_1 == 0x25) {
         selected_control = 0x2713;
-        FUN_00417cef();
+        activate_form_tail();
         return;
       }
-      FUN_00417cef();
+      activate_form_tail();
       return;
     }
   }
@@ -13718,7 +13719,7 @@ void __watcall check_form_key_pressed(int param_1)
         formdis.hwndItem = *(HWND *)(activeform + iVar1 + 0x18);
         formdis.itemState = 0x11;
         SendMessageA(*(HWND *)(activeform + iVar1 + 0x18),0x2b,0,0x4423f0);
-        FUN_00417cef();
+        activate_form_tail();
         return;
       }
       iVar3 = iVar3 + 1;
@@ -21221,9 +21222,9 @@ char * __watcall parse_rule(byte *param_1,int *unaff_EDX)
 }
 
 
-/* ==== 0041f547 FUN_0041f547 ==== */
+/* ==== 0041f547 parse_rule_tail ==== */
 
-undefined4 __watcall FUN_0041f547(void)
+undefined4 __watcall parse_rule_tail(void)
 
 {
   int unaff_EDX;
@@ -25051,9 +25052,9 @@ bool __watcall IF_LOG(void)
 }
 
 
-/* ==== 004220a2 FUN_004220a2 ==== */
+/* ==== 004220a2 IF_LOG_tail ==== */
 
-undefined8 __watcall FUN_004220a2(undefined4 param_1,undefined4 param_2)
+undefined8 __watcall IF_LOG_tail(undefined4 param_1,undefined4 param_2)
 
 {
   float10 fVar1;
@@ -25092,7 +25093,7 @@ undefined8 __watcall IF_LOG2(undefined4 param_1,undefined4 param_2)
 {
   undefined8 uVar1;
   
-  uVar1 = FUN_004220a2(CONCAT31((int3)((uint)param_1 >> 8),9),param_2);
+  uVar1 = IF_LOG_tail(CONCAT31((int3)((uint)param_1 >> 8),9),param_2);
   return uVar1;
 }
 
@@ -25104,7 +25105,7 @@ undefined8 __watcall IF_LOG10(undefined4 param_1,undefined4 param_2)
 {
   undefined8 uVar1;
   
-  uVar1 = FUN_004220a2(CONCAT31((int3)((uint)param_1 >> 8),0xb),param_2);
+  uVar1 = IF_LOG_tail(CONCAT31((int3)((uint)param_1 >> 8),0xb),param_2);
   return uVar1;
 }
 
@@ -25349,7 +25350,7 @@ void __watcall ZBuf2F(byte *param_1,undefined8 *param_2)
   uint uVar6;
   bool bVar7;
   bool bVar8;
-  undefined8 uVar9;
+  undefined8 normalize_mantissa_64_result;
   
   uVar6 = 0;
   uVar5 = 0;
@@ -25366,15 +25367,15 @@ void __watcall ZBuf2F(byte *param_1,undefined8 *param_2)
             (uint)CARRY4(uVar3,uVar3) + (uint)CARRY4(uVar2,uVar4);
     param_1 = param_1 + 1;
   }
-  uVar9 = FUN_0042257f(uVar5,uVar6);
-  *param_2 = uVar9;
+  normalize_mantissa_64_result = normalize_mantissa_64(uVar5,uVar6);
+  *param_2 = normalize_mantissa_64_result;
   return;
 }
 
 
-/* ==== 0042257f FUN_0042257f ==== */
+/* ==== 0042257f normalize_mantissa_64 ==== */
 
-uint __watcall FUN_0042257f(uint param_1,uint param_2)
+uint __watcall normalize_mantissa_64(uint param_1,uint param_2)
 
 {
   uint uVar1;
@@ -25520,11 +25521,11 @@ int __watcall CmpBigInt(void)
   int unaff_EDI;
   uint *puVar6;
   bool bVar7;
-  undefined8 uVar8;
+  undefined8 bin2string_inline_table_result;
   
-  uVar8 = FUN_004228df();
-  puVar5 = (uint *)((ulonglong)uVar8 >> 0x20);
-  puVar6 = (uint *)(unaff_EDI + ((int)uVar8 + 1) * 8);
+  bin2string_inline_table_result = bin2string_inline_table();
+  puVar5 = (uint *)((ulonglong)bin2string_inline_table_result >> 0x20);
+  puVar6 = (uint *)(unaff_EDI + ((int)bin2string_inline_table_result + 1) * 8);
   uVar2 = *puVar5;
   uVar3 = puVar5[1];
   iVar4 = 0;
@@ -25669,13 +25670,13 @@ LAB_0042289f:
 }
 
 
-/* ==== 004228df FUN_004228df ==== */
+/* ==== 004228df bin2string_inline_table ==== */
 
 /* WARNING: Control flow encountered bad instruction data */
 /* WARNING: Instruction at (ram,0x00422928) overlaps instruction at (ram,0x00422927)
     */
 
-void __watcall FUN_004228df(void)
+void __watcall bin2string_inline_table(void)
 
 {
   short sVar1;
@@ -25700,7 +25701,7 @@ void __watcall FUN_004228df(void)
   byte bVar11;
   
   bVar11 = 0;
-  pbVar5 = (byte *)FUN_00422994();
+  pbVar5 = (byte *)bin2string_inline_table_2();
   bVar2 = (byte)pbVar5;
   *pbVar5 = *pbVar5 + bVar2;
   *pbVar5 = *pbVar5 + bVar2;
@@ -25786,9 +25787,9 @@ void __watcall FUN_004228df(void)
 }
 
 
-/* ==== 00422994 FUN_00422994 ==== */
+/* ==== 00422994 bin2string_inline_table_2 ==== */
 
-void __watcall FUN_00422994(void)
+void __watcall bin2string_inline_table_2(void)
 
 {
   return;

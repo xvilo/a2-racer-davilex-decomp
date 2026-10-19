@@ -13154,9 +13154,9 @@ long __watcall tell(int _FileHandle)
 }
 
 
-/* ==== 0040f500 FUN_0040f500 ==== */
+/* ==== 0040f500 tell_tail ==== */
 
-undefined4 __watcall FUN_0040f500(void)
+undefined4 __watcall tell_tail(void)
 
 {
   int unaff_EDX;
@@ -18727,9 +18727,9 @@ Nan_Inf(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 pa
 }
 
 
-/* ==== 00414b3c FUN_00414b3c ==== */
+/* ==== 00414b3c Nan_Inf_tail ==== */
 
-undefined8 __watcall FUN_00414b3c(undefined4 param_1,undefined4 param_2)
+undefined8 __watcall Nan_Inf_tail(undefined4 param_1,undefined4 param_2)
 
 {
   float10 fVar1;
@@ -18768,7 +18768,7 @@ undefined8 __watcall IF_DLOG10(undefined4 param_1,undefined4 param_2)
 {
   undefined8 uVar1;
   
-  uVar1 = FUN_00414b3c(CONCAT31((int3)((uint)param_1 >> 8),0xb),param_2);
+  uVar1 = Nan_Inf_tail(CONCAT31((int3)((uint)param_1 >> 8),0xb),param_2);
   return uVar1;
 }
 
@@ -19750,9 +19750,9 @@ float10 __watcall matherr(int *param_1,undefined4 unaff_EDX_00,undefined4 unaff_
 }
 
 
-/* ==== 00415d72 thunk_FUN_00415e23 ==== */
+/* ==== 00415d72 fputs_tail ==== */
 
-undefined4 __watcall thunk_FUN_00415e23(void)
+undefined4 __watcall fputs_tail(void)
 
 {
   return 0;
@@ -19828,9 +19828,9 @@ LAB_00415dec:
 }
 
 
-/* ==== 00415e23 FUN_00415e23 ==== */
+/* ==== 00415e23 fputs_tail ==== */
 
-undefined4 __watcall FUN_00415e23(void)
+undefined4 __watcall fputs_tail(void)
 
 {
   return 0;

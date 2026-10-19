@@ -21,7 +21,7 @@ address	name	size	thunk	callers	callees	status
 00401d90	slot_check_index	31	false	14	1	ok
 00401db2	slot_check_level	31	false	3	1	ok
 00401dd4	create_slot	42	false	0	1	ok
-0040225e	FUN_0040225e	9	false	1	0	ok
+0040225e	create_slot_tail	9	false	1	0	ok
 00402267	clear_slot	31	false	0	1	ok
 00402601	reset_slot	34	false	1	1	ok
 00402979	load_tmp_slotdbase	26	false	0	1	ok
@@ -61,7 +61,7 @@ address	name	size	thunk	callers	callees	status
 004042ea	mm_display_info	25	false	1	1	ok
 004043be	mm_af_image	63	false	1	1	ok
 00404400	mm_animate_buttons	349	false	0	5	ok
-0040455d	FUN_0040455d	7	false	1	0	ok
+0040455d	mm_animate_buttons_tail	7	false	1	0	ok
 00404564	mm_animate_map	60	false	0	3	ok
 00404610	mm_open_screen	48	false	2	2	ok
 00404724	mm_close_screen	14	false	2	1	ok
@@ -69,7 +69,7 @@ address	name	size	thunk	callers	callees	status
 004048df	mm_handle_opnieuw_spel	355	false	1	9	ok
 00404a74	menu_main	1180	false	0	27	ok
 00404f10	mst_draw_selected_slot_info	374	false	0	9	ok
-00405089	FUN_00405089	7	false	0	0	ok
+00405089	mst_draw_selected_slot_info_tail	7	false	0	0	ok
 00405090	mst_draw_slot_info	47	false	0	1	ok
 004052e8	mst_reselect_slot	28	false	0	1	ok
 0040537f	mst_print_slot	26	false	0	1	ok
@@ -152,7 +152,7 @@ address	name	size	thunk	callers	callees	status
 00409903	init_anims_1	68	false	0	4	ok
 0040994a	use_mm_menu_cfg_anims	129	false	0	6	ok
 004099ce	free_mm_menu_cfg_anims	40	false	0	2	ok
-004099f9	FUN_004099f9	24	false	3	2	ok
+004099f9	free_mm_menu_cfg_anims_tail	24	false	3	2	ok
 00409a11	use_mc_menu_cfg_anims	129	false	1	6	ok
 00409a95	free_mc_menu_cfg_anims	45	false	0	2	ok
 00409ac5	use_mo_menu_cfg_anims	129	false	1	6	ok
@@ -220,9 +220,9 @@ address	name	size	thunk	callers	callees	status
 0040c195	dd_error_string	744	false	44	0	ok
 0040c47d	get_surface_ptr	89	false	8	3	ok
 0040c4d9	get_surface_ptr_1	97	false	2	3	ok
-0040c530	FUN_0040c530	21	false	1	1	ok
-0040c548	FUN_0040c548	74	false	1	3	ok
-0040c595	FUN_0040c595	8	false	2	0	ok
+0040c530	get_surface_ptr_1_tail	21	false	1	1	ok
+0040c548	get_surface_ptr_1_tail_2	74	false	1	3	ok
+0040c595	get_surface_ptr_1_tail_3	8	false	2	0	ok
 0040c5a7	get_surface_ptr_2	208	false	0	3	ok
 0040c67d	get_surface_ptr_3	97	false	5	3	ok
 0040c6e1	reset_surface_ptr	141	false	2	2	ok
@@ -255,7 +255,7 @@ address	name	size	thunk	callers	callees	status
 0040d9f7	create_3d_sound_buffer	234	false	0	3	ok
 0040db28	sound_buffer_busy	145	false	6	2	ok
 0040dbbf	stop_sound_buffer	240	false	2	2	ok
-0040dcbb	FUN_0040dcbb	13	false	1	0	ok
+0040dcbb	stop_sound_buffer_tail	13	false	1	0	ok
 0040dcc8	stop_all_sound_buffers	55	false	1	1	ok
 0040dcff	delete_all_sound_buffers	114	false	1	1	ok
 0040dd71	search_sound_buffer	79	false	3	2	ok
@@ -275,7 +275,7 @@ address	name	size	thunk	callers	callees	status
 0040eac7	load_wave_file	134	false	0	4	ok
 0040ec34	play_sound_buffer	153	false	0	2	ok
 0040ecd3	play_sound_buffer_1	304	false	3	7	ok
-0040eea8	FUN_0040eea8	11	false	1	0	ok
+0040eea8	play_sound_buffer_1_tail	11	false	1	0	ok
 0040eeb3	play_sound_buffer_2	333	false	0	8	ok
 0040f0a3	load_sound_buffer	246	false	0	7	ok
 0040f237	set_3dsound_buffer_pos	171	false	0	2	ok
@@ -366,8 +366,8 @@ address	name	size	thunk	callers	callees	status
 00412360	get_string_width	120	false	0	0	ok
 004123d8	get_string_height	107	false	1	2	ok
 00412443	win_print_xy	1311	false	9	12	ok
-004124bf	FUN_004124bf	8	false	1	0	ok
-004124c7	FUN_004124c7	7	false	2	0	ok
+004124bf	win_print_xy_tail	8	false	1	0	ok
+004124c7	win_print_xy_tail_2	7	false	2	0	ok
 00412974	win_print_xy_1	1272	false	0	12	ok
 00412e6f	xvga_load_select_font	62	false	0	4	ok
 00412eb0	xvga_load_font	138	false	1	2	ok
@@ -477,7 +477,7 @@ address	name	size	thunk	callers	callees	status
 00417b1c	call_help_function	178	false	1	1	ok
 00417bd4	destroy_form	115	false	2	1	ok
 00417c4a	activate_form	162	false	10	2	ok
-00417cef	FUN_00417cef	7	false	1	0	ok
+00417cef	activate_form_tail	7	false	1	0	ok
 00417cf6	draw_form_animfocus_buttons	72	false	1	1	ok
 00417d3e	check_form_key_pressed	333	false	6	6	ok
 00417e8e	handle_form	120	false	8	4	ok
@@ -693,7 +693,7 @@ address	name	size	thunk	callers	callees	status
 0041f204	parse_time	36	false	2	0	ok
 0041f228	parse_offset	297	false	1	1	ok
 0041f351	parse_rule	260	false	1	1	ok
-0041f547	FUN_0041f547	35	false	0	1	ok
+0041f547	parse_rule_tail	35	false	0	1	ok
 0041f57c	CtrlHandlerIsNeeded	63	false	3	1	ok
 0041f5bb	StartCtrlHandler	44	false	1	1	ok
 0041f5e7	KillCtrlHandler	55	false	3	1	ok
@@ -835,7 +835,7 @@ address	name	size	thunk	callers	callees	status
 00421fce	RegisterThreadData	63	false	0	0	ok
 0042200d	Nan_Inf	146	false	2	0	ok
 004220a0	IF_LOG	2	false	1	0	ok
-004220a2	FUN_004220a2	65	false	2	1	ok
+004220a2	IF_LOG_tail	65	false	2	1	ok
 004220e3	IF_LOG2	4	true	1	1	ok
 004220e7	IF_LOG10	4	true	2	1	ok
 004220eb	log	12	false	0	1	ok
@@ -847,7 +847,7 @@ address	name	size	thunk	callers	callees	status
 004221aa	Scale10V	285	false	3	1	ok
 004222c7	cvt	477	false	1	5	ok
 00422534	ZBuf2F	75	false	1	1	ok
-0042257f	FUN_0042257f	81	false	1	0	ok
+0042257f	normalize_mantissa_64	81	false	1	0	ok
 0042267c	CBeginThread	212	false	1	9	ok
 00422750	CEndThread	39	false	1	4	ok
 0042277a	log87_err	60	false	1	1	ok
@@ -855,8 +855,8 @@ address	name	size	thunk	callers	callees	status
 004227d0	CmpBigInt	58	false	1	1	ok
 0042280a	Rnd2Int	107	false	1	0	ok
 00422875	Bin2String	106	false	1	0	ok
-004228df	FUN_004228df	167	false	1	1	ok
-00422994	FUN_00422994	2	false	1	0	ok
+004228df	bin2string_inline_table	167	false	1	1	ok
+00422994	bin2string_inline_table_2	2	false	1	0	ok
 00422998	fdiv_main_routine	279	false	2	0	ok
 00422f4b	fdivp_sti_st	19	false	2	1	ok
 00422f5e	fdivrp_sti_st	19	false	2	1	ok

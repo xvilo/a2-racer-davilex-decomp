@@ -29,7 +29,8 @@ import ghidra.program.model.symbol.Symbol;
 public class ApplyWatcom extends GhidraScript {
 
 	static final String WATCALL = "__watcall";
-	static final String CC_TAG = "CC=";  // tag prefix recording the convention from symbols
+	static final String CC_TAG = "CC=";
+	static final boolean DEBUG = Boolean.getBoolean("a2.debug");  // tag prefix recording the convention from symbols
 
 	static final String WATCALL_XML =
 		"<prototype name=\"__watcall\" extrapop=\"unknown\" stackshift=\"4\">\n" +
@@ -70,6 +71,7 @@ public class ApplyWatcom extends GhidraScript {
 			if (args.length > 1) {
 				applyNames(new File(args[1]));
 			}
+			nameSharedTails();
 			assignConventions();
 		}
 	}
@@ -228,6 +230,63 @@ public class ApplyWatcom extends GhidraScript {
 		// Game-specific struct: placeholder until its layout is recovered.
 		return dtm.addDataType(new StructureDataType(new CategoryPath("/A2Racer"), t, 0, dtm),
 			DataTypeConflictHandler.KEEP_HANDLER);
+	}
+
+	// ---- post: shared tails ----------------------------------------------------------------
+
+	/**
+	 * Watcom merges identical function tails: one function jumps into another's epilogue or
+	 * error exit. Ghidra splits such a block off as its own FUN_. A default-named function that
+	 * is only ever jumped to (never called) is named after the function it physically sits in.
+	 */
+	private void nameSharedTails() throws Exception {
+		int n = 0;
+		FunctionManager fm = currentProgram.getFunctionManager();
+		for (Function f : fm.getFunctions(true)) {
+			if (f.getSymbol().getSource() != SourceType.DEFAULT || f.isThunk()) {
+				continue;
+			}
+			boolean jumped = false, called = false;
+			for (ghidra.program.model.symbol.Reference r : getReferencesTo(f.getEntryPoint())) {
+				// Ghidra re-types a jump to a function entry as a tail call, so look at the
+				// instruction itself.
+				Instruction in = getInstructionAt(r.getFromAddress());
+				String m = in == null ? "" : in.getMnemonicString().toUpperCase();
+				if (m.startsWith("J")) {
+					jumped = true;
+				}
+				else {
+					called = true; // CALL, or a data/pointer reference: a real entry point
+				}
+			}
+			if (!jumped || called) {
+				if (DEBUG) {
+					println("tail? " + f.getName() + " jumped=" + jumped + " called=" + called);
+				}
+				continue;
+			}
+			// Owner: the nearest preceding function with a real name.
+			Function owner = null;
+			FunctionIterator back = fm.getFunctions(f.getEntryPoint(), false);
+			while (back.hasNext()) {
+				Function g = back.next();
+				if (g != f && g.getSymbol().getSource() != SourceType.DEFAULT) {
+					owner = g;
+					break;
+				}
+			}
+			if (owner == null) {
+				continue;
+			}
+			String base = owner.getName().replaceAll("(_tail(_\\d+)?)+$", "") + "_tail";
+			String name = base;
+			for (int i = 2; !getGlobalFunctions(name).isEmpty(); i++) {
+				name = base + "_" + i;
+			}
+			f.setName(name, SourceType.ANALYSIS);
+			n++;
+		}
+		println("ApplyWatcom post: " + n + " shared tails named after their owner");
 	}
 
 	// ---- post: calling conventions for everything else --------------------------------
