@@ -42,6 +42,8 @@ address	type	value
 0040539f	string	Application Error: 
 004053b3	string	\n\nClick on OK to terminate the application
 004053e0	string	ABNORMAL TERMINATION\r\n
+004053f8	string	conin$
+004053ff	string	conout$
 00405408	string	Thread has no thread-specific data\r\n
 00405a38	string	Stack Overflow!\r\n
 00407278	TerminatedCString	GDI32.dll
