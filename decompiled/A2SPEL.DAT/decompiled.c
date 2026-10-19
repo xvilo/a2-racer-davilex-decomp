@@ -171,14 +171,14 @@ LAB_00401123:
   set_debugmsg_state(0,(uint)(uVar4 != 0));
   debugmsg(s_setting_up_program_00441152);
   init_race_settings(extraout_EAX,extraout_EDX);
-  if (*(int *)(&DAT_00458c74 + DAT_004731f0 * 0x20) == 0) {
+  if (*(int *)(&DAT_00458c74 + video_mode_index * 0x20) == 0) {
     debugmsg(s_set_xvga_vars_allowmodex_00441166);
     set_xvga_vars(1,0x40,1);
   }
   debugmsg(s_set_xvga_vars_DD_GUID_00441180);
-  set_xvga_vars(2,*(int *)(&DAT_00458c70 + DAT_004731f0 * 0x20),0);
+  set_xvga_vars(2,*(int *)(&video_modes + video_mode_index * 0x20),0);
   debugmsg(s_set_xvga_vars_RESOLUTION_00441197);
-  set_xvga_vars(0,*(int *)(&DAT_00458c74 + DAT_004731f0 * 0x20),0);
+  set_xvga_vars(0,*(int *)(&DAT_00458c74 + video_mode_index * 0x20),0);
   debugmsg(s_init_xvga_lib_004411b1);
   iVar1 = init_xvga_lib(hInstance,nShowCmd,s_Davilex_Entertainment_004411c8,extraout_ECX);
   if (iVar1 == 0) {
@@ -192,7 +192,7 @@ LAB_00401123:
   pcVar2 = file_path(&DAT_0045b124,s_rcs_img_00441233);
   filename_val = file_path(&DAT_0045b020,s_rcs_ind_0044123b);
   xvga_init_fileio(filename_val,pcVar2);
-  if (DAT_00458c1c != 0) {
+  if (texture_conversion_mode != 0) {
     debugmsg(s_set_conversion_mode_00441243);
     set_conversion_mode();
   }
@@ -233,7 +233,7 @@ LAB_0040149d:
             }
           }
 LAB_004014ca:
-          DAT_00458c3c = 0;
+          music_enabled = 0;
           engine_sound_enabled = 0;
           goto LAB_004014d6;
         }
@@ -249,12 +249,12 @@ LAB_0040157d:
     uVar4 = xvga_init_sound(0x3c,0xc);
     if (11000 < uVar4) {
       if (uVar4 < 0x2afa) {
-        DAT_00458c3c = 0;
+        music_enabled = 0;
         engine_sound_enabled = 0;
         goto LAB_004014d6;
       }
       if (uVar4 == 0x2afa) {
-        DAT_00458c3c = 0;
+        music_enabled = 0;
         engine_sound_enabled = 0;
         goto LAB_004014d6;
       }
@@ -267,7 +267,7 @@ LAB_004014d6:
   debugmsg(s_Loading_samples_0044137f);
   load_samples();
   debugmsg(s_Loading_Pallette_00441390);
-  if (DAT_00458c20 == 0) {
+  if (dashboard_on_screen == 0) {
     debugmsg(s_loading_dashboard_pic__palet__004413c5);
     load_pcx_file_palette(s_surscrn_pcx_004413e4,1);
   }
@@ -281,12 +281,12 @@ LAB_004014d6:
   debugmsg(s_change_viewport_size_00441402);
   change_viewport_size(0,0);
   debugmsg(s_Initializing_3D_lib_00441418);
-  init_3d_lib(*(undefined4 *)(&DAT_00458c78 + DAT_004731f0 * 0x20),10);
+  init_3d_lib(*(undefined4 *)(&DAT_00458c78 + video_mode_index * 0x20),10);
   debugmsg(s_Done_initializing_3D_lib_0044142d);
   set_background();
   debugmsg(s_Initializing_anims_and_standard_t_00441450);
   init_anims_and_standard_textures(extraout_EAX_00,extraout_EDX_00);
-  if (DAT_00458c1c != 0) {
+  if (texture_conversion_mode != 0) {
     debugmsg(s_set_render_var_TEXTURE_FILTER_0044147a);
     set_render_var(7,2);
   }
@@ -315,7 +315,7 @@ LAB_004014d6:
   debugmsg(s_Initializing_radar_004415d5);
   init_radar();
   debugmsg(s_Init_atan_table_004415e9);
-  DAT_0045b290 = init_atan_table(4,0,1.4013e-42);
+  atan_table_id = init_atan_table(4,0,1.4013e-42);
   debugmsg(s_Initializing_controls_004415fa);
   init_controls();
   if (DAT_00458c2c != 0) {
@@ -330,7 +330,7 @@ LAB_004014d6:
     debugmsg(s_init_static_objects_00441644);
     init_static_objects(track_index,extraout_EDX_11);
   }
-  if (DAT_00458c20 != 0) {
+  if (dashboard_on_screen != 0) {
     debugmsg(s_load_dashboard_to_SCREEN_00441659);
     load_pcx_file_1(0,s_surscrn_pcx_00441673,0x1f);
   }
@@ -348,7 +348,7 @@ LAB_004014d6:
   while (race_state != 8) {
     update_racers();
     lVar5 = render_3d_frame(uVar3,uVar4);
-    iVar1 = DAT_004731f0 * 0x20;
+    iVar1 = video_mode_index * 0x20;
     uVar6 = CONCAT44((int)((ulonglong)lVar5 >> 0x20),iVar1);
     if (*(int *)(&DAT_00458c8c + iVar1) != 0) {
       uVar6 = blt_viewport(*(undefined4 *)(&DAT_00458c78 + iVar1),0,0,
@@ -650,9 +650,8 @@ longlong __watcall load_player_object(int param_1,int param_2,float param_3)
     *(float *)(iVar3 + 200) = param_3;
     *(float *)(iVar2 + opponent_data + 0xcc) = param_3;
     iVar2 = weg_chunks + param_2 * 0x38;
-    local_1c = *(float *)(&DAT_004578d4 + (int)param_3 * 4);
-    DAT_0045772c = *(float *)(*(int *)(weg_sections + *(int *)(iVar2 + 8) * 0x54) * 0x21 +
-                             weg_points);
+    local_1c = *(float *)(&lane_offsets + (int)param_3 * 4);
+    player_x = *(float *)(*(int *)(weg_sections + *(int *)(iVar2 + 8) * 0x54) * 0x21 + weg_points);
     fVar4 = *(float *)(*(int *)(weg_sections + *(int *)(iVar2 + 8) * 0x54) * 0x21 + weg_points + 8);
   }
   else {
@@ -660,31 +659,30 @@ longlong __watcall load_player_object(int param_1,int param_2,float param_3)
     *(float *)(iVar3 + 200) = param_3;
     *(float *)(iVar2 + opponent_data + 0xcc) = param_3;
     iVar2 = weg_chunks + param_2 * 0x38;
-    local_1c = *(float *)(&DAT_004578d4 + (int)param_3 * 4);
-    DAT_0045772c = *(float *)(weg_points +
-                             *(int *)(weg_sections + *(int *)(iVar2 + 8) * 0x54) * 0x21);
+    local_1c = *(float *)(&lane_offsets + (int)param_3 * 4);
+    player_x = *(float *)(weg_points + *(int *)(weg_sections + *(int *)(iVar2 + 8) * 0x54) * 0x21);
     fVar4 = *(float *)(weg_points + 8 + *(int *)(*(int *)(iVar2 + 8) * 0x54 + weg_sections) * 0x21);
   }
-  DAT_00457730 = 0;
-  DAT_0045772c = (*(float *)(iVar2 + 0x1c) * local_1c + DAT_0045772c) -
-                 *(float *)(iVar2 + 0x24) * (in_stack_00000004 + (float)_DAT_0044199d);
-  DAT_00457734 = (in_stack_00000004 + (float)_DAT_0044199d) * *(float *)(iVar2 + 0x1c) +
-                 *(float *)(iVar2 + 0x24) * local_1c + fVar4;
+  player_y = 0.0;
+  player_x = (*(float *)(iVar2 + 0x1c) * local_1c + player_x) -
+             *(float *)(iVar2 + 0x24) * (in_stack_00000004 + 40.0);
+  player_z = (in_stack_00000004 + 40.0) * *(float *)(iVar2 + 0x1c) +
+             *(float *)(iVar2 + 0x24) * local_1c + fVar4;
 LAB_00402196:
   iVar2 = iVar1 * 0x100;
-  *(float *)(opponent_data + 4 + iVar2) = DAT_0045772c;
-  *(undefined4 *)(opponent_data + 8 + iVar2) = DAT_00457730;
-  *(float *)(opponent_data + 0xc + iVar2) = DAT_00457734;
+  *(float *)(opponent_data + 4 + iVar2) = player_x;
+  *(float *)(opponent_data + 8 + iVar2) = player_y;
+  *(float *)(opponent_data + 0xc + iVar2) = player_z;
   if (param_1 == 0) {
-    DAT_0045b250 = *(int *)(weg_sections + 0x40 + param_2 * 0x54) + 0x100;
+    player_heading = *(int *)(weg_sections + 0x40 + param_2 * 0x54) + 0x100;
   }
   if (param_1 == 1) {
-    DAT_0045b250 = *(int *)(weg_sections + 0x40 + param_2 * 0x54) + -0x100;
+    player_heading = *(int *)(weg_sections + 0x40 + param_2 * 0x54) + -0x100;
   }
   debugmsg(s_Marking_opponent__d_in_map_at_ch_0044195f,iVar1,param_2,param_3);
   set_map_occupant(iVar1,param_2);
   debugmsg(s_Done__00441996);
-  DAT_00457738 = param_2;
+  player_start_lane = param_2;
   player_chunk = param_2;
   _DAT_00457740 = param_2;
   object_bounds = compute_object_bounds(player_index,extraout_EDX_00);
@@ -747,7 +745,7 @@ void __watcall play_motor_sample(int sample,int loop)
   
   if (engine_sound_enabled != 0) {
     play_sound_buffer_1_result = play_sound_buffer_1(motor_samples + sample * 0x13,loop);
-    *(int *)((int)&DAT_00457767 + sample * 0x13) = play_sound_buffer_1_result;
+    *(int *)((int)&motor_sample_handles + sample * 0x13) = play_sound_buffer_1_result;
   }
   return;
 }
@@ -762,7 +760,7 @@ void __watcall load_and_play_motor_sample(int sample,int loop)
   
   if (engine_sound_enabled != 0) {
     sound_buffer = load_sound_buffer(motor_samples + sample * 0x13,4);
-    *(int *)((int)&DAT_00457767 + sample * 0x13) = sound_buffer;
+    *(int *)((int)&motor_sample_handles + sample * 0x13) = sound_buffer;
     play_sound_buffer(sound_buffer,loop);
   }
   return;
@@ -861,7 +859,7 @@ LAB_00402b3a:
   set_joystick_keys(1,2,DAT_004577e8);
   set_joystick_keys(1,3,DAT_004577ec);
   add_rpm_steps();
-  DAT_004729c0 = rpm_step_count;
+  idle_rpm_step = rpm_step_count;
   rpm_step = rpm_step_count;
   add_rpm_steps();
   add_rpm_steps();
@@ -910,34 +908,32 @@ LAB_00402b3a:
 
 /* ==== 00402d0c set_camera_position ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall set_camera_position(int camera)
 
 {
   switch(camera) {
   case 1:
     *(undefined1 *)(player_index * 0x4b + 0x35 + racers) = 1;
-    _DAT_00457720 = 0xc1f80000;
-    DAT_00457724 = 0x41700000;
+    camera_distance = -31.0;
+    camera_height = 15.0;
     camera_position = 1;
     break;
   case 2:
     *(undefined1 *)(racers + 0x35 + player_index * 0x4b) = 0;
     camera_position = 2;
-    _DAT_00457720 = 0xc0800000;
-    DAT_00457724 = 0x40e00000;
+    camera_distance = -4.0;
+    camera_height = 7.0;
     break;
   case 3:
-    _DAT_00457720 = 0xc1f80000;
-    DAT_00457724 = 0x42000000;
+    camera_distance = -31.0;
+    camera_height = 32.0;
     camera_position = 3;
     break;
   case 4:
     *(undefined1 *)(racers + 0x35 + player_index * 0x4b) = 1;
-    DAT_00457724 = 0x43ff8000;
+    camera_height = 511.0;
     camera_position = 4;
-    _DAT_00457720 = 0xc1f80000;
+    camera_distance = -31.0;
     break;
   default:
     fatal_exit(s__s__d____unknown_camera_position_00441ba2,s_mycontro_cpp_00441b95,0x148,camera);
@@ -989,12 +985,12 @@ void __watcall play_gear_change_sound(int new_step,int old_step)
   if (engine_sound_enabled != 0) {
     if (old_step < new_step) {
       play_motor_sample(2,0);
-      iVar2 = (-100 - volume_attenuation) - DAT_00458c48;
+      iVar2 = (-100 - volume_attenuation) - volume_offset;
       iVar1 = DAT_0045778d;
     }
     else {
       play_motor_sample(3,0);
-      iVar2 = (-100 - volume_attenuation) - DAT_00458c48;
+      iVar2 = (-100 - volume_attenuation) - volume_offset;
       iVar1 = DAT_004577a0;
     }
     set_sound_buffer_vol(iVar1,iVar2);
@@ -1012,17 +1008,15 @@ void __watcall start_engine_sounds(void)
     load_and_play_motor_sample(1,1);
     load_and_play_motor_sample(0,1);
     set_sound_buffer_freq(DAT_0045777a,DAT_004729c8 + 6000);
-    set_sound_buffer_vol(DAT_0045777a,((DAT_004729cc + 300) - volume_attenuation) - DAT_00458c48);
-    set_sound_buffer_vol(DAT_00457767,(DAT_00472cec - volume_attenuation) - DAT_00458c48);
-    set_sound_buffer_freq(DAT_00457767,DAT_00472ce8);
+    set_sound_buffer_vol(DAT_0045777a,((DAT_004729cc + 300) - volume_attenuation) - volume_offset);
+    set_sound_buffer_vol(motor_sample_handles,(DAT_00472cec - volume_attenuation) - volume_offset);
+    set_sound_buffer_freq(motor_sample_handles,DAT_00472ce8);
   }
   return;
 }
 
 
 /* ==== 0040311c update_steering ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall update_steering(int input)
 
@@ -1056,7 +1050,7 @@ void __watcall update_steering(int input)
             steering_position = 0xe;
           }
         }
-        DAT_0045b2a8 = 1.0;
+        steering_return_rate = 1.0;
       }
       goto LAB_0040325b;
     }
@@ -1068,9 +1062,9 @@ void __watcall update_steering(int input)
       }
     }
   }
-  DAT_0045b2a8 = DAT_0045b2a8 + _DAT_00441c13;
-  if (0x40c00000 < (int)DAT_0045b2a8) {
-    DAT_0045b2a8 = 6.0;
+  steering_return_rate = steering_return_rate + 0.5;
+  if (0x40c00000 < (int)steering_return_rate) {
+    steering_return_rate = 6.0;
   }
 LAB_0040325b:
   if (DAT_0045b274 == 0) {
@@ -1095,14 +1089,14 @@ void __watcall update_accelerator(int input)
   iVar2 = rpm_step + 1;
   iVar1 = rpm_step + -1;
   if ((uint)input < 2) {
-    if ((input == 1) && (DAT_00457754 != 0)) {
-      if (DAT_00457754 < 2) {
+    if ((input == 1) && (accelerator_input != 0)) {
+      if ((uint)accelerator_input < 2) {
         if (rpm_step < rpm_step_count + -1) {
           rpm_step = iVar2;
         }
       }
       else {
-        if (DAT_00457754 != 2) goto LAB_004033c2;
+        if (accelerator_input != 2) goto LAB_004033c2;
         if (0 < rpm_step) {
           rpm_step = iVar1;
         }
@@ -1113,33 +1107,33 @@ void __watcall update_accelerator(int input)
     goto LAB_004033c2;
   }
   if ((uint)input < 3) {
-    if (DAT_00457754 == 0) goto LAB_004033c2;
-    if (1 < DAT_00457754) {
-      if (((DAT_00457754 == 2) && (rpm_step < DAT_004729c0)) &&
-         (rpm_step = rpm_step + 4, DAT_004729c0 < rpm_step)) {
-        rpm_step = DAT_004729c0;
+    if (accelerator_input == 0) goto LAB_004033c2;
+    if (1 < (uint)accelerator_input) {
+      if (((accelerator_input == 2) && (rpm_step < idle_rpm_step)) &&
+         (rpm_step = rpm_step + 4, idle_rpm_step < rpm_step)) {
+        rpm_step = idle_rpm_step;
       }
       goto LAB_004033c2;
     }
-    if (rpm_step <= DAT_004729c0) goto LAB_004033c2;
+    if (rpm_step <= idle_rpm_step) goto LAB_004033c2;
     rpm_step = rpm_step + -4;
-    iVar2 = rpm_step - DAT_004729c0;
+    iVar2 = rpm_step - idle_rpm_step;
   }
   else {
-    if ((input != 3) || (DAT_00457754 == 0)) goto LAB_004033c2;
-    if (1 < DAT_00457754) {
-      if (((DAT_00457754 == 2) && (rpm_step < DAT_004729c0)) &&
-         (rpm_step = iVar2, DAT_004729c0 < iVar2)) {
-        rpm_step = DAT_004729c0;
+    if ((input != 3) || (accelerator_input == 0)) goto LAB_004033c2;
+    if (1 < (uint)accelerator_input) {
+      if (((accelerator_input == 2) && (rpm_step < idle_rpm_step)) &&
+         (rpm_step = iVar2, idle_rpm_step < iVar2)) {
+        rpm_step = idle_rpm_step;
       }
       goto LAB_004033c2;
     }
-    if (rpm_step <= DAT_004729c0) goto LAB_004033c2;
-    iVar2 = iVar1 - DAT_004729c0;
+    if (rpm_step <= idle_rpm_step) goto LAB_004033c2;
+    iVar2 = iVar1 - idle_rpm_step;
     rpm_step = iVar1;
   }
-  if (SBORROW4(rpm_step,DAT_004729c0) != iVar2 < 0) {
-    rpm_step = DAT_004729c0;
+  if (SBORROW4(rpm_step,idle_rpm_step) != iVar2 < 0) {
+    rpm_step = idle_rpm_step;
   }
 LAB_004033c2:
   if (DAT_0045b2b0 != *(int *)(&DAT_0045b2c4 + rpm_step * 0xc)) {
@@ -1152,18 +1146,17 @@ LAB_004033c2:
     set_sound_buffer_freq(DAT_0045777a,(&DAT_004729c8)[engine_rpm * 2] + iVar4);
     set_sound_buffer_vol
               (DAT_0045777a,
-               (((&DAT_004729cc)[engine_rpm * 2] + iVar3) - volume_attenuation) - DAT_00458c48);
-    set_sound_buffer_freq(DAT_00457767,(&DAT_00472ce8)[engine_rpm * 2]);
+               (((&DAT_004729cc)[engine_rpm * 2] + iVar3) - volume_attenuation) - volume_offset);
+    set_sound_buffer_freq(motor_sample_handles,(&DAT_00472ce8)[engine_rpm * 2]);
     set_sound_buffer_vol
-              (DAT_00457767,((&DAT_00472cec)[engine_rpm * 2] - volume_attenuation) - DAT_00458c48);
+              (motor_sample_handles,
+               ((&DAT_00472cec)[engine_rpm * 2] - volume_attenuation) - volume_offset);
   }
   return;
 }
 
 
 /* ==== 004034bb handle_player_controls ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall handle_player_controls(void)
 
@@ -1181,19 +1174,19 @@ void __watcall handle_player_controls(void)
   }
   if ((uint)control_type < 2) {
     if (control_type == 1) {
-      DAT_0045b2a0 = control_type;
-      _DAT_0045b2a4 = 0;
+      active_input_device = control_type;
+      joystick_buttons = 0;
     }
   }
   else if ((uint)control_type < 3) {
-    _DAT_0045b2a4 = 0;
-    DAT_0045b2a0 = 2;
+    joystick_buttons = 0;
+    active_input_device = 2;
     handle_joystick();
   }
   else if (control_type == 3) {
-    _DAT_0045b2a4 = 0;
-    DAT_0045b2a0 = 0;
-    get_joystick_position(1,0x1c,0x1c,&steering_position,(int *)&DAT_0045774c,(int *)&DAT_0045b2a4);
+    joystick_buttons = 0;
+    active_input_device = 0;
+    get_joystick_position(1,0x1c,0x1c,&steering_position,(int *)&DAT_0045774c,&joystick_buttons);
     if (0x1c < steering_position) {
       steering_position = 0x1b;
     }
@@ -1201,10 +1194,10 @@ void __watcall handle_player_controls(void)
       steering_position = 0;
     }
   }
-  input_val = keyispressed_1(DAT_004577e0,DAT_0045b2a0);
-  if ((input_val == 0) && ((_DAT_0045b2a4 & 4) == 0)) {
-    input_val = keyispressed_1(DAT_004577e4,DAT_0045b2a0);
-    if ((input_val == 0) && ((_DAT_0045b2a4 & 8) == 0)) {
+  input_val = keyispressed_1(DAT_004577e0,active_input_device);
+  if ((input_val == 0) && ((joystick_buttons & 4U) == 0)) {
+    input_val = keyispressed_1(DAT_004577e4,active_input_device);
+    if ((input_val == 0) && ((joystick_buttons & 8U) == 0)) {
       if (control_type != 3) {
         input_val = 3;
         goto LAB_004035bf;
@@ -1226,8 +1219,8 @@ LAB_00403603:
   }
   *(float *)(opponent_data + 0x10 + *(int *)(player_index * 0x4b + 0x37 + racers) * 0x100) =
        player_speed;
-  if (((float)_DAT_00441c17 <= ABS(player_speed)) && (DAT_00457754 != 0)) {
-    if (DAT_00457754 < 2) {
+  if ((0.01 <= ABS(player_speed)) && (accelerator_input != 0)) {
+    if ((uint)accelerator_input < 2) {
       CHP();
       input_val = player_index;
       iVar1 = player_index * 0x50;
@@ -1236,59 +1229,59 @@ LAB_00403603:
       input_val = racers;
     }
     else {
-      if (DAT_00457754 != 2) goto LAB_00403740;
+      if (accelerator_input != 2) goto LAB_00403740;
       CHP();
       input_val = player_index * 0x4b;
       chp = CHP();
       iVar1 = racers;
     }
-    DAT_0045b250 = (int)ROUND(chp);
+    player_heading = (int)ROUND(chp);
     *(float *)(opponent_data + 0x10 + *(int *)(input_val + 0x37 + iVar1) * 0x100) = player_speed;
   }
 LAB_00403740:
-  input_val = keyispressed_1(DAT_004577e8,DAT_0045b2a0);
-  if ((input_val == 0) && ((_DAT_0045b2a4 & 1) == 0)) {
-    input_val = keyispressed_1(DAT_004577ec,DAT_0045b2a0);
-    if ((input_val == 0) && ((_DAT_0045b2a4 & 2) == 0)) {
+  input_val = keyispressed_1(DAT_004577e8,active_input_device);
+  if ((input_val == 0) && ((joystick_buttons & 1U) == 0)) {
+    input_val = keyispressed_1(DAT_004577ec,active_input_device);
+    if ((input_val == 0) && ((joystick_buttons & 2U) == 0)) {
       input_val = 3;
     }
     else {
-      if (rpm_step == DAT_004729c0) {
-        DAT_00457754 = 2;
+      if (rpm_step == idle_rpm_step) {
+        accelerator_input = 2;
       }
-      if (DAT_00457754 == 0) goto LAB_004037ce;
-      if (DAT_00457754 < 2) {
+      if (accelerator_input == 0) goto LAB_004037ce;
+      if ((uint)accelerator_input < 2) {
         input_val = 2;
       }
       else {
-        if (DAT_00457754 != 2) goto LAB_004037ce;
+        if (accelerator_input != 2) goto LAB_004037ce;
         input_val = 1;
       }
     }
   }
   else {
     input_val = 1;
-    DAT_00457754 = 1;
+    accelerator_input = 1;
   }
   update_accelerator(input_val);
 LAB_004037ce:
-  if (DAT_00457738 == player_chunk) {
+  if (player_start_lane == player_chunk) {
     return;
   }
   consume_fuel(1);
   if (*(int *)(&track_info + track_index * 0x10) == 0) {
-    if (player_chunk <= DAT_00457738) {
-      DAT_00457738 = player_chunk;
+    if (player_chunk <= player_start_lane) {
+      player_start_lane = player_chunk;
       return;
     }
   }
   else {
     if (*(int *)(&track_info + track_index * 0x10) != 1) {
-      DAT_00457738 = player_chunk;
+      player_start_lane = player_chunk;
       return;
     }
-    if (DAT_00457738 <= player_chunk) {
-      DAT_00457738 = player_chunk;
+    if (player_start_lane <= player_chunk) {
+      player_start_lane = player_chunk;
       return;
     }
   }
@@ -1296,14 +1289,12 @@ LAB_004037ce:
     DAT_004729c4 = 1;
     play_sound_effect(0x2f,0);
   }
-  DAT_00457738 = player_chunk;
+  player_start_lane = player_chunk;
   return;
 }
 
 
 /* ==== 0040386f update_camera_chase ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall update_camera_chase(undefined4 param_1)
 
@@ -1347,87 +1338,83 @@ void __watcall update_camera_chase(undefined4 param_1)
   int z_val;
   float local_1c;
   
-  iVar2 = (DAT_0045b250 + 0x100 & 0x3ff) * 4;
+  iVar2 = (player_heading + 0x100U & 0x3ff) * 4;
   local_3c = *(float *)(iVar2 + sin_table);
   local_38 = *(float *)(iVar2 + cos_table);
-  local_30 = local_3c * (float)_DAT_00441c1f;
-  local_34 = local_38 * (float)_DAT_00441c1f;
+  local_30 = local_3c * 8.0;
+  local_34 = local_38 * 8.0;
   uVar4 = update_chunk_for_position(player_chunk,iVar2);
   player_chunk = (int)uVar4;
-  _DAT_0045b240 = _DAT_00457714 - ABS(player_speed);
-  if (_DAT_0045b240 < 1.0) {
-    _DAT_0045b240 = 1.0;
+  camera_lag_xz = 3.0 - ABS(player_speed);
+  if (camera_lag_xz < 1.0) {
+    camera_lag_xz = 1.0;
   }
-  fVar3 = road_height_at(DAT_0045772c,DAT_00457734);
-  DAT_00457730 = (float)(((fVar3 + (float10)_DAT_0045b264) - (float10)DAT_00457730) /
-                         (float10)_DAT_0045b240 + (float10)DAT_00457730);
-  local_64 = DAT_0045772c - local_30;
-  local_78 = DAT_00457734 - local_34;
+  fVar3 = road_height_at(player_x,player_z);
+  player_y = (float)(((fVar3 + (float10)FLOAT_0045b264) - (float10)player_y) /
+                     (float10)camera_lag_xz + (float10)player_y);
+  local_64 = player_x - local_30;
+  local_78 = player_z - local_34;
   fVar3 = road_height_at(local_64,local_78);
   local_1c = (float)fVar3;
-  local_cc = DAT_0045772c + local_30;
-  local_c4 = DAT_00457734 + local_34;
+  local_cc = player_x + local_30;
+  local_c4 = player_z + local_34;
   fVar3 = road_height_at(local_cc,local_c4);
   local_cc = local_cc - local_64;
   local_c8 = (float)fVar3 - local_1c;
   local_c4 = local_c4 - local_78;
   normalize_vector(&local_cc);
   iVar2 = sin_table;
-  _DAT_0045b244 = _DAT_00457718 - player_speed;
-  if (_DAT_0045b244 < 1.0) {
-    _DAT_0045b244 = 1.0;
+  camera_lag_y = 3.0 - player_speed;
+  if (camera_lag_y < 1.0) {
+    camera_lag_y = 1.0;
   }
-  local_9c = (double)_DAT_0045b258;
-  _DAT_0045b258 = (local_c8 * (float)_DAT_00441c27 - _DAT_0045b258) / _DAT_0045b244 + _DAT_0045b258;
-  uVar1 = DAT_0045b250 & 0x3ff;
+  local_9c = (double)camera_tilt;
+  camera_tilt = (local_c8 * 128.0 - camera_tilt) / camera_lag_y + camera_tilt;
+  uVar1 = player_heading & 0x3ff;
   fVar3 = CHP();
-  DAT_0045b24c = (int)ROUND(fVar3);
-  local_60 = *(float *)(iVar2 + uVar1 * 4) * (float)_DAT_00441c2f;
-  local_5c = *(float *)(cos_table + uVar1 * 4) * (float)_DAT_00441c2f;
-  local_64 = DAT_0045772c - local_60;
-  local_78 = DAT_00457734 - local_5c;
+  camera_heading_int = (int)ROUND(fVar3);
+  local_60 = *(float *)(iVar2 + uVar1 * 4) * 4.0;
+  local_5c = *(float *)(cos_table + uVar1 * 4) * 4.0;
+  local_64 = player_x - local_60;
+  local_78 = player_z - local_5c;
   fVar3 = road_height_at(local_64,local_78);
   local_1c = (float)fVar3;
-  local_c0 = DAT_0045772c + local_60;
-  local_b8 = DAT_00457734 + local_5c;
+  local_c0 = player_x + local_60;
+  local_b8 = player_z + local_5c;
   fVar3 = road_height_at(local_c0,local_b8);
   local_c0 = local_c0 - local_64;
   local_bc = (float)fVar3 - local_1c;
   local_b8 = local_b8 - local_78;
   normalize_vector(&local_c0);
-  _DAT_0045b25c = (local_bc * (float)_DAT_00441c27 - _DAT_0045b25c) / _DAT_0045771c + _DAT_0045b25c;
-  uVar1 = (DAT_0045b250 - DAT_0045b274) + 0x100 & 0x3ff;
+  camera_roll = (local_bc * 128.0 - camera_roll) / 3.0 + camera_roll;
+  uVar1 = (player_heading - DAT_0045b274) + 0x100U & 0x3ff;
   iVar2 = sin_table;
   fVar3 = CHP();
-  DAT_0045b254 = (int)ROUND(fVar3);
+  camera_pitch_int = (int)ROUND(fVar3);
   local_2c = *(float *)(iVar2 + uVar1 * 4);
   local_28 = *(float *)(cos_table + uVar1 * 4);
-  local_40 = -(local_2c * _DAT_00457720 + DAT_0045772c);
-  DAT_0045b278 = (local_40 - DAT_0045b278) * (float)_DAT_00441c37 + DAT_0045b278;
-  DAT_0045b27c = (-(DAT_00457730 + DAT_00457724) - DAT_0045b27c) * (float)_DAT_00441c37 +
-                 DAT_0045b27c;
-  DAT_0045b280 = (-(local_28 * _DAT_00457720 + DAT_00457734) - DAT_0045b280) * (float)_DAT_00441c37
-                 + DAT_0045b280;
-  uVar4 = atan_lookup(DAT_0045b290,uVar1);
+  local_40 = -(local_2c * camera_distance + player_x);
+  camera_x = (local_40 - camera_x) * 0.25 + camera_x;
+  camera_y = (-(player_y + camera_height) - camera_y) * 0.25 + camera_y;
+  camera_z = (-(local_28 * camera_distance + player_z) - camera_z) * 0.25 + camera_z;
+  uVar4 = atan_lookup(atan_table_id,uVar1);
   iVar2 = DAT_0045b274 >> 0x1f;
   local_44 = DAT_0045b274 / 2;
-  _DAT_0045b288 =
-       (((float)(int)DAT_0045b250 - _DAT_0045b288) - (float)local_44) / _DAT_00457714 +
-       _DAT_0045b288;
-  _DAT_0045b284 = ((float)(int)uVar4 - _DAT_0045b284) / _DAT_00457718 + _DAT_0045b284;
+  camera_yaw = (((float)player_heading - camera_yaw) - (float)local_44) / 3.0 + camera_yaw;
+  camera_pitch = ((float)(int)uVar4 - camera_pitch) / 3.0 + camera_pitch;
   fVar3 = CHP();
-  DAT_0045b294 = (int)ROUND(fVar3);
+  camera_target_heading = (int)ROUND(fVar3);
   fVar3 = CHP();
-  DAT_0045b298 = (int)ROUND(fVar3);
-  _DAT_0045b29c = 0;
-  set_camera(0,iVar2,unaff_EBX,unaff_ECX,(int)DAT_0045b278,(int)DAT_0045b27c);
+  camera_target_pitch = (int)ROUND(fVar3);
+  camera_target_roll = 0;
+  set_camera(0,iVar2,unaff_EBX,unaff_ECX,(int)camera_x,(int)camera_y);
   fVar3 = CHP();
   x_val = (int)ROUND(fVar3);
   fVar3 = CHP();
   z_val = (int)ROUND(fVar3);
   local_84 = (double)local_2c;
-  if ((float)_DAT_00441c47 <= local_2c) {
-    if (local_84 <= _DAT_00441c4f) {
+  if (-0.5 <= local_2c) {
+    if (local_84 <= 0.5) {
       local_94 = (double)local_28;
     }
     else {
@@ -1456,16 +1443,14 @@ void __watcall update_camera_chase(undefined4 param_1)
   fVar3 = CHP();
   local_44 = (int)ROUND(fVar3);
   get_road_height();
-  DAT_0045b268 = -DAT_0045b24c;
-  DAT_0045b26c = -DAT_0045b250;
-  DAT_0045b270 = DAT_0045b254;
+  DAT_0045b268 = -camera_heading_int;
+  DAT_0045b26c = -player_heading;
+  DAT_0045b270 = camera_pitch_int;
   return;
 }
 
 
 /* ==== 00403f5d update_camera_overhead ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall update_camera_overhead(undefined4 param_1)
 
@@ -1509,87 +1494,83 @@ void __watcall update_camera_overhead(undefined4 param_1)
   int z_val;
   float local_1c;
   
-  iVar2 = (DAT_0045b250 + 0x100 & 0x3ff) * 4;
+  iVar2 = (player_heading + 0x100U & 0x3ff) * 4;
   local_3c = *(float *)(iVar2 + sin_table);
   local_38 = *(float *)(iVar2 + cos_table);
-  local_30 = local_3c * (float)_DAT_00441c5f;
-  local_34 = local_38 * (float)_DAT_00441c5f;
+  local_30 = local_3c * 8.0;
+  local_34 = local_38 * 8.0;
   uVar4 = update_chunk_for_position(player_chunk,iVar2);
   player_chunk = (int)uVar4;
-  _DAT_0045b240 = _DAT_00457714 - ABS(player_speed);
-  if (_DAT_0045b240 < 1.0) {
-    _DAT_0045b240 = 1.0;
+  camera_lag_xz = 3.0 - ABS(player_speed);
+  if (camera_lag_xz < 1.0) {
+    camera_lag_xz = 1.0;
   }
-  fVar3 = road_height_at(DAT_0045772c,DAT_00457734);
-  DAT_00457730 = (float)(((fVar3 + (float10)_DAT_0045b264) - (float10)DAT_00457730) /
-                         (float10)_DAT_0045b240 + (float10)DAT_00457730);
-  local_64 = DAT_0045772c - local_30;
-  local_78 = DAT_00457734 - local_34;
+  fVar3 = road_height_at(player_x,player_z);
+  player_y = (float)(((fVar3 + (float10)FLOAT_0045b264) - (float10)player_y) /
+                     (float10)camera_lag_xz + (float10)player_y);
+  local_64 = player_x - local_30;
+  local_78 = player_z - local_34;
   fVar3 = road_height_at(local_64,local_78);
   local_1c = (float)fVar3;
-  local_cc = DAT_0045772c + local_30;
-  local_c4 = DAT_00457734 + local_34;
+  local_cc = player_x + local_30;
+  local_c4 = player_z + local_34;
   fVar3 = road_height_at(local_cc,local_c4);
   local_cc = local_cc - local_64;
   local_c8 = (float)fVar3 - local_1c;
   local_c4 = local_c4 - local_78;
   normalize_vector(&local_cc);
   iVar2 = sin_table;
-  _DAT_0045b244 = _DAT_00457718 - player_speed;
-  if (_DAT_0045b244 < 1.0) {
-    _DAT_0045b244 = 1.0;
+  camera_lag_y = 3.0 - player_speed;
+  if (camera_lag_y < 1.0) {
+    camera_lag_y = 1.0;
   }
-  local_9c = (double)_DAT_0045b258;
-  _DAT_0045b258 = (local_c8 * (float)_DAT_00441c67 - _DAT_0045b258) / _DAT_0045b244 + _DAT_0045b258;
-  uVar1 = DAT_0045b250 & 0x3ff;
+  local_9c = (double)camera_tilt;
+  camera_tilt = (local_c8 * 128.0 - camera_tilt) / camera_lag_y + camera_tilt;
+  uVar1 = player_heading & 0x3ff;
   fVar3 = CHP();
-  DAT_0045b24c = (int)ROUND(fVar3);
-  local_60 = *(float *)(iVar2 + uVar1 * 4) * (float)_DAT_00441c6f;
-  local_5c = *(float *)(cos_table + uVar1 * 4) * (float)_DAT_00441c6f;
-  local_64 = DAT_0045772c - local_60;
-  local_78 = DAT_00457734 - local_5c;
+  camera_heading_int = (int)ROUND(fVar3);
+  local_60 = *(float *)(iVar2 + uVar1 * 4) * 4.0;
+  local_5c = *(float *)(cos_table + uVar1 * 4) * 4.0;
+  local_64 = player_x - local_60;
+  local_78 = player_z - local_5c;
   fVar3 = road_height_at(local_64,local_78);
   local_1c = (float)fVar3;
-  local_c0 = DAT_0045772c + local_60;
-  local_b8 = DAT_00457734 + local_5c;
+  local_c0 = player_x + local_60;
+  local_b8 = player_z + local_5c;
   fVar3 = road_height_at(local_c0,local_b8);
   local_c0 = local_c0 - local_64;
   local_bc = (float)fVar3 - local_1c;
   local_b8 = local_b8 - local_78;
   normalize_vector(&local_c0);
-  _DAT_0045b25c = (local_bc * (float)_DAT_00441c67 - _DAT_0045b25c) / _DAT_0045771c + _DAT_0045b25c;
-  uVar1 = (DAT_0045b250 - DAT_0045b274) + 0x100 & 0x3ff;
+  camera_roll = (local_bc * 128.0 - camera_roll) / 3.0 + camera_roll;
+  uVar1 = (player_heading - DAT_0045b274) + 0x100U & 0x3ff;
   iVar2 = sin_table;
   fVar3 = CHP();
-  DAT_0045b254 = (int)ROUND(fVar3);
+  camera_pitch_int = (int)ROUND(fVar3);
   local_2c = *(float *)(iVar2 + uVar1 * 4);
   local_28 = *(float *)(cos_table + uVar1 * 4);
-  local_40 = -(local_2c * _DAT_00457720 + DAT_0045772c);
-  DAT_0045b278 = (local_40 - DAT_0045b278) * (float)_DAT_00441c77 + DAT_0045b278;
-  DAT_0045b27c = (-(DAT_00457730 + DAT_00457724) - DAT_0045b27c) * (float)_DAT_00441c77 +
-                 DAT_0045b27c;
-  DAT_0045b280 = (-(local_28 * _DAT_00457720 + DAT_00457734) - DAT_0045b280) * (float)_DAT_00441c77
-                 + DAT_0045b280;
-  uVar4 = atan_lookup(DAT_0045b290,uVar1);
+  local_40 = -(local_2c * camera_distance + player_x);
+  camera_x = (local_40 - camera_x) * 0.25 + camera_x;
+  camera_y = (-(player_y + camera_height) - camera_y) * 0.25 + camera_y;
+  camera_z = (-(local_28 * camera_distance + player_z) - camera_z) * 0.25 + camera_z;
+  uVar4 = atan_lookup(atan_table_id,uVar1);
   iVar2 = DAT_0045b274 >> 0x1f;
   local_44 = DAT_0045b274 / 2;
-  _DAT_0045b288 =
-       (((float)(int)DAT_0045b250 - _DAT_0045b288) - (float)local_44) / _DAT_00457714 +
-       _DAT_0045b288;
-  _DAT_0045b284 = ((float)(int)uVar4 - _DAT_0045b284) / _DAT_00457718 + _DAT_0045b284;
+  camera_yaw = (((float)player_heading - camera_yaw) - (float)local_44) / 3.0 + camera_yaw;
+  camera_pitch = ((float)(int)uVar4 - camera_pitch) / 3.0 + camera_pitch;
   fVar3 = CHP();
-  DAT_0045b294 = (int)ROUND(fVar3);
+  camera_target_heading = (int)ROUND(fVar3);
   fVar3 = CHP();
-  DAT_0045b298 = (int)ROUND(fVar3);
-  _DAT_0045b29c = 0;
-  set_camera(0,iVar2,unaff_EBX,unaff_ECX,(int)DAT_0045b278,(int)DAT_0045b27c);
+  camera_target_pitch = (int)ROUND(fVar3);
+  camera_target_roll = 0;
+  set_camera(0,iVar2,unaff_EBX,unaff_ECX,(int)camera_x,(int)camera_y);
   fVar3 = CHP();
   x_val = (int)ROUND(fVar3);
   fVar3 = CHP();
   z_val = (int)ROUND(fVar3);
   local_84 = (double)local_2c;
-  if ((float)_DAT_00441c87 <= local_2c) {
-    if (local_84 <= _DAT_00441c8f) {
+  if (-0.5 <= local_2c) {
+    if (local_84 <= 0.5) {
       local_94 = (double)local_28;
     }
     else {
@@ -1618,16 +1599,14 @@ void __watcall update_camera_overhead(undefined4 param_1)
   fVar3 = CHP();
   local_44 = (int)ROUND(fVar3);
   get_road_height();
-  DAT_0045b268 = -DAT_0045b24c;
-  DAT_0045b26c = -DAT_0045b250;
-  DAT_0045b270 = DAT_0045b254;
+  DAT_0045b268 = -camera_heading_int;
+  DAT_0045b26c = -player_heading;
+  DAT_0045b270 = camera_pitch_int;
   return;
 }
 
 
 /* ==== 0040458a update_camera_cockpit ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall update_camera_cockpit(undefined4 param_1)
 
@@ -1666,70 +1645,70 @@ void __watcall update_camera_cockpit(undefined4 param_1)
   int z_val;
   float local_18;
   
-  uVar2 = DAT_0045b250 + 0x100 & 0x3ff;
+  uVar2 = player_heading + 0x100U & 0x3ff;
   local_28 = *(float *)(sin_table + uVar2 * 4);
   local_24 = *(float *)(cos_table + uVar2 * 4);
-  local_2c = local_28 * (float)_DAT_00441ca7;
-  local_34 = local_24 * (float)_DAT_00441ca7;
+  local_2c = local_28 * 8.0;
+  local_34 = local_24 * 8.0;
   update_chunk_for_position_result = update_chunk_for_position(player_chunk,uVar2);
   player_chunk = (int)update_chunk_for_position_result;
-  _DAT_0045b240 = _DAT_00457714 - ABS(player_speed);
-  if (_DAT_0045b240 < 1.0) {
-    _DAT_0045b240 = 1.0;
+  camera_lag_xz = 3.0 - ABS(player_speed);
+  if (camera_lag_xz < 1.0) {
+    camera_lag_xz = 1.0;
   }
-  fVar3 = road_height_at(DAT_0045772c,DAT_00457734);
-  DAT_00457730 = (float)(((fVar3 + (float10)_DAT_0045b264) - (float10)DAT_00457730) /
-                         (float10)_DAT_0045b240 + (float10)DAT_00457730);
-  local_50 = DAT_0045772c - local_2c;
-  local_18 = DAT_00457734 - local_34;
+  fVar3 = road_height_at(player_x,player_z);
+  player_y = (float)(((fVar3 + (float10)FLOAT_0045b264) - (float10)player_y) /
+                     (float10)camera_lag_xz + (float10)player_y);
+  local_50 = player_x - local_2c;
+  local_18 = player_z - local_34;
   fVar3 = road_height_at(local_50,local_18);
   local_54 = (float)fVar3;
-  local_a4 = DAT_0045772c + local_2c;
-  local_9c = DAT_00457734 + local_34;
+  local_a4 = player_x + local_2c;
+  local_9c = player_z + local_34;
   fVar3 = road_height_at(local_a4,local_9c);
   local_a4 = local_a4 - local_50;
   local_a0 = (float)fVar3 - local_54;
   local_9c = local_9c - local_18;
   normalize_vector(&local_a4);
-  _DAT_0045b244 = _DAT_00457718 - player_speed;
-  if (_DAT_0045b244 < 1.0) {
-    _DAT_0045b244 = 1.0;
+  camera_lag_y = 3.0 - player_speed;
+  if (camera_lag_y < 1.0) {
+    camera_lag_y = 1.0;
   }
-  _DAT_0045b258 = (local_a0 * (float)_DAT_00441caf - _DAT_0045b258) / _DAT_0045b244 + _DAT_0045b258;
-  uVar2 = DAT_0045b250 & 0x3ff;
+  camera_tilt = (local_a0 * 128.0 - camera_tilt) / camera_lag_y + camera_tilt;
+  uVar2 = player_heading & 0x3ff;
   iVar1 = sin_table;
   fVar3 = CHP();
-  DAT_0045b24c = (int)ROUND(fVar3);
-  local_48 = *(float *)(iVar1 + uVar2 * 4) * (float)_DAT_00441cb7;
-  local_40 = *(float *)(cos_table + uVar2 * 4) * (float)_DAT_00441cb7;
-  local_50 = DAT_0045772c - local_48;
-  local_18 = DAT_00457734 - local_40;
+  camera_heading_int = (int)ROUND(fVar3);
+  local_48 = *(float *)(iVar1 + uVar2 * 4) * 4.0;
+  local_40 = *(float *)(cos_table + uVar2 * 4) * 4.0;
+  local_50 = player_x - local_48;
+  local_18 = player_z - local_40;
   fVar3 = road_height_at(local_50,local_18);
   local_54 = (float)fVar3;
-  local_b0 = DAT_0045772c + local_48;
-  local_a8 = DAT_00457734 + local_40;
+  local_b0 = player_x + local_48;
+  local_a8 = player_z + local_40;
   fVar3 = road_height_at(local_b0,local_a8);
   local_b0 = local_b0 - local_50;
   local_ac = (float)fVar3 - local_54;
   local_a8 = local_a8 - local_18;
   normalize_vector(&local_b0);
-  _DAT_0045b25c = (local_ac * (float)_DAT_00441caf - _DAT_0045b25c) / _DAT_0045771c + _DAT_0045b25c;
+  camera_roll = (local_ac * 128.0 - camera_roll) / 3.0 + camera_roll;
   fVar3 = CHP();
-  DAT_0045b254 = (int)ROUND(fVar3);
-  DAT_0045b278 = -(DAT_0045772c + local_28 * _DAT_00457720);
-  DAT_0045b27c = -(DAT_00457730 + DAT_00457724);
-  DAT_0045b280 = -(local_28 * _DAT_00457720 + DAT_00457734);
-  DAT_0045b294 = DAT_0045b24c;
-  _DAT_0045b29c = -DAT_0045b254;
-  DAT_0045b298 = DAT_0045b250;
-  set_camera(0,uVar2,unaff_EBX,_DAT_0045b29c,(int)DAT_0045b278,(int)DAT_0045b27c);
+  camera_pitch_int = (int)ROUND(fVar3);
+  camera_x = -(player_x + local_28 * camera_distance);
+  camera_y = -(player_y + camera_height);
+  camera_z = -(local_28 * camera_distance + player_z);
+  camera_target_heading = camera_heading_int;
+  camera_target_roll = -camera_pitch_int;
+  camera_target_pitch = player_heading;
+  set_camera(0,uVar2,unaff_EBX,camera_target_roll,(int)camera_x,(int)camera_y);
   fVar3 = CHP();
   x_val = (int)ROUND(fVar3);
   fVar3 = CHP();
   z_val = (int)ROUND(fVar3);
   local_88 = (double)local_28;
-  if ((float)_DAT_00441cc7 <= local_28) {
-    if (local_88 <= _DAT_00441ccf) {
+  if (-0.5 <= local_28) {
+    if (local_88 <= 0.5) {
       local_70 = (double)local_24;
     }
     else {
@@ -1758,16 +1737,14 @@ void __watcall update_camera_cockpit(undefined4 param_1)
   fVar3 = CHP();
   local_38 = (int)ROUND(fVar3);
   get_road_height();
-  DAT_0045b268 = -DAT_0045b24c;
-  DAT_0045b26c = -DAT_0045b250;
-  DAT_0045b270 = DAT_0045b254;
+  DAT_0045b268 = -camera_heading_int;
+  DAT_0045b26c = -player_heading;
+  DAT_0045b270 = camera_pitch_int;
   return;
 }
 
 
 /* ==== 00404c39 place_camera_behind ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined8 __watcall
 place_camera_behind(undefined4 param_1,undefined4 param_2,float param_3,float param_4,float param_5,
@@ -1786,23 +1763,22 @@ place_camera_behind(undefined4 param_1,undefined4 param_2,float param_3,float pa
   int in_stack_00000014;
   
   uVar3 = in_stack_00000014 + 0x100U & 0x3ff;
-  fVar1 = *(float *)(sin_table + uVar3 * 4) * _DAT_00457720;
-  fVar2 = *(float *)(cos_table + uVar3 * 4) * _DAT_00457720;
+  fVar1 = *(float *)(sin_table + uVar3 * 4) * camera_distance;
+  fVar2 = *(float *)(cos_table + uVar3 * 4) * camera_distance;
   fVar4 = return_zero_float();
-  DAT_0045b278 = (-(fVar1 + param_5) - DAT_0045b278) * (float)_DAT_00441cef + DAT_0045b278;
-  DAT_0045b27c = (float)((-((float10)param_6 + (float10)DAT_00457724 +
-                           fVar4 * (float10)_DAT_00441ceb) - (float10)DAT_0045b27c) *
-                         (float10)_DAT_00441cef + (float10)DAT_0045b27c);
-  DAT_0045b280 = (-(fVar2 + (float)param_7) - DAT_0045b280) * (float)_DAT_00441cef + DAT_0045b280;
-  atan_lookup_result = atan_lookup(DAT_0045b290,uVar3);
-  _DAT_0045b288 = ((float)in_stack_00000014 - _DAT_0045b288) / _DAT_00457714 + _DAT_0045b288;
-  _DAT_0045b284 = ((float)(int)atan_lookup_result - _DAT_0045b284) / _DAT_00457718 + _DAT_0045b284;
+  camera_x = (-(fVar1 + param_5) - camera_x) * 0.25 + camera_x;
+  camera_y = (float)((-((float10)param_6 + (float10)camera_height + fVar4 * (float10)2.0) -
+                     (float10)camera_y) * (float10)0.25 + (float10)camera_y);
+  camera_z = (-(fVar2 + (float)param_7) - camera_z) * 0.25 + camera_z;
+  atan_lookup_result = atan_lookup(atan_table_id,uVar3);
+  camera_yaw = ((float)in_stack_00000014 - camera_yaw) / 3.0 + camera_yaw;
+  camera_pitch = ((float)(int)atan_lookup_result - camera_pitch) / 3.0 + camera_pitch;
   fVar4 = CHP();
-  DAT_0045b294 = (int)ROUND(fVar4);
+  camera_target_heading = (int)ROUND(fVar4);
   fVar4 = CHP();
-  DAT_0045b298 = (int)ROUND(fVar4);
-  _DAT_0045b29c = 0;
-  set_camera(0,0,DAT_0045b298,DAT_0045b294,(int)DAT_0045b278,(int)DAT_0045b27c);
+  camera_target_pitch = (int)ROUND(fVar4);
+  camera_target_roll = 0;
+  set_camera(0,0,camera_target_pitch,camera_target_heading,(int)camera_x,(int)camera_y);
   fVar4 = CHP();
   chp = CHP();
   update_visible_tiles((int)ROUND(fVar4),(int)ROUND(chp));
@@ -1946,8 +1922,6 @@ void __watcall clear_map_occupant(int chunk,int lane)
 
 /* ==== 004056a9 create_opponent ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 undefined4 __watcall create_opponent(int param_1,undefined4 param_2)
 
 {
@@ -1969,7 +1943,7 @@ undefined4 __watcall create_opponent(int param_1,undefined4 param_2)
   uVar4 = get_new_object3d(param_1,param_2);
   iVar1 = racers;
   *(undefined1 *)((int)uVar4 * 0x4b + 0x34 + racers) = 1;
-  if (DAT_00473010 == 0) {
+  if (opponents_initialized == 0) {
     iVar1 = fatal_exit(s__s__d____opponents_not_initialis_0044207a,s_opponent_cpp_0044206d);
     uVar4 = CONCAT44(extraout_EDX,extraout_ECX);
   }
@@ -1987,13 +1961,12 @@ undefined4 __watcall create_opponent(int param_1,undefined4 param_2)
     load_object_mesh(object,(&PTR_s_porche_d3d_00457978)[param_1 * 8]);
     *(undefined4 *)(&DAT_00457988 + iVar3) =
          *(undefined4 *)
-          (*(int *)(*(int *)(racers + iVar1) * 9 + DAT_00476788 + 4) +
-          ((int *)(racers + iVar1))[1] * 4);
+          (*(int *)(*(int *)(racers + iVar1) * 9 + anims3d + 4) + ((int *)(racers + iVar1))[1] * 4);
   }
   else {
     *(undefined4 *)
-     (((int *)(racers + iVar1))[1] * 4 + *(int *)(DAT_00476788 + *(int *)(racers + iVar1) * 9 + 4))
-         = *(undefined4 *)(&DAT_00457988 + iVar3);
+     (((int *)(racers + iVar1))[1] * 4 + *(int *)(anims3d + *(int *)(racers + iVar1) * 9 + 4)) =
+         *(undefined4 *)(&DAT_00457988 + iVar3);
   }
   iVar1 = iVar2 * 0x100;
   *(int *)(iVar1 + 0xdc + opponent_data) = object;
@@ -2026,21 +1999,20 @@ undefined4 __watcall create_opponent(int param_1,undefined4 param_2)
        *(undefined4 *)(cos_table + (*(uint *)(iVar1 + 0x24 + opponent_data) & 0x3ff) * 4);
   if (*(int *)(opponent_data + iVar1 + 0xe4) == 3) {
     iVar3 = rand();
-    *(float *)(iVar1 + 0x14 + opponent_data) =
-         _DAT_0044216e - (float)(iVar3 % 5) / (float)_DAT_00442166;
+    *(float *)(iVar1 + 0x14 + opponent_data) = 0.2 - (float)(iVar3 % 5) / 10.0;
   }
   else {
     *(undefined4 *)(opponent_data + iVar1 + 0x14) = 0x3e4ccccd;
   }
   *(undefined4 *)(iVar2 * 0x100 + 0x30 + opponent_data) =
        *(undefined4 *)(&DAT_00457994 + param_1 * 0x20);
-  if ((&DAT_00457984)[param_1 * 8] == -1) {
+  if ((&car_type_texture_ids)[param_1 * 8] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_c_004420f2,s_opponent_cpp_004420e5,0x148);
     object = extraout_ECX_01;
   }
   iVar1 = object * 0x4b;
-  *(undefined4 *)(iVar1 + 0x2c + racers) = (&DAT_00457984)[param_1 * 8];
-  set_object3d_matrix(object,&DAT_0045792c);
+  *(undefined4 *)(iVar1 + 0x2c + racers) = (&car_type_texture_ids)[param_1 * 8];
+  set_object3d_matrix(object,&identity_matrix);
   *(undefined **)(iVar1 + 0x20 + racers) = &DAT_0040654b;
   *(undefined1 *)(iVar1 + 0x36 + racers) = 1;
   *(undefined1 *)(iVar1 + 0x35 + racers) = 1;
@@ -2120,8 +2092,6 @@ void __watcall compute_opponent_target(undefined4 *param_1,int param_2)
 
 /* ==== 00405cf4 next_opponent_waypoint ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall next_opponent_waypoint(int param_1,int param_2)
 
 {
@@ -2197,11 +2167,9 @@ LAB_00405ee2:
     *(float *)(iVar2 + 0xc + opponent_data) =
          fVar1 * *(float *)(weg_chunks + 0x24 + iVar4) + *(float *)(iVar2 + 0xc + opponent_data);
     *(float *)(iVar2 + 4 + opponent_data) =
-         *(float *)(iVar2 + 4 + opponent_data) -
-         -*(float *)(iVar4 + 0x24 + weg_chunks) * (float)_DAT_0044226f;
+         *(float *)(iVar2 + 4 + opponent_data) - -*(float *)(iVar4 + 0x24 + weg_chunks) * 40.0;
     *(float *)(iVar2 + 0xc + opponent_data) =
-         -*(float *)(iVar4 + 0x1c + weg_chunks) * (float)_DAT_0044226f +
-         *(float *)(iVar2 + 0xc + opponent_data);
+         -*(float *)(iVar4 + 0x1c + weg_chunks) * 40.0 + *(float *)(iVar2 + 0xc + opponent_data);
     *(undefined4 *)(iVar2 + 0xf4 + opponent_data) = 0;
     *(undefined4 *)(iVar2 + 0xf8 + opponent_data) = 0;
     *(undefined4 *)(iVar2 + 0xec + opponent_data) = 0;
@@ -2248,8 +2216,6 @@ LAB_004060f8:
 
 /* ==== 0040610f evaluate_opponent ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 undefined4 __watcall evaluate_opponent(void)
 
 {
@@ -2271,10 +2237,10 @@ undefined4 __watcall evaluate_opponent(void)
   else {
     get_opponent_chunk(s_opponent_cpp_004422a8,0x23d);
     fVar4 = (float)(opponent_data + (int)in_EAX * 0x100);
-    local_14 = ABS(*(float *)((int)fVar4 + 0xc) - DAT_00457734) +
-               ABS(*(float *)((int)fVar4 + 8) - DAT_00457730) +
-               ABS(*(float *)((int)fVar4 + 4) - DAT_0045772c);
-    if (_DAT_004422c7 <= local_14) {
+    local_14 = ABS(*(float *)((int)fVar4 + 0xc) - player_z) +
+               ABS(*(float *)((int)fVar4 + 8) - player_y) +
+               ABS(*(float *)((int)fVar4 + 4) - player_x);
+    if (500.0 <= local_14) {
       stop_object_sound(unaff_EDX,fVar4);
     }
     else {
@@ -2292,10 +2258,8 @@ undefined4 __watcall evaluate_opponent(void)
     iVar2 = opponent_data;
     chp = CHP();
     *(int *)(iVar3 + 0x2c + iVar2) = (int)ROUND(chp);
-    *(float *)(iVar3 + 0xec + opponent_data) =
-         _DAT_004578a4 * *(float *)(iVar3 + 0xec + opponent_data);
-    *(float *)(iVar3 + 0xf0 + opponent_data) =
-         _DAT_004578a4 * *(float *)(iVar3 + 0xf0 + opponent_data);
+    *(float *)(iVar3 + 0xec + opponent_data) = *(float *)(iVar3 + 0xec + opponent_data) * 0.75;
+    *(float *)(iVar3 + 0xf0 + opponent_data) = *(float *)(iVar3 + 0xf0 + opponent_data) * 0.75;
   }
   return 0;
 }
@@ -2388,9 +2352,9 @@ LAB_004062f7:
             opponent_chunk = (int *)get_opponent_chunk(s_opponent_cpp_0044233b,0x2ad);
             lane_val = *opponent_chunk - (lane_val + -0xf);
 LAB_00406352:
-            *(int *)(iVar4 + 8 + DAT_00475140) = 10 - lane_val;
+            *(int *)(iVar4 + 8 + driver_lane_data) = 10 - lane_val;
             set_racer_finish_time(racer_val);
-            *(undefined4 *)(iVar4 + DAT_00475140) = 4;
+            *(undefined4 *)(iVar4 + driver_lane_data) = 4;
           }
         }
         else {
@@ -2442,7 +2406,7 @@ longlong __watcall init_opponents(int param_1,uint param_2)
   int extraout_EDX;
   int iVar2;
   
-  if (DAT_00473010 == 0) {
+  if (opponents_initialized == 0) {
     debugmsg(s_allocating__d_opponents_004423ff,param_1);
     opponent_data = LocalAlloc(0x40,param_1 << 8);
     if (opponent_data == (HLOCAL)0x0) {
@@ -2457,7 +2421,7 @@ longlong __watcall init_opponents(int param_1,uint param_2)
       *(undefined4 *)((int)opponent_data + iVar1 + 0xe8) = 0;
       iVar1 = iVar1 + 0x100;
     }
-    DAT_00473010 = 1;
+    opponents_initialized = 1;
     debugmsg(s__d_opponents_initialized_ok_00442451,param_1);
   }
   return (ulonglong)param_2 << 0x20;
@@ -2465,8 +2429,6 @@ longlong __watcall init_opponents(int param_1,uint param_2)
 
 
 /* ==== 0040684c place_opponent ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall place_opponent(int param_1,int param_2,float param_3)
 
@@ -2519,12 +2481,11 @@ void __watcall place_opponent(int param_1,int param_2,float param_3)
        *(float *)(weg_chunks + iVar5 + 0x20) * fVar1 + *(float *)(iVar3 + 8 + opponent_data);
   *(float *)(iVar3 + 0xc + opponent_data) =
        *(float *)(weg_chunks + iVar5 + 0x24) * fVar1 + *(float *)(iVar3 + 0xc + opponent_data);
-  fVar1 = (float)_DAT_004425c4;
   *(float *)(iVar3 + 4 + opponent_data) =
        *(float *)(iVar3 + 4 + opponent_data) -
-       *(float *)(weg_chunks + iVar5 + 0x24) * (in_stack_00000004 + fVar1);
+       *(float *)(weg_chunks + iVar5 + 0x24) * (in_stack_00000004 + 40.0);
   *(float *)(iVar3 + 0xc + opponent_data) =
-       (in_stack_00000004 + fVar1) * *(float *)(iVar5 + weg_chunks + 0x1c) +
+       (in_stack_00000004 + 40.0) * *(float *)(iVar5 + weg_chunks + 0x1c) +
        *(float *)(iVar3 + 0xc + opponent_data);
   debugmsg(s_placing_opponent__d_ok_00442582,param_1);
   opponent_chunk = (float *)get_opponent_chunk(s_opponent_cpp_0044259a,0x376);
@@ -2685,14 +2646,14 @@ longlong __watcall exit_opponents(undefined4 param_1,uint param_2)
 {
   HLOCAL pvVar1;
   
-  if (DAT_00473010 == (HLOCAL)0x0) {
+  if (opponents_initialized == 0) {
     return (ulonglong)param_2 << 0x20;
   }
   pvVar1 = LocalFree(opponent_data);
   if (pvVar1 != (HLOCAL)0x0) {
     return CONCAT44(param_2,2000);
   }
-  DAT_00473010 = pvVar1;
+  opponents_initialized = (int)pvVar1;
   return (ulonglong)param_2 << 0x20;
 }
 
@@ -2780,8 +2741,6 @@ undefined4 __watcall check_opponent_collisions(int racer_a_val,int param_2)
 
 /* ==== 00407193 update_racers ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall update_racers(void)
 
 {
@@ -2809,7 +2768,7 @@ void __watcall update_racers(void)
   int local_28;
   int local_1c;
   
-  iVar3 = (int)DAT_0045b250;
+  iVar3 = player_heading;
   racer_val = *(int *)(racers + 0x37 + player_index * 0x4b);
   iVar7 = racer_val * 0x100;
   racer_a_val = opponent_data + iVar7;
@@ -2818,11 +2777,11 @@ void __watcall update_racers(void)
   opponent_chunk = (undefined4 *)get_opponent_chunk(s_opponent_cpp_0044278d,0x474);
   debugmsg(s_Car_chunk_value_read___d_into_op_0044279a,player_chunk,*opponent_chunk);
   handle_player_controls();
-  *(undefined4 *)(iVar7 + 4 + opponent_data) = DAT_0045772c;
-  *(undefined4 *)(iVar7 + 8 + opponent_data) = DAT_00457730;
-  *(undefined4 *)(iVar7 + 0xc + opponent_data) = DAT_00457734;
+  *(float *)(iVar7 + 4 + opponent_data) = player_x;
+  *(float *)(iVar7 + 8 + opponent_data) = player_y;
+  *(float *)(iVar7 + 0xc + opponent_data) = player_z;
   *(int *)(iVar7 + 0x24 + opponent_data) = iVar3;
-  *(int *)(iVar7 + 0xfc + opponent_data) = (int)DAT_0045b250 - iVar3;
+  *(int *)(iVar7 + 0xfc + opponent_data) = player_heading - iVar3;
   *(float *)(iVar7 + 0x10 + opponent_data) = player_speed;
   piVar2 = (int *)get_opponent_chunk(s_opponent_cpp_004427c8,0x480);
   *piVar2 = player_chunk;
@@ -2880,15 +2839,15 @@ void __watcall update_racers(void)
       }
       racer_val = racer_val * 0x100;
       *(float *)(racer_val + 0xec + opponent_data) =
-           _DAT_004578a4 * *(float *)(racer_val + 0xec + opponent_data);
+           *(float *)(racer_val + 0xec + opponent_data) * 0.75;
       *(float *)(racer_val + 0xf0 + opponent_data) =
-           _DAT_004578a4 * *(float *)(racer_val + 0xf0 + opponent_data);
-      DAT_0045772c = *(undefined4 *)(racer_val + 4 + opponent_data);
-      DAT_00457734 = *(undefined4 *)(racer_val + 0xc + opponent_data);
-      DAT_00457730 = *(undefined4 *)(racer_val + 8 + opponent_data);
+           *(float *)(racer_val + 0xf0 + opponent_data) * 0.75;
+      player_x = *(float *)(racer_val + 4 + opponent_data);
+      player_z = *(float *)(racer_val + 0xc + opponent_data);
+      player_y = *(float *)(racer_val + 8 + opponent_data);
       player_speed = *(float *)(racer_val + 0x10 + opponent_data);
-      DAT_0045b250 = *(float *)(racer_val + 0x24 + opponent_data);
-      uVar9 = select_rpm_step_for_speed(DAT_0045b250);
+      player_heading = *(int *)(racer_val + 0x24 + opponent_data);
+      uVar9 = select_rpm_step_for_speed((float)player_heading);
       update_camera((int)uVar9,(int)((ulonglong)uVar9 >> 0x20));
       return;
     }
@@ -2909,7 +2868,7 @@ void __watcall update_racers(void)
       *(undefined4 *)(iVar8 + 0xf8 + opponent_data) = 0;
       fVar1 = *(float *)(iVar8 + 0x10 + iVar7);
       *(undefined4 *)(iVar8 + 0xf4 + opponent_data) = *(undefined4 *)(iVar8 + 0xf8 + iVar7);
-      if (fVar1 < (float)_DAT_00442911) {
+      if (fVar1 < 4.0) {
         uVar10 = *(undefined4 *)(iVar8 + 0x24 + opponent_data);
         iVar7 = 4;
         while (iVar7 = iVar7 + -1, iVar7 != -1) {
@@ -2971,7 +2930,7 @@ void __watcall load_car_textures(void)
   do {
     flags = iVar1 + 0x20;
     texture = load_texture(*(char **)((int)&PTR_s_k_porche_pcx_00457980 + iVar1),flags);
-    *(int *)((int)&DAT_00457984 + iVar1) = texture;
+    *(int *)((int)&car_type_texture_ids + iVar1) = texture;
     iVar1 = flags;
   } while (flags != 0x2e0);
   return;
@@ -2988,9 +2947,9 @@ void __watcall release_car_textures(undefined4 param_1,undefined4 param_2)
   
   iVar2 = 0;
   do {
-    piVar1 = *(int **)(*(int *)((int)&DAT_00457984 + iVar2) * 0xc + 4 + texture_table);
+    piVar1 = *(int **)(*(int *)((int)&car_type_texture_ids + iVar2) * 0xc + 4 + texture_table);
     (**(code **)(*piVar1 + 8))(piVar1,param_2);
-    piVar1 = *(int **)(texture_table + 8 + *(int *)((int)&DAT_00457984 + iVar2) * 0xc);
+    piVar1 = *(int **)(texture_table + 8 + *(int *)((int)&car_type_texture_ids + iVar2) * 0xc);
     iVar2 = iVar2 + 0x20;
     (**(code **)(*piVar1 + 8))(piVar1);
   } while (iVar2 != 0x2e0);
@@ -3027,32 +2986,31 @@ load_static_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 
   *(undefined1 *)(racers + 0x36 + iVar1) = 0;
   iVar2 = param_1 * 0x10;
   debugmsg(s_starting_static_object___d__00442c18,object_val);
-  if (*(int *)(&DAT_00457c64 + iVar2) == -1) {
+  if (*(int *)(&static_object_mesh_ids + iVar2) == -1) {
     debugmsg(s_static_object___d__mesh_not_yet_l_00442c35,object_val);
     load_object_mesh(object_val,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
-    *(undefined4 *)(&DAT_00457c64 + iVar2) =
+    *(undefined4 *)(&static_object_mesh_ids + iVar2) =
          *(undefined4 *)
-          (*(int *)(DAT_00476788 + *(int *)(iVar1 + racers) * 9 + 4) +
-          ((int *)(iVar1 + racers))[1] * 4);
+          (*(int *)(anims3d + *(int *)(iVar1 + racers) * 9 + 4) + ((int *)(iVar1 + racers))[1] * 4);
     iVar1 = extraout_ECX;
   }
   else {
     debugmsg(s_static_object___d__allready_load_00442c69,object_val);
     *(undefined4 *)
-     (((int *)(iVar1 + racers))[1] * 4 + *(int *)(DAT_00476788 + *(int *)(iVar1 + racers) * 9 + 4))
-         = *(undefined4 *)(&DAT_00457c64 + iVar2);
+     (((int *)(iVar1 + racers))[1] * 4 + *(int *)(anims3d + *(int *)(iVar1 + racers) * 9 + 4)) =
+         *(undefined4 *)(&static_object_mesh_ids + iVar2);
     iVar1 = extraout_ECX_00;
   }
   debugmsg(s_done_loading_static_object_00442c97);
-  if ((&DAT_00457c60)[iVar1 * 4] == -1) {
+  if ((&static_object_texture_ids)[iVar1 * 4] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_s_00442cc0,s_statobj_cpp_00442cb4,0x59,
                extraout_ECX_01);
   }
   debugmsg(s_setting_static_object_texture_00442cf7);
   iVar1 = object_val * 0x4b;
-  *(undefined4 *)(iVar1 + 0x2c + racers) = (&DAT_00457c60)[extraout_ECX_02 * 4];
+  *(undefined4 *)(iVar1 + 0x2c + racers) = (&static_object_texture_ids)[extraout_ECX_02 * 4];
   debugmsg(s_setting_static_object_matrix_00442d16);
-  set_object3d_matrix(object_val,&DAT_0045792c);
+  set_object3d_matrix(object_val,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00442d34);
   if (extraout_ECX_03 < 0x28) {
     if (extraout_ECX_03 < 0x26) {
@@ -3101,17 +3059,14 @@ LAB_00407a2b:
 
 /* ==== 00407ac4 place_static_object_on_road ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall place_static_object_on_road(int param_1,int param_2,int param_3)
 
 {
   double dVar1;
   float fVar2;
-  float fVar3;
   undefined4 extraout_EAX;
-  float *pfVar4;
-  undefined4 uVar5;
+  float *pfVar3;
+  undefined4 uVar4;
   int unaff_ECX;
   int extraout_ECX;
   int extraout_ECX_00;
@@ -3122,11 +3077,11 @@ void __watcall place_static_object_on_road(int param_1,int param_2,int param_3)
   undefined4 extraout_EDX;
   float extraout_EDX_00;
   int extraout_EDX_01;
+  int iVar5;
   int iVar6;
-  int iVar7;
   int object_val;
-  float10 fVar8;
-  undefined8 uVar9;
+  float10 fVar7;
+  undefined8 uVar8;
   longlong object_bounds;
   int in_stack_00000004;
   float local_50 [3];
@@ -3137,52 +3092,51 @@ void __watcall place_static_object_on_road(int param_1,int param_2,int param_3)
   int local_20;
   uint local_1c;
   
-  uVar9 = get_new_object3d(param_1,param_2);
-  object_val = (int)uVar9;
-  local_1c = *(uint *)(*(int *)(weg_chunks + 8 + (int)((ulonglong)uVar9 >> 0x20) * 0x38) * 0x54 +
+  uVar8 = get_new_object3d(param_1,param_2);
+  object_val = (int)uVar8;
+  local_1c = *(uint *)(*(int *)(weg_chunks + 8 + (int)((ulonglong)uVar8 >> 0x20) * 0x38) * 0x54 +
                       weg_sections);
-  iVar6 = object_val * 0x4b;
-  *(undefined1 *)(racers + iVar6 + 0x34) = 1;
-  uVar9 = init_anim3d(1,iVar6);
-  *(int *)(racers + iVar6) = (int)uVar9;
-  *(undefined4 *)(racers + iVar6 + 4) = 0;
-  *(undefined4 *)(racers + iVar6 + 0x47) = 1;
-  *(undefined1 *)(racers + iVar6 + 0x36) = 0;
+  iVar5 = object_val * 0x4b;
+  *(undefined1 *)(racers + iVar5 + 0x34) = 1;
+  uVar8 = init_anim3d(1,iVar5);
+  *(int *)(racers + iVar5) = (int)uVar8;
+  *(undefined4 *)(racers + iVar5 + 4) = 0;
+  *(undefined4 *)(racers + iVar5 + 0x47) = 1;
+  *(undefined1 *)(racers + iVar5 + 0x36) = 0;
   debugmsg(s_starting_static_object___d__00442db9,object_val);
-  iVar7 = param_1 * 0x10;
-  if (*(int *)(&DAT_00457c64 + iVar7) == -1) {
+  iVar6 = param_1 * 0x10;
+  if (*(int *)(&static_object_mesh_ids + iVar6) == -1) {
     debugmsg(s_static_object___d__mesh_not_yet_l_00442dd6,object_val);
     load_object_mesh(object_val,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
-    local_20 = *(int *)(racers + iVar6);
-    *(undefined4 *)(&DAT_00457c64 + iVar7) =
-         *(undefined4 *)
-          (*(int *)(local_20 * 9 + DAT_00476788 + 4) + ((int *)(racers + iVar6))[1] * 4);
+    local_20 = *(int *)(racers + iVar5);
+    *(undefined4 *)(&static_object_mesh_ids + iVar6) =
+         *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + ((int *)(racers + iVar5))[1] * 4);
   }
   else {
     debugmsg(s_static_object___d__allready_load_00442e0a,object_val);
-    local_20 = *(int *)(racers + iVar6);
-    *(undefined4 *)(*(int *)(local_20 * 9 + DAT_00476788 + 4) + ((int *)(racers + iVar6))[1] * 4) =
-         *(undefined4 *)(&DAT_00457c64 + iVar7);
+    local_20 = *(int *)(racers + iVar5);
+    *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + ((int *)(racers + iVar5))[1] * 4) =
+         *(undefined4 *)(&static_object_mesh_ids + iVar6);
   }
   debugmsg(s_done_loading_static_object_00442e38);
-  iVar6 = extraout_ECX;
-  if ((&DAT_00457c60)[param_1 * 4] == -1) {
+  iVar5 = extraout_ECX;
+  if ((&static_object_texture_ids)[param_1 * 4] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_s_00442e61,s_statobj_cpp_00442e55,0xc1,param_1);
-    iVar6 = extraout_ECX_00;
+    iVar5 = extraout_ECX_00;
   }
   debugmsg(s_setting_static_object_texture_00442e98);
-  iVar6 = (iVar6 * 4 + extraout_ECX_01) * 0xf;
-  *(undefined4 *)(iVar6 + 0x2c + racers) = (&DAT_00457c60)[param_1 * 4];
+  iVar5 = (iVar5 * 4 + extraout_ECX_01) * 0xf;
+  *(undefined4 *)(iVar5 + 0x2c + racers) = (&static_object_texture_ids)[param_1 * 4];
   debugmsg(s_setting_static_object_matrix_00442eb7);
-  set_object3d_matrix(extraout_ECX_02,&DAT_0045792c);
+  set_object3d_matrix(extraout_ECX_02,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00442ed5);
-  uVar9 = alloc_opponent_slot(extraout_EAX,extraout_EDX);
-  *(int *)(racers + 0x37 + iVar6) = (int)uVar9;
-  *(undefined1 **)(iVar6 + 0x20 + racers) = &LAB_004080bd;
+  uVar8 = alloc_opponent_slot(extraout_EAX,extraout_EDX);
+  *(int *)(racers + 0x37 + iVar5) = (int)uVar8;
+  *(undefined1 **)(iVar5 + 0x20 + racers) = &LAB_004080bd;
   object_bounds = compute_object_bounds(extraout_ECX_03,local_1c);
-  pfVar4 = (float *)(weg_points + (int)((ulonglong)object_bounds >> 0x20) * 0x21);
-  local_44 = *pfVar4;
-  local_3c = pfVar4[2];
+  pfVar3 = (float *)(weg_points + (int)((ulonglong)object_bounds >> 0x20) * 0x21);
+  local_44 = *pfVar3;
+  local_3c = pfVar3[2];
   object_val = weg_chunks + param_2 * 0x38;
   local_50[0] = *(float *)(object_val + 0x1c);
   local_50[1] = 0.0;
@@ -3192,71 +3146,69 @@ void __watcall place_static_object_on_road(int param_1,int param_2,int param_3)
   debugmsg(s_setting_static_object_position_00442ef3);
   switch(param_3) {
   case 0:
-    *(float *)(iVar6 + 8 + racers) = extraout_EDX_00;
-    fVar8 = road_height_at(extraout_EDX_00,local_3c);
-    *(float *)(iVar6 + 0xc + racers) = (float)fVar8;
-    *(float *)(iVar6 + racers + 0x10) = local_3c;
+    *(float *)(iVar5 + 8 + racers) = extraout_EDX_00;
+    fVar7 = road_height_at(extraout_EDX_00,local_3c);
+    *(float *)(iVar5 + 0xc + racers) = (float)fVar7;
+    *(float *)(iVar5 + racers + 0x10) = local_3c;
     break;
   case 1:
-    *(float *)(iVar6 + 8 + racers) = local_44 - local_50[0] * fVar2;
-    fVar8 = road_height_at(local_44 - local_50[0] * fVar2,local_3c - local_50[2] * fVar2);
-    *(float *)(iVar6 + 0xc + racers) = (float)fVar8;
+    *(float *)(iVar5 + 8 + racers) = local_44 - local_50[0] * fVar2;
+    fVar7 = road_height_at(local_44 - local_50[0] * fVar2,local_3c - local_50[2] * fVar2);
+    *(float *)(iVar5 + 0xc + racers) = (float)fVar7;
     fVar2 = local_3c - local_50[2] * fVar2;
     goto LAB_00407e40;
   case 2:
-    *(float *)(iVar6 + 8 + racers) = local_50[0] * fVar2 + local_44;
-    fVar8 = road_height_at(local_50[0] * fVar2 + local_44,local_50[2] * fVar2 + local_3c);
-    *(float *)(iVar6 + 0xc + racers) = (float)fVar8;
+    *(float *)(iVar5 + 8 + racers) = local_50[0] * fVar2 + local_44;
+    fVar7 = road_height_at(local_50[0] * fVar2 + local_44,local_50[2] * fVar2 + local_3c);
+    *(float *)(iVar5 + 0xc + racers) = (float)fVar7;
     fVar2 = local_50[2] * fVar2 + local_3c;
 LAB_00407e40:
-    *(float *)(iVar6 + 0x10 + racers) = fVar2;
+    *(float *)(iVar5 + 0x10 + racers) = fVar2;
     break;
   case 3:
-    fVar3 = (float)_DAT_00442f5a;
-    *(float *)(iVar6 + 8 + racers) =
+    *(float *)(iVar5 + 8 + racers) =
          local_44 -
-         (*(float *)(*(int *)(iVar6 + 0x37 + racers) * 0x100 + 0x54 + opponent_data) + fVar2 * fVar3
-         ) * local_50[0];
-    *(undefined4 *)(iVar6 + 0xc + racers) = 0;
-    iVar6 = iVar6 + racers;
+         (*(float *)(*(int *)(iVar5 + 0x37 + racers) * 0x100 + 0x54 + opponent_data) + fVar2 * 2.0)
+         * local_50[0];
+    *(undefined4 *)(iVar5 + 0xc + racers) = 0;
+    iVar5 = iVar5 + racers;
     fVar2 = local_3c -
-            (fVar2 * fVar3 + *(float *)(opponent_data + 0x54 + *(int *)(iVar6 + 0x37) * 0x100)) *
+            (fVar2 * 2.0 + *(float *)(opponent_data + 0x54 + *(int *)(iVar5 + 0x37) * 0x100)) *
             local_50[2];
     goto LAB_00407f01;
   case 4:
-    fVar3 = (float)_DAT_00442f5a;
-    *(float *)(iVar6 + 8 + racers) =
-         (*(float *)(*(int *)(iVar6 + 0x37 + racers) * 0x100 + 0x54 + opponent_data) + fVar2 * fVar3
-         ) * local_50[0] + local_44;
-    *(undefined4 *)(iVar6 + 0xc + racers) = 0;
-    iVar6 = iVar6 + racers;
-    fVar2 = (fVar2 * fVar3 + *(float *)(opponent_data + 0x54 + *(int *)(iVar6 + 0x37) * 0x100)) *
+    *(float *)(iVar5 + 8 + racers) =
+         (*(float *)(*(int *)(iVar5 + 0x37 + racers) * 0x100 + 0x54 + opponent_data) + fVar2 * 2.0)
+         * local_50[0] + local_44;
+    *(undefined4 *)(iVar5 + 0xc + racers) = 0;
+    iVar5 = iVar5 + racers;
+    fVar2 = (fVar2 * 2.0 + *(float *)(opponent_data + 0x54 + *(int *)(iVar5 + 0x37) * 0x100)) *
             local_50[2] + local_3c;
 LAB_00407f01:
-    *(float *)(iVar6 + 0x10) = fVar2;
+    *(float *)(iVar5 + 0x10) = fVar2;
   }
-  iVar6 = extraout_ECX_04 * 0x4b;
+  iVar5 = extraout_ECX_04 * 0x4b;
   if (unaff_ECX == 0) {
     if ((param_3 != 3) && (param_3 != 1)) {
-      object_val = CONCAT22((short)((uint)iVar6 >> 0x10),
+      object_val = CONCAT22((short)((uint)iVar5 >> 0x10),
                             (ushort)(0.0 < local_50[0]) << 8 | (ushort)NAN(local_50[0]) << 10 |
                             (ushort)(local_50[0] == 0.0) << 0xe);
       if ((local_50[0] == 0.0) != 0) {
-        *(undefined4 *)(iVar6 + 0x3f + racers) = 0x200;
+        *(undefined4 *)(iVar5 + 0x3f + racers) = 0x200;
         goto LAB_00407d8d;
       }
 LAB_0040800c:
       atan2_checked(object_val,unaff_ECX);
-      iVar6 = iVar6 + racers;
-      fVar8 = CHP();
-      local_20 = (int)ROUND(fVar8);
-      *(int *)(iVar6 + 0x3f) = local_20;
+      iVar5 = iVar5 + racers;
+      fVar7 = CHP();
+      local_20 = (int)ROUND(fVar7);
+      *(int *)(iVar5 + 0x3f) = local_20;
       goto LAB_00407d8d;
     }
     dVar1 = (double)local_50[0];
     local_28._4_4_ = (undefined4)((ulonglong)dVar1 >> 0x20);
     local_28._0_4_ = SUB84(dVar1,0);
-    uVar5 = local_28._4_4_;
+    uVar4 = local_28._4_4_;
     if ((((ulonglong)dVar1 & 0x7fffffff00000000) == 0) && ((int)local_28 == 0)) {
       *(undefined4 *)(extraout_ECX_04 * 0x4b + 0x3f + racers) = 0;
       local_28 = dVar1;
@@ -3267,14 +3219,14 @@ LAB_0040800c:
     if (unaff_ECX != 1) goto LAB_00407d8d;
     if ((param_3 != 3) && (param_3 != 1)) {
       local_38 = (double)local_50[2];
-      object_val = iVar6;
+      object_val = iVar5;
       if ((((ulonglong)local_38 & 0x7fffffff00000000) == 0) && (local_38._0_4_ == 0)) {
-        *(undefined4 *)(iVar6 + 0x3f + racers) = 0x100;
+        *(undefined4 *)(iVar5 + 0x3f + racers) = 0x100;
         goto LAB_00407d8d;
       }
       goto LAB_0040800c;
     }
-    uVar5 = CONCAT22((short)((uint)(extraout_ECX_04 * 5) >> 0x10),
+    uVar4 = CONCAT22((short)((uint)(extraout_ECX_04 * 5) >> 0x10),
                      (ushort)(0.0 < local_50[2]) << 8 | (ushort)NAN(local_50[2]) << 10 |
                      (ushort)(local_50[2] == 0.0) << 0xe);
     dVar1 = local_28;
@@ -3284,11 +3236,11 @@ LAB_0040800c:
     }
   }
   local_28 = dVar1;
-  atan2_checked(uVar5,extraout_ECX_04 * 0x4b);
-  iVar6 = extraout_EDX_01 + racers;
-  fVar8 = CHP();
-  local_20 = (int)ROUND(fVar8);
-  *(int *)(iVar6 + 0x3f) = local_20;
+  atan2_checked(uVar4,extraout_ECX_04 * 0x4b);
+  iVar5 = extraout_EDX_01 + racers;
+  fVar7 = CHP();
+  local_20 = (int)ROUND(fVar7);
+  *(int *)(iVar5 + 0x3f) = local_20;
 LAB_00407d8d:
   *(undefined4 *)(*(int *)(extraout_ECX_04 * 0x4b + 0x37 + racers) * 0x100 + 0xe8 + opponent_data) =
        0;
@@ -3313,7 +3265,7 @@ void __watcall load_static_object_textures(void)
   do {
     flags = iVar1 + 0x10;
     texture = load_texture(*(char **)((int)&PTR_s_sky_pcx_00457c5c + iVar1),flags);
-    *(int *)((int)&DAT_00457c60 + iVar1) = texture;
+    *(int *)((int)&static_object_texture_ids + iVar1) = texture;
     iVar1 = flags;
   } while (flags != 0x300);
   return;
@@ -3330,9 +3282,9 @@ void __watcall release_static_object_textures(undefined4 param_1,undefined4 para
   
   iVar2 = 0;
   do {
-    piVar1 = *(int **)(*(int *)((int)&DAT_00457c60 + iVar2) * 0xc + 4 + texture_table);
+    piVar1 = *(int **)(*(int *)((int)&static_object_texture_ids + iVar2) * 0xc + 4 + texture_table);
     (**(code **)(*piVar1 + 8))(piVar1,param_2);
-    piVar1 = *(int **)(texture_table + 8 + *(int *)((int)&DAT_00457c60 + iVar2) * 0xc);
+    piVar1 = *(int **)(texture_table + 8 + *(int *)((int)&static_object_texture_ids + iVar2) * 0xc);
     iVar2 = iVar2 + 0x10;
     (**(code **)(*piVar1 + 8))(piVar1);
   } while (iVar2 != 0x300);
@@ -3397,19 +3349,19 @@ undefined8 __watcall exit_timing(int param_1,undefined4 param_2)
   float10 chp;
   
   _DAT_00473038 = clock_ticks();
-  dVar1 = (double)(uint)(_DAT_00473038 - timing_start_ticks) / _DAT_004438d4;
-  DAT_00473040 = (undefined4)((ulonglong)dVar1 >> 0x20);
-  uVar2 = DAT_00473040;
-  DAT_0047303c = SUB84(dVar1,0);
-  uVar3 = DAT_0047303c;
-  _DAT_0047303c = dVar1;
+  dVar1 = (double)(uint)(_DAT_00473038 - timing_start_ticks) / 100.0;
+  elapsed_seconds._4_4_ = (undefined4)((ulonglong)dVar1 >> 0x20);
+  uVar2 = elapsed_seconds._4_4_;
+  elapsed_seconds._0_4_ = SUB84(dVar1,0);
+  uVar3 = elapsed_seconds._0_4_;
+  elapsed_seconds = dVar1;
   debugmsg(s___d__frames___f__sec_004438b4,param_1,uVar3,uVar2);
-  dVar1 = (double)param_1 / _DAT_0047303c;
-  DAT_00473040 = (undefined4)((ulonglong)dVar1 >> 0x20);
-  uVar2 = DAT_00473040;
-  DAT_0047303c = SUB84(dVar1,0);
-  uVar3 = DAT_0047303c;
-  _DAT_0047303c = dVar1;
+  dVar1 = (double)param_1 / elapsed_seconds;
+  elapsed_seconds._4_4_ = (undefined4)((ulonglong)dVar1 >> 0x20);
+  uVar2 = elapsed_seconds._4_4_;
+  elapsed_seconds._0_4_ = SUB84(dVar1,0);
+  uVar3 = elapsed_seconds._0_4_;
+  elapsed_seconds = dVar1;
   debugmsg(s_fps____f_004438ca,uVar3,uVar2);
   chp = CHP();
   return CONCAT44(param_2,(int)ROUND(chp));
@@ -3602,7 +3554,7 @@ undefined8 __watcall init_dashboard(uint param_1,undefined4 param_2)
   undefined8 uVar3;
   
   anims_1 = init_anims_1(2);
-  if (DAT_00458c20 == 0) {
+  if (dashboard_on_screen == 0) {
     if (screen_resolution == 0) {
       uVar3 = use_dashboard_anims_2(0,param_1);
       param_1 = (uint)((ulonglong)uVar3 >> 0x20);
@@ -3645,7 +3597,7 @@ undefined8 __watcall release_dashboard(undefined4 param_1,uint param_2)
 {
   longlong lVar1;
   
-  if (DAT_00458c20 == 0) {
+  if (dashboard_on_screen == 0) {
     if (screen_resolution == 0) {
       lVar1 = free_dashboard_anims_2(0,param_2);
       param_2 = (uint)((ulonglong)lVar1 >> 0x20);
@@ -3672,7 +3624,7 @@ void __watcall draw_dashboard(void)
   undefined4 unaff_EDX;
   undefined8 draw_race_position_result;
   
-  if (DAT_00458c20 == 0) {
+  if (dashboard_on_screen == 0) {
     draw_speed_indicator();
     draw_fuel_warning();
   }
@@ -3688,8 +3640,8 @@ void __watcall draw_dashboard(void)
   draw_time_left((int)draw_race_position_result,(int)((ulonglong)draw_race_position_result >> 0x20))
   ;
   draw_money();
-  if (DAT_004731e4 != 2) {
-    DAT_004731e4 = DAT_004731e4 + 1;
+  if (dashboard_redraw_state != 2) {
+    dashboard_redraw_state = dashboard_redraw_state + 1;
   }
   return;
 }
@@ -4016,13 +3968,13 @@ void __watcall draw_speedometer(void)
   frame_val = *(int *)(*(int *)(xvga_anims + 0x14) + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   if (frame_val == DAT_00458c08) {
-    if (DAT_004731e4 == 2) {
+    if (dashboard_redraw_state == 2) {
       DAT_00458c08 = frame_val;
       return;
     }
   }
   else {
-    DAT_004731e4 = 0;
+    dashboard_redraw_state = 0;
   }
   set_mem_image(dashboard_surface,frame_val,0xd7,0x140,2);
   DAT_00458c08 = frame_val;
@@ -4053,13 +4005,13 @@ void __watcall draw_rev_counter(void)
   frame_val = *(int *)(*(int *)(xvga_anims + 0x20) + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   if (frame_val == DAT_00458c0c) {
-    if (DAT_004731e4 == 2) {
+    if (dashboard_redraw_state == 2) {
       DAT_00458c0c = frame_val;
       return;
     }
   }
   else {
-    DAT_004731e4 = 0;
+    dashboard_redraw_state = 0;
   }
   set_mem_image(dashboard_surface,frame_val,0x87,0x13f,2);
   DAT_00458c0c = frame_val;
@@ -4090,13 +4042,13 @@ void __watcall draw_fuel_gauge(void)
   frame_val = *(int *)(*(int *)(xvga_anims + 0x2c) + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   if (frame_val == DAT_00458c14) {
-    if (DAT_004731e4 == 2) {
+    if (dashboard_redraw_state == 2) {
       DAT_00458c14 = frame_val;
       return;
     }
   }
   else {
-    DAT_004731e4 = 0;
+    dashboard_redraw_state = 0;
   }
   set_mem_image(dashboard_surface,frame_val,0x124,0x148,2);
   DAT_00458c14 = frame_val;
@@ -4130,9 +4082,9 @@ void __watcall draw_steering_wheel(void)
   frame = *(int *)(*(int *)(xvga_anims + 0x38) + 4 + (steering_position / 2) * 8);
   check_dashboard_frame(frame);
   if (frame != DAT_00458c10) {
-    DAT_004731e4 = 0;
+    dashboard_redraw_state = 0;
   }
-  if ((DAT_004731e4 != 2) || (frame != DAT_00458c10)) {
+  if ((dashboard_redraw_state != 2) || (frame != DAT_00458c10)) {
     set_mem_image(dashboard_surface,frame,0x2c,0x15c,2);
   }
   DAT_00458c10 = frame;
@@ -4142,8 +4094,6 @@ void __watcall draw_steering_wheel(void)
 
 
 /* ==== 00409cfc resolve_collision ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall resolve_collision(int racer_a,int racer_b)
 
@@ -4177,48 +4127,41 @@ void __watcall resolve_collision(int racer_a,int racer_b)
   fVar5 = (fVar4 - fVar2) + fVar4;
   fVar3 = (fVar3 - *(float *)(iVar11 + 0xf4)) + fVar3;
   fVar4 = (fVar4 - *(float *)(iVar11 + 0xf8)) + fVar4;
-  *(float *)(iVar9 + 0xec) = fVar6 * (float)_DAT_00443ba4 + *(float *)(iVar9 + 0xec);
-  *(float *)(iVar8 + 0xf0 + opponent_data) =
-       fVar5 * (float)_DAT_00443ba4 + *(float *)(iVar8 + 0xf0 + opponent_data);
-  if (((float)_DAT_00443bac < ABS(*(float *)(opponent_data + iVar8 + 0xec))) ||
-     ((float)_DAT_00443bac < ABS(*(float *)(opponent_data + iVar8 + 0xf0)))) {
+  *(float *)(iVar9 + 0xec) = fVar6 * 0.6 + *(float *)(iVar9 + 0xec);
+  *(float *)(iVar8 + 0xf0 + opponent_data) = fVar5 * 0.6 + *(float *)(iVar8 + 0xf0 + opponent_data);
+  if ((10.0 < ABS(*(float *)(opponent_data + iVar8 + 0xec))) ||
+     (10.0 < ABS(*(float *)(opponent_data + iVar8 + 0xf0)))) {
     iVar9 = iVar7 * 0x100;
     *(float *)(iVar9 + 0xec + opponent_data) =
-         *(float *)(iVar9 + 0xec + opponent_data) - fVar6 * (float)_DAT_00443ba4;
+         *(float *)(iVar9 + 0xec + opponent_data) - fVar6 * 0.6;
     *(float *)(iVar9 + 0xf0 + opponent_data) =
-         *(float *)(iVar9 + 0xf0 + opponent_data) - fVar5 * (float)_DAT_00443ba4;
+         *(float *)(iVar9 + 0xf0 + opponent_data) - fVar5 * 0.6;
   }
   iVar9 = iVar10 * 0x100;
-  *(float *)(iVar9 + 0xec + opponent_data) =
-       fVar3 * (float)_DAT_00443ba4 + *(float *)(iVar9 + 0xec + opponent_data);
-  *(float *)(iVar9 + 0xf0 + opponent_data) =
-       fVar4 * (float)_DAT_00443ba4 + *(float *)(iVar9 + 0xf0 + opponent_data);
-  if (((float)_DAT_00443bac < ABS(*(float *)(iVar9 + opponent_data + 0xec))) ||
-     ((float)_DAT_00443bac < ABS(*(float *)(iVar9 + opponent_data + 0xf0)))) {
+  *(float *)(iVar9 + 0xec + opponent_data) = fVar3 * 0.6 + *(float *)(iVar9 + 0xec + opponent_data);
+  *(float *)(iVar9 + 0xf0 + opponent_data) = fVar4 * 0.6 + *(float *)(iVar9 + 0xf0 + opponent_data);
+  if ((10.0 < ABS(*(float *)(iVar9 + opponent_data + 0xec))) ||
+     (10.0 < ABS(*(float *)(iVar9 + opponent_data + 0xf0)))) {
     iVar10 = iVar10 * 0x100;
     *(float *)(iVar10 + 0xec + opponent_data) =
-         *(float *)(iVar10 + 0xec + opponent_data) - fVar3 * (float)_DAT_00443ba4;
+         *(float *)(iVar10 + 0xec + opponent_data) - fVar3 * 0.6;
     *(float *)(iVar10 + 0xf0 + opponent_data) =
-         *(float *)(iVar10 + 0xf0 + opponent_data) - fVar4 * (float)_DAT_00443ba4;
+         *(float *)(iVar10 + 0xf0 + opponent_data) - fVar4 * 0.6;
   }
   iVar9 = racers_collide(racer_a,racer_b);
   if (iVar9 != 0) {
-    for (local_18 = 0.1; local_18 < 1.0; local_18 = local_18 + _DAT_00443bcc) {
+    for (local_18 = 0.1; local_18 < 1.0; local_18 = local_18 + 0.1) {
       *(float *)(iVar7 * 0x100 + 0xf4 + opponent_data) = local_18 * fVar1;
       *(float *)(iVar7 * 0x100 + 0xf8 + opponent_data) = local_18 * fVar2;
       iVar9 = racers_collide(racer_a,racer_b);
       if (iVar9 != 0) break;
     }
-    fVar3 = (float)_DAT_00443bb4;
     iVar7 = iVar7 * 0x100;
-    *(float *)(opponent_data + 0xf4 + iVar7) = (local_18 + fVar3) * fVar1;
-    *(float *)(opponent_data + 0xf8 + iVar7) = (local_18 + fVar3) * fVar2;
-    *(float *)(opponent_data + 0x10 + iVar7) =
-         *(float *)(opponent_data + 0x10 + iVar7) * (float)_DAT_00443bbc;
-    *(float *)(opponent_data + 0xec + iVar7) =
-         *(float *)(opponent_data + 0xec + iVar7) * (float)_DAT_00443bc4;
-    *(float *)(opponent_data + 0xf0 + iVar7) =
-         *(float *)(opponent_data + 0xf0 + iVar7) * (float)_DAT_00443bc4;
+    *(float *)(opponent_data + 0xf4 + iVar7) = (local_18 + -0.1) * fVar1;
+    *(float *)(opponent_data + 0xf8 + iVar7) = (local_18 + -0.1) * fVar2;
+    *(float *)(opponent_data + 0x10 + iVar7) = *(float *)(opponent_data + 0x10 + iVar7) * 0.7;
+    *(float *)(opponent_data + 0xec + iVar7) = *(float *)(opponent_data + 0xec + iVar7) * 0.8;
+    *(float *)(opponent_data + 0xf0 + iVar7) = *(float *)(opponent_data + 0xf0 + iVar7) * 0.8;
     play_crash_sound();
   }
   return;
@@ -4250,7 +4193,7 @@ longlong __watcall compute_object_bounds(int param_1,uint param_2)
   piVar3 = (int *)(param_1 * 0x4b + racers);
   local_20 = 0.0;
   local_1c = 0.0;
-  iVar1 = *(int *)(*(int *)(DAT_00476788 + *piVar3 * 9 + 4) + piVar3[1] * 4);
+  iVar1 = *(int *)(*(int *)(anims3d + *piVar3 * 9 + 4) + piVar3[1] * 4);
   iVar7 = *(int *)((int)piVar3 + 0x37);
   local_28 = 10000.0;
   local_24 = 10000.0;
@@ -4259,8 +4202,7 @@ longlong __watcall compute_object_bounds(int param_1,uint param_2)
   }
   iVar8 = 0;
   iVar9 = 0;
-  for (iVar2 = 0; piVar3 = (int *)(DAT_00480d6c + iVar1 * 0x11), iVar2 < *piVar3; iVar2 = iVar2 + 1)
-  {
+  for (iVar2 = 0; piVar3 = (int *)(frames3d + iVar1 * 0x11), iVar2 < *piVar3; iVar2 = iVar2 + 1) {
     iVar6 = *(int *)(iVar9 + piVar3[1]);
     if (*(char *)(weg_points + 0x20 + iVar8) != '\0') {
       pfVar4 = (float *)(weg_points + iVar6 * 0x21);
@@ -4549,8 +4491,8 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
   int file_exist_result;
   uint ini_value_setting;
   int iVar1;
-  undefined4 extraout_ECX;
-  undefined4 extraout_EDX;
+  int extraout_ECX;
+  int extraout_EDX;
   uint ini_value_setting_2;
   undefined8 race_positions_valid_result;
   
@@ -4583,7 +4525,7 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
     _DAT_00475a17 = 5;
     race_positions._2_2_ = 6;
   }
-  DAT_00458c48 = (-(int)_DAT_00475a1d + 5) * 300;
+  volume_offset = (-(int)_DAT_00475a1d + 5) * 300;
   fuel = 300;
   DAT_00458c24 = 1;
   volume_attenuation = (-(int)_DAT_00475a1d + 4) * 500;
@@ -4603,21 +4545,21 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
     money = 1000;
   }
   if (DAT_00475a03 == 0) {
-    DAT_00458c20 = 0;
+    dashboard_on_screen = 0;
   }
   else if (DAT_00475a03 == 1) {
-    DAT_00458c20 = 1;
+    dashboard_on_screen = 1;
   }
   if (DAT_004759ff == 0) {
-    DAT_00458c1c = 1;
+    texture_conversion_mode = 1;
   }
   else if (DAT_004759ff < 2) {
-    DAT_00458c1c = 0;
+    texture_conversion_mode = 0;
     screen_resolution = 1;
-    DAT_00458c20 = 0;
+    dashboard_on_screen = 0;
   }
   else if (DAT_004759ff == 2) {
-    DAT_00458c1c = 0;
+    texture_conversion_mode = 0;
     screen_resolution = 0;
   }
   if (DAT_00475a01 == 0) {
@@ -4628,54 +4570,54 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
   }
   switch(DAT_004759e9._2_2_) {
   case 0:
-    DAT_00458c3c = 1;
+    music_enabled = 1;
     engine_sound_enabled = 1;
     break;
   case 1:
-    DAT_00458c3c = 0;
+    music_enabled = 0;
     engine_sound_enabled = 1;
     break;
   case 2:
-    DAT_00458c3c = 0;
+    music_enabled = 0;
     engine_sound_enabled = 0;
     break;
   case 3:
-    DAT_00458c3c = 1;
+    music_enabled = 1;
     engine_sound_enabled = 0;
   }
   if (screen_resolution == 0) {
-    if (DAT_00458c1c == 0) {
-      if (DAT_00458c20 == 0) {
+    if (texture_conversion_mode == 0) {
+      if (dashboard_on_screen == 0) {
         if (ini_value_setting_2 == 0) {
           debugmsg(s_using_config_1_00443f13);
-          DAT_004731f0 = 5;
+          video_mode_index = 5;
         }
         else {
           debugmsg(s_using_config_1_00443f23);
-          DAT_004731f0 = 1;
+          video_mode_index = 1;
         }
       }
       else if (ini_value_setting_2 == 0) {
         debugmsg(s_using_config_6_00443ef3);
-        DAT_004731f0 = 6;
+        video_mode_index = 6;
       }
       else {
         debugmsg(s_using_config_2_00443f03);
-        DAT_004731f0 = extraout_EDX;
+        video_mode_index = extraout_EDX;
       }
     }
-    else if (DAT_00458c20 == 0) {
+    else if (dashboard_on_screen == 0) {
       debugmsg(s_using_config_3_00443ee3);
-      DAT_004731f0 = extraout_ECX;
+      video_mode_index = extraout_ECX;
     }
     else {
       debugmsg(s_using_config_4_00443ed3);
-      DAT_004731f0 = 4;
+      video_mode_index = 4;
     }
   }
   else if (screen_resolution == 1) {
     debugmsg(s_using_config_0_00443ec3);
-    DAT_004731f0 = 0;
+    video_mode_index = 0;
   }
   return;
 }
@@ -4733,8 +4675,6 @@ void __watcall set_race_state(void)
 
 /* ==== 0040c814 update_race ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 undefined8 __watcall update_race(int param_1,int param_2)
 
 {
@@ -4764,11 +4704,11 @@ undefined8 __watcall update_race(int param_1,int param_2)
     if (DAT_00475a2c == 0) {
       start_camera_intro();
     }
-    DAT_00457724 = DAT_00457724 + _DAT_00446180;
+    camera_height = camera_height + -10.0;
     uVar2 = CONCAT22((short)((uint)frame_val >> 0x10),
-                     (ushort)(0.0 < DAT_00457724) << 8 | (ushort)NAN(DAT_00457724) << 10 |
-                     (ushort)(DAT_00457724 == 0.0) << 0xe);
-    if (0.0 >= DAT_00457724) {
+                     (ushort)(0.0 < camera_height) << 8 | (ushort)NAN(camera_height) << 10 |
+                     (ushort)(camera_height == 0.0) << 0xe);
+    if (0.0 >= camera_height) {
       uVar2 = 2;
       set_camera_position(2);
       race_state = 2;
@@ -4784,16 +4724,16 @@ undefined8 __watcall update_race(int param_1,int param_2)
     uVar6 = countdown_expired(frame_val,effect_val);
     frame_val = (int)((ulonglong)uVar6 >> 0x20);
     if ((int)uVar6 != 0) {
-      DAT_00475a24 = DAT_00475a24 + 1;
-      if (DAT_00475a24 == 5) {
+      countdown_step = countdown_step + 1;
+      if (countdown_step == 5) {
         frame_val = 4;
         race_running = 1;
         controls_enabled = 1;
         race_state = 0;
-        DAT_00475a24 = 4;
+        countdown_step = 4;
       }
       else {
-        if (DAT_00475a24 < 4) {
+        if (countdown_step < 4) {
           effect_val = 0x1a;
         }
         else {
@@ -4804,8 +4744,8 @@ undefined8 __watcall update_race(int param_1,int param_2)
         start_countdown(1);
       }
     }
-    effect_val = DAT_00475a24;
-    draw_big_digit_1(DAT_00475a24,frame_val);
+    effect_val = countdown_step;
+    draw_big_digit_1(countdown_step,frame_val);
     return CONCAT44(param_2,effect_val);
   case 2:
     effect_val = param_2;
@@ -4830,7 +4770,7 @@ undefined8 __watcall update_race(int param_1,int param_2)
       unaff_EBX = 0x140;
       unaff_ECX = 0xf0;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x188) + 4);
-      if (DAT_00458c20 != 0) {
+      if (dashboard_on_screen != 0) {
         unaff_ECX = 0x8c;
       }
     }
@@ -4855,7 +4795,7 @@ undefined8 __watcall update_race(int param_1,int param_2)
       unaff_EBX = 0xa0;
       unaff_ECX = 100;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x128) + 4);
-      if (DAT_00458c20 != 0) {
+      if (dashboard_on_screen != 0) {
         unaff_ECX = 0x3c;
       }
     }
@@ -4883,7 +4823,7 @@ LAB_00412475:
       unaff_EBX = 0x140;
       unaff_ECX = 0xf0;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x1a0) + 4);
-      if (DAT_00458c20 != 0) {
+      if (dashboard_on_screen != 0) {
         unaff_ECX = 0x8c;
       }
     }
@@ -4910,7 +4850,7 @@ LAB_00412475:
       unaff_EBX = 0xa0;
       unaff_ECX = 0x8c;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x140) + 4);
-      if (DAT_00458c20 != 0) {
+      if (dashboard_on_screen != 0) {
         unaff_ECX = 100;
       }
     }
@@ -4955,7 +4895,7 @@ LAB_00412527:
     local_38 = *(int *)(iVar1 + iVar3 + 4);
     local_20 = 0xc;
     unaff_ECX = 100;
-    if (DAT_00458c20 != 0) {
+    if (dashboard_on_screen != 0) {
       unaff_ECX = 0x3c;
       unaff_ESI = 0xbe;
     }
@@ -5029,22 +4969,21 @@ undefined8 __watcall load_object_file(char *param_1,undefined4 param_2)
   iVar4 = 0;
   local_1c = iVar3;
   for (iVar2 = 0; iVar2 < local_2c; iVar2 = iVar2 + 1) {
-    piVar1 = (int *)(iVar4 + *(int *)(DAT_00480d6c + 4 +
-                                     *(int *)(*(int *)(*(int *)(racers + local_1c) * 9 + 4 +
-                                                      DAT_00476788) +
-                                             ((int *)(racers + local_1c))[1] * 4) * 0x11));
+    piVar1 = (int *)(iVar4 + *(int *)(frames3d + 4 +
+                                     *(int *)(*(int *)(*(int *)(racers + local_1c) * 9 + 4 + anims3d
+                                                      ) + ((int *)(racers + local_1c))[1] * 4) *
+                                     0x11));
     iVar4 = iVar4 + 4;
     fread((void *)(weg_points + *piVar1 * 0x21),1,0x21,_File);
   }
   local_20 = local_24 * 0x4b;
   iVar2 = 0;
   for (iVar3 = 0; iVar3 < local_28; iVar3 = iVar3 + 1) {
-    piVar1 = (int *)(iVar2 + *(int *)(*(int *)(*(int *)(DAT_00476788 +
-                                                        *(int *)(racers + local_20) * 9 + 4) +
-                                              ((int *)(racers + local_20))[1] * 4) * 0x11 + 0xc +
-                                     DAT_00480d6c));
+    piVar1 = (int *)(iVar2 + *(int *)(*(int *)(*(int *)(anims3d + *(int *)(racers + local_20) * 9 +
+                                                       4) + ((int *)(racers + local_20))[1] * 4) *
+                                      0x11 + 0xc + frames3d));
     iVar2 = iVar2 + 4;
-    fread((void *)(DAT_00480d7c + *piVar1 * 9),1,9,_File);
+    fread((void *)(triangles3d + *piVar1 * 9),1,9,_File);
   }
   xvga_src_fclose((__iobuf *)_File);
   return CONCAT44(param_2,local_24);
@@ -5076,25 +5015,25 @@ void __watcall load_object_mesh(int object,char *filename)
   *(undefined1 *)(iVar4 + 0x34 + racers) = 1;
   iVar2 = init_frame3d(local_24,local_20);
   iVar3 = 0;
-  *(int *)(*(int *)(DAT_00476788 + 4 + *(int *)(racers + iVar4) * 9) +
-          *(int *)(racers + 4 + iVar4) * 4) = iVar2;
+  *(int *)(*(int *)(anims3d + 4 + *(int *)(racers + iVar4) * 9) + *(int *)(racers + 4 + iVar4) * 4)
+       = iVar2;
   local_18 = iVar4;
   for (iVar2 = 0; iVar2 < local_24; iVar2 = iVar2 + 1) {
-    piVar1 = (int *)(*(int *)(*(int *)(*(int *)(*(int *)(racers + local_18) * 9 + 4 + DAT_00476788)
-                                      + ((int *)(racers + local_18))[1] * 4) * 0x11 + 4 +
-                             DAT_00480d6c) + iVar3);
+    piVar1 = (int *)(*(int *)(*(int *)(*(int *)(*(int *)(racers + local_18) * 9 + 4 + anims3d) +
+                                      ((int *)(racers + local_18))[1] * 4) * 0x11 + 4 + frames3d) +
+                    iVar3);
     iVar3 = iVar3 + 4;
     fread((void *)(weg_points + *piVar1 * 0x21),1,0x21,_File);
   }
   local_1c = object * 0x4b;
   iVar2 = 0;
   for (iVar4 = 0; iVar4 < local_20; iVar4 = iVar4 + 1) {
-    piVar1 = (int *)(iVar2 + *(int *)(DAT_00480d6c + 0xc +
-                                     *(int *)(*(int *)(*(int *)(racers + local_1c) * 9 + 4 +
-                                                      DAT_00476788) +
-                                             ((int *)(racers + local_1c))[1] * 4) * 0x11));
+    piVar1 = (int *)(iVar2 + *(int *)(frames3d + 0xc +
+                                     *(int *)(*(int *)(*(int *)(racers + local_1c) * 9 + 4 + anims3d
+                                                      ) + ((int *)(racers + local_1c))[1] * 4) *
+                                     0x11));
     iVar2 = iVar2 + 4;
-    fread((void *)(DAT_00480d7c + *piVar1 * 9),1,9,_File);
+    fread((void *)(triangles3d + *piVar1 * 9),1,9,_File);
   }
   xvga_src_fclose((__iobuf *)_File);
   return;
@@ -5206,10 +5145,10 @@ LAB_0040d2ae:
   debugmsg(s_Allocating__03d_drivers__________004443bd,param_1);
   driver_list = LocalAlloc(0x40,(param_1 * 8 - extraout_EDX) * 4);
   if (driver_list != (HLOCAL)0x0) {
-    DAT_00475140 = LocalAlloc(0x40,param_2 * 0xc);
-    if (DAT_00475140 != (HLOCAL)0x0) {
-      DAT_00475144 = LocalAlloc(0x40,unaff_EBX * 0x18);
-      if (DAT_00475144 != (HLOCAL)0x0) {
+    driver_lane_data = LocalAlloc(0x40,param_2 * 0xc);
+    if (driver_lane_data != (HLOCAL)0x0) {
+      driver_path_data = LocalAlloc(0x40,unaff_EBX * 0x18);
+      if (driver_path_data != (HLOCAL)0x0) {
         driver_count = param_1;
         debugmsg(s__d_drivers_allocated_OK_004443e7,param_1);
         debugmsg(s_Clearing_driver_list____00444400);
@@ -5220,14 +5159,14 @@ LAB_0040d2ae:
         debugmsg(s_OK_Clearing_racer_list____00444418);
         for (iVar1 = 0; iVar1 < (extraout_ECX_00 * 4 - param_2) * 4; iVar1 = iVar1 + 0xc) {
           random = rand();
-          *(int *)(iVar1 + (int)DAT_00475140) = random % 2;
-          *(undefined4 *)(iVar1 + 4 + (int)DAT_00475140) = 0xffffffff;
-          *(undefined4 *)(iVar1 + 8 + (int)DAT_00475140) = 0;
+          *(int *)(iVar1 + (int)driver_lane_data) = random % 2;
+          *(undefined4 *)(iVar1 + 4 + (int)driver_lane_data) = 0xffffffff;
+          *(undefined4 *)(iVar1 + 8 + (int)driver_lane_data) = 0;
         }
         debugmsg(s_OK_Clearing_police_list____00444432);
         for (iVar1 = 0; iVar1 < unaff_EBX * 0x18; iVar1 = iVar1 + 0x18) {
-          *(undefined4 *)(iVar1 + (int)DAT_00475144) = 0;
-          *(undefined4 *)(iVar1 + 0xc + (int)DAT_00475144) = 0;
+          *(undefined4 *)(iVar1 + (int)driver_path_data) = 0;
+          *(undefined4 *)(iVar1 + 0xc + (int)driver_path_data) = 0;
         }
         format = s_OK_Init_drivers_completely_OK_0044444d;
         drivers_initialized = 1;
@@ -5257,9 +5196,9 @@ LAB_0040d32e:
   }
   pvVar1 = LocalFree(driver_list);
   if (pvVar1 == (HLOCAL)0x0) {
-    pvVar1 = LocalFree(DAT_00475140);
+    pvVar1 = LocalFree(driver_lane_data);
     if (pvVar1 == (HLOCAL)0x0) {
-      pvVar1 = LocalFree(DAT_00475144);
+      pvVar1 = LocalFree(driver_path_data);
       if (pvVar1 == (HLOCAL)0x0) {
         format = s_Drivers_exited_OK_00444499;
         drivers_initialized = 0;
@@ -5555,8 +5494,6 @@ float10 __watcall racer_distance_margin(undefined4 param_1,int param_2)
 
 /* ==== 0040d80e classify_lane_occupant ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 undefined4 __watcall classify_lane_occupant(int param_1,int param_2,int *param_3)
 
 {
@@ -5581,8 +5518,8 @@ undefined4 __watcall classify_lane_occupant(int param_1,int param_2,int *param_3
         *in_stack_00000004 = opponent_data + iVar1 * 0x100;
       }
       racer_distance_margin_result = racer_distance_margin(piVar3,*in_stack_00000004);
-      if ((float10)_DAT_00444733 < racer_distance_margin_result) {
-        if (_DAT_0044473b < (double)racer_distance_margin_result) {
+      if ((float10)57600.0 < racer_distance_margin_result) {
+        if (102400.0 < (double)racer_distance_margin_result) {
           uVar2 = 3;
         }
         else {
@@ -5605,8 +5542,6 @@ undefined4 __watcall classify_lane_occupant(int param_1,int param_2,int *param_3
 
 
 /* ==== 0040d8aa drive_racer ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall drive_racer(void)
 
@@ -5662,7 +5597,7 @@ void __watcall drive_racer(void)
   }
   piVar9 = (int *)(driver_list + in_EAX * 0x1c);
   iVar2 = opponent_data + *piVar9 * 0x100;
-  piVar10 = (int *)(DAT_00475144 + piVar9[5] * 0x18);
+  piVar10 = (int *)(driver_path_data + piVar9[5] * 0x18);
   local_28 = *(int *)(iVar2 + 200);
   local_1c = iVar2;
   debugmsg(s_Driving_car___03d_OppIndex____03_004447ab,in_EAX,*piVar9,local_28,
@@ -5699,14 +5634,14 @@ void __watcall drive_racer(void)
     for (; iVar5 = local_3c, local_3c < 6; local_3c = local_3c + 1) {
       if (*(int *)((int)local_80 + iVar2) != 0) {
         piVar10[2] = 0;
-        if ((float)_DAT_00444af8 < *(float *)(opponent_data + local_20 + 0x10)) {
+        if (9.0 < *(float *)(opponent_data + local_20 + 0x10)) {
           piVar10[2] = 1;
         }
         if (piVar10[2] != 0) {
           iVar6 = 0;
           iVar4 = 0;
           for (iVar8 = 0; iVar8 < DAT_00475154; iVar8 = iVar8 + 1) {
-            if (iVar8 == *(int *)(DAT_00475144 + 4 + iVar4)) {
+            if (iVar8 == *(int *)(driver_path_data + 4 + iVar4)) {
               iVar6 = iVar6 + 1;
             }
             iVar4 = iVar4 + 0x18;
@@ -5752,7 +5687,7 @@ LAB_0040db8f:
       piVar9[1] = *(int *)(iVar2 + 200);
     }
     else if (*(int *)(iVar2 + 200) == *(int *)(local_1c + 200)) {
-      fVar1 = *(float *)(iVar2 + 0x10) + (float)_DAT_00444ae8;
+      fVar1 = *(float *)(iVar2 + 0x10) + -1.0;
       piVar9[2] = (int)fVar1;
       if (fVar1 < 0.0) {
         piVar9[2] = 0;
@@ -5765,19 +5700,19 @@ LAB_0040db8f:
           set_race_state();
         }
         else {
-          *(int *)(*(int *)(driver_list + 0x14 + *(int *)(iVar2 + 0xe0) * 0x1c) * 0xc + DAT_00475140
-                  + 4) = *piVar9;
+          *(int *)(*(int *)(driver_list + 0x14 + *(int *)(iVar2 + 0xe0) * 0x1c) * 0xc +
+                   driver_lane_data + 4) = *piVar9;
           *(undefined4 *)
-           (DAT_00475140 + 8 + *(int *)(driver_list + 0x14 + *(int *)(iVar2 + 0xe0) * 0x1c) * 0xc) =
-               100;
+           (driver_lane_data + 8 +
+           *(int *)(driver_list + 0x14 + *(int *)(iVar2 + 0xe0) * 0x1c) * 0xc) = 100;
         }
         iVar2 = piVar10[1];
         iVar5 = 0;
         for (iVar4 = 0; iVar4 < DAT_00475154; iVar4 = iVar4 + 1) {
-          if (iVar2 == ((undefined4 *)(DAT_00475144 + iVar5))[1]) {
-            *(undefined4 *)(DAT_00475144 + iVar5) = 2;
-            *(undefined4 *)(DAT_00475144 + 4 + iVar5) = 0xffffffff;
-            *(undefined4 *)(DAT_00475144 + 0xc + iVar5) = 0x15e;
+          if (iVar2 == ((undefined4 *)(driver_path_data + iVar5))[1]) {
+            *(undefined4 *)(driver_path_data + iVar5) = 2;
+            *(undefined4 *)(driver_path_data + 4 + iVar5) = 0xffffffff;
+            *(undefined4 *)(driver_path_data + 0xc + iVar5) = 0x15e;
           }
           iVar5 = iVar5 + 0x18;
         }
@@ -5787,7 +5722,7 @@ LAB_0040db8f:
       uVar3 = *(int *)(iVar2 + 0xc4) - *(int *)(local_1c + 0xc4);
       uVar7 = (int)uVar3 >> 0x1f;
       local_38 = (uVar3 ^ uVar7) - uVar7;
-      if ((double)local_38 < _DAT_00444ae0) {
+      if ((double)local_38 < 57600.0) {
         *(undefined4 *)(local_1c + 0xcc) = *(undefined4 *)(iVar2 + 200);
         *(undefined4 *)(local_1c + 0x4c) = *(undefined4 *)(iVar2 + 0x10);
         if (0.0 <= *(float *)(local_1c + 0x4c)) {
@@ -5821,7 +5756,7 @@ LAB_0040db8f:
       return;
     }
     if (piVar10[3] != 0) {
-      *(float *)(local_1c + 0x4c) = *(float *)(local_1c + 0x4c) * (float)_DAT_00444af0;
+      *(float *)(local_1c + 0x4c) = *(float *)(local_1c + 0x4c) * 0.99;
       piVar10[3] = piVar10[3] + -1;
       if (1 < classify_lane_occupant_result[3]) {
         return;
@@ -5953,8 +5888,6 @@ LAB_0040e096:
 
 /* ==== 0040e301 drive_traffic ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall drive_traffic(void)
 
 {
@@ -6048,12 +5981,12 @@ void __watcall drive_traffic(void)
     local_4c[2] = classify_lane_occupant(iVar9,(int)local_a4,local_78);
     iVar6 = 3;
   }
-  piVar7 = (int *)(DAT_00475140 + piVar10[5] * 0xc);
+  piVar7 = (int *)(driver_lane_data + piVar10[5] * 0xc);
   if (piVar7[1] != -1) {
-    if (*(float *)(iVar9 + 0x4c) != (float)_DAT_0044512b) {
-      fVar1 = *(float *)(iVar9 + 0x4c) * _DAT_00445133;
+    if (*(float *)(iVar9 + 0x4c) != 2.0) {
+      fVar1 = *(float *)(iVar9 + 0x4c) * 0.5;
       *(float *)(iVar9 + 0x4c) = fVar1;
-      if ((float)_DAT_0044512b <= fVar1) {
+      if (2.0 <= fVar1) {
         return;
       }
       *(undefined4 *)(iVar9 + 0x4c) = 0x40000000;
@@ -6063,7 +5996,7 @@ void __watcall drive_traffic(void)
       return;
     }
     piVar7[2] = piVar7[2] + -1;
-    iVar9 = piVar10[5] * 0xc + DAT_00475140;
+    iVar9 = piVar10[5] * 0xc + driver_lane_data;
     if (*(int *)(iVar9 + 8) != 0) {
       return;
     }
@@ -6072,7 +6005,7 @@ void __watcall drive_traffic(void)
   }
   if (*piVar7 == 4) {
     piVar10[1] = local_34[4];
-    piVar10[2] = (int)(float)*(int *)(piVar10[5] * 0xc + 8 + DAT_00475140);
+    piVar10[2] = (int)(float)*(int *)(piVar10[5] * 0xc + 8 + driver_lane_data);
     if (*(float *)(iVar9 + 0x4c) == 0.0) {
       *(undefined4 *)(*(int *)(iVar9 + 0xdc) * 0x4b + 0x47 + racers) = 0xffffffff;
     }
@@ -6301,8 +6234,6 @@ LAB_0040ec39:
 
 /* ==== 0040ec6c drive_opponent ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall drive_opponent(void)
 
 {
@@ -6391,8 +6322,8 @@ LAB_0040f339:
             local_24 = (float)racer_distance_margin_result;
             debugmsg(s____Range_to_target____>>__f___>_c_004454e3,
                      (double)racer_distance_margin_result);
-            if ((float)_DAT_004456a2 < local_24) {
-              if ((float)_DAT_004456aa <= local_24) {
+            if (57600.0 < local_24) {
+              if (102400.0 <= local_24) {
                 format = s_Normal_exit_covered_for_driver___0044555a;
                 *(int *)(iVar7 + 0x4c) = piVar8[2];
                 *(int *)(iVar7 + 0xcc) = iVar3;
@@ -6435,8 +6366,8 @@ LAB_0040f175:
       local_38 = (double)racer_distance_margin_result;
       debugmsg(s__>_Fast_lane_occupied____Range_t_0044557d,local_38._0_4_);
       iVar3 = extraout_ECX_03;
-      if (_DAT_004456a2 < local_38) {
-        if (_DAT_004456aa <= local_38) goto LAB_0040f339;
+      if (57600.0 < local_38) {
+        if (102400.0 <= local_38) goto LAB_0040f339;
         fVar1 = (float)piVar8[2];
         local_40 = (double)fVar1;
         if (*(float *)(iVar6 + 0x10) < fVar1) goto LAB_0040ef3a;
@@ -6451,8 +6382,8 @@ LAB_0040f175:
             racer_distance_margin_result = racer_distance_margin(extraout_ECX_03,iVar7);
             local_48 = (double)racer_distance_margin_result;
             debugmsg(s____Range_to_target____>>__f_0044563e,local_48._0_4_);
-            if (local_48 <= _DAT_004456a2) goto LAB_0040f1db;
-            if (local_48 < _DAT_004456aa) {
+            if (local_48 <= 57600.0) goto LAB_0040f1db;
+            if (local_48 < 102400.0) {
               fVar1 = *(float *)(local_28 + 0x10);
               *(int *)(iVar7 + 0xcc) = extraout_ECX_04;
               *(float *)(iVar7 + 0x4c) = fVar1;
@@ -6492,7 +6423,7 @@ LAB_0040f16c:
           goto LAB_0040f175;
         }
         racer_distance_margin_result = racer_distance_margin(extraout_ECX_03,iVar7);
-        if ((float10)_DAT_004456b2 < racer_distance_margin_result) {
+        if ((float10)240.0 < racer_distance_margin_result) {
           *(undefined4 *)(iVar7 + 0x4c) = *(undefined4 *)(local_2c + 0x10);
           *(int *)(iVar7 + 0xcc) = extraout_ECX_03;
           if (*(float *)(iVar7 + 0x4c) < 0.0) {
@@ -6526,7 +6457,7 @@ LAB_0040f1f2:
       racer_distance_margin_result = racer_distance_margin(extraout_ECX,iVar7);
       local_30 = (float)racer_distance_margin_result;
       debugmsg(s__>_TARGET____d_______Range_to_ta_004452f1);
-      if (local_30 <= (float)_DAT_004456a2) {
+      if (local_30 <= 57600.0) {
         debugmsg(s___>_Too_close__00445322);
         iVar3 = local_1c + local_20;
         if (((float)piVar8[2] <= *(float *)(iVar6 + 0x10)) ||
@@ -6546,7 +6477,7 @@ LAB_0040ef47:
           }
           else {
             racer_distance_margin_result = racer_distance_margin(iVar3,iVar7);
-            if (racer_distance_margin_result <= (float10)_DAT_004456a2) goto LAB_0040ef3a;
+            if (racer_distance_margin_result <= (float10)57600.0) goto LAB_0040ef3a;
             debugmsg(s___>_OVERTAKING_00445367);
             format = s_Normal_exit_covered_for_driver___00445378;
             uVar4 = extraout_ECX_01;
@@ -6558,7 +6489,7 @@ LAB_0040ef3a:
         iVar3 = *(int *)(iVar6 + 0x10);
         goto LAB_0040f1ef;
       }
-      if ((float)_DAT_004456aa <= local_30) {
+      if (102400.0 <= local_30) {
         format = s___>_max_range______>_DOING_NOTHI_004453ee;
       }
       else {
@@ -6611,35 +6542,35 @@ void __watcall init_radar(void)
   int iStack_24;
   
   if (screen_resolution == 0) {
-    if (DAT_00458c20 == 0) {
+    if (dashboard_on_screen == 0) {
       DAT_00475158 = 6;
       DAT_0047515c = 0x166;
-      DAT_00475160 = 0x74;
-      DAT_00475164 = 0x74;
-      DAT_00475170 = 1;
-      DAT_00475168 = 0x38;
-      DAT_0047516c = 0x38;
+      radar_width = 0x74;
+      radar_height = 0x74;
+      radar_scale = 1;
+      radar_center_x = 0x38;
+      radar_center_y = 0x38;
     }
     else {
       DAT_00475158 = 0x1e6;
       DAT_0047515c = 0x179;
-      DAT_00475160 = 0x3a;
-      DAT_00475164 = 0x3a;
-      DAT_00475170 = 0;
-      DAT_00475168 = 0x1d;
-      DAT_0047516c = 0x1d;
+      radar_width = 0x3a;
+      radar_height = 0x3a;
+      radar_scale = 0;
+      radar_center_x = 0x1d;
+      radar_center_y = 0x1d;
     }
   }
   else if (screen_resolution == 1) {
     DAT_00475158 = 6;
     DAT_0047515c = 0x89;
-    DAT_00475160 = 0x3a;
-    DAT_00475164 = 0x3a;
-    DAT_00475168 = 0x1d;
-    DAT_0047516c = 0x1d;
-    DAT_00475170 = 0;
+    radar_width = 0x3a;
+    radar_height = 0x3a;
+    radar_center_x = 0x1d;
+    radar_center_y = 0x1d;
+    radar_scale = 0;
   }
-  radar_surface = create_surface(DAT_00475160,DAT_00475164);
+  radar_surface = create_surface(radar_width,radar_height);
   memset(local_40,0,0x20);
   local_40[0] = 0x20;
   lVar2 = (**(code **)(*(int *)xvga_screen + 0x54))(xvga_screen);
@@ -6653,12 +6584,12 @@ void __watcall init_radar(void)
   }
   if (7 < (uint)xvga_screen_bpp) {
     if ((uint)xvga_screen_bpp < 9) {
-      DAT_004751a4 = 0x1414;
-      DAT_004751a6 = 0xa0a;
+      radar_background_color._0_2_ = 0x1414;
+      radar_background_color._2_2_ = 0xa0a;
       DAT_004751aa = 0x5858;
       DAT_004751ac = 0x3c3c;
       _DAT_004751a8 = 0xff;
-      if (DAT_00458c20 == 0) {
+      if (dashboard_on_screen == 0) {
         DAT_0047519e = 0xff;
         DAT_0047519c = 0xff00;
       }
@@ -6670,7 +6601,7 @@ void __watcall init_radar(void)
     else if (xvga_screen_bpp == 0x10) {
       translate_pixel_result = translate_pixel(0x14,8);
       translate_pixel_result_2 = translate_pixel(0x14,8);
-      DAT_004751b0 = translate_pixel_result_2 + translate_pixel_result * 0x10000;
+      radar_dot_color = translate_pixel_result_2 + translate_pixel_result * 0x10000;
       translate_pixel_result = translate_pixel(10,8);
       translate_pixel_result_2 = translate_pixel(10,8);
       DAT_004751b4 = translate_pixel_result_2 + translate_pixel_result * 0x10000;
@@ -6681,7 +6612,7 @@ void __watcall init_radar(void)
       translate_pixel_result_2 = translate_pixel(0x3c,8);
       DAT_004751c0 = translate_pixel_result_2 + translate_pixel_result * 0x10000;
       _DAT_004751b8 = translate_pixel(0xff,8);
-      if (DAT_00458c20 == 0) {
+      if (dashboard_on_screen == 0) {
         DAT_00475194 = _DAT_004751b8 << 0x10;
         DAT_00475198 = _DAT_004751b8;
       }
@@ -6710,8 +6641,8 @@ void __watcall init_radar(void)
   }
   else {
     if (in_EAX < 2) {
-      DAT_00458db0 = 1;
-      uVar1 = DAT_00458db0;
+      radar_enabled = 1;
+      uVar1 = radar_enabled;
       goto LAB_0040f4e0;
     }
     bVar3 = in_EAX == 2;
@@ -6719,18 +6650,18 @@ void __watcall init_radar(void)
   uVar1 = in_EAX;
   if (!bVar3) {
     fatal_exit(s__init_radar__invalid_focus_00445768);
-    uVar1 = DAT_00458db0;
+    uVar1 = radar_enabled;
   }
 LAB_0040f4e0:
-  DAT_00458db0 = uVar1;
-  _DAT_0047517c = DAT_00475160;
-  _DAT_00475180 = DAT_00475164;
+  radar_enabled = uVar1;
+  _DAT_0047517c = radar_width;
+  _DAT_00475180 = radar_height;
   _DAT_00475188 = DAT_0047515c;
-  _DAT_00475190 = DAT_0047515c + DAT_00475164;
+  _DAT_00475190 = DAT_0047515c + radar_height;
   _DAT_00475174 = 0;
   _DAT_00475184 = DAT_00475158;
   _DAT_00475178 = 0;
-  _DAT_0047518c = DAT_00475158 + DAT_00475160;
+  _DAT_0047518c = DAT_00475158 + radar_width;
   return;
 }
 
@@ -6757,7 +6688,7 @@ void __watcall draw_radar(void)
       draw_radar_contents_1();
     }
   }
-  if (DAT_00458db0 == 0) {
+  if (radar_enabled == 0) {
     lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
                       (xvga_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
     if (lVar1 != 0) {
@@ -6768,7 +6699,7 @@ void __watcall draw_radar(void)
       goto LAB_0040f85a;
     }
   }
-  else if (DAT_00458db0 < 2) {
+  else if ((uint)radar_enabled < 2) {
     lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
                       (xvga_back_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
     if (lVar1 != 0) {
@@ -6780,7 +6711,7 @@ void __watcall draw_radar(void)
     }
   }
   else {
-    if (DAT_00458db0 != 2) {
+    if (radar_enabled != 2) {
       return;
     }
     lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x14))
@@ -6811,10 +6742,10 @@ void __watcall clear_radar_surface(undefined4 *param_1,int param_2)
   
   if (7 < (uint)xvga_screen_bpp) {
     if ((uint)xvga_screen_bpp < 9) {
-      for (iVar2 = 0; iVar2 < DAT_00475164; iVar2 = iVar2 + 2) {
+      for (iVar2 = 0; iVar2 < radar_height; iVar2 = iVar2 + 2) {
         puVar3 = (undefined2 *)((int)param_1 + (param_2 / 2) * 2);
         puVar1 = param_1;
-        for (iVar4 = 0; iVar4 < DAT_00475160; iVar4 = iVar4 + 2) {
+        for (iVar4 = 0; iVar4 < radar_width; iVar4 = iVar4 + 2) {
           *puVar3 = DAT_0047519c;
           puVar3 = puVar3 + 1;
           *(undefined2 *)puVar1 = DAT_0047519e;
@@ -6824,14 +6755,14 @@ void __watcall clear_radar_surface(undefined4 *param_1,int param_2)
       }
     }
     else if (xvga_screen_bpp == 0x10) {
-      for (iVar2 = 0; iVar2 < DAT_00475164; iVar2 = iVar2 + 2) {
+      for (iVar2 = 0; iVar2 < radar_height; iVar2 = iVar2 + 2) {
         puVar1 = param_1;
-        for (iVar4 = 0; iVar4 < DAT_00475160; iVar4 = iVar4 + 2) {
+        for (iVar4 = 0; iVar4 < radar_width; iVar4 = iVar4 + 2) {
           *puVar1 = DAT_00475194;
           puVar1 = puVar1 + 1;
         }
         puVar1 = (undefined4 *)((int)param_1 + param_2);
-        for (iVar4 = 0; iVar4 < DAT_00475160; iVar4 = iVar4 + 2) {
+        for (iVar4 = 0; iVar4 < radar_width; iVar4 = iVar4 + 2) {
           *puVar1 = DAT_00475198;
           puVar1 = puVar1 + 1;
         }
@@ -6864,44 +6795,44 @@ void __watcall draw_radar_contents_1(void)
   int local_20;
   int local_1c;
   
-  lane_val = DAT_0045b250;
+  lane_val = player_heading;
   opponent_chunk = (int *)get_opponent_chunk(s_radar_cpp_0044580d,0x13c);
   chunk_val = *opponent_chunk;
   surface_ptr_3 = get_surface_ptr_3(radar_surface,local_40);
   surface_ptr_3_2 = surface_ptr_3;
   clear_radar_surface(surface_ptr_3,local_40[0]);
   local_40[0] = local_40[0] / 2;
-  if (DAT_00475170 == 0) {
-    *(undefined4 *)(surface_ptr_3 + DAT_0047516c * local_40[0] * 2 + DAT_00475168 * 2) =
-         DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + (DAT_0047516c + 1) * local_40[0] * 2 + DAT_00475168 * 2) =
-         DAT_004751b0;
+  if (radar_scale == 0) {
+    *(int *)(surface_ptr_3 + radar_center_y * local_40[0] * 2 + radar_center_x * 2) =
+         radar_dot_color;
+    *(int *)(surface_ptr_3 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2) =
+         radar_dot_color;
   }
-  else if (DAT_00475170 == 1) {
-    *(undefined4 *)(surface_ptr_3 + DAT_0047516c * local_40[0] * 2 + DAT_00475168 * 2) =
-         DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + (DAT_0047516c + 1) * local_40[0] * 2 + DAT_00475168 * 2) =
-         DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + DAT_0047516c * local_40[0] * 2 + DAT_00475168 * 2 + 4) =
-         DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + (DAT_0047516c + 1) * local_40[0] * 2 + DAT_00475168 * 2 + 4) =
-         DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + (DAT_0047516c + 2) * local_40[0] * 2 + DAT_00475168 * 2) =
-         DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + local_40[0] * (DAT_0047516c + 3) * 2 + DAT_00475168 * 2) =
-         DAT_004751b0;
-    uVar1 = DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + (DAT_0047516c + 2) * local_40[0] * 2 + DAT_00475168 * 2 + 4) =
-         DAT_004751b0;
-    *(undefined4 *)(surface_ptr_3 + (DAT_0047516c + 3) * local_40[0] * 2 + DAT_00475168 * 2 + 4) =
-         uVar1;
+  else if (radar_scale == 1) {
+    *(int *)(surface_ptr_3 + radar_center_y * local_40[0] * 2 + radar_center_x * 2) =
+         radar_dot_color;
+    *(int *)(surface_ptr_3 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2) =
+         radar_dot_color;
+    *(int *)(surface_ptr_3 + radar_center_y * local_40[0] * 2 + radar_center_x * 2 + 4) =
+         radar_dot_color;
+    *(int *)(surface_ptr_3 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2 + 4) =
+         radar_dot_color;
+    *(int *)(surface_ptr_3 + (radar_center_y + 2) * local_40[0] * 2 + radar_center_x * 2) =
+         radar_dot_color;
+    *(int *)(surface_ptr_3 + local_40[0] * (radar_center_y + 3) * 2 + radar_center_x * 2) =
+         radar_dot_color;
+    iVar3 = radar_dot_color;
+    *(int *)(surface_ptr_3 + (radar_center_y + 2) * local_40[0] * 2 + radar_center_x * 2 + 4) =
+         radar_dot_color;
+    *(int *)(surface_ptr_3 + (radar_center_y + 3) * local_40[0] * 2 + radar_center_x * 2 + 4) =
+         iVar3;
   }
   local_30 = 0;
   chunk_val = chunk_val + -10;
   local_24 = (-lane_val & 0x3ffU) << 2;
   surface_ptr_3_3 = surface_ptr_3;
   do {
-    if ((-1 < chunk_val) && (chunk_val < DAT_0047656c + -1)) {
+    if ((-1 < chunk_val) && (chunk_val < weg_lane_chunks + -1)) {
       lane_val = 0;
       do {
         iVar3 = get_map_occupant(chunk_val,lane_val);
@@ -6920,14 +6851,14 @@ void __watcall draw_radar_contents_1(void)
              ((uVar1 = DAT_004751c0, 3 < uVar2 && (uVar1 = DAT_004751b4, uVar2 == 4)))) {
             uVar1 = DAT_004751bc;
           }
-          if ((((0 < local_20) && (local_20 < DAT_00475160 + -4)) && (0 < local_1c)) &&
-             (local_1c < DAT_00475164 + -4)) {
+          if ((((0 < local_20) && (local_20 < radar_width + -4)) && (0 < local_1c)) &&
+             (local_1c < radar_height + -4)) {
             iVar3 = local_1c + 1;
-            if (DAT_00475170 == 0) {
+            if (radar_scale == 0) {
               *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar1;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * iVar3 * 2 + local_20 * 2) = uVar1;
             }
-            else if (DAT_00475170 == 1) {
+            else if (radar_scale == 1) {
               *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar1;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * iVar3 * 2 + local_20 * 2) = uVar1;
               *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + 4 + local_20 * 2) =
@@ -6976,35 +6907,42 @@ void __watcall draw_radar_contents_2(void)
   int local_20;
   int local_1c;
   
-  lane_val = DAT_0045b250;
+  lane_val = player_heading;
   opponent_chunk = (int *)get_opponent_chunk(s_radar_cpp_0044581f,0x1a7);
   chunk_val = *opponent_chunk;
   surface_ptr_3 = get_surface_ptr_3(radar_surface,local_48);
   surface_ptr_3_2 = surface_ptr_3;
   surface_ptr_3_3 = surface_ptr_3;
   clear_radar_surface(surface_ptr_3,local_48[0]);
-  if (DAT_00475170 == 0) {
-    *(undefined2 *)(surface_ptr_3 + DAT_0047516c * local_48[0] + DAT_00475168) = DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + local_48[0] * (DAT_0047516c + 1) + DAT_00475168) = DAT_004751a4;
+  if (radar_scale == 0) {
+    *(undefined2 *)(surface_ptr_3 + radar_center_y * local_48[0] + radar_center_x) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + local_48[0] * (radar_center_y + 1) + radar_center_x) =
+         (undefined2)radar_background_color;
   }
-  else if (DAT_00475170 == 1) {
-    *(undefined2 *)(surface_ptr_3 + DAT_0047516c * local_48[0] + DAT_00475168) = DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + local_48[0] * (DAT_0047516c + 1) + DAT_00475168) = DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + DAT_0047516c * local_48[0] + DAT_00475168 + 2) = DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + (DAT_0047516c + 1) * local_48[0] + DAT_00475168 + 2) =
-         DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + (DAT_0047516c + 2) * local_48[0] + DAT_00475168) = DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + local_48[0] * (DAT_0047516c + 3) + DAT_00475168) = DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + (DAT_0047516c + 2) * local_48[0] + DAT_00475168 + 2) =
-         DAT_004751a4;
-    *(undefined2 *)(surface_ptr_3 + (DAT_0047516c + 3) * local_48[0] + DAT_00475168 + 2) =
-         DAT_004751a4;
+  else if (radar_scale == 1) {
+    *(undefined2 *)(surface_ptr_3 + radar_center_y * local_48[0] + radar_center_x) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + local_48[0] * (radar_center_y + 1) + radar_center_x) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + radar_center_y * local_48[0] + radar_center_x + 2) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + (radar_center_y + 1) * local_48[0] + radar_center_x + 2) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + (radar_center_y + 2) * local_48[0] + radar_center_x) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + local_48[0] * (radar_center_y + 3) + radar_center_x) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + (radar_center_y + 2) * local_48[0] + radar_center_x + 2) =
+         (undefined2)radar_background_color;
+    *(undefined2 *)(surface_ptr_3 + (radar_center_y + 3) * local_48[0] + radar_center_x + 2) =
+         (undefined2)radar_background_color;
   }
   local_30 = 0;
   chunk_val = chunk_val + -10;
   local_24 = (-lane_val & 0x3ffU) << 2;
   do {
-    if ((-1 < chunk_val) && (chunk_val < DAT_0047656c + -1)) {
+    if ((-1 < chunk_val) && (chunk_val < weg_lane_chunks + -1)) {
       lane_val = 0;
       do {
         iVar3 = get_map_occupant(chunk_val,lane_val);
@@ -7018,19 +6956,20 @@ void __watcall draw_radar_contents_2(void)
           uVar2 = *(uint *)(iVar3 + 0xe4);
           chp = CHP();
           local_1c = (int)ROUND(chp);
-          uVar1 = DAT_004751a6;
+          uVar1 = radar_background_color._2_2_;
           if ((2 < uVar2) &&
-             ((uVar1 = DAT_004751ac, 3 < uVar2 && (uVar1 = DAT_004751a6, uVar2 == 4)))) {
+             ((uVar1 = DAT_004751ac, 3 < uVar2 && (uVar1 = radar_background_color._2_2_, uVar2 == 4)
+              ))) {
             uVar1 = DAT_004751aa;
           }
-          if ((((0 < local_20) && (local_20 < DAT_00475160 + -4)) && (0 < local_1c)) &&
-             (local_1c < DAT_00475164 + -4)) {
+          if ((((0 < local_20) && (local_20 < radar_width + -4)) && (0 < local_1c)) &&
+             (local_1c < radar_height + -4)) {
             iVar3 = local_1c + 1;
-            if (DAT_00475170 == 0) {
+            if (radar_scale == 0) {
               *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + local_20) = uVar1;
               *(undefined2 *)(surface_ptr_3_3 + iVar3 * local_48[0] + local_20) = uVar1;
             }
-            else if (DAT_00475170 == 1) {
+            else if (radar_scale == 1) {
               *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + local_20) = uVar1;
               *(undefined2 *)(surface_ptr_3_3 + local_48[0] * iVar3 + local_20) = uVar1;
               *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + 2 + local_20) = uVar1;
@@ -7077,7 +7016,7 @@ void __watcall load_samples(void)
   iVar3 = 0;
   do {
     iVar4 = iVar3 + 8;
-    *(undefined4 *)((int)&DAT_004751c4 + iVar3) = 0xffffffff;
+    *(undefined4 *)((int)&object_sound_handles + iVar3) = 0xffffffff;
     *(undefined4 *)((int)&object_sound_slots + iVar3) = 0xffffffff;
     iVar3 = iVar4;
   } while (iVar4 != 0x30);
@@ -7168,7 +7107,7 @@ void __watcall start_object_sound(int slot,int object)
     if (uVar1 < 0xb) {
 LAB_004102d5:
       iVar2 = play_sound_buffer_2(s_motor2_wav_00458db4,iVar3,1);
-      (&DAT_004751c4)[slot * 2] = iVar2;
+      (&object_sound_handles)[slot * 2] = iVar2;
       goto LAB_004102eb;
     }
     if (uVar1 < 0xc) {
@@ -7180,11 +7119,12 @@ LAB_004102d5:
     }
   }
   iVar2 = play_sound_buffer_2(str2,iVar3,1);
-  (&DAT_004751c4)[slot * 2] = iVar2;
+  (&object_sound_handles)[slot * 2] = iVar2;
 LAB_004102eb:
   chp = CHP();
   set_sound_buffer_vol
-            ((&DAT_004751c4)[slot * 2],(&volume_by_distance)[(int)ROUND(chp)] - volume_attenuation);
+            ((&object_sound_handles)[slot * 2],
+             (&volume_by_distance)[(int)ROUND(chp)] - volume_attenuation);
   (&object_sound_slots)[slot * 2] = object;
   return;
 }
@@ -7201,7 +7141,7 @@ void __watcall set_object_sound_volume(void)
   if (engine_sound_enabled != 0) {
     chp = CHP();
     set_sound_buffer_vol
-              ((&DAT_004751c4)[in_EAX * 2],
+              ((&object_sound_handles)[in_EAX * 2],
                (&volume_by_distance)[(int)ROUND(chp)] - volume_attenuation);
   }
   return;
@@ -7219,7 +7159,7 @@ void __watcall stop_object_sound(undefined4 param_1,undefined4 param_2)
   object_sound_slot = find_object_sound_slot(param_1,param_2);
   iVar1 = (int)object_sound_slot;
   if ((engine_sound_enabled != 0) && (iVar1 != -1)) {
-    stop_sound_buffer((&DAT_004751c4)[iVar1 * 2]);
+    stop_sound_buffer((&object_sound_handles)[iVar1 * 2]);
     (&object_sound_slots)[iVar1 * 2] = 0xffffffff;
   }
   return;
@@ -7227,8 +7167,6 @@ void __watcall stop_object_sound(undefined4 param_1,undefined4 param_2)
 
 
 /* ==== 004103a5 update_object_sound ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall update_object_sound(float param_1,float param_2,float param_3)
 
@@ -7247,9 +7185,8 @@ void __watcall update_object_sound(float param_1,float param_2,float param_3)
     uVar2 = (ushort)(0.0 < in_stack_00000010) << 8 | (ushort)NAN(in_stack_00000010) << 10 |
             (ushort)(in_stack_00000010 == 0.0) << 0xe;
     if (0.0 < in_stack_00000010 || (in_stack_00000010 == 0.0) != 0) {
-      uVar2 = (ushort)(in_stack_00000010 < _DAT_00445892) << 8 |
-              (ushort)(NAN(in_stack_00000010) || NAN(_DAT_00445892)) << 10 |
-              (ushort)(in_stack_00000010 == _DAT_00445892) << 0xe;
+      uVar2 = (ushort)(in_stack_00000010 < 500.0) << 8 | (ushort)NAN(in_stack_00000010) << 10 |
+              (ushort)(in_stack_00000010 == 500.0) << 0xe;
     }
     if ((int)uVar3 == -1) {
       uVar3 = find_free_sound_slot(CONCAT22((short)((ulonglong)uVar3 >> 0x10),uVar2),uVar1);
@@ -7259,8 +7196,8 @@ void __watcall update_object_sound(float param_1,float param_2,float param_3)
     }
     else {
       debugmsg(s_changing_pos_object__d___5_2f__5_00445866,uVar1,
-               (double)(in_stack_00000004 - DAT_0045772c),(double)(in_stack_00000008 - DAT_00457730)
-               ,(double)(in_stack_0000000c - DAT_00457734));
+               (double)(in_stack_00000004 - player_x),(double)(in_stack_00000008 - player_y),
+               (double)(in_stack_0000000c - player_z));
       set_object_sound_volume();
     }
   }
@@ -7277,7 +7214,7 @@ void __watcall start_music(void)
 {
   int in_EAX;
   
-  if (DAT_00458c3c != 0) {
+  if (music_enabled != 0) {
     _DAT_004751f4 = play_sound_buffer_1(s_motor2_wav_00458db4 + in_EAX * 0xf,1);
     set_sound_buffer_vol(_DAT_004751f4,-100 - _DAT_00458c34);
   }
@@ -7995,7 +7932,7 @@ void __watcall draw_big_digit_1(int digit,int frame)
     unaff_EBX = 0x96;
     frame = *(int *)(*(int *)(xvga_anims + 0xe0) + 4 + digit * 8);
     unaff_ECX = 200;
-    if (DAT_00458c20 != 0) {
+    if (dashboard_on_screen != 0) {
       unaff_ECX = 0xa0;
     }
   }
@@ -8021,7 +7958,7 @@ void __watcall draw_big_digit_2(int digit,int frame)
     unaff_EBX = 0x140;
     frame = *(int *)(*(int *)(xvga_anims + 0xec) + 4 + digit * 8);
     unaff_ECX = 200;
-    if (DAT_00458c20 != 0) {
+    if (dashboard_on_screen != 0) {
       unaff_ECX = 0xa0;
     }
   }
@@ -8037,8 +7974,6 @@ void __watcall draw_big_digit_2(int digit,int frame)
 
 /* ==== 004116cb start_camera_intro ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall start_camera_intro(void)
 
 {
@@ -8046,22 +7981,20 @@ void __watcall start_camera_intro(void)
   
   set_camera_position(1);
   *(undefined1 *)(player_index * 0x4b + 0x35 + racers) = 1;
-  DAT_00457724 = 350.0;
-  _DAT_00457720 = 0xc1f80000;
-  atan_lookup_result = atan_lookup(DAT_0045b290,0xc1f80000);
-  _DAT_0045b284 = (float)(int)atan_lookup_result;
-  _DAT_0045b288 = (float)DAT_0045b250;
-  DAT_0045b278 = -DAT_0045772c;
+  camera_height = 350.0;
+  camera_distance = -31.0;
+  atan_lookup_result = atan_lookup(atan_table_id,0xc1f80000);
+  camera_pitch = (float)(int)atan_lookup_result;
+  camera_yaw = (float)player_heading;
+  camera_x = -player_x;
   DAT_00475a2c = 1;
-  DAT_0045b27c = -DAT_00457730 - DAT_00457724;
-  DAT_0045b280 = -DAT_00457734;
+  camera_y = -player_y - camera_height;
+  camera_z = -player_z;
   return;
 }
 
 
 /* ==== 0041177a caseD_0 ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall switchD_0040c81f::caseD_0(void)
 
@@ -8069,8 +8002,8 @@ void __watcall switchD_0040c81f::caseD_0(void)
   if (DAT_00475a2c == 0) {
     start_camera_intro();
   }
-  DAT_00457724 = DAT_00457724 + _DAT_00446180;
-  if (DAT_00457724 <= 0.0) {
+  camera_height = camera_height + -10.0;
+  if (camera_height <= 0.0) {
     set_camera_position(2);
     race_state = 2;
   }
@@ -8083,7 +8016,7 @@ void __watcall switchD_0040c81f::caseD_0(void)
 void __watcall begin_start_countdown(void)
 
 {
-  DAT_00475a24 = 0;
+  countdown_step = 0;
   start_countdown(1);
   DAT_00475a34 = 1;
   return;
@@ -8316,7 +8249,7 @@ int __watcall get_racer_lane(int racer)
       return -1;
     }
     if ((*(float *)((int)&lane_boundaries + iVar4) <= fVar1) &&
-       (fVar1 < *(float *)((int)&DAT_004590e4 + iVar4))) break;
+       (fVar1 < *(float *)((int)&FLOAT_004590e4 + iVar4))) break;
     iVar4 = iVar4 + 4;
     iVar6 = iVar6 + 1;
   }
@@ -8392,13 +8325,13 @@ undefined8 __watcall init_race_timers(int param_1,undefined4 param_2)
   now = time(&DAT_00475a88,(int)((ulonglong)now >> 0x20));
   time(&DAT_00475a94,(int)((ulonglong)now >> 0x20));
   now = time(&DAT_00475aa0,0);
-  DAT_00475a5c = (undefined4)((ulonglong)now >> 0x20);
-  _DAT_00475a68 = DAT_00475a5c;
-  _DAT_00475a74 = DAT_00475a5c;
-  _DAT_00475a80 = DAT_00475a5c;
-  _DAT_00475a8c = DAT_00475a5c;
-  _DAT_00475a98 = DAT_00475a5c;
-  _DAT_00475aa4 = DAT_00475a5c;
+  racer_finish_times = (undefined4)((ulonglong)now >> 0x20);
+  _DAT_00475a68 = racer_finish_times;
+  _DAT_00475a74 = racer_finish_times;
+  _DAT_00475a80 = racer_finish_times;
+  _DAT_00475a8c = racer_finish_times;
+  _DAT_00475a98 = racer_finish_times;
+  _DAT_00475aa4 = racer_finish_times;
   _DAT_00475a60 = 1;
   _DAT_00475a6c = 1;
   _DAT_00475a78 = 1;
@@ -8421,10 +8354,10 @@ void __watcall set_racer_finish_time(int param_1)
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__set_racer_finish_time__invalid_r_00446364,param_1);
   }
-  if ((&DAT_00475a5c)[param_1 * 3] == 0) {
-    uVar2 = time(&DAT_00475a50,param_1 * 0xc);
+  if ((&racer_finish_times)[param_1 * 3] == 0) {
+    uVar2 = time(&time_now,param_1 * 0xc);
     iVar1 = (int)((ulonglong)uVar2 >> 0x20);
-    *(int *)((int)&DAT_00475a5c + iVar1) = DAT_00475a50 - *(int *)(&DAT_00475a58 + iVar1);
+    *(int *)((int)&racer_finish_times + iVar1) = time_now - *(int *)(&DAT_00475a58 + iVar1);
     uVar2 = get_racer_entry(param_1,iVar1);
     *(int *)(&DAT_00475a60 + (int)((ulonglong)uVar2 >> 0x20)) = (int)uVar2;
   }
@@ -8444,11 +8377,11 @@ undefined8 __watcall get_racer_finish_time(int param_1,undefined4 param_2)
     fatal_exit(s__get_racer_finish_time__invalid_r_00446396,param_1);
     param_1 = extraout_EDX;
   }
-  if ((&DAT_00475a5c)[param_1 * 3] != 0) {
-    return CONCAT44(param_2,(&DAT_00475a5c)[param_1 * 3]);
+  if ((&racer_finish_times)[param_1 * 3] != 0) {
+    return CONCAT44(param_2,(&racer_finish_times)[param_1 * 3]);
   }
   random = rand();
-  return CONCAT44(param_2,DAT_00475a5c + random % 0x3c + 5);
+  return CONCAT44(param_2,racer_finish_times + random % 0x3c + 5);
 }
 
 
@@ -8464,7 +8397,7 @@ undefined8 __watcall get_racer_finish_time_2(int param_1,undefined4 param_2)
     fatal_exit(s__get_racer_finish_time__invalid_r_004463c8,param_1);
     param_1 = extraout_EDX;
   }
-  if ((&DAT_00475a5c)[param_1 * 3] != 0) {
+  if ((&racer_finish_times)[param_1 * 3] != 0) {
     return CONCAT44(param_2,*(undefined4 *)(&DAT_00475a60 + param_1 * 0xc));
   }
   racer_entry = get_racer_entry(param_1,param_1);
@@ -8503,9 +8436,9 @@ void __watcall update_time_left(void)
   undefined4 unaff_EDX;
   
   if (time_left != 0) {
-    time(&DAT_00475a50,unaff_EDX);
-    time_left = time_left - (DAT_00475a50 - DAT_00475a54);
-    DAT_00475a54 = DAT_00475a50;
+    time(&time_now,unaff_EDX);
+    time_left = time_left - (time_now - DAT_00475a54);
+    DAT_00475a54 = time_now;
     if (time_left < 1) {
       race_positions._0_2_ = 3;
       race_finished_ok = 0;
@@ -8660,8 +8593,6 @@ LAB_0041272f:
 
 /* ==== 00412737 place_bonus_item ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall place_bonus_item(undefined4 param_1,int param_2)
 
 {
@@ -8722,11 +8653,11 @@ LAB_004127e4:
   *(byte *)(pfVar3 + 3) = (byte)param_1;
   *(int *)((int)pfVar3 + 0xd) = param_2;
   *(int *)((int)pfVar3 + 0x11) = unaff_EBX;
-  fVar1 = *(float *)(&DAT_004578d4 + unaff_EBX * 4);
+  fVar1 = *(float *)(&lane_offsets + unaff_EBX * 4);
   *pfVar3 = (*(float *)(weg_chunks + 0x1c + param_2 * 0x38) * fVar1 +
             *(float *)(weg_points + *(int *)(param_2 * 0x54 + weg_sections) * 0x21)) -
-            *(float *)(weg_chunks + 0x24 + param_2 * 0x38) * (float)_DAT_00446520;
-  pfVar3[2] = *(float *)(weg_chunks + 0x1c + param_2 * 0x38) * (float)_DAT_00446520 +
+            *(float *)(weg_chunks + 0x24 + param_2 * 0x38) * 40.0;
+  pfVar3[2] = *(float *)(weg_chunks + 0x1c + param_2 * 0x38) * 40.0 +
               *(float *)(weg_chunks + 0x24 + param_2 * 0x38) * fVar1 +
               *(float *)(weg_points + *(int *)(param_2 * 0x54 + weg_sections) * 0x21 + 8);
   road_height_at(*pfVar3,pfVar3[2]);
@@ -8919,29 +8850,28 @@ load_bonus_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 p
   iVar3 = param_1 * 0x10;
   *(undefined1 *)(iVar1 + 0x36 + racers) = 0;
   debugmsg(s_starting_static_object___d__004465ff,iVar2);
-  if (*(int *)(&DAT_00457c64 + iVar3) == -1) {
+  if (*(int *)(&static_object_mesh_ids + iVar3) == -1) {
     debugmsg(s_static_object___d__mesh_not_yet_l_0044661c,extraout_ECX);
     load_object_mesh(object,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
-    *(undefined4 *)(&DAT_00457c64 + iVar3) =
+    *(undefined4 *)(&static_object_mesh_ids + iVar3) =
          *(undefined4 *)
-          (*(int *)(DAT_00476788 + *(int *)(iVar1 + racers) * 9 + 4) +
-          ((int *)(iVar1 + racers))[1] * 4);
+          (*(int *)(anims3d + *(int *)(iVar1 + racers) * 9 + 4) + ((int *)(iVar1 + racers))[1] * 4);
   }
   else {
     debugmsg(s_static_object___d__allready_load_00446650,extraout_ECX);
     *(undefined4 *)
-     (*(int *)(DAT_00476788 + *(int *)(iVar1 + racers) * 9 + 4) + ((int *)(iVar1 + racers))[1] * 4)
-         = *(undefined4 *)(&DAT_00457c64 + iVar3);
+     (*(int *)(anims3d + *(int *)(iVar1 + racers) * 9 + 4) + ((int *)(iVar1 + racers))[1] * 4) =
+         *(undefined4 *)(&static_object_mesh_ids + iVar3);
   }
   debugmsg(s_done_loading_static_object_0044667e);
-  if ((&DAT_00457c60)[param_1 * 4] == -1) {
+  if ((&static_object_texture_ids)[param_1 * 4] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_s_004466a5,s_bonus_cpp_0044669b,0x156,param_1);
   }
   debugmsg(s_setting_static_object_texture_004466dc);
   iVar1 = iVar2 * 0x4b;
-  *(undefined4 *)(iVar1 + 0x2c + racers) = (&DAT_00457c60)[param_1 * 4];
+  *(undefined4 *)(iVar1 + 0x2c + racers) = (&static_object_texture_ids)[param_1 * 4];
   debugmsg(s_setting_static_object_matrix_004466fb);
-  set_object3d_matrix(iVar2,&DAT_0045792c);
+  set_object3d_matrix(iVar2,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00446719);
   *(undefined **)(iVar1 + 0x20 + racers) = &DAT_00412e6a;
   debugmsg(s_setting_static_object_position_00446737);
@@ -9058,8 +8988,6 @@ LAB_00413133:
 
 /* ==== 004131a8 collide_racer_with_road_edge ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 undefined8 __watcall collide_racer_with_road_edge(int param_1,undefined4 param_2)
 
 {
@@ -9118,22 +9046,22 @@ undefined8 __watcall collide_racer_with_road_edge(int param_1,undefined4 param_2
     }
     iVar8 = 0;
     do {
-      if ((float)_DAT_004468b0 < *(float *)((int)afStack_98 + iVar8) + local_1c) {
+      if (120.0 < *(float *)((int)afStack_98 + iVar8) + local_1c) {
         bVar3 = true;
-        local_1c = (float)_DAT_004468b0 - *(float *)((int)afStack_98 + iVar8);
+        local_1c = 120.0 - *(float *)((int)afStack_98 + iVar8);
       }
-      if (*(float *)((int)afStack_98 + iVar8) + local_1c < (float)_DAT_004468b8) {
+      if (*(float *)((int)afStack_98 + iVar8) + local_1c < 5.0) {
         bVar3 = true;
-        local_1c = (float)_DAT_004468b8 - *(float *)((int)afStack_98 + iVar8);
+        local_1c = 5.0 - *(float *)((int)afStack_98 + iVar8);
       }
       iVar8 = iVar8 + 0xc;
     } while (iVar8 != 0x30);
     if (bVar3) {
       *(float *)(iVar6 + 0xf4) = *(float *)(iVar6 + 0xf4) * (local_1c / local_2c);
       *(float *)(iVar6 + 0xf8) = (local_1c / local_2c) * *(float *)(iVar6 + 0xf8);
-      fVar1 = *(float *)(iVar6 + 0x10) * (float)_DAT_004468a0;
+      fVar1 = *(float *)(iVar6 + 0x10) * 0.845;
       *(float *)(iVar6 + 0x10) = fVar1;
-      if ((float)_DAT_004468a8 < fVar1) {
+      if (4.0 < fVar1) {
         play_bump3_sound();
       }
       uVar5 = 1;
@@ -9156,8 +9084,6 @@ int __watcall no_collision_check(void)
 
 
 /* ==== 004133d1 collide_player_with_track_ends ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined8 __watcall collide_player_with_track_ends(undefined4 param_1,undefined4 param_2)
 
@@ -9222,9 +9148,9 @@ undefined8 __watcall collide_player_with_track_ends(undefined4 param_1,undefined
       else {
         iVar7 = 0;
         do {
-          if (_DAT_004468d0 < *(float *)((int)afStack_64 + iVar7) + local_18) {
+          if (59.0 < *(float *)((int)afStack_64 + iVar7) + local_18) {
             bVar3 = true;
-            local_18 = _DAT_004468d0 - *(float *)((int)afStack_64 + iVar7);
+            local_18 = 59.0 - *(float *)((int)afStack_64 + iVar7);
           }
           iVar7 = iVar7 + 0xc;
         } while (iVar7 != 0x30);
@@ -9232,9 +9158,9 @@ undefined8 __watcall collide_player_with_track_ends(undefined4 param_1,undefined
       if (bVar3) {
         *(float *)(opponent_data + 0xf4) = *(float *)(opponent_data + 0xf4) * (local_18 / local_24);
         *(float *)(iVar4 + 0xf8) = (local_18 / local_24) * *(float *)(iVar4 + 0xf8);
-        fVar1 = *(float *)(iVar4 + 0x10) * (float)_DAT_004468c0;
+        fVar1 = *(float *)(iVar4 + 0x10) * 0.845;
         *(float *)(iVar4 + 0x10) = fVar1;
-        if ((float)_DAT_004468c8 < fVar1) {
+        if (4.0 < fVar1) {
           play_bump3_sound();
         }
         uVar8 = 1;
@@ -9264,14 +9190,14 @@ undefined8 __watcall alloc_pionnen(int param_1,undefined4 param_2)
   if (0 < param_1) {
     debugmsg(s_Allocating__d_pion_objects____004468d4,param_1);
     uBytes = (param_1 * 0xc - extraout_EDX) * 4;
-    DAT_00475ad8 = LocalAlloc(0x40,uBytes);
-    if (DAT_00475ad8 == (HLOCAL)0x0) {
+    pionnen = LocalAlloc(0x40,uBytes);
+    if (pionnen == (HLOCAL)0x0) {
       uVar1 = 2000;
       goto LAB_00413a56;
     }
     iVar2 = 0;
     while (iVar2 < (int)uBytes) {
-      puVar5 = (undefined4 *)((int)DAT_00475ad8 + iVar2);
+      puVar5 = (undefined4 *)((int)pionnen + iVar2);
       iVar2 = iVar2 + 0x2c;
       puVar4 = &DAT_00459188;
       for (iVar3 = 0xb; iVar3 != 0; iVar3 = iVar3 + -1) {
@@ -9280,7 +9206,7 @@ undefined8 __watcall alloc_pionnen(int param_1,undefined4 param_2)
         puVar5 = puVar5 + 1;
       }
     }
-    DAT_00475adc = param_1;
+    pion_count = param_1;
     debugmsg(s_OK__004468f2);
   }
   uVar1 = 0;
@@ -9291,8 +9217,6 @@ LAB_00413a56:
 
 /* ==== 00413646 place_pion_left ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall place_pion_left(float param_1,float param_2)
 
 {
@@ -9300,10 +9224,9 @@ int __watcall place_pion_left(float param_1,float param_2)
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  int iVar6;
-  float *pfVar7;
-  int iVar8;
+  int iVar5;
+  float *pfVar6;
+  int iVar7;
   undefined8 pion_object;
   
   if (((int)param_1 < 0) || (weg_chunk_count < (int)param_1)) {
@@ -9312,41 +9235,38 @@ int __watcall place_pion_left(float param_1,float param_2)
   if (((int)param_2 < 0) || (0xb < (int)param_2)) {
     fatal_exit(s__s__d____Lane_value_out_of_bound_0044692e,s_pion_cpp_00446925,99);
   }
-  iVar8 = 0;
-  for (iVar6 = 0; (iVar6 < DAT_00475adc * 0x2c && (*(int *)(DAT_00475ad8 + 0x18 + iVar6) != 0));
-      iVar6 = iVar6 + 0x2c) {
-    iVar8 = iVar8 + 1;
+  iVar7 = 0;
+  for (iVar5 = 0; (iVar5 < pion_count * 0x2c && (*(int *)(pionnen + 0x18 + iVar5) != 0));
+      iVar5 = iVar5 + 0x2c) {
+    iVar7 = iVar7 + 1;
   }
-  if (iVar8 == DAT_00475adc) {
+  if (iVar7 == pion_count) {
     fatal_exit(s__s__d____No_more_free_pion_objec_0044695b,s_pion_cpp_00446952,0x6a);
   }
-  pfVar7 = (float *)(DAT_00475ad8 + iVar8 * 0x2c);
-  pfVar7[8] = param_1;
-  pfVar7[9] = param_2;
-  iVar6 = (int)param_1 * 0x54;
-  fVar4 = *(float *)(&DAT_004578d4 + (int)param_2 * 4);
-  *pfVar7 = (*(float *)(weg_chunks + 0x1c + (int)param_1 * 0x38) * fVar4 +
-            *(float *)(weg_points + *(int *)(iVar6 + weg_sections) * 0x21)) -
-            *(float *)(weg_chunks + 0x24 + (int)param_1 * 0x38) * (float)_DAT_00446980;
+  pfVar6 = (float *)(pionnen + iVar7 * 0x2c);
+  pfVar6[8] = param_1;
+  pfVar6[9] = param_2;
+  iVar5 = (int)param_1 * 0x54;
+  fVar4 = *(float *)(&lane_offsets + (int)param_2 * 4);
+  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)param_1 * 0x38) * fVar4 +
+            *(float *)(weg_points + *(int *)(iVar5 + weg_sections) * 0x21)) -
+            *(float *)(weg_chunks + 0x24 + (int)param_1 * 0x38) * 40.0;
   fVar1 = *(float *)(weg_chunks + 0x24 + (int)param_1 * 0x38);
-  fVar2 = *(float *)(weg_points + *(int *)(iVar6 + weg_sections) * 0x21 + 8);
+  fVar2 = *(float *)(weg_points + *(int *)(iVar5 + weg_sections) * 0x21 + 8);
   fVar3 = *(float *)(weg_chunks + 0x1c + (int)param_1 * 0x38);
-  pfVar7[6] = 1.4013e-45;
-  fVar5 = (float)_DAT_00446980;
-  pfVar7[7] = 0.0;
-  pfVar7[2] = fVar3 * fVar5 + fVar1 * fVar4 + fVar2;
-  iVar6 = iVar6 + weg_sections;
-  road_height_at(*pfVar7,pfVar7[2]);
+  pfVar6[6] = 1.4013e-45;
+  pfVar6[7] = 0.0;
+  pfVar6[2] = fVar3 * 40.0 + fVar1 * fVar4 + fVar2;
+  iVar5 = iVar5 + weg_sections;
+  road_height_at(*pfVar6,pfVar6[2]);
   CHP();
-  pion_object = load_pion_object(0x13,pfVar7,iVar8,iVar6,(int)*pfVar7);
+  pion_object = load_pion_object(0x13,pfVar6,iVar7,iVar5,(int)*pfVar6);
   *(int *)((int)((ulonglong)pion_object >> 0x20) + 0x28) = (int)pion_object;
-  return iVar8;
+  return iVar7;
 }
 
 
 /* ==== 004137dc place_pion_right ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int __watcall place_pion_right(float param_1,float param_2)
 
@@ -9355,10 +9275,9 @@ int __watcall place_pion_right(float param_1,float param_2)
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  int iVar6;
-  float *pfVar7;
-  int iVar8;
+  int iVar5;
+  float *pfVar6;
+  int iVar7;
   undefined8 pion_object;
   
   if (((int)param_1 < 0) || (weg_chunk_count < (int)param_1)) {
@@ -9367,41 +9286,38 @@ int __watcall place_pion_right(float param_1,float param_2)
   if (((int)param_2 < 0) || (0xb < (int)param_2)) {
     fatal_exit(s__s__d____Lane_value_out_of_bound_004469bf,s_pion_cpp_004469b6,0x91);
   }
-  iVar8 = 0;
-  for (iVar6 = 0; (iVar6 < DAT_00475adc * 0x2c && (*(int *)(DAT_00475ad8 + 0x18 + iVar6) != 0));
-      iVar6 = iVar6 + 0x2c) {
-    iVar8 = iVar8 + 1;
+  iVar7 = 0;
+  for (iVar5 = 0; (iVar5 < pion_count * 0x2c && (*(int *)(pionnen + 0x18 + iVar5) != 0));
+      iVar5 = iVar5 + 0x2c) {
+    iVar7 = iVar7 + 1;
   }
-  if (iVar8 == DAT_00475adc) {
+  if (iVar7 == pion_count) {
     fatal_exit(s__s__d____No_more_free_pion_objec_004469ec,s_pion_cpp_004469e3,0x98);
   }
-  pfVar7 = (float *)(DAT_00475ad8 + iVar8 * 0x2c);
-  pfVar7[8] = param_1;
-  pfVar7[9] = param_2;
-  iVar6 = (int)param_1 * 0x54;
-  fVar4 = *(float *)(&DAT_004578d4 + (int)param_2 * 4);
-  *pfVar7 = (*(float *)(weg_chunks + 0x1c + (int)param_1 * 0x38) * fVar4 +
-            *(float *)(weg_points + *(int *)(iVar6 + weg_sections) * 0x21)) -
-            *(float *)(weg_chunks + 0x24 + (int)param_1 * 0x38) * (float)_DAT_00446a11;
+  pfVar6 = (float *)(pionnen + iVar7 * 0x2c);
+  pfVar6[8] = param_1;
+  pfVar6[9] = param_2;
+  iVar5 = (int)param_1 * 0x54;
+  fVar4 = *(float *)(&lane_offsets + (int)param_2 * 4);
+  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)param_1 * 0x38) * fVar4 +
+            *(float *)(weg_points + *(int *)(iVar5 + weg_sections) * 0x21)) -
+            *(float *)(weg_chunks + 0x24 + (int)param_1 * 0x38) * 40.0;
   fVar1 = *(float *)(weg_chunks + 0x24 + (int)param_1 * 0x38);
-  fVar2 = *(float *)(weg_points + *(int *)(iVar6 + weg_sections) * 0x21 + 8);
+  fVar2 = *(float *)(weg_points + *(int *)(iVar5 + weg_sections) * 0x21 + 8);
   fVar3 = *(float *)(weg_chunks + 0x1c + (int)param_1 * 0x38);
-  pfVar7[6] = 1.4013e-45;
-  fVar5 = (float)_DAT_00446a11;
-  pfVar7[7] = 0.0;
-  pfVar7[2] = fVar3 * fVar5 + fVar1 * fVar4 + fVar2;
-  iVar6 = iVar6 + weg_sections;
-  road_height_at(*pfVar7,pfVar7[2]);
+  pfVar6[6] = 1.4013e-45;
+  pfVar6[7] = 0.0;
+  pfVar6[2] = fVar3 * 40.0 + fVar1 * fVar4 + fVar2;
+  iVar5 = iVar5 + weg_sections;
+  road_height_at(*pfVar6,pfVar6[2]);
   CHP();
-  pion_object = load_pion_object(0x14,pfVar7,iVar8,iVar6,(int)*pfVar7);
+  pion_object = load_pion_object(0x14,pfVar6,iVar7,iVar5,(int)*pfVar6);
   *(int *)((int)((ulonglong)pion_object >> 0x20) + 0x28) = (int)pion_object;
-  return iVar8;
+  return iVar7;
 }
 
 
 /* ==== 00413a5c collide_with_pionnen ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall collide_with_pionnen(void)
 
@@ -9419,22 +9335,22 @@ void __watcall collide_with_pionnen(void)
   int local_1c;
   
   bVar7 = 0;
-  if (DAT_00475adc == 0) {
+  if (pion_count == 0) {
     fatal_exit(s__s__d____No_pion_objects_allocat_00446a50,s_pion_cpp_00446a47,0xdb);
   }
   iVar2 = opponent_data + in_EAX * 0x100;
   if ((*(int *)(iVar2 + 0xc4) != -1) && (*(int *)(iVar2 + 200) != -1)) {
     local_1c = 0;
-    for (local_20 = 0; local_20 < DAT_00475adc; local_20 = local_20 + 1) {
-      puVar4 = (undefined4 *)(DAT_00475ad8 + local_1c);
+    for (local_20 = 0; local_20 < pion_count; local_20 = local_20 + 1) {
+      puVar4 = (undefined4 *)(pionnen + local_1c);
       if (puVar4[6] != 0) {
         if (puVar4[7] != 0) {
           *(float *)(puVar4[10] * 0x4b + 0x18 + racers) =
-               *(float *)(puVar4[10] * 0x4b + 0x18 + racers) + _DAT_00446a85;
+               *(float *)(puVar4[10] * 0x4b + 0x18 + racers) + -0.125;
           *(float *)(puVar4[10] * 0x4b + 0x14 + racers) =
-               *(float *)(puVar4[10] * 0x4b + 0x14 + racers) * (float)_DAT_00446a75;
+               *(float *)(puVar4[10] * 0x4b + 0x14 + racers) * 0.95;
           *(float *)(puVar4[10] * 0x4b + 0x1c + racers) =
-               *(float *)(puVar4[10] * 0x4b + 0x1c + racers) * (float)_DAT_00446a75;
+               *(float *)(puVar4[10] * 0x4b + 0x1c + racers) * 0.95;
           iVar3 = racers + puVar4[10] * 0x4b;
           random = rand();
           piVar1 = (int *)(iVar3 + 0x3f);
@@ -9477,8 +9393,7 @@ void __watcall collide_with_pionnen(void)
                *(float *)(iVar2 + 0x20 + opponent_data) * *(float *)(iVar2 + 0x10 + opponent_data);
           iVar2 = racers + puVar4[10] * 0x4b;
           *(float *)(iVar2 + 0x18) =
-               (ABS(*(float *)(iVar2 + 0x1c)) + ABS(*(float *)(iVar2 + 0x14))) /
-               (float)_DAT_00446a7d;
+               (ABS(*(float *)(iVar2 + 0x1c)) + ABS(*(float *)(iVar2 + 0x14))) / 3.0;
           if (puVar4[7] == 0) {
             play_bump_sound();
           }
@@ -9498,10 +9413,10 @@ void __watcall collide_with_pionnen(void)
 void __watcall init_pionnen(undefined4 param_1,undefined4 param_2)
 
 {
-  undefined8 pionnen;
+  undefined8 pionnen_val;
   
-  pionnen = alloc_pionnen(0x3c,param_2);
-  if ((int)pionnen != 0) {
+  pionnen_val = alloc_pionnen(0x3c,param_2);
+  if ((int)pionnen_val != 0) {
     fatal_exit(s__s__d____Initpion_failed__00446ac0,s_pion_cpp_00446ab7,0x130);
   }
   return;
@@ -9528,8 +9443,8 @@ void __watcall place_pion_group(int chunk)
   else {
     iVar1 = chunk + 1;
     fVar2 = 1.4013e-44;
-    if (DAT_00476574 <= iVar1) {
-      iVar1 = DAT_00476574 + -1;
+    if (weg_section_count <= iVar1) {
+      iVar1 = weg_section_count + -1;
     }
   }
   place_pion_right(iVar1,fVar2);
@@ -9556,8 +9471,8 @@ void __watcall place_pion_group(int chunk)
     if (iVar3 < 0) {
       iVar3 = 0;
     }
-    if (DAT_00476574 <= iVar3) {
-      iVar3 = DAT_00476574 + -1;
+    if (weg_section_count <= iVar3) {
+      iVar3 = weg_section_count + -1;
     }
     iVar1 = iVar1 + 1;
     place_pion_left(iVar3,fVar2);
@@ -9590,8 +9505,6 @@ void __watcall update_pionnen(void)
 
 /* ==== 00413ece load_pion_object ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 undefined8 __watcall
 load_pion_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5)
 
@@ -9615,34 +9528,33 @@ load_pion_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 pa
   *(undefined4 *)(iVar1 + 0x47 + racers) = 1;
   *(undefined1 *)(iVar1 + 0x36 + racers) = 0;
   debugmsg(s_starting_static_object___d__00446adb,object);
-  if (*(int *)(&DAT_00457c64 + extraout_ECX) == -1) {
+  if (*(int *)(&static_object_mesh_ids + extraout_ECX) == -1) {
     debugmsg(s_static_object___d__mesh_not_yet_l_00446af8,object);
     load_object_mesh(object,*(char **)((int)&PTR_s_sky_d3d_00457c58 + extraout_ECX_00));
-    *(undefined4 *)(&DAT_00457c64 + extraout_ECX_00) =
+    *(undefined4 *)(&static_object_mesh_ids + extraout_ECX_00) =
          *(undefined4 *)
-          (*(int *)(*(int *)(iVar1 + racers) * 9 + DAT_00476788 + 4) +
-          ((int *)(iVar1 + racers))[1] * 4);
+          (*(int *)(*(int *)(iVar1 + racers) * 9 + anims3d + 4) + ((int *)(iVar1 + racers))[1] * 4);
   }
   else {
     debugmsg(s_static_object___d__allready_load_00446b2c,object);
     *(undefined4 *)
-     (*(int *)(DAT_00476788 + *(int *)(iVar1 + racers) * 9 + 4) + ((int *)(iVar1 + racers))[1] * 4)
-         = *(undefined4 *)(&DAT_00457c64 + extraout_ECX_01);
+     (*(int *)(anims3d + *(int *)(iVar1 + racers) * 9 + 4) + ((int *)(iVar1 + racers))[1] * 4) =
+         *(undefined4 *)(&static_object_mesh_ids + extraout_ECX_01);
   }
   debugmsg(s_done_loading_static_object_00446b5a);
-  if ((&DAT_00457c60)[param_1 * 4] == -1) {
+  if ((&static_object_texture_ids)[param_1 * 4] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_s_00446b80,s_pion_cpp_00446b77,0x1b0,param_1);
   }
   debugmsg(s_setting_static_object_texture_00446bb7);
   iVar1 = object * 0x4b;
-  *(undefined4 *)(iVar1 + 0x2c + racers) = (&DAT_00457c60)[param_1 * 4];
+  *(undefined4 *)(iVar1 + 0x2c + racers) = (&static_object_texture_ids)[param_1 * 4];
   debugmsg(s_setting_static_object_matrix_00446bd6);
-  set_object3d_matrix(object,&DAT_0045792c);
+  set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00446bf4);
   *(undefined **)(iVar1 + 0x20 + racers) = &DAT_004140f4;
   debugmsg(s_setting_static_object_position_00446c12);
   *(int *)(iVar1 + 8 + racers) = param_5;
-  *(float *)(iVar1 + 0xc + racers) = (float)in_stack_0000000c + (float)_DAT_00446c79;
+  *(float *)(iVar1 + 0xc + racers) = (float)in_stack_0000000c + 0.1;
   *(undefined4 *)(iVar1 + 0x10 + racers) = in_stack_00000008;
   *(undefined4 *)(iVar1 + 0x3f + racers) = 0;
   *(undefined4 *)(iVar1 + 0x3b + racers) = 0;
@@ -11096,13 +11008,13 @@ int __watcall get_attached_joysticks(void)
   MVar1 = joyGetPosEx(0,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_00476000 = 1;
+      joystick1_attached = 1;
     }
     else if (MVar1 == 2) goto LAB_00415e4f;
   }
   else if (MVar1 < 7) {
 LAB_00415e4f:
-    DAT_00476000 = 0;
+    joystick1_attached = 0;
   }
   else if (10 < MVar1) {
     if (MVar1 < 0xc) {
@@ -11113,7 +11025,7 @@ LAB_00415e4f:
   MVar1 = joyGetPosEx(1,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_0047605c = 1;
+      joystick2_attached = 1;
       goto LAB_00415ed5;
     }
     if (MVar1 != 2) goto LAB_00415ed5;
@@ -11126,10 +11038,10 @@ LAB_00415e4f:
     }
     if ((MVar1 < 0xa6) || (0xa7 < MVar1)) goto LAB_00415ed5;
   }
-  DAT_0047605c = 0;
+  joystick2_attached = 0;
 LAB_00415ed5:
-  bVar2 = DAT_00476000 != 0;
-  if (DAT_0047605c != 0) {
+  bVar2 = joystick1_attached != 0;
+  if (joystick2_attached != 0) {
     bVar2 = bVar2 + 2;
   }
   return (uint)bVar2;
@@ -11152,18 +11064,18 @@ void __watcall calibrate_joysticks(void)
   if (MVar1 < 6) {
     if (MVar1 == 0) {
       debugmsg(s_Joystick_One_Found_00448087);
-      DAT_00476000 = 1;
+      joystick1_attached = 1;
       _DAT_00476044 = joystickinfo.dwXpos;
       _DAT_00476048 = joystickinfo.dwYpos;
       debugmsg(s__1_Xbase____d_0044809b,joystickinfo.dwXpos);
       debugmsg(s__1_Ybase____d_004480aa,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_00476000 = 0;
+      joystick1_attached = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_00476000 = 0;
+    joystick1_attached = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -11171,10 +11083,10 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_00476000 = 0;
+    joystick1_attached = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_00476000 = 0;
+    joystick1_attached = 0;
   }
   MVar1 = joyGetDevCapsA(0,&joycaps,0x194);
   if (MVar1 == 0) {
@@ -11195,16 +11107,16 @@ void __watcall calibrate_joysticks(void)
       debugmsg(s_Joystick_Two_Found_00448109);
       _DAT_004760a0 = joystickinfo.dwXpos;
       _DAT_004760a4 = joystickinfo.dwYpos;
-      DAT_0047605c = 1;
+      joystick2_attached = 1;
       debugmsg(s__2_Xbase____d_0044811d,joystickinfo.dwXpos);
       debugmsg(s__2_Ybase____d_0044812c,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_0047605c = 0;
+      joystick2_attached = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_0047605c = 0;
+    joystick2_attached = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -11212,10 +11124,10 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_0047605c = 0;
+    joystick2_attached = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_0047605c = 0;
+    joystick2_attached = 0;
   }
   MVar1 = joyGetDevCapsA(1,&joycaps,0x194);
   if (MVar1 == 0) {
@@ -11255,22 +11167,22 @@ void __watcall check_joystick_movement(int param_1,int param_2,int param_3,int p
 
 {
   clear_joystick_key_down_state(param_1);
-  if ((double)*(int *)(&DAT_00475fe8 + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_00475fe8 + param_1 * 0x5c) < (double)param_2) {
+  if ((double)*(int *)(&joystick_center_x + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystick_center_x + param_1 * 0x5c) < (double)param_2) {
     *(undefined4 *)(&DAT_00475fb4 + param_1 * 0x5c) = 1;
   }
   if ((double)param_2 <
-      (double)*(int *)(&DAT_00475fe8 + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_00475fe8 + param_1 * 0x5c) * joysticksencesibility) {
+      (double)*(int *)(&joystick_center_x + param_1 * 0x5c) -
+      (double)*(int *)(&joystick_center_x + param_1 * 0x5c) * joysticksencesibility) {
     *(undefined4 *)(&DAT_00475fac + param_1 * 0x5c) = 1;
   }
-  if ((double)*(int *)(&DAT_00475fec + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_00475fec + param_1 * 0x5c) < (double)param_3) {
+  if ((double)*(int *)(&joystick_center_y + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystick_center_y + param_1 * 0x5c) < (double)param_3) {
     *(undefined4 *)(&DAT_00475fc4 + param_1 * 0x5c) = 1;
   }
   if ((double)param_3 <
-      (double)*(int *)(&DAT_00475fec + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_00475fec + param_1 * 0x5c) * joysticksencesibility) {
+      (double)*(int *)(&joystick_center_y + param_1 * 0x5c) -
+      (double)*(int *)(&joystick_center_y + param_1 * 0x5c) * joysticksencesibility) {
     *(undefined4 *)(&DAT_00475fbc + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 1U) != 0) {
@@ -11296,7 +11208,7 @@ void __watcall handle_joystick(void)
 {
   MMRESULT MVar1;
   
-  if (DAT_00476000 != 0) {
+  if (joystick1_attached != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(0,&joystickinfo);
@@ -11307,7 +11219,7 @@ void __watcall handle_joystick(void)
       clear_joystick_key_down_state(1);
     }
   }
-  if (DAT_0047605c != 0) {
+  if (joystick2_attached != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(1,&joystickinfo);
@@ -11355,12 +11267,10 @@ void __watcall set_joystick_keys(int param_1,int param_2,int param_3)
 
 /* ==== 00416510 set_joystick_sensibility ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall set_joystick_sensibility(double param_1)
 
 {
-  if ((1.0 < param_1) || (param_1 < _DAT_00448225)) {
+  if ((1.0 < param_1) || (param_1 < 0.05)) {
     fatal_exit(s__set_joystick_sencesibility__inv_004481da);
   }
   joysticksencesibility = param_1;
@@ -11403,28 +11313,28 @@ LAB_004165ab:
     joystickinfo.dwFlags = 0x83;
     MVar5 = joyGetPosEx(local_10,&joystickinfo);
     if (MVar5 == 0) {
-      dVar1 = (double)*(int *)(&DAT_00475fe8 + iVar6);
-      dVar2 = (double)*(int *)(&DAT_00475fe8 + iVar6) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystick_center_x + iVar6);
+      dVar2 = (double)*(int *)(&joystick_center_x + iVar6) * joysticksencesibility;
       if ((double)joystickinfo.dwXpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwXpos) {
           *param_4 = iVar3;
         }
         else {
           *param_4 = joystickinfo.dwXpos /
-                     (uint)((*(int *)(&DAT_00475fe8 + iVar6) - *(int *)(&DAT_00475ff4 + iVar6)) /
-                           iVar3);
+                     (uint)((*(int *)(&joystick_center_x + iVar6) - *(int *)(&DAT_00475ff4 + iVar6))
+                           / iVar3);
           *(byte *)param_6 = (byte)*param_6 | 4;
         }
       }
       else {
         *param_4 = joystickinfo.dwXpos /
-                   (uint)((*(int *)(&DAT_00475ff0 + iVar6) - *(int *)(&DAT_00475fe8 + iVar6)) /
+                   (uint)((*(int *)(&DAT_00475ff0 + iVar6) - *(int *)(&joystick_center_x + iVar6)) /
                          iVar3);
         *(byte *)param_6 = (byte)*param_6 | 8;
       }
       iVar3 = param_1 * 0x5c;
-      dVar1 = (double)*(int *)(&DAT_00475fec + iVar3);
-      dVar2 = (double)*(int *)(&DAT_00475fec + iVar3) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystick_center_y + iVar3);
+      dVar2 = (double)*(int *)(&joystick_center_y + iVar3) * joysticksencesibility;
       if ((double)joystickinfo.dwYpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwYpos) {
           *param_5 = iVar4;
@@ -11432,15 +11342,15 @@ LAB_004165ab:
         else {
           *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                           ((longlong)
-                           (*(int *)(&DAT_00475fec + iVar3) - *(int *)(&DAT_00475ffc + iVar3)) /
-                           (longlong)iVar4 & 0xffffffffU));
+                           (*(int *)(&joystick_center_y + iVar3) - *(int *)(&DAT_00475ffc + iVar3))
+                           / (longlong)iVar4 & 0xffffffffU));
           *(byte *)param_6 = (byte)*param_6 | 1;
         }
       }
       else {
         *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                         ((longlong)
-                         (*(int *)(&DAT_00475ff8 + iVar3) - *(int *)(&DAT_00475fec + iVar3)) /
+                         (*(int *)(&DAT_00475ff8 + iVar3) - *(int *)(&joystick_center_y + iVar3)) /
                          (longlong)iVar4 & 0xffffffffU));
         *(byte *)param_6 = (byte)*param_6 | 2;
       }
@@ -15430,8 +15340,6 @@ set_3dlistener_orientation_1
 
 /* ==== 0041b371 set_3dlistener_dopplerfactor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int set_3dlistener_dopplerfactor(float param_1)
 
 {
@@ -15442,7 +15350,7 @@ int set_3dlistener_dopplerfactor(float param_1)
     if (param_1 < 0.0) {
       param_1 = 0.0;
     }
-    if ((float)_DAT_0044ad2b < param_1) {
+    if (10.0 < param_1) {
       param_1 = 10.0;
     }
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x30))(ds3d_listener,param_1,0);
@@ -15458,8 +15366,6 @@ int set_3dlistener_dopplerfactor(float param_1)
 
 /* ==== 0041b3e1 set_3dlistener_distancefactor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall set_3dlistener_distancefactor(float param_1)
 
 {
@@ -15471,7 +15377,7 @@ int __watcall set_3dlistener_distancefactor(float param_1)
     if (in_stack_00000004 < 0.0) {
       in_stack_00000004 = 0.0;
     }
-    if ((float)_DAT_0044ad67 < in_stack_00000004) {
+    if (10.0 < in_stack_00000004) {
       in_stack_00000004 = 10.0;
     }
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x2c))(ds3d_listener,in_stack_00000004,0);
@@ -15487,8 +15393,6 @@ int __watcall set_3dlistener_distancefactor(float param_1)
 
 /* ==== 0041b443 set_3dlistener_rollofffactor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall set_3dlistener_rollofffactor(float param_1)
 
 {
@@ -15500,7 +15404,7 @@ int __watcall set_3dlistener_rollofffactor(float param_1)
     if (in_stack_00000004 < 0.0) {
       in_stack_00000004 = 0.0;
     }
-    if ((float)_DAT_0044ada3 < in_stack_00000004) {
+    if (10.0 < in_stack_00000004) {
       in_stack_00000004 = 10.0;
     }
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x3c))(ds3d_listener,in_stack_00000004,0);
@@ -15943,8 +15847,8 @@ set_xvga_palette_flag(tagPALETTEENTRY *param_1,int param_2,int param_3,int param
 void __watcall d3d_store_screen_size(void)
 
 {
-  DAT_004764d8 = xvga_screen_xsize;
-  DAT_004764dc = xvga_screen_ysize;
+  viewport_width = xvga_screen_xsize;
+  viewport_height = xvga_screen_ysize;
   return;
 }
 
@@ -15972,9 +15876,9 @@ void __watcall change_viewport_size(int param_1,int param_2)
     param_2 = extraout_EDX_00;
   }
   DAT_004764d0 = param_1;
-  DAT_004764d4 = param_2;
-  DAT_004764d8 = unaff_EBX;
-  DAT_004764dc = unaff_ECX;
+  viewport_x = param_2;
+  viewport_width = unaff_EBX;
+  viewport_height = unaff_ECX;
   DAT_004764e4 = 1;
   return;
 }
@@ -15989,20 +15893,20 @@ void __watcall set_background(void)
   undefined8 uVar1;
   
   debugmsg(s_setbkg__adding_texture_<_s>_0044b531);
-  DAT_0045966c = (int *)load_texture(filename,(int)filename);
-  if (DAT_00459670 == -1) {
-    debugmsg(s_setbkg__making_material_texture___0044b54e,DAT_0045966c);
-    DAT_00459670 = create_material(0,DAT_0045966c);
-    debugmsg(s_setbkg__material____d_0044b574,DAT_00459670);
+  background_texture = (int *)load_texture(filename,(int)filename);
+  if (background_material == -1) {
+    debugmsg(s_setbkg__making_material_texture___0044b54e,background_texture);
+    background_material = create_material(0,background_texture);
+    debugmsg(s_setbkg__material____d_0044b574,background_material);
   }
   else {
     debugmsg(s_setbkg__setting_material_texure__0044b58b);
-    set_material_texture(DAT_00459670,DAT_0045966c);
+    set_material_texture(background_material,background_texture);
   }
   if (DAT_004764e0 != 0) {
     debugmsg(s_setbkg__setting_bkg_material_in_v_0044b5ad);
     uVar1 = (**(code **)(*d3d_object + 0x20))
-                      (d3d_object,*(undefined4 *)(DAT_00459670 * 0xc + 4 + DAT_00480ff0));
+                      (d3d_object,*(undefined4 *)(background_material * 0xc + 4 + materials));
     if ((int)uVar1 != 0) {
       uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
       fatal_exit(s__s__d____Could_not_set_backgroun_0044b5e4,s_viewport_cpp_0044b5d7,0x92,(int)uVar1
@@ -16048,9 +15952,9 @@ longlong __watcall init_viewport(undefined4 param_1,uint param_2)
     init_render_state_defaults();
     apply_render_states();
     create_frame_execute_buffer();
-    if ((DAT_00459670 != -1) && (DAT_0045966c != -1)) {
+    if ((background_material != -1) && (background_texture != -1)) {
       uVar2 = (**(code **)(*d3d_object + 0x20))
-                        (d3d_object,*(undefined4 *)(DAT_00480ff0 + 4 + DAT_00459670 * 0xc));
+                        (d3d_object,*(undefined4 *)(materials + 4 + background_material * 0xc));
       if ((int)uVar2 != 0) {
         uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
         fatal_exit(s__s__d____Could_not_set_backgroun_0044b69f,s_viewport_cpp_0044b692,0xde,
@@ -16065,8 +15969,6 @@ longlong __watcall init_viewport(undefined4 param_1,uint param_2)
 
 /* ==== 0041c0d4 create_viewport ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 longlong __watcall create_viewport(void)
 
 {
@@ -16075,22 +15977,22 @@ longlong __watcall create_viewport(void)
   int *piStack_5c;
   int *piStack_58;
   undefined4 *puStack_54;
-  uint uStack_50;
+  int iStack_50;
   float fStack_4c;
   float fStack_48;
   float fStack_44;
   float fStack_40;
   undefined4 uStack_3c;
   undefined4 uStack_38;
-  uint uStack_34;
+  int iStack_34;
   undefined4 uStack_30;
   uint uStack_28;
   
-  uStack_50 = 0;
+  iStack_50 = 0;
   puStack_54 = &d3d_object;
-  piStack_58 = DAT_004764f8;
+  piStack_58 = direct3d;
   piStack_5c = (int *)0x41c0ed;
-  uVar1 = (**(code **)(*DAT_004764f8 + 0x1c))();
+  uVar1 = (**(code **)(*direct3d + 0x1c))();
   if ((int)uVar1 != 0) {
     piStack_5c = (int *)0x41c0f6;
     uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
@@ -16107,14 +16009,14 @@ longlong __watcall create_viewport(void)
   }
   memset(&piStack_60,0,0x2c);
   piStack_5c = (int *)DAT_004764d0;
-  piStack_58 = (int *)DAT_004764d4;
-  puStack_54 = (undefined4 *)DAT_004764d8;
-  uStack_50 = DAT_004764dc;
-  fStack_4c = (float)DAT_004764dc;
-  fStack_44 = (float)DAT_004764d8 / ((float)DAT_004764dc * _DAT_0044b776);
+  piStack_58 = (int *)viewport_x;
+  puStack_54 = (undefined4 *)viewport_width;
+  iStack_50 = viewport_height;
+  fStack_4c = (float)(uint)viewport_height;
+  fStack_44 = (float)(uint)viewport_width / (fStack_4c * 2.0);
   uStack_30 = 0;
-  uStack_34 = DAT_004764dc;
-  fStack_40 = (float)DAT_004764dc / ((float)DAT_004764dc * _DAT_0044b776);
+  iStack_34 = viewport_height;
+  fStack_40 = (float)(uint)viewport_height / (fStack_4c * 2.0);
   piStack_60 = (int *)0x2c;
   uStack_3c = 0xbf800000;
   uStack_38 = 0x3f800000;
@@ -16230,8 +16132,8 @@ void __watcall query_d3d_interface(undefined4 param_1,undefined4 param_2)
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)**(undefined4 **)xvga_dd_object)
-                    (xvga_dd_object,&DAT_00430081,&DAT_004764f8,param_2);
+  uVar1 = (*(code *)**(undefined4 **)xvga_dd_object)(xvga_dd_object,&DAT_00430081,&direct3d,param_2)
+  ;
   if ((int)uVar1 != 0) {
     uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
     fatal_exit(s__s__d____D3DError____s_0044ba5d,s_d3dlib_cpp_0044ba52,0x81,(int)uVar1);
@@ -16335,8 +16237,8 @@ void __watcall find_d3d_device(void)
   }
   apiStack_1f0[2] = (int *)0x0;
   apiStack_1f0[1] = (int *)&LAB_0041c580;
-  apiStack_1f0[0] = DAT_004764f8;
-  uVar2 = (**(code **)(*DAT_004764f8 + 0x10))();
+  apiStack_1f0[0] = direct3d;
+  uVar2 = (**(code **)(*direct3d + 0x10))();
   if ((int)uVar2 != 0) {
     uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
     fatal_exit(s__s__d____D3DError_EnumDevice_____0044bc62,s_d3dlib_cpp_0044bc57,0xe2,(int)uVar2);
@@ -16348,7 +16250,7 @@ void __watcall find_d3d_device(void)
   memset(apiStack_1f0 + 1,0,0x16c);
   ppiVar3 = apiStack_1f0 + 1;
   apiStack_1f0[1] = (int *)0x16c;
-  uVar2 = (**(code **)(*DAT_004764f8 + 0x20))(DAT_004764f8,&uStack_80);
+  uVar2 = (**(code **)(*direct3d + 0x20))(direct3d,&uStack_80);
   if ((int)uVar2 != 0) {
     uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
     fatal_exit(s__s__d____D3DError_FindDevice_____0044bc91,s_d3dlib_cpp_0044bc86,0xf0,(int)uVar2);
@@ -16500,9 +16402,9 @@ longlong __watcall clear_zbuffer(undefined4 param_1,undefined4 param_2)
     uVar1 = 3;
   }
   local_1c = DAT_004764d0;
-  local_18 = DAT_004764d4;
-  local_14 = DAT_004764d8 + DAT_004764d4;
-  local_10 = DAT_004764dc + DAT_004764d4;
+  local_18 = viewport_x;
+  local_14 = viewport_width + viewport_x;
+  local_10 = viewport_height + viewport_x;
   uVar2 = (**(code **)(*d3d_object + 0x30))(d3d_object,1,&local_1c,uVar1);
   if ((int)uVar2 != 0) {
     uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
@@ -16587,15 +16489,15 @@ void __watcall log_device_caps(void)
   }
   if ((bStack_cb & 2) != 0) {
     if (iStack_2c != 0) {
-      DAT_00459674 = iStack_2c;
+      max_buffer_size = iStack_2c;
     }
-    debugmsg(s_helcaps_dwMaxBufferSize____d_0044c08c,DAT_00459674);
+    debugmsg(s_helcaps_dwMaxBufferSize____d_0044c08c,max_buffer_size);
   }
   if ((bStack_cb & 4) != 0) {
     if (iStack_28 != 0) {
-      DAT_00459678 = iStack_28;
+      max_vertex_count = iStack_28;
     }
-    debugmsg(s_helcaps_dwMaxVertexCount____d_0044c0aa,DAT_00459678);
+    debugmsg(s_helcaps_dwMaxVertexCount____d_0044c0aa,max_vertex_count);
   }
   return;
 }
@@ -16608,23 +16510,23 @@ void __watcall log_device_caps(void)
 void __watcall init_render_state_defaults(void)
 
 {
-  memset(&DAT_0047651c,0,0x35);
+  memset(&render_states,0,0x35);
   DAT_00476528 = 0;
   DAT_0047652c = 0;
   DAT_00476530 = 0;
   DAT_00476540 = 0;
   _DAT_00476534 = 0;
   _DAT_00476538 = 0;
-  DAT_0047651c = 1;
-  DAT_00476520 = 1;
-  DAT_00476524._0_1_ = 0;
-  DAT_00476524._3_1_ = 3;
+  render_states = 1;
+  render_shade_mode = 1;
+  render_flags._0_1_ = 0;
+  render_flags._3_1_ = 3;
   DAT_00476548 = 3;
   _DAT_0047653c = 3;
   DAT_00476554 = 1;
-  DAT_00476524._1_1_ = 1;
+  render_flags._1_1_ = 1;
   DAT_00476544 = 0xffffff;
-  DAT_00476524._2_1_ = 7;
+  render_flags._2_1_ = 7;
   DAT_0047654d = 0x43c80000;
   DAT_00476549 = 0x41f00000;
   return;
@@ -16660,8 +16562,8 @@ uint __watcall set_render_var(uint param_1,uint param_2)
   }
   uVar8 = (undefined3)(param_1 >> 8);
   uVar11 = (undefined1)param_2;
-  uVar1 = DAT_0047651c;
-  uVar2 = DAT_00476520;
+  uVar1 = render_states;
+  uVar2 = render_shade_mode;
   uVar3 = DAT_00476528;
   uVar4 = DAT_0047652c;
   uVar5 = DAT_00476530;
@@ -16685,7 +16587,7 @@ uint __watcall set_render_var(uint param_1,uint param_2)
   case 2:
     if ((((param_2 == 0) || (param_2 == 1)) || (param_2 == 2)) || (param_2 == 3)) {
       param_2 = CONCAT31(uVar8,uVar11);
-      DAT_00476524._0_1_ = uVar11;
+      render_flags._0_1_ = uVar11;
       goto LAB_0041cfdd;
     }
     uVar10 = 0x67;
@@ -16724,7 +16626,7 @@ uint __watcall set_render_var(uint param_1,uint param_2)
   case 7:
     if ((((param_2 == 1) || (param_2 == 2)) || (param_2 == 4)) || (param_2 == 3)) {
       param_2 = CONCAT31(uVar8,uVar11);
-      DAT_00476524._1_1_ = uVar11;
+      render_flags._1_1_ = uVar11;
       goto LAB_0041cfdd;
     }
     uVar10 = 0x9b;
@@ -16762,7 +16664,7 @@ uint __watcall set_render_var(uint param_1,uint param_2)
   case 0xd:
     if (((param_2 == 2) || (param_2 == 7)) || (param_2 == 1)) {
       param_2 = CONCAT31(uVar8,uVar11);
-      DAT_00476524._2_1_ = uVar11;
+      render_flags._2_1_ = uVar11;
       goto LAB_0041cfdd;
     }
     uVar10 = 0x78;
@@ -16772,8 +16674,8 @@ uint __watcall set_render_var(uint param_1,uint param_2)
   default:
     param_2 = fatal_exit(s__s__d____error_referencing_unkno_0044c423,s_exec_cpp_0044c41a,0xba,
                          param_1,param_2);
-    uVar1 = DAT_0047651c;
-    uVar2 = DAT_00476520;
+    uVar1 = render_states;
+    uVar2 = render_shade_mode;
     uVar3 = DAT_00476528;
     uVar4 = DAT_0047652c;
     uVar5 = DAT_00476530;
@@ -16782,8 +16684,8 @@ uint __watcall set_render_var(uint param_1,uint param_2)
     goto LAB_0041cfdd;
   }
   param_2 = fatal_exit(format,pcVar9,uVar10,param_2);
-  uVar1 = DAT_0047651c;
-  uVar2 = DAT_00476520;
+  uVar1 = render_states;
+  uVar2 = render_shade_mode;
   uVar3 = DAT_00476528;
   uVar4 = DAT_0047652c;
   uVar5 = DAT_00476530;
@@ -16795,8 +16697,8 @@ LAB_0041cfdd:
   DAT_00476530 = uVar5;
   DAT_0047652c = uVar4;
   DAT_00476528 = uVar3;
-  DAT_00476520 = uVar2;
-  DAT_0047651c = uVar1;
+  render_shade_mode = uVar2;
+  render_states = uVar1;
   if (unaff_EBX != 0) {
     apply_render_states_result = apply_render_states();
     param_2 = (uint)apply_render_states_result;
@@ -16863,25 +16765,25 @@ undefined8 __watcall apply_render_states(void)
   *(undefined1 *)((int)dst + 1) = 8;
   *(undefined2 *)((int)dst + 2) = 0xf;
   *(undefined1 *)(dst + 1) = 9;
-  dst[2] = (int)(char)DAT_00476524;
+  dst[2] = (int)(char)render_flags;
   *(undefined1 *)(dst + 3) = 4;
-  dst[4] = CONCAT13(DAT_00476520._3_1_,
-                    CONCAT12(DAT_00476520._2_1_,
-                             CONCAT11(DAT_00476520._1_1_,(undefined1)DAT_00476520)));
+  dst[4] = CONCAT13(render_shade_mode._3_1_,
+                    CONCAT12(render_shade_mode._2_1_,
+                             CONCAT11(render_shade_mode._1_1_,(undefined1)render_shade_mode)));
   *(undefined1 *)(dst + 5) = 7;
-  dst[6] = DAT_0047651c;
+  dst[6] = render_states;
   *(undefined1 *)(dst + 7) = 0xe;
-  dst[8] = DAT_0047651c;
+  dst[8] = render_states;
   *(undefined1 *)(dst + 9) = 0x17;
   dst[10] = 4;
   *(undefined1 *)(dst + 0xb) = 0x11;
-  dst[0xc] = (int)DAT_00476524._1_1_;
+  dst[0xc] = (int)render_flags._1_1_;
   *(undefined1 *)(dst + 0xd) = 0x12;
-  dst[0xe] = (int)DAT_00476524._1_1_;
+  dst[0xe] = (int)render_flags._1_1_;
   *(undefined1 *)(dst + 0xf) = 0x15;
-  dst[0x10] = (int)DAT_00476524._2_1_;
+  dst[0x10] = (int)render_flags._2_1_;
   *(undefined1 *)(dst + 0x11) = 8;
-  dst[0x12] = (int)DAT_00476524._3_1_;
+  dst[0x12] = (int)render_flags._3_1_;
   *(undefined1 *)(dst + 0x13) = 0x1a;
   dst[0x14] = DAT_00476528;
   *(undefined1 *)(dst + 0x15) = 0x1d;
@@ -17061,7 +16963,7 @@ longlong __watcall render_3d_frame(undefined4 param_1,undefined4 param_2)
   undefined8 uVar4;
   
   execute_object_buffers();
-  if (DAT_0047651c == 1) {
+  if (render_states == 1) {
     clear_zbuffer(param_1,param_2);
   }
   uVar4 = (**(code **)(*d3d_device + 0x4c))(d3d_device);
@@ -17139,18 +17041,18 @@ undefined8 __watcall build_object_execute_buffer(void)
     fatal_exit(s__s__d____error_illegal_object_in_0044c78f);
   }
   piVar4 = (int *)(racers + in_EAX * 0x4b);
-  local_30 = *(int *)(*(int *)(DAT_00476788 + 4 + *piVar4 * 9) + piVar4[1] * 4);
-  piVar4 = (int *)(local_30 * 0x11 + DAT_00480d6c);
+  local_30 = *(int *)(*(int *)(anims3d + 4 + *piVar4 * 9) + piVar4[1] * 4);
+  piVar4 = (int *)(local_30 * 0x11 + frames3d);
   local_28 = *piVar4;
   local_2c = piVar4[2];
   debugmsg(s_nb_verts____d_0044c7c0);
   debugmsg(s_nb_tris____d_0044c7cf);
-  if (DAT_00459678 < extraout_EDX) {
+  if (max_vertex_count < extraout_EDX) {
     piStack_bc = (int *)0x41d72f;
     fatal_exit(s__s__d____Too_many_vertices___d__i_0044c7e6);
   }
   _Size = local_28 * 0x20 + 0x88 + local_2c * 8;
-  if (DAT_00459674 < (int)_Size) {
+  if (max_buffer_size < (int)_Size) {
     piStack_bc = (int *)0x41d76b;
     fatal_exit(s__s__d____Execbuffer_too_large____0044c81d);
   }
@@ -17174,14 +17076,14 @@ undefined8 __watcall build_object_execute_buffer(void)
   piStack_34 = dst;
   memset(dst,0,_Size);
   iVar6 = iStack_48 * 0x11;
-  if (*(char *)(iVar6 + 0x10 + DAT_00480d6c) == '\0') {
+  if (*(char *)(iVar6 + 0x10 + frames3d) == '\0') {
     fatal_exit(s__s__d____error_this_object_frame_0044c8bc,s_exec_cpp_0044c8b3,0x210);
   }
   else {
     local_3c = iVar6;
     iVar5 = 0;
-    for (iVar7 = 0; iVar7 < *(int *)(DAT_00480d6c + iVar6); iVar7 = iVar7 + 1) {
-      iVar1 = *(int *)(iVar5 + ((int *)(DAT_00480d6c + iVar6))[1]) * 0x21;
+    for (iVar7 = 0; iVar7 < *(int *)(frames3d + iVar6); iVar7 = iVar7 + 1) {
+      iVar1 = *(int *)(iVar5 + ((int *)(frames3d + iVar6))[1]) * 0x21;
       piStack_38 = piStack_34 + 8;
       if (DAT_004764f4 == 0) {
         piVar4 = (int *)(weg_points + iVar1);
@@ -17234,14 +17136,14 @@ undefined8 __watcall build_object_execute_buffer(void)
   piStack_34[6] = DAT_004764c8;
   piStack_34[4] = DAT_004764c4;
   piStack_34 = piStack_34 + 7;
-  if (DAT_00459874 == -1) {
+  if (default_material == -1) {
     fatal_exit(s__s__d____xvga_material_not_initi_0044c8fa,s_exec_cpp_0044c8f1,0x220);
   }
   *(undefined1 *)piStack_34 = 7;
   *(undefined1 *)((int)piStack_34 + 1) = 8;
   *(undefined2 *)((int)piStack_34 + 2) = 1;
   *(undefined1 *)(piStack_34 + 1) = 1;
-  piStack_34[2] = DAT_00459874;
+  piStack_34[2] = default_material;
   *(undefined1 *)(piStack_34 + 3) = 0xe;
   *(undefined1 *)((int)piStack_34 + 0xd) = 0x18;
   *(undefined2 *)((int)piStack_34 + 0xe) = 1;
@@ -17289,16 +17191,16 @@ undefined8 __watcall build_object_execute_buffer(void)
   *(undefined1 *)((int)piStack_34 + 1) = 8;
   *(short *)((int)piStack_34 + 2) = (short)local_44;
   piVar2 = piVar4;
-  if (*(char *)(DAT_00480d6c + 0x10 + iStack_48 * 0x11) != '\0') {
+  if (*(char *)(frames3d + 0x10 + iStack_48 * 0x11) != '\0') {
     iVar5 = 0;
-    for (iVar6 = 0; iVar7 = DAT_00480d6c + iStack_48 * 0x11, iVar6 < *(int *)(iVar7 + 8);
+    for (iVar6 = 0; iVar7 = frames3d + iStack_48 * 0x11, iVar6 < *(int *)(iVar7 + 8);
         iVar6 = iVar6 + 1) {
       iVar7 = *(int *)(*(int *)(iVar7 + 0xc) + iVar5) * 9;
-      *(undefined2 *)piVar2 = *(undefined2 *)(DAT_00480d7c + iVar7);
-      *(undefined2 *)((int)piVar2 + 2) = *(undefined2 *)(DAT_00480d7c + 2 + iVar7);
-      *(undefined2 *)(piVar2 + 1) = *(undefined2 *)(DAT_00480d7c + 4 + iVar7);
+      *(undefined2 *)piVar2 = *(undefined2 *)(triangles3d + iVar7);
+      *(undefined2 *)((int)piVar2 + 2) = *(undefined2 *)(triangles3d + 2 + iVar7);
+      *(undefined2 *)(piVar2 + 1) = *(undefined2 *)(triangles3d + 4 + iVar7);
       iVar5 = iVar5 + 4;
-      *(undefined2 *)((int)piVar2 + 6) = *(undefined2 *)(DAT_00480d7c + 6 + iVar7);
+      *(undefined2 *)((int)piVar2 + 6) = *(undefined2 *)(triangles3d + 6 + iVar7);
       piVar2 = piVar2 + 2;
     }
   }
@@ -17399,9 +17301,9 @@ undefined8 __watcall update_chunk_for_position(int param_1,undefined4 param_2)
   int iVar4;
   undefined8 point_between_chunk_edges_result;
   
-  if ((param_1 < 0) || (DAT_00476564 <= param_1)) {
+  if ((param_1 < 0) || (weg_chunk_capacity <= param_1)) {
     fatal_exit(s__s__d____chunk__d_out_of_array_b_0044c999,s_wegtools_cpp_0044c98c,0x4f,param_1,
-               DAT_00476564);
+               weg_chunk_capacity);
     param_1 = extraout_ECX;
   }
   iVar3 = param_1 + 1;
@@ -17409,30 +17311,30 @@ undefined8 __watcall update_chunk_for_position(int param_1,undefined4 param_2)
   iVar2 = iVar3 * 4;
   while( true ) {
     do {
-      if ((param_1 < 1) && (DAT_00476564 <= iVar3)) {
+      if ((param_1 < 1) && (weg_chunk_capacity <= iVar3)) {
         fatal_exit(s_weg_chunk_is__1_0044c9c9);
         uVar1 = 0xffffffff;
         goto LAB_0041ddb2;
       }
       if (0 < param_1) {
         point_between_chunk_edges_result =
-             point_between_chunk_edges(*(undefined4 *)(iVar4 + DAT_00476584),iVar3);
+             point_between_chunk_edges(*(undefined4 *)(iVar4 + weg_chunk_quads),iVar3);
         iVar3 = (int)((ulonglong)point_between_chunk_edges_result >> 0x20);
         if ((int)point_between_chunk_edges_result != 0) {
-          uVar1 = *(undefined4 *)(iVar4 + DAT_00476584);
+          uVar1 = *(undefined4 *)(iVar4 + weg_chunk_quads);
           goto LAB_0041ddb2;
         }
         iVar4 = iVar4 + -4;
         param_1 = param_1 + -1;
       }
-    } while (DAT_00476564 <= iVar3);
+    } while (weg_chunk_capacity <= iVar3);
     point_between_chunk_edges_result =
-         point_between_chunk_edges(*(undefined4 *)(iVar2 + DAT_00476584),iVar3);
+         point_between_chunk_edges(*(undefined4 *)(iVar2 + weg_chunk_quads),iVar3);
     if ((int)point_between_chunk_edges_result != 0) break;
     iVar2 = iVar2 + 4;
     iVar3 = (int)((ulonglong)point_between_chunk_edges_result >> 0x20) + 1;
   }
-  uVar1 = *(undefined4 *)(iVar2 + DAT_00476584);
+  uVar1 = *(undefined4 *)(iVar2 + weg_chunk_quads);
 LAB_0041ddb2:
   return CONCAT44(param_2,uVar1);
 }
@@ -17456,8 +17358,8 @@ longlong __watcall alloc_weg_chunks(int param_1,uint param_2)
   for (iVar1 = 0; iVar1 < param_1 * 0x54; iVar1 = iVar1 + 0x54) {
     *(undefined4 *)((int)weg_sections + iVar1 + 0x3c) = 0;
   }
-  DAT_00476564 = param_1;
-  DAT_0047656c = 0;
+  weg_chunk_capacity = param_1;
+  weg_lane_chunks = 0;
   DAT_00476568 = 1;
   return (ulonglong)param_2 << 0x20;
 }
@@ -17544,18 +17446,18 @@ undefined4 __watcall load_weg_data(char *param_1,int param_2)
       fatal_exit(s__s__d____error_reading_weg_data_f_0044caa6,s_weg_cpp_0044ca9e,0xb8,param_1);
     }
     iVar3 = build_weg_sections(local_28,local_2c);
-    *(int *)(DAT_00476584 + iVar4) = iVar3;
+    *(int *)(weg_chunk_quads + iVar4) = iVar3;
     *(undefined4 *)(weg_points + local_20) = *(undefined4 *)(local_18 + weg_points);
     *(undefined4 *)(weg_points + local_20 + 4) = *(undefined4 *)(local_18 + weg_points + 4);
     iVar4 = iVar4 + 4;
     *(undefined4 *)(weg_points + local_20 + 8) = *(undefined4 *)(local_18 + weg_points + 8);
   }
   xvga_src_fclose((__iobuf *)pFVar2);
-  if (DAT_00459874 == -1) {
+  if (default_material == -1) {
     fatal_exit(s__s__d____error_xvga_material_has_0044cad8,s_weg_cpp_0044cad0,0xc9);
   }
   else {
-    set_material_texture(DAT_00459874,(int *)road_texture);
+    set_material_texture(default_material,(int *)road_texture);
   }
   pFVar2 = (FILE *)xvga_src_fopen(param_1);
   if (pFVar2 == (FILE *)0x0) {
@@ -17585,12 +17487,12 @@ undefined4 __watcall load_weg_data(char *param_1,int param_2)
     compute_weg_normals(pvVar6,(int)pvVar6 + 1);
     if (uVar1 == 0) {
       build_weg_execute_buffers_result = build_weg_execute_buffers(pvVar6,(int)element_size / 2);
-      iVar3 = *(int *)(DAT_00476584 + iVar5) * 0x38;
+      iVar3 = *(int *)(weg_chunk_quads + iVar5) * 0x38;
       iVar4 = weg_chunks;
     }
     else {
       build_weg_execute_buffers_result = build_weg_execute_buffers(pvVar6,element_size);
-      iVar4 = *(int *)(DAT_00476584 + iVar5) * 0x38;
+      iVar4 = *(int *)(weg_chunk_quads + iVar5) * 0x38;
       iVar3 = weg_chunks;
     }
     *(int *)(iVar4 + 0x34 + iVar3) = build_weg_execute_buffers_result;
@@ -17622,70 +17524,71 @@ void __watcall alloc_weg_lanes(void)
   if (DAT_00476568 == 0) {
     fatal_exit(s__s__d____error_weg_chunks_not_in_0044cc4b,s_weg_cpp_0044cc43,0x127);
   }
-  if (DAT_00476564 <= DAT_0047656c + 1) {
-    fatal_exit(s_s__d____error_not_enough_weg_chu_0044cc88,s_weg_cpp_0044cc80,299,DAT_00476564);
+  if (weg_chunk_capacity <= weg_lane_chunks + 1) {
+    fatal_exit(s_s__d____error_not_enough_weg_chu_0044cc88,s_weg_cpp_0044cc80,299,weg_chunk_capacity
+              );
   }
   pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  *(HLOCAL *)(DAT_0047656c * 0x54 + 0x2c + weg_sections) = pvVar1;
+  *(HLOCAL *)(weg_lane_chunks * 0x54 + 0x2c + weg_sections) = pvVar1;
   if (pvVar1 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_l_0044ccbf,s_weg_cpp_0044ccb7,0x12f);
   }
   pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  *(HLOCAL *)(weg_sections + 0x34 + DAT_0047656c * 0x54) = pvVar1;
+  *(HLOCAL *)(weg_sections + 0x34 + weg_lane_chunks * 0x54) = pvVar1;
   if (pvVar1 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_l_0044cd04,s_weg_cpp_0044ccfc,0x133);
   }
   pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  *(HLOCAL *)(weg_sections + 0x30 + DAT_0047656c * 0x54) = pvVar1;
+  *(HLOCAL *)(weg_sections + 0x30 + weg_lane_chunks * 0x54) = pvVar1;
   if (pvVar1 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_r_0044cd49,s_weg_cpp_0044cd41,0x137);
   }
   pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  *(HLOCAL *)(weg_sections + 0x38 + DAT_0047656c * 0x54) = pvVar1;
+  *(HLOCAL *)(weg_sections + 0x38 + weg_lane_chunks * 0x54) = pvVar1;
   if (pvVar1 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_r_0044cd8f,s_weg_cpp_0044cd87,0x13b);
   }
   iVar2 = weg_sections;
-  *(int *)(DAT_0047656c * 0x54 + 0x3c + weg_sections) = in_EAX;
+  *(int *)(weg_lane_chunks * 0x54 + 0x3c + weg_sections) = in_EAX;
   iVar3 = 0;
   do {
     new_vertices = get_new_vertices(iVar2,iVar3);
     iVar3 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)(iVar3 + DAT_0047656c * 0x54 + weg_sections) = (int)new_vertices;
-    iVar2 = *(int *)(iVar3 + DAT_0047656c * 0x54 + weg_sections) * 0x21;
+    *(int *)(iVar3 + weg_lane_chunks * 0x54 + weg_sections) = (int)new_vertices;
+    iVar2 = *(int *)(iVar3 + weg_lane_chunks * 0x54 + weg_sections) * 0x21;
     iVar3 = iVar3 + 4;
     *(undefined1 *)(weg_points + 0x20 + iVar2) = 1;
   } while (iVar3 != 0xc);
   for (iVar3 = 0; iVar3 < in_EAX * 4; iVar3 = iVar3 + 4) {
     new_vertices = get_new_vertices(iVar2,iVar3);
     iVar3 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)(iVar3 + *(int *)(DAT_0047656c * 0x54 + 0x2c + weg_sections)) = (int)new_vertices;
-    iVar2 = *(int *)(iVar3 + *(int *)(weg_sections + 0x2c + DAT_0047656c * 0x54)) * 0x21;
+    *(int *)(iVar3 + *(int *)(weg_lane_chunks * 0x54 + 0x2c + weg_sections)) = (int)new_vertices;
+    iVar2 = *(int *)(iVar3 + *(int *)(weg_sections + 0x2c + weg_lane_chunks * 0x54)) * 0x21;
     *(undefined1 *)(weg_points + 0x20 + iVar2) = 1;
   }
   for (iVar3 = 0; iVar3 < in_EAX * 4; iVar3 = iVar3 + 4) {
     new_vertices = get_new_vertices(iVar2,iVar3);
     iVar3 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)(iVar3 + *(int *)(DAT_0047656c * 0x54 + 0x30 + weg_sections)) = (int)new_vertices;
-    iVar2 = *(int *)(iVar3 + *(int *)(weg_sections + 0x30 + DAT_0047656c * 0x54)) * 0x21;
+    *(int *)(iVar3 + *(int *)(weg_lane_chunks * 0x54 + 0x30 + weg_sections)) = (int)new_vertices;
+    iVar2 = *(int *)(iVar3 + *(int *)(weg_sections + 0x30 + weg_lane_chunks * 0x54)) * 0x21;
     *(undefined1 *)(weg_points + 0x20 + iVar2) = 1;
   }
   iVar3 = 0;
   do {
     new_vertices = get_new_vertices(iVar2,iVar3);
     iVar3 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)(iVar3 + 0x1c + DAT_0047656c * 0x54 + weg_sections) = (int)new_vertices;
-    iVar2 = *(int *)(iVar3 + 0x1c + weg_sections + DAT_0047656c * 0x54) * 0x21;
+    *(int *)(iVar3 + 0x1c + weg_lane_chunks * 0x54 + weg_sections) = (int)new_vertices;
+    iVar2 = *(int *)(iVar3 + 0x1c + weg_sections + weg_lane_chunks * 0x54) * 0x21;
     *(undefined1 *)(weg_points + 0x20 + iVar2) = 1;
     new_vertices = get_new_vertices(iVar2,iVar3);
     iVar4 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)(iVar4 + 0xc + DAT_0047656c * 0x54 + weg_sections) = (int)new_vertices;
+    *(int *)(iVar4 + 0xc + weg_lane_chunks * 0x54 + weg_sections) = (int)new_vertices;
     iVar2 = weg_points;
     iVar3 = iVar4 + 4;
     *(undefined1 *)
-     (*(int *)(iVar4 + 0xc + DAT_0047656c * 0x54 + weg_sections) * 0x21 + 0x20 + weg_points) = 1;
+     (*(int *)(iVar4 + 0xc + weg_lane_chunks * 0x54 + weg_sections) * 0x21 + 0x20 + weg_points) = 1;
   } while (iVar3 != 0x10);
-  DAT_0047656c = DAT_0047656c + 1;
+  weg_lane_chunks = weg_lane_chunks + 1;
   return;
 }
 
@@ -17710,20 +17613,20 @@ undefined4 __watcall alloc_weg_vertices(int param_1,undefined4 param_2)
   }
   DAT_00476580 = param_2;
   DAT_00476588 = param_1;
-  DAT_00476584 = LocalAlloc(0x40,param_1 << 2);
-  if (DAT_00476584 == (HLOCAL)0x0) {
+  weg_chunk_quads = LocalAlloc(0x40,param_1 << 2);
+  if (weg_chunk_quads == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_v_0044ce32,s_weg_cpp_0044ce2a,0x16e,DAT_00476580);
   }
   _DAT_00476590 = param_1;
-  DAT_0047658c = LocalAlloc(0x40,param_1 << 2);
-  if (DAT_0047658c == (HLOCAL)0x0) {
+  weg_chunk_vertex_lists = LocalAlloc(0x40,param_1 << 2);
+  if (weg_chunk_vertex_lists == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_v_0044ce7b,s_weg_cpp_0044ce73,0x173,DAT_00476580);
   }
   weg_data_loaded = 1;
   weg_chunk_count = 0;
   iVar1 = 0;
-  DAT_00476574 = param_1;
-  for (iVar2 = 0; iVar2 < DAT_00476574; iVar2 = iVar2 + 1) {
+  weg_section_count = param_1;
+  for (iVar2 = 0; iVar2 < weg_section_count; iVar2 = iVar2 + 1) {
     *(undefined4 *)((int)weg_chunks + iVar1 + 0x14) = 0;
     iVar1 = iVar1 + 0x38;
   }
@@ -17740,14 +17643,14 @@ undefined8 __watcall weg_section_index(undefined4 param_1,undefined4 param_2)
   int iVar2;
   
   iVar1 = weg_chunk_count;
-  if (weg_chunk_count + 1 < DAT_00476574) {
+  if (weg_chunk_count + 1 < weg_section_count) {
     weg_chunk_count = weg_chunk_count + 1;
     return CONCAT44(param_2,iVar1);
   }
   iVar2 = 0;
   iVar1 = 0;
   while( true ) {
-    if (DAT_00476574 * 0x38 <= iVar1) {
+    if (weg_section_count * 0x38 <= iVar1) {
       return CONCAT44(param_2,0xffffffff);
     }
     if (*(int *)(weg_chunks + 0x14 + iVar1) == 0) break;
@@ -17789,12 +17692,12 @@ void __watcall compute_weg_normals(int param_1,int param_2)
   local_1c = (unaff_EBX + -1) * 4;
   local_14 = 0;
   while (local_14 < local_1c) {
-    piVar6 = (int *)(*(int *)(*(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + local_24) * 0x38) *
-                              0x54 + 0x30 + weg_sections) + local_14);
+    piVar6 = (int *)(*(int *)(*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_24) * 0x38)
+                              * 0x54 + 0x30 + weg_sections) + local_14);
     iVar1 = *piVar6;
     iVar2 = piVar6[1];
-    piVar6 = (int *)(*(int *)(*(int *)(*(int *)(DAT_00476584 + local_28) * 0x38 + 8 + weg_chunks) *
-                              0x54 + 0x30 + weg_sections) + local_14);
+    piVar6 = (int *)(*(int *)(*(int *)(*(int *)(weg_chunk_quads + local_28) * 0x38 + 8 + weg_chunks)
+                              * 0x54 + 0x30 + weg_sections) + local_14);
     iVar3 = *piVar6;
     iVar4 = piVar6[1];
     vertex_edge_vector(local_3c,iVar2,iVar1);
@@ -17840,13 +17743,13 @@ void __watcall compute_weg_normals(int param_1,int param_2)
   local_18 = 0;
   while (local_18 < local_20) {
     piVar6 = (int *)(*(int *)(weg_sections + 0x2c +
-                             *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + local_2c) * 0x38) *
-                             0x54) + local_18);
+                             *(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_2c) * 0x38)
+                             * 0x54) + local_18);
     iVar1 = *piVar6;
     iVar2 = piVar6[1];
     piVar6 = (int *)(*(int *)(weg_sections + 0x2c +
-                             *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + local_30) * 0x38) *
-                             0x54) + local_18);
+                             *(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_30) * 0x38)
+                             * 0x54) + local_18);
     iVar3 = *piVar6;
     iVar4 = piVar6[1];
     vertex_edge_vector(local_3c,iVar2,iVar1);
@@ -17893,7 +17796,6 @@ void __watcall compute_weg_normals(int param_1,int param_2)
 /* ==== 0041f358 build_weg_sections ==== */
 
 /* WARNING: Type propagation algorithm not settling */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int __watcall build_weg_sections(int param_1,undefined4 param_2)
 
@@ -17943,7 +17845,8 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
   uVar14 = weg_section_index(iVar2,param_2);
   local_38 = (int)uVar14;
   if (local_38 == -1) {
-    fatal_exit(s__s__d____error_not_enough_weg_el_0044cf6c,s_weg_cpp_0044cf64,0x231,DAT_00476574);
+    fatal_exit(s__s__d____error_not_enough_weg_el_0044cf6c,s_weg_cpp_0044cf64,0x231,
+               weg_section_count);
     uVar14 = CONCAT44(extraout_EDX_00,local_38);
   }
   local_38 = (int)uVar14;
@@ -18005,7 +17908,7 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
   *(float *)(weg_points + 0x14 + iVar2) = local_70;
   *(undefined4 *)(iVar2 + 0x1c + weg_points) = local_40;
   *(undefined4 *)(iVar2 + 0x18 + weg_points) = 0;
-  fVar1 = ((float)unaff_ECX + (float)_DAT_0044cfb9) * (float)_DAT_0044cfc1;
+  fVar1 = ((float)unaff_ECX + 2.0) * 30.0;
   iVar2 = *(int *)(weg_sections + 4 + *(int *)(weg_chunks + 8 + iVar9) * 0x54);
   iVar8 = iVar2 * 0x21;
   *(float *)(weg_points + iVar8) = fVar1 * local_60 + *(float *)(weg_points + iVar5);
@@ -18056,11 +17959,9 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
     puVar10 = (undefined4 *)((int)puVar10 + (uint)bVar13 * -2 + 1);
     puVar12 = (undefined4 *)((int)puVar12 + (uint)bVar13 * -2 + 1);
   }
-  *(float *)(iVar6 + weg_points) = local_78 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + weg_points);
-  *(float *)(iVar6 + 4 + weg_points) =
-       local_74 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 4 + weg_points);
-  *(float *)(iVar6 + 8 + weg_points) =
-       local_70 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 8 + weg_points);
+  *(float *)(iVar6 + weg_points) = local_78 * 5.0 + *(float *)(iVar6 + weg_points);
+  *(float *)(iVar6 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar6 + 4 + weg_points);
+  *(float *)(iVar6 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar6 + 8 + weg_points);
   *(float *)(weg_points + 0xc + iVar6) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar6) = local_5c;
   *(float *)(iVar6 + weg_points + 0x14) = local_58;
@@ -18093,11 +17994,9 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
     puVar10 = (undefined4 *)((int)puVar10 + (uint)bVar13 * -2 + 1);
     puVar12 = (undefined4 *)((int)puVar12 + (uint)bVar13 * -2 + 1);
   }
-  *(float *)(iVar6 + weg_points) = local_78 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + weg_points);
-  *(float *)(iVar6 + 4 + weg_points) =
-       local_74 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 4 + weg_points);
-  *(float *)(iVar6 + 8 + weg_points) =
-       local_70 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 8 + weg_points);
+  *(float *)(iVar6 + weg_points) = local_78 * 5.0 + *(float *)(iVar6 + weg_points);
+  *(float *)(iVar6 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar6 + 4 + weg_points);
+  *(float *)(iVar6 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar6 + 8 + weg_points);
   *(float *)(weg_points + 0xc + iVar6) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar6) = local_5c;
   *(float *)(iVar6 + weg_points + 0x14) = local_58;
@@ -18114,9 +18013,8 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
     puVar10 = (undefined4 *)((int)puVar10 + (uint)bVar13 * -2 + 1);
     puVar12 = (undefined4 *)((int)puVar12 + (uint)bVar13 * -2 + 1);
   }
-  *(float *)(iVar6 + weg_points) = *(float *)(iVar5 + weg_points) - local_60 * _DAT_0044cfd1;
-  *(float *)(iVar6 + 8 + weg_points) = *(float *)(iVar5 + 8 + weg_points) - local_58 * _DAT_0044cfd1
-  ;
+  *(float *)(iVar6 + weg_points) = *(float *)(iVar5 + weg_points) - local_60 * 5.0;
+  *(float *)(iVar6 + 8 + weg_points) = *(float *)(iVar5 + 8 + weg_points) - local_58 * 5.0;
   *(float *)(weg_points + 0xc + iVar6) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar6) = local_5c;
   *(float *)(iVar6 + weg_points + 0x14) = local_58;
@@ -18133,14 +18031,11 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
     puVar10 = (undefined4 *)((int)puVar10 + (uint)bVar13 * -2 + 1);
     puVar12 = (undefined4 *)((int)puVar12 + (uint)bVar13 * -2 + 1);
   }
-  *(float *)(weg_points + iVar6) = *(float *)(weg_points + iVar5) - local_60 * _DAT_0044cfd1;
-  *(float *)(weg_points + 8 + iVar6) = *(float *)(weg_points + 8 + iVar5) - local_58 * _DAT_0044cfd1
-  ;
-  *(float *)(iVar6 + weg_points) = local_78 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + weg_points);
-  *(float *)(iVar6 + 4 + weg_points) =
-       local_74 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 4 + weg_points);
-  *(float *)(iVar6 + 8 + weg_points) =
-       local_70 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 8 + weg_points);
+  *(float *)(weg_points + iVar6) = *(float *)(weg_points + iVar5) - local_60 * 5.0;
+  *(float *)(weg_points + 8 + iVar6) = *(float *)(weg_points + 8 + iVar5) - local_58 * 5.0;
+  *(float *)(iVar6 + weg_points) = local_78 * 5.0 + *(float *)(iVar6 + weg_points);
+  *(float *)(iVar6 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar6 + 4 + weg_points);
+  *(float *)(iVar6 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar6 + 8 + weg_points);
   *(float *)(weg_points + 0xc + iVar6) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar6) = local_5c;
   *(float *)(iVar6 + weg_points + 0x14) = local_58;
@@ -18157,9 +18052,8 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
     puVar10 = (undefined4 *)((int)puVar10 + (uint)bVar13 * -2 + 1);
     puVar12 = (undefined4 *)((int)puVar12 + (uint)bVar13 * -2 + 1);
   }
-  *(float *)(weg_points + iVar6) = local_60 * _DAT_0044cfd1 + *(float *)(weg_points + iVar5);
-  *(float *)(weg_points + 8 + iVar6) = local_58 * _DAT_0044cfd1 + *(float *)(weg_points + 8 + iVar5)
-  ;
+  *(float *)(weg_points + iVar6) = local_60 * 5.0 + *(float *)(weg_points + iVar5);
+  *(float *)(weg_points + 8 + iVar6) = local_58 * 5.0 + *(float *)(weg_points + 8 + iVar5);
   *(float *)(weg_points + 0xc + iVar6) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar6) = local_5c;
   *(float *)(iVar6 + weg_points + 0x14) = local_58;
@@ -18176,14 +18070,11 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
     puVar10 = (undefined4 *)((int)puVar10 + (uint)bVar13 * -2 + 1);
     puVar12 = (undefined4 *)((int)puVar12 + (uint)bVar13 * -2 + 1);
   }
-  *(float *)(iVar6 + weg_points) = local_78 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + weg_points);
-  *(float *)(iVar6 + 4 + weg_points) =
-       local_74 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 4 + weg_points);
-  *(float *)(iVar6 + 8 + weg_points) =
-       local_70 * (float)_DAT_0044cfc9 + *(float *)(iVar6 + 8 + weg_points);
-  *(float *)(weg_points + iVar6) = local_60 * _DAT_0044cfd1 + *(float *)(weg_points + iVar5);
-  *(float *)(iVar6 + 8 + weg_points) = local_58 * _DAT_0044cfd1 + *(float *)(iVar5 + 8 + weg_points)
-  ;
+  *(float *)(iVar6 + weg_points) = local_78 * 5.0 + *(float *)(iVar6 + weg_points);
+  *(float *)(iVar6 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar6 + 4 + weg_points);
+  *(float *)(iVar6 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar6 + 8 + weg_points);
+  *(float *)(weg_points + iVar6) = local_60 * 5.0 + *(float *)(weg_points + iVar5);
+  *(float *)(iVar6 + 8 + weg_points) = local_58 * 5.0 + *(float *)(iVar5 + 8 + weg_points);
   *(float *)(weg_points + 0xc + iVar6) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar6) = local_5c;
   *(float *)(iVar6 + weg_points + 0x14) = local_58;
@@ -18200,8 +18091,8 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
     iVar3 = iVar6 * 0x21;
     *(float *)(weg_points + iVar3) = local_14;
     *(float *)(weg_points + 8 + iVar3) = local_1c;
-    local_14 = local_14 - local_60 * _DAT_0044cfd5;
-    local_1c = local_1c - local_58 * _DAT_0044cfd5;
+    local_14 = local_14 - local_60 * 60.0;
+    local_1c = local_1c - local_58 * 60.0;
     if (iVar2 == 0) {
       *(undefined4 *)(weg_points + 4 + iVar3) = *(undefined4 *)(iVar5 + 4 + weg_points);
     }
@@ -18263,8 +18154,8 @@ longlong __watcall compute_road_height(undefined4 param_1,uint param_2)
     if (DAT_00476588 + -2 <= iVar4) {
       return (ulonglong)param_2 << 0x20;
     }
-    *(undefined4 *)(DAT_0047658c + iVar5) = 0;
-    iVar1 = *(int *)(*(int *)(DAT_00476584 + iVar5) * 0x38 + 8 + weg_chunks);
+    *(undefined4 *)(weg_chunk_vertex_lists + iVar5) = 0;
+    iVar1 = *(int *)(*(int *)(weg_chunk_quads + iVar5) * 0x38 + 8 + weg_chunks);
     CHP();
     CHP();
     point_in_view_quad_result = point_in_view_quad();
@@ -18281,25 +18172,24 @@ longlong __watcall compute_road_height(undefined4 param_1,uint param_2)
     else {
 LAB_004200ee:
       pfVar3 = (float *)(weg_points + *(int *)(weg_sections + iVar1 * 0x54) * 0x21);
-      if (((((((float)DAT_00477014 < *pfVar3) && (*pfVar3 < (float)DAT_004596f0)) &&
-            ((float)DAT_00477018 < pfVar3[2])) && (pfVar3[2] < (float)DAT_004596f4)) ||
+      if (((((((float)view_min_x < *pfVar3) && (*pfVar3 < (float)view_max_x)) &&
+            ((float)view_min_z < pfVar3[2])) && (pfVar3[2] < (float)view_max_z)) ||
           (((((pfVar3 = (float *)(weg_points + *(int *)(weg_sections + 4 + iVar1 * 0x54) * 0x21),
-              (float)DAT_00477014 < *pfVar3 && (*pfVar3 < (float)DAT_004596f0)) &&
-             (((float)DAT_00477018 < pfVar3[2] && (pfVar3[2] < (float)DAT_004596f4)))) ||
+              (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
+             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))) ||
             (((pfVar3 = (float *)(weg_points + *(int *)(weg_sections + 8 + iVar1 * 0x54) * 0x21),
-              (float)DAT_00477014 < *pfVar3 && (*pfVar3 < (float)DAT_004596f0)) &&
-             (((float)DAT_00477018 < pfVar3[2] && (pfVar3[2] < (float)DAT_004596f4)))))) ||
+              (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
+             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))))) ||
            (((((pfVar3 = (float *)(weg_points +
                                   *(int *)(*(int *)(weg_sections + 0x30 + iVar1 * 0x54) + 0x28) *
-                                  0x21), (float)DAT_00477014 < *pfVar3 &&
-               (*pfVar3 < (float)DAT_004596f0)) && ((float)DAT_00477018 < pfVar3[2])) &&
-             (pfVar3[2] < (float)DAT_004596f4)) ||
+                                  0x21), (float)view_min_x < *pfVar3 &&
+               (*pfVar3 < (float)view_max_x)) && ((float)view_min_z < pfVar3[2])) &&
+             (pfVar3[2] < (float)view_max_z)) ||
             (((pfVar3 = (float *)(weg_points +
                                  *(int *)(*(int *)(iVar1 * 0x54 + 0x2c + weg_sections) + 0x28) *
-                                 0x21), (float)DAT_00477014 < *pfVar3 &&
-              (*pfVar3 < (float)DAT_004596f0)) &&
-             (((float)DAT_00477018 < pfVar3[2] && (pfVar3[2] < (float)DAT_004596f4)))))))))) &&
-         (*(undefined4 *)(DAT_0047658c + iVar5) = 1, DAT_00476598 = iVar4, iVar2 != 0)) {
+                                 0x21), (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)
+              ) && (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))))))))) &&
+         (*(undefined4 *)(weg_chunk_vertex_lists + iVar5) = 1, DAT_00476598 = iVar4, iVar2 != 0)) {
         iVar2 = 0;
         DAT_00476594 = iVar4;
       }
@@ -18338,7 +18228,8 @@ LAB_004203a3:
       return CONCAT44(param_2,uVar2);
     }
     iVar1 = *(int *)(weg_sections +
-                    *(int *)(*(int *)(DAT_00476584 + iVar5) * 0x38 + 8 + weg_chunks) * 0x54) * 0x21;
+                    *(int *)(*(int *)(weg_chunk_quads + iVar5) * 0x38 + 8 + weg_chunks) * 0x54) *
+            0x21;
     pfVar4 = (float *)(weg_points + iVar1);
     fVar6 = ((float10)param_5 - (float10)*pfVar4) * ((float10)param_5 - (float10)*pfVar4) +
             ((float10)in_stack_00000008 - (float10)pfVar4[2]) *
@@ -18370,7 +18261,7 @@ void __watcall execute_weg_buffer(void)
   iVar3 = DAT_00476594 << 2;
   iVar2 = DAT_00476594 * 0x38;
   for (iVar1 = DAT_00476594; iVar1 < DAT_00476598; iVar1 = iVar1 + 1) {
-    if (*(int *)(iVar3 + DAT_0047658c) != 0) {
+    if (*(int *)(iVar3 + weg_chunk_vertex_lists) != 0) {
       uVar4 = (**(code **)(*d3d_device + 0x20))
                         (d3d_device,*(undefined4 *)(weg_chunks + 0x34 + iVar2),d3d_object,1);
       if ((int)uVar4 != 0) {
@@ -18494,13 +18385,13 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   piStack_144 = (int *)(param_2 * 8 + 0x10);
   local_b8 = param_2 * 4 + 0x10;
   local_bc = (int)piStack_144;
-  if (DAT_00459678 < (int)piStack_144) {
+  if (max_vertex_count < (int)piStack_144) {
     piStack_148 = (int *)0x40d;
     ppiStack_14c = (int **)s_weg_cpp_0044d0cf;
     fatal_exit(s__s__d____Too_many_vertices___d__i_0044d0d7);
   }
   _Size = local_bc * 0x20 + 0xa8 + local_b8 * 8;
-  if (DAT_00459674 < (int)_Size) {
+  if (max_buffer_size < (int)_Size) {
     piStack_148 = (int *)0x41a;
     ppiStack_14c = (int **)s_weg_cpp_0044d0ff;
     piStack_144 = (int *)_Size;
@@ -18540,8 +18431,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
     iVar4 = 0;
     fStack_44 = 0.0;
     do {
-      iVar2 = *(int *)(iVar4 + *(int *)(*(int *)(DAT_00476584 + iStack_84) * 0x38 + 8 + weg_chunks)
-                               * 0x54 + weg_sections) * 0x21;
+      iVar2 = *(int *)(iVar4 + *(int *)(*(int *)(weg_chunk_quads + iStack_84) * 0x38 + 8 +
+                                       weg_chunks) * 0x54 + weg_sections) * 0x21;
       *(float *)(iVar2 + 0x18 + weg_points) = fStack_44;
       *(float *)(iVar2 + 0x1c + weg_points) = fStack_c8;
       piVar3 = (int *)(iVar2 + weg_points);
@@ -18576,8 +18467,9 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
     iVar4 = 0;
     fStack_48 = 0.0;
     do {
-      iVar2 = *(int *)(iVar4 + *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + iStack_7c) * 0x38)
-                               * 0x54 + weg_sections) * 0x21;
+      iVar2 = *(int *)(iVar4 + *(int *)(weg_chunks + 8 +
+                                       *(int *)(weg_chunk_quads + iStack_7c) * 0x38) * 0x54 +
+                               weg_sections) * 0x21;
       *(float *)(iVar2 + 0x18 + weg_points) = fStack_48;
       *(float *)(iVar2 + 0x1c + weg_points) = fStack_4c;
       piVar3 = (int *)(iVar2 + weg_points);
@@ -18612,10 +18504,11 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iStack_b4 = (int)ppiStack_14c * 4;
   do {
     iVar2 = *(int *)(weg_sections +
-                     *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + (int)ppiStack_14c * 4) * 0x38
-                             ) * 0x54 + 0xc + iStack_c4 * 4) * 0x21;
-    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&DAT_004767d8 + iVar4);
-    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&DAT_004767e8 + iVar4);
+                     *(int *)(weg_chunks + 8 +
+                             *(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38) * 0x54 + 0xc
+                    + iStack_c4 * 4) * 0x21;
+    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + iVar4);
+    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + iVar4);
     piVar3 = (int *)(iVar2 + weg_points);
     iStack_118 = *piVar3;
     iStack_114 = piVar3[1];
@@ -18642,8 +18535,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iStack_74 = 0;
   iVar4 = 0xc;
   do {
-    iVar2 = *(int *)(*(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + local_bc * 4) * 0x38) * 0x54
-                     + weg_sections + iStack_74 + 0xc) * 0x21;
+    iVar2 = *(int *)(*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38) *
+                     0x54 + weg_sections + iStack_74 + 0xc) * 0x21;
     *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)(iVar4 + 0x4768b8);
     *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)(iVar4 + 0x4768c8);
     piVar3 = (int *)(iVar2 + weg_points);
@@ -18674,10 +18567,10 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iStack_ac = (int)ppiStack_14c * 4;
   do {
     iVar2 = *(int *)(weg_sections +
-                     *(int *)(*(int *)(DAT_00476584 + (int)ppiStack_14c * 4) * 0x38 + 8 + weg_chunks
-                             ) * 0x54 + 0x14 + iStack_3c * 4) * 0x21;
-    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&DAT_004767d8 + iVar4);
-    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&DAT_004767e8 + iVar4);
+                     *(int *)(*(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38 + 8 +
+                             weg_chunks) * 0x54 + 0x14 + iStack_3c * 4) * 0x21;
+    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + iVar4);
+    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + iVar4);
     piVar3 = (int *)(iVar2 + weg_points);
     iStack_118 = *piVar3;
     iStack_114 = piVar3[1];
@@ -18705,8 +18598,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iVar4 = 0xc;
   do {
     iVar2 = *(int *)(weg_sections +
-                     *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + local_bc * 4) * 0x38) * 0x54
-                     + iStack_70 + 0x14) * 0x21;
+                     *(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38) *
+                     0x54 + iStack_70 + 0x14) * 0x21;
     *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)(iVar4 + 0x4768b8);
     *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)(iVar4 + 0x4768c8);
     piVar3 = (int *)(iVar2 + weg_points);
@@ -18737,10 +18630,11 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iStack_a4 = (int)ppiStack_14c * 4;
   do {
     iVar2 = *(int *)(weg_sections +
-                     *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + (int)ppiStack_14c * 4) * 0x38
-                             ) * 0x54 + 0x1c + iStack_40 * 4) * 0x21;
-    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&DAT_004767d8 + iVar4);
-    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&DAT_004767e8 + iVar4);
+                     *(int *)(weg_chunks + 8 +
+                             *(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38) * 0x54 + 0x1c
+                    + iStack_40 * 4) * 0x21;
+    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + iVar4);
+    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + iVar4);
     piVar3 = (int *)(iVar2 + weg_points);
     iStack_118 = *piVar3;
     iStack_114 = piVar3[1];
@@ -18768,8 +18662,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iVar4 = 0xc;
   do {
     iVar2 = *(int *)(weg_sections +
-                     *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + local_bc * 4) * 0x38) * 0x54
-                     + iStack_6c + 0x1c) * 0x21;
+                     *(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38) *
+                     0x54 + iStack_6c + 0x1c) * 0x21;
     *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)(iVar4 + 0x4768b8);
     *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)(iVar4 + 0x4768c8);
     piVar3 = (int *)(iVar2 + weg_points);
@@ -18800,10 +18694,11 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iStack_9c = (int)ppiStack_14c * 4;
   do {
     iVar2 = *(int *)(weg_sections +
-                     *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + (int)ppiStack_14c * 4) * 0x38
-                             ) * 0x54 + 0x24 + local_cc * 4) * 0x21;
-    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&DAT_004767d8 + iVar4);
-    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&DAT_004767e8 + iVar4);
+                     *(int *)(weg_chunks + 8 +
+                             *(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38) * 0x54 + 0x24
+                    + local_cc * 4) * 0x21;
+    *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + iVar4);
+    *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + iVar4);
     piVar3 = (int *)(iVar2 + weg_points);
     iStack_118 = *piVar3;
     iStack_114 = piVar3[1];
@@ -18831,8 +18726,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   iVar4 = 0xc;
   do {
     iVar2 = *(int *)(weg_sections +
-                     *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + local_bc * 4) * 0x38) * 0x54
-                     + iStack_68 + 0x24) * 0x21;
+                     *(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38) *
+                     0x54 + iStack_68 + 0x24) * 0x21;
     *(undefined4 *)(iVar2 + 0x18 + weg_points) = *(undefined4 *)(iVar4 + 0x4768b8);
     *(undefined4 *)(iVar2 + 0x1c + weg_points) = *(undefined4 *)(iVar4 + 0x4768c8);
     piVar3 = (int *)(iVar2 + weg_points);
@@ -18870,10 +18765,10 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
     }
     piVar1 = local_e0;
     iVar2 = *(int *)(*(int *)(weg_sections + 0x2c +
-                             *(int *)(*(int *)(DAT_00476584 + iStack_94) * 0x38 + 8 + weg_chunks) *
-                             0x54) + iStack_60 + 4) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + iVar2) = (&DAT_004767d8)[iVar4 * 8];
-    *(undefined4 *)(weg_points + 0x1c + iVar2) = (&DAT_004767e8)[iVar4 * 8];
+                             *(int *)(*(int *)(weg_chunk_quads + iStack_94) * 0x38 + 8 + weg_chunks)
+                             * 0x54) + iStack_60 + 4) * 0x21;
+    *(undefined4 *)(weg_points + 0x18 + iVar2) = (&tile_u_coords)[iVar4 * 8];
+    *(undefined4 *)(weg_points + 0x1c + iVar2) = (&tile_v_coords)[iVar4 * 8];
     piVar3 = (int *)(weg_points + iVar2);
     iStack_118 = *piVar3;
     iStack_114 = piVar3[1];
@@ -18893,8 +18788,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
       piVar9 = (int *)((int)piVar9 + (uint)bVar10 * -2 + 1);
     }
     local_e0 = local_e0 + 8;
-    iVar2 = *(int *)(*(int *)(*(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + iStack_94) * 0x38) *
-                              0x54 + 0x2c + weg_sections) + iStack_60) * 0x21;
+    iVar2 = *(int *)(*(int *)(*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_94) * 0x38
+                                      ) * 0x54 + 0x2c + weg_sections) + iStack_60) * 0x21;
     iVar6 = iVar6 + 4;
     *(undefined4 *)(weg_points + 0x18 + iVar2) = (&DAT_004767dc)[iVar4 * 8];
     *(undefined4 *)(weg_points + 0x1c + iVar2) = (&DAT_004767ec)[iVar4 * 8];
@@ -18916,8 +18811,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
       local_e0 = (int *)((int)local_e0 + (uint)bVar10 * -2 + 1);
     }
     local_e0 = piVar1 + 0x10;
-    iVar2 = *(int *)(*(int *)(*(int *)(*(int *)(DAT_00476584 + iStack_8c) * 0x38 + 8 + weg_chunks) *
-                              0x54 + 0x2c + weg_sections) + iStack_60 + 4) * 0x21;
+    iVar2 = *(int *)(*(int *)(*(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks
+                                      ) * 0x54 + 0x2c + weg_sections) + iStack_60 + 4) * 0x21;
     *(undefined4 *)(iVar2 + 0x18 + weg_points) = (&DAT_004767e4)[iVar4 * 8];
     *(undefined4 *)(iVar2 + 0x1c + weg_points) = (&DAT_004767f4)[iVar4 * 8];
     piVar3 = (int *)(iVar2 + weg_points);
@@ -18940,8 +18835,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
     }
     local_e0 = piVar1 + 0x18;
     iVar2 = *(int *)(*(int *)(weg_sections + 0x2c +
-                             *(int *)(*(int *)(DAT_00476584 + iStack_8c) * 0x38 + 8 + weg_chunks) *
-                             0x54) + iStack_60) * 0x21;
+                             *(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks)
+                             * 0x54) + iStack_60) * 0x21;
     *(undefined4 *)(weg_points + 0x18 + iVar2) = (&DAT_004767e0)[iVar4 * 8];
     *(undefined4 *)(weg_points + 0x1c + iVar2) = (&DAT_004767f0)[iVar4 * 8];
     piVar3 = (int *)(weg_points + iVar2);
@@ -18978,10 +18873,10 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
     }
     piVar1 = local_e0;
     iVar2 = *(int *)(*(int *)(weg_sections + 0x30 +
-                             *(int *)(*(int *)(DAT_00476584 + iStack_90) * 0x38 + 8 + weg_chunks) *
-                             0x54) + iStack_54) * 0x21;
-    *(undefined4 *)(iVar2 + 0x18 + weg_points) = (&DAT_004767d8)[iVar4 * 8];
-    *(undefined4 *)(iVar2 + 0x1c + weg_points) = (&DAT_004767e8)[iVar4 * 8];
+                             *(int *)(*(int *)(weg_chunk_quads + iStack_90) * 0x38 + 8 + weg_chunks)
+                             * 0x54) + iStack_54) * 0x21;
+    *(undefined4 *)(iVar2 + 0x18 + weg_points) = (&tile_u_coords)[iVar4 * 8];
+    *(undefined4 *)(iVar2 + 0x1c + weg_points) = (&tile_v_coords)[iVar4 * 8];
     piVar5 = (int *)(iVar2 + weg_points);
     iStack_118 = *piVar5;
     iStack_114 = piVar5[1];
@@ -19002,8 +18897,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
     }
     local_e0 = local_e0 + 8;
     iVar2 = *(int *)(*(int *)(weg_sections + 0x30 +
-                             *(int *)(weg_chunks + 8 + *(int *)(DAT_00476584 + iStack_90) * 0x38) *
-                             0x54) + iStack_54 + 4) * 0x21;
+                             *(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_90) * 0x38)
+                             * 0x54) + iStack_54 + 4) * 0x21;
     iVar6 = iVar6 + 4;
     *(undefined4 *)(weg_points + 0x18 + iVar2) = (&DAT_004767dc)[iVar4 * 8];
     *(undefined4 *)(weg_points + 0x1c + iVar2) = (&DAT_004767ec)[iVar4 * 8];
@@ -19025,8 +18920,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
       local_e0 = (int *)((int)local_e0 + (uint)bVar10 * -2 + 1);
     }
     local_e0 = piVar1 + 0x10;
-    iVar2 = *(int *)(*(int *)(*(int *)(*(int *)(DAT_00476584 + iStack_88) * 0x38 + 8 + weg_chunks) *
-                              0x54 + 0x30 + weg_sections) + iStack_54) * 0x21;
+    iVar2 = *(int *)(*(int *)(*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks
+                                      ) * 0x54 + 0x30 + weg_sections) + iStack_54) * 0x21;
     *(undefined4 *)(iVar2 + 0x18 + weg_points) = (&DAT_004767e4)[iVar4 * 8];
     *(undefined4 *)(iVar2 + 0x1c + weg_points) = (&DAT_004767f4)[iVar4 * 8];
     piVar5 = (int *)(iVar2 + weg_points);
@@ -19048,8 +18943,8 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
       piVar3 = (int *)((int)piVar3 + (uint)bVar10 * -2 + 1);
     }
     local_e0 = piVar1 + 0x18;
-    iVar2 = *(int *)(*(int *)(*(int *)(*(int *)(DAT_00476584 + iStack_88) * 0x38 + 8 + weg_chunks) *
-                              0x54 + 0x30 + weg_sections) + iStack_54 + 4) * 0x21;
+    iVar2 = *(int *)(*(int *)(*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks
+                                      ) * 0x54 + 0x30 + weg_sections) + iStack_54 + 4) * 0x21;
     *(undefined4 *)(weg_points + 0x18 + iVar2) = (&DAT_004767e0)[iVar4 * 8];
     *(undefined4 *)(weg_points + 0x1c + iVar2) = (&DAT_004767f0)[iVar4 * 8];
     piVar5 = (int *)(weg_points + iVar2);
@@ -19088,7 +18983,7 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   *(undefined1 *)((int)local_e0 + 0x1d) = 8;
   *(undefined2 *)((int)local_e0 + 0x1e) = 1;
   *(undefined1 *)(local_e0 + 8) = 1;
-  local_e0[9] = *(int *)(DAT_00480ff0 + 4 + DAT_00459874 * 0xc);
+  local_e0[9] = *(int *)(materials + 4 + default_material * 0xc);
   *(undefined1 *)(local_e0 + 10) = 0xe;
   *(undefined1 *)((int)local_e0 + 0x29) = 0x18;
   *(undefined2 *)((int)local_e0 + 0x2a) = 1;
@@ -19323,8 +19218,6 @@ undefined8 __watcall init_math3d(undefined4 param_1,undefined4 param_2)
 
 /* ==== 00421bd3 compute_height_map_row ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 longlong __watcall compute_height_map_row(int param_1,uint param_2)
 
 {
@@ -19372,12 +19265,12 @@ longlong __watcall compute_height_map_row(int param_1,uint param_2)
   uVar1 = 0x100;
   local_18 = local_60;
   local_1c = local_5c;
-  local_24 = -(local_5c * _DAT_0044d376 + local_64 * 0.0 + local_60 * local_28);
+  local_24 = -(local_5c * 10.0 + local_64 * 0.0 + local_60 * local_28);
   normalize_vector(&local_40);
   do {
     iVar2 = (uVar1 & 0x3ff) * 4;
-    local_58[3] = *(float *)(iVar2 + sin_table) * (float)_DAT_0044d37a;
-    local_44 = *(float *)(iVar2 + cos_table) * (float)_DAT_0044d37a;
+    local_58[3] = *(float *)(iVar2 + sin_table) * 10.0;
+    local_44 = *(float *)(iVar2 + cos_table) * 10.0;
     local_48 = -(local_44 * local_1c + local_20 * local_58[3] + local_24) / local_18;
     local_34 = local_58[3];
     local_30 = local_44;
@@ -19388,8 +19281,8 @@ longlong __watcall compute_height_map_row(int param_1,uint param_2)
     chp = CHP();
     local_28 = (float)(int)ROUND(chp);
     *(float *)(iVar2 + iVar3) = local_28;
-    local_58[3] = *(float *)(iVar3 + sin_table) * (float)_DAT_0044d37a;
-    local_44 = *(float *)(iVar3 + cos_table) * (float)_DAT_0044d37a;
+    local_58[3] = *(float *)(iVar3 + sin_table) * 10.0;
+    local_44 = *(float *)(iVar3 + cos_table) * 10.0;
     local_48 = -(local_44 * local_1c + local_20 * local_58[3] + local_24) / local_18;
     local_34 = local_58[3];
     local_30 = local_44;
@@ -19695,15 +19588,15 @@ void __watcall vertex_edge_vector(float *out,int v1,int v2)
   int extraout_EDX;
   int extraout_EDX_00;
   
-  if ((v1 < 0) || (DAT_004767cc < v1)) {
+  if ((v1 < 0) || (vertex_capacity < v1)) {
     fatal_exit(s__s__d___illegal_vertex__v1__inde_0044dc1d,s_math3d_cpp_0044dc12,0x284,v1,
-               DAT_004767cc);
+               vertex_capacity);
     out = extraout_ECX;
     v1 = extraout_EDX;
   }
-  if ((v2 < 0) || (DAT_004767cc < v2)) {
+  if ((v2 < 0) || (vertex_capacity < v2)) {
     fatal_exit(s__s__d___illegal_vertex__v2__inde_0044dc57,s_math3d_cpp_0044dc4c,0x287,v2,
-               DAT_004767cc);
+               vertex_capacity);
     out = extraout_ECX_00;
     v1 = extraout_EDX_00;
   }
@@ -19960,7 +19853,7 @@ undefined8 __watcall alloc_objects3d(int param_1,undefined4 param_2)
   int iVar5;
   undefined8 uVar6;
   
-  if (DAT_0047677c == 0) {
+  if (objects3d_initialized == 0) {
     racers = LocalAlloc(0x40,param_1 * 0x4b);
     if (racers == (HLOCAL)0x0) {
       uVar3 = 2000;
@@ -19996,7 +19889,7 @@ undefined8 __watcall alloc_objects3d(int param_1,undefined4 param_2)
       }
       iVar4 = iVar4 + 0x4b;
     }
-    DAT_0047677c = 1;
+    objects3d_initialized = 1;
     debugmsg(s__d_objects_initialized_ok_0044dd9e,param_1);
   }
   uVar3 = 0;
@@ -20013,7 +19906,7 @@ longlong __watcall find_free_object3d(undefined4 param_1,uint param_2)
   int iVar1;
   int iVar2;
   
-  if (DAT_0047677c == 0) {
+  if (objects3d_initialized == 0) {
     fatal_exit(s__s__d____get_free_object3d___ple_0044ddc6,s_object3d_cpp_0044ddb9,0x58);
   }
   iVar2 = 0;
@@ -20043,7 +19936,7 @@ undefined8 __watcall get_new_object3d(undefined4 param_1,undefined4 param_2)
   longlong free_object3d;
   
   uVar1 = DAT_00476780;
-  if (DAT_0047677c == 0) {
+  if (objects3d_initialized == 0) {
     fatal_exit(s__s__d____get_new_object3d___plea_0044de71,s_object3d_cpp_0044de64,0x6d);
     uVar1 = extraout_EDX;
   }
@@ -20066,7 +19959,7 @@ void __watcall set_object3d_matrix(int param_1,undefined4 param_2)
   undefined4 extraout_ECX_00;
   undefined8 uVar1;
   
-  if (DAT_0047677c == 0) {
+  if (objects3d_initialized == 0) {
     fatal_exit(s__s__d____set_object3d_matrix___p_0044e151,s_object3d_cpp_0044e144,0xb1);
     param_2 = extraout_ECX;
   }
@@ -20096,7 +19989,7 @@ void __watcall check_objects3d_visibility(int param_1,int param_2)
   int unaff_EBX;
   int iVar3;
   
-  if (DAT_0047677c == 0) {
+  if (objects3d_initialized == 0) {
     fatal_exit(s__s__d____check_objects3d_visibil_0044e452,s_object3d_cpp_0044e445,0xf0);
   }
   iVar3 = 0;
@@ -20167,12 +20060,12 @@ int __watcall alloc_3d_arrays(void)
   longlong lVar3;
   
   if (DAT_00476790 == 0) {
-    DAT_00476788 = LocalAlloc(0x40,in_EAX * 9);
-    if (DAT_00476788 != (HLOCAL)0x0) {
+    anims3d = LocalAlloc(0x40,in_EAX * 9);
+    if (anims3d != (HLOCAL)0x0) {
       uVar2 = 0;
       DAT_0047678c = in_EAX;
       for (iVar1 = 0; iVar1 < DAT_0047678c; iVar1 = iVar1 + 1) {
-        *(undefined1 *)(uVar2 + 8 + (int)DAT_00476788) = 0;
+        *(undefined1 *)(uVar2 + 8 + (int)anims3d) = 0;
         uVar2 = uVar2 + 9;
       }
       lVar3 = alloc_frames3d(unaff_EDX,uVar2);
@@ -20205,7 +20098,7 @@ longlong __watcall free_3d_arrays(undefined4 param_1,uint param_2)
   longlong lVar2;
   
   if (DAT_00476790 != 0) {
-    pvVar1 = LocalFree(DAT_00476788);
+    pvVar1 = LocalFree(anims3d);
     if (pvVar1 != (HLOCAL)0x0) {
       return CONCAT44(param_2,2000);
     }
@@ -20235,7 +20128,7 @@ longlong __watcall find_free_anim3d(undefined4 param_1,uint param_2)
       fatal_exit(s__s__d____no_more_free_anims_0044e522,s_anim3d_cpp_0044e517,0x7a);
       return (ulonglong)param_2 << 0x20;
     }
-    if (*(char *)(DAT_00476788 + iVar1 + 8) == '\0') break;
+    if (*(char *)(anims3d + iVar1 + 8) == '\0') break;
     iVar1 = iVar1 + 9;
     iVar2 = iVar2 + 1;
   }
@@ -20280,7 +20173,7 @@ int __watcall init_static_anim3d(int param_1,undefined4 param_2)
   new_anim3d = get_new_anim3d(param_1,param_2);
   iVar2 = (int)new_anim3d;
   pvVar3 = LocalAlloc(0x40,param_1 << 2);
-  *(HLOCAL *)(iVar2 * 9 + 4 + DAT_00476788) = pvVar3;
+  *(HLOCAL *)(iVar2 * 9 + 4 + anims3d) = pvVar3;
   if (pvVar3 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_a_0044e5c1,s_anim3d_cpp_0044e5b6,0xac);
   }
@@ -20288,10 +20181,10 @@ int __watcall init_static_anim3d(int param_1,undefined4 param_2)
   iVar1 = iVar2 * 9;
   for (iVar4 = 0; iVar4 < param_1 * 4; iVar4 = iVar4 + 4) {
     frame3d = init_frame3d(param_2,unaff_EBX);
-    *(int *)(iVar4 + *(int *)(DAT_00476788 + iVar1 + 4)) = frame3d;
+    *(int *)(iVar4 + *(int *)(anims3d + iVar1 + 4)) = frame3d;
   }
-  *(int *)(DAT_00476788 + iVar1) = param_1;
-  *(undefined1 *)(DAT_00476788 + iVar1 + 8) = 1;
+  *(int *)(anims3d + iVar1) = param_1;
+  *(undefined1 *)(anims3d + iVar1 + 8) = 1;
   debugmsg(s_Finished_initing_static_anim_0044e60a);
   return iVar2;
 }
@@ -20309,13 +20202,13 @@ undefined8 __watcall init_anim3d(int param_1,undefined4 param_2)
   new_anim3d = get_new_anim3d(param_1,param_2);
   iVar1 = (int)new_anim3d;
   pvVar2 = LocalAlloc(0x40,param_1 << 2);
-  *(HLOCAL *)(iVar1 * 9 + 4 + DAT_00476788) = pvVar2;
+  *(HLOCAL *)(iVar1 * 9 + 4 + anims3d) = pvVar2;
   if (pvVar2 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_a_0044e633,s_anim3d_cpp_0044e628,199);
   }
   debugmsg(s_anim__d_used_frames_0044e666,iVar1);
-  *(int *)(DAT_00476788 + iVar1 * 9) = param_1;
-  *(undefined1 *)(DAT_00476788 + 8 + iVar1 * 9) = 1;
+  *(int *)(anims3d + iVar1 * 9) = param_1;
+  *(undefined1 *)(anims3d + 8 + iVar1 * 9) = 1;
   debugmsg(s_Finished_initing_anim_0044e67c);
   return CONCAT44(param_2,iVar1);
 }
@@ -20331,9 +20224,8 @@ void __watcall free_anim3d(void)
   HLOCAL pvVar2;
   int iVar3;
   
-  if (*(char *)(DAT_00476788 + 8 + in_EAX * 9) != '\0') {
-    for (iVar3 = 0; piVar1 = (int *)(DAT_00476788 + in_EAX * 9), iVar3 < *piVar1; iVar3 = iVar3 + 1)
-    {
+  if (*(char *)(anims3d + 8 + in_EAX * 9) != '\0') {
+    for (iVar3 = 0; piVar1 = (int *)(anims3d + in_EAX * 9), iVar3 < *piVar1; iVar3 = iVar3 + 1) {
       free_frame3d();
     }
     pvVar2 = LocalFree((HLOCAL)piVar1[1]);
@@ -20341,8 +20233,8 @@ void __watcall free_anim3d(void)
       fatal_exit(s__s__d____error_freeing_anim__d_0044e69e);
     }
     debugmsg(s_anim__d_freed_frame_array_0044e6c0);
-    *(undefined4 *)(DAT_00476788 + in_EAX * 9) = 0;
-    *(undefined1 *)(DAT_00476788 + 8 + in_EAX * 9) = 0;
+    *(undefined4 *)(anims3d + in_EAX * 9) = 0;
+    *(undefined1 *)(anims3d + 8 + in_EAX * 9) = 0;
   }
   return;
 }
@@ -20353,8 +20245,8 @@ void __watcall free_anim3d(void)
 longlong __watcall alloc_texture_formats(int param_1,uint param_2)
 
 {
-  DAT_004767a8 = LocalAlloc(0x40,param_1 << 7);
-  if (DAT_004767a8 == (HLOCAL)0x0) {
+  texture_formats = LocalAlloc(0x40,param_1 << 7);
+  if (texture_formats == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_t_0044e734,s_texture_cpp_0044e728,0x25);
   }
   DAT_004767ac = param_1;
@@ -20377,7 +20269,7 @@ void __watcall add_texture_format(undefined4 param_1,void *param_2)
     fatal_exit(s__s__d____too_many_textures_reque_0044e7a1,s_texture_cpp_0044e795,0x3e,DAT_004767b0)
     ;
   }
-  memset((void *)(DAT_004767b0 * 0x80 + DAT_004767a8),0,0x80);
+  memset((void *)(DAT_004767b0 * 0x80 + texture_formats),0,0x80);
   DAT_004767b0 = DAT_004767b0 + 1;
   return;
 }
@@ -20413,7 +20305,7 @@ enum_texture_format_callback(undefined4 param_1,void *param_2,undefined4 *param_
   add_texture_format_result = add_texture_format(param_1,param_2);
   iVar6 = add_texture_format_result * 0x80;
   puVar9 = in_stack_00000004;
-  puVar10 = (undefined4 *)(DAT_004767a8 + iVar6);
+  puVar10 = (undefined4 *)(texture_formats + iVar6);
   for (iVar3 = 0x1b; iVar3 != 0; iVar3 = iVar3 + -1) {
     *puVar10 = *puVar9;
     puVar9 = puVar9 + (uint)bVar11 * -2 + 1;
@@ -20429,8 +20321,8 @@ enum_texture_format_callback(undefined4 param_1,void *param_2,undefined4 *param_
     if ((bVar11 & 8) == 0) {
       iVar3 = add_texture_format_result;
       if ((bVar11 & 1) == 0) {
-        *(undefined4 *)(iVar6 + 0x6c + DAT_004767a8) = 0;
-        *(undefined4 *)(iVar6 + 0x70 + DAT_004767a8) = 0x10;
+        *(undefined4 *)(iVar6 + 0x6c + texture_formats) = 0;
+        *(undefined4 *)(iVar6 + 0x70 + texture_formats) = 0x10;
         iVar6 = 0;
         for (uVar1 = in_stack_00000004[0x16]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
           iVar6 = iVar6 + 1;
@@ -20456,9 +20348,9 @@ enum_texture_format_callback(undefined4 param_1,void *param_2,undefined4 *param_
           iVar5 = iVar5 + 1;
         }
         iVar2 = add_texture_format_result * 0x80;
-        *(int *)(iVar2 + 0x74 + DAT_004767a8) = iVar3;
-        *(int *)(DAT_004767a8 + iVar2 + 0x78) = iVar8;
-        *(int *)(iVar2 + DAT_004767a8 + 0x7c) = iVar5;
+        *(int *)(iVar2 + 0x74 + texture_formats) = iVar3;
+        *(int *)(texture_formats + iVar2 + 0x78) = iVar8;
+        *(int *)(iVar2 + texture_formats + 0x7c) = iVar5;
         debugmsg(s_texture_format__d__rgb__d__d__d___0044e815,add_texture_format_result,iVar3,iVar8,
                  iVar5,iVar6,iVar7,iVar4,xvga_screen_r,xvga_screen_g,xvga_screen_b,xvga_screen_r_pos
                  ,xvga_screen_g_pos,xvga_screen_b_pos);
@@ -20473,7 +20365,7 @@ enum_texture_format_callback(undefined4 param_1,void *param_2,undefined4 *param_
           }
         }
         else {
-          iVar2 = DAT_004767a8 + DAT_004596d0 * 0x80;
+          iVar2 = texture_formats + DAT_004596d0 * 0x80;
           if ((((iVar8 <= iVar5) && (iVar6 == xvga_screen_r_pos)) && (iVar7 == xvga_screen_g_pos))
              && ((iVar4 == xvga_screen_b_pos &&
                  (iVar5 - iVar8 <=
@@ -20488,16 +20380,16 @@ enum_texture_format_callback(undefined4 param_1,void *param_2,undefined4 *param_
     }
     else {
       debugmsg(s_texture_format__d__4bit_palettiz_0044e7f0,add_texture_format_result);
-      *(undefined4 *)(iVar6 + 0x6c + DAT_004767a8) = 1;
-      *(undefined4 *)(iVar6 + 0x70 + DAT_004767a8) = 4;
+      *(undefined4 *)(iVar6 + 0x6c + texture_formats) = 1;
+      *(undefined4 *)(iVar6 + 0x70 + texture_formats) = 4;
       _DAT_004596c8 = extraout_EDX_00;
       iVar3 = _DAT_004596cc;
     }
   }
   else {
     debugmsg(s_texture_format__d__8bit_palettiz_0044e7cb,add_texture_format_result);
-    *(undefined4 *)(iVar6 + 0x6c + DAT_004767a8) = 1;
-    *(undefined4 *)(iVar6 + 0x70 + DAT_004767a8) = 8;
+    *(undefined4 *)(iVar6 + 0x6c + texture_formats) = 1;
+    *(undefined4 *)(iVar6 + 0x70 + texture_formats) = 8;
     DAT_004596c4 = extraout_EDX;
     iVar3 = _DAT_004596cc;
   }
@@ -20606,7 +20498,7 @@ int __watcall load_texture(char *filename,int flags)
     debugmsg(s_pixel_format_>_8_while_loading_p_0044e9b1);
     pIVar3 = load_pcx_file_surface_1
                        (filename,&local_20,local_1c,0x1800,
-                        (_DDPIXELFORMAT *)(DAT_004596d0 * 0x80 + DAT_004767a8 + 0x48));
+                        (_DDPIXELFORMAT *)(DAT_004596d0 * 0x80 + texture_formats + 0x48));
   }
   uVar7 = (*(code *)**(undefined4 **)pIVar3)();
   if ((int)uVar7 != 0) {
@@ -20621,7 +20513,7 @@ int __watcall load_texture(char *filename,int flags)
     debugmsg(s_pixel_format_<__8_while_creating_0044eaba);
     local_24 = local_24 | 0x800;
     pIVar4 = create_surface_4(iStack_2c,iStack_28,local_24,
-                              (_DDPIXELFORMAT *)(DAT_004596c4 * 0x80 + DAT_004767a8 + 0x48));
+                              (_DDPIXELFORMAT *)(DAT_004596c4 * 0x80 + texture_formats + 0x48));
     *(IDirectDrawSurface **)(texture_table + 4 + iVar2 * 0xc) = pIVar4;
     uVar7 = (**(code **)(**(int **)(texture_table + 4 + iVar2 * 0xc) + 0x7c))();
     if ((int)uVar7 != 0) {
@@ -20637,7 +20529,7 @@ int __watcall load_texture(char *filename,int flags)
     }
     debugmsg(s_pixel_format_>_8_while_creating_t_0044ea50);
     pIVar4 = create_surface_4(iStack_2c,iStack_28,local_24,
-                              (_DDPIXELFORMAT *)(DAT_004596d0 * 0x80 + DAT_004767a8 + 0x48));
+                              (_DDPIXELFORMAT *)(DAT_004596d0 * 0x80 + texture_formats + 0x48));
     *(IDirectDrawSurface **)(iVar2 * 0xc + 4 + texture_table) = pIVar4;
     debugmsg(s_done_0044ea81);
   }
@@ -20766,8 +20658,8 @@ int __watcall create_standard_light(void)
   iVar2 = (int)uVar3;
   uStack_64 = 0;
   iStack_68 = DAT_004767b8 + iVar2 * 8;
-  piStack_6c = DAT_004764f8;
-  uVar3 = (**(code **)(*DAT_004764f8 + 0x14))();
+  piStack_6c = direct3d;
+  uVar3 = (**(code **)(*direct3d + 0x14))();
   if ((int)uVar3 == 0) {
     debugmsg(s_D3D___Light_created_ok_0044f845);
     piVar1 = *(int **)(iVar2 * 8 + DAT_004767b8);
@@ -20811,8 +20703,8 @@ longlong __watcall alloc_vertices(int param_1,uint param_2)
     debugmsg(s__d_vertices_initialized_0044f93e,param_1);
     DAT_004767d0 = 1;
     iVar2 = extraout_EDX;
-    DAT_004767cc = param_1;
-    for (iVar1 = 0; iVar1 < DAT_004767cc; iVar1 = iVar1 + 1) {
+    vertex_capacity = param_1;
+    for (iVar1 = 0; iVar1 < vertex_capacity; iVar1 = iVar1 + 1) {
       *(undefined1 *)(iVar2 + 0x20 + (int)weg_points) = 0;
       iVar2 = iVar2 + 0x21;
     }
@@ -20835,7 +20727,7 @@ longlong __watcall free_vertices(undefined4 param_1,uint param_2)
       return CONCAT44(param_2,2000);
     }
     debugmsg(s_Vertex_array_freed_0044f97c);
-    DAT_004767cc = 0;
+    vertex_capacity = 0;
     DAT_004767d0 = 0;
   }
   return (ulonglong)param_2 << 0x20;
@@ -20853,7 +20745,7 @@ longlong __watcall find_free_vertices(undefined4 param_1,uint param_2)
   iVar2 = 0;
   iVar1 = 0;
   while( true ) {
-    if (DAT_004767cc * 0x21 <= iVar1) {
+    if (vertex_capacity * 0x21 <= iVar1) {
       fatal_exit(s__s__d____no_more_free_vertices_0044f99b,s_vertex_cpp_0044f990,0x5b);
       return (ulonglong)param_2 << 0x20;
     }
@@ -20874,7 +20766,7 @@ undefined8 __watcall get_new_vertices(undefined4 param_1,undefined4 param_2)
   longlong free_vertices_val;
   
   uVar1 = DAT_004767d4;
-  if ((int)DAT_004767d4 < DAT_004767cc) {
+  if ((int)DAT_004767d4 < vertex_capacity) {
     DAT_004767d4 = DAT_004767d4 + 1;
     return CONCAT44(param_2,uVar1);
   }
@@ -20987,41 +20879,36 @@ undefined4 __watcall point_in_view_quad(void)
 
 /* ==== 00425f55 init_tiles ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall init_tiles(void)
 
 {
   float fVar1;
   float fVar2;
-  float fVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
   int local_1c;
   int local_18;
   
   debugmsg(s_>>>>>init_tiles_0044f9bc);
-  iVar5 = 0;
+  iVar4 = 0;
   local_1c = 0;
   do {
     local_18 = 0;
-    iVar4 = iVar5 << 5;
+    iVar3 = iVar4 << 5;
     do {
-      fVar1 = (float)local_18 * _DAT_0044f9e0;
-      *(float *)((int)&DAT_004767d8 + iVar4) = fVar1;
-      fVar2 = fVar1 + _DAT_0044f9e0;
-      *(float *)((int)&DAT_004767dc + iVar4) = fVar1;
-      fVar1 = (float)local_1c * _DAT_0044f9e0;
-      *(float *)((int)&DAT_004767e0 + iVar4) = fVar2;
-      fVar3 = fVar1 + _DAT_0044f9e0;
-      *(float *)((int)&DAT_004767e4 + iVar4) = fVar2;
-      *(float *)((int)&DAT_004767e8 + iVar4) = fVar3;
-      *(float *)((int)&DAT_004767ec + iVar4) = fVar1;
-      *(float *)((int)&DAT_004767f0 + iVar4) = fVar1;
-      *(float *)((int)&DAT_004767f4 + iVar4) = fVar3;
-      iVar4 = iVar4 + 0x20;
+      fVar1 = (float)local_18 * 0.125;
+      *(float *)((int)&tile_u_coords + iVar3) = fVar1;
+      *(float *)((int)&DAT_004767dc + iVar3) = fVar1;
+      fVar2 = (float)local_1c * 0.125;
+      *(float *)((int)&DAT_004767e0 + iVar3) = fVar1 + 0.125;
+      *(float *)((int)&DAT_004767e4 + iVar3) = fVar1 + 0.125;
+      *(float *)((int)&tile_v_coords + iVar3) = fVar2 + 0.125;
+      *(float *)((int)&DAT_004767ec + iVar3) = fVar2;
+      *(float *)((int)&DAT_004767f0 + iVar3) = fVar2;
+      *(float *)((int)&DAT_004767f4 + iVar3) = fVar2 + 0.125;
+      iVar3 = iVar3 + 0x20;
       local_18 = local_18 + 1;
-      iVar5 = iVar5 + 1;
+      iVar4 = iVar4 + 1;
     } while (local_18 < 8);
     local_1c = local_1c + 1;
   } while (local_1c < 8);
@@ -21040,8 +20927,6 @@ int __watcall tile_always_hidden(void)
 
 
 /* ==== 00426137 build_map_execute_buffers ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall build_map_execute_buffers(undefined4 param_1)
 
@@ -21070,23 +20955,23 @@ void __watcall build_map_execute_buffers(undefined4 param_1)
       DAT_00476fe8 = create_material(3,0xffffffff);
     }
     else {
-      DAT_00476fe8 = DAT_00459874;
-      if (DAT_00459874 == -1) {
+      DAT_00476fe8 = default_material;
+      if (default_material == -1) {
         fatal_exit(s__s__d____error_xvga_material_has_0044fa2e,s_mapexec_cpp_0044fa22,0xe7);
         unaff_ECX = extraout_ECX;
         fVar2 = extraout_EDX;
       }
       else {
-        set_material_texture(DAT_00459874,(int *)grass_texture);
+        set_material_texture(default_material,(int *)grass_texture);
       }
     }
     for (iVar6 = 0; iVar6 < DAT_00476ffc; iVar6 = iVar6 + 1) {
       for (iVar5 = 0; iVar5 < DAT_00476ff8; iVar5 = iVar5 + 1) {
         debug_weg_position_result =
-             debug_weg_position(DAT_004596e8 * iVar5,fVar2,fVar3,unaff_ECX,
-                                (float)(DAT_004596e8 * iVar5) * (float)_DAT_0044faa6);
+             debug_weg_position(tile_size * iVar5,fVar2,fVar3,unaff_ECX,
+                                (float)(tile_size * iVar5) * 30.0);
         fVar2 = DAT_00476ff4;
-        fVar1 = DAT_004596ec;
+        fVar1 = tile_scale;
         if ((int)debug_weg_position_result == 0) {
           fVar3 = (float)((int)local_1c + 1);
           *(undefined4 *)((int)DAT_00476ff4 + (DAT_00476ff8 * iVar6 + iVar5) * 8) = 0;
@@ -21094,7 +20979,7 @@ void __watcall build_map_execute_buffers(undefined4 param_1)
         }
         else {
           build_tile_execute_buffer_result =
-               build_tile_execute_buffer(iVar5 * DAT_004596e8,iVar6 * (int)DAT_004596ec);
+               build_tile_execute_buffer(iVar5 * tile_size,iVar6 * (int)tile_scale);
           fVar3 = DAT_00476ff4;
           *(undefined4 *)((int)DAT_00476ff4 + 4 + (DAT_00476ff8 * iVar6 + iVar5) * 8) =
                build_tile_execute_buffer_result;
@@ -21109,10 +20994,10 @@ void __watcall build_map_execute_buffers(undefined4 param_1)
     debugmsg(s_discarded__d_0044fa74,local_1c);
     debugmsg(s_total__d_0044fa82,iVar4 + extraout_EDX_00);
     debugmsg(s_mapsize__dx_d____d_0044fa90,DAT_00476ff8,DAT_00476ffc,DAT_00476ff8 * DAT_00476ffc);
-    DAT_00477014 = 0;
-    DAT_004596f0 = DAT_004596d8;
-    DAT_00477018 = 0;
-    DAT_004596f4 = DAT_004596dc;
+    view_min_x = 0;
+    view_max_x = DAT_004596d8;
+    view_min_z = 0;
+    view_max_z = DAT_004596dc;
   }
   return;
 }
@@ -21135,47 +21020,47 @@ void __watcall update_visible_tiles(int x,int z)
   int local_18;
   int local_14;
   
-  iVar3 = DAT_004596e8 * DAT_004596d8;
-  iVar2 = DAT_004596ec * DAT_004596dc;
+  iVar3 = tile_size * DAT_004596d8;
+  iVar2 = (int)tile_scale * DAT_004596dc;
   switch(unaff_EBX) {
   case 0:
     iVar1 = iVar3 / 2;
     local_14 = x - iVar1;
     break;
   case 1:
-    local_14 = x + DAT_004596e8 * -2;
-    local_20 = x + iVar3 + DAT_004596e8 * -2;
+    local_14 = x + tile_size * -2;
+    local_20 = x + iVar3 + tile_size * -2;
     goto LAB_00426cbd;
   case 2:
-    local_14 = x + DAT_004596e8 * -2;
-    local_20 = x + iVar3 + DAT_004596e8 * -2;
+    local_14 = x + tile_size * -2;
+    local_20 = x + iVar3 + tile_size * -2;
     goto LAB_00426e10;
   case 3:
-    local_14 = x + DAT_004596e8 * -2;
-    local_20 = x + iVar3 + DAT_004596e8 * -2;
+    local_14 = x + tile_size * -2;
+    local_20 = x + iVar3 + tile_size * -2;
     goto LAB_00426e4f;
   case 4:
     iVar1 = iVar3 / 2;
     local_14 = x - iVar1;
     goto LAB_00426e4d;
   case 5:
-    iVar1 = DAT_004596e8 * 2;
+    iVar1 = tile_size * 2;
     local_14 = (x - iVar3) + iVar1;
 LAB_00426e4d:
     local_20 = x + iVar1;
 LAB_00426e4f:
-    local_18 = z + DAT_004596ec * 2;
-    local_1c = (z - iVar2) + DAT_004596ec * 2;
+    local_18 = z + (int)tile_scale * 2;
+    local_1c = (z - iVar2) + (int)tile_scale * 2;
     goto switchD_00426ca4_default;
   case 6:
-    local_14 = (x - iVar3) + DAT_004596e8 * 2;
-    local_20 = x + DAT_004596e8 * 2;
+    local_14 = (x - iVar3) + tile_size * 2;
+    local_20 = x + tile_size * 2;
 LAB_00426e10:
     iVar1 = -(iVar2 / 2);
     local_18 = z + iVar2 / 2;
     goto LAB_00426cd3;
   case 7:
-    iVar1 = DAT_004596e8 * 2;
+    iVar1 = tile_size * 2;
     local_14 = (x - iVar3) + iVar1;
     break;
   default:
@@ -21183,8 +21068,8 @@ LAB_00426e10:
   }
   local_20 = x + iVar1;
 LAB_00426cbd:
-  iVar1 = DAT_004596ec * -2;
-  local_18 = z + iVar2 + DAT_004596ec * -2;
+  iVar1 = (int)tile_scale * -2;
+  local_18 = z + iVar2 + (int)tile_scale * -2;
 LAB_00426cd3:
   local_1c = z + iVar1;
 switchD_00426ca4_default:
@@ -21204,20 +21089,20 @@ switchD_00426ca4_default:
     local_14 = DAT_004596e0 - iVar3;
     local_20 = DAT_004596e0;
   }
-  _DAT_0047701c = local_14 / DAT_004596e8;
-  DAT_004596f8 = local_20 / DAT_004596e8;
-  _DAT_00477020 = local_1c / DAT_004596ec;
-  iVar2 = local_18 / DAT_004596ec;
+  _DAT_0047701c = local_14 / tile_size;
+  DAT_004596f8 = local_20 / tile_size;
+  _DAT_00477020 = local_1c / (int)tile_scale;
+  iVar2 = local_18 / (int)tile_scale;
   chp = CHP();
-  DAT_00477014 = (int)ROUND(chp);
+  view_min_x = (int)ROUND(chp);
   chp = CHP();
-  DAT_004596f0 = (int)ROUND(chp);
+  view_max_x = (int)ROUND(chp);
   chp = CHP();
-  DAT_00477018 = (int)ROUND(chp);
+  view_min_z = (int)ROUND(chp);
   chp = CHP();
-  DAT_004596f4 = (int)ROUND(chp);
+  view_max_z = (int)ROUND(chp);
   DAT_004596fc = iVar2;
-  check_objects3d_visibility(DAT_00477014,DAT_00477018);
+  check_objects3d_visibility(view_min_x,view_min_z);
   tile_always_hidden();
   return;
 }
@@ -21293,12 +21178,12 @@ undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
   bVar8 = 0;
   local_2c = unaff_EBX * unaff_ECX * 4;
   local_34 = unaff_EBX * unaff_ECX * 2;
-  if (DAT_00459678 < local_2c) {
+  if (max_vertex_count < local_2c) {
     piStack_9c = (int *)0x426f83;
     fatal_exit(s__s__d____Too_many_vertices___d____0044fd36);
   }
   _Size = local_2c * 0x20 + 0x88 + local_34 * 8;
-  if (DAT_00459674 < (int)_Size) {
+  if (max_buffer_size < (int)_Size) {
     fatal_exit(s__s__d____Execbuffer_too_large____0044fd72);
   }
   memset(&local_54,0,0x14);
@@ -21333,8 +21218,8 @@ undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
       do {
         iVar1 = *(int *)((local_2c * DAT_004596e0 + local_54) * 0x1c + DAT_00476fec + 4 + iVar6 * 4)
                 * 0x21;
-        *(undefined4 *)(weg_points + 0x18 + iVar1) = *(undefined4 *)((int)&DAT_004767d8 + iVar5);
-        *(undefined4 *)(weg_points + 0x1c + iVar1) = *(undefined4 *)((int)&DAT_004767e8 + iVar5);
+        *(undefined4 *)(weg_points + 0x18 + iVar1) = *(undefined4 *)((int)&tile_u_coords + iVar5);
+        *(undefined4 *)(weg_points + 0x1c + iVar1) = *(undefined4 *)((int)&tile_v_coords + iVar5);
         iVar5 = iVar5 + 4;
         piVar2 = (int *)(weg_points + iVar1);
         piVar7 = piStack_28;
@@ -21368,7 +21253,7 @@ undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
   *(undefined2 *)((int)piStack_28 + 0x1e) = 1;
   *(undefined1 *)(piStack_28 + 7) = 7;
   *(undefined1 *)(piStack_28 + 8) = 1;
-  piStack_28[9] = *(int *)(DAT_00476fe8 * 0xc + 4 + DAT_00480ff0);
+  piStack_28[9] = *(int *)(DAT_00476fe8 * 0xc + 4 + materials);
   *(undefined1 *)(piStack_28 + 10) = 0xe;
   *(undefined1 *)((int)piStack_28 + 0x29) = 0x18;
   *(undefined2 *)((int)piStack_28 + 0x2a) = 1;
@@ -21459,14 +21344,14 @@ undefined8 __watcall find_free_camera(undefined4 param_1,undefined4 param_2)
   iVar2 = 0;
   iVar1 = 0;
   while( true ) {
-    if (DAT_004770d4 * 0x5c <= iVar1) {
+    if (camera_count * 0x5c <= iVar1) {
       return CONCAT44(param_2,0xffffffff);
     }
-    if (*(int *)(DAT_004770e0 + iVar1 + 0x58) == 0) break;
+    if (*(int *)(cameras + iVar1 + 0x58) == 0) break;
     iVar1 = iVar1 + 0x5c;
     iVar2 = iVar2 + 1;
   }
-  *(undefined4 *)(DAT_004770e0 + iVar1 + 0x58) = 1;
+  *(undefined4 *)(cameras + iVar1 + 0x58) = 1;
   return CONCAT44(param_2,iVar2);
 }
 
@@ -21488,13 +21373,10 @@ void __watcall
 set_camera(int param_1,undefined4 param_2,undefined4 param_3,int param_4,int param_5,int param_6)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
   int extraout_EDX;
   int extraout_EDX_00;
   int extraout_EDX_01;
-  undefined8 uVar4;
+  undefined8 uVar1;
   undefined4 in_stack_0000000c;
   int in_stack_00000010;
   int in_stack_00000014;
@@ -21505,36 +21387,31 @@ set_camera(int param_1,undefined4 param_2,undefined4 param_3,int param_4,int par
     fatal_exit(s__s__d___camera_array_has_not_bee_0045023b,s_camera_cpp_00450230,0x13c);
     param_1 = extraout_EDX;
   }
-  if ((param_1 < 0) || (DAT_004770d4 < param_1)) {
+  if ((param_1 < 0) || (camera_count < param_1)) {
     fatal_exit(s__s__d___error_illegal_camera_pos_00450276,s_camera_cpp_0045026b,0x140,param_1);
     param_1 = extraout_EDX_00;
   }
-  if (*(int *)(DAT_004770e0 + 0x58 + param_1 * 0x5c) == 0) {
+  if (*(int *)(cameras + 0x58 + param_1 * 0x5c) == 0) {
     fatal_exit(s__s__d___error_illegal_camera__d_004502a7,s_camera_cpp_0045029c,0x144,param_1);
     param_1 = extraout_EDX_01;
   }
-  fVar3 = (float)_DAT_0045032d;
-  fVar2 = (float)_DAT_00450335;
-  fVar1 = (float)_DAT_0045033d;
-  *(int *)(DAT_004770e0 + param_1 * 0x5c) = param_5;
-  *(int *)(DAT_004770e0 + 4 + param_1 * 0x5c) = param_6;
-  *(undefined4 *)(DAT_004770e0 + 8 + param_1 * 0x5c) = in_stack_0000000c;
-  *(float *)(DAT_004770e0 + 0x18 + param_1 * 0x5c) =
-       (float)in_stack_00000010 * fVar3 * fVar2 * fVar1;
-  *(float *)(DAT_004770e0 + 0x1c + param_1 * 0x5c) =
-       (float)in_stack_00000014 * (float)_DAT_0045032d * (float)_DAT_00450335 * (float)_DAT_0045033d
-  ;
-  *(float *)(DAT_004770e0 + 0x20 + param_1 * 0x5c) =
-       (float)in_stack_00000018 * (float)_DAT_0045032d * (float)_DAT_00450335 * (float)_DAT_0045033d
-  ;
-  memset(&DAT_00477054,0,0x40);
+  *(int *)(cameras + param_1 * 0x5c) = param_5;
+  *(int *)(cameras + 4 + param_1 * 0x5c) = param_6;
+  *(undefined4 *)(cameras + 8 + param_1 * 0x5c) = in_stack_0000000c;
+  *(float *)(cameras + 0x18 + param_1 * 0x5c) =
+       (float)in_stack_00000010 * 2.0 * 3.141596 * 0.0009765625;
+  *(float *)(cameras + 0x1c + param_1 * 0x5c) =
+       (float)in_stack_00000014 * 2.0 * 3.141596 * 0.0009765625;
+  *(float *)(cameras + 0x20 + param_1 * 0x5c) =
+       (float)in_stack_00000018 * 2.0 * 3.141596 * 0.0009765625;
+  memset(&view_matrix,0,0x40);
   _DAT_00477090 = 0x3f800000;
   _DAT_0047707c = 0x3f800000;
   _DAT_00477068 = 0x3f800000;
-  _DAT_00477054 = 0x3f800000;
-  rotate_matrix_x(&DAT_00477054,afStack_54);
-  rotate_matrix_z(&DAT_00477054,afStack_54);
-  rotate_matrix_y(&DAT_00477054,afStack_54);
+  _view_matrix = 0x3f800000;
+  rotate_matrix_x(&view_matrix,afStack_54);
+  rotate_matrix_z(&view_matrix,afStack_54);
+  rotate_matrix_y(&view_matrix,afStack_54);
   memset(&DAT_00477094,0,0x40);
   _DAT_004770d0 = 0x3f800000;
   _DAT_004770bc = 0x3f800000;
@@ -21543,15 +21420,15 @@ set_camera(int param_1,undefined4 param_2,undefined4 param_3,int param_4,int par
   _DAT_004770c8 = param_6;
   _DAT_004770cc = in_stack_0000000c;
   _DAT_00477094 = 0x3f800000;
-  uVar4 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c8,&DAT_00477054);
-  if ((int)uVar4 != 0) {
-    uVar4 = d3d_error_string((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
-    fatal_exit(s__s__d____D3DError_moving_camera___004502d4,s_camera_cpp_004502c9,0x17a,(int)uVar4);
+  uVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c8,&view_matrix);
+  if ((int)uVar1 != 0) {
+    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
+    fatal_exit(s__s__d____D3DError_moving_camera___004502d4,s_camera_cpp_004502c9,0x17a,(int)uVar1);
   }
-  uVar4 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764cc,&DAT_00477094);
-  if ((int)uVar4 != 0) {
-    uVar4 = d3d_error_string((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
-    fatal_exit(s__s__d____D3DError_moving_camera___00450306,s_camera_cpp_004502fb,0x17e,(int)uVar4);
+  uVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764cc,&DAT_00477094);
+  if ((int)uVar1 != 0) {
+    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
+    fatal_exit(s__s__d____D3DError_moving_camera___00450306,s_camera_cpp_004502fb,0x17e,(int)uVar1);
   }
   find_free_camera_tail();
   return;
@@ -21577,9 +21454,9 @@ longlong __watcall init_cameras(int param_1,uint param_2)
   undefined8 uVar6;
   
   uVar6 = init_math3d(param_1,param_1);
-  DAT_004770e0 = LocalAlloc(0x40,(int)((ulonglong)uVar6 >> 0x20) * 0x5c);
+  cameras = LocalAlloc(0x40,(int)((ulonglong)uVar6 >> 0x20) * 0x5c);
   iVar3 = extraout_ECX;
-  if (DAT_004770e0 == (HLOCAL)0x0) {
+  if (cameras == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_c_00450350,s_camera_cpp_00450345,0x18d);
     iVar3 = extraout_ECX_00;
   }
@@ -21587,9 +21464,9 @@ longlong __watcall init_cameras(int param_1,uint param_2)
   DAT_004770d8 = 1;
   iVar2 = 0;
   pvVar5 = (HLOCAL)0x1;
-  DAT_004770d4 = param_1;
-  for (iVar4 = 0; pvVar1 = DAT_004770e0, iVar4 < DAT_004770d4; iVar4 = iVar4 + 1) {
-    *(undefined4 *)((int)DAT_004770e0 + iVar2 + 0x58) = 0;
+  camera_count = param_1;
+  for (iVar4 = 0; pvVar1 = cameras, iVar4 < camera_count; iVar4 = iVar4 + 1) {
+    *(undefined4 *)((int)cameras + iVar2 + 0x58) = 0;
     iVar2 = iVar2 + 0x5c;
     pvVar5 = pvVar1;
   }
@@ -21924,7 +21801,7 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
       SelectObject(pHStack_24,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
       SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00459714 + xvga_font_index * 0x10));
       SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
-      SetBkMode(pHStack_24,*(int *)(&DAT_0045970c + xvga_font_index * 0x10));
+      SetBkMode(pHStack_24,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
       ptVar4 = &size_3;
       iVar2 = lstrlenA((LPCSTR)&pIStack_200);
       GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar4);
@@ -21956,7 +21833,7 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
       SelectObject(pHStack_24,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
       SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00459714 + xvga_font_index * 0x10));
       SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
-      SetBkMode(pHStack_24,*(int *)(&DAT_0045970c + xvga_font_index * 0x10));
+      SetBkMode(pHStack_24,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
       ptVar4 = &size;
       iVar2 = lstrlenA((LPCSTR)&pIStack_200);
       GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar4);
@@ -21994,7 +21871,7 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
       SelectObject(pHStack_24,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
       SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00459714 + xvga_font_index * 0x10));
       SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
-      SetBkMode(pHStack_24,*(int *)(&DAT_0045970c + xvga_font_index * 0x10));
+      SetBkMode(pHStack_24,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
       ptVar4 = &size_2;
       iVar2 = lstrlenA((LPCSTR)&pIStack_200);
       GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,ptVar4);
@@ -22056,7 +21933,7 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         SelectObject(pHStack_28,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
         SetTextColor(pHStack_28,param_3);
         SetBkColor(pHStack_28,param_4);
-        SetBkMode(pHStack_28,*(int *)(&DAT_0045970c + xvga_font_index * 0x10));
+        SetBkMode(pHStack_28,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
         ptVar4 = &size;
         iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
         GetTextExtentPoint32A(pHStack_28,(LPCSTR)&pIStack_1f0,iVar2,ptVar4);
@@ -22090,7 +21967,7 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         SelectObject(pHStack_28,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
         SetTextColor(pHStack_28,param_3);
         SetBkColor(pHStack_28,param_4);
-        SetBkMode(pHStack_28,*(int *)(&DAT_0045970c + xvga_font_index * 0x10));
+        SetBkMode(pHStack_28,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
         ptVar4 = &size;
         iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
         GetTextExtentPoint32A(pHStack_28,(LPCSTR)&pIStack_1f0,iVar2,ptVar4);
@@ -22128,7 +22005,7 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         SelectObject(pHStack_28,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
         SetTextColor(pHStack_28,param_3);
         SetBkColor(pHStack_28,param_4);
-        SetBkMode(pHStack_28,*(int *)(&DAT_0045970c + xvga_font_index * 0x10));
+        SetBkMode(pHStack_28,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
         ptVar4 = &size;
         iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
         GetTextExtentPoint32A(pHStack_28,(LPCSTR)&pIStack_1f0,iVar2,ptVar4);
@@ -22250,11 +22127,11 @@ void __watcall xvga_set_font_bkmode(int param_1,int param_2)
   }
   if (param_2 != 0) {
     if ((uint)param_2 < 2) {
-      *(undefined4 *)(&DAT_0045970c + param_1 * 0x10) = 1;
+      *(undefined4 *)(&font_bk_modes + param_1 * 0x10) = 1;
       return;
     }
     if (param_2 == 2) {
-      *(undefined4 *)(&DAT_0045970c + param_1 * 0x10) = 2;
+      *(undefined4 *)(&font_bk_modes + param_1 * 0x10) = 2;
       return;
     }
   }
@@ -23964,8 +23841,8 @@ longlong __watcall alloc_frames3d(int param_1,uint param_2)
   int iVar2;
   
   if (DAT_00480d74 == 0) {
-    DAT_00480d6c = LocalAlloc(0x40,param_1 * 0x11);
-    if (DAT_00480d6c == (HLOCAL)0x0) {
+    frames3d = LocalAlloc(0x40,param_1 * 0x11);
+    if (frames3d == (HLOCAL)0x0) {
       debugmsg(s__s__d____not_enough_memory_for_f_00451b2c);
       return CONCAT44(param_2,2000);
     }
@@ -23974,9 +23851,9 @@ longlong __watcall alloc_frames3d(int param_1,uint param_2)
     iVar1 = 0;
     DAT_00480d70 = param_1;
     for (iVar2 = extraout_EDX; iVar2 < DAT_00480d70; iVar2 = iVar2 + 1) {
-      *(undefined4 *)((int)DAT_00480d6c + iVar1) = 0;
-      *(undefined4 *)((int)DAT_00480d6c + iVar1 + 8) = 0;
-      *(undefined1 *)((int)DAT_00480d6c + iVar1 + 0x10) = 0;
+      *(undefined4 *)((int)frames3d + iVar1) = 0;
+      *(undefined4 *)((int)frames3d + iVar1 + 8) = 0;
+      *(undefined1 *)((int)frames3d + iVar1 + 0x10) = 0;
       iVar1 = iVar1 + 0x11;
     }
   }
@@ -23992,7 +23869,7 @@ longlong __watcall free_frames3d(undefined4 param_1,uint param_2)
   HLOCAL pvVar1;
   
   if (DAT_00480d74 != 0) {
-    pvVar1 = LocalFree(DAT_00480d6c);
+    pvVar1 = LocalFree(frames3d);
     if (pvVar1 != (HLOCAL)0x0) {
       debugmsg(s__s__d____error_deallocating_fram_00451b6c);
       return CONCAT44(param_2,2000);
@@ -24020,7 +23897,7 @@ longlong __watcall find_free_frame3d(undefined4 param_1,uint param_2)
       fatal_exit(s__s__d____no_more_free_frames_00451bb0,s_frame3d_cpp_00451ba4,0x62);
       return (ulonglong)param_2 << 0x20;
     }
-    if (*(char *)(DAT_00480d6c + 0x10 + iVar1) == '\0') break;
+    if (*(char *)(frames3d + 0x10 + iVar1) == '\0') break;
     iVar1 = iVar1 + 0x11;
     iVar2 = iVar2 + 1;
   }
@@ -24064,13 +23941,13 @@ int __watcall init_frame3d(int param_1,int param_2)
   uVar6 = get_new_frame3d(param_1,param_2);
   iVar1 = (int)uVar6;
   pvVar2 = LocalAlloc(0x40,param_1 << 2);
-  *(HLOCAL *)(iVar1 * 0x11 + 4 + DAT_00480d6c) = pvVar2;
+  *(HLOCAL *)(iVar1 * 0x11 + 4 + frames3d) = pvVar2;
   if (pvVar2 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_f_00451bdb,s_frame3d_cpp_00451bcf,0x7c);
   }
   debugmsg(s_frame__d_used__d_vertices_00451c03,iVar1,param_1);
   pvVar2 = LocalAlloc(0x40,param_2 << 2);
-  *(HLOCAL *)(DAT_00480d6c + 0xc + iVar1 * 0x11) = pvVar2;
+  *(HLOCAL *)(frames3d + 0xc + iVar1 * 0x11) = pvVar2;
   if (pvVar2 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_f_00451c2b,s_frame3d_cpp_00451c1f,0x83);
   }
@@ -24080,22 +23957,21 @@ int __watcall init_frame3d(int param_1,int param_2)
   for (iVar5 = extraout_EDX; iVar5 < param_1 * 4; iVar5 = iVar5 + 4) {
     uVar6 = get_new_vertices(iVar3,iVar5);
     iVar5 = (int)((ulonglong)uVar6 >> 0x20);
-    *(int *)(iVar5 + *(int *)(iVar4 + 4 + DAT_00480d6c)) = (int)uVar6;
-    iVar3 = *(int *)(iVar5 + *(int *)(iVar4 + 4 + DAT_00480d6c)) * 0x21;
+    *(int *)(iVar5 + *(int *)(iVar4 + 4 + frames3d)) = (int)uVar6;
+    iVar3 = *(int *)(iVar5 + *(int *)(iVar4 + 4 + frames3d)) * 0x21;
     *(undefined1 *)(weg_points + 0x20 + iVar3) = 1;
   }
   iVar5 = iVar1 * 0x11;
   for (iVar4 = 0; iVar4 < param_2 * 4; iVar4 = iVar4 + 4) {
     uVar6 = get_new_triangles(iVar3,iVar4);
     iVar4 = (int)((ulonglong)uVar6 >> 0x20);
-    *(int *)(iVar4 + *(int *)(iVar5 + 0xc + DAT_00480d6c)) = (int)uVar6;
-    iVar3 = DAT_00480d7c;
-    *(undefined1 *)(*(int *)(iVar4 + *(int *)(iVar5 + 0xc + DAT_00480d6c)) * 9 + 8 + DAT_00480d7c) =
-         1;
+    *(int *)(iVar4 + *(int *)(iVar5 + 0xc + frames3d)) = (int)uVar6;
+    iVar3 = triangles3d;
+    *(undefined1 *)(*(int *)(iVar4 + *(int *)(iVar5 + 0xc + frames3d)) * 9 + 8 + triangles3d) = 1;
   }
-  *(int *)(iVar5 + DAT_00480d6c) = param_1;
-  *(int *)(iVar5 + 8 + DAT_00480d6c) = param_2;
-  *(undefined1 *)(iVar5 + 0x10 + DAT_00480d6c) = 1;
+  *(int *)(iVar5 + frames3d) = param_1;
+  *(int *)(iVar5 + 8 + frames3d) = param_2;
+  *(undefined1 *)(iVar5 + 0x10 + frames3d) = 1;
   return iVar1;
 }
 
@@ -24113,10 +23989,10 @@ void __watcall free_frame3d(void)
   int extraout_EDX;
   int iVar5;
   
-  if (*(char *)(DAT_00480d6c + 0x10 + in_EAX * 0x11) != '\0') {
+  if (*(char *)(frames3d + 0x10 + in_EAX * 0x11) != '\0') {
     iVar5 = 0;
-    for (iVar4 = 0; piVar1 = (int *)(DAT_00480d6c + in_EAX * 0x11), iVar4 < *piVar1;
-        iVar4 = iVar4 + 1) {
+    for (iVar4 = 0; piVar1 = (int *)(frames3d + in_EAX * 0x11), iVar4 < *piVar1; iVar4 = iVar4 + 1)
+    {
       piVar1 = (int *)(iVar5 + piVar1[1]);
       iVar5 = iVar5 + 4;
       *(undefined1 *)(weg_points + 0x20 + *piVar1 * 0x21) = 0;
@@ -24127,11 +24003,11 @@ void __watcall free_frame3d(void)
     }
     iVar5 = 0;
     debugmsg(s_frame__d_freed_vertex_array_00451cab);
-    for (iVar4 = extraout_EDX; iVar3 = DAT_00480d6c + in_EAX * 0x11, iVar4 < *(int *)(iVar3 + 8);
+    for (iVar4 = extraout_EDX; iVar3 = frames3d + in_EAX * 0x11, iVar4 < *(int *)(iVar3 + 8);
         iVar4 = iVar4 + 1) {
       piVar1 = (int *)(iVar5 + *(int *)(iVar3 + 0xc));
       iVar5 = iVar5 + 4;
-      *(undefined1 *)(DAT_00480d7c + 8 + *piVar1 * 9) = 0;
+      *(undefined1 *)(triangles3d + 8 + *piVar1 * 9) = 0;
     }
     pvVar2 = LocalFree(*(HLOCAL *)(iVar3 + 0xc));
     if (pvVar2 != (HLOCAL)0x0) {
@@ -24139,9 +24015,9 @@ void __watcall free_frame3d(void)
     }
     debugmsg(s_frame__d_freed_triangle_array_00451d06);
     iVar4 = in_EAX * 0x11;
-    *(undefined4 *)(DAT_00480d6c + iVar4) = 0;
-    *(undefined4 *)(DAT_00480d6c + 8 + iVar4) = 0;
-    *(undefined1 *)(DAT_00480d6c + 0x10 + iVar4) = 0;
+    *(undefined4 *)(frames3d + iVar4) = 0;
+    *(undefined4 *)(frames3d + 8 + iVar4) = 0;
+    *(undefined1 *)(frames3d + 0x10 + iVar4) = 0;
   }
   return;
 }
@@ -24703,8 +24579,8 @@ longlong __watcall alloc_triangles(int param_1,uint param_2)
   int iVar2;
   
   if (DAT_00480d84 == 0) {
-    DAT_00480d7c = LocalAlloc(0x40,param_1 * 9);
-    if (DAT_00480d7c == (HLOCAL)0x0) {
+    triangles3d = LocalAlloc(0x40,param_1 * 9);
+    if (triangles3d == (HLOCAL)0x0) {
       debugmsg(s__s__d____not_enough_memory_for_t_00451d28);
       return CONCAT44(param_2,2000);
     }
@@ -24713,7 +24589,7 @@ longlong __watcall alloc_triangles(int param_1,uint param_2)
     iVar2 = extraout_EDX;
     DAT_00480d80 = param_1;
     for (iVar1 = 0; iVar1 < DAT_00480d80; iVar1 = iVar1 + 1) {
-      *(undefined1 *)(iVar2 + 8 + (int)DAT_00480d7c) = 0;
+      *(undefined1 *)(iVar2 + 8 + (int)triangles3d) = 0;
       iVar2 = iVar2 + 9;
     }
   }
@@ -24729,7 +24605,7 @@ longlong __watcall free_triangles(undefined4 param_1,uint param_2)
   HLOCAL pvVar1;
   
   if (DAT_00480d84 != 0) {
-    pvVar1 = LocalFree(DAT_00480d7c);
+    pvVar1 = LocalFree(triangles3d);
     if (pvVar1 != (HLOCAL)0x0) {
       debugmsg(s__s__d____error_freeing_triangles_00451d6e);
       return CONCAT44(param_2,2000);
@@ -24757,7 +24633,7 @@ longlong __watcall find_free_triangles(undefined4 param_1,uint param_2)
       fatal_exit(s__s__d____no_more_free_triangles_00451db5,s_triangle_cpp_00451da8,0x5b);
       return (ulonglong)param_2 << 0x20;
     }
-    if (*(char *)(DAT_00480d7c + 8 + iVar1) == '\0') break;
+    if (*(char *)(triangles3d + 8 + iVar1) == '\0') break;
     iVar1 = iVar1 + 9;
     iVar2 = iVar2 + 1;
   }
@@ -27335,7 +27211,7 @@ splitpath(byte *param_1,byte *unaff_EDX_01,byte *unaff_EBX,byte *unaff_ECX,byte 
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00459bb9)[*pbVar3] & 1);
+        uVar2 = (uint)((&mbcs_lead_byte_table)[*pbVar3] & 1);
       }
       pbVar4 = pbVar3 + uVar2 + 1;
     } while ((unaff_EDX_01 != (byte *)0x5c) && (unaff_EDX_01 != (byte *)0x2f));
@@ -27403,12 +27279,12 @@ makepath(byte *param_1,byte *unaff_EDX_00,byte *unaff_EBX,byte *unaff_ECX,byte *
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00459bb9)[*unaff_EDX] & 1);
+        uVar2 = (uint)((&mbcs_lead_byte_table)[*unaff_EDX] & 1);
       }
       unaff_EDX = unaff_EDX + uVar2 + 1;
       uVar2 = 0;
       if (IsDBCS != 0) {
-        uVar2 = (uint)((&DAT_00459bb9)[*unaff_EBX] & 1);
+        uVar2 = (uint)((&mbcs_lead_byte_table)[*unaff_EBX] & 1);
       }
       unaff_EBX = unaff_EBX + uVar2 + 1;
     } while (*unaff_EBX != 0);
@@ -27455,14 +27331,14 @@ makepath(byte *param_1,byte *unaff_EDX_00,byte *unaff_EBX,byte *unaff_ECX,byte *
       } while (bVar1 != 0);
       uVar2 = 0;
       if (IsDBCS != 0) {
-        uVar2 = (uint)((&DAT_00459bb9)[*unaff_EDX] & 1);
+        uVar2 = (uint)((&mbcs_lead_byte_table)[*unaff_EDX] & 1);
       }
       unaff_EDX = unaff_EDX + uVar2 + 1;
       if (IsDBCS == 0) {
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00459bb9)[*unaff_ECX] & 1);
+        uVar2 = (uint)((&mbcs_lead_byte_table)[*unaff_ECX] & 1);
       }
       unaff_ECX = unaff_ECX + uVar2 + 1;
     } while (*unaff_ECX != 0);
@@ -28024,8 +27900,8 @@ void __watcall set_smacker_key(int param_1,int param_2)
 longlong __watcall alloc_materials(int param_1,uint param_2)
 
 {
-  DAT_00480ff0 = LocalAlloc(0x40,param_1 * 0xc);
-  if (DAT_00480ff0 == (HLOCAL)0x0) {
+  materials = LocalAlloc(0x40,param_1 * 0xc);
+  if (materials == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_m_00452bf9,s_material_cpp_00452bec,0x1d);
   }
   DAT_00480ff4 = param_1;
@@ -28040,7 +27916,7 @@ longlong __watcall alloc_materials(int param_1,uint param_2)
 void __watcall create_default_material(undefined4 param_1)
 
 {
-  DAT_00459874 = create_material(1,0xffffffff);
+  default_material = create_material(1,0xffffffff);
   return;
 }
 
@@ -28080,14 +27956,14 @@ undefined4 __watcall set_material_texture(int param_1,int *param_2)
   }
   memset(local_64,0,0x50);
   local_64[0] = 0x50;
-  uVar2 = (**(code **)(**(int **)(DAT_00480ff0 + param_1 * 0xc) + 0x14))();
+  uVar2 = (**(code **)(**(int **)(materials + param_1 * 0xc) + 0x14))();
   if ((int)uVar2 != 0) {
     uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
     fatal_exit(s__s__d____D3DError_Get_Material___00452cd8,s_material_cpp_00452ccb,0x4c,param_1,
                (int)uVar2);
   }
   uStack_24 = *(undefined4 *)(texture_table + (int)param_2 * 0xc);
-  piVar1 = *(int **)(DAT_00480ff0 + param_1 * 0xc);
+  piVar1 = *(int **)(materials + param_1 * 0xc);
   uVar2 = (**(code **)(*piVar1 + 0x10))(piVar1,&stack0xffffff94);
   if ((int)uVar2 != 0) {
     uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
@@ -28225,18 +28101,18 @@ int __watcall create_material(undefined4 param_1,int param_2)
     debugmsg(s_____Set_object_texture__d_to_han_00452d75);
     local_1c = *(undefined4 *)(param_2 * 0xc + texture_table);
   }
-  uVar4 = (**(code **)(*DAT_004764f8 + 0x18))();
+  uVar4 = (**(code **)(*direct3d + 0x18))();
   if ((int)uVar4 != 0) {
     uVar4 = d3d_error_string((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
     fatal_exit(s__s__d____D3DError_Create_Materia_00452dde,s_material_cpp_00452dd1,0xdd,(int)uVar4);
   }
-  piVar1 = *(int **)(DAT_00480ff0 + iVar2 * 0xc);
+  piVar1 = *(int **)(materials + iVar2 * 0xc);
   uVar4 = (**(code **)(*piVar1 + 0x10))(piVar1,&stack0xffffff90);
   if ((int)uVar4 != 0) {
     uVar4 = d3d_error_string((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
     fatal_exit(s__s__d____D3DError_Set_Material___00452e14,s_material_cpp_00452e07,0xe0,(int)uVar4);
   }
-  puVar3 = (undefined4 *)(DAT_00480ff0 + iVar2 * 0xc);
+  puVar3 = (undefined4 *)(materials + iVar2 * 0xc);
   piVar1 = (int *)*puVar3;
   uVar4 = (**(code **)(*piVar1 + 0x18))(piVar1,d3d_device,puVar3 + 1);
   if ((int)uVar4 != 0) {
@@ -28265,7 +28141,7 @@ enum_d3d_device_callback
   undefined4 *in_stack_00000014;
   
   if ((*(char *)(in_stack_00000010 + 2) == '\0') || (DAT_0048311e == 0)) {
-    puVar2 = (undefined4 *)(&DAT_00482098 + DAT_00481f94 * 0x11c);
+    puVar2 = (undefined4 *)(&d3d_devices + d3d_device_count * 0x11c);
     for (iVar1 = 4; iVar1 != 0; iVar1 = iVar1 + -1) {
       *puVar2 = *param_5;
       param_5 = param_5 + 1;
@@ -28276,16 +28152,16 @@ enum_d3d_device_callback
       param_5 = (undefined4 *)((int)param_5 + 1);
       puVar2 = (undefined4 *)((int)puVar2 + 1);
     }
-    lstrcpyA((LPSTR)(DAT_00481f94 * 0x11c + 0x481fba),in_stack_00000008);
-    lstrcpyA(&DAT_00481f9c + DAT_00481f94 * 0x11c,in_stack_0000000c);
+    lstrcpyA((LPSTR)(d3d_device_count * 0x11c + 0x481fba),in_stack_00000008);
+    lstrcpyA(&DAT_00481f9c + d3d_device_count * 0x11c,in_stack_0000000c);
     if (*(char *)(in_stack_00000010 + 2) == '\0') {
-      *(undefined4 *)(&DAT_004820a8 + DAT_00481f94 * 0x11c) = 0;
+      *(undefined4 *)(&DAT_004820a8 + d3d_device_count * 0x11c) = 0;
       in_stack_00000010 = in_stack_00000014;
     }
     else {
-      *(undefined4 *)(&DAT_004820a8 + DAT_00481f94 * 0x11c) = 1;
+      *(undefined4 *)(&DAT_004820a8 + d3d_device_count * 0x11c) = 1;
     }
-    puVar2 = (undefined4 *)(&DAT_00481fec + DAT_00481f94 * 0x11c);
+    puVar2 = (undefined4 *)(&DAT_00481fec + d3d_device_count * 0x11c);
     for (iVar1 = 0x2b; iVar1 != 0; iVar1 = iVar1 + -1) {
       *puVar2 = *in_stack_00000010;
       in_stack_00000010 = in_stack_00000010 + 1;
@@ -28296,19 +28172,19 @@ enum_d3d_device_callback
       in_stack_00000010 = (undefined4 *)((int)in_stack_00000010 + 1);
       puVar2 = (undefined4 *)((int)puVar2 + 1);
     }
-    *(uint *)(&DAT_004820ac + DAT_00481f94 * 0x11c) =
-         (uint)(((&DAT_00482070)[DAT_00481f94 * 0x11c] & 1) != 0);
-    *(uint *)(&DAT_004820b0 + DAT_00481f94 * 0x11c) =
-         (uint)(*(int *)(&DAT_0048208c + DAT_00481f94 * 0x11c) != 0);
-    iVar1 = DAT_00481f94 * 0x11c;
+    *(uint *)(&DAT_004820ac + d3d_device_count * 0x11c) =
+         (uint)(((&DAT_00482070)[d3d_device_count * 0x11c] & 1) != 0);
+    *(uint *)(&DAT_004820b0 + d3d_device_count * 0x11c) =
+         (uint)(*(int *)(&DAT_0048208c + d3d_device_count * 0x11c) != 0);
+    iVar1 = d3d_device_count * 0x11c;
     bpp_to_ddbd_flag_result = bpp_to_ddbd_flag();
-    *(uint *)(&DAT_004820b4 + DAT_00481f94 * 0x11c) =
+    *(uint *)(&DAT_004820b4 + d3d_device_count * 0x11c) =
          (uint)((*(uint *)(&DAT_00482088 + iVar1) & bpp_to_ddbd_flag_result) != 0);
     if (DAT_00482f7a == 0) {
-      *(undefined4 *)(&DAT_004820b4 + DAT_00481f94 * 0x11c) = 0;
+      *(undefined4 *)(&DAT_004820b4 + d3d_device_count * 0x11c) = 0;
     }
-    DAT_00481f94 = DAT_00481f94 + 1;
-    if (DAT_00481f94 == 5) {
+    d3d_device_count = d3d_device_count + 1;
+    if (d3d_device_count == 5) {
       return 0;
     }
   }
@@ -28332,9 +28208,9 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
   int *in_stack_00000008;
   
   bVar7 = 0;
-  memset(&DAT_0048264c + DAT_00482644 * 0x80,0,0x80);
+  memset(&dd_modes + dd_mode_count * 0x80,0,0x80);
   puVar5 = in_stack_00000004;
-  puVar6 = (undefined4 *)(&DAT_0048264c + DAT_00482644 * 0x80);
+  puVar6 = (undefined4 *)(&dd_modes + dd_mode_count * 0x80);
   for (iVar2 = 0x1b; iVar2 != 0; iVar2 = iVar2 + -1) {
     *puVar6 = *puVar5;
     puVar5 = puVar5 + (uint)bVar7 * -2 + 1;
@@ -28346,14 +28222,14 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
     puVar6 = (undefined4 *)((int)puVar6 + (uint)bVar7 * -2 + 1);
   }
   bVar7 = *(byte *)(in_stack_00000004 + 0x13);
-  iVar2 = DAT_00482644 * 0x80;
+  iVar2 = dd_mode_count * 0x80;
   if ((bVar7 & 0x20) == 0) {
     if ((bVar7 & 8) == 0) {
       if ((bVar7 & 1) != 0) {
         return 1;
       }
       *(undefined4 *)(&DAT_004826b8 + iVar2) = 0;
-      *(undefined4 *)(&DAT_004826c8 + DAT_00482644 * 0x80) = 0;
+      *(undefined4 *)(&DAT_004826c8 + dd_mode_count * 0x80) = 0;
       for (uVar1 = in_stack_00000004[0x16]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
       }
       iVar2 = 0;
@@ -28372,27 +28248,27 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
       for (; (uVar1 & 1) != 0; uVar1 = uVar1 >> 1) {
         iVar3 = iVar3 + 1;
       }
-      *(int *)(&DAT_004826bc + DAT_00482644 * 0x80) = iVar2;
-      *(int *)(&DAT_004826c4 + DAT_00482644 * 0x80) = iVar4;
-      *(int *)(&DAT_004826c0 + DAT_00482644 * 0x80) = iVar3;
+      *(int *)(&DAT_004826bc + dd_mode_count * 0x80) = iVar2;
+      *(int *)(&DAT_004826c4 + dd_mode_count * 0x80) = iVar4;
+      *(int *)(&DAT_004826c0 + dd_mode_count * 0x80) = iVar3;
     }
     else {
       *(undefined4 *)(&DAT_004826b8 + iVar2) = 1;
-      *(undefined4 *)(&DAT_004826c8 + DAT_00482644 * 0x80) = 4;
+      *(undefined4 *)(&DAT_004826c8 + dd_mode_count * 0x80) = 4;
     }
   }
   else {
     *(undefined4 *)(&DAT_004826b8 + iVar2) = 1;
-    *(undefined4 *)(&DAT_004826c8 + DAT_00482644 * 0x80) = 8;
+    *(undefined4 *)(&DAT_004826c8 + dd_mode_count * 0x80) = 8;
   }
   *in_stack_00000008 = -1;
   if (*in_stack_00000008 != 0) {
-    *in_stack_00000008 = DAT_00482644;
+    *in_stack_00000008 = dd_mode_count;
   }
-  if (*(int *)(&DAT_004826b8 + DAT_00482644 * 0x80) != 0) {
-    *in_stack_00000008 = DAT_00482644;
+  if (*(int *)(&DAT_004826b8 + dd_mode_count * 0x80) != 0) {
+    *in_stack_00000008 = dd_mode_count;
   }
-  DAT_00482644 = DAT_00482644 + 1;
+  dd_mode_count = dd_mode_count + 1;
   return 1;
 }
 
@@ -30829,7 +30705,7 @@ byte * __watcall mbsninc_1(byte *param_1,int unaff_EDX)
         bVar1 = true;
       }
       else {
-        bVar1 = ((&DAT_00459bb9)[*param_1] & 1) == 0;
+        bVar1 = ((&mbcs_lead_byte_table)[*param_1] & 1) == 0;
       }
       param_1 = param_1 + !bVar1 + 1;
     }
@@ -31035,7 +30911,7 @@ LAB_00432bcb:
             bVar8 = true;
           }
           else {
-            bVar8 = ((&DAT_00459bb9)[*pbVar6] & 1) == 0;
+            bVar8 = ((&mbcs_lead_byte_table)[*pbVar6] & 1) == 0;
           }
           pbVar5 = pbVar6;
           if (!bVar8) break;
@@ -31044,7 +30920,7 @@ LAB_00432bcb:
           uVar3 = 0;
         }
         else {
-          uVar3 = (uint)((&DAT_00459bb9)[*pbVar2] & 1);
+          uVar3 = (uint)((&mbcs_lead_byte_table)[*pbVar2] & 1);
         }
       }
       dest = pbVar5;
@@ -31118,7 +30994,7 @@ char * __watcall mbsnbcpy(char *dest,char *unaff_EDX,int unaff_EBX)
     iVar4 = uVar3 - 1;
     bVar2 = 0;
     if (IsDBCS != 0) {
-      bVar2 = (&DAT_00459bb9)[(byte)unaff_EDX[unaff_EBX]] & 1;
+      bVar2 = (&mbcs_lead_byte_table)[(byte)unaff_EDX[unaff_EBX]] & 1;
     }
     if ((bVar2 != 0) && (unaff_EBX < iVar4)) {
       unaff_EBX = unaff_EBX + -1;
@@ -31164,7 +31040,7 @@ undefined8 __watcall mbptov(byte *param_1,undefined4 unaff_EDX)
   
   bVar1 = 0;
   if (IsDBCS != 0) {
-    bVar1 = (&DAT_00459bb9)[*param_1] & 1;
+    bVar1 = (&mbcs_lead_byte_table)[*param_1] & 1;
   }
   if (bVar1 != 0) {
     return CONCAT44(unaff_EDX,(uint)CONCAT11(*param_1,param_1[1]));
@@ -31249,7 +31125,7 @@ byte * __watcall mbgetcode(byte *param_1,uint *unaff_EDX)
         bVar4 = true;
       }
       else {
-        bVar4 = ((&DAT_00459bb9)[(byte)*unaff_EDX] & 1) == 0;
+        bVar4 = ((&mbcs_lead_byte_table)[(byte)*unaff_EDX] & 1) == 0;
       }
       pbVar3 = pbVar1;
       if (!bVar4) {
@@ -31284,7 +31160,7 @@ undefined8 __watcall mbsnextc(byte *param_1,undefined4 unaff_EDX)
     if (uVar2 != 0) {
       bVar3 = 0;
       if (IsDBCS != 0) {
-        bVar3 = (&DAT_00459bb9)[bVar1] & 1;
+        bVar3 = (&mbcs_lead_byte_table)[bVar1] & 1;
       }
       if ((bVar3 != 0) && (param_1[1] != 0)) {
         return CONCAT44(unaff_EDX,(uint)CONCAT11(bVar1,param_1[1]));
@@ -31309,7 +31185,7 @@ undefined8 __watcall mbsinc(byte *param_1,undefined4 unaff_EDX)
       bVar2 = true;
     }
     else {
-      bVar2 = ((&DAT_00459bb9)[*param_1] & 1) == 0;
+      bVar2 = ((&mbcs_lead_byte_table)[*param_1] & 1) == 0;
     }
     pbVar1 = param_1 + 1;
     if (!bVar2) {
@@ -31333,7 +31209,7 @@ byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
   if (param_1 < unaff_EDX) {
     pbVar1 = unaff_EDX + -1;
     if (IsDBCS != 0) {
-      if (((&DAT_00459bb9)[*pbVar1] & 1) == 0) {
+      if (((&mbcs_lead_byte_table)[*pbVar1] & 1) == 0) {
         do {
           pbVar1 = pbVar1 + -1;
           if (pbVar1 < param_1) break;
@@ -31341,7 +31217,7 @@ byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
             bVar2 = true;
           }
           else {
-            bVar2 = ((&DAT_00459bb9)[*pbVar1] & 1) == 0;
+            bVar2 = ((&mbcs_lead_byte_table)[*pbVar1] & 1) == 0;
           }
         } while (!bVar2);
         pbVar1 = unaff_EDX + (-1 - ((int)unaff_EDX - (int)pbVar1) % 2);
@@ -31908,21 +31784,16 @@ ushort __watcall init_80x87(void)
 
 /* ==== 004371ab verify_pentium_fdiv_bug ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Removing unreachable block (ram,0x004371f5) */
 
 void __watcall verify_pentium_fdiv_bug(void)
 
 {
-  if ((2 < real87) && (_DAT_00456230 < 0.0)) {
-    chipbug = chipbug | 1;
-  }
   return;
 }
 
 
 /* ==== 00437200 fpatan_emulated ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined8 __watcall fpatan_emulated(undefined4 param_1,undefined4 param_2)
 
@@ -34210,20 +34081,20 @@ undefined8 __watcall do_getch(HANDLE console_input,undefined4 unaff_EDX_00)
   _INPUT_RECORD input_record;
   DWORD local_14;
   
-  if (DAT_00459ea0 != 0) {
-    if (DAT_00459ea0 < 2) {
-      DAT_004833cc = DAT_004833cc + -1;
+  if (getch_pending != 0) {
+    if ((uint)getch_pending < 2) {
+      getch_buffer_count = getch_buffer_count + -1;
       uVar2 = DAT_004833c8;
       if (DAT_004833c8 == 0) {
-        DAT_00459ea0 = 2;
+        getch_pending = 2;
       }
-      else if (DAT_004833cc == 0) {
-        DAT_00459ea0 = 0;
+      else if (getch_buffer_count == 0) {
+        getch_pending = 0;
       }
       goto LAB_00439fd0;
     }
-    if (DAT_00459ea0 == 2) {
-      DAT_00459ea0 = (uint)(DAT_004833cc != 0);
+    if (getch_pending == 2) {
+      getch_pending = (int)(getch_buffer_count != 0);
       uVar2 = DAT_004833c4;
       goto LAB_00439fd0;
     }
@@ -34236,18 +34107,18 @@ undefined8 __watcall do_getch(HANDLE console_input,undefined4 unaff_EDX_00)
     }
     nt_real_key = NTRealKey((short *)&input_record,unaff_EDX);
   } while ((int)nt_real_key == 0);
-  DAT_004833cc = input_record.Event.KeyEvent.wRepeatCount - 1;
+  getch_buffer_count = input_record.Event.KeyEvent.wRepeatCount - 1;
   uVar2 = (uint)(byte)input_record.Event.MouseEvent.dwControlKeyState._2_1_;
   if (((input_record.Event.KeyEvent.dwControlKeyState._1_1_ & 1) == 0) && (uVar2 != 0)) {
     DAT_004833c8 = uVar2;
-    if (DAT_004833cc != 0) {
-      DAT_00459ea0 = 1;
+    if (getch_buffer_count != 0) {
+      getch_pending = 1;
     }
   }
   else {
     DAT_004833c4 = (uint)input_record.Event.KeyEvent.wVirtualScanCode;
     DAT_004833c8 = 0;
-    DAT_00459ea0 = 2;
+    getch_pending = 2;
     uVar2 = DAT_004833c8;
   }
 LAB_00439fd0:
@@ -35025,8 +34896,6 @@ LAB_0043bdc9:
 
 /* ==== 0043bde4 fdiv_pentium_safe_core ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 uint __watcall
 fdiv_pentium_safe_core
           (int param_1,uint param_2,ushort param_3,undefined4 param_4,uint param_5,uint param_6)
@@ -35057,7 +34926,7 @@ fdiv_pentium_safe_core
             (uVar2 = in_stack_00000014 * 2, !CARRY4(in_stack_00000014,in_stack_00000014))) {
       return uVar2;
     }
-    fVar3 = fVar1 * (float10)_DAT_0045a128;
+    fVar3 = fVar1 * (float10)9.223372e+18;
     param_5 = SUB104(fVar3,0);
     in_stack_0000000c = (ushort)((unkuint10)fVar3 >> 0x40);
     param_6 = (uint)((unkuint10)fVar3 >> 0x20);
@@ -37425,8 +37294,6 @@ undefined8 __watcall IF_DLOG10(undefined4 param_1,undefined4 param_2)
 
 /* ==== 0043e89b floor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 double __watcall floor(double _X)
 
 {
@@ -37436,7 +37303,7 @@ double __watcall floor(double _X)
   
   modf_result = modf(_X,&local_18);
   if ((float10)CONCAT28(extraout_ST0h,modf_result) < (float10)0) {
-    local_18 = local_18 + _DAT_004574e0;
+    local_18 = local_18 + -1.0;
   }
   return SUB108((float10)local_18,0);
 }
@@ -37463,8 +37330,6 @@ void __watcall Scale(int param_1)
 
 
 /* ==== 0043e918 Scale10V ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined8 __watcall Scale10V(undefined4 param_1,undefined4 unaff_EDX)
 

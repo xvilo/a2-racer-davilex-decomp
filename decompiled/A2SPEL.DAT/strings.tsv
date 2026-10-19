@@ -144,7 +144,6 @@ address	type	value
 00441954	string	myinit.cpp
 0044195f	string	Marking opponent %d in map at chunk %d and lane %d...\n
 00441996	string	Done.\n
-004419a3	string	D@resetting player object..\n
 004419c0	string	%s(%d) Illegal opponent nr %d (max=%d)\n
 004419e8	string	myinit.cpp
 004419f3	string	 %s(%d) : D3DError Getting matrix : %s\n
@@ -199,8 +198,6 @@ address	type	value
 0044211e	string	Getting driver...\n
 00442131	string	Memorizing driver_type...\n
 0044214c	string	Start_opponent completed\n
-00442170	string	L>opponent.cpp
-0044217f	string	%s(%d) : object3d not initialised while releasing opponents \n
 004421cd	string	opponent.cpp
 004421da	string	%s(%d) : Illegal waypoints for opponent %d.\n
 00442207	string	opponent.cpp
@@ -704,7 +701,6 @@ address	type	value
 0044563e	string	 ## Range to target ## >> %f\n
 0044565c	string	Normal exit covered for driver %d\n
 0044567f	string	Normal exit covered for driver %d\n
-004456b8	string	n@Driving %d drivers.\n
 004456d0	string	radar.cpp
 004456da	string	 %s(%d) : unable to get pixelformat (%s).
 00445704	string	 Radar is 8 bits formaat.\n
@@ -1032,7 +1028,6 @@ address	type	value
 00446c12	string	setting static object position\n
 00446c32	string	create execute buffer object..\n
 00446c52	string	done creating execute buffer object..\n
-00446c80	string	?pion.cpp
 00446c8a	string	 %s(%d) : Illegal object number (%d)\n
 00446cb0	string	pion.cpp
 00446cb9	string	 %s(%d) : D3DError Getting matrix : %s\n
@@ -2296,7 +2291,6 @@ address	type	value
 0044fa74	string	discarded %d\n
 0044fa82	string	total     %d\n
 0044fa90	string	mapsize   %dx%d = %d\n
-0044faac	string	>@mapexec.cpp
 0044faba	string	 %s(%d) : D3DError Execute ExecBuffer : %s\n
 0044fae6	string	mapexec.cpp
 0044faf2	string	 %s(%d) : illegal vertex index error %d [0..%d]\n
@@ -3041,7 +3035,6 @@ address	type	value
 0045616f	string	Failure while getting the surface description of the back buffer before clearing.\n%s
 004561c4	string	Clearing the front buffer failed.\n%s
 004561e9	string	Getting DD capabilities failed while checking total video memory.\n%s
-00456235	string	yE>read from
 00456242	string	written
 0045624a	string	The instruction at %08lx referenced memory at %08lx\nThe memory could not be %s
 00456299	string	An privileged instruction was executed at address %08lx

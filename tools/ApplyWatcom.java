@@ -13,8 +13,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ghidra.app.script.GhidraScript;
@@ -78,6 +80,7 @@ public class ApplyWatcom extends GhidraScript {
 			}
 			nameSharedTails(args.length > 2 && args[2].equals("complete"));
 			defineShortStrings();
+			defineFloatConstants();
 			assignConventions();
 		}
 	}
@@ -395,6 +398,69 @@ public class ApplyWatcom extends GhidraScript {
 			}
 		}
 		println("ApplyWatcom post: " + n + " short strings defined");
+	}
+
+	// ---- post: floating-point constants -------------------------------------------------
+
+	/**
+	 * Watcom keeps float literals in the writable data segment, so the decompiler prints them as
+	 * (float)_DAT_xxx instead of their value. A location that FPU instructions only read (never
+	 * written anywhere) is typed float/double by operand size and marked constant.
+	 */
+	private void defineFloatConstants() throws Exception {
+		Map<Address, Integer> size = new HashMap<>();
+		Set<Address> written = new HashSet<>(), otherUse = new HashSet<>();
+		InstructionIterator ii = currentProgram.getListing().getInstructions(true);
+		while (ii.hasNext() && !monitor.isCancelled()) {
+			Instruction in = ii.next();
+			String m = in.getMnemonicString().toUpperCase();
+			boolean fpuRead = m.startsWith("F") && !m.startsWith("FST") && !m.startsWith("FI") &&
+				!m.startsWith("FN") && !m.startsWith("FLDCW") && !m.startsWith("FLDENV");
+			for (ghidra.program.model.symbol.Reference r : in.getReferencesFrom()) {
+				Address a = r.getToAddress();
+				if (r.getReferenceType().isWrite()) {
+					written.add(a);
+				}
+				else if (fpuRead && r.getReferenceType().isRead()) {
+					String op = in.getDefaultOperandRepresentation(r.getOperandIndex()).toLowerCase();
+					int sz = op.startsWith("float") || op.startsWith("dword") ? 4
+							: op.startsWith("double") || op.startsWith("qword") ? 8 : 0;
+					if (sz == 0 || (size.containsKey(a) && size.get(a) != sz)) {
+						otherUse.add(a);
+					}
+					else {
+						size.put(a, sz);
+					}
+				}
+				else {
+					otherUse.add(a);
+				}
+			}
+		}
+		int n = 0;
+		ghidra.program.model.mem.Memory mem = currentProgram.getMemory();
+		for (Map.Entry<Address, Integer> e : size.entrySet()) {
+			Address a = e.getKey();
+			if (written.contains(a) || otherUse.contains(a) || mem.getBlock(a) == null ||
+				mem.getBlock(a).isExecute()) {
+				continue;
+			}
+			Data d = getDataAt(a);
+			if (d != null && d.isDefined() && !(d.getDataType() instanceof Undefined)) {
+				continue;
+			}
+			try {
+				clearListing(a, a.add(e.getValue() - 1));
+				Data c = createData(a, e.getValue() == 4 ? FloatDataType.dataType : DoubleDataType.dataType);
+				ghidra.program.model.data.MutabilitySettingsDefinition.DEF.setChoice(c,
+					ghidra.program.model.data.MutabilitySettingsDefinition.CONSTANT);
+				n++;
+			}
+			catch (Exception ex) {
+				// overlaps other data; leave it
+			}
+		}
+		println("ApplyWatcom post: " + n + " floating-point constants defined");
 	}
 
 	// ---- post: calling conventions for everything else --------------------------------

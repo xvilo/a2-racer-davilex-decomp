@@ -1019,7 +1019,6 @@ address	type	value
 0041f524	string	atan2
 0041f52f	string	dpowi
 0041f54e	string	cotan
-0041f559	string	yE>Domain error
 0041f569	string	Argument singularity
 0041f57e	string	Overflow range error
 0041f593	string	Underflow range error

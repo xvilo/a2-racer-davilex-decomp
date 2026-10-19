@@ -423,3 +423,109 @@ address	kind	name	cc	ret	params	dtype	mangled
 00430e34	function	crt_return_zero	__watcall	int	-		
 0043ef1f	function	crt_return_zero_2	__watcall	int	-		
 0043f45d	function	crt_return_zero_3	__watcall	int	-		
+# --- globals, most-used first ---------------------------------------------------------
+00476788	data	anims3d					
+00480d6c	data	frames3d					
+00480d7c	data	triangles3d					
+00476584	data	weg_chunk_quads					
+0047656c	data	weg_lane_chunks				int	
+00476574	data	weg_section_count				int	
+0045772c	data	player_x				float	
+00457730	data	player_y				float	
+00457734	data	player_z				float	
+0045b250	data	player_heading				int	
+00457738	data	player_start_lane				int	
+00457754	data	accelerator_input				int	
+004729c0	data	idle_rpm_step				int	
+0045b2a4	data	joystick_buttons				int	
+00457720	data	camera_distance				float	
+00457724	data	camera_height				float	
+0045b278	data	camera_x				float	
+0045b27c	data	camera_y				float	
+0045b280	data	camera_z				float	
+0045b284	data	camera_pitch				float	
+0045b288	data	camera_yaw				float	
+0045b240	data	camera_lag_xz				float	
+0045b244	data	camera_lag_y				float	
+0045b258	data	camera_tilt				float	
+0045b25c	data	camera_roll				float	
+004770e0	data	cameras					
+004770d4	data	camera_count				int	
+00475160	data	radar_width				int	
+00475164	data	radar_height				int	
+00475168	data	radar_center_x				int	
+0047516c	data	radar_center_y				int	
+00475170	data	radar_scale				int	
+004751a4	data	radar_background_color				int	
+004751b0	data	radar_dot_color				int	
+00458c20	data	dashboard_on_screen				int	
+004731e4	data	dashboard_redraw_state				int	
+004731f0	data	video_mode_index				int	
+00458c70	data	video_modes					
+00458c3c	data	music_enabled				int	
+004767a8	data	texture_formats					
+00480ff0	data	materials					
+00459874	data	default_material				int	
+004764f8	data	direct3d					
+00481f94	data	d3d_device_count				int	
+00482098	data	d3d_devices					
+00482644	data	dd_mode_count				int	
+0048264c	data	dd_modes					
+0047651c	data	render_states					
+00476520	data	render_shade_mode				int	
+00476524	data	render_flags					
+004767cc	data	vertex_capacity				int	
+004596e8	data	tile_size				int	
+004596ec	data	tile_scale				float	
+004767d8	data	tile_u_coords					
+004767e8	data	tile_v_coords					
+00477014	data	view_min_x				int	
+00477018	data	view_min_z				int	
+004596f0	data	view_max_x				int	
+004596f4	data	view_max_z				int	
+00475140	data	driver_lane_data					
+00475144	data	driver_path_data					
+00475a5c	data	racer_finish_times					
+00457c60	data	static_object_texture_ids					
+00457c64	data	static_object_mesh_ids					
+00475a24	data	countdown_step				int	
+00475ad8	data	pionnen					
+00476000	data	joystick1_attached				int	
+0047605c	data	joystick2_attached				int	
+00475fe8	data	joystick_center_x					
+00475fec	data	joystick_center_y					
+00459bb9	data	mbcs_lead_byte_table					
+0045970c	data	font_bk_modes					
+00459ea0	data	getch_pending				int	
+00458c48	data	volume_offset				int	
+0045b2a0	data	active_input_device				int	
+0045b24c	data	camera_heading_int				int	
+0045b254	data	camera_pitch_int				int	
+0045b294	data	camera_target_heading				int	
+0045b298	data	camera_target_pitch				int	
+0045b29c	data	camera_target_roll				int	
+0045b2a8	data	steering_return_rate				float	
+0045b290	data	atan_table_id				int	
+0047303c	data	elapsed_seconds				double	
+00458db0	data	radar_enabled				int	
+00458c1c	data	texture_conversion_mode				int	
+00475adc	data	pion_count				int	
+00473010	data	opponents_initialized				int	
+0047677c	data	objects3d_initialized				int	
+00476564	data	weg_chunk_capacity				int	
+0047658c	data	weg_chunk_vertex_lists					
+004764d4	data	viewport_x				int	
+004764d8	data	viewport_width				int	
+004764dc	data	viewport_height				int	
+00459670	data	background_material				int	
+0045966c	data	background_texture					
+00459674	data	max_buffer_size				int	
+00459678	data	max_vertex_count				int	
+00457767	data	motor_sample_handles					
+004751c4	data	object_sound_handles					
+00457984	data	car_type_texture_ids					
+0045792c	data	identity_matrix					
+004578d4	data	lane_offsets					
+00475a50	data	time_now				int	
+00477054	data	view_matrix					
+004833cc	data	getch_buffer_count				int	

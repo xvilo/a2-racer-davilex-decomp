@@ -3757,8 +3757,6 @@ set_3dlistener_orientation_1
 
 /* ==== 004058b1 set_3dlistener_dopplerfactor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int set_3dlistener_dopplerfactor(float param_1)
 
 {
@@ -3769,7 +3767,7 @@ int set_3dlistener_dopplerfactor(float param_1)
     if (param_1 < 0.0) {
       param_1 = 0.0;
     }
-    if ((float)_DAT_0041b2c7 < param_1) {
+    if (10.0 < param_1) {
       param_1 = 10.0;
     }
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x30))(ds3d_listener,param_1,0);
@@ -3785,8 +3783,6 @@ int set_3dlistener_dopplerfactor(float param_1)
 
 /* ==== 00405921 set_3dlistener_distancefactor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall set_3dlistener_distancefactor(float param_1)
 
 {
@@ -3798,7 +3794,7 @@ int __watcall set_3dlistener_distancefactor(float param_1)
     if (in_stack_00000004 < 0.0) {
       in_stack_00000004 = 0.0;
     }
-    if ((float)_DAT_0041b303 < in_stack_00000004) {
+    if (10.0 < in_stack_00000004) {
       in_stack_00000004 = 10.0;
     }
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x2c))(ds3d_listener,in_stack_00000004,0);
@@ -3814,8 +3810,6 @@ int __watcall set_3dlistener_distancefactor(float param_1)
 
 /* ==== 00405983 set_3dlistener_rollofffactor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall set_3dlistener_rollofffactor(float param_1)
 
 {
@@ -3827,7 +3821,7 @@ int __watcall set_3dlistener_rollofffactor(float param_1)
     if (in_stack_00000004 < 0.0) {
       in_stack_00000004 = 0.0;
     }
-    if ((float)_DAT_0041b33f < in_stack_00000004) {
+    if (10.0 < in_stack_00000004) {
       in_stack_00000004 = 10.0;
     }
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x3c))(ds3d_listener,in_stack_00000004,0);
@@ -12275,12 +12269,10 @@ void __watcall set_joystick_keys(int param_1,int param_2,int param_3)
 
 /* ==== 0040e538 set_joystick_sensibility ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall set_joystick_sensibility(double param_1)
 
 {
-  if ((1.0 < param_1) || (param_1 < _DAT_0041e4f5)) {
+  if ((1.0 < param_1) || (param_1 < 0.05)) {
     fatal_exit(s__set_joystick_sencesibility__inv_0041e4aa);
   }
   joysticksencesibility = param_1;
@@ -19194,8 +19186,6 @@ undefined8 __watcall IF_DLOG10(undefined4 param_1,undefined4 param_2)
 
 /* ==== 00414ba9 floor ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 double __watcall floor(double _X)
 
 {
@@ -19205,7 +19195,7 @@ double __watcall floor(double _X)
   
   modf_result = modf(_X,&local_18);
   if ((float10)CONCAT28(extraout_ST0h,modf_result) < (float10)0) {
-    local_18 = local_18 + _DAT_0041f4d4;
+    local_18 = local_18 + -1.0;
   }
   return SUB108((float10)local_18,0);
 }
@@ -19243,8 +19233,6 @@ void __watcall Scale(int param_1)
 
 
 /* ==== 00414c44 Scale10V ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined8 __watcall Scale10V(undefined4 param_1,undefined4 unaff_EDX)
 
@@ -19845,8 +19833,6 @@ void __watcall bin2string_inline_table_2(void)
 
 /* ==== 00415430 fdiv_pentium_safe_core ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 uint __watcall
 fdiv_pentium_safe_core
           (int param_1,uint param_2,ushort param_3,undefined4 param_4,uint param_5,uint param_6)
@@ -19877,7 +19863,7 @@ fdiv_pentium_safe_core
             (uVar2 = in_stack_00000014 * 2, !CARRY4(in_stack_00000014,in_stack_00000014))) {
       return uVar2;
     }
-    fVar3 = fVar1 * (float10)_DAT_004203ac;
+    fVar3 = fVar1 * (float10)9.223372e+18;
     param_5 = SUB104(fVar3,0);
     in_stack_0000000c = (ushort)((unkuint10)fVar3 >> 0x40);
     param_6 = (uint)((unkuint10)fVar3 >> 0x20);
@@ -20123,14 +20109,11 @@ void __watcall math2err(uint param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX
 
 /* ==== 00415ca0 verify_pentium_fdiv_bug ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Removing unreachable block (ram,0x00415cea) */
 
 void __watcall verify_pentium_fdiv_bug(void)
 
 {
-  if ((2 < real87) && (_DAT_0041f554 < 0.0)) {
-    chipbug = chipbug | 1;
-  }
   return;
 }
 

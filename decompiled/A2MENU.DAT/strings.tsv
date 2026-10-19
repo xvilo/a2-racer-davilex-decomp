@@ -2350,7 +2350,6 @@ address	type	value
 00431efc	string	atan2
 00431f07	string	dpowi
 00431f26	string	cotan
-00431f31	string	yE>Domain error
 00431f41	string	Argument singularity
 00431f56	string	Overflow range error
 00431f6b	string	Underflow range error
