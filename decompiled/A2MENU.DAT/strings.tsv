@@ -850,6 +850,7 @@ address	type	value
 00428e00	string	mdc_close_screen ( ), destroy form\n
 00428e24	string	click1.wav
 00428e30	string	not enough memory for animations
+00428e51	string	a2mrc.img
 00428e5b	string	not enough memory for animation data
 00428e80	string	not enough memory for animations
 00428eab	string	not enough memory for animation data
@@ -1191,7 +1192,6 @@ address	type	value
 0042b191	string	error unidentified
 0042b1a4	string	 %s(%d) : not enough memory to retrieve driver info\n
 0042b1d9	string	%s, %s\n
-0042b1e1	string	SB16.VXD
 0042b1ea	string	sb16 driver found %d\n
 0042b205	string	secondary driver found %d\n
 0042b220	string	sound.cpp
@@ -1317,11 +1317,9 @@ address	type	value
 0042bf58	string	 %s(%d) : error locking sound buffer (%d) (%s)\n
 0042bf88	string	sound.cpp
 0042bf92	string	 %s(%d) : error unlocking sound buffer (%d) (%s)\n
-0042bfc4	string	[%s]\n
 0042bfca	string	file        : %s\n
 0042bfdc	string	bufferlength:%d\n
 0042bfed	string	samplerate  :%d\n
-0042bffe	string	bpps        :%d\n
 0042c00f	string	align       :%d stereo %d\n
 0042c02a	string	sound.cpp
 0042c034	string	 %s(%d) : error playing sound %d (%s)\n
@@ -1653,7 +1651,9 @@ address	type	value
 0042e39a	string	(set_joystick_sencesibility) invalid percentage must be between 0.05 and 1
 0042e3ec	string	?(get_joystick_position) invalid joystick number (%d)\n
 0042e424	string	(keyispressed) illegal device requested (%d)
+0042e454	string	msg.cpp
 0042e45c	string	 %s(%d) : DESTROY MESSAGE\n
+0042e477	string	msg.cpp
 0042e47f	string	 %s(%d) : QUIT MESSAGE\n
 0042e498	string	clipblit.cpp
 0042e4a5	string	 %s(%d) : illegal clipping limit top x.
@@ -1725,6 +1725,7 @@ address	type	value
 0042ec15	string	 %s(%d) : no clipping limit set\n
 0042ec38	string	rcpcx.cpp
 0042ec42	string	 %s(%d) : unidentified focus error (%d).\n
+0042ec6c	string	rcpcx.cpp
 0042ec76	string	 %s(%d) : error reading\n
 0042ec8f	string	rcpcx.cpp
 0042ec99	string	 %s(%d) : error reading\n
@@ -1733,38 +1734,52 @@ address	type	value
 0042ecdb	string	rcpcx.cpp
 0042ece5	string	 %s(%d) : error reading\n
 0042ecfe	string	bpl %d, width %d\n
+0042ed10	string	rcpcx.cpp
 0042ed1a	string	 %s(%d) : error reading\n
+0042ed33	string	rcpcx.cpp
 0042ed3d	string	 %s(%d)  : header read]\n
 0042ed60	string	 %s(%d)  : no error header read]\n
 0042ed82	string	creating surface %d,%d\n
 0042ed9a	string	creation succesfull\n
+0042edaf	string	rcpcx.cpp
 0042edb9	string	 %s(%d)  : closing\n
+0042edcd	string	rcpcx.cpp
 0042edd7	string	 %s(%d) : error reading\n
+0042edf0	string	rcpcx.cpp
 0042edfa	string	 %s(%d)  : header read]\n
 0042ee1d	string	 %s(%d)  : no error header read]\n
 0042ee3f	string	creating surface %d,%d\n
 0042ee57	string	creation succesfull\n
+0042ee6c	string	rcpcx.cpp
 0042ee76	string	 %s(%d)  : closing\n
+0042ee8a	string	rcpcx.cpp
 0042ee94	string	 %s(%d) : error reading\n
+0042eead	string	rcpcx.cpp
 0042eeb7	string	 %s(%d)  : header read]\n
 0042eeda	string	 %s(%d)  : no error header read]\n
 0042eefc	string	creating surface %d,%d\n
 0042ef14	string	creation succesfull\n
+0042ef29	string	rcpcx.cpp
 0042ef33	string	 %s(%d)  : closing\n
+0042ef47	string	rcpcx.cpp
 0042ef51	string	 %s(%d) : error reading\n
+0042ef6a	string	rcpcx.cpp
 0042ef74	string	 %s(%d)  : header read]\n
 0042ef97	string	 %s(%d)  : no error header read]\n
 0042efb9	string	creation succesfull\n
 0042efce	string	blitting to destination\n
 0042eff1	string	 %s(%d) : blitting error (%s)\n
 0042f010	string	Release buffer surface\n
+0042f028	string	rcpcx.cpp
 0042f032	string	 %s(%d)  : closing\n
+0042f046	string	rcpcx.cpp
 0042f050	string	 %s(%d)  : header read]\n
 0042f073	string	 %s(%d)  : no error header read]\n
 0042f095	string	creation succesfull\n
 0042f0aa	string	blitting to destination\n
 0042f0cd	string	 %s(%d) : blitting error (%s)\n
 0042f0ec	string	Release buffer surface\n
+0042f104	string	rcpcx.cpp
 0042f10e	string	 %s(%d)  : closing\n
 0042f124	string	wipes.cpp
 0042f12e	string	 %s(%d) : (handle_wipe) incorrect position or size x(%d) y(%d) w(%d) h(%d) 
@@ -1901,13 +1916,21 @@ address	type	value
 004304ac	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
 004304e9	string	pal.cpp
 004304f1	string	 %s(%d) : could set entries (%s)\n
+00430513	string	pal.cpp
 0043051b	string	 %s(%d) : palette was not initialized\n
+00430542	string	pal.cpp
 0043054a	string	 %s(%d) : illegal palette base entry (%d)\n
+00430575	string	pal.cpp
 0043057d	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+004305ba	string	pal.cpp
 004305c2	string	 %s(%d) : could set entries (%s)\n
+004305e4	string	pal.cpp
 004305ec	string	 %s(%d) : palette was not initialized\n
+00430613	string	pal.cpp
 0043061b	string	 %s(%d) : illegal palette base entry (%d)\n
+00430646	string	pal.cpp
 0043064e	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+0043068b	string	pal.cpp
 00430693	string	 %s(%d) : illegal flag value %d\n
 004306b4	string	pformat.cpp
 004306c0	string	 %s(%d) : error getting hdc of screen (%s)\n
@@ -1958,7 +1981,6 @@ address	type	value
 00430b59	string	Windows 95 thinks this is a slow machine\n
 00430b83	string	 %s(%d) : not enough memory to retrieve driver info\n
 00430bb8	string	%s, %s\n
-00430bc0	string	DD3Dfx
 00430bc7	string	dd3ddfx driver found %d\n
 00430be4	string	Righteous dd3ddfx driver found %d\n
 00430c0c	string	secondary driver found %d\n
@@ -2110,7 +2132,6 @@ address	type	value
 00431f6b	string	Underflow range error
 00431f81	string	Total loss of significance
 00431f9c	string	Partial loss of significance
-00432194	string	Jeroen
 004321c0	string	David
 004321ec	string	Rogier
 00432270	string	Richard
