@@ -55,7 +55,7 @@ for m in "${modules[@]}"; do
 	# The .DAT modules are PE files; force the PE loader since the extension hides it.
 	"$GHIDRA_INSTALL_DIR/support/analyzeHeadless" "$ROOT/build/ghidra" "$m" \
 		-import "$bin" -loader PeLoader -scriptPath "$ROOT/tools" \
-		-preScript ApplyWatcom.java pre "$names" \
+		-preScript ApplyWatcom.java pre "$names" "$ROOT/symbols/structs.tsv" \
 		-postScript ApplyWatcom.java post "$names" "$coverage" \
 		-postScript AutoNameVariables.java \
 		-postScript ExportDecompiled.java "$out" "$names" \

@@ -1,0 +1,41 @@
+# Recovered structure layouts, shared by all modules. Columns: struct, offset (hex), type,
+# field name, comment. Types are as in names.tsv ("base" plus "*" per pointer level), with
+# "[N]" for arrays. Structures are packed; gaps stay undefined.
+struct	offset	type	name	comment
+# infio_t: race data passed between A2MENU.DAT and A2SPEL.DAT through INFIO.INI.
+# Field order and names follow save_infio's INI keys (Dutch keys in comments).
+infio_t	00	uchar	race_finished	GAME/RACE_KLAAR
+infio_t	01	int	time	GAME/TIJD
+infio_t	05	int	time_racer_1	GAME/TIJD_1
+infio_t	09	int	time_racer_2	GAME/TIJD_2
+infio_t	0d	int	time_racer_3	GAME/TIJD_3
+infio_t	11	int	time_racer_4	GAME/TIJD_4
+infio_t	15	int	time_racer_5	GAME/TIJD_5
+infio_t	19	short	active_slot	GAME/ACTIVE_SLOT
+infio_t	1b	short	sound	OPTION/GELUID
+infio_t	1d	short	resolution	OPTION/RESOLUTIE
+infio_t	1f	short	view	OPTION/VIEW
+infio_t	21	short	control_type	CONTROL/BEDIENING
+infio_t	23	short	key_left	CONTROL/KEY_LINKS
+infio_t	25	short	key_right	CONTROL/KEY_RECHTS
+infio_t	27	short	key_gas	CONTROL/KEY_GAS
+infio_t	29	short	key_brake	CONTROL/KEY_REM
+infio_t	2b	short	key_action1	CONTROL/KEY_ACTIE1
+infio_t	2d	short	key_action2	CONTROL/KEY_ACTIE2
+infio_t	2f	short	display_mode	OPTION/DISPLAY_MODE
+infio_t	31	short	horizon	OPTION/HORIZON
+infio_t	33	short	dashboard	OPTION/DASHBORD
+infio_t	35	short	detail	OPTION/DETAIL
+infio_t	37	short	stage	GAME/ETAPPE
+infio_t	39	short	camera	OPTION/CAMERA
+infio_t	3b	short	ended_by	GAME/EINDE_DOOR (0 quit, 1 fuel, 2 money, 3 time)
+infio_t	3d	short	position	GAME/POSITIE
+infio_t	3f	short	racer_1	GAME/RACER_1
+infio_t	41	short	racer_2	GAME/RACER_2
+infio_t	43	short	racer_3	GAME/RACER_3
+infio_t	45	short	racer_4	GAME/RACER_4
+infio_t	47	short	racer_5	GAME/RACER_5
+infio_t	49	short	final	GAME/FINALE
+infio_t	4b	short	music_volume	OPTION/VMUZIEK
+infio_t	4d	short	effects_volume	OPTION/VEFFECT
+infio_t	4f	int	money	GAME/GELD

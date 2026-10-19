@@ -171,7 +171,6 @@ address	kind	name	cc	ret	params	dtype	mangled
 0040c278	function	race_positions_valid					
 0040c6fe	function	set_race_state					
 0040c814	function	update_race					
-00475a0b	data	race_positions					
 00458c50	data	race_running				int	
 00458c60	data	controls_enabled				int	
 # --- objio.cpp: object file loading ------------------------------------------------

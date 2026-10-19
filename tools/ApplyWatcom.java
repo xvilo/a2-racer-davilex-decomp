@@ -68,6 +68,9 @@ public class ApplyWatcom extends GhidraScript {
 			// marked debugmsg non-returning and cut code after 164 call sites). Library exits
 			// are still covered by the "Non-Returning Functions - Known" analyzer.
 			setAnalysisOption(currentProgram, "Non-Returning Functions - Discovered", "false");
+			if (args.length > 2) {
+				defineStructs(new File(args[2]));
+			}
 			if (args.length > 1) {
 				applyNames(new File(args[1]));
 			}
@@ -164,6 +167,52 @@ public class ApplyWatcom extends GhidraScript {
 		}
 		println("ApplyWatcom names: " + funcs + " functions (" + typed + " typed), " + data + " data, " +
 			labels + " labels, " + failed + " failed");
+	}
+
+	/** Builds the packed structures listed in structs.tsv (struct, offset, type, name, comment). */
+	private void defineStructs(File tsv) throws Exception {
+		if (!tsv.exists()) {
+			return;
+		}
+		openWindowsArchive();
+		Map<String, List<String[]>> fields = new java.util.LinkedHashMap<>();
+		try (BufferedReader r = new BufferedReader(new FileReader(tsv))) {
+			String line;
+			while ((line = r.readLine()) != null) {
+				if (line.startsWith("#") || line.startsWith("struct\t") || line.isBlank()) {
+					continue;
+				}
+				String[] c = line.split("\t", -1);
+				fields.computeIfAbsent(c[0], k -> new ArrayList<>()).add(c);
+			}
+		}
+		DataTypeManager dtm = currentProgram.getDataTypeManager();
+		for (Map.Entry<String, List<String[]>> e : fields.entrySet()) {
+			int size = 0;
+			List<Object[]> parsed = new ArrayList<>();
+			for (String[] c : e.getValue()) {
+				int off = Integer.parseInt(c[1], 16);
+				DataType dt = resolveArray(c[2]);
+				parsed.add(new Object[] { off, dt, c[3], c.length > 4 ? c[4] : null });
+				size = Math.max(size, off + dt.getLength());
+			}
+			StructureDataType st = new StructureDataType(new CategoryPath("/A2Racer"), e.getKey(), size, dtm);
+			for (Object[] f : parsed) {
+				DataType dt = (DataType) f[1];
+				st.replaceAtOffset((Integer) f[0], dt, dt.getLength(), (String) f[2], (String) f[3]);
+			}
+			dtm.addDataType(st, DataTypeConflictHandler.REPLACE_HANDLER);
+			println("ApplyWatcom: struct " + e.getKey() + " (" + size + " bytes, " + parsed.size() + " fields)");
+		}
+	}
+
+	private DataType resolveArray(String t) {
+		java.util.regex.Matcher m = java.util.regex.Pattern.compile("(.*)\\[(\\d+)\\]$").matcher(t);
+		if (m.matches()) {
+			DataType el = resolve(m.group(1));
+			return new ArrayDataType(el, Integer.parseInt(m.group(2)), el.getLength());
+		}
+		return resolve(t);
 	}
 
 	private void setSignature(Function f, String cc, String ret, String params) throws Exception {

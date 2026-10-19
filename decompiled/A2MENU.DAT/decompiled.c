@@ -1749,8 +1749,6 @@ int __watcall add_new_levelscore(char *source,int param_2,int param_3,int param_
 
 /* ==== 004038f4 load_infio ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall load_infio(void)
 
 {
@@ -1764,73 +1762,73 @@ void __watcall load_infio(void)
              s_INFIO_INI_00426a5c);
     set_ini_filename(s_INFIO_INI_00426aa0);
     ini_value_setting = read_ini_value_setting(s_GAME_00426ab5,s_RACE_KLAAR_00426aaa);
-    infio = SUB41(ini_value_setting,0);
-    DAT_00437edd = read_ini_value_setting(s_GAME_00426abf,s_TIJD_00426aba);
+    infio.race_finished = (uchar)ini_value_setting;
+    infio.time = read_ini_value_setting(s_GAME_00426abf,s_TIJD_00426aba);
     ini_value_setting = read_ini_value_setting(s_GAME_00426ad0,s_ACTIVE_SLOT_00426ac4);
-    DAT_00437ef5._0_2_ = (undefined2)ini_value_setting;
-    DAT_00437f2b = read_ini_value_setting(s_GAME_00426ada,s_GELD_00426ad5);
+    infio.active_slot = (short)ini_value_setting;
+    infio.money = read_ini_value_setting(s_GAME_00426ada,s_GELD_00426ad5);
     ini_value_setting = read_ini_value_setting(s_GAME_00426ae6,s_ETAPPE_00426adf);
-    DAT_00437f13._0_2_ = (undefined2)ini_value_setting;
+    infio.stage = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426af6,s_EINDE_DOOR_00426aeb);
-    _DAT_00437f17 = (undefined2)ini_value_setting;
+    infio.ended_by = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b03,s_POSITIE_00426afb);
-    DAT_00437f19._0_2_ = (undefined2)ini_value_setting;
+    infio.position = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b10,s_RACER_1_00426b08);
-    DAT_00437f19._2_2_ = (undefined2)ini_value_setting;
+    infio.racer_1 = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b1d,s_RACER_2_00426b15);
-    DAT_00437f1d._0_2_ = (undefined2)ini_value_setting;
+    infio.racer_2 = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b2a,s_RACER_3_00426b22);
-    DAT_00437f1d._2_2_ = (undefined2)ini_value_setting;
+    infio.racer_3 = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b37,s_RACER_4_00426b2f);
-    DAT_00437f21._0_2_ = (undefined2)ini_value_setting;
+    infio.racer_4 = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b44,s_RACER_5_00426b3c);
-    DAT_00437f21._2_2_ = (undefined2)ini_value_setting;
+    infio.racer_5 = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b50,s_TIJD_1_00426b49);
-    DAT_00437ee1 = (int)(short)ini_value_setting;
+    infio.time_racer_1 = (int)(short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b5c,s_TIJD_2_00426b55);
-    DAT_00437ee5 = (int)(short)ini_value_setting;
+    infio.time_racer_2 = (int)(short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b68,s_TIJD_3_00426b61);
-    DAT_00437ee9 = (int)(short)ini_value_setting;
+    infio.time_racer_3 = (int)(short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b74,s_TIJD_4_00426b6d);
-    DAT_00437eed = (int)(short)ini_value_setting;
+    infio.time_racer_4 = (int)(short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b80,s_TIJD_5_00426b79);
-    DAT_00437ef1 = (int)(short)ini_value_setting;
+    infio.time_racer_5 = (int)(short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_GAME_00426b8c,s_FINALE_00426b85);
-    DAT_00437f25._0_2_ = (undefined2)ini_value_setting;
+    infio.final = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426b9b,s_BEDIENING_00426b91);
-    _DAT_00437efd = (undefined2)ini_value_setting;
+    infio.control_type = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426bad,s_KEY_LINKS_00426ba3);
-    DAT_00437eff = (undefined2)ini_value_setting;
+    infio.key_left = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426bc0,s_KEY_RECHTS_00426bb5);
-    DAT_00437f01 = (undefined2)ini_value_setting;
+    infio.key_right = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426bd0,s_KEY_GAS_00426bc8);
-    DAT_00437f03._0_2_ = (undefined2)ini_value_setting;
+    infio.key_gas = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426be0,s_KEY_REM_00426bd8);
-    DAT_00437f03._2_2_ = (undefined2)ini_value_setting;
+    infio.key_brake = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426bf3,s_KEY_ACTIE1_00426be8);
-    DAT_00437f07._0_2_ = (undefined2)ini_value_setting;
+    infio.key_action1 = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_CONTROL_00426c06,s_KEY_ACTIE2_00426bfb);
-    DAT_00437f07._2_2_ = (undefined2)ini_value_setting;
+    infio.key_action2 = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c15,s_GELUID_00426c0e);
-    DAT_00437ef5._2_2_ = (undefined2)ini_value_setting;
+    infio.sound = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c26,s_RESOLUTIE_00426c1c);
-    DAT_00437ef9._0_2_ = (undefined2)ini_value_setting;
+    infio.resolution = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c32,s_VIEW_00426c2d);
-    DAT_00437ef9._2_2_ = (undefined2)ini_value_setting;
+    infio.view = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c46,s_DISPLAY_MODE_00426c39);
-    DAT_00437f0b._0_2_ = (undefined2)ini_value_setting;
+    infio.display_mode = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c55,s_HORIZON_00426c4d);
-    DAT_00437f0b._2_2_ = (undefined2)ini_value_setting;
+    infio.horizon = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c65,s_DASHBORD_00426c5c);
-    DAT_00437f0f._0_2_ = (undefined2)ini_value_setting;
+    infio.dashboard = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c73,s_DETAIL_00426c6c);
-    DAT_00437f0f._2_2_ = (undefined2)ini_value_setting;
+    infio.detail = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c81,s_CAMERA_00426c7a);
-    DAT_00437f13._2_2_ = (undefined2)ini_value_setting;
+    infio.camera = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c90,s_VMUZIEK_00426c88);
-    DAT_00437f25._2_2_ = (undefined2)ini_value_setting;
+    infio.music_volume = (short)ini_value_setting;
     ini_value_setting = read_ini_value_setting(s_OPTION_00426c9f,s_VEFFECT_00426c97);
-    _DAT_00437f29 = (short)ini_value_setting;
+    infio.effects_volume = (short)ini_value_setting;
     return;
   }
   debugmsg(s__s__d____>_INFIO_INI_FILE____d_d_00426cba,s_infio_cpp_00426cb0,0x6b,
@@ -1843,8 +1841,6 @@ void __watcall load_infio(void)
 
 /* ==== 00403c46 save_infio ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall save_infio(void)
 
 {
@@ -1852,96 +1848,94 @@ void __watcall save_infio(void)
   
   debugmsg(s__s__d____>_SAVE_INFIO_<*_00426d02,s_infio_cpp_00426cf8,0x76);
   set_ini_filename(s_INFIO_INI_00426d1e);
-  write_ini_value_setting(s_GAME_00426d33,extraout_EDX,(uint)(byte)infio);
-  write_ini_value_setting(s_GAME_00426d3d,s_TIJD_00426d38,DAT_00437edd);
-  write_ini_value_setting(s_GAME_00426d4e,s_ACTIVE_SLOT_00426d42,(int)(short)DAT_00437ef5);
-  write_ini_value_setting(s_GAME_00426d58,s_GELD_00426d53,DAT_00437f2b);
-  write_ini_value_setting(s_GAME_00426d64,s_ETAPPE_00426d5d,(int)(short)DAT_00437f13);
-  write_ini_value_setting(s_GAME_00426d74,s_EINDE_DOOR_00426d69,(int)_DAT_00437f17);
-  write_ini_value_setting(s_GAME_00426d81,s_POSITIE_00426d79,(int)(short)DAT_00437f19);
-  write_ini_value_setting(s_GAME_00426d8e,s_RACER_1_00426d86,(int)DAT_00437f19._2_2_);
-  write_ini_value_setting(s_GAME_00426d9b,s_RACER_2_00426d93,(int)(short)DAT_00437f1d);
-  write_ini_value_setting(s_GAME_00426da8,s_RACER_3_00426da0,(int)DAT_00437f1d._2_2_);
-  write_ini_value_setting(s_GAME_00426db5,s_RACER_4_00426dad,(int)(short)DAT_00437f21);
-  write_ini_value_setting(s_GAME_00426dc2,s_RACER_5_00426dba,(int)DAT_00437f21._2_2_);
-  write_ini_value_setting(s_GAME_00426dce,s_TIJD_1_00426dc7,DAT_00437ee1);
-  write_ini_value_setting(s_GAME_00426dda,s_TIJD_2_00426dd3,DAT_00437ee5);
-  write_ini_value_setting(s_GAME_00426de6,s_TIJD_3_00426ddf,DAT_00437ee9);
-  write_ini_value_setting(s_GAME_00426df2,s_TIJD_4_00426deb,DAT_00437eed);
+  write_ini_value_setting(s_GAME_00426d33,extraout_EDX,(uint)infio.race_finished);
+  write_ini_value_setting(s_GAME_00426d3d,s_TIJD_00426d38,infio.time);
+  write_ini_value_setting(s_GAME_00426d4e,s_ACTIVE_SLOT_00426d42,(int)infio.active_slot);
+  write_ini_value_setting(s_GAME_00426d58,s_GELD_00426d53,infio.money);
+  write_ini_value_setting(s_GAME_00426d64,s_ETAPPE_00426d5d,(int)infio.stage);
+  write_ini_value_setting(s_GAME_00426d74,s_EINDE_DOOR_00426d69,(int)infio.ended_by);
+  write_ini_value_setting(s_GAME_00426d81,s_POSITIE_00426d79,(int)infio.position);
+  write_ini_value_setting(s_GAME_00426d8e,s_RACER_1_00426d86,(int)infio.racer_1);
+  write_ini_value_setting(s_GAME_00426d9b,s_RACER_2_00426d93,(int)infio.racer_2);
+  write_ini_value_setting(s_GAME_00426da8,s_RACER_3_00426da0,(int)infio.racer_3);
+  write_ini_value_setting(s_GAME_00426db5,s_RACER_4_00426dad,(int)infio.racer_4);
+  write_ini_value_setting(s_GAME_00426dc2,s_RACER_5_00426dba,(int)infio.racer_5);
+  write_ini_value_setting(s_GAME_00426dce,s_TIJD_1_00426dc7,infio.time_racer_1);
+  write_ini_value_setting(s_GAME_00426dda,s_TIJD_2_00426dd3,infio.time_racer_2);
+  write_ini_value_setting(s_GAME_00426de6,s_TIJD_3_00426ddf,infio.time_racer_3);
+  write_ini_value_setting(s_GAME_00426df2,s_TIJD_4_00426deb,infio.time_racer_4);
   write_ini_value_setting
-            (s_GAME_00426dfe,s_TIJD_5_00426df7,CONCAT22(DAT_00437ef1._2_2_,(undefined2)DAT_00437ef1)
-            );
-  write_ini_value_setting(s_GAME_00426e0a,s_FINALE_00426e03,(int)(short)DAT_00437f25);
-  write_ini_value_setting(s_CONTROL_00426e19,s_BEDIENING_00426e0f,(int)_DAT_00437efd);
-  write_ini_value_setting(s_CONTROL_00426e2b,s_KEY_LINKS_00426e21,(int)DAT_00437eff);
-  write_ini_value_setting(s_CONTROL_00426e3e,s_KEY_RECHTS_00426e33,(int)DAT_00437f01);
-  write_ini_value_setting(s_CONTROL_00426e4e,s_KEY_GAS_00426e46,(int)(short)DAT_00437f03);
-  write_ini_value_setting(s_CONTROL_00426e5e,s_KEY_REM_00426e56,(int)DAT_00437f03._2_2_);
-  write_ini_value_setting(s_CONTROL_00426e71,s_KEY_ACTIE1_00426e66,(int)(short)DAT_00437f07);
-  write_ini_value_setting(s_CONTROL_00426e84,s_KEY_ACTIE2_00426e79,(int)DAT_00437f07._2_2_);
-  write_ini_value_setting(s_OPTION_00426e93,s_GELUID_00426e8c,(int)DAT_00437ef5._2_2_);
-  write_ini_value_setting(s_OPTION_00426ea4,s_RESOLUTIE_00426e9a,(int)(short)DAT_00437ef9);
-  write_ini_value_setting(s_OPTION_00426eb0,s_VIEW_00426eab,(int)DAT_00437ef9._2_2_);
-  write_ini_value_setting(s_OPTION_00426ec4,s_DISPLAY_MODE_00426eb7,(int)(short)DAT_00437f0b);
-  write_ini_value_setting(s_OPTION_00426ed3,s_HORIZON_00426ecb,(int)DAT_00437f0b._2_2_);
-  write_ini_value_setting(s_OPTION_00426ee3,s_DASHBORD_00426eda,(int)(short)DAT_00437f0f);
-  write_ini_value_setting(s_OPTION_00426ef1,s_DETAIL_00426eea,(int)DAT_00437f0f._2_2_);
-  write_ini_value_setting(s_OPTION_00426eff,s_CAMERA_00426ef8,(int)DAT_00437f13._2_2_);
-  write_ini_value_setting(s_OPTION_00426f0e,s_VMUZIEK_00426f06,(int)DAT_00437f25._2_2_);
-  write_ini_value_setting(s_OPTION_00426f1d,s_VEFFECT_00426f15,(int)_DAT_00437f29);
+            (s_GAME_00426dfe,s_TIJD_5_00426df7,
+             CONCAT22(infio.time_racer_5._2_2_,(undefined2)infio.time_racer_5));
+  write_ini_value_setting(s_GAME_00426e0a,s_FINALE_00426e03,(int)infio.final);
+  write_ini_value_setting(s_CONTROL_00426e19,s_BEDIENING_00426e0f,(int)infio.control_type);
+  write_ini_value_setting(s_CONTROL_00426e2b,s_KEY_LINKS_00426e21,(int)infio.key_left);
+  write_ini_value_setting(s_CONTROL_00426e3e,s_KEY_RECHTS_00426e33,(int)infio.key_right);
+  write_ini_value_setting(s_CONTROL_00426e4e,s_KEY_GAS_00426e46,(int)infio.key_gas);
+  write_ini_value_setting(s_CONTROL_00426e5e,s_KEY_REM_00426e56,(int)infio.key_brake);
+  write_ini_value_setting(s_CONTROL_00426e71,s_KEY_ACTIE1_00426e66,(int)infio.key_action1);
+  write_ini_value_setting(s_CONTROL_00426e84,s_KEY_ACTIE2_00426e79,(int)infio.key_action2);
+  write_ini_value_setting(s_OPTION_00426e93,s_GELUID_00426e8c,(int)infio.sound);
+  write_ini_value_setting(s_OPTION_00426ea4,s_RESOLUTIE_00426e9a,(int)infio.resolution);
+  write_ini_value_setting(s_OPTION_00426eb0,s_VIEW_00426eab,(int)infio.view);
+  write_ini_value_setting(s_OPTION_00426ec4,s_DISPLAY_MODE_00426eb7,(int)infio.display_mode);
+  write_ini_value_setting(s_OPTION_00426ed3,s_HORIZON_00426ecb,(int)infio.horizon);
+  write_ini_value_setting(s_OPTION_00426ee3,s_DASHBORD_00426eda,(int)infio.dashboard);
+  write_ini_value_setting(s_OPTION_00426ef1,s_DETAIL_00426eea,(int)infio.detail);
+  write_ini_value_setting(s_OPTION_00426eff,s_CAMERA_00426ef8,(int)infio.camera);
+  write_ini_value_setting(s_OPTION_00426f0e,s_VMUZIEK_00426f06,(int)infio.music_volume);
+  write_ini_value_setting(s_OPTION_00426f1d,s_VEFFECT_00426f15,(int)infio.effects_volume);
   return;
 }
 
 
 /* ==== 00403f9b init_infio ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall init_infio(void)
 
 {
   int iVar1;
   int iVar2;
-  undefined2 extraout_CX;
-  undefined4 extraout_EDX;
+  short extraout_CX;
+  int extraout_EDX;
   
   debugmsg(s__s__d_____>_INIT_INFIO_<*_00426f2e,s_infio_cpp_00426f24,0xb1);
   iVar1 = file_exist(s_INFIO_INI_00426f4b);
   if (iVar1 == 0) {
     debugmsg(s_Creating_infio_file__s_00426f5f,s_INFIO_INI_00426f55);
-    DAT_00437f1d._0_2_ = 2;
-    DAT_00437f21._0_2_ = 4;
-    DAT_00437f21._2_2_ = 5;
-    _DAT_00437f29 = 4;
-    infio = (infio_t)0x0;
-    DAT_00437ef5._0_2_ = 0;
-    DAT_00437ef5._2_2_ = 0;
-    DAT_00437ef9._0_2_ = 0;
-    DAT_00437ef9._2_2_ = 0;
-    _DAT_00437efd = 0;
-    DAT_00437f0b._2_2_ = 0;
-    DAT_00437f0f._0_2_ = 0;
-    DAT_00437f13._2_2_ = 0;
-    DAT_00437f13._0_2_ = 0;
-    _DAT_00437f17 = 0;
-    DAT_00437edd = 0;
-    DAT_00437ee1 = 0;
-    DAT_00437ee5 = 0;
-    DAT_00437ee9 = 0;
-    DAT_00437eed = 0;
-    DAT_00437ef1 = 0;
-    DAT_00437f0b._0_2_ = 1;
-    DAT_00437f0f._2_2_ = 1;
-    DAT_00437f19._2_2_ = 1;
-    DAT_00437f25._0_2_ = 0;
-    DAT_00437f19._0_2_ = 6;
+    infio.racer_2 = 2;
+    infio.racer_4 = 4;
+    infio.racer_5 = 5;
+    infio.effects_volume = 4;
+    infio.race_finished = '\0';
+    infio.active_slot = 0;
+    infio.sound = 0;
+    infio.resolution = 0;
+    infio.view = 0;
+    infio.control_type = 0;
+    infio.horizon = 0;
+    infio.dashboard = 0;
+    infio.camera = 0;
+    infio.stage = 0;
+    infio.ended_by = 0;
+    infio.time = 0;
+    infio.time_racer_1 = 0;
+    infio.time_racer_2 = 0;
+    infio.time_racer_3 = 0;
+    infio.time_racer_4 = 0;
+    infio.time_racer_5 = 0;
+    infio.display_mode = 1;
+    infio.detail = 1;
+    infio.racer_1 = 1;
+    infio.final = 0;
+    infio.position = 6;
     iVar1 = 0;
-    DAT_00437f1d._2_2_ = extraout_CX;
-    DAT_00437f25._2_2_ = extraout_CX;
-    DAT_00437f2b = extraout_EDX;
+    infio.racer_3 = extraout_CX;
+    infio.music_volume = extraout_CX;
+    infio.money = extraout_EDX;
     do {
       iVar2 = iVar1 + 2;
-      *(undefined2 *)((int)&DAT_00437eff + iVar1) = *(undefined2 *)((int)&toets_define + iVar1);
+      *(undefined2 *)((int)&infio.key_left + iVar1) = *(undefined2 *)((int)&toets_define + iVar1);
       iVar1 = iVar2;
     } while (iVar2 != 0xc);
     save_infio();
@@ -6597,104 +6591,104 @@ void __watcall reset_infio(void)
   int iVar3;
   int iVar4;
   
-  infio = (infio_t)0x0;
+  infio.race_finished = '\0';
   iVar2 = slot_check_index(active_slot,s_spel_cpp_00429904,0x45);
-  DAT_00437f2b = *(undefined4 *)(&DAT_004372d4 + iVar2 * 0x13c);
-  DAT_00437ef5._0_2_ = (undefined2)active_slot;
-  DAT_00437ef5._2_2_ = DAT_00437222._2_2_;
-  DAT_00437ef9._0_2_ = (undefined2)DAT_00437222;
-  DAT_00437ef9._2_2_ = _opties;
-  _DAT_00437efd = _control;
-  DAT_00437f0b._0_2_ = DAT_00437226;
-  DAT_00437f0b._2_2_ = (undefined2)DAT_00437228;
-  DAT_00437f0f._0_2_ = DAT_00437228._2_2_;
-  DAT_00437f0f._2_2_ = (undefined2)DAT_0043722c;
-  DAT_00437f13._2_2_ = DAT_0043722c._2_2_;
-  DAT_00437f25._2_2_ = (undefined2)DAT_00437230;
-  _DAT_00437f29 = DAT_00437230._2_2_;
+  infio.money = *(int *)(&DAT_004372d4 + iVar2 * 0x13c);
+  infio.active_slot = (short)active_slot;
+  infio.sound = DAT_00437222._2_2_;
+  infio.resolution = (short)DAT_00437222;
+  infio.view = _opties;
+  infio.control_type = _control;
+  infio.display_mode = DAT_00437226;
+  infio.horizon = (short)DAT_00437228;
+  infio.dashboard = DAT_00437228._2_2_;
+  infio.detail = (short)DAT_0043722c;
+  infio.camera = DAT_0043722c._2_2_;
+  infio.music_volume = (short)DAT_00437230;
+  infio.effects_volume = DAT_00437230._2_2_;
   iVar2 = slot_check_index(active_slot,s_spel_cpp_0042990d,0x52);
-  DAT_00437f13._0_2_ = *(undefined2 *)(&DAT_004372ba + iVar2 * 0x13c);
+  infio.stage = *(short *)(&DAT_004372ba + iVar2 * 0x13c);
   iVar2 = slot_check_index(active_slot,s_spel_cpp_00429916,0x53);
   if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
-    DAT_00437f19._0_2_ = 6;
+    infio.position = 6;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_0042991f,0x53);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429931,0x53);
     iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_00429928,0x53);
-    DAT_00437f19._0_2_ = *(undefined2 *)(&DAT_004372d8 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.position = *(short *)(&DAT_004372d8 + iVar3 * 2 + iVar2 * 0x13c);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_0042993a,0x54);
   if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
-    DAT_00437f19._2_2_ = 1;
+    infio.racer_1 = 1;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_00429943,0x54);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429955,0x54);
     iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_0042994c,0x54);
-    DAT_00437f19._2_2_ = *(undefined2 *)(&DAT_0043735c + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_1 = *(short *)(&DAT_0043735c + iVar3 * 2 + iVar2 * 0x13c);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_0042995e,0x55);
   if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
-    DAT_00437f1d._0_2_ = 2;
+    infio.racer_2 = 2;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_00429967,0x55);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429979,0x55);
     iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_00429970,0x55);
-    DAT_00437f1d._0_2_ = *(undefined2 *)(&DAT_00437368 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_2 = *(short *)(&DAT_00437368 + iVar3 * 2 + iVar2 * 0x13c);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_00429982,0x56);
   if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
-    DAT_00437f1d._2_2_ = 3;
+    infio.racer_3 = 3;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_0042998b,0x56);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_0042999d,0x56);
     iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_00429994,0x56);
-    DAT_00437f1d._2_2_ = *(undefined2 *)(&DAT_00437374 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_3 = *(short *)(&DAT_00437374 + iVar3 * 2 + iVar2 * 0x13c);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_004299a6,0x57);
   if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
-    DAT_00437f21._0_2_ = 4;
+    infio.racer_4 = 4;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_004299af,0x57);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_004299c1,0x57);
     iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_004299b8,0x57);
-    DAT_00437f21._0_2_ = *(undefined2 *)(&DAT_00437380 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_4 = *(short *)(&DAT_00437380 + iVar3 * 2 + iVar2 * 0x13c);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_004299ca,0x58);
   if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
-    DAT_00437f21._2_2_ = 5;
+    infio.racer_5 = 5;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_004299d3,0x58);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_004299e5,0x58);
     iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_004299dc,0x58);
-    DAT_00437f21._2_2_ = *(undefined2 *)(&DAT_0043738c + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_5 = *(short *)(&DAT_0043738c + iVar3 * 2 + iVar2 * 0x13c);
   }
-  DAT_00437edd = 0;
-  DAT_00437ee1 = 0;
-  DAT_00437ee5 = 0;
-  DAT_00437ee9 = 0;
-  DAT_00437eed = 0;
-  DAT_00437ef1 = 0;
-  DAT_00437f25._0_2_ = 0;
-  _DAT_00437f17 = 0;
+  infio.time = 0;
+  infio.time_racer_1 = 0;
+  infio.time_racer_2 = 0;
+  infio.time_racer_3 = 0;
+  infio.time_racer_4 = 0;
+  infio.time_racer_5 = 0;
+  infio.final = 0;
+  infio.ended_by = 0;
   iVar3 = 0;
   iVar2 = 0;
   do {
     iVar4 = iVar2 + 2;
     puVar1 = (undefined2 *)((int)&DAT_00437244 + iVar3);
     iVar3 = iVar3 + 4;
-    *(undefined2 *)((int)&DAT_00437eff + iVar2) = *puVar1;
+    *(undefined2 *)((int)&infio.key_left + iVar2) = *puVar1;
     iVar2 = iVar4;
   } while (iVar4 != 0xc);
   return;
@@ -6704,7 +6698,6 @@ void __watcall reset_infio(void)
 /* ==== 0040b288 handle_game ==== */
 
 /* WARNING: Switch with 1 destination removed at 0x0040b913 : 4 cases all go to same destination */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int __watcall handle_game(void)
 
@@ -6717,56 +6710,56 @@ int __watcall handle_game(void)
   int extraout_EDX_00;
   int local_18;
   
-  active_slot = (int)(short)DAT_00437ef5;
+  active_slot = (int)infio.active_slot;
   local_18 = -1;
   debugmsg(s__>_HANDLE_GAME_<*_004299ee);
-  if (infio != (infio_t)0x0) {
-    infio = (infio_t)0x0;
+  if (infio.race_finished != '\0') {
+    infio.race_finished = '\0';
     iVar1 = slot_check_index(active_slot,s_spel_cpp_00429a04,0x73);
     iVar1 = *(int *)(&DAT_004372b8 + iVar1 * 0x13c);
     iVar2 = slot_check_index(active_slot,s_spel_cpp_00429a0d,0x74);
     iVar3 = active_slot;
     *(short *)(&DAT_004372ba + iVar2 * 0x13c) = *(short *)(&DAT_004372ba + iVar2 * 0x13c) + 1;
     iVar3 = slot_check_index(iVar3,s_spel_cpp_00429a16,0x75);
-    *(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c) = DAT_00437f2b;
+    *(int *)(&DAT_004372d4 + iVar3 * 0x13c) = infio.money;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a1f,0x76);
     iVar1 = iVar1 >> 0x10;
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a28,0x76);
-    *(undefined4 *)(&DAT_004372bc + iVar2 * 4 + iVar3 * 0x13c) = DAT_00437edd;
+    *(int *)(&DAT_004372bc + iVar2 * 4 + iVar3 * 0x13c) = infio.time;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a31,0x77);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a3a,0x77);
-    *(undefined2 *)(&DAT_004372d8 + iVar2 * 2 + iVar3 * 0x13c) = (undefined2)DAT_00437f19;
+    *(short *)(&DAT_004372d8 + iVar2 * 2 + iVar3 * 0x13c) = infio.position;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a43,0x78);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a4c,0x78);
-    *(undefined2 *)(&DAT_0043735c + iVar2 * 2 + iVar3 * 0x13c) = DAT_00437f19._2_2_;
+    *(short *)(&DAT_0043735c + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_1;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a55,0x79);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a5e,0x79);
-    *(undefined2 *)(&DAT_00437368 + iVar2 * 2 + iVar3 * 0x13c) = (undefined2)DAT_00437f1d;
+    *(short *)(&DAT_00437368 + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_2;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a67,0x7a);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a70,0x7a);
-    *(undefined2 *)(&DAT_00437374 + iVar2 * 2 + iVar3 * 0x13c) = DAT_00437f1d._2_2_;
+    *(short *)(&DAT_00437374 + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_3;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a79,0x7b);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a82,0x7b);
-    *(undefined2 *)(&DAT_00437380 + iVar2 * 2 + iVar3 * 0x13c) = (undefined2)DAT_00437f21;
+    *(short *)(&DAT_00437380 + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_4;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a8b,0x7c);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a94,0x7c);
-    *(undefined2 *)(&DAT_0043738c + iVar2 * 2 + iVar3 * 0x13c) = DAT_00437f21._2_2_;
+    *(short *)(&DAT_0043738c + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_5;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a9d,0x7d);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aa6,0x7d);
-    *(undefined4 *)(&DAT_004372e4 + iVar2 * 4 + iVar3 * 0x13c) = DAT_00437ee1;
+    *(int *)(&DAT_004372e4 + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_1;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429aaf,0x7e);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429ab8,0x7e);
-    *(undefined4 *)(&DAT_004372fc + iVar2 * 4 + iVar3 * 0x13c) = DAT_00437ee5;
+    *(int *)(&DAT_004372fc + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_2;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ac1,0x7f);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aca,0x7f);
-    *(undefined4 *)(&DAT_00437314 + iVar2 * 4 + iVar3 * 0x13c) = DAT_00437ee9;
+    *(int *)(&DAT_00437314 + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_3;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ad3,0x80);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429adc,0x80);
-    *(undefined4 *)(&DAT_0043732c + iVar2 * 4 + iVar3 * 0x13c) = DAT_00437eed;
+    *(int *)(&DAT_0043732c + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_4;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ae5,0x81);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aee,0x81);
     *(uint *)(&DAT_00437344 + iVar3 * 0x13c + iVar2 * 4) =
-         CONCAT22(DAT_00437ef1._2_2_,(undefined2)DAT_00437ef1);
+         CONCAT22(infio.time_racer_5._2_2_,(undefined2)infio.time_racer_5);
     snd_play_looping(&local_18,s_rock_wav_00429af7);
     menu_display_stand(iVar1);
     menu_display_classe();
