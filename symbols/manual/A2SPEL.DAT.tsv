@@ -59,7 +59,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 00402f3f	function	start_engine_sounds
 00457728	data	camera_position				int
 0045b22c	data	player_index				int
-00476774	data	racers
+00476774	data	racers				racer_object_t*	
 00458c38	data	track_index				int
 00458c64	data	race_state				int
 00458c68	data	race_finished_ok				int
@@ -97,7 +97,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004052ee	function	get_map_occupant	__watcall	int	int:chunk|int:lane		
 00405343	function	clear_map_occupant	__watcall	void	int:chunk|int:lane		
 004056a9	function	create_opponent					
-00473008	data	opponent_data					
+00473008	data	opponent_data				opponent_t*	
 0047300c	data	opponent_count				int	
 004731f4	data	opponent_map					
 0047657c	data	weg_chunk_count				int	
@@ -113,7 +113,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 00407066	function	alloc_opponent_slot					
 004070df	function	check_opponent_collisions					
 00476570	data	weg_chunks					
-00476560	data	weg_sections					
+00476560	data	weg_sections				weg_section_t*	
 004767c8	data	weg_points					
 00476578	data	weg_data_loaded				int	
 00475ac8	data	active_opponent_count				int	

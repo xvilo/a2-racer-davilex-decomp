@@ -39,3 +39,81 @@ infio_t	49	short	final	GAME/FINALE
 infio_t	4b	short	music_volume	OPTION/VMUZIEK
 infio_t	4d	short	effects_volume	OPTION/VEFFECT
 infio_t	4f	int	money	GAME/GELD
+# opponent_t: one 0x100-byte entry per car on the road (player, rivals, police, traffic);
+# opponent_data points to an array of them. Unclear fields keep field_XX.
+opponent_t	00	int	car_type	index into the car type table
+opponent_t	04	float	x	
+opponent_t	08	float	y	
+opponent_t	0c	float	z	
+opponent_t	10	float	speed	
+opponent_t	14	float	acceleration	
+opponent_t	18	float	field_18	
+opponent_t	1c	int	field_1c	
+opponent_t	20	float	field_20	
+opponent_t	24	int	heading	0..0x3ff
+opponent_t	28	int	steer_angle	
+opponent_t	2c	int	steer_rate	added to steer_angle each frame
+opponent_t	30	float	mass	weights the collision response
+opponent_t	34	float	distance_to_target	
+opponent_t	48	int	field_48	
+opponent_t	4c	float	max_speed	
+opponent_t	50	int	car_class	copied from the car type table
+opponent_t	54	float	radius	collision radius
+opponent_t	58	float[12]	world_corners	4 bounding-box corners (x, y, z), rotated by heading
+opponent_t	88	float[12]	local_corners	the same corners relative to the car
+opponent_t	b8	float	target_x	
+opponent_t	bc	float	target_y	
+opponent_t	c0	float	target_z	
+opponent_t	c4	int	chunk	road chunk the car is on
+opponent_t	c8	int	lane	
+opponent_t	cc	int	target_lane	
+opponent_t	d0	int	prev_waypoint	
+opponent_t	d4	int	waypoint	
+opponent_t	d8	int	direction	0 or 1, driving direction along the road
+opponent_t	dc	int	object	index into racers (the 3D object)
+opponent_t	e0	int	field_e0	
+opponent_t	e4	int	field_e4	
+opponent_t	e8	int	active	
+opponent_t	ec	float	push_x	collision push
+opponent_t	f0	float	push_z	
+opponent_t	f4	float	offset_x	
+opponent_t	f8	float	offset_z	
+opponent_t	fc	int	heading_delta	
+# racer_object_t: one 0x4b-byte (packed) entry per 3D object; racers points to an array.
+racer_object_t	00	int	anim	index into anims3d
+racer_object_t	04	int	frame	
+racer_object_t	08	float	field_08	
+racer_object_t	0c	float	field_0c	
+racer_object_t	10	float	field_10	
+racer_object_t	14	float	field_14	
+racer_object_t	18	float	field_18	
+racer_object_t	1c	float	field_1c	
+racer_object_t	24	int	field_24	
+racer_object_t	2c	int	field_2c	
+racer_object_t	34	uchar	in_use	
+racer_object_t	35	uchar	visible	cleared for the player's car in cockpit view
+racer_object_t	36	uchar	field_36	
+racer_object_t	37	int	opponent	index into opponent_data
+racer_object_t	3b	int	field_3b	
+racer_object_t	3f	int	field_3f	
+racer_object_t	43	int	field_43	
+racer_object_t	47	int	needs_update	
+# weg_section_t: one 0x54-byte road section; weg_sections points to an array.
+weg_section_t	00	int	point	index into weg_points
+weg_section_t	04	int	field_04	
+weg_section_t	08	int	field_08	
+weg_section_t	0c	int	field_0c	
+weg_section_t	14	int	field_14	
+weg_section_t	18	int	field_18	
+weg_section_t	1c	int	field_1c	
+weg_section_t	20	int	field_20	
+weg_section_t	2c	void*	buffer_1	
+weg_section_t	30	void*	buffer_2	
+weg_section_t	34	void*	buffer_3	
+weg_section_t	38	void*	buffer_4	
+weg_section_t	3c	int	field_3c	
+weg_section_t	40	int	heading	0..0x3ff
+weg_section_t	44	float	plane_a	road plane: height = -(a*x + c*z + d) / b
+weg_section_t	48	float	plane_b	
+weg_section_t	4c	float	plane_c	
+weg_section_t	50	float	plane_d	
