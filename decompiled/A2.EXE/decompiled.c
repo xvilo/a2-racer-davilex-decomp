@@ -1854,7 +1854,7 @@ dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPS
   LPVOID in_stack_00000010;
   int *in_stack_00000014;
   _STARTUPINFOA startupinfo;
-  _PROCESS_INFORMATION process;
+  _PROCESS_INFORMATION local_2c;
   DWORD local_1c;
   
   build_command_line((int)param_6,in_stack_00000014);
@@ -1862,7 +1862,7 @@ dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPS
   startupinfo.wShowWindow = 1;
   BVar1 = CreateProcessA((LPCSTR)0x0,(LPSTR)command_line,(LPSECURITY_ATTRIBUTES)0x0,
                          (LPSECURITY_ATTRIBUTES)0x0,1,0,in_stack_00000010,(LPCSTR)0x0,&startupinfo,
-                         &process);
+                         &local_2c);
   if (BVar1 == 0) {
     DVar2 = GetLastError();
     if (((DVar2 == 5) || (DVar2 == 0xc1)) || (DVar2 == 0xa1)) {
@@ -1872,7 +1872,7 @@ dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPS
     local_1c = (DWORD)uVar3;
   }
   else {
-    DVar2 = process.dwProcessId;
+    DVar2 = local_2c.dwProcessId;
     if (param_5 == (LPSTR)0x0) {
       if ((osbuild >> 8 & 0x80) != 0) {
         Sleep(1000);
@@ -1881,15 +1881,15 @@ dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPS
           DVar2 = local_1c;
           if (local_1c != 0x103) goto LAB_00402824;
           Sleep(100);
-          BVar1 = GetExitCodeProcess(process.hProcess,&local_1c);
+          BVar1 = GetExitCodeProcess(local_2c.hProcess,&local_1c);
         } while (BVar1 != 0);
         uVar3 = set_errno_nt(0,unaff_EDX_00);
         local_1c = (DWORD)uVar3;
         goto LAB_0040283c;
       }
-      DVar2 = WaitForSingleObject(process.hProcess,0xffffffff);
+      DVar2 = WaitForSingleObject(local_2c.hProcess,0xffffffff);
       if (DVar2 == 0) {
-        GetExitCodeProcess(process.hProcess,&local_1c);
+        GetExitCodeProcess(local_2c.hProcess,&local_1c);
         DVar2 = local_1c;
       }
       else {
@@ -1899,8 +1899,8 @@ dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPS
     }
 LAB_00402824:
     local_1c = DVar2;
-    CloseHandle(process.hProcess);
-    CloseHandle(process.hThread);
+    CloseHandle(local_2c.hProcess);
+    CloseHandle(local_2c.hThread);
   }
 LAB_0040283c:
   return CONCAT44(param_2,local_1c);
@@ -2699,23 +2699,23 @@ undefined8 __watcall MultipleThread(undefined4 param_1,undefined4 unaff_EDX,unde
 /* ==== 004032df InitThreadData ==== */
 
 undefined8 __watcall
-InitThreadData(void *buffer,size_t unaff_EDX,undefined4 param_3,size_t unaff_ECX)
+InitThreadData(void *param_1,size_t unaff_EDX,undefined4 param_3,size_t unaff_ECX)
 
 {
   DWORD DVar1;
   
-  if (buffer == (void *)0x0) {
-    buffer = calloc(1,ThreadDataSize);
-    if (buffer != (void *)0x0) {
-      *(undefined1 *)((int)buffer + 0x52) = 1;
+  if (param_1 == (void *)0x0) {
+    param_1 = calloc(1,ThreadDataSize);
+    if (param_1 != (void *)0x0) {
+      *(undefined1 *)((int)param_1 + 0x52) = 1;
     }
   }
-  if (buffer != (void *)0x0) {
-    *(undefined4 *)((int)buffer + 0xc) = 1;
+  if (param_1 != (void *)0x0) {
+    *(undefined4 *)((int)param_1 + 0xc) = 1;
     DVar1 = GetCurrentThreadId();
-    *(DWORD *)((int)buffer + 0xda) = DVar1;
+    *(DWORD *)((int)param_1 + 0xda) = DVar1;
   }
-  return CONCAT44(unaff_EDX,buffer);
+  return CONCAT44(unaff_EDX,param_1);
 }
 
 
@@ -2736,7 +2736,7 @@ undefined8 __watcall NTThreadInit(undefined4 param_1,undefined4 unaff_EDX)
 
 /* ==== 0040336a NTAddThread ==== */
 
-longlong __watcall NTAddThread(void *buffer,size_t unaff_EDX,undefined4 unaff_EBX,size_t unaff_ECX)
+longlong __watcall NTAddThread(void *param_1,size_t unaff_EDX,undefined4 unaff_EBX,size_t unaff_ECX)
 
 {
   LPVOID lpTlsValue;
@@ -2748,7 +2748,7 @@ longlong __watcall NTAddThread(void *buffer,size_t unaff_EDX,undefined4 unaff_EB
 LAB_00403376:
     return (ulonglong)unaff_EDX << 0x20;
   }
-  init_thread_data = InitThreadData(buffer,unaff_EDX,unaff_EBX,unaff_ECX);
+  init_thread_data = InitThreadData(param_1,unaff_EDX,unaff_EBX,unaff_ECX);
   lpTlsValue = (LPVOID)init_thread_data;
   uVar1 = 0;
   if (lpTlsValue != (LPVOID)0x0) {
@@ -3215,17 +3215,16 @@ char * __watcall strcpy_inline(char *param_1,char *param_2)
 
 /* ==== 0040386b mbsnccnt ==== */
 
-int __watcall mbsnccnt(byte *mbgetcode_result,int unaff_EDX)
+int __watcall mbsnccnt(byte *param_1,int unaff_EDX)
 
 {
   byte *pbVar1;
   uint local_14;
   
   if (IsDBCS != 0) {
-    pbVar1 = mbgetcode_result + unaff_EDX;
+    pbVar1 = param_1 + unaff_EDX;
     unaff_EDX = 0;
-    while ((mbgetcode_result = mbgetcode(mbgetcode_result,&local_14), local_14 != 0 &&
-           (mbgetcode_result <= pbVar1))) {
+    while ((param_1 = mbgetcode(param_1,&local_14), local_14 != 0 && (param_1 <= pbVar1))) {
       unaff_EDX = unaff_EDX + 1;
     }
   }

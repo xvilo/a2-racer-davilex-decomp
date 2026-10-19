@@ -1,0 +1,261 @@
+# Hand-assigned names for A2SPEL.DAT (the race). Columns as in tools/watcom_names.py;
+# empty cc/ret/params/dtype keep recovered values, params "-" means no parameters.
+# Source file names come from the module's own assert strings (main.cpp, myinit.cpp, ...).
+address	kind	name	cc	ret	params	dtype	mangled
+# --- main.cpp: start-up, main loop and shutdown (named after WinMain's own log lines) --
+00401035	function	handle_win_msg	__watcall	void	-
+00401076	function	on_quit_message	__watcall	void	-
+0040107c	function	do_msg_loop	__watcall	void	-
+00401df5	function	blt_viewport
+004146d0	function	set_debugmsg_state	__watcall	void	int:toggle|int:channel
+0040c2f4	function	init_race_settings
+00416ee8	function	set_conversion_mode	__watcall	void	-
+00410168	function	load_samples	__watcall	void	-
+0041bc89	function	change_viewport_size
+0041c6ff	function	init_3d_lib
+0041bd52	function	set_background	__watcall	void	-
+00401ebc	function	init_anims_and_standard_textures
+0041cd48	function	set_render_var
+00406795	function	init_opponents
+0041e158	function	load_weg_data
+0040cdfc	function	init_opponent_map
+0040d12c	function	init_drivers
+00412fa8	function	init_active_opponent_list
+0040914c	function	init_dashboard
+0040f3ad	function	init_radar	__watcall	void	-
+0042211d	function	init_atan_table
+00402ac7	function	init_controls	__watcall	void	-
+00413da4	function	init_pionnen
+00411296	function	set_all_objects
+00411131	function	init_static_objects
+00410460	function	start_music	__watcall	void	-
+00412ac2	function	place_all_bonus_items	__watcall	void	-
+00408d59	function	init_timing
+0041d571	function	render_3d_frame
+0040f7c1	function	draw_radar	__watcall	void	-
+004091f1	function	draw_dashboard	__watcall	void	-
+00412bf0	function	draw_bonus_status
+00408d64	function	exit_timing
+004091bf	function	release_dashboard
+0040f38c	function	release_radar
+00412a90	function	free_bonus
+0040243f	function	exit_player
+0040d2bd	function	exit_drivers
+0040cf27	function	exit_opponent_map
+00406fd3	function	exit_opponents
+00402831	function	exit_system_3d
+0041ca24	function	exit_d3dlib	__watcall	void	-
+00411ebb	function	set_racer_finish_time
+00411f18	function	get_racer_finish_time
+00411f6a	function	get_racer_finish_time_2
+# --- mycontro.cpp: controls, camera, engine sound -----------------------------------
+004029ab	function	select_rpm_step_for_speed
+00402a06	function	add_rpm_steps
+00402d0c	function	set_camera_position	__watcall	void	int:camera
+00402e48	function	update_camera
+0040291c	function	play_motor_sample	__watcall	void	int:sample|int:loop
+0040294c	function	load_and_play_motor_sample	__watcall	void	int:sample|int:loop
+00402ed6	function	play_gear_change_sound	__watcall	void	int:new_step|int:old_step
+00402f3f	function	start_engine_sounds
+00457728	data	camera_position				int
+0045b22c	data	player_index				int
+00476774	data	racers
+00458c38	data	track_index				int
+00458c64	data	race_state				int
+00458c68	data	race_finished_ok				int
+0045b228	data	frame_counter				int
+0045b018	data	police_count				int
+0045b01c	data	civilian_count				int
+00473018	data	racer_range				int
+0047301c	data	racer_high_speed				float
+00473020	data	racer_low_speed				float
+00458c40	data	engine_sound_enabled				int
+0045b2b8	data	rpm_step_count				int
+0045b2b4	data	rpm_step				int
+0045b2c0	data	rpm_table
+00457758	data	motor_samples
+004576c8	data	road_texture				int
+004576cc	data	grass_texture				int
+00476778	data	object_count				int
+00476798	data	texture_table
+0040311c	function	update_steering	__watcall	void	int:input		
+00403273	function	update_accelerator	__watcall	void	int:input		
+004034bb	function	handle_player_controls					
+0040386f	function	update_camera_chase					
+00403f5d	function	update_camera_overhead					
+0040458a	function	update_camera_cockpit					
+00404fe9	function	update_camera_opponent					
+00404c39	function	place_camera_behind					
+00457744	data	control_type				int	
+00457748	data	steering_position				int	
+004765a0	data	sin_table					
+0047659c	data	cos_table					
+00457710	data	watched_opponent				int	
+# --- opponent.cpp: opponents, their slots on the road map ---------------------------
+004051fe	function	get_opponent_chunk					
+0040525a	function	set_map_occupant					
+004052ee	function	get_map_occupant	__watcall	int	int:chunk|int:lane		
+00405343	function	clear_map_occupant	__watcall	void	int:chunk|int:lane		
+004056a9	function	create_opponent					
+00473008	data	opponent_data					
+0047300c	data	opponent_count				int	
+004731f4	data	opponent_map					
+0047657c	data	weg_chunk_count				int	
+00405b09	function	compute_opponent_target					
+00405cf4	function	next_opponent_waypoint					
+0040608d	function	move_opponent_toward_target					
+0040610f	function	evaluate_opponent					
+00406257	function	update_all_opponents	__watcall	void	-		
+0040674a	function	mark_active_racers	__watcall	void	-		
+0040684c	function	place_opponent					
+00406c45	function	scatter_traffic					
+00407009	function	find_free_opponent_slot					
+00407066	function	alloc_opponent_slot					
+004070df	function	check_opponent_collisions					
+00476570	data	weg_chunks					
+00476560	data	weg_sections					
+004767c8	data	weg_points					
+00476578	data	weg_data_loaded				int	
+00475ac8	data	active_opponent_count				int	
+00475ac0	data	active_opponent_list					
+00473014	data	opponents_used				int	
+00407193	function	update_racers	__watcall	void	-		
+# --- statobj.cpp / car types: car and static-object meshes and textures --------------
+00407778	function	load_car_textures					
+00407799	function	release_car_textures					
+004077dc	function	load_static_object					
+00407ac4	function	place_static_object_on_road					
+00408c8c	function	load_static_object_textures					
+00408cad	function	release_static_object_textures					
+00457964	data	car_types					
+00457c50	data	static_object_types					
+# --- countdown timer -----------------------------------------------------------------
+00408cf0	function	start_countdown	__watcall	int	int:seconds		
+00408cff	function	countdown_expired					
+0047304c	data	countdown_seconds				int	
+00473048	data	countdown_last_tick				int	
+00408d59	function	init_timing					
+00473034	data	timing_start_ticks				int	
+# --- dashbrd.cpp: dashboard gauges ---------------------------------------------------
+00408f1a	function	use_dashboard_anims_0					
+00408fe1	function	use_dashboard_anims_1					
+00409095	function	use_dashboard_anims_2					
+00408f9e	function	free_dashboard_anims_0					
+00409065	function	free_dashboard_anims_1					
+00409119	function	free_dashboard_anims_2					
+00409251	function	check_dashboard_frame	__watcall	void	int:frame		
+00409275	function	draw_speed_indicator	__watcall	void	-		
+00409318	function	draw_fuel_warning	__watcall	void	-		
+00409383	function	draw_race_position					
+0040946e	function	draw_time_left					
+004097c5	function	draw_money	__watcall	void	-		
+004099be	function	draw_speedometer	__watcall	void	-		
+00409a53	function	draw_rev_counter	__watcall	void	-		
+00409ae5	function	draw_fuel_gauge	__watcall	void	-		
+00409b77	function	draw_dashboard_panel	__watcall	void	-		
+00409c83	function	draw_steering_wheel	__watcall	void	-		
+0045b260	data	player_speed				float	
+0045b2ac	data	engine_rpm				int	
+00458c4c	data	fuel				int	
+00458c54	data	time_left				int	
+00458c5c	data	money				int	
+00458c28	data	screen_resolution				int	
+00458c04	data	dashboard_surface				int	
+# --- collisions ------------------------------------------------------------------------
+00409cfc	function	resolve_collision	__watcall	void	int:racer_a|int:racer_b		
+0040a17d	function	compute_object_bounds					
+0040a895	function	racers_collide	__watcall	int	int:racer_a|int:racer_b		
+0040bcaf	function	cross_product_y					
+0040bccd	function	update_racer_corners					
+# --- race state ------------------------------------------------------------------------
+0040c278	function	race_positions_valid					
+0040c6fe	function	set_race_state					
+0040c814	function	update_race					
+00475a0b	data	race_positions					
+00458c50	data	race_running				int	
+00458c60	data	controls_enabled				int	
+# --- objio.cpp: object file loading ------------------------------------------------
+0040cb06	function	load_object_file					
+0040cc82	function	load_object_mesh	__watcall	void	int:object|char*:filename		
+# --- opponent map lifetime --------------------------------------------------------
+004731f8	data	opponent_map_allocated				int	
+# --- driver.cpp: AI drivers assigned to opponents -----------------------------------
+0040d33d	function	get_new_driver					
+0040d414	function	assign_driver_to_opponent					
+0040d5d2	function	scan_lanes_ahead					
+0040d71c	function	scan_lanes_for_heading					
+0040d7ed	function	racer_distance_margin					
+0040d80e	function	classify_lane_occupant					
+0047513c	data	driver_list					
+00475148	data	drivers_initialized				int	
+0047514c	data	driver_count				int	
+0040d8aa	function	drive_racer					
+0040e301	function	drive_traffic					
+0040ec6c	function	drive_opponent					
+# --- radar.cpp -----------------------------------------------------------------------
+0040f8f3	function	clear_radar_surface					
+0040f9be	function	draw_radar_contents_1	__watcall	void	-		
+0040fdb4	function	draw_radar_contents_2	__watcall	void	-		
+004751a0	data	radar_surface					
+# --- sndfx.cpp: positional sound effects ---------------------------------------------
+004101a8	function	find_free_sound_slot					
+004101cc	function	find_object_sound_slot					
+004101f4	function	start_object_sound	__watcall	void	int:slot|int:object		
+0041032e	function	set_object_sound_volume					
+00410372	function	stop_object_sound					
+004103a5	function	update_object_sound					
+00410527	function	play_crash_sound	__watcall	void	-		
+004105b4	function	play_bump3_sound	__watcall	void	-		
+00410626	function	play_bump_sound	__watcall	void	-		
+004751f8	data	volume_by_distance					
+00458c30	data	volume_attenuation				int	
+004751c8	data	object_sound_slots					
+004104bc	function	play_sound_effect	__watcall	void	int:effect|int:loop		
+# --- mkstobj.cpp / setracer.cpp: placing objects and racers on the track ---------------
+004110d4	function	read_track_object_count					
+00411258	function	player_at_finish					
+00411401	function	place_rival_racers					
+00411473	function	place_police_cars	__watcall	void	-		
+004114ba	function	create_all_opponents					
+0041158d	function	place_random_pionnen	__watcall	void	-		
+00411928	function	set_racer_start_position	__watcall	int	int:racer|int:position		
+00411aa9	function	set_police_car	__watcall	void	int:police|int:chunk		
+00411b65	function	scatter_all_traffic					
+00411b7a	function	get_racer_value					
+00411b82	function	get_racer_entry					
+00458d58	data	track_info					
+0045773c	data	player_chunk				int	
+# --- race phases -----------------------------------------------------------------------
+00411601	function	draw_big_digit_1	__watcall	void	int:digit|int:frame		
+0041166b	function	draw_big_digit_2	__watcall	void	int:digit|int:frame		
+004116cb	function	start_camera_intro	__watcall	void	-		
+004117bb	function	begin_start_countdown					
+0041185e	function	stop_player_car					
+00411bb0	function	compute_race_ranking					
+00411c93	function	get_racer_lane	__watcall	int	int:racer		
+004590e0	data	lane_boundaries					
+# --- time, fuel, money and fines (each can end the race) --------------------------------
+00411e08	function	init_race_timers					
+00411fe9	function	restart_time_clock					
+00411ff3	function	update_time_left	__watcall	void	-		
+004120ae	function	consume_fuel	__watcall	void	int:amount		
+00412130	function	pay_money	__watcall	void	int:amount		
+00412183	function	next_fine	__watcall	void	-		
+0041266a	function	halt_player_car	__watcall	void	-		
+00475ab0	data	fine_count				int	
+00475ab4	data	current_fine				int	
+00459110	data	fine_amounts					
+# --- bonus.cpp: bonus pickups ----------------------------------------------------------
+00412918	function	describe_bonus					
+00412c65	function	load_bonus_object					
+00475abc	data	bonus_allocated				int	
+00475ab8	data	bonus_items					
+# --- active.cpp: list of opponents near the player ----------------------------------
+0041303d	function	update_active_opponent_list					
+00475ad4	data	active_list_initialized				int	
+00475ac4	data	nearby_opponent_list					
+00475acc	data	nearby_opponent_count				int	
+# --- collisions with the road -------------------------------------------------------
+004131a8	function	collide_racer_with_road_edge					
+004133ce	function	no_collision_check	__watcall	int	-		
+004133d1	function	collide_player_with_track_ends					

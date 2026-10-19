@@ -184,6 +184,9 @@ public class AutoNameVariables extends GhidraScript {
 					}
 				}
 			}
+			if (vn.isInput()) {
+				otherDefs = true; // a parameter's incoming value: not a call result
+			}
 			PcodeOp def = vn.getDef();
 			while (def != null && (def.getOpcode() == PcodeOp.CAST || def.getOpcode() == PcodeOp.COPY)) {
 				def = def.getInput(0).getDef();
@@ -197,8 +200,13 @@ public class AutoNameVariables extends GhidraScript {
 				otherDefs = true;
 			}
 		}
-		if (!votes.isEmpty()) {
-			return votes.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+		// Ghidra often reuses one variable for unrelated values; a variable passed in more than
+		// one role (say as a section name and as a file name) keeps its default name.
+		if (votes.size() == 1) {
+			return votes.keySet().iterator().next();
+		}
+		if (votes.size() > 1) {
+			return null;
 		}
 		// A variable that only ever holds one function's result is named after it; one
 		// that Ghidra reuses for several unrelated values keeps its default name.

@@ -1,0 +1,45 @@
+# Hand-assigned names for A2MOVIE.DAT (the Smacker movie player). Columns as in
+# tools/watcom_names.py; empty cc/ret/params/dtype keep recovered values.
+address	kind	name	cc	ret	params	dtype	mangled
+# --- command line -----------------------------------------------------------------
+00401010	function	contains_nocase	__watcall	int	char*:text|char*:pattern
+0040105f	function	split_args_in_place	__watcall	void	char*:command_line
+# --- xvga graphics library (same source as A2MENU.DAT, different build) -----------
+0040143c	function	set_debugmsg_state	__watcall	void	int:toggle|int:channel
+0040152f	function	exit_xvga_lib	__watcall	void	-
+00406a54	function	exit_help	__watcall	void	-
+00421398	data	helpgrid				IDirectDrawSurface*
+004016e7	function	xvga_flip_page
+004017df	function	set_xvga_vars
+00401ee2	function	create_offscreen_surface
+004021f8	function	test_surface_lock	__watcall	void	int:focus
+0040229f	function	blt_buffer_to_screen
+004023b5	function	init_lib_surfaces	__watcall	void	-
+00402751	function	init_xvga_lib
+004093d3	function	alloc_dd_info
+004095b3	function	enum_dd_drivers
+# --- Smacker playback -------------------------------------------------------------
+00405ec5	function	smacker_next_frame_and_wait	__watcall	void	-
+00406006	function	do_play_smacker
+00406225	function	play_smacker
+# --- Watcom C runtime ---------------------------------------------------------------
+0040d597	function	fill_dwords
+0040edbe	function	init_amblksiz	__watcall	void	-
+0040f500	function	raise_sigill_handler
+00412cc5	function	flush_all_open_streams
+00408459	function	crt_nop_hook_1	__watcall	void	-
+0040bd91	function	crt_nop_hook_2	__watcall	void	-
+0040c4a5	function	crt_nop_hook_3	__watcall	void	-
+0040f76e	function	crt_nop_hook_4	__watcall	void	-
+0040fbcc	function	crt_nop_hook_5	__watcall	void	-
+00414a5a	function	crt_nop_hook_6	__watcall	void	-
+0040c4a0	function	crt_return_zero	__watcall	int	-
+00414a50	function	crt_return_zero_2	__watcall	int	-
+00415e23	function	crt_return_zero_3	__watcall	int	-
+# --- floating-point runtime helpers without their own symbol -------------------------
+00414b3c	function	IF_LOG_tail
+00415019	function	normalize_mantissa_64
+00415379	function	bin2string_inline_table
+0041542e	function	bin2string_inline_table_2
+00415430	function	fdiv_pentium_safe_core
+00415b00	function	fdivr_checked
