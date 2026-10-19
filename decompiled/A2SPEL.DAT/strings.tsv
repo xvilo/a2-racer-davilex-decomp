@@ -278,7 +278,6 @@ address	type	value
 00442927	string	porche.pcx
 00442932	string	k_porche.pcx
 0044293f	string	interl.d3d
-0044294a	string	il.pcx
 00442951	string	k_il.pcx
 0044295a	string	camaro.d3d
 00442965	string	camaro.pcx
@@ -418,6 +417,7 @@ address	type	value
 00443467	string	 %s(%d) : D3DError Setting matrix : %s\n
 00443498	string	sky.d3d
 004434a0	string	sky.pcx
+004434b1	string	50.pcx
 004434b8	string	arena.d3d
 004434cc	string	viaduct.d3d
 004434d8	string	viaduct.pcx

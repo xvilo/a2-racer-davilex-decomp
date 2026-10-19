@@ -259,3 +259,167 @@ address	kind	name	cc	ret	params	dtype	mangled
 004131a8	function	collide_racer_with_road_edge					
 004133ce	function	no_collision_check	__watcall	int	-		
 004133d1	function	collide_player_with_track_ends					
+00411d4a	function	racer_progress_in_section					
+00411dc8	function	bubble_sort_ints	__watcall	void	int*:values|int:count		
+00401f79	function	load_player_object					
+# --- bonus effects ---------------------------------------------------------------------
+00411fc7	function	bonus_add_time	__watcall	void	-		
+00412078	function	bonus_add_fuel	__watcall	void	-		
+00412101	function	bonus_add_money	__watcall	void	-		
+004126a8	function	alloc_bonus_items					
+00412737	function	place_bonus_item					
+# --- pion.cpp: pionnen (traffic cones / road markers) ---------------------------------
+004135c4	function	alloc_pionnen					
+00413646	function	place_pion_left					
+004137dc	function	place_pion_right					
+00413a5c	function	collide_with_pionnen	__watcall	void	-		
+00413dca	function	place_pion_group	__watcall	void	int:chunk		
+00413e88	function	update_pionnen	__watcall	void	-		
+00413ece	function	load_pion_object					
+# --- d3dlib.cpp / viewport.cpp / exec.cpp: Direct3D wrapper ----------------------------
+0041bc74	function	d3d_store_screen_size	__watcall	void	-		
+0041bede	function	init_viewport					
+0041c0d4	function	create_viewport					
+0041c212	function	release_d3d	__watcall	void	-		
+0041c32c	function	d3d_error_string					
+0041c439	function	query_d3d_interface					
+0041c473	function	create_d3d_device					
+0041c574	function	release_d3d_device	__watcall	void	-		
+0041c5e5	function	find_d3d_device	__watcall	void	-		
+0041c818	function	create_zbuffer					
+0041c97f	function	clear_zbuffer					
+0041ca01	function	release_zbuffer	__watcall	void	-		
+0041cb12	function	log_device_caps	__watcall	void	-		
+0041cc58	function	init_render_state_defaults	__watcall	void	-		
+0041cfed	function	apply_render_states					
+0041d341	function	create_frame_execute_buffer					
+0041d654	function	build_object_execute_buffer					
+# --- wegtools.cpp / weg.cpp: the road ("weg") ------------------------------------------
+0041dcc0	function	point_side_of_line					
+0041dd0c	function	point_side_of_chunk_edge					
+0041ddb8	function	point_between_chunk_edges					
+0041de40	function	update_chunk_for_position					
+0041e07d	function	alloc_weg_chunks					
+0041e93c	function	alloc_weg_lanes					
+0041ec35	function	alloc_weg_vertices					
+0041ee77	function	weg_section_index					
+0041eed1	function	compute_weg_normals					
+0041f358	function	build_weg_sections					
+0041ffce	function	compute_road_height					
+004202c7	function	debug_weg_position					
+004203ac	function	execute_weg_buffer	__watcall	void	-		
+00420429	function	get_road_height					
+00420431	function	build_weg_execute_buffers					
+# --- math3d.cpp -------------------------------------------------------------------------
+00421af0	function	init_math3d					
+00421bd3	function	compute_height_map_row					
+00421ddc	function	alloc_height_map					
+00421e3c	function	alloc_atan_table					
+00421fbd	function	atan_lookup					
+00422637	function	interpolate_weg_point					
+00422d1c	function	normalize_vector	__watcall	void	float*:v		
+00422d96	function	cross_product	__watcall	void	float*:out|float*:a|float*:b		
+00422eac	function	store_vertex_z					
+00422f84	function	vector_subtract	__watcall	void	float*:out|float*:a|float*:b		
+00422f9d	function	vertex_edge_vector	__watcall	void	float*:out|int:v1|int:v2		
+004764b4	data	d3d_object					
+004764fc	data	d3d_device					
+00476500	data	zbuffer_surface					
+00476504	data	zbuffer_created				int	
+004232be	function	matrix_multiply	__watcall	void	float*:a|float*:b		
+00423553	function	rotate_matrix_x					
+004235fb	function	rotate_matrix_y					
+0042369d	function	rotate_matrix_z					
+# --- object3d.cpp / anim3d.cpp / frame3d.cpp / vertex.cpp / triangle.cpp ---------------
+004238d5	function	object3d_nop	__watcall	void	-		
+004238d8	function	alloc_objects3d					
+00423a64	function	find_free_object3d					
+00423aeb	function	get_new_object3d					
+00423d2c	function	set_object3d_matrix					
+00423f75	function	check_objects3d_visibility					
+00424003	function	execute_object_buffers	__watcall	void	-		
+0042407c	function	alloc_3d_arrays	__watcall	int	-		
+0042410e	function	free_3d_arrays					
+00424165	function	find_free_anim3d					
+004241c8	function	get_new_anim3d					
+004242bc	function	init_static_anim3d					
+0042438b	function	init_anim3d					
+00424415	function	free_anim3d					
+0042be90	function	alloc_frames3d					
+0042bf2d	function	free_frames3d					
+0042bf82	function	find_free_frame3d					
+0042bfcd	function	get_new_frame3d					
+0042bfee	function	init_frame3d					
+0042c151	function	free_frame3d	__watcall	void	-		
+00425cfc	function	alloc_vertices					
+00425d7a	function	free_vertices					
+00425dcf	function	find_free_vertices					
+00425e1a	function	get_new_vertices					
+0042c8e0	function	alloc_triangles					
+0042c95e	function	free_triangles					
+0042c9b3	function	find_free_triangles					
+0042c9fe	function	get_new_triangles					
+# --- texture.cpp / light.cpp / material.cpp -------------------------------------------
+0042451c	function	alloc_texture_formats					
+00424580	function	add_texture_format					
+004245ee	function	enum_texture_format_callback					
+00424828	function	enum_texture_formats					
+0042487e	function	alloc_textures					
+004248df	function	get_new_texture					
+00424930	function	load_texture	__watcall	int	char*:filename|int:flags		
+00425ad8	function	alloc_lights					
+00425b31	function	get_new_light					
+00425b65	function	create_standard_light	__watcall	int	-		
+0042fab0	function	alloc_materials					
+0042fb03	function	create_default_material					
+0042fb25	function	get_new_material					
+0042fb59	function	set_material_texture					
+0042fc74	function	create_material					
+# --- tiles, map execute buffers and the camera ------------------------------------------
+00425e78	function	point_side_of_line_2					
+00425ec4	function	set_view_quad					
+00425efc	function	point_in_view_quad					
+00425f55	function	init_tiles	__watcall	void	-		
+0042612d	function	tile_always_hidden	__watcall	int	-		
+00426137	function	build_map_execute_buffers					
+00426c74	function	update_visible_tiles	__watcall	void	int:x|int:z		
+00426ea7	function	return_zero_float					
+00426eac	function	road_height_at					
+00426f39	function	build_tile_execute_buffer					
+00427414	function	find_free_camera					
+00427c2a	function	set_camera					
+00427e58	function	init_cameras					
+00427f31	function	atan2_checked					
+# --- Watcom C runtime / FPU helpers ----------------------------------------------------
+0042c296	function	sqrt_checked					
+004311f5	function	sqrt_domain_error					
+00430a4c	function	fcos_reduced					
+00430a56	function	fsin_reduced					
+00430a60	function	wait_fpu_reduction					
+00430d04	function	atan2_software					
+00437200	function	fpatan_emulated					
+0043befb	function	fpatan_emulated_helper					
+00431189	function	get_ticks_centiseconds					
+004311a9	function	clock_ticks					
+00481010	data	clock_start_ticks				int	
+00430120	function	enum_d3d_device_callback					
+004303a0	function	enum_dd_mode_callback					
+00436bac	function	bpp_to_ddbd_flag					
+00430c97	function	fill_dwords					
+00432f96	function	flush_all_open_streams					
+00436fdc	function	init_amblksiz	__watcall	void	-		
+00438055	function	raise_sigill_handler					
+0043bde4	function	fdiv_pentium_safe_core					
+0043c4b4	function	fdivr_checked					
+0043e82e	function	IF_LOG_tail					
+0043eced	function	normalize_mantissa_64					
+0043f18d	function	bin2string_inline_table					
+0043f242	function	bin2string_inline_table_2					
+0042e6db	function	crt_nop_hook_1	__watcall	void	-		
+00430e39	function	crt_nop_hook_2	__watcall	void	-		
+004382c3	function	crt_nop_hook_3	__watcall	void	-		
+004388f0	function	crt_nop_hook_4	__watcall	void	-		
+0043ef29	function	crt_nop_hook_5	__watcall	void	-		
+00430e34	function	crt_return_zero	__watcall	int	-		
+0043ef1f	function	crt_return_zero_2	__watcall	int	-		
+0043f45d	function	crt_return_zero_3	__watcall	int	-		
