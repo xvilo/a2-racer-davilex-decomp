@@ -119,8 +119,22 @@ public class AutoNameVariables extends GhidraScript {
 			syms.add(s);
 			used.add(s.getName());
 		}
+		// Loop counters first: i, j, k, ... in order of where they appear.
+		List<HighSymbol> counters = new ArrayList<>();
 		for (HighSymbol s : syms) {
-			if (!DEFAULT.matcher(s.getName()).matches()) {
+			if (DEFAULT.matcher(s.getName()).matches() && !s.isParameter() && isLoopCounter(s)) {
+				counters.add(s);
+			}
+		}
+		counters.sort(Comparator.comparing(AutoNameVariables::firstUse));
+		String[] letters = { "i", "j", "k", "m", "n" };
+		for (int c = 0; c < counters.size() && c < letters.length; c++) {
+			String name = unique(letters[c], used);
+			used.add(name);
+			plan.put(counters.get(c), name);
+		}
+		for (HighSymbol s : syms) {
+			if (!DEFAULT.matcher(s.getName()).matches() || plan.containsKey(s)) {
 				continue;
 			}
 			String name = propose(s);
@@ -166,6 +180,15 @@ public class AutoNameVariables extends GhidraScript {
 				Iterator<PcodeOp> d = v.getDescendants();
 				while (d.hasNext()) {
 					PcodeOp op = d.next();
+					if (op.getOpcode() == PcodeOp.PTRADD && op.getInput(1) == v) {
+						// Index into an array of a named structure: opponent_data + i -> opponent_index.
+						HighVariable base = op.getInput(0).getHigh();
+						String sn = base == null ? null : fromType(base.getDataType());
+						if (sn != null && !sn.equals("file")) {
+							votes.merge(sn + "_index", 2, Integer::sum);
+						}
+						continue;
+					}
 					if (op.getOpcode() != PcodeOp.CALL) {
 						continue;
 					}
@@ -206,7 +229,8 @@ public class AutoNameVariables extends GhidraScript {
 			return votes.keySet().iterator().next();
 		}
 		if (votes.size() > 1) {
-			return null;
+			String idx = votes.keySet().stream().filter(k -> k.endsWith("_index")).findFirst().orElse(null);
+			return votes.keySet().stream().filter(k -> k.endsWith("_index")).count() == 1 ? idx : null;
 		}
 		// A variable that only ever holds one function's result is named after it; one
 		// that Ghidra reuses for several unrelated values keeps its default name.
@@ -217,6 +241,50 @@ public class AutoNameVariables extends GhidraScript {
 			}
 		}
 		return fromType(s.getDataType());
+	}
+
+	/** A variable incremented or decremented by one and merged around a loop. */
+	private boolean isLoopCounter(HighSymbol s) {
+		HighVariable hv = s.getHighVariable();
+		if (hv == null || hv.getSize() > 4) {
+			return false;
+		}
+		DataType dt = s.getDataType();
+		if (dt instanceof Pointer || dt instanceof AbstractFloatDataType) {
+			return false;
+		}
+		Set<Varnode> mine = new HashSet<>(Arrays.asList(hv.getInstances()));
+		boolean stepped = false, merged = false;
+		for (Varnode vn : hv.getInstances()) {
+			PcodeOp def = vn.getDef();
+			if (def == null) {
+				continue;
+			}
+			if (def.getOpcode() == PcodeOp.MULTIEQUAL) {
+				merged = true;
+			}
+			if ((def.getOpcode() == PcodeOp.INT_ADD || def.getOpcode() == PcodeOp.INT_SUB) &&
+				mine.contains(def.getInput(0)) && def.getInput(1).isConstant()) {
+				long c = def.getInput(1).getOffset();
+				if (c == 1 || c == 0xffffffffL || c == 0xffffffffffffffffL) {
+					stepped = true;
+				}
+			}
+		}
+		return stepped && merged;
+	}
+
+	private static long firstUse(HighSymbol s) {
+		long min = Long.MAX_VALUE;
+		HighVariable hv = s.getHighVariable();
+		if (hv != null) {
+			for (Varnode vn : hv.getInstances()) {
+				if (vn.getPCAddress() != null && vn.getPCAddress().getOffset() < min) {
+					min = vn.getPCAddress().getOffset();
+				}
+			}
+		}
+		return min;
 	}
 
 	/** The varnode plus the outputs of CAST/COPY ops reading it (one level). */
@@ -274,19 +342,32 @@ public class AutoNameVariables extends GhidraScript {
 	}
 
 	static String fromType(DataType dt) {
+		boolean pointer = false;
+		if (dt instanceof Pointer && ((Pointer) dt).getDataType() != null) {
+			dt = ((Pointer) dt).getDataType();
+			pointer = true;
+		}
+		String raw = dt.getName();
+		if (raw.equals("FILE") || raw.equals("_iobuf") || raw.equals("__iobuf")) {
+			return "file";
+		}
+		if (pointer && raw.startsWith("IDirect")) {
+			return toSnake(raw.substring(1).replaceAll("(A|W)$", ""));
+		}
 		while (dt instanceof TypeDef) {
 			dt = ((TypeDef) dt).getBaseDataType();
 		}
 		if (!(dt instanceof Structure) && !(dt instanceof Union)) {
 			return null;
 		}
-		String n = dt.getName().replaceFirst("^(tag|_+)", "").replaceAll("(?<=[A-Z])(A|W)$", "");
+		String n = raw.replaceFirst("^(tag|_+)", "").replaceAll("(?<=[A-Z])(A|W)$", "")
+			.replaceAll("_t$", "");
 		return toSnake(n);
 	}
 
 	private String unique(String name, Set<String> used) {
 		if (RESERVED.contains(name) || globalNames.contains(name)) {
-			name = name + "_val";
+			name = name.endsWith("_index") ? name.replaceAll("_index$", "_idx") : name + "_val";
 		}
 		String base = name;
 		for (int i = 2; used.contains(name); i++) {
