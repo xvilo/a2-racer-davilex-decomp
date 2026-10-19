@@ -77,7 +77,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004055ed	function	menu_start	__watcall	int	int		W?menu_start$n(i)i
 00405ab8	function	mc_af_image	__watcall	int	int|int|char*|int		W?mc_af_image$n(iipnai)i
 00405afa	function	mc_clear_text_bar	__watcall	void			W?mc_clear_text_bar$n()v
-00405b39	function	mc_print_text_bar	__cdecl	void	char*		W?mc_print_text_bar$n(pnae)v
+00405b39	function	mc_print_text_bar	__cdecl	void	char*|...		W?mc_print_text_bar$n(pnae)v
 00405c0e	function	scan_2_ckey	__watcall	int	int		W?scan_2_ckey$n(i)i
 00405c35	function	load_ckey	__watcall	void			W?load_ckey$n()v
 00405c67	function	save_ckey	__watcall	void			W?save_ckey$n()v
@@ -174,22 +174,22 @@ address	kind	name	cc	ret	params	dtype	mangled
 0040a19d	function	free_mns_menu_cfg_anims	__watcall	int			W?free_mns_menu_cfg_anims$n()i
 0040a1d0	function	reqw_open	__watcall	void	char*		W?reqw_open$n(pna)v
 0040a2b6	function	reqw_close	__watcall	void			W?reqw_close$n()v
-0040a308	function	req_warning	__cdecl	int	char*		W?req_warning$n(pnae)i
+0040a308	function	req_warning	__cdecl	int	char*|...		W?req_warning$n(pnae)i
 0040a3a4	function	reqv_stop_snd	__watcall	void	int*		W?reqv_stop_snd$n(pni)v
 0040a401	function	reqv_wait_snd	__watcall	void	int*		W?reqv_wait_snd$n(pni)v
 0040a433	function	reqv_open	__watcall	void	char*		W?reqv_open$n(pna)v
 0040a51f	function	reqv_close	__watcall	void			W?reqv_close$n()v
-0040a571	function	req_vraag	__cdecl	int	char*		W?req_vraag$n(pnae)i
+0040a571	function	req_vraag	__cdecl	int	char*|...		W?req_vraag$n(pnae)i
 0040a658	function	reqi_stop_snd	__watcall	void	int*		W?reqi_stop_snd$n(pni)v
 0040a6b5	function	reqi_wait_snd	__watcall	void	int*		W?reqi_wait_snd$n(pni)v
 0040a6e7	function	reqi_open	__watcall	void	char*		W?reqi_open$n(pna)v
 0040a7fd	function	reqi_close	__watcall	void			W?reqi_close$n()v
-0040a85e	function	req_input	__cdecl	int	char*|int|char*		W?req_input$n(pnaipnae)i
+0040a85e	function	req_input	__cdecl	int	char*|int|char*|...		W?req_input$n(pnaipnae)i
 0040aa20	function	txt_get_word	__watcall	int	char*|char*		W?txt_get_word$n(pnapna)i
 0040aa73	function	txt_check_newline	__watcall	int	char*		W?txt_check_newline$n(pna)i
 0040aaa3	function	txt_crop_word	__watcall	char*	char*		W?txt_crop_word$n(pna)pna
-0040aac3	function	win_printwrapped	__cdecl	void	int|int|int|int|char*		W?win_printwrapped$n(iiiipnae)v
-0040ac58	function	win_bprintf	__cdecl	void	int|int|int|int|char*		W?win_bprintf$n(iiiipnae)v
+0040aac3	function	win_printwrapped	__cdecl	void	int|int|int|int|char*|...		W?win_printwrapped$n(iiiipnae)v
+0040ac58	function	win_bprintf	__cdecl	void	int|int|int|int|char*|...		W?win_bprintf$n(iiiipnae)v
 0040ad6c	function	reset_infio	__watcall	void			W?reset_infio$n()v
 0040b288	function	handle_game	__watcall	int			W?handle_game$n()i
 0040b92c	function	movie_play_finish	__watcall	void			W?movie_play_finish$n()v
@@ -209,10 +209,10 @@ address	kind	name	cc	ret	params	dtype	mangled
 0040bd13	function	read_ini_value_setting	__watcall	uint	char*|char*		W?read_ini_value_setting$n(pnapna)ui
 0040bd47	function	read_ini_string_setting	__watcall	void	char*|char*|char*|int		W?read_ini_string_setting$n(pnapnapnai)v
 0040bd80	function	set_debugmsg_state	__watcall	void	int|int		W?set_debugmsg_state$n(ii)v
-0040bd8c	function	debugmsg	__cdecl	void	char*		W?debugmsg$n(pnae)v
-0040be1f	function	message	__cdecl	int	char*		W?message$n(pnae)i
+0040bd8c	function	debugmsg	__cdecl	void	char*|...		W?debugmsg$n(pnae)v
+0040be1f	function	message	__cdecl	int	char*|...		W?message$n(pnae)i
 0040be73	function	exit_xvga_lib	__watcall	void			W?exit_xvga_lib$n()v
-0040bf81	function	fatal_exit	__cdecl	int	char*		W?fatal_exit$n(pnae)i
+0040bf81	function	fatal_exit	__cdecl	int	char*|...		W?fatal_exit$n(pnae)i
 0040c02d	function	xvga_flip_page	__watcall	void			W?xvga_flip_page$n()v
 0040c125	function	set_xvga_vars	__watcall	int	int|int|int		W?set_xvga_vars$n(iii)i
 0040c168	function	get_xvga_vars	__watcall	int	int		W?get_xvga_vars$n(i)i
@@ -249,7 +249,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 0040d821	function	set_3d_output_format	__watcall	int	int|int|int|int		W?set_3d_output_format$n(iiii)i
 0040d937	function	create_sound_buffer	__watcall	IDirectSoundBuffer*	int|int|int|int|int		W?create_sound_buffer$n(iiiii)pn$IDirectSoundBuffer$$
 0040d9f7	function	create_3d_sound_buffer	__watcall	int	IDirectSoundBuffer**|IDirectSound3DBuffer**|int|int|int|int|int		W?create_3d_sound_buffer$n(pnpn$IDirectSoundBuffer$$pnpn$IDirectSound3DBuffer$$iiiii)i
-0040dae7	label	W_duplicate_sound_buffer_n_pn_IDirectSoundBuffer___pn_1_			?		W?duplicate_sound_buffer$n(pn$IDirectSoundBuffer$$)pn$1$
+0040dae7	function	duplicate_sound_buffer	__watcall	IDirectSoundBuffer*	IDirectSoundBuffer*		W?duplicate_sound_buffer$n(pn$IDirectSoundBuffer$$)pn$1$
 0040db28	function	sound_buffer_busy	__watcall	int	int		W?sound_buffer_busy$n(i)i
 0040dbbf	function	stop_sound_buffer	__watcall	int	int		W?stop_sound_buffer$n(i)i
 0040dcc8	function	stop_all_sound_buffers	__watcall	int			W?stop_all_sound_buffers$n()i
@@ -287,8 +287,8 @@ address	kind	name	cc	ret	params	dtype	mangled
 0040f7a2	function	get_3dlistener_velocity	__watcall	int	_D3DVECTOR*		W?get_3dlistener_velocity$n(pn$_D3DVECTOR$$)i
 0040f7e2	function	get_3dlistener_pos_1	__watcall	int	float*|float*|float*		W?get_3dlistener_pos$n(pnbpnbpnb)i
 0040f83e	function	get_3dlistener_velocity_1	__watcall	int	float*|float*|float*		W?get_3dlistener_velocity$n(pnbpnbpnb)i
-0040f87a	label	W_set_3dlistener_orientation_n_pn__D3DVECTOR__pn_1__i			?		W?set_3dlistener_orientation$n(pn$_D3DVECTOR$$pn$1$)i
-0040f8c9	function	set_3dlistener_orientation	__watcall	int	float|float|float|float|float|float		W?set_3dlistener_orientation$n(bbbbbb)i
+0040f87a	function	set_3dlistener_orientation	__watcall	int	_D3DVECTOR*|_D3DVECTOR*		W?set_3dlistener_orientation$n(pn$_D3DVECTOR$$pn$1$)i
+0040f8c9	function	set_3dlistener_orientation_1	__watcall	int	float|float|float|float|float|float		W?set_3dlistener_orientation$n(bbbbbb)i
 0040f921	function	set_3dlistener_dopplerfactor	__watcall	int	float		W?set_3dlistener_dopplerfactor$n(b)i
 0040f991	function	set_3dlistener_distancefactor	__watcall	int	float		W?set_3dlistener_distancefactor$n(b)i
 0040f9f3	function	set_3dlistener_rollofffactor	__watcall	int	float		W?set_3dlistener_rollofffactor$n(b)i
@@ -312,7 +312,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 00410575	function	xvga_exit_fileio	__watcall	void			W?xvga_exit_fileio$n()v
 004105c4	function	init_controls	__watcall	void			W?init_controls$n()v
 004106d2	function	clear_control_list	__watcall	void			W?clear_control_list$n()v
-004106e9	label	W_add_control_to_list_n_ipn_pn___2e8n7fform_t__i_vpn_pn_1__vpn_pn_1_i_ipn_pn_1__vpn_pn_1__vpn_pnvuiuil_l_v			?		W?add_control_to_list$n(ipn(pn$__2e8n7fform_t$$i)vpn(pn$1$)vpn(pn$1$i)ipn(pn$1$)vpn(pn$1$)vpn(pnvuiuil)l)v
+004106e9	function	add_control_to_list	__watcall	void	int|void*|void*|void*|void*|void*|void*		W?add_control_to_list$n(ipn(pn$__2e8n7fform_t$$i)vpn(pn$1$)vpn(pn$1$i)ipn(pn$1$)vpn(pn$1$)vpn(pnvuiuil)l)v
 0041075c	function	get_mouse_type	__watcall	int			W?get_mouse_type$n()i
 0041077f	function	set_mouse_type	__watcall	void	int		W?set_mouse_type$n(i)v
 004107c8	function	init_mouse	__watcall	int			W?init_mouse$n()i
@@ -363,8 +363,8 @@ address	kind	name	cc	ret	params	dtype	mangled
 004122e2	function	wstart2	__watcall		?		_wstart2_
 00412360	function	get_string_width	__watcall	int	char*|int		W?get_string_width$n(pnai)i
 004123d8	function	get_string_height	__watcall	int	char*|int		W?get_string_height$n(pnai)i
-00412443	function	win_print_xy	__cdecl	int	int|int|int|char*		W?win_print_xy$n(iiipnae)i
-00412974	function	win_print_xy_1	__cdecl	int	int|int|int|ulong|ulong|char*		W?win_print_xy$n(iiiululpnae)i
+00412443	function	win_print_xy	__cdecl	int	int|int|int|char*|...		W?win_print_xy$n(iiipnae)i
+00412974	function	win_print_xy_1	__cdecl	int	int|int|int|ulong|ulong|char*|...		W?win_print_xy$n(iiiululpnae)i
 00412e6f	function	xvga_load_select_font	__watcall	int	char*|int|int|int		W?xvga_load_select_font$n(pnaiii)i
 00412eb0	function	xvga_load_font	__watcall	int	int|char*|int|int|int		W?xvga_load_font$n(ipnaiii)i
 00412f40	function	xvga_select_font	__watcall	int	int		W?xvga_select_font$n(i)i

@@ -61,6 +61,11 @@ public class ApplyWatcom extends GhidraScript {
 		String mode = args.length > 0 ? args[0] : "post";
 		if (mode.equals("pre")) {
 			new SpecExtension(currentProgram).addReplaceCompilerSpecExtension(WATCALL_XML, monitor);
+			// This heuristic marks a function non-returning when calls to it sit right before
+			// another function's start. With every symbol created up front that misfires (it
+			// marked debugmsg non-returning and cut code after 164 call sites). Library exits
+			// are still covered by the "Non-Returning Functions - Known" analyzer.
+			setAnalysisOption(currentProgram, "Non-Returning Functions - Discovered", "false");
 			if (args.length > 1) {
 				applyNames(new File(args[1]));
 			}
@@ -160,8 +165,13 @@ public class ApplyWatcom extends GhidraScript {
 	private void setSignature(Function f, String cc, String ret, String params) throws Exception {
 		List<ParameterImpl> ps = new ArrayList<>();
 		int i = 1;
+		boolean varargs = false;
 		if (!params.isEmpty() && !params.equals("-")) {
 			for (String p : params.split("\\|")) {
+				if (p.equals("...")) {
+					varargs = true;
+					continue;
+				}
 				// "type:name" names the parameter; a bare type keeps param_N.
 				String[] tn = p.split(":", 2);
 				String pname = tn.length > 1 ? tn[1] : "param_" + i;
@@ -173,6 +183,7 @@ public class ApplyWatcom extends GhidraScript {
 		f.updateFunction(cc.isEmpty() ? WATCALL : cc,
 			new ReturnParameterImpl(resolve(ret), currentProgram), ps,
 			FunctionUpdateType.DYNAMIC_STORAGE_ALL_PARAMS, true, SourceType.IMPORTED);
+		f.setVarArgs(varargs);
 	}
 
 	private void openWindowsArchive() {

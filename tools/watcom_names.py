@@ -117,7 +117,7 @@ def demangle(sym, known):
     m = re.match(r'W\?([A-Za-z_][A-Za-z0-9_]*)\$n(.*)$', sym)
     if m:
         name, enc = m.groups()
-        p = Parser(enc)
+        p = Parser(enc, [name])  # back-reference $0$ is the symbol's own name
         if enc.startswith('('):
             p.i = 1
             params = []
@@ -126,7 +126,7 @@ def demangle(sym, known):
             p.i += 1
             ret = p.type()
             variadic = any(t[0] == '...' for t in params)
-            plist = [fmt(t, known) for t in params if t[0] != '...']
+            plist = [fmt(t, known) if t[0] != '...' else '...' for t in params]
             if plist == ['void']:
                 plist = []
             return name, '__cdecl' if variadic else '__watcall', fmt(ret, known), plist, '', True

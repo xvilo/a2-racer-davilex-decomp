@@ -19,10 +19,10 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00414612	function	write_ini_value_setting	__watcall	void	char*|char*|int		W?write_ini_value_setting$n(pnapnai)v	pattern
 00414663	function	read_ini_value_setting	__watcall	uint	char*|char*		W?read_ini_value_setting$n(pnapna)ui	pattern
 00414697	function	read_ini_string_setting	__watcall	void	char*|char*|char*|int		W?read_ini_string_setting$n(pnapnapnai)v	pattern
-004146dc	function	debugmsg	__cdecl	void	char*		W?debugmsg$n(pnae)v	pattern
-0041476f	function	message	__cdecl	int	char*		W?message$n(pnae)i	pattern
+004146dc	function	debugmsg	__cdecl	void	char*|...		W?debugmsg$n(pnae)v	pattern
+0041476f	function	message	__cdecl	int	char*|...		W?message$n(pnae)i	pattern
 004147c3	function	exit_xvga_lib	__watcall	void			W?exit_xvga_lib$n()v	pattern
-004148d1	function	fatal_exit	__cdecl	int	char*		W?fatal_exit$n(pnae)i	pattern
+004148d1	function	fatal_exit	__cdecl	int	char*|...		W?fatal_exit$n(pnae)i	pattern
 0041497d	function	xvga_flip_page	__watcall	void			W?xvga_flip_page$n()v	pattern
 00414a75	function	set_xvga_vars	__watcall	int	int|int|int		W?set_xvga_vars$n(iii)i	pattern
 00414ab8	function	get_xvga_vars	__watcall	int	int		W?get_xvga_vars$n(i)i	pattern
@@ -117,7 +117,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00419271	function	set_3d_output_format	__watcall	int	int|int|int|int		W?set_3d_output_format$n(iiii)i	pattern
 00419387	function	create_sound_buffer	__watcall	IDirectSoundBuffer*	int|int|int|int|int		W?create_sound_buffer$n(iiiii)pn$IDirectSoundBuffer$$	pattern
 00419447	function	create_3d_sound_buffer	__watcall	int	IDirectSoundBuffer**|IDirectSound3DBuffer**|int|int|int|int|int		W?create_3d_sound_buffer$n(pnpn$IDirectSoundBuffer$$pnpn$IDirectSound3DBuffer$$iiiii)i	pattern
-00419537	label	W_duplicate_sound_buffer_n_pn_IDirectSoundBuffer___pn_1_			?		W?duplicate_sound_buffer$n(pn$IDirectSoundBuffer$$)pn$1$	call
+00419537	function	duplicate_sound_buffer	__watcall	IDirectSoundBuffer*	IDirectSoundBuffer*		W?duplicate_sound_buffer$n(pn$IDirectSoundBuffer$$)pn$1$	pattern
 00419578	function	sound_buffer_busy	__watcall	int	int		W?sound_buffer_busy$n(i)i	pattern
 0041960f	function	stop_sound_buffer	__watcall	int	int		W?stop_sound_buffer$n(i)i	pattern
 00419718	function	stop_all_sound_buffers	__watcall	int			W?stop_all_sound_buffers$n()i	pattern
@@ -155,7 +155,8 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 0041b1f2	function	get_3dlistener_velocity	__watcall	int	_D3DVECTOR*		W?get_3dlistener_velocity$n(pn$_D3DVECTOR$$)i	pattern
 0041b232	function	get_3dlistener_pos_1	__watcall	int	float*|float*|float*		W?get_3dlistener_pos$n(pnbpnbpnb)i	pattern
 0041b28e	function	get_3dlistener_velocity_1	__watcall	int	float*|float*|float*		W?get_3dlistener_velocity$n(pnbpnbpnb)i	pattern
-0041b319	function	set_3dlistener_orientation	__watcall	int	float|float|float|float|float|float		W?set_3dlistener_orientation$n(bbbbbb)i	pattern
+0041b2ca	function	set_3dlistener_orientation	__watcall	int	_D3DVECTOR*|_D3DVECTOR*		W?set_3dlistener_orientation$n(pn$_D3DVECTOR$$pn$1$)i	pattern
+0041b319	function	set_3dlistener_orientation_1	__watcall	int	float|float|float|float|float|float		W?set_3dlistener_orientation$n(bbbbbb)i	pattern
 0041b371	function	set_3dlistener_dopplerfactor	__watcall	int	float		W?set_3dlistener_dopplerfactor$n(b)i	pattern
 0041b3e1	function	set_3dlistener_distancefactor	__watcall	int	float		W?set_3dlistener_distancefactor$n(b)i	pattern
 0041b443	function	set_3dlistener_rollofffactor	__watcall	int	float		W?set_3dlistener_rollofffactor$n(b)i	pattern
@@ -181,8 +182,8 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004290b9	function	time	__watcall		?		time_	pattern
 004290f0	function	get_string_width	__watcall	int	char*|int		W?get_string_width$n(pnai)i	pattern
 00429168	function	get_string_height	__watcall	int	char*|int		W?get_string_height$n(pnai)i	pattern
-004291d3	function	win_print_xy	__cdecl	int	int|int|int|char*		W?win_print_xy$n(iiipnae)i	pattern
-00429704	function	win_print_xy_1	__cdecl	int	int|int|int|ulong|ulong|char*		W?win_print_xy$n(iiiululpnae)i	pattern
+004291d3	function	win_print_xy	__cdecl	int	int|int|int|char*|...		W?win_print_xy$n(iiipnae)i	pattern
+00429704	function	win_print_xy_1	__cdecl	int	int|int|int|ulong|ulong|char*|...		W?win_print_xy$n(iiiululpnae)i	pattern
 00429bff	function	xvga_load_select_font	__watcall	int	char*|int|int|int		W?xvga_load_select_font$n(pnaiii)i	pattern
 00429c40	function	xvga_load_font	__watcall	int	int|char*|int|int|int		W?xvga_load_font$n(ipnaiii)i	pattern
 00429cd0	function	xvga_select_font	__watcall	int	int		W?xvga_select_font$n(i)i	pattern
@@ -512,7 +513,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00439c16	function	nmemneed	__watcall		?		__nmemneed_	call
 00439c1c	function	init_controls	__watcall	void			W?init_controls$n()v	pattern
 00439d2a	function	clear_control_list	__watcall	void			W?clear_control_list$n()v	pattern
-00439d41	label	W_add_control_to_list_n_ipn_pn___2e8n7fform_t__i_vpn_pn_1__vpn_pn_1_i_ipn_pn_1__vpn_pn_1__vpn_pnvuiuil_l_v			?		W?add_control_to_list$n(ipn(pn$__2e8n7fform_t$$i)vpn(pn$1$)vpn(pn$1$i)ipn(pn$1$)vpn(pn$1$)vpn(pnvuiuil)l)v	call
+00439d41	function	add_control_to_list	__watcall	void	int|void*|void*|void*|void*|void*|void*		W?add_control_to_list$n(ipn(pn$__2e8n7fform_t$$i)vpn(pn$1$)vpn(pn$1$i)ipn(pn$1$)vpn(pn$1$)vpn(pnvuiuil)l)v	pattern
 00439db1	function	setenvp	__watcall		?		__setenvp_	pattern
 00439e69	function	strncat	__watcall		?		strncat_	pattern
 00439ea8	function	strncpy	__watcall		?		strncpy_	pattern

@@ -12,7 +12,7 @@ address	name	size	thunk	callers	callees	status
 00401448	debugmsg	147	false	39	5	ok
 004014db	message	84	false	0	2	ok
 0040152f	FUN_0040152f	270	false	2	8	ok
-00401642	fatal_exit	165	false	176	6	ok
+00401642	fatal_exit	165	false	177	6	ok
 004016e7	FUN_004016e7	117	false	2	2	ok
 004017df	FUN_004017df	180	false	1	1	ok
 0040184f	dd_error_string	744	false	29	0	ok
@@ -51,7 +51,7 @@ address	name	size	thunk	callers	callees	status
 00403298	handle_win_msg	71	false	5	3	ok
 004032df	handle_quit_msg	74	false	1	5	ok
 00403329	WindowProc	270	false	0	8	ok
-00403438	ds_error_string	160	false	41	0	ok
+00403438	ds_error_string	160	false	42	0	ok
 004034d8	xvga_init_sound_info	105	false	1	2	ok
 00403541	get_new_sound_info	32	false	1	0	ok
 00403561	enum_sound_info_callback	279	false	0	4	ok
@@ -60,7 +60,7 @@ address	name	size	thunk	callers	callees	status
 004037b1	set_3d_output_format	278	false	1	3	ok
 004038c7	create_sound_buffer	192	false	1	3	ok
 00403987	create_3d_sound_buffer	240	false	1	3	ok
-00403a77	W_duplicate_sound_buffer_n_pn_IDirectSoundBuffer___pn_1_	65	false	3	2	ok
+00403a77	duplicate_sound_buffer	65	false	3	2	ok
 00403ab8	sound_buffer_busy	151	false	5	2	ok
 00403b4f	stop_sound_buffer	265	false	1	2	ok
 00403c58	stop_all_sound_buffers	55	false	1	1	ok
@@ -98,7 +98,8 @@ address	name	size	thunk	callers	callees	status
 00405732	get_3dlistener_velocity	64	false	0	1	ok
 00405772	get_3dlistener_pos_1	92	false	0	2	ok
 004057ce	get_3dlistener_velocity_1	60	false	0	1	ok
-00405859	set_3dlistener_orientation	88	false	0	2	ok
+0040580a	set_3dlistener_orientation	79	false	0	2	ok
+00405859	set_3dlistener_orientation_1	88	false	0	2	ok
 004058b1	set_3dlistener_dopplerfactor	112	false	0	2	ok
 00405921	set_3dlistener_distancefactor	98	false	0	1	ok
 00405983	set_3dlistener_rollofffactor	105	false	0	1	ok
@@ -343,7 +344,7 @@ address	name	size	thunk	callers	callees	status
 0040e7a4	check_joystick_keys	62	false	1	0	ok
 0040e7e4	init_controls	270	false	0	3	ok
 0040e8f2	clear_control_list	23	false	1	0	ok
-0040e909	W_add_control_to_list_n_ipn_pn___2e8n7fform_t__i_vpn_pn_1__vpn_pn_1_i_ipn_pn_1__vpn_pn_1__vpn_pnvuiuil_l_v	112	false	1	1	ok
+0040e909	add_control_to_list	112	false	1	1	ok
 0040e979	filelength	89	false	2	2	ok
 0040e9d2	ioalloc	119	false	5	2	ok
 0040ea49	qread	116	false	2	3	ok

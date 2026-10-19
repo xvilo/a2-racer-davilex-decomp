@@ -195,7 +195,7 @@ address	name	size	thunk	callers	callees	status
 004146dc	debugmsg	147	false	123	5	ok
 0041476f	message	84	false	0	2	ok
 004147c3	exit_xvga_lib	270	false	2	7	ok
-004148d1	fatal_exit	157	false	330	7	ok
+004148d1	fatal_exit	157	false	331	7	ok
 00414976	fatal_exit_tail	7	false	2	0	ok
 0041497d	xvga_flip_page	117	false	3	2	ok
 00414a75	set_xvga_vars	180	false	1	1	ok
@@ -283,7 +283,7 @@ address	name	size	thunk	callers	callees	status
 0041888c	load_pcx_file_surface_2	507	false	0	8	ok
 00418a87	load_pcx_file_surface_3	653	false	0	10	ok
 00418d14	load_pcx_file_surface_4	482	false	0	9	ok
-00418ef8	ds_error_string	160	false	41	0	ok
+00418ef8	ds_error_string	160	false	42	0	ok
 00418f98	xvga_init_sound_info	105	false	1	2	ok
 00419001	get_new_sound_info	32	false	1	0	ok
 00419021	enum_sound_info_callback	279	false	0	4	ok
@@ -292,7 +292,7 @@ address	name	size	thunk	callers	callees	status
 00419271	set_3d_output_format	278	false	1	3	ok
 00419387	create_sound_buffer	192	false	1	3	ok
 00419447	create_3d_sound_buffer	240	false	1	3	ok
-00419537	W_duplicate_sound_buffer_n_pn_IDirectSoundBuffer___pn_1_	65	false	3	2	ok
+00419537	duplicate_sound_buffer	65	false	3	2	ok
 00419578	sound_buffer_busy	151	false	7	2	ok
 0041960f	stop_sound_buffer	265	false	3	2	ok
 00419718	stop_all_sound_buffers	55	false	2	1	ok
@@ -330,7 +330,8 @@ address	name	size	thunk	callers	callees	status
 0041b1f2	get_3dlistener_velocity	64	false	0	1	ok
 0041b232	get_3dlistener_pos_1	92	false	0	2	ok
 0041b28e	get_3dlistener_velocity_1	60	false	0	1	ok
-0041b319	set_3dlistener_orientation	88	false	0	2	ok
+0041b2ca	set_3dlistener_orientation	79	false	0	2	ok
+0041b319	set_3dlistener_orientation_1	88	false	0	2	ok
 0041b371	set_3dlistener_dopplerfactor	112	false	0	2	ok
 0041b3e1	set_3dlistener_distancefactor	98	false	0	1	ok
 0041b443	set_3dlistener_rollofffactor	105	false	0	1	ok
@@ -820,7 +821,7 @@ address	name	size	thunk	callers	callees	status
 00439c16	nmemneed	3	false	1	0	ok
 00439c1c	init_controls	270	false	0	3	ok
 00439d2a	clear_control_list	23	false	1	0	ok
-00439d41	W_add_control_to_list_n_ipn_pn___2e8n7fform_t__i_vpn_pn_1__vpn_pn_1_i_ipn_pn_1__vpn_pn_1__vpn_pnvuiuil_l_v	112	false	1	1	ok
+00439d41	add_control_to_list	112	false	1	1	ok
 00439db1	setenvp	184	false	0	3	ok
 00439e69	strncat	63	false	2	0	ok
 00439ea8	strncpy	37	false	1	0	ok

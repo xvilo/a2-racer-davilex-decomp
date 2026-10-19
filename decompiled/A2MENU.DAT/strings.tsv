@@ -33,7 +33,12 @@ address	type	value
 0042523f	string	A2-Racer
 00425248	string	Davilex Software
 00425259	string	error : couldn't initialize graphics resolution\n
+0042528a	string	a2intro.smk
+00425296	string	a2mrcs.img
 004252a1	string	\txvga_init_fileio (%s)\n
+004252b9	string	a2mrcs.img
+004252c4	string	a2mrcs.ind
+004252cf	string	a2mrcs.img
 004252da	string	main.cpp
 004252e3	string	%s(%d) : Unable to initialize resource file %s.\n
 00425314	string	Init_controls()\n
@@ -109,8 +114,12 @@ address	type	value
 0042594d	string	%s(%d): save_tmp_optie ():\n Failed writing %s.\n
 0042597d	string	optie.cpp
 00425987	string	\n\n%s(%d) :  *> INIT OPTION <*\n
+004259a6	string	OPTIE.A2R
 004259b0	string	\tCreating option file %s\nOPTIE.A2R
+004259d3	string	OPTIE.A2R
 004259dd	string	\tLoad option files %s\n
+004259f4	string	OPTIE.A2R
+004259fe	string	OPTIE.A2R
 00425a08	string	bedien.cpp
 00425a13	string	\n\n%s(%d): *> LOAD TEMPORARY BEDIENING <*\n
 00425a3d	string	bedien.cpp
@@ -121,10 +130,15 @@ address	type	value
 00425abd	string	%s(%d): save_tmp_bedien ():\n Failed writing %s.\n
 00425aee	string	bedien.cpp
 00425af9	string	\n\n%s(%d) : *> INIT BEDIEN <*\n
+00425b17	string	BEDIEN.A2R
+00425b22	string	BEDIEN.A2R
 00425b2d	string	\tCreating controls file %s\n
+00425b49	string	BEDIEN.A2R
 00425b54	string	Loading controls files %s\n
+00425b6f	string	BEDIEN.A2R
 00425b7a	string	bedien.cpp
 00425b85	string	\n\n%s(%d): *> SAVE BEDIENING <*\n
+00425ba5	string	BEDIEN.A2R
 00425bb0	string	%s(%d), slot_check_index():\nUnknown slot ( %d of max %d ) given\n
 00425bf1	string	%s(%d), slot_check_level():\nUnknown level ( %d of max %d) given\n
 00425c32	string	slot.cpp
@@ -246,6 +260,7 @@ address	type	value
 00426185	string	%s(%d): save_tmp_slotdbase():\nError(%d) while writing file%s.\n
 004261c4	string	slot.cpp
 004261cd	string	\t%s(%d): init_slotdbase()\n
+004261e8	string	SLOT.A2R
 004261f2	string	slot.cpp
 004261fb	string	slot.cpp
 00426204	string	slot.cpp
@@ -253,8 +268,10 @@ address	type	value
 00426216	string	slot.cpp
 0042621f	string	slot.cpp
 00426228	string	slot.cpp
+00426231	string	SLOT.A2R
 0042623a	string	slot.cpp
 00426243	string	\t%s(%d): save_slotdbase ( void ) \n
+00426266	string	SLOT.A2R
 0042626f	string	slot.cpp
 00426278	string	\t%s(%d): get_last_saved_slot ( void )\n
 0042629f	string	slot.cpp
@@ -285,6 +302,7 @@ address	type	value
 004264cb	string	slot.cpp
 004264d4	string	slot.cpp
 004264dd	string	slot.cpp
+004264e6	string	L E E G
 004264ee	string	slot.cpp
 004264f7	string	slot.cpp
 00426500	string	slot.cpp
@@ -293,6 +311,8 @@ address	type	value
 0042651c	string	slot.cpp
 00426525	string	slot.cpp
 0042652e	string	slot.cpp
+00426537	string	%#2.2du%#2.2dm%#2.2ds
+0042654d	string	--u--m--s
 00426557	string	slot.cpp
 00426560	string	slot.cpp
 00426569	string	slot.cpp
@@ -370,6 +390,13 @@ address	type	value
 00426b08	string	RACER_1
 00426b15	string	RACER_2
 00426b22	string	RACER_3
+00426b2f	string	RACER_4
+00426b3c	string	RACER_5
+00426b49	string	TIJD_1
+00426b55	string	TIJD_2
+00426b61	string	TIJD_3
+00426b6d	string	TIJD_4
+00426b79	string	TIJD_5
 00426b85	string	FINALE
 00426b91	string	BEDIENING
 00426b9b	string	CONTROL
@@ -377,6 +404,7 @@ address	type	value
 00426bad	string	CONTROL
 00426bb5	string	KEY_RECHTS
 00426bc0	string	CONTROL
+00426bc8	string	KEY_GAS
 00426bd0	string	CONTROL
 00426bd8	string	KEY_REM
 00426be0	string	CONTROL
@@ -384,6 +412,7 @@ address	type	value
 00426bf3	string	CONTROL
 00426bfb	string	KEY_ACTIE2
 00426c06	string	CONTROL
+00426c0e	string	GELUID
 00426c15	string	OPTION
 00426c1c	string	RESOLUTIE
 00426c26	string	OPTION
@@ -398,6 +427,7 @@ address	type	value
 00426c73	string	OPTION
 00426c7a	string	CAMERA
 00426c81	string	OPTION
+00426c88	string	VMUZIEK
 00426c90	string	OPTION
 00426c97	string	VEFFECT
 00426c9f	string	OPTION
@@ -416,6 +446,13 @@ address	type	value
 00426d86	string	RACER_1
 00426d93	string	RACER_2
 00426da0	string	RACER_3
+00426dad	string	RACER_4
+00426dba	string	RACER_5
+00426dc7	string	TIJD_1
+00426dd3	string	TIJD_2
+00426ddf	string	TIJD_3
+00426deb	string	TIJD_4
+00426df7	string	TIJD_5
 00426e03	string	FINALE
 00426e0f	string	BEDIENING
 00426e19	string	CONTROL
@@ -423,6 +460,7 @@ address	type	value
 00426e2b	string	CONTROL
 00426e33	string	KEY_RECHTS
 00426e3e	string	CONTROL
+00426e46	string	KEY_GAS
 00426e4e	string	CONTROL
 00426e56	string	KEY_REM
 00426e5e	string	CONTROL
@@ -430,6 +468,7 @@ address	type	value
 00426e71	string	CONTROL
 00426e79	string	KEY_ACTIE2
 00426e84	string	CONTROL
+00426e8c	string	GELUID
 00426e93	string	OPTION
 00426e9a	string	RESOLUTIE
 00426ea4	string	OPTION
@@ -444,6 +483,7 @@ address	type	value
 00426ef1	string	OPTION
 00426ef8	string	CAMERA
 00426eff	string	OPTION
+00426f06	string	VMUZIEK
 00426f0e	string	OPTION
 00426f15	string	VEFFECT
 00426f1d	string	OPTION
@@ -467,12 +507,16 @@ address	type	value
 00426ffc	string	snd_buffer = %d\n
 0042700d	string	not busy snd_buffer = %d\n
 00427027	string	m_main.cpp
+00427032	string	%-16s
 00427038	string	m_main.cpp
 00427048	string	m_main.cpp
 00427058	string	Toetsenbord
 00427064	string	Joypad 1
+0042706d	string	Stuur
 00427073	string	Onbekend
 0042707f	string	3D Accelerator
+0042708e	string	320 x 200
+00427098	string	640 x 480
 004270a2	string	Onbekend
 004270ae	string	\n\n *> DISPLAY_INFO %d<*\n
 004270c7	string	*> END DISPLAY_INFO <*\n
@@ -543,7 +587,9 @@ address	type	value
 00427554	string	m_start.cpp
 00427560	string	%s(%d), mst_draw_selected_slot_info () :\nCould not load frame %d of ANIM %d\n
 004275ad	string	m_start.cpp
+004275b9	string	%-16s
 004275bf	string	m_start.cpp
+004275cb	string	%-16s
 004275d1	string	m_start.cpp
 004275e1	string	m_start.cpp
 004275f2	string	m_start.cpp
@@ -557,7 +603,9 @@ address	type	value
 004276c2	string	m_start.cpp
 004276ce	string	\tprinting %s\n
 004276dc	string	m_start.cpp
+004276e8	string	%-16s
 004276ee	string	m_start.cpp
+004276fa	string	%-16s
 00427700	string	m_start.cpp
 00427710	string	m_start.cpp
 00427721	string	m_start.cpp
@@ -568,9 +616,11 @@ address	type	value
 00427797	string	%s(%d): mst_print_slot(), initializing\n
 004277bf	string	m_start.cpp
 004277cb	string	%s(%d): mst_print_slot(), end slot print\n
+004277f5	string	LOGO256.PCX
 00427801	string	algintro.wav
 0042780e	string	m_start.cpp
 0042781a	string	%s(%d): mst_open_screen(), initializing\n
+00427843	string	NSPEL_1.PCX
 0042784f	string	m_start.cpp
 0042785b	string	%s(%d): mst_open_screen(), Could not load mc_menu_cfg\n
 00427892	string	m_start.cpp
@@ -581,7 +631,9 @@ address	type	value
 0042790e	string	%s(%d): mst_close_screen(), destroy form\n
 00427938	string	\n\n *> START MENU <*\n
 0042794d	string	m_start.cpp
+00427959	string	MNS_00.wav
 00427964	string	m_start.cpp
+00427970	string	MNS_01.wav
 0042797b	string	Vul je naam in en wordt lid van de A2 Racing Club!
 004279ae	string	m_start.cpp
 004279ba	string	%s(%d): activate form\n
@@ -591,10 +643,12 @@ address	type	value
 004279f2	string	click3.wav
 004279fd	string	click1.wav
 00427a08	string	m_start.cpp
+00427a14	string	MNS_01.wav
 00427a1f	string	Vul je naam in en wordt lid van de A2 Racing Club!
 00427a52	string	MSTART SET ACTIVE SLOT %d<*%d\n
 00427a71	string	m_start.cpp
 00427a7d	string	click1.wav
+00427a88	string	MNS_02.wav
 00427a93	string	m_start.cpp
 00427a9f	string	Wil je deze speler '%s' verwijderen?
 00427ac4	string	click1.wav
@@ -609,7 +663,9 @@ address	type	value
 00427b9c	string	%s %s
 00427ba2	string	click1.wav
 00427bad	string	click3.wav
+00427bb8	string	MC_09.wav
 00427bc2	string	Deze toets, <%s>, is eerder gedefinieerd. Kies een andere toets.
+00427c03	string	MC_10.wav
 00427c0d	string	De toetsen zijn ingesteld.
 00427c2b	string	m_bedien.cpp
 00427c38	string	%s(%d) : illegal keyboard frame image %d of ANIM %d.
@@ -654,12 +710,12 @@ address	type	value
 00427fac	string	Rechts
 00427fb9	string	SPACE
 00427fbf	string	ENTER
+00427fc5	string	LINKS
 00427fcb	string	RECHTS
 00427fda	string	TOETER
 00427fe7	string	MC_05.wav
 00427ff1	string	MC_06.wav
 00427ffb	string	MC_07.wav
-00428005	string	MC_08.wav
 00428010	string	%s(%d), mo_af_image() : Could not load frame %d of ANIM %d\n
 0042804c	string	m_opties.cpp
 00428059	string	m_opties.cpp
@@ -744,9 +800,13 @@ address	type	value
 0042854a	string	click3.wav
 00428555	string	click3.wav
 00428560	string	%s(%d), mds_af_image() : Could not load frame %d of ANIM %d\n
+004285a8	string	%#2.2du%#2.2dm%#2.2ds
+004285c8	string	%#2.2du%#2.2dm%#2.2ds
 004285de	string	m_dscore.cpp
 004285eb	string	m_dscore.cpp
 004285f8	string	m_dscore.cpp
+00428605	string	Score3.pcx
+00428610	string	Score2.pcx
 0042861b	string	m_dscore.cpp
 00428628	string	%s(%d) : Could not load mds_menu_cfg\n
 0042864e	string	mds_open_screen ( ) ok\n
@@ -755,7 +815,9 @@ address	type	value
 00428698	string	m_nsplr.cpp
 004286a4	string	%s(%d), mns_draw_selected_slot_info () :\nCould not load frame %d of ANIM %d\n
 004286f1	string	m_nsplr.cpp
+004286fd	string	%-16s
 00428703	string	m_nsplr.cpp
+0042870f	string	%-16s
 00428715	string	m_nsplr.cpp
 00428725	string	m_nsplr.cpp
 00428736	string	m_nsplr.cpp
@@ -767,7 +829,9 @@ address	type	value
 004287d8	string	m_nsplr.cpp
 004287e4	string	\t%d>, naam %s, level %d, tijd %d\n
 00428806	string	m_nsplr.cpp
+00428812	string	%-16s
 00428818	string	m_nsplr.cpp
+00428824	string	%-16s
 0042882a	string	m_nsplr.cpp
 0042883a	string	m_nsplr.cpp
 0042884b	string	m_nsplr.cpp
@@ -776,6 +840,7 @@ address	type	value
 0042888e	string	%s(%d): mns_print_slot(), initializing\n
 004288b6	string	m_nsplr.cpp
 004288c2	string	%s(%d): mns_open_screen(), initializing\n
+004288eb	string	NSPEL_2.PCX
 004288f7	string	m_nsplr.cpp
 00428903	string	%s(%d): mns_open_screen(), Could not load mc_menu_cfg\n
 0042893a	string	m_nsplr.cpp
@@ -788,9 +853,11 @@ address	type	value
 004289ba	string	click3.wav
 004289c5	string	click1.wav
 004289d0	string	m_nsplr.cpp
+004289dc	string	MNS_01.wav
 004289e7	string	Vul je naam in en wordt lid van de A2 Racing Club!
 00428a1a	string	m_nsplr.cpp
 00428a26	string	click1.wav
+00428a31	string	MNS_02.wav
 00428a3c	string	m_nsplr.cpp
 00428a48	string	Wil je deze speler '%s' verwijderen?
 00428a6d	string	click1.wav
@@ -820,6 +887,7 @@ address	type	value
 00428bb0	string	m_stand.cpp
 00428bbc	string	m_stand.cpp
 00428bc8	string	m_stand.cpp
+00428bda	string	%#2.2du%#2.2dm%#2.2ds
 00428bf0	string	m_stand.cpp
 00428bfc	string	%s(%d) : Could not load mdt_menu_cfg\n
 00428c22	string	mdt_open_screen ( ) ok\n
@@ -841,6 +909,7 @@ address	type	value
 00428d1c	string	m_clas.cpp
 00428d27	string	m_clas.cpp
 00428d32	string	\t\tDone initializing current score to level score list and start qsort\n
+00428d7f	string	%#2.2du%#2.2dm%#2.2ds
 00428d95	string	m_clas.cpp
 00428da0	string	TStand2.pcx
 00428dac	string	TStand.pcx
@@ -853,17 +922,24 @@ address	type	value
 00428e51	string	a2mrc.img
 00428e5b	string	not enough memory for animation data
 00428e80	string	not enough memory for animations
+00428ea1	string	a2mrc.img
 00428eab	string	not enough memory for animation data
 00428ed0	string	menuanim.cpp
 00428edd	string	 %s(%d) : please call init_anims () first
+00428f07	string	a2mrc.ind
+00428f11	string	a2mrc.img
 00428f1b	string	menuanim.cpp
 00428f28	string	 %s(%d) : please call init_anims () first
 00428f52	string	menuanim.cpp
 00428f5f	string	 %s(%d) : please call init_anims () first
+00428f89	string	a2mrc.ind
+00428f93	string	a2mrc.img
 00428f9d	string	menuanim.cpp
 00428faa	string	 %s(%d) : please call init_anims () first
 00428fd4	string	menuanim.cpp
 00428fe1	string	 %s(%d) : please call init_anims () first
+0042900b	string	a2mrc.ind
+00429015	string	a2mrc.img
 0042901f	string	menuanim.cpp
 0042902c	string	 %s(%d) : please call init_anims () first
 00429056	string	menuanim.cpp
@@ -874,6 +950,8 @@ address	type	value
 004290ae	string	 %s(%d) : please call init_anims () first
 004290d8	string	menuanim.cpp
 004290e5	string	 %s(%d) : please call init_anims () first
+0042910f	string	a2mrc.ind
+00429119	string	a2mrc.img
 00429123	string	menuanim.cpp
 00429130	string	 %s(%d) : please call init_anims () first
 0042915a	string	menuanim.cpp
@@ -884,26 +962,38 @@ address	type	value
 004291b2	string	 %s(%d) : please call init_anims () first
 004291dc	string	menuanim.cpp
 004291e9	string	 %s(%d) : please call init_anims () first
+00429213	string	a2mrc.ind
+0042921d	string	a2mrc.img
 00429227	string	menuanim.cpp
 00429234	string	 %s(%d) : please call init_anims () first
 0042925e	string	menuanim.cpp
 0042926b	string	 %s(%d) : please call init_anims () first
+00429295	string	a2mrc.ind
+0042929f	string	a2mrc.img
 004292a9	string	menuanim.cpp
 004292b6	string	 %s(%d) : please call init_anims () first
 004292e0	string	menuanim.cpp
 004292ed	string	 %s(%d) : please call init_anims () first
+00429317	string	a2mrc.ind
+00429321	string	a2mrc.img
 0042932b	string	menuanim.cpp
 00429338	string	 %s(%d) : please call init_anims () first
 00429362	string	menuanim.cpp
 0042936f	string	 %s(%d) : please call init_anims () first
+00429399	string	a2mrc.ind
+004293a3	string	a2mrc.img
 004293ad	string	menuanim.cpp
 004293ba	string	 %s(%d) : please call init_anims () first
 004293e4	string	menuanim.cpp
 004293f1	string	 %s(%d) : please call init_anims () first
+0042941b	string	a2mrc.ind
+00429425	string	a2mrc.img
 0042942f	string	menuanim.cpp
 0042943c	string	 %s(%d) : please call init_anims () first
 00429466	string	menuanim.cpp
 00429473	string	 %s(%d) : please call init_anims () first
+0042949d	string	a2mrc.ind
+004294a7	string	a2mrc.img
 004294b1	string	menuanim.cpp
 004294be	string	 %s(%d) : please call init_anims () first
 004294e8	string	reqwarn.cpp
@@ -999,6 +1089,7 @@ address	type	value
 00429adc	string	spel.cpp
 00429ae5	string	spel.cpp
 00429aee	string	spel.cpp
+00429af7	string	rock.wav
 00429b00	string	spel.cpp
 00429b09	string	\tslot[%d].tijd[%d] = %d\n
 00429b22	string	spel.cpp
@@ -1192,6 +1283,7 @@ address	type	value
 0042b191	string	error unidentified
 0042b1a4	string	 %s(%d) : not enough memory to retrieve driver info\n
 0042b1d9	string	%s, %s\n
+0042b1e1	string	SB16.VXD
 0042b1ea	string	sb16 driver found %d\n
 0042b205	string	secondary driver found %d\n
 0042b220	string	sound.cpp
@@ -1317,9 +1409,11 @@ address	type	value
 0042bf58	string	 %s(%d) : error locking sound buffer (%d) (%s)\n
 0042bf88	string	sound.cpp
 0042bf92	string	 %s(%d) : error unlocking sound buffer (%d) (%s)\n
+0042bfc4	string	[%s]\n
 0042bfca	string	file        : %s\n
 0042bfdc	string	bufferlength:%d\n
 0042bfed	string	samplerate  :%d\n
+0042bffe	string	bpps        :%d\n
 0042c00f	string	align       :%d stereo %d\n
 0042c02a	string	sound.cpp
 0042c034	string	 %s(%d) : error playing sound %d (%s)\n
@@ -1425,6 +1519,8 @@ address	type	value
 0042ca90	string	 %s(%d) : getting sound status failed %d (%s)\n
 0042cabf	string	sound.cpp
 0042cac9	string	 %s(%d) : error releasing sound buffer (%s)\n
+0042caf8	string	x:%s\\%s
+0042cb02	string	x:\\%s
 0042cb12	string	fatal error : no program cdrom was found\n
 0042cb3c	string	program installation check failed\n
 0042cb61	string	path=%s\n
@@ -1524,6 +1620,7 @@ address	type	value
 0042d5ef	string	 %s(%d) : (draw_mouse) You can't change the windows default mouse
 0042d631	string	mouse.cpp
 0042d63b	string	 %s(%d) : (handle_mouse) Mouse is not initialised
+0042d670	string	help.cpp
 0042d679	string	 %s(%d) : failed to set color key(%s)\n
 0042d6a0	string	help.cpp
 0042d6a9	string	 %s(%d) : help grid blitting error
@@ -1535,6 +1632,7 @@ address	type	value
 0042d72d	string	 %s(%d) : (play_help) empty form or no form is active 
 0042d764	string	help.cpp
 0042d76d	string	 %s(%d) : (play_help) illegal form index found (%d)
+0042d7a1	string	help.cpp
 0042d7aa	string	 %s(%d) : (set_help_key) No free key availible max. : %d.
 0042d7e4	string	 %s(%d) : illegal mem image array index %d (max=%d) (xsize)\n
 0042d821	string	 %s(%d) : get xsize of mem image while not initialized\n
@@ -1738,6 +1836,7 @@ address	type	value
 0042ed1a	string	 %s(%d) : error reading\n
 0042ed33	string	rcpcx.cpp
 0042ed3d	string	 %s(%d)  : header read]\n
+0042ed56	string	rcpcx.cpp
 0042ed60	string	 %s(%d)  : no error header read]\n
 0042ed82	string	creating surface %d,%d\n
 0042ed9a	string	creation succesfull\n
@@ -1747,6 +1846,7 @@ address	type	value
 0042edd7	string	 %s(%d) : error reading\n
 0042edf0	string	rcpcx.cpp
 0042edfa	string	 %s(%d)  : header read]\n
+0042ee13	string	rcpcx.cpp
 0042ee1d	string	 %s(%d)  : no error header read]\n
 0042ee3f	string	creating surface %d,%d\n
 0042ee57	string	creation succesfull\n
@@ -1756,6 +1856,7 @@ address	type	value
 0042ee94	string	 %s(%d) : error reading\n
 0042eead	string	rcpcx.cpp
 0042eeb7	string	 %s(%d)  : header read]\n
+0042eed0	string	rcpcx.cpp
 0042eeda	string	 %s(%d)  : no error header read]\n
 0042eefc	string	creating surface %d,%d\n
 0042ef14	string	creation succesfull\n
@@ -1765,18 +1866,22 @@ address	type	value
 0042ef51	string	 %s(%d) : error reading\n
 0042ef6a	string	rcpcx.cpp
 0042ef74	string	 %s(%d)  : header read]\n
+0042ef8d	string	rcpcx.cpp
 0042ef97	string	 %s(%d)  : no error header read]\n
 0042efb9	string	creation succesfull\n
 0042efce	string	blitting to destination\n
+0042efe7	string	rcpcx.cpp
 0042eff1	string	 %s(%d) : blitting error (%s)\n
 0042f010	string	Release buffer surface\n
 0042f028	string	rcpcx.cpp
 0042f032	string	 %s(%d)  : closing\n
 0042f046	string	rcpcx.cpp
 0042f050	string	 %s(%d)  : header read]\n
+0042f069	string	rcpcx.cpp
 0042f073	string	 %s(%d)  : no error header read]\n
 0042f095	string	creation succesfull\n
 0042f0aa	string	blitting to destination\n
+0042f0c3	string	rcpcx.cpp
 0042f0cd	string	 %s(%d) : blitting error (%s)\n
 0042f0ec	string	Release buffer surface\n
 0042f104	string	rcpcx.cpp
@@ -1900,13 +2005,21 @@ address	type	value
 0043025f	string	timer.cpp
 00430269	string	 %s(%d) : out of timer place holders max=%d\n
 00430296	string	timer set = %d\n
+004302a8	string	pal.cpp
 004302b0	string	 %s(%d) : error not enough memory to allocate a palette\n
+004302e9	string	pal.cpp
 004302f1	string	 %s(%d) : 16 bit screen mode -> ignore palette\n
+00430321	string	pal.cpp
 00430329	string	 %s(%d) : could not create a palette (%s)\n
+00430354	string	pal.cpp
 0043035c	string	 %s(%d) : palette was not initialized\n
+00430383	string	pal.cpp
 0043038b	string	 %s(%d) : could not set the palette (%s)\n
+004303b5	string	pal.cpp
 004303bd	string	 %s(%d) : could not set the palette (%s)\n
+004303e7	string	pal.cpp
 004303ef	string	 %s(%d) : could not set the palette (%s)\n
+00430419	string	pal.cpp
 00430421	string	 %s(%d) : unknown focus defined\n
 00430442	string	pal.cpp
 0043044a	string	 %s(%d) : palette was not initialized\n
@@ -1981,6 +2094,7 @@ address	type	value
 00430b59	string	Windows 95 thinks this is a slow machine\n
 00430b83	string	 %s(%d) : not enough memory to retrieve driver info\n
 00430bb8	string	%s, %s\n
+00430bc0	string	DD3Dfx
 00430bc7	string	dd3ddfx driver found %d\n
 00430be4	string	Righteous dd3ddfx driver found %d\n
 00430c0c	string	secondary driver found %d\n
