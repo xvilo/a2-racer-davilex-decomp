@@ -1,0 +1,110 @@
+address	type	value
+004047d8	string	0123456789abcdefghijklmnopqrstuvwxyz
+00405006	string	A2 MOTOR
+0040500f	string	Argument list exceeds 1024 bytes
+00405030	string	A2 MOTOR
+00405039	string	mode argument is invalid
+00405052	string	A2 MOTOR
+0040505b	string	File or path is not found
+00405075	string	A2 MOTOR
+0040507e	string	Specified file is not executable or has invalid executable-file format
+004050c5	string	A2 MOTOR
+004050ce	string	Not enough memory is available to execute new process
+00405104	string	A2MOTOR
+0040510c	string	Err! -7 CCWINMAP
+0040511d	string	WinMain(): RegisterClass() failed
+00405140	string	A2MOTOR
+00405148	string	/FIRST
+0040514f	string	a2intro.smk
+0040515b	string	a2movie.dat
+00405167	string	a2menu.dat
+00405172	string	a2spel.dat
+0040517d	string	infio.ini
+00405187	string	ETAPPE
+00405193	string	RACE_KLAAR
+004051a3	string	POSITIE
+004051b0	string	a2win.smk
+004051ba	string	a2movie.dat
+004051c9	string	exit.smk
+004051d2	string	a2movie.dat
+004051ef	string	COMSPEC
+004051fb	string	COMMAND
+00405204	string	read from
+0040520e	string	written
+00405216	string	The instruction at %08lx referenced memory at %08lx\nThe memory could not be %s
+00405265	string	An privileged instruction was executed at address %08lx
+0040529d	string	An illegal instruction was executed at address %08lx
+004052d2	string	An integer divide by zero was encountered at address %08lx
+0040530d	string	A stack overflow was encountered at address %08lx
+0040533f	string	The program encountered a problem at address %08lx and cannot continue
+00405386	string	user32.dll
+00405391	string	MessageBoxExA
+0040539f	string	Application Error: 
+004053b3	string	\n\nClick on OK to terminate the application
+004053e0	string	ABNORMAL TERMINATION\r\n
+00405408	string	Thread has no thread-specific data\r\n
+00405a38	string	Stack Overflow!\r\n
+00407278	TerminatedCString	GDI32.dll
+00407282	TerminatedCString	USER32.dll
+0040728d	TerminatedCString	KERNEL32.dll
+0040729a	TerminatedCString	USER32.DLL
+004072a5	TerminatedCString	KERNEL32.DLL
+004072b4	TerminatedCString	GetStockObject
+004072c6	TerminatedCString	BeginPaint
+004072d4	TerminatedCString	CreateWindowExA
+004072e6	TerminatedCString	DefWindowProcA
+004072f8	TerminatedCString	DestroyWindow
+00407308	TerminatedCString	DispatchMessageA
+0040731c	TerminatedCString	EndPaint
+00407328	TerminatedCString	GetSystemMetrics
+0040733c	TerminatedCString	LoadCursorA
+0040734a	TerminatedCString	LoadIconA
+00407356	TerminatedCString	MessageBoxA
+00407364	TerminatedCString	PeekMessageA
+00407374	TerminatedCString	PostQuitMessage
+00407386	TerminatedCString	RegisterClassExA
+0040739a	TerminatedCString	SendMessageA
+004073aa	TerminatedCString	SetCursor
+004073b6	TerminatedCString	ShowWindow
+004073c4	TerminatedCString	TranslateAcceleratorA
+004073dc	TerminatedCString	TranslateMessage
+004073f0	TerminatedCString	GetPrivateProfileIntA
+00407408	TerminatedCString	GetActiveWindow
+0040741a	TerminatedCString	wsprintfA
+00407426	TerminatedCString	CloseHandle
+00407434	TerminatedCString	CreateEventA
+00407444	TerminatedCString	CreateFileA
+00407452	TerminatedCString	CreateMutexA
+00407462	TerminatedCString	CreateProcessA
+00407474	TerminatedCString	CreateThread
+00407484	TerminatedCString	ExitProcess
+00407492	TerminatedCString	ExitThread
+004074a0	TerminatedCString	GetCPInfo
+004074ac	TerminatedCString	GetCommandLineA
+004074be	TerminatedCString	GetCurrentDirectoryA
+004074d6	TerminatedCString	GetCurrentThreadId
+004074ec	TerminatedCString	GetCurrentThread
+00407500	TerminatedCString	GetEnvironmentStrings
+00407518	TerminatedCString	GetExitCodeProcess
+0040752e	TerminatedCString	GetFileAttributesA
+00407544	TerminatedCString	GetFileType
+00407552	TerminatedCString	GetLastError
+00407562	TerminatedCString	GetModuleFileNameA
+00407578	TerminatedCString	GetModuleHandleA
+0040758c	TerminatedCString	GetProcAddress
+0040759e	TerminatedCString	GetStdHandle
+004075ae	TerminatedCString	GetVersion
+004075bc	TerminatedCString	LoadLibraryA
+004075cc	TerminatedCString	ReleaseMutex
+004075dc	TerminatedCString	SetConsoleCtrlHandler
+004075f4	TerminatedCString	SetEvent
+00407600	TerminatedCString	SetStdHandle
+00407610	TerminatedCString	Sleep
+00407618	TerminatedCString	TlsAlloc
+00407624	TerminatedCString	TlsFree
+0040762e	TerminatedCString	TlsGetValue
+0040763c	TerminatedCString	TlsSetValue
+0040764a	TerminatedCString	VirtualAlloc
+0040765a	TerminatedCString	VirtualFree
+00407668	TerminatedCString	WaitForSingleObject
+0040767e	TerminatedCString	WriteFile
