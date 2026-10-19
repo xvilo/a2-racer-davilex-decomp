@@ -1,0 +1,15 @@
+# Local working files
+build/
+*.gpr
+*.rep/
+*.lock
+*.lock~
+
+# The CD dump and its unpacked files never go in this repo
+*.BIN
+*.bin
+*.iso
+*.ISO
+*.cue
+disc/
+original/

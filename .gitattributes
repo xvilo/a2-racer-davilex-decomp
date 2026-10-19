@@ -1,0 +1,7 @@
+*.md text
+*.py text
+*.sh text eol=lf
+*.java text
+*.c text
+*.tsv text
+*.json text
