@@ -1,0 +1,43 @@
+# Hand-assigned names for A2.EXE (the launcher). Columns as in tools/watcom_names.py;
+# empty cc/ret/params/dtype keep recovered values, params "-" means no parameters.
+address	kind	name	cc	ret	params	dtype	mangled
+# --- launcher logic ----------------------------------------------------------------
+00401010	function	read_game_ini_int	__watcall	int	char*:section|char*:key
+00401023	function	build_infio_path	__watcall	void	char*:filename
+004010b7	function	run_module	__watcall	int	char*:module|char*:arguments
+00401403	function	launcher_window_proc	__stdcall	long	HWND:hwnd|uint:message|uint:wparam|long:lparam
+00405898	data	infio_path				char
+00406010	data	app_instance				HINSTANCE
+00406014	data	main_window				HWND
+00406018	data	infio_path_ready				int
+0040513f	data	window_title
+# --- Watcom C runtime: process spawning ------------------------------------------------
+004014ff	function	spawnv
+0040150d	function	get_errno_ptr	__watcall	int*	-
+00401732	function	write_comspec_switch	__watcall	void	char*
+0040173e	function	path_exists	__watcall	int	char*
+00401750	function	spawnve
+0040215c	function	stpcpy	__watcall	char*	char*|char*
+0040216b	function	build_environment_block
+0040227d	function	build_command_line
+004022be	function	string_length	__watcall	int	char*
+00402394	function	copy_path_component
+004023e6	function	split_spawn_path
+00402708	function	dospawn
+004028a7	function	spawnl
+# --- Watcom C runtime: startup, stack and memory -------------------------------------
+00401a6f	function	get_first_thread_data	__watcall	void*	-
+004020fd	function	alloca_stack_check
+0040210d	function	check_stack_overflow
+0040213c	function	probe_stack_pages
+004028e9	function	raise_sigill_handler
+004036c8	function	init_amblksiz	__watcall	void	-
+0040384c	function	strcpy_inline	__watcall	char*	char*|char*
+00404297	function	fill_dwords
+004045e1	function	end_thread	__watcall	void	-
+00401a74	function	crt_nop_hook_1	__watcall	void	-
+004024c1	function	crt_nop_hook_2	__watcall	void	-
+00402b57	function	crt_nop_hook_3	__watcall	void	-
+00403184	function	crt_nop_hook_4	__watcall	void	-
+004036d3	function	crt_nop_hook_5	__watcall	void	-
+004045d7	function	crt_return_zero	__watcall	int	-

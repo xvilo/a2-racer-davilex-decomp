@@ -160,7 +160,12 @@ public class ApplyWatcom extends GhidraScript {
 		int i = 1;
 		if (!params.isEmpty() && !params.equals("-")) {
 			for (String p : params.split("\\|")) {
-				ps.add(new ParameterImpl("param_" + i++, resolve(p), currentProgram));
+				// "type:name" names the parameter; a bare type keeps param_N.
+				String[] tn = p.split(":", 2);
+				String pname = tn.length > 1 ? tn[1] : "param_" + i;
+				ps.add(new ParameterImpl(pname, resolve(tn[0]), currentProgram,
+					tn.length > 1 ? SourceType.USER_DEFINED : SourceType.DEFAULT));
+				i++;
 			}
 		}
 		f.updateFunction(cc.isEmpty() ? WATCALL : cc,

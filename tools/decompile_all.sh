@@ -54,7 +54,8 @@ for m in "${modules[@]}"; do
 		-import "$bin" -loader PeLoader -scriptPath "$ROOT/tools" \
 		-preScript ApplyWatcom.java pre "$names" \
 		-postScript ApplyWatcom.java post "$names" \
+		-postScript AutoNameVariables.java \
 		-postScript ExportDecompiled.java "$out" "$names" \
 		> "$ROOT/build/logs/$m.ghidra.log" 2>&1
-	grep -h -E 'ApplyWatcom.java>|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
+	grep -h -E 'ApplyWatcom.java>|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
 done
