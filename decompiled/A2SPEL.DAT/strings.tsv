@@ -1,0 +1,3254 @@
+address	type	value
+0042da4c	string	0123456789abcdefghijklmnopqrstuvwxyz
+00431ab5	string	0123456789abcdefghijklmnopqrstuvwxyz
+0044100e	string	a2.ini
+00441015	string	a2.ini
+0044101c	string	DEBUG
+00441022	string	HELPDESK
+0044102b	string	SNDFRT
+00441032	string	HELPDESK
+0044103b	string	WINMSG
+00441042	string	HELPDESK
+0044104b	string	RACERRANGE
+00441056	string	TWEAK
+0044105c	string	RACERHIGHSPEED
+0044106b	string	TWEAK
+00441071	string	RACERLOWSPEED
+0044107f	string	TWEAK
+00441085	string	POLICE0
+0044108d	string	TWEAK
+00441093	string	CIVIL0
+0044109a	string	TWEAK
+004410a0	string	POLICE1
+004410a8	string	TWEAK
+004410ae	string	CIVIL1
+004410b5	string	TWEAK
+004410bb	string	POLICE2
+004410c3	string	TWEAK
+004410c9	string	CIVIL2
+004410d0	string	TWEAK
+004410d6	string	POLICE3
+004410de	string	TWEAK
+004410e4	string	CIVIL3
+004410eb	string	TWEAK
+004410f1	string	POLICE4
+004410f9	string	TWEAK
+004410ff	string	CIVIL4
+00441106	string	TWEAK
+0044110c	string	POLICE5
+00441114	string	TWEAK
+0044111a	string	CIVIL5
+00441121	string	TWEAK
+00441127	string	main.cpp
+00441130	string	%s(%d) : Illegal track value %d.\n
+00441152	string	setting up program\n
+00441166	string	set xvga vars allowmodex\n
+00441180	string	set xvga vars DD_GUID\n
+00441197	string	set xvga vars RESOLUTION\n
+004411b1	string	init xvga lib\n
+004411c0	string	A2Racer
+004411c8	string	Davilex Entertainment
+004411de	string	error : couldn't initialize program\n
+00441203	string	Calibrating joysticks\n
+0044121a	string	a2intro.smk
+00441226	string	init fileio\n
+00441233	string	rcs.img
+0044123b	string	rcs.ind
+00441243	string	set conversion mode\n
+00441258	string	load hi wait screen\n
+0044126d	string	hi_wait.pcx
+00441279	string	load lo wait screen\n
+0044128e	string	lo_wait.pcx
+0044129a	string	set mouse type\n
+004412aa	string	init mouse\n
+004412b6	string	mouse off\n
+004412c1	string	handle win msg\n
+004412d1	string	Setting Sound lib, BEST AS POSSIBLE\n
+004412f6	string	Using 11025, 8, mono\n
+0044130c	string	Using 22050, 8, mono\n
+00441322	string	Using 22050, 16, stereo\n
+0044133b	string	Setting Sound lib, SAFEMODE (11025, 8, MONO)\n
+00441369	string	Using 11025, 8, mono\n
+0044137f	string	Loading samples\n
+00441390	string	Loading Pallette\n
+004413a2	string	loading dashboard pic\n
+004413b9	string	surscrn.pcx
+004413c5	string	loading dashboard pic (palet)\n
+004413e4	string	surscrn.pcx
+004413f0	string	Locking Pallette\n
+00441402	string	change viewport size\n
+00441418	string	Initializing 3D-lib\n
+0044142d	string	Done initializing 3D-lib\n
+00441447	string	back.pcx
+00441450	string	Initializing anims and standard textures\n
+0044147a	string	set render var TEXTURE_FILTER\n
+00441499	string	Initializing opponent objects\n
+004414b8	string	main.cpp
+004414c1	string	 %s(%d) : error initialising opponent objects \n
+004414f1	string	loading weg data\n
+00441503	string	main.cpp
+0044150c	string	 %s(%d) : error loading map datafile (%s)\n
+00441537	string	Initializing opponent map structure......
+00441565	string	Initialising drivers...\n
+00441582	string	Init active opponent list OK.\n
+004415a1	string	Initializing player object\n
+004415bd	string	Initializing dashboard\n
+004415d5	string	Initializing radar\n
+004415e9	string	Init atan-table\n
+004415fa	string	Initializing controls\n
+00441611	string	set horizon object\n
+00441625	string	init pionnen\n
+00441633	string	set all objects\n
+00441644	string	init static objects\n
+00441659	string	load dashboard to SCREEN\n
+00441673	string	surscrn.pcx
+0044167f	string	Starting music\n
+0044168f	string	Dump all bonus stuff\n
+004416a5	string	init timing\n
+004416b2	string	Done init.. starting loop\n
+004416cd	string	do msg loop\n
+004416da	string	exit timing\n
+004416e7	string	Stopping all sounds\n
+004416fc	string	Clear screen on exit\n
+00441712	string	Check if finisched OK\n
+00441729	string	Releasing dashboard\n
+0044173e	string	Releasing radar\n
+0044174f	string	Free bonus\n
+0044175b	string	Exit player\n
+00441768	string	Exit drivers\n
+00441776	string	Exit opponent map\n
+00441789	string	Exit opponents\n
+00441799	string	Exit system 3d\n
+004417a9	string	Exit d3dlib\n
+004417b6	string	Exit fileio\n
+004417c3	string	Exit sound lib\n
+004417d3	string	Exit xvga lib\n
+004417e2	string	main.cpp
+004417eb	string	 %s(%d) : blitting error (%s).
+0044180a	string	main.cpp
+00441813	string	 %s(%d) : blitting error (%s).
+00441834	string	myinit.cpp
+0044183f	string	%s(%d) : Memory error initing anims\n
+00441864	string	starting alloc of anims \n
+0044187e	string	myinit.cpp
+00441889	string	%s(%d) : Memory error initing anims\n
+004418ae	string	initialising car types \n
+004418c7	string	2baans.pcx
+004418d2	string	grass2.pcx
+004418dd	string	loading player object..\n
+004418f6	string	player objectnr = %d \n
+0044190d	string	create execute buffer object..\n
+0044192d	string	done creating execute buffer object..\n
+00441954	string	myinit.cpp
+0044195f	string	Marking opponent %d in map at chunk %d and lane %d...\n
+00441996	string	Done.\n
+004419a3	string	D@resetting player object..\n
+004419c0	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+004419e8	string	myinit.cpp
+004419f3	string	 %s(%d) : D3DError Getting matrix : %s\n
+00441a1b	string	myinit.cpp
+00441a26	string	 %s(%d) : D3DError Setting matrix : %s\n
+00441a4e	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00441a76	string	myinit.cpp
+00441a81	string	 %s(%d) : D3DError Getting matrix : %s\n
+00441aa9	string	myinit.cpp
+00441ab4	string	 %s(%d) : D3DError Setting matrix : %s\n
+00441adc	string	Deallocating objects, anims, frames and vertices\n
+00441b0e	string	Deallocating standard textures\n
+00441b2e	string	exiting car & obj types\n
+00441b47	string	Done deallocating objects, anims, frames and vertices\n
+00441b80	string	cartoerenspeed = %f\n
+00441b95	string	mycontro.cpp
+00441ba2	string	 %s(%d) : unknown camera position %d\n
+00441bc8	string	mycontro.cpp
+00441bd5	string	 %s(%d) : unknown camera position %d\n
+00441d30	string	opptools.cpp
+00441d4c	string	@ %s(%d) : illegal opponent index nr %d\n
+00441d75	string	 %s(%d) : illegal opponent chunk nr %d == %d\n
+00441da3	string	opponent.cpp
+00441db0	string	%s(%d) Invalid weg chunk value %d for opponent %d and lane %d.\n
+00441df0	string	opponent.cpp
+00441dfd	string	%s(%d) Invalid weg lane for opponent %d in chunk %d : %d
+00441e36	string	opponent.cpp
+00441e43	string	%s(%d) : (Frame %d) Overwriting opponent %d in map\n
+00441e77	string	opponent.cpp
+00441e84	string	%s(%d) Invalid weg chunk value returned by 'get_current_weg_chunk': %d
+00441ecb	string	opponent.cpp
+00441ed8	string	%s(%d) Invalid wegl lane by 'get_lane: %d
+00441f02	string	opponent.cpp
+00441f0f	string	%s(%d) Invalid weg chunk value returned by 'get_current_weg_chunk': %d
+00441f56	string	opponent.cpp
+00441f63	string	%s(%d) Invalid wegl lane by 'get_lane: %d
+00441f8d	string	opponent.cpp
+00441f9a	string	%s(%d) : opponents not initialized while starting objects\n
+00441fdb	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00442003	string	opponent.cpp
+00442010	string	 %s(%d) : D3DError Getting matrix : %s\n
+00442038	string	opponent.cpp
+00442045	string	 %s(%d) : D3DError Setting matrix : %s\n
+0044206d	string	opponent.cpp
+0044207a	string	%s(%d) : opponents not initialised while starting objects\n
+004420b5	string	a2.ini
+004420bc	string	POLICESPEED
+004420cd	string	policespeed =%d, %5.2f\n
+004420e5	string	opponent.cpp
+004420f2	string	%s(%d) : texture not loaded for cartype %d\n
+0044211e	string	Getting driver...\n
+00442131	string	Memorizing driver_type...\n
+0044214c	string	Start_opponent completed\n
+00442170	string	L>opponent.cpp
+0044217f	string	%s(%d) : object3d not initialised while releasing opponents \n
+004421cc	string	?opponent.cpp
+004421da	string	%s(%d) : Illegal waypoints for opponent %d.\n
+00442207	string	opponent.cpp
+00442214	string	opponent.cpp
+00442221	string	opponent.cpp
+0044222e	string	opponent.cpp
+0044223b	string	opponent.cpp
+00442248	string	opponent.cpp
+00442255	string	opponent.cpp
+00442262	string	opponent.cpp
+00442275	string	D@opponent(%d) called for object(%d) is not used!\n
+004422a8	string	opponent.cpp
+004422b5	string	Evaluating...
+004422d2	string	?opponent.cpp
+004422e0	string	opponent.cpp
+004422ed	string	opponent.cpp
+004422fa	string	opponent.cpp
+00442307	string	opponent.cpp
+00442314	string	opponent.cpp
+00442321	string	opponent.cpp
+0044232e	string	opponent.cpp
+0044233b	string	opponent.cpp
+00442348	string	opponent.cpp
+00442355	string	opponent.cpp
+00442362	string	opponent.cpp
+0044236f	string	 %s(%d) : Illegal object number (%d)\n
+00442395	string	opponent.cpp
+004423a2	string	 %s(%d) : D3DError Getting matrix : %s\n
+004423ca	string	opponent.cpp
+004423d7	string	 %s(%d) : D3DError Setting matrix : %s\n
+004423ff	string	allocating %d opponents\n
+00442418	string	done allocating %d opponents\n
+00442436	string	initializing opponents ok\n
+00442451	string	%d opponents initialized ok\n
+0044246e	string	opponent.cpp
+0044247b	string	%s(%d) : weg data not initialised while initializing opponents\n
+004424bb	string	opponent.cpp
+004424c8	string	%s(%d) : illegal heading value.\n
+004424e9	string	opponent.cpp
+004424f6	string	%s(%d) : illegal chunk value.\n
+00442515	string	opponent.cpp
+00442522	string	%s(%d) : illegal lane value.\n
+00442540	string	opponent.cpp
+0044254d	string	%s(%d) : illegal opponent value: opponent not used.\n
+00442582	string	placing opponent %d ok\n
+0044259a	string	opponent.cpp
+004425a7	string	Attempting to set driver...\n
+004425ca	string	D@opponent.cpp
+004425d9	string	%s(%d) : weg data not initialised while initializing opponents\n
+00442619	string	You know where\n
+00442629	string	opponent.cpp
+00442636	string	placing opponent %d ok\n
+0044264e	string	Attempting to set driver...\n
+0044266b	string	opponent object %d returned in get free \n
+00442695	string	opponent.cpp
+004426a2	string	 %s(%d) : no more free opponent \n
+004426c4	string	opponent object %d returned in get new opponent\n
+004426f5	string	opponent.cpp
+00442702	string	 %s(%d) : error illegal opponent object index %d [0..%d]\n
+0044273c	string	opponent.cpp
+00442749	string	opponent.cpp
+00442756	string	Player opponent = %d, po-pointer = %08X, l_Opp = %08X\n
+0044278d	string	opponent.cpp
+0044279a	string	Car-chunk value read: %d into opp_chunk = %d\n
+004427c8	string	opponent.cpp
+004427d5	string	Player opponent = %d, po-pointer = %08X, l_Opp = %08X\n
+0044280c	string	opponent.cpp
+00442819	string	Car-chunk value read: %d into opp_chunk = %d\n
+00442847	string	Car-lane value read: %d into opp_lane = %d\n
+00442873	string	player car != object
+00442888	string	opponent.cpp
+00442895	string	opponent.cpp
+004428a2	string	opponent.cpp
+004428af	string	opponent.cpp
+004428bc	string	opponent.cpp
+004428c9	string	Checking opponent %03d:  Current chunk = %03d, Current waypoint = %03d\n
+0044291c	string	porche.d3d
+00442927	string	porche.pcx
+00442932	string	k_porche.pcx
+0044293f	string	interl.d3d
+0044294a	string	il.pcx
+00442951	string	k_il.pcx
+0044295a	string	camaro.d3d
+00442965	string	camaro.pcx
+00442970	string	k_camaro.pcx
+0044297d	string	golf.d3d
+00442986	string	golf.pcx
+0044298f	string	k_golf.pcx
+0044299a	string	bmw.d3d
+004429a2	string	bmw.pcx
+004429aa	string	k_bmw.pcx
+004429b4	string	van.d3d
+004429bc	string	vanmap.pcx
+004429c7	string	k_vanmap.pcx
+004429d4	string	lotus.d3d
+004429de	string	lotus.pcx
+004429e8	string	k_lotus.pcx
+004429f4	string	viper.d3d
+004429fe	string	viper.pcx
+00442a08	string	k_viper.pcx
+00442a14	string	panda.d3d
+00442a1e	string	panda.pcx
+00442a28	string	k_panda.pcx
+00442a34	string	merceds.d3d
+00442a40	string	mercedes.pcx
+00442a4d	string	k_merced.pcx
+00442a5a	string	merceds.d3d
+00442a66	string	merceds2.pcx
+00442a73	string	k_merce2.pcx
+00442a80	string	vracht.d3d
+00442a8b	string	vracht.pcx
+00442a96	string	k_vracht.pcx
+00442aa3	string	police.d3d
+00442aae	string	police.pcx
+00442ab9	string	k_police.pcx
+00442ac6	string	cx.d3d
+00442acd	string	cx.pcx
+00442ad4	string	k_cx.pcx
+00442add	string	jaguar.d3d
+00442ae8	string	jaguar.pcx
+00442af3	string	k_jaguar.pcx
+00442b00	string	volvo.d3d
+00442b0a	string	volvo.pcx
+00442b14	string	k_volvo.pcx
+00442b20	string	werkweg2.d3d
+00442b2d	string	werkweg2.pcx
+00442b3a	string	werkweg2.pcx
+00442b47	string	porche.d3d
+00442b52	string	r_porche.pcx
+00442b5f	string	r_porche.pcx
+00442b6c	string	camaro.d3d
+00442b77	string	r_camaro.pcx
+00442b84	string	r_camaro.pcx
+00442b91	string	bmw.d3d
+00442b99	string	r_bmw.pcx
+00442ba3	string	r_bmw.pcx
+00442bad	string	jaguar.d3d
+00442bb8	string	r_jaguar.pcx
+00442bc5	string	r_jaguar.pcx
+00442bd2	string	lotus.d3d
+00442bdc	string	r_lotus.pcx
+00442be8	string	r_lotus.pcx
+00442bf4	string	viper.d3d
+00442bfe	string	r_viper.pcx
+00442c0a	string	r_viper.pcx
+00442c18	string	starting static object (%d)\n
+00442c35	string	static object (%d) mesh not yet loaded, loading...\n
+00442c69	string	static object (%d) allready loaded, using...\n
+00442c97	string	done loading static object \n
+00442cb4	string	statobj.cpp
+00442cc0	string	%s(%d) : texture not loaded for static object type %d\n
+00442cf7	string	setting static object texture\n
+00442d16	string	setting static object matrix\n
+00442d34	string	setting static object handle\n
+00442d52	string	setting static object position\n
+00442d72	string	create execute buffer object..\n
+00442d92	string	done creating execute buffer object..\n
+00442db9	string	starting static object (%d)\n
+00442dd6	string	static object (%d) mesh not yet loaded, loading...\n
+00442e0a	string	static object (%d) allready loaded, using...\n
+00442e38	string	done loading static object \n
+00442e55	string	statobj.cpp
+00442e61	string	%s(%d) : texture not loaded for static object type %d\n
+00442e98	string	setting static object texture\n
+00442eb7	string	setting static object matrix\n
+00442ed5	string	setting static object handle\n
+00442ef3	string	setting static object position\n
+00442f13	string	create execute buffer object..\n
+00442f33	string	done creating execute buffer object..\n
+00442f71	string	@statobj.cpp
+00442f7e	string	 %s(%d) : Illegal object number (%d)\n
+00442fa4	string	statobj.cpp
+00442fb0	string	 %s(%d) : D3DError Getting matrix : %s\n
+00442fd8	string	object pos = (%f , %f , %f)\n
+00442ff5	string	statobj.cpp
+00443001	string	 %s(%d) : D3DError Setting matrix : %s\n
+00443030	string	@statobj.cpp
+0044303d	string	 %s(%d) : Illegal object number (%d)\n
+00443063	string	statobj.cpp
+0044306f	string	 %s(%d) : D3DError Getting matrix : %s\n
+00443097	string	statobj.cpp
+004430a3	string	 %s(%d) : D3DError Setting matrix : %s\n
+004430cb	string	statobj.cpp
+004430d7	string	 %s(%d) : Illegal object number (%d)\n
+004430fd	string	statobj.cpp
+00443109	string	 %s(%d) : D3DError Getting matrix : %s\n
+00443131	string	statobj.cpp
+0044313d	string	 %s(%d) : D3DError Setting matrix : %s\n
+0044316b	string	$@statobj.cpp
+00443179	string	 %s(%d) : Illegal object number (%d)\n
+0044319f	string	statobj.cpp
+004431ab	string	 %s(%d) : D3DError Getting matrix : %s\n
+004431d3	string	statobj.cpp
+004431df	string	 %s(%d) : D3DError Setting matrix : %s\n
+0044320d	string	$@statobj.cpp
+0044321b	string	 %s(%d) : Illegal object number (%d)\n
+00443241	string	statobj.cpp
+0044324d	string	 %s(%d) : D3DError Getting matrix : %s\n
+00443275	string	statobj.cpp
+00443281	string	 %s(%d) : D3DError Setting matrix : %s\n
+004432af	string	$@statobj.cpp
+004432bd	string	 %s(%d) : Illegal object number (%d)\n
+004432e3	string	statobj.cpp
+004432ef	string	 %s(%d) : D3DError Getting matrix : %s\n
+00443317	string	statobj.cpp
+00443323	string	 %s(%d) : D3DError Setting matrix : %s\n
+00443351	string	$@statobj.cpp
+0044335f	string	 %s(%d) : Illegal object number (%d)\n
+00443385	string	statobj.cpp
+00443391	string	 %s(%d) : D3DError Getting matrix : %s\n
+004433b9	string	statobj.cpp
+004433c5	string	 %s(%d) : D3DError Setting matrix : %s\n
+004433f3	string	$@statobj.cpp
+00443401	string	 %s(%d) : Illegal object number (%d)\n
+00443427	string	statobj.cpp
+00443433	string	 %s(%d) : D3DError Getting matrix : %s\n
+0044345b	string	statobj.cpp
+00443467	string	 %s(%d) : D3DError Setting matrix : %s\n
+00443498	string	sky.d3d
+004434a0	string	sky.pcx
+004434b8	string	arena.d3d
+004434cc	string	viaduct.d3d
+004434d8	string	viaduct.pcx
+004434e4	string	molent.d3d
+004434ef	string	molen.pcx
+004434f9	string	shell.d3d
+00443503	string	shell.pcx
+00443535	string	zaltboml.d3d
+004435ab	string	trees.d3d
+004435b5	string	trees.pcx
+004435bf	string	wegresg2.d3d
+004435cc	string	wegresg2.pcx
+0044364d	string	flits.d3d
+00443657	string	flits.pcx
+00443677	string	start.d3d
+00443681	string	start.pcx
+0044368b	string	finish.d3d
+00443696	string	finish.pcx
+004436b3	string	benzine.d3d
+004436bf	string	benzine.pcx
+004436dd	string	lantaarn.d3d
+004436ea	string	lantaarn.pcx
+0044370b	string	amsterd.d3d
+00443717	string	amsterd.pcx
+00443723	string	denbosch.d3d
+00443730	string	denbosch.pcx
+0044373d	string	maastr.d3d
+00443748	string	maastr.pcx
+00443753	string	utrecht.d3d
+0044375f	string	utrecht.pcx
+0044376b	string	s_maastr.d3d
+00443778	string	s_maastr.pcx
+004437c5	string	s_eindho.d3d
+004437df	string	number1.d3d
+004437eb	string	number1.pcx
+004437f7	string	number2.d3d
+00443803	string	number2.pcx
+0044380f	string	number3.d3d
+00443857	string	number6.d3d
+004438b4	string	(%d) frames (%f) sec\n
+004438ca	string	fps = %f\n
+004438f0	string	not enough memory for animations
+00443911	string	gamespr.img
+0044391d	string	not enough memory for animation data
+00443942	string	not enough memory for animations
+00443963	string	gamespr.img
+0044396f	string	not enough memory for animation data
+00443994	string	menuanim.cpp
+004439a1	string	 %s(%d) : please call init_anims () first
+004439cb	string	gamespr.ind
+004439d7	string	gamespr.img
+004439e3	string	menuanim.cpp
+004439f0	string	 %s(%d) : please call init_anims () first
+00443a1a	string	menuanim.cpp
+00443a27	string	 %s(%d) : please call init_anims () first
+00443a51	string	gamespr.ind
+00443a5d	string	gamespr.img
+00443a69	string	menuanim.cpp
+00443a76	string	 %s(%d) : please call init_anims () first
+00443aa0	string	menuanim.cpp
+00443aad	string	 %s(%d) : please call init_anims () first
+00443ad7	string	gamespr.ind
+00443ae3	string	gamespr.img
+00443aef	string	menuanim.cpp
+00443afc	string	 %s(%d) : please call init_anims () first
+00443b28	string	(init_dashboard) invalid focus
+00443b47	string	dashbrd.cpp
+00443b53	string	%s(%d) : control illegal frame image.
+00443be6	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443c0e	string	Bounding rectangle for object %d = (%f,%f,%f,%f)\n
+00443c40	string	radius for object %d = (%f)\n
+00443c63	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443c8b	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443ce9	string	%d lijn 1 = %5.2f\n
+00443cfc	string	%d lijn 3 = %5.2f\n
+00443d0f	string	%d lijn 2 = %5.2f\n
+00443d22	string	%d lijn 4 = %5.2f\n
+00443d35	string	Boem %d,%d\n
+00443d41	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443d69	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443d97	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443dc5	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443e19	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443e41	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00443e74	string	a2.ini
+00443e7b	string	a2.ini
+00443e82	string	SCALE
+00443e88	string	HELPDESK
+00443e96	string	BONUS
+00443e9c	string	START1
+00443ea3	string	TRACK
+00443ea9	string	START2
+00443eb0	string	TRACK
+00443eb6	string	START3
+00443ebd	string	TRACK
+00443ec3	string	using config 0\n
+00443ed3	string	using config 4\n
+00443ee3	string	using config 3\n
+00443ef3	string	using config 6\n
+00443f03	string	using config 2\n
+00443f13	string	using config 1\n
+00443f23	string	using config 1\n
+00443f33	string	etappe1.trk
+00443f3f	string	etappe2.trk
+00443f4b	string	etappe3.trk
+00443f57	string	etappe3.trk
+00443f63	string	etappe2.trk
+00443f6f	string	etappe1.trk
+00443f7c	string	A2 Racer - Beta test Instellingen
+00443f9e	string	Geen 3D Acceleratie
+00443fb2	string	Monster 3D / Righteous 3D
+00443fd6	string	%s(%d) : illegal frame for object (object: %d, frame: %d)
+0044401d	string	%s(%d) : Unable to save object, can't create file %s
+0044405c	string	%s(%d) : Vertex is not used (object: %d, vertex: %d).
+0044409c	string	%s(%d) : Triangle is not used (object: %d, triangle: %d).
+004440d6	string	objio.cpp
+004440e0	string	%s(%d) : Unable to load object, can't open file %s
+00444113	string	objio.cpp
+0044411d	string	%s(%d) : Unable to load object, can't open file %s
+00444150	string	init_opponent_map -> allocating space for %d chunks\n
+00444185	string	init_opponent_map -> big chunk allocated\n
+004441af	string	init_opponent_map -> clearing map\n
+004441d2	string	init_opponent_map -> finished\n
+004441f1	string	Resetting opponent_map\n
+00444209	string	%s(%d) : Cannot reset un-initialized structure.\n
+0044423a	string	Reset succesful\n
+0044424b	string	Exiting opponent map\n
+00444261	string	Not alloceted -> OK\n
+00444276	string	Exit opponent map OK\n
+0044428c	string	OPPONENT MAP DUMP:\n
+004442a0	string	Chunk: %04d 
+004442b5	string	opp_map.cpp
+004442c1	string	%s(%d) : (Frame %04d) Opponent %d is no longer present...\n
+004442fc	string	opp_map.cpp
+00444308	string	%s(%d) : (Frame %04d) Opponent %d has spawned a map ghost!!\n
+00444345	string	opp_map.cpp
+00444351	string	%s(%d) : (Frame %04d) Non-existent opponent %d has appeared on the map!!\n
+0044439c	string	Driverlist already initialized.\n
+004443bd	string	Allocating %03d drivers..................
+004443e7	string	%d drivers allocated OK\n
+00444400	string	Clearing driver list...
+00444418	string	OK\nClearing racer list...
+00444432	string	OK\nClearing police list...
+0044444d	string	OK\nInit drivers completely OK\n
+0044446c	string	Exiting drivers\n
+0044447d	string	Already exited...returning\n
+00444499	string	Drivers exited OK\n
+004444ac	string	Getting new driver...\n
+004444c3	string	driver.cpp
+004444ce	string	%s(%d) Driver list not initialized.\n
+004444f3	string	Scanning driver_list...\n
+0044450c	string	Scanning index %d\n
+0044451f	string	Breaking at index %d\n
+00444535	string	Scan completed...\n
+00444548	string	%s(%d) Not enough drivers available.\n
+0044456e	string	Driver object found at index %d\n
+0044458f	string	Get completed.\n
+0044459f	string	Setting driver %d to opponent %d and type %d\n
+004445cd	string	driver.cpp
+004445d8	string	%s(%d) Cannot set unused driver %d with opponent %d.\n
+0044460e	string	driver.cpp
+00444619	string	%s(%d) Attempt to double-assign driver %d with opponent %d.\n
+00444656	string	Assigning driver %d to opponent %d\n
+0044467a	string	Heading is SOUTH, preferred lane = %d\n
+004446a1	string	Heading is NORTH, preferred lane = %d\n
+004446c8	string	Preferred speed = %f\nDriver setting ok...\n
+004446f3	string	Driver set completed OK\n
+0044470c	string	driver.cpp
+00444717	string	%s(%d) Impossible heading!\n
+00444742	string	@driver.cpp
+0044474e	string	%s(%d) Cannot drive unused driver %d.\n
+00444775	string	driver.cpp
+00444780	string	%s(%d) Cannot drive unassigned driver %d.\n
+004447ab	string	Driving car #%03d\n\tOppIndex = %03d\tLane: %02d\tChunk: %02d\tHeading: %02d\n\tSpeed: %f\tMax.Speed: %f\n\tPreferred speed: %f\tPreferred lane: %d\n\tCurrent waypoint: %d\n
+0044484b	string	ILLEGAL WAYPOINT FOUND!\n
+00444864	string	Checking state of police...\n
+00444881	string	Car is on stake-out...\n
+00444899	string	Using 'EMPTY_LANE' tactic...\n
+004448b7	string	Both lanes of equal status\n
+004448d3	string	Other lane is closer to preferred...\nSWITCHING\n
+00444903	string	Current lane is closer to preferred...\nSTAYING\n
+00444933	string	SWITCHING to other lane...\n
+0044494f	string	STAYING in current lane...\n
+0044496b	string	Slowing down\n
+00444979	string	Speeding\n
+00444983	string	Somewhere in the middle...\nStatus, current: %d, faster: %d, slower: %d\n
+004449cb	string	One of the other lanes is best...\n
+004449ee	string	Both others are equal...\n
+00444a08	string	SWITCHING to faster lane...\n
+00444a25	string	SWITCHING to slower lane...\n
+00444a42	string	Slower lane is best\nSWITCHING to slower lane...\n
+00444a73	string	Faster lane is best\nSWITCHING to faster lane...\n
+00444aa4	string	Current lane is one of the best...\n
+00444ac8	string	Normal exit covered...\n
+00444afe	string	"@driver.cpp
+00444b0b	string	%s(%d) Cannot drive unused driver %d.\n
+00444b32	string	driver.cpp
+00444b3d	string	%s(%d) Cannot drive unassigned driver %d.\n
+00444b68	string	Driving car #%03d\n\tOppIndex = %03d\tLane: %02d\tChunk: %02d\tHeading: %02d\n\tSpeed: %f\tMax.Speed: %f\n\tPreferred speed: %f\tPreferred lane: %d\n\tCurrent waypoint: %d\n
+00444c08	string	ILLEGAL WAYPOINT FOUND!\n
+00444c21	string	FrontArray filled... values:\n
+00444c3f	string	Element %03d = %04d\n
+00444c54	string	BackArray filled... values:\n
+00444c71	string	Element %03d = %04d\n
+00444c86	string	Racer logic activated\n
+00444c9d	string	Using 'EMPTY_LANE' tactic...\n
+00444cbb	string	Both lanes of equal status\n
+00444cd7	string	Other lane is closer to preferred...\nSWITCHING\n
+00444d07	string	Current lane is closer to preferred...\nSTAYING\n
+00444d37	string	SWITCHING to other lane...\n
+00444d53	string	STAYING in current lane...\n
+00444d6f	string	Slowing down\n
+00444d7d	string	Speeding\n
+00444d87	string	Somewhere in the middle...\nStatus, current: %d, faster: %d, slower: %d\n
+00444dcf	string	One of the other lanes is best...\n
+00444df2	string	Both others are equal...\n
+00444e0c	string	SWITCHING to faster lane...\n
+00444e29	string	SWITCHING to slower lane...\n
+00444e46	string	Slower lane is best\nSWITCHING to slower lane...\n
+00444e77	string	Faster lane is best\nSWITCHING to faster lane...\n
+00444ea8	string	Current lane is one of the best...\n
+00444ecc	string	Using 'FASTEST_LANE' tactic...\n
+00444eec	string	On the edge...\n
+00444efc	string	Searching for preferred lane..\n
+00444f1c	string	Other lane better or equal to current lane...\n
+00444f4b	string	Differences to preferred lane calculated...\n
+00444f78	string	Switching to other lane...\n
+00444f94	string	Current lane is best... staying...\n
+00444fb8	string	Somewhere in the middle...\n
+00444fd4	string	Too close on target...\n
+00444fec	string	Both alternatives look good...\n
+0044500c	string	Both are just as good as current...\n
+00445031	string	One is better than the other...\n
+00445052	string	Checking which is best, Faster or Slower lane...\n
+00445084	string	Faster is better...\n
+00445099	string	Slower is better...\n
+004450ae	string	Going to better lane...(OK?)
+004450cb	string	 ---> YES!\n
+004450d7	string	Do we crash in here somwhere?.....
+004450fa	string	No we don't.\n
+00445108	string	Normal exit covered for driver %d\n
+00445136	string	?driver.cpp
+00445142	string	%s(%d) Cannot drive unused driver %d.\n
+00445169	string	driver.cpp
+00445174	string	%s(%d) Cannot drive unassigned driver %d.\n
+0044519f	string	driver.cpp
+004451aa	string	%s(%d) Illegal driver type %d for driver %d with opponent %d.\n
+004451e9	string	Driving car #%03d\n\tOppIndex = %03d\tLane: %02d\tChunk: %02d\tHeading: %02d\n\tSpeed: %f\tMax.Speed: %f\n\tPreferred speed: %f\tPreferred lane: %d\n\tCurrent waypoint: %03d\n
+0044528b	string	ILLEGAL WAYPOINT FOUND!\n
+004452a4	string	Driving logic activated...\n
+004452c0	string	 -> Driving in slow lane\n
+004452da	string	 -> Nothing in sight.\n
+004452f1	string	 -> TARGET : %d!!!\n ## Range to target ## >> %f\n
+00445322	string	 --> Too close!\n
+00445333	string	 --> OVERTAKING\n
+00445344	string	Normal exit covered for driver %d\n
+00445367	string	 --> OVERTAKING\n
+00445378	string	Normal exit covered for driver %d\n
+0044539b	string	 --> SLOWING DOWN\n
+004453ae	string	 --> Normal range \n
+004453c2	string	 --> PREPARING TO OVERTAKE\n
+004453de	string	 --> FOLLOWING\n
+004453ee	string	 --> max range...\n --> DOING NOTHING\n
+00445414	string	Driving in the fast lane\n
+0044542e	string	 -> Nothing in current lane...\n
+0044544e	string	 --> Slow lane empty: SWITCHING!\n
+00445470	string	Normal exit covered for driver %d\n
+00445493	string	 --> Slow lane not emtpy, checking...\n
+004454ba	string	 --> Faster than slow-laner... speeding\n
+004454e3	string	 ## Range to target ## >> %f\n --> can't overtake.\n
+00445516	string	 --> Good range, switching back\n
+00445537	string	Normal exit covered for driver %d\n
+0044555a	string	Normal exit covered for driver %d\n
+0044557d	string	 -> Fast lane occupied\n ## Range to target ## >> %f\n
+004455b2	string	Normal exit covered for driver %d\n
+004455d5	string	Normal exit covered for driver %d\n
+004455f8	string	Normal exit covered for driver %d\n
+0044561b	string	Normal exit covered for driver %d\n
+0044563e	string	 ## Range to target ## >> %f\n
+0044565c	string	Normal exit covered for driver %d\n
+0044567f	string	Normal exit covered for driver %d\n
+004456b8	string	n@Driving %d drivers.\n
+004456d0	string	radar.cpp
+004456da	string	 %s(%d) : unable to get pixelformat (%s).
+00445704	string	 Radar is 8 bits formaat.\n
+0044571f	string	 Radar is RGB formaat.\n
+00445737	string	radar.cpp
+00445741	string	 %s(%d) : failed to set color key(%s)\n
+00445768	string	(init_radar) invalid focus
+00445783	string	radar.cpp
+0044578d	string	 %s(%d) : draw radar blitting error
+004457b1	string	radar.cpp
+004457bb	string	 %s(%d) : draw radar blitting error
+004457df	string	radar.cpp
+004457e9	string	 %s(%d) : draw radar blitting error
+0044580d	string	radar.cpp
+0044581d	string	(@radar.cpp
+00445834	string	sndfx.cpp
+0044583e	string	%s(%d) Illegal opponent nr %d (max=%d)\n
+00445866	string	changing pos object %d (%5.2f,%5.2f,%5.2f)\n
+00445895	string	CSNDFX sample out of bounds\n
+004458b8	string	infio.cpp
+004458c2	string	\n\n%s(%d): *> LOAD INFIO <*\n
+004458de	string	INFIO.INI
+004458e8	string	INFIO.INI
+004458f2	string	infio.cpp
+004458fc	string	\n\n%s(%d): *> INFIO_INI_FILE = %d does exist <*\n
+0044592c	string	INFIO.INI
+00445936	string	RACE_KLAAR
+00445950	string	ACTIVE_SLOT
+0044596b	string	ETAPPE
+00445977	string	EINDE_DOOR
+00445987	string	POSITIE
+00445994	string	RACER_1
+004459a1	string	RACER_2
+004459ae	string	RACER_3
+004459bb	string	RACER_4
+004459c8	string	RACER_5
+004459d5	string	TIJD_1
+004459e1	string	TIJD_2
+004459ed	string	TIJD_3
+004459f9	string	TIJD_4
+00445a05	string	TIJD_5
+00445a11	string	FINALE
+00445a1d	string	BEDIENING
+00445a27	string	CONTROL
+00445a2f	string	KEY_LINKS
+00445a39	string	CONTROL
+00445a41	string	KEY_RECHTS
+00445a4c	string	CONTROL
+00445a54	string	KEY_GAS
+00445a5c	string	CONTROL
+00445a64	string	KEY_REM
+00445a6c	string	CONTROL
+00445a74	string	KEY_ACTIE1
+00445a7f	string	CONTROL
+00445a87	string	KEY_ACTIE2
+00445a92	string	CONTROL
+00445a9a	string	GELUID
+00445aa1	string	OPTION
+00445aa8	string	RESOLUTIE
+00445ab2	string	OPTION
+00445abe	string	OPTION
+00445ac5	string	DISPLAY_MODE
+00445ad2	string	OPTION
+00445ad9	string	HORIZON
+00445ae1	string	OPTION
+00445ae8	string	DASHBORD
+00445af1	string	OPTION
+00445af8	string	DETAIL
+00445aff	string	OPTION
+00445b06	string	CAMERA
+00445b0d	string	OPTION
+00445b14	string	VMUZIEK
+00445b1c	string	OPTION
+00445b23	string	VEFFECT
+00445b2b	string	OPTION
+00445b32	string	INFIO.INI
+00445b3c	string	infio.cpp
+00445b46	string	\n\n%s(%d): *> INFIO_INI_FILE = %d does NOT exist <*\n
+00445b7a	string	INFIO.INI
+00445b84	string	infio.cpp
+00445b8e	string	\n\n%s(%d): *> SAVE INFIO <*\n
+00445baa	string	INFIO.INI
+00445bb4	string	RACE_KLAAR
+00445bce	string	ACTIVE_SLOT
+00445be9	string	ETAPPE
+00445bf5	string	EINDE_DOOR
+00445c05	string	POSITIE
+00445c12	string	RACER_1
+00445c1f	string	RACER_2
+00445c2c	string	RACER_3
+00445c39	string	RACER_4
+00445c46	string	RACER_5
+00445c53	string	TIJD_1
+00445c5f	string	TIJD_2
+00445c6b	string	TIJD_3
+00445c77	string	TIJD_4
+00445c83	string	TIJD_5
+00445c8f	string	FINALE
+00445c9b	string	BEDIENING
+00445ca5	string	CONTROL
+00445cad	string	KEY_LINKS
+00445cb7	string	CONTROL
+00445cbf	string	KEY_RECHTS
+00445cca	string	CONTROL
+00445cd2	string	KEY_GAS
+00445cda	string	CONTROL
+00445ce2	string	KEY_REM
+00445cea	string	CONTROL
+00445cf2	string	KEY_ACTIE1
+00445cfd	string	CONTROL
+00445d05	string	KEY_ACTIE2
+00445d10	string	CONTROL
+00445d18	string	GELUID
+00445d1f	string	OPTION
+00445d26	string	RESOLUTIE
+00445d30	string	OPTION
+00445d3c	string	OPTION
+00445d43	string	DISPLAY_MODE
+00445d50	string	OPTION
+00445d57	string	HORIZON
+00445d5f	string	OPTION
+00445d66	string	DASHBORD
+00445d6f	string	OPTION
+00445d76	string	DETAIL
+00445d7d	string	OPTION
+00445d84	string	CAMERA
+00445d8b	string	OPTION
+00445d92	string	VMUZIEK
+00445d9a	string	OPTION
+00445da1	string	VEFFECT
+00445da9	string	OPTION
+00445db0	string	infio.cpp
+00445dba	string	\n\n%s(%d) : *> INIT INFIO <*\n
+00445dd7	string	INFIO.INI
+00445de1	string	INFIO.INI
+00445deb	string	\tCreating infio file %s\n
+00445e04	string	INFIO.INI
+00445e0e	string	Loading infio file %s\n
+00445e25	string	Etappe 1
+00445e2e	string	Etappe 2
+00445e37	string	Etappe 3
+00445e40	string	Etappe 4
+00445e49	string	Etappe 5
+00445e52	string	Etappe 6
+00445e5b	string	Uitgereden
+00445e66	string	Uitgereden
+00445e71	string	Uitgereden
+00445e7c	string	Uitgereden
+00445e8a	string	bestand.cpp
+00445e96	string	%s(%d), unable to close file %s while checking its existance.
+00445ed7	string	bestand.cpp
+00445ee3	string	%s(%d): %s while doing file seek on %s
+00445f0a	string	bestand.cpp
+00445f16	string	%s(%d): %s while getting file tell from %s
+00445f41	string	bestand.cpp
+00445f4d	string	%s(%d): %s while closing file %s
+00445f71	string	bestand.cpp
+00445f7d	string	%s(%d), %s while reading from file %s
+00445fa3	string	bestand.cpp
+00445faf	string	%s(%d), %s while closing file %s
+00445fd3	string	bestand.cpp
+00445fdf	string	%s(%d), %s while writing to file %s
+00446003	string	bestand.cpp
+0044600f	string	%s(%d), unable to close file %s
+00446030	string	mkstobj.cpp
+0044603c	string	%s(%d), Could not open resource file %s
+00446064	string	mkstobj.cpp
+00446070	string	%s(%d), Illegal level (%d) given. Valid (0..5)\n
+004460a0	string	mkstobj.cpp
+004460ac	string	%s(%d), Could not open resource file %s
+004460d4	string	count: %d\n
+004460df	string	mkstobj.cpp
+004460eb	string	%s(%d) : i=%d, ID=%d, chunk=%d, positie=%d, angle=%d, offset=%6.2f\n
+0044612f	string	ETAPPE1.OMP
+0044613b	string	ETAPPE2.OMP
+00446147	string	ETAPPE3.OMP
+00446153	string	ETAPPE3.OMP
+0044615f	string	ETAPPE2.OMP
+0044616b	string	ETAPPE1.OMP
+00446184	string	setracer.cpp
+00446191	string	%s(%d) : Racer index %d out of bounds .\n
+004461ba	string	setracer.cpp
+004461c7	string	%s(%d) : Illegal heading for racer %d.\n
+004461ef	string	setracer.cpp
+004461fc	string	%s(%d) : Starting racer %d:\n\tHeading: %d\tChunk: %d\tLane: %d\n\talloc_weg_ptr = %d\n
+0044624d	string	a2.ini
+00446254	string	RACERSPEED
+00446264	string	setracer.cpp
+00446271	string	%s(%d) : Illegal police index value %d.\n
+0044629a	string	setracer.cpp
+004462a7	string	%s(%d) : Illegal chunk value %d for police index %d.\n
+004462dd	string	setracer.cpp
+004462ea	string	%s(%d) : Illegal heading for police index %d.\n
+00446319	string	setracer.cpp
+00446326	string	%s(%d) : Illegal racer index %d.\n
+00446348	string	setracer.cpp
+00446355	string	setracer.cpp
+00446364	string	(set_racer_finish_time) invalid racer index (%d)\n
+00446396	string	(get_racer_finish_time) invalid racer index (%d)\n
+004463c8	string	(get_racer_finish_time) invalid racer index (%d)\n
+004463fc	string	Allocating %d bonus objects...
+00446420	string	bonus.cpp
+0044642a	string	%s(%d) : Cannot set a bonus object of type 'None'.\n
+0044645e	string	bonus.cpp
+00446468	string	%s(%d) : Chunk value %d out of bounds.\n
+00446490	string	bonus.cpp
+0044649a	string	%s(%d) : Lane value %d out of bounds.\n
+004464c1	string	bonus.cpp
+004464cb	string	%s(%d) : Illegal bonus object type.\n
+004464f0	string	bonus.cpp
+004464fa	string	%s(%d) : No more free bonus objects.\n
+00446528	string	bonus.cpp
+00446532	string	%s(%d) : No bonus objects allocated.\n
+00446558	string	bonus.cpp
+00446562	string	%s(%d) : No bonus objects allocated.\n
+00446588	string	bonus.cpp
+00446592	string	%s(%d) : InitBonus failed.\n
+004465ae	string	Last bonus: %s
+004465bd	string	None     
+004465d1	string	Money
+004465d7	string	bonus.cpp
+004465e1	string	%s(%d) : Illegal bonus type.\n
+004465ff	string	starting static object (%d)\n
+0044661c	string	static object (%d) mesh not yet loaded, loading...\n
+00446650	string	static object (%d) allready loaded, using...\n
+0044667e	string	done loading static object \n
+0044669b	string	bonus.cpp
+004466a5	string	%s(%d) : texture not loaded for static object type %d\n
+004466dc	string	setting static object texture\n
+004466fb	string	setting static object matrix\n
+00446719	string	setting static object handle\n
+00446737	string	setting static object position\n
+00446757	string	create execute buffer object..\n
+00446777	string	done creating execute buffer object..\n
+0044679e	string	bonus.cpp
+004467a8	string	 %s(%d) : Illegal object number (%d)\n
+004467ce	string	bonus.cpp
+004467d8	string	 %s(%d) : D3DError Getting matrix : %s\n
+00446800	string	bonus.cpp
+0044680a	string	 %s(%d) : D3DError Setting matrix : %s\n
+00446834	string	active.cpp
+0044683f	string	active.cpp
+0044684a	string	%s(%d) : PLEASE, use the 'init_active_opponent_list' method first, Sir!\n
+00446893	string	active.cpp
+004468d2	string	lBAllocating %d pion objects...
+004468f7	string	pion.cpp
+00446900	string	%s(%d) : Chunk value out of bounds.\n
+00446925	string	pion.cpp
+0044692e	string	%s(%d) : Lane value out of bounds.\n
+00446952	string	pion.cpp
+0044695b	string	%s(%d) : No more free pion objects.\n
+00446988	string	pion.cpp
+00446991	string	%s(%d) : Chunk value out of bounds.\n
+004469b6	string	pion.cpp
+004469bf	string	%s(%d) : Lane value out of bounds.\n
+004469e3	string	pion.cpp
+004469ec	string	%s(%d) : No more free pion objects.\n
+00446a22	string	%s(%d) : Chunk value out of bounds.\n
+00446a47	string	pion.cpp
+00446a50	string	%s(%d) : No pion objects allocated.\n
+00446a89	string	pion.cpp
+00446a92	string	%s(%d) : No pion objects allocated.\n
+00446ab7	string	pion.cpp
+00446ac0	string	%s(%d) : Initpion failed.\n
+00446adb	string	starting static object (%d)\n
+00446af8	string	static object (%d) mesh not yet loaded, loading...\n
+00446b2c	string	static object (%d) allready loaded, using...\n
+00446b5a	string	done loading static object \n
+00446b77	string	pion.cpp
+00446b80	string	%s(%d) : texture not loaded for static object type %d\n
+00446bb7	string	setting static object texture\n
+00446bd6	string	setting static object matrix\n
+00446bf4	string	setting static object handle\n
+00446c12	string	setting static object position\n
+00446c32	string	create execute buffer object..\n
+00446c52	string	done creating execute buffer object..\n
+00446c80	string	?pion.cpp
+00446c8a	string	 %s(%d) : Illegal object number (%d)\n
+00446cb0	string	pion.cpp
+00446cb9	string	 %s(%d) : D3DError Getting matrix : %s\n
+00446ce1	string	pion.cpp
+00446cea	string	 %s(%d) : D3DError Setting matrix : %s\n
+00446d14	string	pure virtual function called!
+00446d3f	string	 %s(%d) : (save_bmp) can't create file %s.
+00446d6c	string	inifile.cpp
+00446d78	string	(set_ini_filename) %s(%d) : filename has incorrect lenght.
+00446db5	string	inifile.cpp
+00446dc1	string	(write_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
+00446e0d	string	inifile.cpp
+00446e19	string	(write_ini_value_setting) %s(%d) : No ini file set, use set_ini_filename .
+00446e64	string	inifile.cpp
+00446e70	string	(read_ini_value_setting) %s(%d) : No ini file set, use set_ini_filename .
+00446eba	string	inifile.cpp
+00446ec6	string	(read_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
+00446f18	string	debug.txt
+00446f22	string	Releasing screen\n
+00446f34	string	Releasing buffer screen\n
+00446f4d	string	Releasing buffer screen\n
+00446f66	string	Releasing dd object\n
+00446f7b	string	post quit\n
+00446f86	string	[%d] %s\n
+00446f94	string	initlib.cpp
+00446fa0	string	 %s(%d) : error flipping surfaces\n
+00446fc3	string	initlib.cpp
+00446fcf	string	 %s(%d) : blitting error (%s).
+00446fee	string	initlib.cpp
+00446ffa	string	 %s(%d) : error predefined screen mode variable is out of bounds
+0044703b	string	initlib.cpp
+00447047	string	 %s(%d) : unknown variable (%d) requested
+00447071	string	initlib.cpp
+0044707d	string	 %s(%d) : unknown variable (%d) requested
+004470a7	string	direct draw object already created
+004470ca	string	exclusive mode was already set
+004470e9	string	undefined error condition
+00447103	string	cooperative level for HWND already set. It cannot be reset while the process has surfaces or palettes created
+00447171	string	dd is prevented from restoring state because of subclassing the HWND dd cooperative level
+004471cb	string	this surface was implicitly created, therefore restore is impossible
+00447210	string	primary surface creation request is incompatible with existing primary surface
+0044725f	string	one or more of the capability bits are incorrect
+00447290	string	direct draw invalid gui id
+004472ab	string	screen mode not supported
+004472c5	string	pointer is not a dd object
+004472e0	string	one or more invalid parameters
+004472ff	string	pixel format is invalid
+00447317	string	surface type incompatible with operation
+00447340	string	one or more surfaces of the dd object are locked
+00447371	string	surface does not use an 8 bit palette, while the requested operation does
+004473bb	string	hardware does not support alpha acceleration
+004473e8	string	the setcooperativelevel must be called before attempting to create anything
+00447434	string	hardware only dd objects not allowed; driver does not support any hardware
+0044747f	string	there is no software emulation for the requested function
+004474b9	string	exclusive mode necessary for this operation
+004474e5	string	(hardware) flipping of visible surfaces is not supported
+0044751e	string	(hardware) no mipmap texture mapping hardware is present
+00447557	string	there was no palette attached to the surface
+00447584	string	there is no hardware support for 16- or 256 color palettes
+004475bf	string	the surface being used is not a palette based surface
+004475f5	string	(hardware) no hardware support for zbuffering is present
+0044762e	string	hardware needed for this operation has already been allocated
+0044766c	string	application out of free memory
+0044768b	string	application out of video memory
+004476ab	string	application already created a primary surface
+004476d9	string	access to surface denied by other thread
+00447702	string	access to surface denied because memory is gone
+00447732	string	operation is not supported
+0044774d	string	display is currently in an unsuppported mode
+0044777a	string	previous blit is still in progress
+0044779d	string	surface was created in different mode
+004477c3	string	unidentified error
+004477d6	string	initlib.cpp
+004477e2	string	 %s(%d) : could not lock surface (%s)\n
+00447809	string	initlib.cpp
+00447815	string	 %s(%d) : unidentified focus error (%d).\n
+0044783f	string	initlib.cpp
+0044784b	string	 %s(%d) : could not lock surface (%s)\n
+00447872	string	initlib.cpp
+0044787e	string	 %s(%d) : unidentified focus error (%d).\n
+004478a8	string	initlib.cpp
+004478b4	string	 %s(%d) : could not lock surface (%s)\n
+004478db	string	initlib.cpp
+004478e7	string	 %s(%d) : could not lock surface (%s)\n
+0044790e	string	initlib.cpp
+0044791a	string	 %s(%d) : unidentified focus error (%d).\n
+00447944	string	initlib.cpp
+00447950	string	 %s(%d) : could not unlock surface (%s)\n
+00447979	string	initlib.cpp
+00447985	string	 %s(%d) : could not unlock surface (%s)\n
+004479ae	string	initlib.cpp
+004479ba	string	 %s(%d) : could not create surface (%s)\n
+004479e3	string	initlib.cpp
+004479ef	string	 %s(%d) : could not create surface (%s)\n
+00447a18	string	initlib.cpp
+00447a24	string	 %s(%d) : could not create surface (%s)\n
+00447a4d	string	initlib.cpp
+00447a59	string	 %s(%d) : could not create surface (%s)\n
+00447a82	string	initlib.cpp
+00447a8e	string	 %s(%d) : could not create surface (%s)\n
+00447ab7	string	initlib.cpp
+00447ac3	string	 %s(%d) : could not create surface (%s)\n
+00447aec	string	initlib.cpp
+00447af8	string	 %s(%d) : could not get desc of surface (%s)\n
+00447b26	string	initlib.cpp
+00447b32	string	 %s(%d) : unidentified focus error (%d).\n
+00447b5c	string	initlib.cpp
+00447b68	string	 %s(%d) : blitting error (%s).
+00447b87	string	initlib.cpp
+00447b93	string	 %s(%d) : blitting error (%s).
+00447bb2	string	initlib.cpp
+00447bbe	string	 %s(%d) : blitting error (%s).
+00447bdd	string	creating\n
+00447be7	string	initlib.cpp
+00447bf3	string	 %s(%d) : could not create primary surface (%s).
+00447c24	string	locking\n
+00447c2d	string	locking inter\n
+00447c3c	string	locking done\n
+00447c4a	string	back screen\n
+00447c57	string	initlib.cpp
+00447c63	string	 %s(%d) : unable to create attached surface (%s).
+00447c95	string	back screen locking\n
+00447caa	string	back screen locking done\n
+00447cc4	string	back screen\n
+00447cd1	string	back screen locking done\n
+00447ceb	string	init palette done\n
+00447cfe	string	getting pixel format\n
+00447d14	string	release buffer screen\n
+00447d2b	string	release back screen\n
+00447d40	string	release primary surface\n
+00447d59	string	*** init xvgalib ***\n
+00447d6f	string	failure to make window\n
+00447d87	string	window defined\n
+00447d97	string	starting direct draw driver search\n
+00447dbb	string	Finished search\n
+00447dcc	string	create direct draw object\n
+00447de7	string	initlib.cpp
+00447df3	string	 %s(%d) : could not create dd object (%s).
+00447e1e	string	set cooperative level\n
+00447e35	string	initlib.cpp
+00447e41	string	 %s(%d) : could not set cooperative level (%s).
+00447e71	string	could not find mode\n
+00447e86	string	set display mode %dx%dx%d\n
+00447ea1	string	initlib.cpp
+00447ead	string	 %s(%d) : could not set display mode (%s).
+00447ed8	string	screen update\n
+00447ee7	string	init input\n
+00447ef3	string	system info\n
+00447f00	string	initlib.cpp
+00447f0c	string	 %s(%d) : error predefined screen mode variable is out of bounds
+00447f4d	string	initlib.cpp
+00447f59	string	 %s(%d) : mode is not available\n
+00447f7a	string	Setting display mode\n
+00447f90	string	Setting display mode: %dx%dx%d\n
+00447fb0	string	initlib.cpp
+00447fbc	string	 %s(%d) : could not set display mode (%s).
+00447fe7	string	Setting display mode done\n
+00448002	string	initlib.cpp
+0044800e	string	 %s(%d) : could not set display mode (%s).
+0044803c	string	Joystick invalid params\n
+00448055	string	Joystick invalid params\n
+0044806e	string	Joystick invalid params\n
+00448087	string	Joystick One Found\n
+0044809b	string	(1)Xbase : %d\n
+004480aa	string	(1)Ybase : %d\n
+004480b9	string	(1)Xmin : %d\n
+004480c7	string	(1)Xmax : %d\n
+004480d5	string	(1)Ymin : %d\n
+004480e3	string	(1)Ymax : %d\n
+004480f1	string	Joystick invalid param\n
+00448109	string	Joystick Two Found\n
+0044811d	string	(2)Xbase : %d\n
+0044812c	string	(2)Ybase : %d\n
+0044813b	string	(2)Xmin : %d\n
+00448149	string	(2)Xmax : %d\n
+00448157	string	(2)Ymin : %d\n
+00448165	string	(2)Ymax : %d\n
+00448173	string	(set_joystick_keys) invalid joystick number (%d)\n
+004481a5	string	(set_joystick_keys) invalid joystick key type. (%d)\n
+004481da	string	(set_joystick_sencesibility) invalid percentage must be between 0.05 and 1
+0044822c	string	?(get_joystick_position) invalid joystick number (%d)\n
+00448264	string	x:%s\\%s
+0044826e	string	x:\\%s
+0044827e	string	fatal error : no program cdrom was found\n
+004482a8	string	program installation check failed\n
+004482cd	string	path=%s\n
+004482d8	string	failed goto path=%s\n
+004482f0	string	fileio.cpp
+004482fb	string	 %s(%d) : warning : double call to init_fileio potential error.\n
+0044833c	string	init fileio\n
+0044834c	string	fileio.cpp
+00448357	string	%s(%d) : could not open <%s>
+00448374	string	fileio.cpp
+0044837f	string	%s(%d) : could not open <%s>
+0044839c	string	fileio.cpp
+004483a7	string	 %s(%d) : error not enough memory to allocate a file list\n
+004483e6	string	fileio.cpp
+004483f1	string	 %s(%d) : error while reading file list\n
+0044841d	string	fileio.cpp
+00448428	string	%s(%d) : could not open <%s>
+00448445	string	%s is %d bytes\n
+00448455	string	fileio done\n
+00448462	string	fileio.cpp
+0044846d	string	%s(%d) : null ptr assignment !
+0044848c	string	fileio.cpp
+00448497	string	 %s(%d)  : direct fseek 1\n
+004484b2	string	fileio.cpp
+004484bd	string	 %s(%d)  : direct fseek 2\n
+004484d8	string	fileio.cpp
+004484e3	string	%s(%d) : fseeking past end or begin of file!
+00448510	string	fileio.cpp
+0044851b	string	%s(%d) : fseeking past end file! (%d,%d,%d)
+00448547	string	fileio.cpp
+00448552	string	%s(%d) : illegal fseek cmd.\n
+0044856f	string	fileio.cpp
+0044857a	string	%s(%d) : null ptr assignment !
+00448599	string	fileio.cpp
+004485a4	string	%s(%d) : attempt at reading unopened file length
+004485d8	string	fileio.cpp
+004485e3	string	 %s(%d)  : file open failed [%s]\n
+00448605	string	fileio.cpp
+00448610	string	 %s(%d)  : file open succeeded [%s]\n
+00448638	string	fileio.cpp
+00448643	string	 %s(%d)  : file open failed [%s]\n
+00448665	string	fileio.cpp
+00448670	string	 %s(%d)  : file open succeeded [%s]\n
+00448695	string	fileio.cpp
+004486a0	string	 %s(%d)  : file open succeeded [%s] %d/%d pos %d %d %d\n
+004486d8	string	fileio.cpp
+004486e3	string	%s(%d) : null ptr assignment !
+00448702	string	fileio.cpp
+0044870d	string	 %s(%d)  : file close\n
+00448724	string	fileio.cpp
+0044872f	string	 %s(%d) : unopened resource file access!
+00448758	string	fileio.cpp
+00448763	string	 %s(%d) : failure to free file list\n
+00448788	string	pformat.cpp
+00448794	string	 %s(%d) : error getting hdc of screen (%s)\n
+004487c0	string	pformat.cpp
+004487cc	string	 %s(%d) : error getting hdc of screen (%s)\n
+004487f8	string	pformat.cpp
+00448804	string	 %s(%d) : error getting hdc of screen (%s)\n
+00448830	string	pformat.cpp
+0044883c	string	 %s(%d) : error getting hdc of screen (%s)\n
+00448868	string	pformat.cpp
+00448874	string	 %s(%d) : could not set color key (%s)\n
+0044889c	string	pformat.cpp
+004488a8	string	 %s(%d) : error please use get_xvga_pixel_format first\n
+004488e0	string	not yet supported\n
+004488f3	string	not yet supported\n
+00448906	string	pformat.cpp
+00448912	string	 %s(%d) : error please use get_xvga_pixel_format first\n
+0044894a	string	not yet supported\n
+0044895d	string	not yet supported\n
+00448970	string	pformat.cpp
+0044897c	string	 %s(%d) : unable to get pixelformat (%s).
+004489a8	string	mouse.cpp
+004489b2	string	 %s(%d) : (get_mouse_type) mouse not initialised
+004489e3	string	mouse.cpp
+004489ed	string	 %s(%d) : (set_mouse_type) Can't change type if mouse is already initialised
+00448a3a	string	mouse.cpp
+00448a44	string	 %s(%d) : (set_mouse_type) Unknow mouse type (%d)
+00448a76	string	mouse.cpp
+00448a80	string	 %s(%d) : (init_mouse) Unable to load default windows cursor
+00448abd	string	mouse.cpp
+00448ac7	string	 %s(%d) : (init_mouse) No mouse_anim initialised
+00448af8	string	mouse.cpp
+00448b02	string	 %s(%d) : (mouse_on) Mouse is not initialised
+00448b30	string	mouse.cpp
+00448b3a	string	 %s(%d) : (mouse_off) Mouse is not initialised
+00448b69	string	mouse.cpp
+00448b73	string	 %s(%d) : (set_mouse_anim) You can't change the windows default mouse
+00448bb9	string	mouse.cpp
+00448bc3	string	 %s(%d) : (set_mouse_anim) illegal animation for mouse %d (max %d), current animation %d\n
+00448c1d	string	mouse.cpp
+00448c27	string	 %s(%d) : (set_mouse_anim) illegal frame nr for mouse %d (max %d), current animation %d\n
+00448c80	string	mouse.cpp
+00448c8a	string	%s(%d) : (set_mouse_anim) image %d used, is out side bounds (%d).\n
+00448ccd	string	mouse.cpp
+00448cd7	string	%s(%d) : (set_mouse_anim) mouse image (%d) is trying to dereference a NULL pointer.\n
+00448d2c	string	mouse.cpp
+00448d36	string	 %s(%d) : (get_mouse_anim) Mouse is not initialised
+00448d6a	string	mouse.cpp
+00448d74	string	 %s(%d) : (get_mouse_anim) windows default mouse active
+00448dac	string	mouse.cpp
+00448db6	string	 %s(%d) : (get_mouse_anim) No mouse animation is set
+00448deb	string	mouse.cpp
+00448df5	string	 %s(%d) : (set_mouse_pos) Mouse is not initialised
+00448e28	string	mouse.cpp
+00448e32	string	 %s(%d) : (get_mouse_pos) Mouse is not initialised
+00448e65	string	mouse.cpp
+00448e6f	string	 %s(%d) : (set_mouse_hotspot) Mouse is not initialised
+00448ea6	string	mouse.cpp
+00448eb0	string	 %s(%d) : (get_mouse_hotspot) Mouse is not initialised
+00448ee7	string	mouse.cpp
+00448ef1	string	 %s(%d) : (draw_mouse) Mouse is not initialised
+00448f21	string	mouse.cpp
+00448f2b	string	 %s(%d) : (draw_mouse) You can't change the windows default mouse
+00448f6d	string	mouse.cpp
+00448f77	string	 %s(%d) : (handle_mouse) Mouse is not initialised
+00448fac	string	rcpcx.cpp
+00448fb6	string	 %s(%d) : unidentified focus error (%d).\n
+00448fe0	string	rcpcx.cpp
+00448fea	string	 %s(%d) : error reading\n
+0044900d	string	 %s(%d) : error reading\n
+00449030	string	 %s(%d) : blitting error (%s).
+0044904f	string	rcpcx.cpp
+00449059	string	 %s(%d) : error reading\n
+00449072	string	bpl %d, width %d\n
+00449084	string	rcpcx.cpp
+0044908e	string	 %s(%d) : error reading\n
+004490a7	string	rcpcx.cpp
+004490b1	string	 %s(%d)  : header read]\n
+004490ca	string	rcpcx.cpp
+004490d4	string	 %s(%d)  : no error header read]\n
+004490f6	string	creating surface %d,%d\n
+0044910e	string	creation succesfull\n
+00449123	string	rcpcx.cpp
+0044912d	string	 %s(%d)  : closing\n
+00449141	string	rcpcx.cpp
+0044914b	string	 %s(%d) : error reading\n
+00449164	string	rcpcx.cpp
+0044916e	string	 %s(%d)  : header read]\n
+00449187	string	rcpcx.cpp
+00449191	string	 %s(%d)  : no error header read]\n
+004491b3	string	creating surface %d,%d\n
+004491cb	string	creation succesfull\n
+004491e0	string	rcpcx.cpp
+004491ea	string	 %s(%d)  : closing\n
+00449208	string	 %s(%d) : error reading\n
+0044922b	string	 %s(%d)  : header read]\n
+0044924e	string	 %s(%d)  : no error header read]\n
+00449270	string	creating surface %d,%d\n
+00449288	string	creation succesfull\n
+004492a7	string	 %s(%d)  : closing\n
+004492c5	string	 %s(%d) : error reading\n
+004492e8	string	 %s(%d)  : header read]\n
+0044930b	string	 %s(%d)  : no error header read]\n
+0044932d	string	creation succesfull\n
+00449342	string	blitting to destination\n
+00449365	string	 %s(%d) : blitting error (%s)\n
+00449384	string	Release buffer surface\n
+004493a6	string	 %s(%d)  : closing\n
+004493c4	string	 %s(%d)  : header read]\n
+004493e7	string	 %s(%d)  : no error header read]\n
+00449409	string	creation succesfull\n
+0044941e	string	blitting to destination\n
+00449441	string	 %s(%d) : blitting error (%s)\n
+00449460	string	Release buffer surface\n
+00449482	string	 %s(%d)  : closing\n
+00449498	string	request failed because resources (like priority level) were already allocated
+004494e6	string	specified format is not supported
+00449508	string	invalid parameters passed to this function
+00449533	string	this function is not valid for the current state of the object
+00449572	string	no sound driver is installed/available
+00449599	string	object doesn't support aggregation
+004495bc	string	not enough memory free for the direct sound subsystem
+004495f2	string	caller doesn't have the priority level needed for this function
+00449632	string	unitialized error ; call the initialize function first
+00449669	string	this function is not supported at this time
+00449695	string	error unidentified
+004496a8	string	 %s(%d) : not enough memory to retrieve driver info\n
+004496dd	string	%s, %s\n
+004496e5	string	SB16.VXD
+004496ee	string	sb16 driver found %d\n
+00449709	string	secondary driver found %d\n
+00449724	string	sound.cpp
+0044972e	string	 %s(%d) : error creating sound buffer (%s)\n
+0044975a	string	sound.cpp
+00449764	string	 %s(%d) : error setting format (%s)\n
+00449789	string	sound.cpp
+00449793	string	 %s(%d) : error starting primary sound buffer (%s)\n
+004497c7	string	sound.cpp
+004497d1	string	 %s(%d) : error creating sound buffer (%s)\n
+004497fd	string	sound.cpp
+00449807	string	 %s(%d) : error setting format (%s)\n
+0044982c	string	sound.cpp
+00449836	string	 %s(%d) : error starting primary sound buffer (%s)\n
+0044986a	string	sound.cpp
+00449874	string	 %s(%d) : error creating sound buffer (%s)\n
+004498a0	string	sound.cpp
+004498aa	string	 %s(%d) : error creating sound buffer (%s)\n
+004498d6	string	sound.cpp
+004498e0	string	 %s(%d) : error creating 3d sound buffer (%s)\n
+0044990f	string	sound.cpp
+00449919	string	 %s(%d) : error duplicating sound buffer (%s)\n
+00449948	string	sound.cpp
+00449952	string	 %s(%d) : illegal sound buffer index %d [0..%d]\n
+00449983	string	sound.cpp
+0044998d	string	 %s(%d) : getting sound status failed %d (%s)\n
+004499bc	string	sound.cpp
+004499c6	string	 %s(%d) : illegal sound buffer index %d [0..%d]\n
+004499f7	string	sound.cpp
+00449a01	string	 %s(%d) : getting sound status failed %d (%s)\n
+00449a30	string	sound.cpp
+00449a3a	string	 %s(%d) : error releasing sound buffer (%s)\n
+00449a67	string	sound.cpp
+00449a71	string	 %s(%d) : error releasing sound buffer (%s)\n
+00449a9e	string	%d used %d\n
+00449aaa	string	%d used %d\n
+00449ab6	string	deleting %d\n
+00449ac3	string	sound.cpp
+00449acd	string	 %s(%d) : error releasing sound buffer (%s)\n
+00449afa	string	Attempting to use sb16 driver\n
+00449b19	string	sound.cpp
+00449b23	string	 %s(%d) : error creating sound object (%s)\n
+00449b4f	string	Attempting to use sb16 driver succesful\n
+00449b78	string	Attempting to use secondary driver\n
+00449b9c	string	sound.cpp
+00449ba6	string	 %s(%d) : error creating sound object (%s)\n
+00449bd2	string	Attempting to use secondary (unknown) driver succesful\n
+00449c0a	string	Using default driver\n
+00449c20	string	sound.cpp
+00449c2a	string	 %s(%d) : error creating sound object (%s)\n
+00449c56	string	Default driver init failure : No sound\n
+00449c7e	string	sound.cpp
+00449c88	string	 %s(%d) : error setting the coop level (%s)\n
+00449cb5	string	sound.cpp
+00449cbf	string	 %s(%d) : not enough memory to create sound buffers\n
+00449cf4	string	 %s(%d) : error illegal sound mode selected\n
+00449d21	string	STEREO
+00449d2d	string	setting sound format %dHz %dbits %s\n
+00449d52	string	init smacker\n
+00449d60	string	init smacker done\n
+00449d73	string	Attempting to use sb16 driver\n
+00449d92	string	sound.cpp
+00449d9c	string	 %s(%d) : error creating sound object (%s)\n
+00449dc8	string	Attempting to use sb16 driver succesful\n
+00449df1	string	Attempting to use secondary driver\n
+00449e15	string	sound.cpp
+00449e1f	string	 %s(%d) : error creating sound object (%s)\n
+00449e4b	string	Attempting to use secondary (unknown) driver succesful\n
+00449e83	string	Using default driver\n
+00449e99	string	sound.cpp
+00449ea3	string	 %s(%d) : error creating sound object (%s)\n
+00449ecf	string	Default driver init failure : No sound\n
+00449ef7	string	sound.cpp
+00449f01	string	 %s(%d) : error setting the coop level (%s)\n
+00449f2e	string	sound.cpp
+00449f38	string	 %s(%d) : not enough memory to create sound buffers\n
+00449f6d	string	sound init\n
+00449f79	string	 %s(%d) : error illegal sound mode selected\n
+00449fa6	string	setting 3d output format\n
+00449fc0	string	STEREO
+00449fcc	string	setting sound format %dHz %dbits %s\n
+00449ff1	string	query interface\n
+0044a002	string	sound.cpp
+0044a00c	string	 %s(%d) : could not query interface for 3d listener (%s)\n
+0044a046	string	init smacker\n
+0044a054	string	init smacker done\n
+0044a067	string	done\n
+0044a06d	string	sound.cpp
+0044a077	string	 %s(%d) : sound buffer index illegal %d\n
+0044a0a0	string	sound.cpp
+0044a0aa	string	 %s(%d) : attempt at setting buffer %d to illegal sound frequency %dHz\n
+0044a0f2	string	sound.cpp
+0044a0fc	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0044a12a	string	sound.cpp
+0044a134	string	 %s(%d) : sound buffer index illegal %d\n
+0044a15d	string	sound.cpp
+0044a167	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0044a195	string	sound.cpp
+0044a19f	string	 %s(%d) : sound buffer index illegal %d\n
+0044a1c8	string	sound.cpp
+0044a1d2	string	 %s(%d) : attempt at setting buffer %d to illegal volume %dDb\n
+0044a211	string	sound.cpp
+0044a21b	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0044a249	string	sound.cpp
+0044a253	string	 %s(%d) : sound buffer index illegal %d\n
+0044a27c	string	sound.cpp
+0044a286	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0044a2b4	string	sound.cpp
+0044a2be	string	 %s(%d) : sound buffer index illegal %d\n
+0044a2e7	string	sound.cpp
+0044a2f1	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044a32c	string	sound.cpp
+0044a336	string	 %s(%d) : attempt at setting buffer %d to pan %dDb\n
+0044a36a	string	sound.cpp
+0044a374	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0044a3a2	string	sound.cpp
+0044a3ac	string	 %s(%d) : sound buffer index illegal %d\n
+0044a3d5	string	sound.cpp
+0044a3df	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044a41a	string	sound.cpp
+0044a424	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0044a452	string	sound.cpp
+0044a45c	string	 %s(%d) : error locking sound buffer (%d) (%s)\n
+0044a48c	string	sound.cpp
+0044a496	string	 %s(%d) : error unlocking sound buffer (%d) (%s)\n
+0044a4c8	string	[%s]\n
+0044a4ce	string	file        : %s\n
+0044a4e0	string	bufferlength:%d\n
+0044a4f1	string	samplerate  :%d\n
+0044a502	string	bpps        :%d\n
+0044a513	string	align       :%d stereo %d\n
+0044a52e	string	sound.cpp
+0044a538	string	 %s(%d) : error playing sound %d (%s)\n
+0044a55f	string	sound.cpp
+0044a569	string	 %s(%d) : error playing sound %d (%s)\n
+0044a590	string	new buffer used %d\n
+0044a5a4	string	sound.cpp
+0044a5ae	string	 %s(%d) : duplicate buffers\n
+0044a5cb	string	duplicate used %d\n
+0044a5de	string	sound.cpp
+0044a5e8	string	 %s(%d) : error playing sound %d (%s)\n
+0044a60f	string	new buffer used %d\n
+0044a623	string	sound.cpp
+0044a62d	string	 %s(%d) : duplicate buffers\n
+0044a64a	string	duplicate used %d\n
+0044a65d	string	sound.cpp
+0044a667	string	 %s(%d) : error playing sound %d (%s)\n
+0044a68e	string	new buffer used %d\n
+0044a6a2	string	sound.cpp
+0044a6ac	string	 %s(%d) : duplicate buffers\n
+0044a6c9	string	duplicate used %d\n
+0044a6dc	string	sound.cpp
+0044a6e6	string	 %s(%d) : sound buffer index illegal %d\n
+0044a70f	string	sound.cpp
+0044a719	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044a754	string	sound.cpp
+0044a75e	string	 %s(%d) : error setting sound position %d (%s)\n
+0044a78e	string	sound.cpp
+0044a798	string	 %s(%d) : sound buffer index illegal %d\n
+0044a7c1	string	sound.cpp
+0044a7cb	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044a806	string	sound.cpp
+0044a810	string	 %s(%d) : error setting sound position%d (%s)\n
+0044a83f	string	sound.cpp
+0044a849	string	 %s(%d) : sound buffer index illegal %d\n
+0044a872	string	sound.cpp
+0044a87c	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044a8b7	string	sound.cpp
+0044a8c1	string	 %s(%d) : error setting sound velocity %d (%s)\n
+0044a8f1	string	sound.cpp
+0044a8fb	string	 %s(%d) : sound buffer index illegal %d\n
+0044a924	string	sound.cpp
+0044a92e	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044a969	string	sound.cpp
+0044a973	string	 %s(%d) : error setting sound velocity %d (%s)\n
+0044a9a3	string	sound.cpp
+0044a9ad	string	 %s(%d) : sound buffer index illegal %d\n
+0044a9d6	string	sound.cpp
+0044a9e0	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044aa1b	string	sound.cpp
+0044aa25	string	 %s(%d) : error getting sound position %d (%s)\n
+0044aa55	string	sound.cpp
+0044aa5f	string	 %s(%d) : sound buffer index illegal %d\n
+0044aa88	string	sound.cpp
+0044aa92	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0044aacd	string	sound.cpp
+0044aad7	string	 %s(%d) : error getting sound position %d (%s)\n
+0044ab07	string	sound.cpp
+0044ab11	string	 %s(%d) : error set listener position\n
+0044ab38	string	sound.cpp
+0044ab42	string	 %s(%d) : error set listener position\n
+0044ab69	string	sound.cpp
+0044ab73	string	 %s(%d) : error set listener position\n
+0044ab9a	string	sound.cpp
+0044aba4	string	 %s(%d) : error set listener velocity\n
+0044abcb	string	sound.cpp
+0044abd5	string	 %s(%d) : error getting position (%s)\n
+0044abfc	string	sound.cpp
+0044ac06	string	 %s(%d) : error getting velocity (%s)\n
+0044ac2d	string	sound.cpp
+0044ac37	string	 %s(%d) : error get listener position\n
+0044ac5e	string	sound.cpp
+0044ac68	string	 %s(%d) : error get listener velocity\n
+0044ac8f	string	sound.cpp
+0044ac99	string	 %s(%d) : error set listener orientation\n
+0044acc3	string	sound.cpp
+0044accd	string	 %s(%d) : error set listener orientation\n
+0044acf7	string	sound.cpp
+0044ad01	string	 %s(%d) : error set listener orientation\n
+0044ad31	string	$@sound.cpp
+0044ad3d	string	 %s(%d) : error set listener orientation\n
+0044ad6d	string	$@sound.cpp
+0044ad79	string	 %s(%d) : error set listener orientation\n
+0044ada9	string	$@sound.cpp
+0044adb5	string	 %s(%d) : error set listener orientation\n
+0044addf	string	new 3d buffer used %d\n
+0044adf6	string	sound.cpp
+0044ae00	string	 %s(%d) : error playing sound %d (%s)\n
+0044ae27	string	sound.cpp
+0044ae31	string	 %s(%d) : error setting position %d (%s)\n
+0044ae5b	string	sound.cpp
+0044ae65	string	 %s(%d) : error setting position %d (%s)\n
+0044ae8f	string	sound.cpp
+0044ae99	string	 %s(%d) : error setting position %d (%s)\n
+0044aec3	string	sound.cpp
+0044aecd	string	 %s(%d) : error setting position %d (%s)\n
+0044aef7	string	sound.cpp
+0044af01	string	 %s(%d) : sound buffer %d type %d was already playing\n
+0044af38	string	new 3d buffer used %d\n
+0044af4f	string	sound.cpp
+0044af59	string	 %s(%d) : illegal sound buffer index %d [0..%d]\n
+0044af8a	string	sound.cpp
+0044af94	string	 %s(%d) : getting sound status failed %d (%s)\n
+0044afc3	string	sound.cpp
+0044afcd	string	 %s(%d) : error releasing sound buffer (%s)\n
+0044affc	string	pal.cpp
+0044b004	string	 %s(%d) : error not enough memory to allocate a palette\n
+0044b03d	string	pal.cpp
+0044b045	string	 %s(%d) : 16 bit screen mode -> ignore palette\n
+0044b075	string	pal.cpp
+0044b07d	string	 %s(%d) : could not create a palette (%s)\n
+0044b0a8	string	pal.cpp
+0044b0b0	string	 %s(%d) : palette was not initialized\n
+0044b0d7	string	pal.cpp
+0044b0df	string	 %s(%d) : could not set the palette (%s)\n
+0044b109	string	pal.cpp
+0044b111	string	 %s(%d) : could not set the palette (%s)\n
+0044b13b	string	pal.cpp
+0044b143	string	 %s(%d) : could not set the palette (%s)\n
+0044b16d	string	pal.cpp
+0044b175	string	 %s(%d) : unknown focus defined\n
+0044b196	string	pal.cpp
+0044b19e	string	 %s(%d) : palette was not initialized\n
+0044b1c5	string	pal.cpp
+0044b1cd	string	 %s(%d) : illegal palette base entry (%d)\n
+0044b1f8	string	pal.cpp
+0044b200	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+0044b23d	string	pal.cpp
+0044b245	string	 %s(%d) : could set entries (%s)\n
+0044b267	string	pal.cpp
+0044b26f	string	 %s(%d) : palette was not initialized\n
+0044b296	string	pal.cpp
+0044b29e	string	 %s(%d) : illegal palette base entry (%d)\n
+0044b2c9	string	pal.cpp
+0044b2d1	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+0044b30e	string	pal.cpp
+0044b316	string	 %s(%d) : could set entries (%s)\n
+0044b338	string	pal.cpp
+0044b340	string	 %s(%d) : palette was not initialized\n
+0044b367	string	pal.cpp
+0044b36f	string	 %s(%d) : illegal palette base entry (%d)\n
+0044b39a	string	pal.cpp
+0044b3a2	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+0044b3df	string	pal.cpp
+0044b3e7	string	 %s(%d) : illegal flag value %d\n
+0044b408	string	viewport.cpp
+0044b415	string	 %s(%d) : error illegal x size of the viewport (%d+%d) [0..%d]\n
+0044b455	string	viewport.cpp
+0044b462	string	 %s(%d) : error illegal x size of the viewport (%d+%d) [0..%d]\n
+0044b4a2	string	viewport.cpp
+0044b4af	string	 %s(%d) : error setting the color model AFTER the viewport has been set\n
+0044b4f8	string	viewport.cpp
+0044b505	string	 %s(%d) : error illegal color model set %d\n
+0044b531	string	setbkg: adding texture <%s>\n
+0044b54e	string	setbkg: making material texture = %d\n
+0044b574	string	setbkg: material = %d\n
+0044b58b	string	setbkg: setting material texure?\n
+0044b5ad	string	setbkg: setting bkg material in viewport\n
+0044b5d7	string	viewport.cpp
+0044b5e4	string	%s(%d) : Could not set background material : %s\n
+0044b615	string	viewport.cpp
+0044b622	string	 %s(%d) : error illegal texture index %d [0..%d]\n
+0044b654	string	viewport.cpp
+0044b661	string	%s(%d) : Could not set background material : %s\n
+0044b692	string	viewport.cpp
+0044b69f	string	%s(%d) : Could not set background material : %s\n
+0044b6d0	string	viewport.cpp
+0044b6dd	string	 %s(%d) : D3DError Creating viewport : %s\n
+0044b708	string	viewport.cpp
+0044b715	string	 %s(%d) :D3DError Creating viewport : %s\n
+0044b73f	string	viewport.cpp
+0044b74c	string	 %s(%d) :D3DError Creating viewport : %s\n
+0044b77c	string	Bad major version
+0044b78e	string	Bad minor version
+0044b7a0	string	clipped execute failed
+0044b7b7	string	create execute failed
+0044b7cd	string	destroy execute failed
+0044b7e4	string	execute failed
+0044b7f3	string	execute lock failed
+0044b807	string	execute locked
+0044b816	string	execute not locked
+0044b829	string	execute unlock failed
+0044b83f	string	Light set failed
+0044b850	string	Material create failed
+0044b867	string	Material destroy failed
+0044b87f	string	Material get data failed
+0044b898	string	Material set data failed
+0044b8b1	string	Matrix create failed
+0044b8c6	string	Matrix destroy failed
+0044b8dc	string	Matrix get data failed
+0044b8f3	string	Matrix set data failed
+0044b90a	string	Scene begin failed
+0044b91d	string	Scene end failed
+0044b92e	string	Scene in scene error
+0044b943	string	Scene not in scene error
+0044b95c	string	Set viewport failed
+0044b970	string	Create texture failed
+0044b986	string	Destroy texture failed
+0044b99d	string	Get texture surface failed
+0044b9b8	string	Texture load failed
+0044b9cc	string	Texture lock failed
+0044b9e0	string	Texture locked
+0044b9ef	string	No texture support
+0044ba02	string	Texture not locked
+0044ba15	string	Texture swap failed
+0044ba29	string	Texture unlock failed
+0044ba3f	string	unidentified error
+0044ba52	string	d3dlib.cpp
+0044ba5d	string	 %s(%d) : D3DError : %s\n
+0044ba76	string	d3dlib.cpp
+0044ba81	string	 %s(%d) : error device_driver guid has not been set.\n
+0044bab7	string	d3dlib.cpp
+0044bac2	string	 %s(%d) : D3DError Query Device Interface screen: %s\n
+0044baf8	string	d3dlib.cpp
+0044bb03	string	 %s(%d) : D3DError Query Device Interface backscreen: %s\n
+0044bb3d	string	d3dlib.cpp
+0044bb48	string	 %s(%d) : D3DError Query Device Interface bufferscreen : %s\n
+0044bb85	string	d3dlib.cpp
+0044bb90	string	 %s(%d) : Illegal focus for 3d device\n
+0044bbb7	string	D3DDEVICE : %s GUID = %d\n
+0044bbd1	string	D3DDEVICE name : %s\n
+0044bbe6	string	this should be a HAL\n
+0044bbfc	string	this should be a HEL\n
+0044bc12	string	d3dlib.cpp
+0044bc1d	string	 %s(%d) : find 3d device illegal color model selected %d\n
+0044bc57	string	d3dlib.cpp
+0044bc62	string	 %s(%d) : D3DError EnumDevice : %s\n
+0044bc86	string	d3dlib.cpp
+0044bc91	string	 %s(%d) : D3DError FindDevice : %s\n
+0044bcb5	string	D3D : Query Device Interface succeeded\n
+0044bcdd	string	init z-buffer\n
+0044bcec	string	d3dlib.cpp
+0044bcf7	string	 %s(%d) : D3D : Error creating Z-buffer \n
+0044bd21	string	z-buffer initialized : %d\n
+0044bd3c	string	init viewport\n
+0044bd4b	string	init viewport ok\n
+0044bd5d	string	clear z-buffer\n
+0044bd6d	string	clear z-buffer ok\n
+0044bd80	string	d3dlib.cpp
+0044bd8b	string	 %s(%d) : D3DError Z-buffer creation : %s\n
+0044bdb6	string	d3dlib.cpp
+0044bdc1	string	 %s(%d) : D3DError Z-buffer attachment to screen: %s\n
+0044bdf7	string	d3dlib.cpp
+0044be02	string	 %s(%d) : D3DError Z-buffer attachment to backscreen: %s\n
+0044be3c	string	d3dlib.cpp
+0044be47	string	 %s(%d) : D3DError Z-buffer attachment to bufferscreen: %s\n
+0044be83	string	d3dlib.cpp
+0044be8e	string	 %s(%d) : Illegal focus for z-buffer\n
+0044beb4	string	d3dlib.cpp
+0044bebf	string	 %s(%d) :D3DError Clearing z-buffer : %s\n
+0044bee9	string	releasing viewport\n
+0044befd	string	releasing zbuffer\n
+0044bf10	string	releasing d3d device\n
+0044bf26	string	releasing d3dlib done\n
+0044bf3d	string	init z-buffer\n
+0044bf57	string	 %s(%d) : D3D : Error creating Z-buffer \n
+0044bf81	string	z-buffer initialized : %d\n
+0044bf9c	string	init viewport\n
+0044bfab	string	init viewport ok\n
+0044bfbd	string	d3dlib.cpp
+0044bfc8	string	 %s(%d) :D3DError getting device caps : %s\n
+0044bff4	string	HARDWARE CAPABILITIES\n
+0044c00b	string	hwcaps.bClipping = %d\n
+0044c022	string	hwcaps.dwMaxBufferSize = %d\n
+0044c03f	string	hwcaps.dwMaxVertexCount = %d\n
+0044c05d	string	SOFTWARE CAPABILITIES\n
+0044c074	string	helcaps.bClipping = %d\n
+0044c08c	string	helcaps.dwMaxBufferSize = %d\n
+0044c0aa	string	helcaps.dwMaxVertexCount = %d\n
+0044c0cc	string	exec.cpp
+0044c0d5	string	 %s(%d) : error render state variables haven't been initialised\n
+0044c116	string	exec.cpp
+0044c11f	string	 %s(%d) : error illegal value %d for zbuffer render var\n
+0044c158	string	exec.cpp
+0044c161	string	 %s(%d) : error illegal value %d for perspective correctness render var\n
+0044c1aa	string	exec.cpp
+0044c1b3	string	 %s(%d) : error illegal value %d for shade mode render var\n
+0044c1ef	string	exec.cpp
+0044c1f8	string	 %s(%d) : error illegal value %d for antialiasing render var\n
+0044c236	string	exec.cpp
+0044c23f	string	 %s(%d) : error illegal value %d for texture blend render var\n
+0044c27e	string	exec.cpp
+0044c287	string	 %s(%d) : error illegal value %d for fog enable render var\n
+0044c2c3	string	exec.cpp
+0044c2cc	string	 %s(%d) : error illegal value %d for dithering render var\n
+0044c307	string	exec.cpp
+0044c310	string	 %s(%d) : error illegal value %d for cull mode render var\n
+0044c34b	string	exec.cpp
+0044c354	string	 %s(%d) : error illegal value %d for texture filter render var\n
+0044c394	string	exec.cpp
+0044c39d	string	 %s(%d) : error illegal value %d for Specular render var\n
+0044c3d7	string	exec.cpp
+0044c3e0	string	 %s(%d) : error illegal value %d for fog mode render var\n
+0044c41a	string	exec.cpp
+0044c423	string	 %s(%d) : error referencing unknown render state var %d [%d]\n
+0044c461	string	exec.cpp
+0044c46a	string	 %s(%d) : error render state variables haven't been initialised\n
+0044c4ab	string	exec.cpp
+0044c4b4	string	 %s(%d) : could not create execute buffer (%s)\n
+0044c4e4	string	exec.cpp
+0044c4ed	string	 %s(%d) : failed to lock execute buffer (%s)\n
+0044c51b	string	exec.cpp
+0044c524	string	 %s(%d) : failed to unlock execute buffer (%s)\n
+0044c554	string	exec.cpp
+0044c55d	string	 %s(%d) : failed to set execute data (%s)\n
+0044c588	string	exec.cpp
+0044c591	string	 %s(%d) : begin scene(%s)\n
+0044c5ac	string	exec.cpp
+0044c5b5	string	 %s(%d) : execute failed (%s)\n
+0044c5d4	string	exec.cpp
+0044c5dd	string	 %s(%d) : end scene (%s)\n
+0044c5f7	string	exec.cpp
+0044c600	string	 %s(%d) : D3DError Create ExecBuffer : %s\n
+0044c62b	string	exec.cpp
+0044c634	string	 %s(%d) : D3DError Lock ExecBuffer : %s\n
+0044c65d	string	exec.cpp
+0044c666	string	 %s(%d) : D3DError Begin Scene : %s\n
+0044c68b	string	exec.cpp
+0044c694	string	 %s(%d) : D3DError Execute ExecBuffer : %s\n
+0044c6c0	string	exec.cpp
+0044c6c9	string	 %s(%d) : D3DError End Scene : %s\n
+0044c6ec	string	exec.cpp
+0044c6f5	string	 %s(%d) : D3DError Begin Scene : %s\n
+0044c71a	string	exec.cpp
+0044c723	string	 %s(%d) : D3DError Execute ExecBuffer (object:%d): %s\n
+0044c75a	string	exec.cpp
+0044c763	string	 %s(%d) : D3DError End Scene : %s\n
+0044c786	string	exec.cpp
+0044c78f	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044c7c0	string	nb_verts = %d\n
+0044c7cf	string	nb_tris = %d\n
+0044c7dd	string	exec.cpp
+0044c7e6	string	%s(%d) : Too many vertices (%d) in object %d\n
+0044c814	string	exec.cpp
+0044c81d	string	%s(%d) : Execbuffer too large (%d) for object %d\n
+0044c84f	string	exec.cpp
+0044c858	string	 %s(%d) :D3DError Create Execbuffer : %s\n
+0044c882	string	exec.cpp
+0044c88b	string	 %s(%d) :D3DError Lock Execbuffer : %s\n
+0044c8b3	string	exec.cpp
+0044c8bc	string	 %s(%d) : error this object frame has not been used\n
+0044c8f1	string	exec.cpp
+0044c8fa	string	 %s(%d) : xvga material not initialised\n
+0044c923	string	exec.cpp
+0044c92c	string	 %s(%d) : D3DError Set ExecData : %s\n
+0044c952	string	exec.cpp
+0044c95b	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044c98c	string	wegtools.cpp
+0044c999	string	 %s(%d) : chunk %d out of array bounds [0..%d]\n
+0044c9c9	string	 weg chunk is -1\n
+0044c9e1	string	p@Freed weg chunks, reinitialzing\n
+0044ca04	string	weg.cpp
+0044ca0c	string	 %s(%d) : not enough memory for weg chunk (%d)\n
+0044ca3c	string	d3d.lib
+0044ca44	string	COMPLETE
+0044ca51	string	weg.cpp
+0044ca59	string	 %s(%d) : could not open weg data file: %s\n
+0044ca85	string	loading [%s], %d chunks\n
+0044ca9e	string	weg.cpp
+0044caa6	string	 %s(%d) : error reading weg data file %s\n
+0044cad0	string	weg.cpp
+0044cad8	string	 %s(%d) : error xvga material has not been initialized\n
+0044cb10	string	weg.cpp
+0044cb18	string	 %s(%d) : could not open weg data file: %s\n
+0044cb44	string	creating the weg execute buffers\n
+0044cb66	string	Finished creating the weg execute buffers\n
+0044cb91	string	calcing weg map execute buffers\n
+0044cbb2	string	calcing weg map execute buffers done\n
+0044cbe0	string	 %s(%d) : error weg chunks not initialized properly\n
+0044cc1d	string	 %s(%d) : %d weg chunk out of bounds\n
+0044cc43	string	weg.cpp
+0044cc4b	string	 %s(%d) : error weg chunks not initialized properly\n
+0044cc80	string	weg.cpp
+0044cc88	string	 s(%d) : error not enough weg chunks max = %d\n
+0044ccb7	string	weg.cpp
+0044ccbf	string	 %s(%d) : not enough memory for linker kant weg chunk (%d).\n
+0044ccfc	string	weg.cpp
+0044cd04	string	 %s(%d) : not enough memory for linker kant weg chunk (%d).\n
+0044cd41	string	weg.cpp
+0044cd49	string	 %s(%d) : not enough memory for rechter kant weg chunk (%d).\n
+0044cd87	string	weg.cpp
+0044cd8f	string	 %s(%d) : not enough memory for rechter kant weg chunk (%d).\n
+0044cdcd	string	Freed weg chunks, reinitialzing\n
+0044cdee	string	weg.cpp
+0044cdf6	string	 %s(%d) : not enough memory for weg elements (%d).\n
+0044ce2a	string	weg.cpp
+0044ce32	string	 %s(%d) : not enough memory for visible weg triangle array (%d)\n
+0044ce73	string	weg.cpp
+0044ce7b	string	 %s(%d) : not enough memory for visible weg triangle array (%d)\n
+0044cec4	string	 %s(%d) : error weg nog niet goed geinitialiseerd\n
+0044ceff	string	 %s(%d) : error weg element out of bounds %d (max. %d)\n
+0044cf37	string	weg.cpp
+0044cf3f	string	 %s(%d) : error weg not initialized\n
+0044cf64	string	weg.cpp
+0044cf6c	string	 %s(%d) : error not enough weg elementen for this road max %d\n
+0044cfab	string	 error nul b\n
+0044cfd9	string	weg.cpp
+0044cfe1	string	 %s(%d) : error weg not initialized\n
+0044d006	string	weg.cpp
+0044d00e	string	 %s(%d) : error weg not initialized\n
+0044d033	string	[%5.2f,%5.2f] = [%5.2f,%5.2f] %5.2f %5.2f\n
+0044d05e	string	weg.cpp
+0044d066	string	 %s(%d) : D3DError Execute ExecBuffer : %s\n
+0044d092	string	weg.cpp
+0044d09a	string	 %s(%d) : weg illegal side length (%d, must be > 1)\n
+0044d0cf	string	weg.cpp
+0044d0d7	string	%s(%d) : Too many vertices (%d) in map\n
+0044d0ff	string	weg.cpp
+0044d107	string	%s(%d) : Execbuffer too large (%d) for map\n
+0044d133	string	weg.cpp
+0044d13b	string	 %s(%d) :D3DError Create Execbuffer : %s\n
+0044d165	string	weg.cpp
+0044d16d	string	 %s(%d) :D3DError Lock Execbuffer : %s\n
+0044d195	string	weg.cpp
+0044d19d	string	 %s(%d) : execute vertex overflow error (%d, max=%d)\n
+0044d1d3	string	weg.cpp
+0044d1db	string	 %s(%d) : execute vertex overflow error (%d, max=%d)\n
+0044d211	string	weg.cpp
+0044d219	string	 %s(%d) : error creating weg eb (%d) referring to illegal vertex offset %d (%d=max)\n
+0044d26e	string	weg.cpp
+0044d276	string	 %s(%d) : error creating weg eb (%d) referring to illegal vertex offset %d (%d=max)\n
+0044d2cb	string	weg.cpp
+0044d2d3	string	 %s(%d) : D3DError Set ExecData : %s\n
+0044d2fc	string	math3d.cpp
+0044d307	string	 %s(%d) : error allocating cos/sin table\n
+0044d331	string	math3d.cpp
+0044d33c	string	 %s(%d) : error allocating cos/sin table\n
+0044d38a	string	math3d.cpp
+0044d395	string	 %s(%d) : error allocating height table\n
+0044d3be	string	math3d.cpp
+0044d3c9	string	 %s(%d) : too many atan tables in use %d\n
+0044d3fe	string	 %s(%d) : illegal atan table index %d [0..%d]\n
+0044d438	string	 %s(%d) : illegal atan table %d type error %d (get_atan float overload)\n
+0044d481	string	math3d.cpp
+0044d48c	string	 %s(%d) : illegal atan table index %d [0..%d]\n
+0044d4bb	string	math3d.cpp
+0044d4c6	string	 %s(%d) : illegal atan table %d type error %d (get_atan float overload)\n
+0044d517	string	math3d.cpp
+0044d522	string	 %s(%d) : illegal table size resulted %d\n
+0044d54c	string	math3d.cpp
+0044d557	string	 %s(%d) : error allocating hoek table %d\n
+0044d581	string	math3d.cpp
+0044d58c	string	 %s(%d) : call init_math_tables before create_atan_tables\n
+0044d5c7	string	type = %d\n
+0044d5d2	string	math3d.cpp
+0044d5dd	string	 %s(%d) : illegal atan x-distance %5.2f (div by 0)\n
+0044d611	string	math3d.cpp
+0044d61c	string	 %s(%d) : illegal atan table type error %d (int create)\n
+0044d670	string	 %s(%d) : illegal table size resulted %d\n
+0044d6a5	string	 %s(%d) : error allocating hoek table %d\n
+0044d6da	string	 %s(%d) : call init_math_tables before create_atan_tables\n
+0044d715	string	type = %d\n
+0044d72b	string	 %s(%d) : illegal atan x-distance %5.2f (div by 0)\n
+0044d76a	string	 %s(%d) : illegal atan table type error %d (int create)\n
+0044d7ce	string	 %s(%d) : illegal index in visible section entries %d (a=%d,y=%d,x=%d)\n
+0044d821	string	 %s(%d) : illegal number of angles %d [0..%d]\n
+0044d85b	string	 %s(%d) : too small stretch %d (min=2)\n
+0044d88e	string	 %s(%d) : not enough memory free for visibility table (%d)\n
+0044d8d5	string	 %s(%d) : unexact number of angles!\n
+0044d8fa	string	before (%5.2f,%5.2f) to (%5.2f,%5.2f) to (%5.2f,%5.2f) \n
+0044d933	string	after (%5.2f,%5.2f) to (%5.2f,%5.2f) to (%5.2f,%5.2f) \n
+0044d96b	string	making entry %d [%d entries]\n
+0044d994	string	 %s(%d) : illegal number of entries %d angle=%d\n
+0044d9d0	string	 %s(%d) : not enough memory free for minx visible section (entries=%d,angle=%d)\n
+0044da2c	string	 %s(%d) : not enough memory free for minx visible section (entries=%d,angle=%d)\n
+0044da7d	string	from (%5.2f,%5.2f) to (%5.2f,%5.2f)\n
+0044daa2	string	from (%5.2f,%5.2f) to (%5.2f,%5.2f)\n
+0044dac7	string	from (%5.2f,%5.2f) to (%5.2f,%5.2f)\n
+0044daf7	string	 %s(%d): illegal vertex (v1) index %d (max=%d)
+0044db31	string	 %s(%d): illegal vertex (v2) index %d (max=%d)
+0044db6b	string	 %s(%d): illegal vertex (v1) index %d (max=%d)
+0044dba5	string	 %s(%d): illegal vertex (v2) index %d (max=%d)
+0044dbdf	string	 %s(%d): illegal vertex (result) index %d (max=%d)
+0044dc12	string	math3d.cpp
+0044dc1d	string	 %s(%d): illegal vertex (v1) index %d (max=%d)
+0044dc4c	string	math3d.cpp
+0044dc57	string	 %s(%d): illegal vertex (v2) index %d (max=%d)
+0044dc91	string	 %s(%d): illegal vertex (v1) index %d (max=%d)
+0044dccb	string	 %s(%d): illegal vertex (v2) index %d (max=%d)
+0044dd05	string	 %s(%d): illegal vertex (result) index %d (max=%d)
+0044dd38	string	(keyispressed) illegal device requested (%d)
+0044dd68	string	object3d.cpp
+0044dd75	string	 %s(%d) : D3DError Creating matrix : %s\n
+0044dd9e	string	%d objects initialized ok\n
+0044ddb9	string	object3d.cpp
+0044ddc6	string	 %s(%d) : get_free_object3d : please initialize 3d objects first\n
+0044de08	string	object %d returned in get free o3d_used = %d \n
+0044de37	string	object3d.cpp
+0044de44	string	 %s(%d) : no more free objects\n
+0044de64	string	object3d.cpp
+0044de71	string	 %s(%d) : get_new_object3d : please initialize 3d objects first\n
+0044deb2	string	object %d returned in get new object\n
+0044ded8	string	object3d.cpp
+0044dee5	string	 %s(%d) : free_object3d : please initialize 3d objects first\n
+0044df23	string	object3d.cpp
+0044df30	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044df61	string	object3d.cpp
+0044df6e	string	 %s(%d) : set_object3d_anim : please initialize 3d objects first\n
+0044dfb0	string	object3d.cpp
+0044dfbd	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044dfee	string	object3d.cpp
+0044dffb	string	 %s(%d) : error illegal animation index %d [0..%d]\n
+0044e02f	string	object3d.cpp
+0044e03c	string	 %s(%d) : set_object3d_anim : please initialize 3d objects first\n
+0044e07e	string	object3d.cpp
+0044e08b	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044e0bc	string	object3d.cpp
+0044e0c9	string	 %s(%d) : error illegal animation index %d [0..%d]\n
+0044e0fd	string	object3d.cpp
+0044e10a	string	 %s(%d) : error illegal animation frame index %d [0..%d]\n
+0044e144	string	object3d.cpp
+0044e151	string	 %s(%d) : set_object3d_matrix : please initialize 3d objects first\n
+0044e195	string	object3d.cpp
+0044e1a2	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044e1d3	string	object3d.cpp
+0044e1e0	string	 %s(%d) : D3DError Setting matrix : %s\n
+0044e208	string	object3d.cpp
+0044e215	string	 %s(%d) : set_object3d_freq : please initialize 3d objects first\n
+0044e257	string	object3d.cpp
+0044e264	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044e295	string	object3d.cpp
+0044e2a2	string	 %s(%d) : set_object3d_x_angle : please initialize 3d objects first\n
+0044e2e7	string	object3d.cpp
+0044e2f4	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044e325	string	object3d.cpp
+0044e332	string	 %s(%d) : set_object3d_y_angle : please initialize 3d objects first\n
+0044e377	string	object3d.cpp
+0044e384	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044e3b5	string	object3d.cpp
+0044e3c2	string	 %s(%d) : set_object3d_z_angle : please initialize 3d objects first\n
+0044e407	string	object3d.cpp
+0044e414	string	 %s(%d) : error illegal object index %d [0..%d]\n
+0044e445	string	object3d.cpp
+0044e452	string	 %s(%d) : check_objects3d_visibility : please initialize 3d objects first\n
+0044e49d	string	object3d.cpp
+0044e4aa	string	 %s(%d) : Error Execute objectfuncion : %d\n
+0044e4d8	string	Anim array freed\n
+0044e4ea	string	anim %d returned in get free a3d_used = %d \n
+0044e517	string	anim3d.cpp
+0044e522	string	 %s(%d) : no more free anims\n
+0044e540	string	anim %d returned in get new anim\n
+0044e56d	string	 %s(%d) : not enough memory for anims frame array\n
+0044e5a0	string	 anim %d used frames\n
+0044e5b6	string	anim3d.cpp
+0044e5c1	string	 %s(%d) : not enough memory for anims frame array\n
+0044e5f4	string	 anim %d used frames\n
+0044e60a	string	Finished initing static anim\n
+0044e628	string	anim3d.cpp
+0044e633	string	 %s(%d) : not enough memory for anims frame array\n
+0044e666	string	 anim %d used frames\n
+0044e67c	string	Finished initing anim\n
+0044e693	string	anim3d.cpp
+0044e69e	string	 %s(%d) : error freeing anim %d \n
+0044e6c0	string	 anim %d freed frame-array \n
+0044e6e8	string	 %s(%d) : error freeing anim %d \n
+0044e70a	string	 anim %d freed frame-array \n
+0044e728	string	texture.cpp
+0044e734	string	 %s(%d) : not enough memory for textures\n
+0044e75e	string	texture.cpp
+0044e76a	string	 %s(%d) : texture formats not initialized\n
+0044e795	string	texture.cpp
+0044e7a1	string	 %s(%d) : too many textures requested %d\n
+0044e7cb	string	 texture format %d, 8bit palettized\n
+0044e7f0	string	 texture format %d, 4bit palettized\n
+0044e815	string	 texture format %d, rgb %d:%d:%d (%d,%d,%d) screen = %d:%d:%d (%d,%d,%d)\n
+0044e85f	string	using this texture format for rgb\n
+0044e882	string	using this texture format for rgb\n
+0044e8a5	string	init enumerating texture formats\n
+0044e8c7	string	starting enumerating texture formats\n
+0044e8ed	string	texture.cpp
+0044e8f9	string	 %s(%d) : enumeration failure\n
+0044e918	string	texture.cpp
+0044e924	string	 %s(%d) : not enough memory for textures\n
+0044e94e	string	texture.cpp
+0044e95a	string	 %s(%d) : too many textures requested\n
+0044e981	string	texture.cpp
+0044e98d	string	 %s(%d) : textures not initialized\n
+0044e9b1	string	pixel format > 8 while loading pcx\n
+0044e9d5	string	pixel format <= 8 while loading pcx\n
+0044e9fa	string	texture.cpp
+0044ea06	string	 %s(%d) : D3DError : %s\n
+0044ea1f	string	texture.cpp
+0044ea2b	string	 %s(%d) : Invalid rgb pixel format \n
+0044ea50	string	pixel format > 8 while creating texture surface\n
+0044ea81	string	done\n
+0044ea87	string	texture.cpp
+0044ea93	string	 %s(%d) : Invalid 8 bit pixel format \n
+0044eaba	string	pixel format <= 8 while creating texture surface\n
+0044eaec	string	texture.cpp
+0044eaf8	string	 %s(%d) : D3DError setting texture palette : %s\n
+0044eb29	string	setting color key\n
+0044eb3c	string	query for the interface\n
+0044eb55	string	texture.cpp
+0044eb61	string	 %s(%d) : D3DError : %s\n
+0044eb7a	string	texture.cpp
+0044eb86	string	 %s(%d) : failed to set color key(%s)\n
+0044ebad	string	texture.cpp
+0044ebb9	string	 %s(%d) : failed to set color key(%s)\n
+0044ebe0	string	Load the texture\n
+0044ebf2	string	texture.cpp
+0044ebfe	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044ec29	string	get handle the texture\n
+0044ec41	string	texture.cpp
+0044ec4d	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044ec78	string	Release the temps\n
+0044ec8b	string	Release the temps done\n
+0044eca3	string	texture.cpp
+0044ecaf	string	 %s(%d) : illegal mem image array index %d (max=%d) (xsize)\n
+0044ecec	string	texture.cpp
+0044ecf8	string	 %s(%d) : get xsize of mem image while not initialized\n
+0044ed30	string	pixel format > 8 while loading pcx\n
+0044ed54	string	pixel format <= 8 while loading pcx\n
+0044ed79	string	texture.cpp
+0044ed85	string	 %s(%d) : D3DError blitting texture : %s\n
+0044edaf	string	texture.cpp
+0044edbb	string	 %s(%d) : D3DError : %s\n
+0044edd4	string	texture.cpp
+0044ede0	string	 %s(%d) : Invalid rgb pixel format \n
+0044ee05	string	pixel format > 8 while creating texture surface\n
+0044ee36	string	done\n
+0044ee3c	string	texture.cpp
+0044ee48	string	 %s(%d) : Invalid 8 bit pixel format \n
+0044ee6f	string	pixel format <= 8 while creating texture surface\n
+0044eea1	string	texture.cpp
+0044eead	string	 %s(%d) : failed to set color key(%s)\n
+0044eed4	string	texture.cpp
+0044eee0	string	 %s(%d) : D3DError setting texture palette : %s\n
+0044ef11	string	query for the interface\n
+0044ef2a	string	texture.cpp
+0044ef36	string	 %s(%d) : D3DError : %s\n
+0044ef4f	string	Load the texture\n
+0044ef61	string	texture.cpp
+0044ef6d	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044ef98	string	get handle the texture\n
+0044efb0	string	texture.cpp
+0044efbc	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044efe7	string	Release the temps\n
+0044effa	string	Release the temps done\n
+0044f012	string	texture.cpp
+0044f01e	string	 %s(%d) : error illegal mipmap level %d\n
+0044f047	string	pixel format > 8 while loading pcx\n
+0044f06b	string	pixel format <= 8 while loading pcx\n
+0044f090	string	texture.cpp
+0044f09c	string	 %s(%d) : error could not get attached #%d mip map surface of texture %s (%s).\n
+0044f0ec	string	texture.cpp
+0044f0f8	string	 %s(%d) : illegal mipmap level xsize (%d,%d <= 0)\n
+0044f12b	string	texture.cpp
+0044f137	string	 %s(%d) : illegal mipmap level ysize (%d,%d <= 0)\n
+0044f16a	string	texture.cpp
+0044f176	string	 %s(%d) : D3DError blitting texture : %s\n
+0044f1a0	string	texture.cpp
+0044f1ac	string	 %s(%d) : D3DError : %s\n
+0044f1c5	string	texture.cpp
+0044f1d1	string	 %s(%d) : Invalid rgb pixel format \n
+0044f1f6	string	pixel format > 8 while creating texture surface\n
+0044f227	string	done\n
+0044f22d	string	texture.cpp
+0044f239	string	 %s(%d) : Invalid 8 bit pixel format \n
+0044f260	string	pixel format <= 8 while creating texture surface\n
+0044f292	string	taking pixel %d\n
+0044f2a3	string	texture.cpp
+0044f2af	string	 %s(%d) : failed to set color key(%s)\n
+0044f2d6	string	texture.cpp
+0044f2e2	string	 %s(%d) : D3DError setting texture palette : %s\n
+0044f313	string	query for the interface\n
+0044f32c	string	texture.cpp
+0044f338	string	 %s(%d) : D3DError : %s\n
+0044f351	string	Load the texture\n
+0044f363	string	texture.cpp
+0044f36f	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044f39a	string	get handle the texture\n
+0044f3b2	string	texture.cpp
+0044f3be	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044f3e9	string	Release the temps\n
+0044f3fc	string	Release the temps done\n
+0044f414	string	texture.cpp
+0044f420	string	 %s(%d) : error illegal mipmap level %d\n
+0044f449	string	pixel format > 8 while loading pcx\n
+0044f46d	string	pixel format <= 8 while loading pcx\n
+0044f492	string	texture.cpp
+0044f49e	string	 %s(%d) : error could not get attached #%d mip map surface of texture %s (%s).\n
+0044f4ee	string	 %s(%d) : expected width and depth are not the same as pcx (%d,%d) %s\n
+0044f535	string	texture.cpp
+0044f541	string	 %s(%d) : D3DError : %s\n
+0044f55a	string	texture.cpp
+0044f566	string	 %s(%d) : Invalid rgb pixel format \n
+0044f58b	string	pixel format > 8 while creating texture surface\n
+0044f5bc	string	done\n
+0044f5c2	string	texture.cpp
+0044f5ce	string	 %s(%d) : Invalid 8 bit pixel format \n
+0044f5f5	string	pixel format <= 8 while creating texture surface\n
+0044f627	string	taking pixel %d\n
+0044f638	string	texture.cpp
+0044f644	string	 %s(%d) : failed to set color key(%s)\n
+0044f66b	string	texture.cpp
+0044f677	string	 %s(%d) : D3DError setting texture palette : %s\n
+0044f6a8	string	query for the interface\n
+0044f6c1	string	texture.cpp
+0044f6cd	string	 %s(%d) : D3DError : %s\n
+0044f6e6	string	Load the texture\n
+0044f6f8	string	texture.cpp
+0044f704	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044f72f	string	get handle the texture\n
+0044f747	string	texture.cpp
+0044f753	string	 %s(%d) : D3DError get texturehandle : %s\n
+0044f77e	string	Release the temps\n
+0044f791	string	Release the temps done\n
+0044f7ac	string	light.cpp
+0044f7b6	string	 %s(%d) : not enough memory for lights array\n
+0044f7e4	string	light.cpp
+0044f7ee	string	 %s(%d) : too many lights requested\n
+0044f813	string	light.cpp
+0044f81d	string	 %s(%d) : D3DError Creating Light : %s\n
+0044f845	string	D3D : Light created ok\n
+0044f85d	string	light.cpp
+0044f867	string	 %s(%d) : D3DError Setting Light : %s\n
+0044f88e	string	D3D : Light set ok\n
+0044f8a2	string	light.cpp
+0044f8ac	string	 %s(%d) : D3DError Add Light : %s\n
+0044f8cf	string	D3D : Light added ok\n
+0044f8e5	string	light.cpp
+0044f8ef	string	 %s(%d) : D3DError Add Light : %s\n
+0044f914	string	 %s(%d) : not enough memory for vertices\n
+0044f93e	string	 %d vertices initialized\n
+0044f958	string	 %s(%d) : error freeing triangles \n
+0044f97c	string	Vertex array freed\n
+0044f990	string	vertex.cpp
+0044f99b	string	 %s(%d) : no more free vertices\n
+0044f9bc	string	>>>>>init tiles \n
+0044f9ce	string	>>>>>exit tiles \n
+0044f9e8	string	mapexec.cpp
+0044f9f4	string	 %s(%d) : error reading weg map data\n
+0044fa21	string	@mapexec.cpp
+0044fa2e	string	 %s(%d) : error xvga material has not been initialized\n
+0044fa66	string	selected  %d\n
+0044fa74	string	discarded %d\n
+0044fa82	string	total     %d\n
+0044fa90	string	mapsize   %dx%d = %d\n
+0044faac	string	>@mapexec.cpp
+0044faba	string	 %s(%d) : D3DError Execute ExecBuffer : %s\n
+0044fae6	string	mapexec.cpp
+0044faf2	string	 %s(%d) : illegal vertex index error %d [0..%d]\n
+0044fb23	string	mapexec.cpp
+0044fb2f	string	 %s(%d) : weg map has not been initialized\n
+0044fb5b	string	generating standard vertex data\n
+0044fbac	string	mapexec.cpp
+0044fbb8	string	 %s(%d) : weg map has not been initialized\n
+0044fbe4	string	starting init map\n
+0044fbf7	string	mapexec.cpp
+0044fc03	string	 %s(%d) : not enough memory free for map (%d,%d)\n
+0044fc35	string	mapexec.cpp
+0044fc41	string	 %s(%d) : not enough memory free for map (%d,%d)\n
+0044fc73	string	mapexec.cpp
+0044fc7f	string	 %s(%d) : not enough memory free for map (%d,%d)\n
+0044fcb1	string	generating data\n
+0044fcc2	string	generating map\n
+0044fcd2	string	generating vertex data\n
+0044fcea	string	exit map\n
+0044fd02	string	>@chunk error\n
+0044fd11	string	[%d:%5.2f (%5.2f,%5.2f)\n
+0044fd2a	string	mapexec.cpp
+0044fd36	string	%s(%d) : Too many vertices (%d) (max=%d)in map\n
+0044fd66	string	mapexec.cpp
+0044fd72	string	%s(%d) : Execbuffer too large (%d) for map\n
+0044fd9e	string	mapexec.cpp
+0044fdaa	string	 %s(%d) :D3DError Create Execbuffer : %s\n
+0044fdd4	string	mapexec.cpp
+0044fde0	string	 %s(%d) :D3DError Lock Execbuffer : %s\n
+0044fe08	string	mapexec.cpp
+0044fe14	string	 %s(%d) : D3DError Set ExecData : %s\n
+0044fe3c	string	camera.cpp
+0044fe47	string	 %s(%d): camera array has not been initialised\n
+0044fe77	string	camera.cpp
+0044fe82	string	 %s(%d): error illegal camera pos %d\n
+0044fea8	string	camera.cpp
+0044feb3	string	 %s(%d): error illegal camera %d\n
+0044fed5	string	camera.cpp
+0044fee0	string	 %s(%d) : D3DError moving camera : %s\n
+0044ff07	string	camera.cpp
+0044ff12	string	 %s(%d) : D3DError moving camera : %s\n
+0044ff39	string	camera.cpp
+0044ff44	string	 %s(%d): camera array has not been initialised\n
+0044ff74	string	camera.cpp
+0044ff7f	string	 %s(%d): error illegal camera pos %d\n
+0044ffa5	string	camera.cpp
+0044ffb0	string	 %s(%d): error illegal camera %d\n
+0044ffd2	string	camera.cpp
+0044ffdd	string	 %s(%d) : D3DError moving camera : %s\n
+00450004	string	camera.cpp
+0045000f	string	 %s(%d) : D3DError moving camera : %s\n
+00450036	string	camera.cpp
+00450041	string	 %s(%d): camera array has not been initialised\n
+00450071	string	camera.cpp
+0045007c	string	 %s(%d): error illegal camera pos %d\n
+004500a2	string	camera.cpp
+004500ad	string	 %s(%d): error illegal camera %d\n
+004500cf	string	camera.cpp
+004500da	string	 %s(%d) : D3DError moving camera : %s\n
+00450101	string	camera.cpp
+0045010c	string	 %s(%d) : D3DError moving camera : %s\n
+00450133	string	camera.cpp
+0045013e	string	 %s(%d): camera array has not been initialised\n
+0045016e	string	camera.cpp
+00450179	string	 %s(%d): error illegal camera pos %d\n
+0045019f	string	camera.cpp
+004501aa	string	 %s(%d): error illegal camera %d\n
+004501cc	string	camera.cpp
+004501d7	string	 %s(%d) : D3DError moving camera : %s\n
+004501fe	string	camera.cpp
+00450209	string	 %s(%d) : D3DError moving camera : %s\n
+00450230	string	camera.cpp
+0045023b	string	 %s(%d): camera array has not been initialised\n
+0045026b	string	camera.cpp
+00450276	string	 %s(%d): error illegal camera pos %d\n
+0045029c	string	camera.cpp
+004502a7	string	 %s(%d): error illegal camera %d\n
+004502c9	string	camera.cpp
+004502d4	string	 %s(%d) : D3DError moving camera : %s\n
+004502fb	string	camera.cpp
+00450306	string	 %s(%d) : D3DError moving camera : %s\n
+00450343	string	P?camera.cpp
+00450350	string	 %s(%d) : not enough memory for cameras array\n
+0045037f	string	camera.cpp
+0045038a	string	 %s(%d) : get new camera failed\n
+004503ac	string	opening x-file %s\n
+004503c2	string	xparser.cpp
+004503ce	string	%s(%d) : Cannot open x-file %s\n
+004503ee	string	xparser.cpp
+004503fa	string	%s(%d) : Error searchin x-file \n
+0045041b	string	x-file contains %d vertices and %d triangles\n
+00450449	string	xparser.cpp
+00450455	string	%s(%d) : Illegal numberof vertices %d or triangles %d\n
+0045048c	string	xparser.cpp
+00450498	string	%s(%d) : Error getting mesh data from file %s to object %d\n
+004504d4	string	xparser.cpp
+004504e0	string	%s(%d) : Illegal object (%d) to load xfile to %s\n
+00450512	string	opening x-file %s\n
+00450528	string	xparser.cpp
+00450534	string	%s(%d) : Cannot open x-file %s\n
+00450554	string	xparser.cpp
+00450560	string	%s(%d) : Error searchin x-file \n
+00450581	string	x-file contains %d vertices and %d triangles\n
+004505af	string	xparser.cpp
+004505bb	string	%s(%d) : Illegal numberof vertices %d or triangles %d\n
+004505f2	string	xparser.cpp
+004505fe	string	%s(%d) : Error getting mesh data from file %s to object %d\n
+0045063a	string	EOF reached %s\n
+00450651	string	template
+0045065a	string	MESH-LINE : %s\n
+0045066a	string	EOF reached %s\n
+0045067a	string	MeshNormals {
+00450688	string	template
+00450691	string	MESHNORMAL-LINE : %s\n
+004506a7	string	EOF reached %s\n
+004506b7	string	MeshTextureCoords {
+004506cb	string	template
+004506d4	string	TEXTURECOORDS-LINE : %s\n
+004506ed	string	nb_verts line: %s\n
+00450706	string	EOF reached %s\n
+00450716	string	EOF reached %s\n
+00450726	string	EOF reached %s\n
+00450736	string	nb_tris line: %s\n
+0045074e	string	Seek mesh \n
+0045075a	string	xparser.cpp
+00450766	string	%s(%d) : EOF reached %s\n
+0045077f	string	xparser.cpp
+0045078b	string	%s(%d) : EOF reached %s\n
+004507b0	string	xparser.cpp
+004507bc	string	%s(%d) : EOF reached %s\n
+004507d5	string	xparser.cpp
+004507e1	string	%s(%d) : EOF reached %s\n
+004507fa	string	xparser.cpp
+00450806	string	%s(%d) : EOF reached %s\n
+0045082e	string	xparser.cpp
+0045083a	string	%s(%d) : EOF reached %s\n
+00450853	string	xparser.cpp
+0045085f	string	%s(%d) : EOF reached %s\n
+00450884	string	Seek texturecoords\n
+00450898	string	NO TEXTURECOORD in x-file\n
+004508b3	string	xparser.cpp
+004508bf	string	%s(%d) : EOF reached %s\n
+004508d8	string	skipped line: %s\n
+004508ea	string	xparser.cpp
+004508f6	string	%s(%d) : EOF reached %s\n
+00450918	string	xparser.cpp
+00450924	string	%s(%d) : Vertex %d in object %d not initialised\n
+00450955	string	xparser.cpp
+00450961	string	%s(%d) : Vertex %d in object %d not initialised\n
+00450992	string	xparser.cpp
+0045099e	string	%s(%d) : Vertex %d in object %d not initialised\n
+004509cf	string	xparser.cpp
+004509db	string	%s(%d) : Triangle %d in object %d not initialised\n
+00450a0e	string	xparser.cpp
+00450a1a	string	%s(%d) : Triangle %d in object %d not initialised\n
+00450a4d	string	Calculating vertex normals\n
+00450a69	string	adding vertexnormal %d,%d,%d = (%f,%f,%f)\n
+00450a94	string	vertexnormal %d = (%f,%f,%f)\n
+00450ab4	string	font.cpp
+00450abd	string	 %s(%d) : unidentified focus error.\n
+00450ae2	string	font.cpp
+00450aeb	string	 %s(%d) : unidentified focus error.\n
+00450b10	string	font.cpp
+00450b19	string	 %s(%d) : No Free Font index.\n
+00450b38	string	font.cpp
+00450b41	string	 %s(%d) : Font index out of bounds max (%d).\n
+00450b6f	string	font.cpp
+00450b78	string	 %s(%d) : Font index already in use (%d).\n
+00450ba3	string	font.cpp
+00450bac	string	 %s(%d) : Font index out of bounds max (%d).\n
+00450bda	string	font.cpp
+00450be3	string	 %s(%d) : Font is not loaded (%d).\n
+00450c07	string	font.cpp
+00450c10	string	 %s(%d) : Font index out of bounds max (%d).\n
+00450c3e	string	font.cpp
+00450c47	string	 %s(%d) : Font index out of bounds max (%d).\n
+00450c75	string	font.cpp
+00450c7e	string	 %s(%d) : illegal bkmode for font
+00450ca0	string	font.cpp
+00450ca9	string	 %s(%d) : Font index out of bounds max (%d).\n
+00450cd8	string	 %s(%d) : illegal mem image array index %d (max=%d) (xsize)\n
+00450d15	string	 %s(%d) : get xsize of mem image while not initialized\n
+00450d4d	string	 %s(%d) : suspect illegal image xsize %d\n
+00450d77	string	 %s(%d) : illegal mem image array index %d (max=%d) (ysize)\n
+00450db4	string	 %s(%d) : get ysize of mem image while not initialized\n
+00450dec	string	 %s(%d) : suspect illegal image ysize %d\n
+00450e16	string	 %s(%d) : illegal mem image array index %d (max=%d) (mx)\n
+00450e50	string	 %s(%d) : get mx of mem image while not initialized\n
+00450e85	string	 %s(%d) : illegal mem image array index %d (max=%d) (my)\n
+00450ebf	string	 %s(%d) : get my of mem image while not initialized\n
+00450ef4	string	sprite.cpp
+00450eff	string	 %s(%d) : illegal sprite index %d\n
+00450f22	string	sprite.cpp
+00450f2d	string	 %s(%d) : illegal mem image index %d\n
+00450f53	string	sprite.cpp
+00450f5e	string	 %s(%d) : illegal sprite index %d\n
+00450f81	string	sprite.cpp
+00450f8c	string	 %s(%d) : illegal mem image index %d\n
+00450fb2	string	sprite.cpp
+00450fbd	string	 %s(%d) : alloc_mem_images : unkown alloc type %d\n
+00450ff0	string	sprite.cpp
+00450ffb	string	 %s(%d) : index out of mem_image array failure %d\n
+0045102e	string	sprite.cpp
+00451039	string	 %s(%d) : illegal mem_xsize ( %d ) = %d\n
+00451062	string	sprite.cpp
+0045106d	string	 %s(%d) : illegal mem_ysize ( %d ) = %d\n
+00451096	string	sprite.cpp
+004510a1	string	 %s(%d) : error illegal mem image size %d (%d,%d)\n
+004510d4	string	sprite.cpp
+004510df	string	 %s(%d) : failed to set color key(%s)\n
+00451106	string	sprite.cpp
+00451111	string	 %s(%d) : illegal alloc type %d for mem image #%d\n
+00451144	string	sprite.cpp
+0045114f	string	 %s(%d) : index out of mem_image array failure %d\n
+00451182	string	sprite.cpp
+0045118d	string	 %s(%d) : illegal alloc type %d for mem image #%d\n
+004511c0	string	sprite.cpp
+004511cb	string	 %s(%d) : index out of mem_image array failure %d\n
+004511fe	string	sprite.cpp
+00451209	string	 %s(%d) : index out of mem_image array failure %d\n
+0045123c	string	sprite.cpp
+00451247	string	 %s(%d) : index out of mem_image array failure %d\n
+00451280	string	sprite.cpp
+0045128b	string	%s(%d) : index file seek error (probably wrong index %d)
+004512c4	string	converting to 16 bits\n
+004512db	string	converting to 24 bits\n
+004512f2	string	pf none\n
+004512fb	string	starting to show images 2\n
+00451316	string	done show images\n
+0045132b	string	%s maxmemimages = %d\n
+00451341	string	%s allocating images\n
+00451357	string	%s allocating image %d\n
+0045136f	string	%s allocating images done\n
+0045138c	string	clipblit.cpp
+00451399	string	 %s(%d) : illegal clipping limit top x.
+004513c1	string	clipblit.cpp
+004513ce	string	 %s(%d) : illegal clipping limit top y.
+004513f6	string	clipblit.cpp
+00451403	string	 %s(%d) : illegal clipping limit bottom x.
+0045142e	string	clipblit.cpp
+0045143b	string	 %s(%d) : illegal clipping limit bottom y.
+00451466	string	clipblit.cpp
+00451473	string	 %s(%d) : blitting error (%s).
+00451492	string	clipblit.cpp
+0045149f	string	 %s(%d) : blitting error (%s).
+004514be	string	clipblit.cpp
+004514cb	string	 %s(%d) : blitting error (%s).
+004514ea	string	clipblit.cpp
+004514f7	string	 %s(%d) : blitting error (%s).
+00451516	string	clipblit.cpp
+00451523	string	 %s(%d) : blitting error (%s).
+00451542	string	clipblit.cpp
+0045154f	string	 %s(%d) : blitting error (%s).
+0045156e	string	clipblit.cpp
+0045157b	string	 %s(%d) : unidentified focus error (%d).\n
+004515a5	string	clipblit.cpp
+004515b2	string	 %s(%d) : unidentified focus error (%d).\n
+004515dc	string	clipblit.cpp
+004515e9	string	 %s(%d) : no clipping limit set\n
+0045160a	string	clipblit.cpp
+00451617	string	 %s(%d) : unidentified focus error (%d).\n
+00451641	string	clipblit.cpp
+0045164e	string	 %s(%d) : no clipping limit set\n
+0045166f	string	clipblit.cpp
+0045167c	string	 %s(%d) : illegal array index %d\n
+0045169e	string	clipblit.cpp
+004516ab	string	 %s(%d) : blt with unallocated mem image %d\n
+004516d8	string	clipblit.cpp
+004516e5	string	 %s(%d) : unidentified focus error (%d).\n
+0045170f	string	clipblit.cpp
+0045171c	string	 %s(%d) : no clipping limit set\n
+0045173d	string	clipblit.cpp
+0045174a	string	 %s(%d) : unidentified focus error (%d).\n
+00451774	string	clipblit.cpp
+00451781	string	 %s(%d) : no clipping limit set\n
+004517a2	string	clipblit.cpp
+004517af	string	 %s(%d) : had to restore %d\n
+004517cc	string	clipblit.cpp
+004517d9	string	 %s(%d) : xvga_screen lost (?) (%d) going to restore\n
+0045180f	string	clipblit.cpp
+0045181c	string	 %s(%d) : restore xvga_screen (%s).
+00451840	string	clipblit.cpp
+0045184d	string	 %s(%d) : set mem image (%d) to screen blitting error (%d,%d) , (%d,%d) , (%d,%d) (%d,%d) (%s).
+004518ad	string	clipblit.cpp
+004518ba	string	 %s(%d) : xvga_back_screen lost (?) (%d) going to restore\n
+004518f5	string	clipblit.cpp
+00451902	string	 %s(%d) : restore xvga_back_screen (%s).
+0045192b	string	clipblit.cpp
+00451938	string	 %s(%d) : set mem image (%d) to back screen blitting error (%d,%d) , (%d,%d) , (%d,%d) (%d,%d) (%s).
+0045199d	string	clipblit.cpp
+004519aa	string	 %s(%d) : xvga_buffer_screen lost (?) (%d) going to restore\n
+004519e7	string	clipblit.cpp
+004519f4	string	 %s(%d) : restore xvga_buffer_screen (%s).
+00451a1f	string	clipblit.cpp
+00451a2c	string	 %s(%d) : set mem image (%d) to buffer screen blitting error (%d,%d) , (%d,%d) , (%d,%d) (%d,%d) (%s).
+00451a93	string	clipblit.cpp
+00451aa0	string	 %s(%d) : illegal array index %d\n
+00451ac2	string	clipblit.cpp
+00451acf	string	 %s(%d) : blt with unallocated mem image %d\n
+00451afc	string	clipblit.cpp
+00451b09	string	 %s(%d) : no clipping limit set\n
+00451b2c	string	 %s(%d) : not enough memory for frames\n
+00451b54	string	 %d frames initialized\n
+00451b6c	string	 %s(%d) : error deallocating frames\n
+00451b91	string	Frame array freed\n
+00451ba4	string	frame3d.cpp
+00451bb0	string	 %s(%d) : no more free frames\n
+00451bcf	string	frame3d.cpp
+00451bdb	string	 %s(%d) : not enough memory for frames\n
+00451c03	string	 frame %d used %d vertices\n
+00451c1f	string	frame3d.cpp
+00451c2b	string	 %s(%d) : not enough memory for frames\n
+00451c53	string	 frame %d used %d triangles\n
+00451c70	string	frame3d.cpp
+00451c7c	string	 %s(%d) : error vertices in freeing frame %d \n
+00451cab	string	 frame %d freed vertex-array \n
+00451cca	string	frame3d.cpp
+00451cd6	string	 %s(%d) : error triangles in freeing frame %d \n
+00451d06	string	 frame %d freed triangle-array \n
+00451d28	string	 %s(%d) : not enough memory for triangles\n
+00451d53	string	 %d triangles initialized\n
+00451d6e	string	 %s(%d) : error freeing triangles \n
+00451d92	string	Triangle array freed\n
+00451da8	string	triangle.cpp
+00451db5	string	 %s(%d) : no more free triangles\n
+00451dd8	string	Error 0
+00451de0	string	No such file or directory
+00451dfa	string	Argument list too big
+00451e10	string	Exec format error
+00451e22	string	Bad file number
+00451e32	string	Not enough memory
+00451e44	string	Permission denied
+00451e56	string	File exists
+00451e62	string	Cross-device link
+00451e74	string	Invalid argument
+00451e85	string	File table overflow
+00451e99	string	Too many open files
+00451ead	string	No space left on device
+00451ec5	string	Argument too large
+00451ed8	string	Result too large
+00451ee9	string	Resource deadlock would occur
+00451f07	string	unknown error
+00451f21	string	 %s(%d) : failed to set color key(%s)\n
+00451f51	string	 %s(%d) : help grid blitting error
+00451f7d	string	 %s(%d) : help grid blitting error
+00451fa9	string	 %s(%d) : help grid blitting error
+00451fd5	string	 %s(%d) : (play_help) empty form or no form is active 
+00452015	string	 %s(%d) : (play_help) illegal form index found (%d)
+00452052	string	 %s(%d) : (set_help_key) No free key availible max. : %d.
+0045208c	string	ddinput.cpp
+00452098	string	 %s(%d) : failed to create direct input object (%s)\n
+004520cd	string	ddinput.cpp
+004520d9	string	 %s(%d) : not yet implemented\n
+004520f8	string	ddinput.cpp
+00452104	string	 %s(%d) : failed to create keyboard device (%s)\n
+00452135	string	ddinput.cpp
+00452141	string	 %s(%d) : failed to set data format for the keyboard device (%s)\n
+00452183	string	ddinput.cpp
+0045218f	string	 %s(%d) : failed to set coop level for the keyboard device (%s)\n
+004521d0	string	ddinput.cpp
+004521dc	string	 %s(%d) : failed to Acquire the keyboard device (%s)\n
+00452212	string	ddinput.cpp
+0045221e	string	 %s(%d) : error input devices have not benn initialized\n
+00452257	string	ddinput.cpp
+00452263	string	 %s(%d) : error running keyboard control panel (%s)\n
+00452298	string	ddinput.cpp
+004522a4	string	 %s(%d) : error running mouse control panel (%s)\n
+004522d6	string	ddinput.cpp
+004522e2	string	 %s(%d) : error keyboard device wasn't initialized\n
+00452316	string	ddinput.cpp
+00452322	string	 %s(%d) : error getting keyboard device state  (%s)\n
+00452358	string	timer.cpp
+00452362	string	 %s(%d) : error not enough memory to allocate timer place holders\n
+004523a5	string	timer init ok = %d\n
+004523b9	string	timer.cpp
+004523c3	string	 %s(%d) : trying to reference uninitialized timer place holders\n
+00452404	string	timer.cpp
+0045240e	string	 %s(%d) : trying to reference uninitialized timer place holders\n
+0045244f	string	timer.cpp
+00452459	string	 %s(%d) : out of timer place holders max=%d\n
+00452486	string	timer set = %d\n
+00452498	string	msg.cpp
+004524a0	string	 %s(%d) : DESTROY MESSAGE\n
+004524bb	string	msg.cpp
+004524c3	string	 %s(%d) : QUIT MESSAGE\n
+004524dc	string	hwinfo.cpp
+004524e7	string	 s(%d) : error attempting to find cdrom before drive list was made\n
+0045252b	string	hwinfo.cpp
+00452536	string	 %s(%d) : error not enough memory to allocate a palette\n
+00452574	string	%s = UNAVAILABLE\n
+00452586	string	%s = UNAVAILABLE\n
+00452598	string	%s = NETWORK\n
+004525a6	string	%s = CDROM\n
+004525b2	string	%s = HDD\n
+004525bc	string	%s = RAM\n
+004525c6	string	%s = FLOPPY\n
+004525d3	string	Getting system information\n
+004525ef	string	Computername = %s\n
+00452602	string	Username = %s\n
+00452611	string	Total Physical Memory     : %d Kb\n
+00452634	string	Available Physical Memory : %d Kb\n
+00452657	string	Memory Load (of total)    : %d\n
+00452677	string	386 processor installed\n
+00452690	string	486 processor installed\n
+004526a9	string	Pentium processor installed\n
+004526c6	string	Unknown processor installed\n
+004526e3	string	Startup = Normal Boot\n
+004526fa	string	Startup = Safe Mode Boot\n
+00452714	string	Startup = Safe Mode Boot With Network\n
+0045273b	string	Mouse is present\n
+0045274d	string	Network is present\n
+00452761	string	Windows 95 thinks this is a slow machine\n
+0045278b	string	 %s(%d) : not enough memory to retrieve driver info\n
+004527c0	string	%s, %s\n
+004527c8	string	DD3Dfx
+004527cf	string	dd3ddfx driver found %d\n
+004527ec	string	Righteous dd3ddfx driver found %d\n
+00452814	string	secondary driver found %d\n
+0045282f	string	using 3dfx driver %d\n
+00452845	string	using unknown secondary driver %d\n
+00452868	string	using 3dfx driver %d\n
+0045287e	string	using unknown secondary driver %d\n
+004528a1	string	mode %d,%d,%d\n
+004528b0	string	getting screen mode info\n
+004528ca	string	hwinfo.cpp
+004528d5	string	 %s(%d) : could not get mode information (%s)\n
+00452904	string	done getting screen mode info\n
+00452923	string	hwinfo.cpp
+0045292e	string	 %s(%d) : illegal mode index, undefined internal mode\n
+00452968	string	smacker.cpp
+00452974	string	 %s(%d) : failed to set directsound for smacker
+004529a4	string	smacker.cpp
+004529b0	string	 %s(%d) : failed to set directsound for smacker
+004529e0	string	smacker.cpp
+004529ec	string	 %s(%d) : blitting error (%s).
+00452a0b	string	smacker.cpp
+00452a17	string	 %s(%d) : blitting error (%s).
+00452a36	string	smacker.cpp
+00452a42	string	 %s(%d) : (playing_smacker) Smacker is not initialised
+00452a79	string	failed to open smacker file(%s)\n
+00452a9a	string	smacker.cpp
+00452aa6	string	 %s(%d) : x or y is not on the screen (%d,%d) or illegal size (%d,%d).
+00452aed	string	smacker.cpp
+00452af9	string	 %s(%d) : the smacker is bigger than the screen size (%d,%d,%d,%d).
+00452b3d	string	closing smacker\n
+00452b4e	string	closing smacker done\n
+00452b64	string	smacker.cpp
+00452b70	string	 %s(%d) : (set_smacker_key) No free key availible max. : %d.
+00452bad	string	smacker.cpp
+00452bb9	string	 %s(%d) : (set_smacker_key) Unknow keytype (%d).
+00452bec	string	material.cpp
+00452bf9	string	 %s(%d) : not enough memory for materials\n
+00452c24	string	material.cpp
+00452c31	string	 %s(%d) : too many materials requested\n
+00452c59	string	material.cpp
+00452c66	string	 %s(%d) : illegal texture index %d [0..%d]\n
+00452c92	string	material.cpp
+00452c9f	string	 %s(%d) : illegal texture index %d [0..%d]\n
+00452ccb	string	material.cpp
+00452cd8	string	 %s(%d) : D3DError Get Material (%d) : %s\n
+00452d03	string	material.cpp
+00452d10	string	 %s(%d) : D3DError Set Material (%d) : %s\n
+00452d3b	string	material.cpp
+00452d48	string	 %s(%d) : illegal texture index %d [0..%d]\n 
+00452d75	string	 *** Set object texture %d to handle %d\n
+00452d9e	string	Not set object texture_nr = %d inittextureok = %d\n
+00452dd1	string	material.cpp
+00452dde	string	 %s(%d) : D3DError Create Material : %s\n
+00452e07	string	material.cpp
+00452e14	string	 %s(%d) : D3DError Set Material : %s\n
+00452e3a	string	material.cpp
+00452e47	string	 %s(%d) : D3DError Get Material Handle : %s\n
+00452e74	string	material %d created\n
+00452e8c	string	Creation of IDirect3D failed.\n%s
+00452ead	string	Enumeration of drivers failed.\n%s
+00452ecf	string	Enumeration of texture formats failed.\n%s
+00452ef9	string	Could not fit the rendering surfaces in video memory for this hardware device.\n
+00452f49	string	Create D3D device failed.\n%s
+00452f66	string	CreateExecuteBuffer failed in SetRenderState.\n%s
+00452f97	string	Lock failed on execute buffer in SetRenderState.\n%s
+00452fcb	string	Unlock failed on execute buffer in SetRenderState.\n%s
+00453001	string	BeginScene failed in SetRenderState.\n%s
+00453029	string	Execute failed in SetRenderState.\n%s
+0045304e	string	EndScene failed in SetRenderState.\n%s
+00453078	string	Floating-point support not loaded\r\n
+0045309c	string	forms.cpp
+004530a6	string	 %s(%d) : (dispatch_form_message) Unused control type found (%d) 
+004530e8	string	forms.cpp
+004530f2	string	 %s(%d) : (set_control_state) control doesn't existed (%d) nmbofcontrols (%d) 
+00453141	string	forms.cpp
+0045314b	string	 %s(%d) : (set_control_state) No active from 
+00453179	string	forms.cpp
+00453183	string	 %s(%d) : (set_control_state) areabutton control's can't have focus (%d)
+004531cc	string	forms.cpp
+004531d6	string	 %s(%d) : (enable_control) control doesn't existed (%d) nmbofcontrols (%d) 
+00453222	string	forms.cpp
+0045322c	string	 %s(%d) : (enable_control) No active from 
+00453257	string	forms.cpp
+00453261	string	 %s(%d) : (disable_control) control doesn't existed (%d) nmbofcontrols (%d) 
+004532ae	string	forms.cpp
+004532b8	string	 %s(%d) : (disable_control) No active from 
+004532e4	string	forms.cpp
+004532ee	string	 %s(%d) : (focus_control) control doesn't existed (%d) nmbofcontrols (%d) 
+00453339	string	forms.cpp
+00453343	string	 %s(%d) : (focus_control) No active from 
+0045336d	string	forms.cpp
+00453377	string	%s(%d) : control illegal frame image.
+0045339d	string	forms.cpp
+004533a7	string	 %s(%d) : (check_control_position) upper left corner is off screen control (%d) x (%d) y (%d)
+00453405	string	forms.cpp
+0045340f	string	 %s(%d) : (check_control_position) width or height is negative or zero, control (%d) w (%d) h (%d)
+00453472	string	forms.cpp
+0045347c	string	 %s(%d) : (check_control_position) lower rigth corner is off screen control (%d) w (%d) h (%d) w+x (%d) h+y (%d)
+004534ed	string	forms.cpp
+004534f7	string	 %s(%d) : (get_previous_control_index) control doesn't existed (%d) nmbofcontrols (%d) 
+0045354f	string	forms.cpp
+00453559	string	 %s(%d) : (get_next_control_index) control doesn't existed (%d) nmbofcontrols (%d) 
+004535ad	string	forms.cpp
+004535b7	string	 %s(%d) : (get_old_control_state) control doesn't existed (%d) 
+004535f7	string	forms.cpp
+00453601	string	 %s(%d) : (get_control_type) control doesn't existe (%d) 
+0045363b	string	forms.cpp
+00453645	string	 %s(%d) : (get_control_state) control doesn't existed (%d) 
+00453681	string	forms.cpp
+0045368b	string	 %s(%d) : (get_control_x) control doesn't existed (%d) 
+004536c3	string	forms.cpp
+004536cd	string	 %s(%d) : (get_control_x) control doesn't existed (%d) 
+00453705	string	forms.cpp
+0045370f	string	 %s(%d) : (get_control_y) control doesn't existed (%d) 
+00453747	string	forms.cpp
+00453751	string	 %s(%d) : (get_control_index) window isn't a control (%d) 
+0045378c	string	forms.cpp
+00453796	string	 %s(%d) : (get_control_index) window isn't a control (%d) 
+004537d1	string	forms.cpp
+004537db	string	 %s(%d) : (get_control_pointer) control doesn't exist (%d) max.(%d)
+0045381f	string	forms.cpp
+00453829	string	 %s(%d) : (call_help_function) control doesn't existed (%d) nmbofcontrols (%d) 
+00453879	string	forms.cpp
+00453883	string	 %s(%d) : (destroy_form) Unused control type found (%d) 
+004538bc	string	forms.cpp
+004538c6	string	 %s(%d) : (destroy_form) Unused control type found (%d) 
+004538ff	string	forms.cpp
+00453909	string	 %s(%d) : (destroy_form) Unused control type found (%d) 
+00453942	string	forms.cpp
+0045394c	string	 %s(%d) : (check_form_key_pressed) Unused control type found (%d) 
+0045398f	string	forms.cpp
+00453999	string	 %s(%d) : (handle_form) No active from to handle 
+004539cc	string	It is not possible to create a D3D window with a hardware DirectDraw device.  Check the bIsPrimary flag before calling D3DAppWindow.
+00453a51	string	Can only load %i textures.
+00453a6c	string	Cannot swap textures which are disable or not loaded.\n
+00453aa3	string	Cannot call D3DAppShowBackBuffer while bRenderingIsOK is FALSE.\n
+00453ae4	string	Flipping complex display surface failed.\n%s
+00453b10	string	Blt of back buffer to front buffer failed.\n%s
+00453b3e	string	The number of clear rectangles exceeded D3DAPP_MAXCLEARRECTS.
+00453b7c	string	Cannot call D3DAppClearBackBuffer while bRenderingIsOK is FALSE.\n
+00453bbe	string	Viewport clear failed.\n%s
+00453bd8	string	Viewport clear of back buffer failed.\n%s
+00453c01	string	Viewport clear of Z buffer failed.\n%s
+00453c27	string	Restoring of a lost surface failed.\n%s
+00453c4e	string	Setting palette entries during unpause failed.\n%s
+00453c80	string	Getting palette entries before a pause failed.\n%s
+00453cb2	string	Returning palette entries to defaults failed.\n%s
+00453ce3	string	Flipping to GDI surface failed.\n%s
+00453d06	string	No error.
+00453d11	string	This object is already initialized.
+00453d36	string	Return if a clipper object is attached to the source surface passed into a BltFast call.
+00453d90	string	This surface can not be attached to the requested surface.
+00453dcc	string	This surface can not be detached from the requested surface.
+00453e0a	string	Windows can not create any more DCs.
+00453e30	string	Can't duplicate primary & 3D surfaces, or surfaces that are implicitly created.
+00453e81	string	An attempt was made to set a cliplist for a clipper object that is already monitoring an hwnd.
+00453ee1	string	No src color key specified for this operation.
+00453f11	string	Support is currently not available.
+00453f36	string	A DirectDraw object representing this driver has already been created for this process.
+00453f8f	string	An exception was encountered while performing the requested operation.
+00453fd7	string	An attempt was made to set the cooperative level when it was already set to exclusive.
+0045402f	string	Generic failure.
+00454041	string	Height of rectangle provided is not a multiple of reqd alignment.
+00454084	string	The CooperativeLevel HWND has already been set. It can not be reset while the process has surfaces or palettes created.
+004540fd	string	HWND used by DirectDraw CooperativeLevel has been subclassed, this prevents DirectDraw from restoring state.
+0045416b	string	This surface can not be restored because it is an implicitly created surface.
+004541ba	string	Unable to match primary surface creation request with existing primary surface.
+0045420b	string	One or more of the caps bits passed to the callback are incorrect.
+0045424f	string	DirectDraw does not support the provided cliplist.
+00454283	string	The GUID passed to DirectDrawCreate is not a valid DirectDraw driver identifier.
+004542d5	string	DirectDraw does not support the requested mode.
+00454306	string	DirectDraw received a pointer that was an invalid DIRECTDRAW object.
+0045434c	string	One or more of the parameters passed to the function are incorrect.
+00454391	string	The pixel format was invalid as specified.
+004543bd	string	Returned when the position of the overlay on the destination is no longer legal for that destination.
+00454424	string	Rectangle provided was invalid.
+00454445	string	Operation could not be carried out because one or more surfaces are locked.
+00454492	string	There is no 3D present.
+004544ab	string	Operation could not be carried out because there is no alpha accleration hardware present or available.
+00454514	string	No blitter hardware present.
+00454532	string	No cliplist available.
+0045454a	string	No clipper object attached to surface object.
+00454579	string	Operation could not be carried out because there is no color conversion hardware present or available.
+004545e1	string	Surface doesn't currently have a color key
+0045460d	string	Operation could not be carried out because there is no hardware support of the destination color key.
+00454674	string	Create function called without DirectDraw object method SetCooperativeLevel being called.
+004546cf	string	No DC was ever created for this surface.
+004546f9	string	No DirectDraw ROP hardware.
+00454716	string	A hardware-only DirectDraw object creation was attempted but the driver did not support any hardware.
+0045477d	string	Software emulation not available.
+004547a0	string	Operation requires the application to have exclusive mode but the application does not have exclusive mode.
+0045480d	string	Flipping visible surfaces is not supported.
+0045483a	string	There is no GDI present.
+00454854	string	Clipper notification requires an HWND or no HWND has previously been set as the CooperativeLevel HWND.
+004548bc	string	Operation could not be carried out because there is no hardware present or available.
+00454913	string	Returned when GetOverlayPosition is called on an overlay that UpdateOverlay has never been called on to establish a destination.
+00454995	string	Operation could not be carried out because there is no overlay hardware present or available.
+004549f4	string	No palette object attached to this surface.
+00454a21	string	No hardware support for 16 or 256 color palettes.
+00454a54	string	Operation could not be carried out because there is no appropriate raster op hardware present or available.
+00454ac1	string	Operation could not be carried out because there is no rotation hardware present or available.
+00454b21	string	Operation could not be carried out because there is no hardware support for stretching.
+00454b7a	string	DirectDrawSurface is not in 4 bit color palette and the requested operation requires 4 bit color palette.
+00454be5	string	DirectDrawSurface is not in 4 bit color index palette and the requested operation requires 4 bit color index palette.
+00454c5c	string	DirectDrawSurface is not in 8 bit color mode and the requested operation requires 8 bit color.
+00454cbc	string	Returned when an overlay member is called for a non-overlay surface.
+00454d02	string	Operation could not be carried out because there is no texture mapping hardware present or available.
+00454d69	string	An attempt has been made to flip a surface that is not flippable.
+00454dac	string	Requested item was not found.
+00454dcb	string	Surface was not locked.  An attempt to unlock a surface that was not locked at all, or by this process, has been attempted.
+00454e48	string	The surface being used is not a palette-based surface.
+00454e80	string	Operation could not be carried out because there is no hardware support for vertical blank synchronized operations.
+00454ef5	string	Operation could not be carried out because there is no hardware support for zbuffer blitting.
+00454f54	string	Overlay surfaces could not be z layered based on their BltOrder because the hardware does not support z layering of overlays.
+00454fd3	string	The hardware needed for the requested operation has already been allocated.
+00455020	string	DirectDraw does not have enough memory to perform the operation.
+00455062	string	DirectDraw does not have enough memory to perform the operation.
+004550a4	string	The hardware does not support clipped overlays.
+004550d5	string	Can only have ony color key active at one time for overlays.
+00455113	string	Returned when GetOverlayPosition is called on a hidden overlay.
+00455154	string	Access to this palette is being refused because the palette is already locked by another thread.
+004551b6	string	This process already has created a primary surface.
+004551eb	string	Region passed to Clipper::GetClipList is too small.
+00455220	string	This surface is already attached to the surface it is being attached to.
+0045526a	string	This surface is already a dependency of the surface it is being made a dependency of.
+004552c1	string	Access to this surface is being refused because the surface is already locked by another thread.
+00455323	string	Access to surface refused because the surface is obscured.
+0045535f	string	Access to this surface is being refused because the surface memory is gone. The DirectDrawSurface object representing this surface should have Restore called on it.
+00455405	string	The requested surface is not attached.
+0045542d	string	Height requested by DirectDraw is too large.
+0045545b	string	Size requested by DirectDraw is too large, but the individual height and width are OK.
+004554b3	string	Width requested by DirectDraw is too large.
+004554e0	string	Action not supported.
+004554f7	string	FOURCC format requested is unsupported by DirectDraw.
+0045552e	string	Bitmask in the pixel format requested is unsupported by DirectDraw.
+00455573	string	Vertical blank is in progress.
+00455593	string	Informs DirectDraw that the previous Blt which is transfering information to or from this Surface is incomplete.
+00455605	string	This surface can not be restored because it was created in a different mode.
+00455653	string	Rectangle provided was not horizontally aligned on required boundary.
+0045569a	string	D3DERR_BADMAJORVERSION
+004556b2	string	D3DERR_BADMINORVERSION
+004556ca	string	D3DERR_EXECUTE_LOCKED
+004556e1	string	D3DERR_EXECUTE_NOT_LOCKED
+004556fc	string	D3DERR_EXECUTE_CREATE_FAILED
+0045571a	string	D3DERR_EXECUTE_DESTROY_FAILED
+00455739	string	D3DERR_EXECUTE_LOCK_FAILED
+00455755	string	D3DERR_EXECUTE_UNLOCK_FAILED
+00455773	string	D3DERR_EXECUTE_FAILED
+0045578a	string	D3DERR_EXECUTE_CLIPPED_FAILED
+004557a9	string	D3DERR_TEXTURE_NO_SUPPORT
+004557c4	string	D3DERR_TEXTURE_NOT_LOCKED
+004557df	string	D3DERR_TEXTURELOCKED
+004557f5	string	D3DERR_TEXTURE_CREATE_FAILED
+00455813	string	D3DERR_TEXTURE_DESTROY_FAILED
+00455832	string	D3DERR_TEXTURE_LOCK_FAILED
+0045584e	string	D3DERR_TEXTURE_UNLOCK_FAILED
+0045586c	string	D3DERR_TEXTURE_LOAD_FAILED
+00455888	string	D3DERR_MATRIX_CREATE_FAILED
+004558a5	string	D3DERR_MATRIX_DESTROY_FAILED
+004558c3	string	D3DERR_MATRIX_SETDATA_FAILED
+004558e1	string	D3DERR_SETVIEWPORTDATA_FAILED
+00455900	string	D3DERR_MATERIAL_CREATE_FAILED
+0045591f	string	D3DERR_MATERIAL_DESTROY_FAILED
+0045593f	string	D3DERR_MATERIAL_SETDATA_FAILED
+0045595f	string	D3DERR_LIGHT_SET_FAILED
+00455978	string	D3DRMERR_BADOBJECT
+0045598c	string	D3DRMERR_BADTYPE
+0045599e	string	D3DRMERR_BADALLOC
+004559b1	string	D3DRMERR_FACEUSED
+004559c4	string	D3DRMERR_NOTFOUND
+004559d7	string	D3DRMERR_NOTDONEYET
+004559ec	string	The file was not found.
+00455a05	string	D3DRMERR_BADFILE
+00455a17	string	D3DRMERR_BADDEVICE
+00455a2b	string	D3DRMERR_BADVALUE
+00455a3e	string	D3DRMERR_BADMAJORVERSION
+00455a58	string	D3DRMERR_BADMINORVERSION
+00455a72	string	D3DRMERR_UNABLETOEXECUTE
+00455a8c	string	Unrecognized error value.
+00455aa8	string	Cannot render to a window when the DirectDraw device is not the primary.\n
+00455af2	string	Cannot find a D3D device driver which is compatible with the current display depth.\n
+00455b47	string	Cannot find a D3D device driver which is compatible with the current display depth or any supported fullscreen mode.\n
+00455bbd	string	Cannot find a D3D device driver which is compatible with the specified fullscreen mode.\n
+00455c16	string	The selected D3D device driver is not compatible with the current display depth or any supported fullscreen modes.\n
+00455c98	string	DirectDrawEnumerate failed.\n%s
+00455cb7	string	DirectDrawCreate failed.\n%s
+00455cd3	string	EnumDisplayModes failed.\n%s
+00455cef	string	CreateSurface for fullscreen flipping surface failed.\n%s
+00455d28	string	GetAttachedSurface failed to get back buffer.\n%s
+00455d59	string	Failed to get surface description of back buffer.\n%s
+00455d8e	string	CreateSurface for window front buffer failed.\n%s
+00455dbf	string	CreateSurface for window back buffer failed.\n%s
+00455def	string	Failed to get surface description for back buffer.\n%s
+00455e25	string	CreateClipper failed.\n%s
+00455e3e	string	Attaching clipper to window failed.\n%s
+00455e65	string	Attaching clipper to front buffer failed.\n%s
+00455e92	string	Failed to get surface description for back buffer for palettizing.\n%s
+00455ed8	string	CreatePalette failed.\n%s
+00455ef1	string	SetPalette failed on back buffer.\n%s
+00455f16	string	SetPalette failed on front buffer.\n%s
+00455f3c	string	Unsupported Z-buffer depth requested by device.\n
+00455f6d	string	CreateSurface for Z-buffer failed.\n%s
+00455f93	string	AddAttachedBuffer failed for Z-Buffer.\n%s
+00455fbd	string	Failed to get surface description of Z buffer.\n%s
+00455fef	string	Could not fit the Z-buffer in video memory for this hardware device.\n
+00456035	string	SetCooperativeLevel to fullscreen failed.\n%s
+00456062	string	SetCooperativeLevel to normal failed.\n%s
+0045608b	string	SetDisplayMode to %dx%dx%d failed\n%s
+004560b0	string	RestoreDisplayMode failed.\n%s
+004560ce	string	Getting the current display mode failed.\n%s
+004560fa	string	Failure getting the surface description of the front buffer before clearing.\n%s
+0045614a	string	Clearing the front buffer failed.\n%s
+0045616f	string	Failure while getting the surface description of the back buffer before clearing.\n%s
+004561c4	string	Clearing the front buffer failed.\n%s
+004561e9	string	Getting DD capabilities failed while checking total video memory.\n%s
+00456235	string	yE>read from
+00456242	string	written
+0045624a	string	The instruction at %08lx referenced memory at %08lx\nThe memory could not be %s
+00456299	string	An privileged instruction was executed at address %08lx
+004562d1	string	An illegal instruction was executed at address %08lx
+00456306	string	An integer divide by zero was encountered at address %08lx
+00456341	string	A stack overflow was encountered at address %08lx
+00456373	string	The program encountered a problem at address %08lx and cannot continue
+004563ba	string	user32.dll
+004563c5	string	MessageBoxExA
+004563d3	string	Application Error: 
+004563e7	string	\n\nClick on OK to terminate the application
+00456439	string	acosh
+00456448	string	log10
+0045644e	string	atanh
+00456454	string	atan2
+0045645f	string	dpowi
+0045647e	string	cotan
+00456484	string	Not enough memory to allocate file structures\r\n
+004564b4	string	controls.cpp
+004564c1	string	 %s(%d) : (add_control_to_list) control is already in use (%d).
+00456504	string	Failed to obtain D3D texture interface for a source texture.\n%s
+00456544	string	Could not get the surface description of the source texture.\n%s
+00456584	string	Could not create the destination texture surface.\n%s
+004565b9	string	Failed to create a palette for the destination texture.\n%s
+004565f4	string	Failed to set the destination texture's palette.\n%s
+00456628	string	Failed to obtain D3D texture interface for a destination texture.\n%s
+0045666d	string	Could not load a source texture into a destination texture.\n%s
+004566ac	string	Could not get the surface description of the loaded texture surface.\n%s
+004566f4	string	Failed to obtain D3D texture interface for a source texture.\n%s
+00456734	string	Could not load a source texture into a destination texture.\n%s
+00456773	string	Could not put all the textures in video memory for this hardware device.\n
+004567bd	string	Could not get a handle to loaded texture %i.\n%s
+004567f0	string	Cannot find %s.\n
+00456805	string	%s is not a PPM file.\n
+0045681c	string	%d %d\n
+00456823	string	CreateSurface for texture failed (loadtex).\n%s
+00456852	string	Lock failed while loading surface (loadtex).\n%s
+00456882	string	Unknown pixel format (loadtex).
+004568a2	string	Palette burst. (loadtex).\n
+004568bd	string	Create palette failed while loading surface (loadtex).\n%s
+004568f7	string	SetPalette failed while loading surface (loadtex).\n%s
+00456937	string	Software\\Microsoft\\Direct3D
+00456953	string	D3D Path
+0045695c	string	ABNORMAL TERMINATION\r\n
+00456974	string	conin$
+0045697b	string	conout$
+00456984	string	Thread has no thread-specific data\r\n
+004569ac	string	Domain error
+004569b9	string	Argument singularity
+004569ce	string	Overflow range error
+004569e3	string	Underflow range error
+004569f9	string	Total loss of significance
+00456a14	string	Partial loss of significance
+00456a38	string	editbox.cpp
+00456a44	string	 %s(%d) : (set_edit_keys_allowed) string to long max. (%d).
+00456a80	string	abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.<,/?![]%$&*+-=>:;' 
+00456ad3	string	editbox.cpp
+00456adf	string	 %s(%d) : (get_edit_box_text) control isn't a editbox (%d) 
+00456b1b	string	editbox.cpp
+00456b27	string	 %s(%d) : (destroy_edit_box) edit box not initialised. (call init_edit_box) 
+00456b74	string	editbox.cpp
+00456b80	string	 %s(%d) : (destroy_edit_box) no valid window handle.
+00456bb5	string	editbox.cpp
+00456bc1	string	 %s(%d) : (edit_windows_box) edit box not initialised. (call init_edit_box) 
+00456c0e	string	editbox.cpp
+00456c1a	string	 %s(%d) : (edit_windows_box) number of lines may not be zero or negative (min. 1)
+00456c6c	string	editbox.cpp
+00456c78	string	 %s(%d) : (edit_windows_box) number of chars may not be zero or negative 
+00456cc6	string	editbox.cpp
+00456cd2	string	 %s(%d) : (edit_windows_box) height of edit box (%d) to small for font height (%d) 
+00456d3a	string	Unable to create a window for edit box (%d)
+00456d68	string	buttons.cpp
+00456d74	string	 %s(%d) : (destroy_button) no valid window handle.
+00456da7	string	buttons.cpp
+00456db3	string	 %s(%d) : (create_button) not enough button states/frames in anim (4) (%d) 
+00456dff	string	BUTTON
+00456e06	string	Unable to create a window for controlbutton (%d)
+00456e37	string	buttons.cpp
+00456e43	string	 %s(%d) : (create_button) Anim focus needs more frames then 1 (%d) 
+00456e87	string	buttons.cpp
+00456e93	string	 %s(%d) : (draw_button) no valid window handle, not in form.
+00456ed0	string	tgglbuts.cpp
+00456edd	string	 %s(%d) : (get_togglebutton_togglestate) control doesn't exist (%d) 
+00456f22	string	tgglbuts.cpp
+00456f2f	string	 %s(%d) : (get_togglebutton_togglestate) control isn't a togglebutton (%d) 
+00456f7b	string	tgglbuts.cpp
+00456f88	string	 %s(%d) : (set_togglebutton_togglestate) control doesn't exist (%d) 
+00456fcd	string	tgglbuts.cpp
+00456fda	string	 %s(%d) : (get_togglebutton_togglestate) control isn't a togglebutton (%d) 
+00457026	string	tgglbuts.cpp
+00457033	string	 %s(%d) : (set_togglebutton_togglestate) state doesn't exist (max.) (%d) 
+0045707d	string	tgglbuts.cpp
+0045708a	string	 %s(%d) : (destroy_togglebutton) no valid window handle.
+004570c3	string	tgglbuts.cpp
+004570d0	string	 %s(%d) : (create_togglebutton) oneven togglebutton states/frames in anim (NMB_FRAME_STATES*states) (%d) 
+0045713a	string	BUTTON
+00457141	string	Unable to create a window for togglebutton (%d)
+00457171	string	tgglbuts.cpp
+0045717e	string	 %s(%d) : (draw_togglebutton) no valid window handle, not in form.
+004571c4	string	areabuts.cpp
+004571d1	string	 %s(%d) : (destroy_areabutton) no valid window handle.
+00457208	string	areabuts.cpp
+00457215	string	 %s(%d) : (create_areabutton) no width or height given width (%d) height (%d).
+00457264	string	STATIC
+0045726b	string	Unable to create a window for areabutton (%d)
+00457299	string	areabuts.cpp
+004572a6	string	 %s(%d) : (draw_areabutton) no valid window handle, not in form.
+004572e8	string	animbuts.cpp
+004572f5	string	 %s(%d) : (destroy_animbutton) no valid window handle.
+0045732c	string	BUTTON
+00457333	string	Unable to create a window for animbutton (%d)
+00457361	string	animbuts.cpp
+0045736e	string	 %s(%d) : (draw_animbutton) no valid window handle, not in form.
+004573b0	string	radiobut.cpp
+004573bd	string	 %s(%d) : (destroy_radiobutton) no valid window handle.
+004573f5	string	radiobut.cpp
+00457402	string	 %s(%d) : (create_radiobutton) not enough button states/frames in anim (5) (%d) 
+00457453	string	BUTTON
+0045745a	string	Unable to create a window for radiobutton (%d)
+00457489	string	radiobut.cpp
+00457496	string	 %s(%d) : (draw_radiobutton) no valid window handle, not in form.
+00457758	string	motor.wav
+0045776b	string	motor1.wav
+0045777e	string	gearup.wav
+00457791	string	geardwn.wav
+004577a4	string	handrem.wav
+00458db4	string	motor2.wav
+00458dc3	string	motor3.wav
+00458dd2	string	speed.wav
+00458de1	string	energy.wav
+00458df0	string	jammin.wav
+00458dff	string	moody.wav
+00458e0e	string	disco.wav
+00458e2c	string	sirene.wav
+00458e3b	string	bump.wav
+00458e4a	string	bump2.wav
+00458e59	string	bump3.wav
+00458e77	string	start.wav
+00458e86	string	mstart.wav
+00458e95	string	truck01.wav
+00458ea4	string	truck02.wav
+00458ed1	string	truck06.wav
+00458f1c	string	autos1.wav
+00458f2b	string	autos2.wav
+00458f67	string	sp_b2.wav
+00458f85	string	sp_p1.wav
+00458f94	string	sp_p2.wav
+0045902a	string	bonust.wav
+00459039	string	finish.wav
+00459048	string	loser.wav
+00459066	string	sp_r2.wav
+004845f0	TerminatedCString	WINMM.dll
+004845fa	TerminatedCString	ADVAPI32.dll
+00484607	TerminatedCString	GDI32.dll
+00484611	TerminatedCString	KERNEL32.dll
+0048461e	TerminatedCString	USER32.dll
+00484629	TerminatedCString	USER32.DLL
+00484634	TerminatedCString	smackw32.dll
+00484641	TerminatedCString	DINPUT.dll
+0048464c	TerminatedCString	KERNEL32.DLL
+00484659	TerminatedCString	DSOUND.dll
+00484664	TerminatedCString	DDRAW.dll
+00484670	TerminatedCString	joyGetDevCapsA
+00484682	TerminatedCString	joyGetNumDevs
+00484692	TerminatedCString	joyGetPosEx
+004846a0	TerminatedCString	GetUserNameA
+004846b0	TerminatedCString	RegCloseKey
+004846be	TerminatedCString	RegOpenKeyExA
+004846ce	TerminatedCString	RegQueryValueExA
+004846e2	TerminatedCString	CreateFontA
+004846f0	TerminatedCString	CreateSolidBrush
+00484704	TerminatedCString	DeleteObject
+00484714	TerminatedCString	ExtTextOutA
+00484722	TerminatedCString	GetPixel
+0048472e	TerminatedCString	GetSystemPaletteEntries
+00484748	TerminatedCString	GetTextExtentPoint32A
+00484760	TerminatedCString	SelectObject
+00484770	TerminatedCString	SetBkColor
+0048477e	TerminatedCString	SetBkMode
+0048478a	TerminatedCString	SetPixel
+00484796	TerminatedCString	SetTextColor
+004847a6	TerminatedCString	TextOutA
+004847b2	TerminatedCString	GetComputerNameA
+004847c6	TerminatedCString	GetDriveTypeA
+004847d6	TerminatedCString	GetPrivateProfileIntA
+004847ee	TerminatedCString	GetPrivateProfileStringA
+0048480a	TerminatedCString	GetSystemInfo
+0048481a	TerminatedCString	GlobalMemoryStatus
+00484830	TerminatedCString	LocalAlloc
+0048483e	TerminatedCString	LocalFree
+0048484a	TerminatedCString	LocalReAlloc
+0048485a	TerminatedCString	OutputDebugStringA
+00484870	TerminatedCString	Sleep
+00484878	TerminatedCString	WritePrivateProfileStringA
+00484896	TerminatedCString	lstrcatA
+004848a2	TerminatedCString	lstrcmpA
+004848ae	TerminatedCString	lstrcpyA
+004848ba	TerminatedCString	lstrcpynA
+004848c6	TerminatedCString	lstrlenA
+004848d2	TerminatedCString	AdjustWindowRectEx
+004848e8	TerminatedCString	BeginPaint
+004848f6	TerminatedCString	CallWindowProcA
+00484908	TerminatedCString	CheckRadioButton
+0048491c	TerminatedCString	ClientToScreen
+0048492e	TerminatedCString	CreateWindowExA
+00484940	TerminatedCString	DefWindowProcA
+00484952	TerminatedCString	DestroyWindow
+00484962	TerminatedCString	DialogBoxParamA
+00484974	TerminatedCString	DispatchMessageA
+00484988	TerminatedCString	DrawMenuBar
+00484996	TerminatedCString	EnableWindow
+004849a6	TerminatedCString	EndDialog
+004849b2	TerminatedCString	EndPaint
+004849be	TerminatedCString	GetAsyncKeyState
+004849d2	TerminatedCString	GetClientRect
+004849e2	TerminatedCString	GetCursorPos
+004849f2	TerminatedCString	GetDC
+004849fa	TerminatedCString	GetDlgItem
+00484a08	TerminatedCString	GetFocus
+00484a14	TerminatedCString	GetKeyState
+00484a22	TerminatedCString	GetMenu
+00484a2c	TerminatedCString	GetSystemMetrics
+00484a40	TerminatedCString	GetWindowLongA
+00484a52	TerminatedCString	GetWindowRect
+00484a62	TerminatedCString	InvalidateRect
+00484a74	TerminatedCString	IsDlgButtonChecked
+00484a8a	TerminatedCString	KillTimer
+00484a96	TerminatedCString	LoadCursorA
+00484aa4	TerminatedCString	LoadIconA
+00484ab0	TerminatedCString	MessageBoxA
+00484abe	TerminatedCString	MessageBoxExA
+00484ace	TerminatedCString	PeekMessageA
+00484ade	TerminatedCString	PostMessageA
+00484aee	TerminatedCString	PostQuitMessage
+00484b00	TerminatedCString	RedrawWindow
+00484b10	TerminatedCString	RegisterClassA
+00484b22	TerminatedCString	ReleaseDC
+00484b2e	TerminatedCString	SendMessageA
+00484b3e	TerminatedCString	SetCursorPos
+00484b4e	TerminatedCString	SetCursor
+00484b5a	TerminatedCString	SetFocus
+00484b66	TerminatedCString	SetRect
+00484b70	TerminatedCString	SetTimer
+00484b7c	TerminatedCString	SetWindowLongA
+00484b8e	TerminatedCString	SetWindowPos
+00484b9e	TerminatedCString	SetWindowTextA
+00484bb0	TerminatedCString	ShowCursor
+00484bbe	TerminatedCString	ShowWindow
+00484bcc	TerminatedCString	TranslateMessage
+00484be0	TerminatedCString	UpdateWindow
+00484bf0	TerminatedCString	wvsprintfA
+00484bfe	TerminatedCString	GetActiveWindow
+00484c10	TerminatedCString	wsprintfA
+00484c1c	TerminatedCString	_SmackClose@4
+00484c2c	TerminatedCString	_SmackColorRemap@16
+00484c42	TerminatedCString	_SmackDoFrame@4
+00484c54	TerminatedCString	_SmackNextFrame@4
+00484c68	TerminatedCString	_SmackOpen@12
+00484c78	TerminatedCString	_SmackSoundUseDirectSound@4
+00484c96	TerminatedCString	_SmackToBuffer@28
+00484caa	TerminatedCString	_SmackWait@4
+00484cba	TerminatedCString	DirectInputCreateA
+00484cd0	TerminatedCString	CloseHandle
+00484cde	TerminatedCString	CreateEventA
+00484cee	TerminatedCString	CreateFileA
+00484cfc	TerminatedCString	CreateMutexA
+00484d0c	TerminatedCString	CreateThread
+00484d1c	TerminatedCString	DeleteFileA
+00484d2a	TerminatedCString	ExitProcess
+00484d38	TerminatedCString	ExitThread
+00484d46	TerminatedCString	GetCPInfo
+00484d52	TerminatedCString	GetCommandLineA
+00484d64	TerminatedCString	GetConsoleMode
+00484d76	TerminatedCString	GetCurrentDirectoryA
+00484d8e	TerminatedCString	GetCurrentProcessId
+00484da4	TerminatedCString	GetCurrentThreadId
+00484dba	TerminatedCString	GetCurrentThread
+00484dce	TerminatedCString	GetEnvironmentStrings
+00484de6	TerminatedCString	GetFileAttributesA
+00484dfc	TerminatedCString	GetFileType
+00484e0a	TerminatedCString	GetLastError
+00484e1a	TerminatedCString	GetLocalTime
+00484e2a	TerminatedCString	GetModuleFileNameA
+00484e40	TerminatedCString	GetModuleHandleA
+00484e54	TerminatedCString	GetProcAddress
+00484e66	TerminatedCString	GetStdHandle
+00484e76	TerminatedCString	GetTickCount
+00484e86	TerminatedCString	GetTimeZoneInformation
+00484ea0	TerminatedCString	GetVersion
+00484eae	TerminatedCString	LoadLibraryA
+00484ebe	TerminatedCString	ReadConsoleInputA
+00484ed2	TerminatedCString	ReadFile
+00484ede	TerminatedCString	ReleaseMutex
+00484eee	TerminatedCString	SetConsoleCtrlHandler
+00484f06	TerminatedCString	SetConsoleMode
+00484f18	TerminatedCString	SetEvent
+00484f24	TerminatedCString	SetFilePointer
+00484f36	TerminatedCString	SetStdHandle
+00484f46	TerminatedCString	TlsAlloc
+00484f52	TerminatedCString	TlsFree
+00484f5c	TerminatedCString	TlsGetValue
+00484f6a	TerminatedCString	TlsSetValue
+00484f78	TerminatedCString	VirtualAlloc
+00484f88	TerminatedCString	VirtualFree
+00484f96	TerminatedCString	WaitForSingleObject
+00484fac	TerminatedCString	WriteConsoleA
+00484fbc	TerminatedCString	WriteFile
+00484fc8	TerminatedCString	DirectSoundCreate
+00484fdc	TerminatedCString	DirectSoundEnumerateA
+00484ff4	TerminatedCString	DirectDrawCreate
+00485008	TerminatedCString	DirectDrawEnumerateA
