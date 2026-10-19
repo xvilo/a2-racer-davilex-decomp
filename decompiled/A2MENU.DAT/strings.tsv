@@ -1,0 +1,2288 @@
+address	type	value
+0041856b	string	0123456789abcdefghijklmnopqrstuvwxyz
+00420d61	string	0123456789abcdefghijklmnopqrstuvwxyz
+00425004	string	a2.ini
+0042500b	string	a2.ini
+00425012	string	DEBUG
+00425018	string	HELPDESK
+00425021	string	SNDFRT
+00425028	string	HELPDESK
+00425031	string	WINMSG
+00425038	string	HELPDESK
+00425041	string	MOVIE
+00425047	string	HELPDESK
+00425050	string	Setting Sound lib, BEST AS POSSIBLE\n
+00425075	string	main.cpp
+0042507e	string	%s(%d): SND_INIT_ERROR or SND_FORMAT_ERROR\n
+004250aa	string	main.cpp
+004250b3	string	%s(%d): SND_INIT_ERROR or SND_FORMAT_ERROR\n
+004250df	string	main.cpp
+004250e8	string	%s(%d): SND_INIT_ERROR or SND_FORMAT_ERROR\n
+00425114	string	Using 11025, 8, mono\n
+0042512a	string	Using 22050, 8, mono\n
+00425140	string	Using 22050, 16, stereo\n
+00425159	string	Setting Sound lib, SAFEMODE (11025, 8, MONO)\n
+00425187	string	main.cpp
+00425190	string	%s(%d): SND_INIT_ERROR or SND_FORMAT_ERROR\n
+004251bc	string	Using 11025, 8, mono\n
+004251d2	string	--------------------\n
+004251e8	string	- *> WinMain () <* -\n
+004251fe	string	--------------------\n
+00425214	string	Setting guid\n
+00425222	string	Setting graphics resolution\n
+0042523f	string	A2-Racer
+00425248	string	Davilex Software
+00425259	string	error : couldn't initialize graphics resolution\n
+004252a1	string	\txvga_init_fileio (%s)\n
+004252da	string	main.cpp
+004252e3	string	%s(%d) : Unable to initialize resource file %s.\n
+00425314	string	Init_controls()\n
+00425325	string	Init_sound()\n
+00425333	string	Init anims( MI_SURFACE_ALLOC )\n
+00425353	string	Use windows95 mouse\n
+00425368	string	Init_help ()\n
+00425376	string	Init_mouse ()\n
+00425385	string	Done init\n
+00425390	string	FIRST
+00425396	string	/FIRST
+0042539d	string	\tdisable_all_mem_images()\n
+004253b8	string	\tXvga_exit_fileio()\n
+004253cd	string	\tXvga_exit_sound()\n
+004253e1	string	\texit_xvga_lib()\n
+004253f3	string	--------\n
+004253fd	string	- exit -\n
+00425407	string	--------\n
+00425414	string	\tMouse_on()\n
+00425421	string	\tClear_screen(), SCREEN, BUFFER_SCREEN and BACK_SCREEN\n
+00425459	string	\tInit_optie\n
+00425466	string	\tInit_bedien\n
+00425474	string	\tInit_slotdbase()\n
+00425487	string	\tInit_scoredbase()\n
+0042549b	string	\tinit_infio()\n
+004254aa	string	\tSet_help_key()\n
+004254bb	string	\tXvga_load_font()\n
+004254ce	string	Arial Black
+004254da	string	Arial Black
+004254e6	string	Arial Black
+004254f2	string	Arial Black
+004254fe	string	Arial Black
+0042550a	string	\tXvga_set_font_colors()\n
+00425523	string	\tXvga_set_font_bkmode()\n
+0042553c	string	\tmouse_off\n
+00425548	string	\tClear_screen(), SCREEN, BUFFER_SCREEN and BACK_SCREEN\n
+00425580	string	\tXvga_free_font()\n
+00425593	string	\tSave_optie()\n
+004255a2	string	\tSave_bedien()\n
+004255b2	string	\tSave_slotdbase()\n
+004255c5	string	\tSave_scoredbase()\n
+004255d9	string	\tSave_infio()\n
+004255e8	string	\tClear_help_keys()\n
+004255ff	string	---------------------------------\n
+00425622	string	- *> DEBUG MESSAGES FOR MENU <* -\n
+00425645	string	---------------------------------\n
+00425668	string	----------------------------------------\n
+00425692	string	- *> END OF DEBUG MESSAGES FOR MENU <* -\n
+004256bc	string	----------------------------------------\n
+004256ee	string	bestand.cpp
+004256fa	string	%s(%d), unable to close file %s while checking its existance.
+0042573b	string	bestand.cpp
+00425747	string	%s(%d): %s while doing file seek on %s
+0042576e	string	bestand.cpp
+0042577a	string	%s(%d): %s while getting file tell from %s
+004257a5	string	bestand.cpp
+004257b1	string	%s(%d): %s while closing file %s
+004257d5	string	bestand.cpp
+004257e1	string	%s(%d), %s while reading from file %s
+00425807	string	bestand.cpp
+00425813	string	%s(%d), %s while closing file %s
+00425837	string	bestand.cpp
+00425843	string	%s(%d), %s while writing to file %s
+00425867	string	bestand.cpp
+00425873	string	%s(%d), unable to close file %s
+00425894	string	optie.cpp
+0042589e	string	\n\n%s(%d): *> LOAD TEMPORARY OPTIE <*\n
+004258c4	string	optie.cpp
+004258ce	string	%s(%d): load_tmp_optie():\n File %s does not exist. Loading aborted.\n
+00425913	string	optie.cpp
+0042591d	string	\n\n%s(%d): *> SAVE TEMPORARY OPTIE <*\n
+00425943	string	optie.cpp
+0042594d	string	%s(%d): save_tmp_optie ():\n Failed writing %s.\n
+0042597d	string	optie.cpp
+00425987	string	\n\n%s(%d) :  *> INIT OPTION <*\n
+004259b0	string	\tCreating option file %s\nOPTIE.A2R
+004259dd	string	\tLoad option files %s\n
+00425a08	string	bedien.cpp
+00425a13	string	\n\n%s(%d): *> LOAD TEMPORARY BEDIENING <*\n
+00425a3d	string	bedien.cpp
+00425a48	string	%s(%d): requested controls file (%s) does not exist.
+00425a7d	string	bedien.cpp
+00425a88	string	\n\n%s(%d): *> SAVE TEMPORARY BEDIENING <*\n
+00425ab2	string	bedien.cpp
+00425abd	string	%s(%d): save_tmp_bedien ():\n Failed writing %s.\n
+00425aee	string	bedien.cpp
+00425af9	string	\n\n%s(%d) : *> INIT BEDIEN <*\n
+00425b2d	string	\tCreating controls file %s\n
+00425b54	string	Loading controls files %s\n
+00425b7a	string	bedien.cpp
+00425b85	string	\n\n%s(%d): *> SAVE BEDIENING <*\n
+00425bb0	string	%s(%d), slot_check_index():\nUnknown slot ( %d of max %d ) given\n
+00425bf1	string	%s(%d), slot_check_level():\nUnknown level ( %d of max %d) given\n
+00425c32	string	slot.cpp
+00425c3b	string	\t%s(%d):create_slot (%d,%s)\n
+00425c58	string	slot.cpp
+00425c61	string	slot.cpp
+00425c6a	string	\t\tSeeking the slot that was saved last (0..9), (highest value means the lastest save)\n
+00425cc1	string	slot.cpp
+00425cca	string	slot.cpp
+00425cd3	string	slot.cpp
+00425cdc	string	\t\tFound the last time %d\n
+00425cf6	string	slot.cpp
+00425cff	string	slot.cpp
+00425d08	string	slot.cpp
+00425d11	string	slot.cpp
+00425d1a	string	slot.cpp
+00425d23	string	slot.cpp
+00425d2c	string	slot.cpp
+00425d35	string	slot.cpp
+00425d3e	string	slot.cpp
+00425d47	string	slot.cpp
+00425d50	string	slot.cpp
+00425d59	string	slot.cpp
+00425d62	string	slot.cpp
+00425d6b	string	slot.cpp
+00425d74	string	slot.cpp
+00425d7d	string	slot.cpp
+00425d86	string	slot.cpp
+00425d8f	string	slot.cpp
+00425d98	string	slot.cpp
+00425da1	string	slot.cpp
+00425daa	string	slot.cpp
+00425db3	string	slot.cpp
+00425dbc	string	slot.cpp
+00425dc5	string	slot.cpp
+00425dce	string	slot.cpp
+00425dd7	string	slot.cpp
+00425de0	string	slot.cpp
+00425de9	string	slot.cpp
+00425df2	string	slot.cpp
+00425dfb	string	slot.cpp
+00425e04	string	slot.cpp
+00425e0d	string	\t\tSlot %d created()
+00425e21	string	slot.cpp
+00425e2a	string	\t%s(%d): clear_slot (%d) \n
+00425e45	string	slot.cpp
+00425e4e	string	\t\tReseting the time when the slots were saved\n
+00425e7d	string	slot.cpp
+00425e86	string	slot.cpp
+00425e8f	string	slot.cpp
+00425e98	string	slot.cpp
+00425ea1	string	\t\tDone reset\n
+00425eaf	string	slot.cpp
+00425eb8	string	slot.cpp
+00425ec1	string	slot.cpp
+00425eca	string	slot.cpp
+00425ed3	string	slot.cpp
+00425edc	string	slot.cpp
+00425ee5	string	slot.cpp
+00425eee	string	slot.cpp
+00425ef7	string	slot.cpp
+00425f00	string	slot.cpp
+00425f09	string	slot.cpp
+00425f12	string	slot.cpp
+00425f1b	string	slot.cpp
+00425f24	string	slot.cpp
+00425f2d	string	slot.cpp
+00425f36	string	slot.cpp
+00425f3f	string	slot.cpp
+00425f48	string	slot.cpp
+00425f51	string	slot.cpp
+00425f5a	string	slot.cpp
+00425f63	string	slot.cpp
+00425f6c	string	slot.cpp
+00425f75	string	slot.cpp
+00425f7e	string	slot.cpp
+00425f87	string	slot.cpp
+00425f90	string	slot.cpp
+00425f99	string	slot.cpp
+00425fa2	string	slot.cpp
+00425fab	string	\t%s(%d): reset_slot (%d)\n
+00425fc5	string	slot.cpp
+00425fce	string	slot.cpp
+00425fd7	string	slot.cpp
+00425fe0	string	slot.cpp
+00425fe9	string	slot.cpp
+00425ff2	string	slot.cpp
+00425ffb	string	slot.cpp
+00426004	string	slot.cpp
+0042600d	string	slot.cpp
+00426016	string	slot.cpp
+0042601f	string	slot.cpp
+00426028	string	slot.cpp
+00426031	string	slot.cpp
+0042603a	string	slot.cpp
+00426043	string	slot.cpp
+0042604c	string	slot.cpp
+00426055	string	slot.cpp
+0042605e	string	slot.cpp
+00426067	string	slot.cpp
+00426070	string	slot.cpp
+00426079	string	slot.cpp
+00426082	string	slot.cpp
+0042608b	string	slot.cpp
+00426094	string	slot.cpp
+0042609d	string	slot.cpp
+004260a6	string	slot.cpp
+004260af	string	slot.cpp
+004260b8	string	slot.cpp
+004260c1	string	slot.cpp
+004260ca	string	slot.cpp
+004260d3	string	slot.cpp
+004260dc	string	\t%s(%d): load_tmp_slotdbase (%s) \n
+004260ff	string	slot.cpp
+00426108	string	%s(%d): load_tmp_slotdbase():\nFile %s does not exist. Loading aborted.\n
+00426150	string	slot.cpp
+00426159	string	\t%s(%d): save_tmp_slotdbase (%s) \n
+0042617c	string	slot.cpp
+00426185	string	%s(%d): save_tmp_slotdbase():\nError(%d) while writing file%s.\n
+004261c4	string	slot.cpp
+004261cd	string	\t%s(%d): init_slotdbase()\n
+004261f2	string	slot.cpp
+004261fb	string	slot.cpp
+00426204	string	slot.cpp
+0042620d	string	slot.cpp
+00426216	string	slot.cpp
+0042621f	string	slot.cpp
+00426228	string	slot.cpp
+0042623a	string	slot.cpp
+00426243	string	\t%s(%d): save_slotdbase ( void ) \n
+0042626f	string	slot.cpp
+00426278	string	\t%s(%d): get_last_saved_slot ( void )\n
+0042629f	string	slot.cpp
+004262a8	string	slot.cpp
+004262b1	string	slot.cpp
+004262ba	string	slot.cpp
+004262c3	string	\t%s(%d): set_active_slot (%d)\n
+004262e2	string	slot.cpp
+004262eb	string	slot.cpp
+004262f4	string	slot.cpp
+004262fd	string	%s(%d): set_active_slot():\nThis slot (%d) is not used so it can not be an active slot.\n
+00426355	string	slot.cpp
+0042635e	string	slot.cpp
+00426367	string	slot.cpp
+00426370	string	\t%s(%d): *> update_active_slot_optie() <*\n
+0042639b	string	slot.cpp
+004263a4	string	slot.cpp
+004263ad	string	slot.cpp
+004263b6	string	%s(%d): set_active_slot():\nThis slot (%d) is not used so it can not be an active slot.\n
+0042640e	string	slot.cpp
+00426417	string	slot.cpp
+00426420	string	\t%s(%d): *> update_active_slot_bediening() <*\n
+0042644f	string	slot.cpp
+00426458	string	slot.cpp
+00426461	string	slot.cpp
+0042646a	string	%s(%d): set_active_slot():\nThis slot (%d) is not used so it can not be an active slot.\n
+004264c2	string	slot.cpp
+004264cb	string	slot.cpp
+004264d4	string	slot.cpp
+004264dd	string	slot.cpp
+004264ee	string	slot.cpp
+004264f7	string	slot.cpp
+00426500	string	slot.cpp
+0042650a	string	slot.cpp
+00426513	string	slot.cpp
+0042651c	string	slot.cpp
+00426525	string	slot.cpp
+0042652e	string	slot.cpp
+00426557	string	slot.cpp
+00426560	string	slot.cpp
+00426569	string	slot.cpp
+00426572	string	slot.cpp
+0042657b	string	slot.cpp
+00426584	string	slot.cpp
+0042658d	string	slot.cpp
+00426596	string	slot.cpp
+0042659f	string	slot.cpp
+004265a8	string	slot.cpp
+004265b1	string	slot.cpp
+004265ba	string	slot.cpp
+004265c3	string	slot.cpp
+004265cc	string	slot.cpp
+004265d5	string	slot.cpp
+004265de	string	slot.cpp
+004265e7	string	slot.cpp
+004265f0	string	slot.cpp
+004265fc	string	%s(%d), score_check_index():\nUnknown positie (%d of %d) given\n
+0042663b	string	%s(%d), score_check_level():\nUnknown level (%d of %d) given\n
+00426678	string	score.cpp
+00426682	string	\t%s(%d): load_tmp_scoredbase (%s)\n
+004266a5	string	score.cpp
+004266af	string	%s(%d): load_tmp_scoredbase():\n File %s does not exist. Loading aborted.\n
+004266f9	string	score.cpp
+00426703	string	\t%s(%d):save_tmp_scoredbase(%s)\n
+00426724	string	score.cpp
+0042672e	string	%s(%d): save_tmp_scoredbase():\nError(%d) while writing file %s.\n
+0042676f	string	score.cpp
+00426779	string	\t%s(%d): init_scoredbase()\n
+00426795	string	SCORE.A2R
+0042679f	string	SCORE.A2R
+004267a9	string	score.cpp
+004267b3	string	score.cpp
+004267bd	string	score.cpp
+004267c7	string	score.cpp
+004267d1	string	\t%s(%d): save_scoredbase () \n
+004267ef	string	SCORE.A2R
+004267f9	string	score.cpp
+00426803	string	score.cpp
+0042680d	string	score.cpp
+00426817	string	score.cpp
+00426821	string	\t%s(%d): add_new_hiscore ( %s, %d, %d)\n
+00426849	string	\t\tCreating sort buffer of hiscore\n
+0042686c	string	score.cpp
+00426876	string	score.cpp
+00426880	string	\t\tDone creating sort buffer\n
+0042689d	string	\t\tDone initializing current score to hiscore list and start qsort\n
+004268e0	string	\t\tDone sorting and now start copy_back\n
+00426908	string	score.cpp
+00426912	string	score.cpp
+0042691c	string	\t%s(%d): add_new_levelscore (%s,%d,%d)\n
+00426944	string	\t\tCreating sort buffer list\n
+00426961	string	score.cpp
+0042696b	string	score.cpp
+00426975	string	score.cpp
+0042697f	string	score.cpp
+00426989	string	\t\tDone creating sort buffer\n
+004269a6	string	\t\tDone initializing current score to level score list and start qsort\n
+004269ed	string	\t\tDone sorting and now start copy_back\n
+00426a15	string	score.cpp
+00426a1f	string	score.cpp
+00426a2c	string	infio.cpp
+00426a36	string	\n\n%s(%d): *> LOAD INFIO <*\n
+00426a52	string	INFIO.INI
+00426a5c	string	INFIO.INI
+00426a66	string	infio.cpp
+00426a70	string	\n\n%s(%d): *> INFIO_INI_FILE = %d does exist <*\n
+00426aa0	string	INFIO.INI
+00426aaa	string	RACE_KLAAR
+00426ac4	string	ACTIVE_SLOT
+00426adf	string	ETAPPE
+00426aeb	string	EINDE_DOOR
+00426afb	string	POSITIE
+00426b08	string	RACER_1
+00426b15	string	RACER_2
+00426b22	string	RACER_3
+00426b85	string	FINALE
+00426b91	string	BEDIENING
+00426b9b	string	CONTROL
+00426ba3	string	KEY_LINKS
+00426bad	string	CONTROL
+00426bb5	string	KEY_RECHTS
+00426bc0	string	CONTROL
+00426bd0	string	CONTROL
+00426bd8	string	KEY_REM
+00426be0	string	CONTROL
+00426be8	string	KEY_ACTIE1
+00426bf3	string	CONTROL
+00426bfb	string	KEY_ACTIE2
+00426c06	string	CONTROL
+00426c15	string	OPTION
+00426c1c	string	RESOLUTIE
+00426c26	string	OPTION
+00426c32	string	OPTION
+00426c39	string	DISPLAY_MODE
+00426c46	string	OPTION
+00426c4d	string	HORIZON
+00426c55	string	OPTION
+00426c5c	string	DASHBORD
+00426c65	string	OPTION
+00426c6c	string	DETAIL
+00426c73	string	OPTION
+00426c7a	string	CAMERA
+00426c81	string	OPTION
+00426c90	string	OPTION
+00426c97	string	VEFFECT
+00426c9f	string	OPTION
+00426ca6	string	INFIO.INI
+00426cb0	string	infio.cpp
+00426cba	string	\n\n%s(%d): *> INFIO_INI_FILE = %d does NOT exist <*\n
+00426cee	string	INFIO.INI
+00426cf8	string	infio.cpp
+00426d02	string	\n\n%s(%d): *> SAVE INFIO <*\n
+00426d1e	string	INFIO.INI
+00426d28	string	RACE_KLAAR
+00426d42	string	ACTIVE_SLOT
+00426d5d	string	ETAPPE
+00426d69	string	EINDE_DOOR
+00426d79	string	POSITIE
+00426d86	string	RACER_1
+00426d93	string	RACER_2
+00426da0	string	RACER_3
+00426e03	string	FINALE
+00426e0f	string	BEDIENING
+00426e19	string	CONTROL
+00426e21	string	KEY_LINKS
+00426e2b	string	CONTROL
+00426e33	string	KEY_RECHTS
+00426e3e	string	CONTROL
+00426e4e	string	CONTROL
+00426e56	string	KEY_REM
+00426e5e	string	CONTROL
+00426e66	string	KEY_ACTIE1
+00426e71	string	CONTROL
+00426e79	string	KEY_ACTIE2
+00426e84	string	CONTROL
+00426e93	string	OPTION
+00426e9a	string	RESOLUTIE
+00426ea4	string	OPTION
+00426eb0	string	OPTION
+00426eb7	string	DISPLAY_MODE
+00426ec4	string	OPTION
+00426ecb	string	HORIZON
+00426ed3	string	OPTION
+00426eda	string	DASHBORD
+00426ee3	string	OPTION
+00426eea	string	DETAIL
+00426ef1	string	OPTION
+00426ef8	string	CAMERA
+00426eff	string	OPTION
+00426f0e	string	OPTION
+00426f15	string	VEFFECT
+00426f1d	string	OPTION
+00426f24	string	infio.cpp
+00426f2e	string	\n\n%s(%d) : *> INIT INFIO <*\n
+00426f4b	string	INFIO.INI
+00426f55	string	INFIO.INI
+00426f5f	string	\tCreating infio file %s\n
+00426f78	string	INFIO.INI
+00426f82	string	Loading infio file %s\n
+00426f99	string	Etappe 1
+00426fa2	string	Etappe 2
+00426fab	string	Etappe 3
+00426fb4	string	Etappe 4
+00426fbd	string	Etappe 5
+00426fc6	string	Etappe 6
+00426fcf	string	Uitgereden
+00426fda	string	Uitgereden
+00426fe5	string	Uitgereden
+00426ff0	string	Uitgereden
+00426ffc	string	snd_buffer = %d\n
+0042700d	string	not busy snd_buffer = %d\n
+00427027	string	m_main.cpp
+00427038	string	m_main.cpp
+00427048	string	m_main.cpp
+00427058	string	Toetsenbord
+00427064	string	Joypad 1
+00427073	string	Onbekend
+0042707f	string	3D Accelerator
+004270a2	string	Onbekend
+004270ae	string	\n\n *> DISPLAY_INFO %d<*\n
+004270c7	string	*> END DISPLAY_INFO <*\n
+004270df	string	%s(%d), mm_af_image() : Could not load frame %d of ANIM %d\n
+0042711b	string	m_main.cpp
+00427126	string	m_main.cpp
+00427131	string	m_main.cpp
+0042713c	string	m_main.cpp
+00427147	string	m_main.cpp
+00427152	string	m_main.cpp
+0042715d	string	m_main.cpp
+00427168	string	%s(%d): mm_animate_map ()\nIllegal level (%d of max %d) given\n
+004271a6	string	\n\nLEVEL SHOWN = %d\n\n
+004271bb	string	m_main.cpp
+004271c6	string	hoofd.pcx
+004271d0	string	hoofd.pcx
+004271da	string	Use config \n
+004271e7	string	m_main.cpp
+004271f2	string	%s(%d) : Could not load mm_menu_cfg\n
+00427217	string	reset anim base \n
+00427229	string	hide mouse\n
+00427235	string	mouse hidden\n
+00427243	string	wipes done\n
+0042724f	string	m_main.cpp
+0042725a	string	activate form\n
+00427269	string	end open\n
+00427273	string	mm_close_screen ( ) ,destroy form\n
+00427296	string	Wait finished\n
+004272a5	string	form destroyed\n
+004272b5	string	exit () mm_close_screen ( ) ,destroy form\n
+004272e0	string	SCORE.TMP
+004272ea	string	m_main.cpp
+004272f5	string	m_main.cpp
+00427300	string	m_main.cpp
+0042730b	string	m_main.cpp
+00427316	string	m_main.cpp
+00427321	string	m_main.cpp
+0042732c	string	SCORE.TMP
+00427336	string	SCORE.TMP
+00427340	string	m_main.cpp
+0042734b	string	m_main.cpp
+00427356	string	m_main.cpp
+00427361	string	m_main.cpp
+0042736c	string	m_main.cpp
+00427377	string	m_main.cpp
+00427382	string	m_main.cpp
+0042738d	string	click3.wav
+00427398	string	click3.wav
+004273a3	string	click1.wav
+004273ae	string	click1.wav
+004273b9	string	click1.wav
+004273c4	string	click1.wav
+004273cf	string	click1.wav
+004273da	string	m_main.cpp
+004273e5	string	click1.wav
+004273f0	string	click1.wav
+004273fb	string	MM_07.wav
+00427405	string	De huidige race wordt afgelast. Alle coureurs worden geacht opnieuw te beginnen.\nWeet je zeker dat je opnieuw wil beginnen?
+00427481	string	click1.wav
+0042748c	string	MM_06.wav
+00427496	string	Weet je zeker dat je de huidige race wil onderbreken?
+00427514	string	speed.wav
+0042751e	string	energy.wav
+00427529	string	jammin.wav
+00427534	string	moody.wav
+0042753e	string	disco.wav
+00427548	string	speed2.wav
+00427554	string	m_start.cpp
+00427560	string	%s(%d), mst_draw_selected_slot_info () :\nCould not load frame %d of ANIM %d\n
+004275ad	string	m_start.cpp
+004275bf	string	m_start.cpp
+004275d1	string	m_start.cpp
+004275e1	string	m_start.cpp
+004275f2	string	m_start.cpp
+004275fe	string	%s(%d): mst_draw_slot_info(%d), initializing\n
+0042762c	string	m_start.cpp
+00427638	string	%s(%d), mst_draw_slot_info () :\nCould not load frame %d of ANIM %d\n
+0042767c	string	m_start.cpp
+00427688	string	m_start.cpp
+00427694	string	m_start.cpp
+004276a0	string	\t%d>, naam %s, level %d, tijd %d\n
+004276c2	string	m_start.cpp
+004276ce	string	\tprinting %s\n
+004276dc	string	m_start.cpp
+004276ee	string	m_start.cpp
+00427700	string	m_start.cpp
+00427710	string	m_start.cpp
+00427721	string	m_start.cpp
+0042772d	string	%s(%d): mst_print_slot(), initializing\n
+00427755	string	m_start.cpp
+00427761	string	%s(%d): mst_print_slot(), end slot print\n
+0042778b	string	m_start.cpp
+00427797	string	%s(%d): mst_print_slot(), initializing\n
+004277bf	string	m_start.cpp
+004277cb	string	%s(%d): mst_print_slot(), end slot print\n
+00427801	string	algintro.wav
+0042780e	string	m_start.cpp
+0042781a	string	%s(%d): mst_open_screen(), initializing\n
+0042784f	string	m_start.cpp
+0042785b	string	%s(%d): mst_open_screen(), Could not load mc_menu_cfg\n
+00427892	string	m_start.cpp
+0042789e	string	%s(%d): mst_open_screen(), initialize slot\n
+004278ca	string	m_start.cpp
+004278d6	string	%s(%d): mst_open_screen(), initialize form\n
+00427902	string	m_start.cpp
+0042790e	string	%s(%d): mst_close_screen(), destroy form\n
+00427938	string	\n\n *> START MENU <*\n
+0042794d	string	m_start.cpp
+00427964	string	m_start.cpp
+0042797b	string	Vul je naam in en wordt lid van de A2 Racing Club!
+004279ae	string	m_start.cpp
+004279ba	string	%s(%d): activate form\n
+004279d1	string	click1.wav
+004279dc	string	click3.wav
+004279e7	string	click3.wav
+004279f2	string	click3.wav
+004279fd	string	click1.wav
+00427a08	string	m_start.cpp
+00427a1f	string	Vul je naam in en wordt lid van de A2 Racing Club!
+00427a52	string	MSTART SET ACTIVE SLOT %d<*%d\n
+00427a71	string	m_start.cpp
+00427a7d	string	click1.wav
+00427a93	string	m_start.cpp
+00427a9f	string	Wil je deze speler '%s' verwijderen?
+00427ac4	string	click1.wav
+00427af4	string	%s(%d), mm_af_image() : Could not load frame %d of ANIM %d\n
+00427b30	string	m_bedien.cpp
+00427b3d	string	m_bedien.cpp
+00427b4a	string	m_bedien.cpp
+00427b5c	string	m_bedien.cpp
+00427b69	string	m_bedien.cpp
+00427b76	string	m_bedien.cpp
+00427b83	string	Kies nu een toets voor:\n
+00427b9c	string	%s %s
+00427ba2	string	click1.wav
+00427bad	string	click3.wav
+00427bc2	string	Deze toets, <%s>, is eerder gedefinieerd. Kies een andere toets.
+00427c0d	string	De toetsen zijn ingesteld.
+00427c2b	string	m_bedien.cpp
+00427c38	string	%s(%d) : illegal keyboard frame image %d of ANIM %d.
+00427c6d	string	m_bedien.cpp
+00427c7a	string	%s(%d) : illegal joystick frame %d image of ANIM %d.
+00427caf	string	m_bedien.cpp
+00427cbc	string	%s(%d) : illegal wheel frame %d image of ANIM %d.
+00427cee	string	m_bedien.cpp
+00427cfb	string	m_bedien.cpp
+00427d08	string	bedien.pcx
+00427d13	string	m_bedien.cpp
+00427d20	string	%s(%d) : Could not load mc_menu_cfg\n
+00427d45	string	mc_close_screen ( ), destroy form\n
+00427d68	string	m_bedien.cpp
+00427d75	string	\n\n%s(%d) : *> START MENU BEDIEN <*\n
+00427d99	string	m_bedien.cpp
+00427da6	string	%s(%d): joystick available %d, joystick %d\n
+00427dd2	string	BEDIEN.TMP
+00427ddd	string	click3.wav
+00427de8	string	click3.wav
+00427df3	string	click1.wav
+00427dfe	string	click1.wav
+00427e09	string	click2.wav
+00427e14	string	click2.wav
+00427e1f	string	click2.wav
+00427e2a	string	click1.wav
+00427e35	string	click1.wav
+00427e40	string	BEDIEN.TMP
+00427e4b	string	BEDIEN.TMP
+00427e56	string	m_bedien.cpp
+00427e63	string	\n\n%s(%d) : *> STOP MENU BEDIEN <*\n
+00427f44	string	NUMPAD 0
+00427f4d	string	NUMPAD 1
+00427f56	string	NUMPAD 2
+00427f5f	string	NUMPAD 3
+00427f68	string	NUMPAD 4
+00427f71	string	NUMPAD 5
+00427f7a	string	NUMPAD 6
+00427f83	string	NUMPAD 7
+00427f8c	string	NUMPAD 8
+00427f95	string	NUMPAD 9
+00427fac	string	Rechts
+00427fb9	string	SPACE
+00427fbf	string	ENTER
+00427fcb	string	RECHTS
+00427fda	string	TOETER
+00427fe7	string	MC_05.wav
+00427ff1	string	MC_06.wav
+00427ffb	string	MC_07.wav
+00428005	string	MC_08.wav
+00428010	string	%s(%d), mo_af_image() : Could not load frame %d of ANIM %d\n
+0042804c	string	m_opties.cpp
+00428059	string	m_opties.cpp
+00428066	string	m_opties.cpp
+00428073	string	m_opties.cpp
+00428080	string	m_opties.cpp
+0042808d	string	m_opties.cpp
+0042809a	string	m_opties.cpp
+004280a7	string	m_opties.cpp
+004280b4	string	m_opties.cpp
+004280c1	string	m_opties.cpp
+004280ce	string	m_opties.cpp
+004280db	string	m_opties.cpp
+004280e8	string	m_opties.cpp
+004280f5	string	m_opties.cpp
+00428102	string	m_opties.cpp
+0042810f	string	m_opties.cpp
+0042811c	string	m_opties.cpp
+00428129	string	m_opties.cpp
+00428136	string	m_opties.cpp
+00428143	string	m_opties.cpp
+00428150	string	m_opties.cpp
+0042815d	string	m_opties.cpp
+0042816a	string	m_opties.cpp
+00428177	string	m_opties.cpp
+00428184	string	m_opties.cpp
+00428191	string	m_opties.cpp
+0042819e	string	m_opties.cpp
+004281ab	string	m_opties.cpp
+004281b8	string	m_opties.cpp
+004281c5	string	m_opties.cpp
+004281d2	string	m_opties.cpp
+004281df	string	Opties.pcx
+004281ea	string	m_opties.cpp
+004281f7	string	%s(%d) : Could not load mo_menu_cfg\n
+0042821c	string	mo_close_screen ( ) ,destroy form\n
+0042823f	string	m_opties.cpp
+0042824c	string	\n\n%s(%d) : *> STOP MENU OPTIES <*\n
+0042826f	string	Opties.TMP
+0042827a	string	click3.wav
+00428285	string	click3.wav
+00428290	string	click1.wav
+0042829b	string	click1.wav
+004282a6	string	click1.wav
+004282b1	string	click3.wav
+004282bc	string	click3.wav
+004282c7	string	click3.wav
+004282d2	string	click3.wav
+004282dd	string	click3.wav
+004282e8	string	click3.wav
+004282f3	string	click3.wav
+004282fe	string	click3.wav
+00428309	string	click3.wav
+00428314	string	click3.wav
+0042831f	string	click3.wav
+0042832a	string	click3.wav
+00428335	string	click3.wav
+00428340	string	click3.wav
+0042834b	string	click3.wav
+00428356	string	click3.wav
+00428361	string	click3.wav
+0042836c	string	Opties.TMP
+00428377	string	Delete temporary options file\n
+00428396	string	Opties.TMP
+004283a1	string	m_opties.cpp
+004283ae	string	\n\n%s(%d) : *> STOP MENU OPTIES <*\n
+00428404	string	%s(%d), ms_af_image() : Could not load frame %d of ANIM %d\n
+0042844b	string	%#2.2du%#2.2dm%#2.2ds
+0042846e	string	%#2.2du%#2.2dm%#2.2ds
+00428484	string	m_score.cpp
+00428490	string	m_score.cpp
+0042849c	string	m_score.cpp
+004284a8	string	m_score.cpp
+004284b4	string	m_score.cpp
+004284c0	string	Score.pcx
+004284ca	string	m_score.cpp
+004284d6	string	%s(%d) : Could not load ms_menu_cfg\n
+004284fb	string	Score.pcx
+00428505	string	ms_open_screen ( ) ok\n
+0042851c	string	ms_close_screen ( ), destroy form\n
+0042853f	string	click1.wav
+0042854a	string	click3.wav
+00428555	string	click3.wav
+00428560	string	%s(%d), mds_af_image() : Could not load frame %d of ANIM %d\n
+004285de	string	m_dscore.cpp
+004285eb	string	m_dscore.cpp
+004285f8	string	m_dscore.cpp
+0042861b	string	m_dscore.cpp
+00428628	string	%s(%d) : Could not load mds_menu_cfg\n
+0042864e	string	mds_open_screen ( ) ok\n
+00428666	string	mds_close_screen ( ), destroy form\n
+0042868a	string	click1.wav
+00428698	string	m_nsplr.cpp
+004286a4	string	%s(%d), mns_draw_selected_slot_info () :\nCould not load frame %d of ANIM %d\n
+004286f1	string	m_nsplr.cpp
+00428703	string	m_nsplr.cpp
+00428715	string	m_nsplr.cpp
+00428725	string	m_nsplr.cpp
+00428736	string	m_nsplr.cpp
+00428742	string	%s(%d): mns_draw_slot_info(%d), initializing\n
+00428770	string	m_nsplr.cpp
+0042877c	string	%s(%d), mns_draw_slot_info () :\nCould not load frame %d of ANIM %d\n
+004287c0	string	m_nsplr.cpp
+004287cc	string	m_nsplr.cpp
+004287d8	string	m_nsplr.cpp
+004287e4	string	\t%d>, naam %s, level %d, tijd %d\n
+00428806	string	m_nsplr.cpp
+00428818	string	m_nsplr.cpp
+0042882a	string	m_nsplr.cpp
+0042883a	string	m_nsplr.cpp
+0042884b	string	m_nsplr.cpp
+00428857	string	%s(%d): mns_reselect_slot(), initializing\n
+00428882	string	m_nsplr.cpp
+0042888e	string	%s(%d): mns_print_slot(), initializing\n
+004288b6	string	m_nsplr.cpp
+004288c2	string	%s(%d): mns_open_screen(), initializing\n
+004288f7	string	m_nsplr.cpp
+00428903	string	%s(%d): mns_open_screen(), Could not load mc_menu_cfg\n
+0042893a	string	m_nsplr.cpp
+00428946	string	%s(%d): mns_close_screen(), destroy form\n
+00428970	string	\n\n *> NIEUWE SPELER MENU <*\n
+0042898d	string	OPSTART.TMP
+00428999	string	click1.wav
+004289a4	string	click3.wav
+004289af	string	click3.wav
+004289ba	string	click3.wav
+004289c5	string	click1.wav
+004289d0	string	m_nsplr.cpp
+004289e7	string	Vul je naam in en wordt lid van de A2 Racing Club!
+00428a1a	string	m_nsplr.cpp
+00428a26	string	click1.wav
+00428a3c	string	m_nsplr.cpp
+00428a48	string	Wil je deze speler '%s' verwijderen?
+00428a6d	string	click1.wav
+00428a78	string	OPSTART.TMP
+00428aa8	string	m_stand.cpp
+00428ab4	string	m_stand.cpp
+00428ac0	string	m_stand.cpp
+00428acc	string	m_stand.cpp
+00428ad8	string	m_stand.cpp
+00428ae4	string	m_stand.cpp
+00428af0	string	m_stand.cpp
+00428afc	string	m_stand.cpp
+00428b08	string	m_stand.cpp
+00428b14	string	m_stand.cpp
+00428b20	string	m_stand.cpp
+00428b2c	string	m_stand.cpp
+00428b38	string	m_stand.cpp
+00428b44	string	m_stand.cpp
+00428b50	string	m_stand.cpp
+00428b5c	string	m_stand.cpp
+00428b68	string	m_stand.cpp
+00428b74	string	m_stand.cpp
+00428b80	string	m_stand.cpp
+00428b8c	string	m_stand.cpp
+00428b98	string	m_stand.cpp
+00428ba4	string	m_stand.cpp
+00428bb0	string	m_stand.cpp
+00428bbc	string	m_stand.cpp
+00428bc8	string	m_stand.cpp
+00428bf0	string	m_stand.cpp
+00428bfc	string	%s(%d) : Could not load mdt_menu_cfg\n
+00428c22	string	mdt_open_screen ( ) ok\n
+00428c3a	string	mdt_close_screen ( ), destroy form\n
+00428c5e	string	click1.wav
+00428c69	string	Etappe1.pcx
+00428c75	string	Etappe2.pcx
+00428c81	string	Etappe3.pcx
+00428c8d	string	Etappe4.pcx
+00428c99	string	Etappe5.pcx
+00428ca5	string	Etappe6.pcx
+00428cb4	string	m_clas.cpp
+00428cbf	string	\t%s(%d): mdc_create_huidige_stand ()\n
+00428ce5	string	m_clas.cpp
+00428cf0	string	m_clas.cpp
+00428cfb	string	m_clas.cpp
+00428d06	string	m_clas.cpp
+00428d11	string	m_clas.cpp
+00428d1c	string	m_clas.cpp
+00428d27	string	m_clas.cpp
+00428d32	string	\t\tDone initializing current score to level score list and start qsort\n
+00428d95	string	m_clas.cpp
+00428da0	string	TStand2.pcx
+00428dac	string	TStand.pcx
+00428db7	string	m_clas.cpp
+00428dc2	string	%s(%d) : Could not load mdc_menu_cfg\n
+00428de8	string	mdc_open_screen ( ) ok\n
+00428e00	string	mdc_close_screen ( ), destroy form\n
+00428e24	string	click1.wav
+00428e30	string	not enough memory for animations
+00428e5b	string	not enough memory for animation data
+00428e80	string	not enough memory for animations
+00428eab	string	not enough memory for animation data
+00428ed0	string	menuanim.cpp
+00428edd	string	 %s(%d) : please call init_anims () first
+00428f1b	string	menuanim.cpp
+00428f28	string	 %s(%d) : please call init_anims () first
+00428f52	string	menuanim.cpp
+00428f5f	string	 %s(%d) : please call init_anims () first
+00428f9d	string	menuanim.cpp
+00428faa	string	 %s(%d) : please call init_anims () first
+00428fd4	string	menuanim.cpp
+00428fe1	string	 %s(%d) : please call init_anims () first
+0042901f	string	menuanim.cpp
+0042902c	string	 %s(%d) : please call init_anims () first
+00429056	string	menuanim.cpp
+00429063	string	 %s(%d) : please call init_anims () first
+0042908d	string	a2mrc.ind
+00429097	string	a2mrc.img
+004290a1	string	menuanim.cpp
+004290ae	string	 %s(%d) : please call init_anims () first
+004290d8	string	menuanim.cpp
+004290e5	string	 %s(%d) : please call init_anims () first
+00429123	string	menuanim.cpp
+00429130	string	 %s(%d) : please call init_anims () first
+0042915a	string	menuanim.cpp
+00429167	string	 %s(%d) : please call init_anims () first
+00429191	string	a2mrc.ind
+0042919b	string	a2mrc.img
+004291a5	string	menuanim.cpp
+004291b2	string	 %s(%d) : please call init_anims () first
+004291dc	string	menuanim.cpp
+004291e9	string	 %s(%d) : please call init_anims () first
+00429227	string	menuanim.cpp
+00429234	string	 %s(%d) : please call init_anims () first
+0042925e	string	menuanim.cpp
+0042926b	string	 %s(%d) : please call init_anims () first
+004292a9	string	menuanim.cpp
+004292b6	string	 %s(%d) : please call init_anims () first
+004292e0	string	menuanim.cpp
+004292ed	string	 %s(%d) : please call init_anims () first
+0042932b	string	menuanim.cpp
+00429338	string	 %s(%d) : please call init_anims () first
+00429362	string	menuanim.cpp
+0042936f	string	 %s(%d) : please call init_anims () first
+004293ad	string	menuanim.cpp
+004293ba	string	 %s(%d) : please call init_anims () first
+004293e4	string	menuanim.cpp
+004293f1	string	 %s(%d) : please call init_anims () first
+0042942f	string	menuanim.cpp
+0042943c	string	 %s(%d) : please call init_anims () first
+00429466	string	menuanim.cpp
+00429473	string	 %s(%d) : please call init_anims () first
+004294b1	string	menuanim.cpp
+004294be	string	 %s(%d) : please call init_anims () first
+004294e8	string	reqwarn.cpp
+004294f4	string	%s(%d), reqw_open () : Could not load reqwarn_cfg ()\n
+0042952a	string	reqwarn.cpp
+00429536	string	%s(%d), reqw_open () : Could not load frame %d of ANIM %d\n
+00429571	string	reqw_close ( ), destroy form\n
+00429590	string	snd_buffer = %d\n
+004295a1	string	snd_buffer is busy %d\n
+004295b8	string	snd_buffer is stopped %d\n
+004295d2	string	not busy snd_buffer = %d\n
+004295ec	string	snd_buffer = %d\n
+004295fd	string	not busy snd_buffer = %d\n
+00429617	string	reqvraag.cpp
+00429624	string	%s(%d), reqv_open () : Could not load reqvraag_cfg ()\n
+0042965b	string	reqvraag.cpp
+00429668	string	%s(%d), reqv_open () : Could not load frame %d of ANIM %d\n
+004296a3	string	reqv_close ( ), destroy form\n
+004296c1	string	click2.wav
+004296cc	string	click2.wav
+004296d8	string	snd_buffer = %d\n
+004296e9	string	snd_buffer is busy %d\n
+00429700	string	snd_buffer is stopped %d\n
+0042971a	string	not busy snd_buffer = %d\n
+00429734	string	snd_buffer = %d\n
+00429745	string	not busy snd_buffer = %d\n
+0042975f	string	reqinput.cpp
+0042976c	string	%s(%d), reqi_open () : Could not load reqinput_cfg ()\n
+004297a3	string	reqinput.cpp
+004297b0	string	%s(%d), reqi_open () : Could not load frame %d of ANIM %d\n
+004297eb	string	reqi_close ( ), destroy form\n
+00429809	string	click2.wav
+00429814	string	click2.wav
+0042981f	string	reqinput.cpp
+0042982c	string	%s(%d) : buffer = %s\n\n
+00429843	string	click2.wav
+0042984e	string	reqinput.cpp
+0042985b	string	%s(%d) : ENTER DETECTED for editbox %s\n\n
+00429884	string	Speler
+0042988c	string	\twin_printwrapped ( focus=%d, x=%d, y=%d, maxw+%d, str=%s )\n
+004298cb	string	\twin_bprintf ( focus=%d, x=%d, y=%d, maxw+%d, str=%s )\n
+00429904	string	spel.cpp
+0042990d	string	spel.cpp
+00429916	string	spel.cpp
+0042991f	string	spel.cpp
+00429928	string	spel.cpp
+00429931	string	spel.cpp
+0042993a	string	spel.cpp
+00429943	string	spel.cpp
+0042994c	string	spel.cpp
+00429955	string	spel.cpp
+0042995e	string	spel.cpp
+00429967	string	spel.cpp
+00429970	string	spel.cpp
+00429979	string	spel.cpp
+00429982	string	spel.cpp
+0042998b	string	spel.cpp
+00429994	string	spel.cpp
+0042999d	string	spel.cpp
+004299a6	string	spel.cpp
+004299af	string	spel.cpp
+004299b8	string	spel.cpp
+004299c1	string	spel.cpp
+004299ca	string	spel.cpp
+004299d3	string	spel.cpp
+004299dc	string	spel.cpp
+004299e5	string	spel.cpp
+004299ee	string	\n\n *> HANDLE_GAME <*\n
+00429a04	string	spel.cpp
+00429a0d	string	spel.cpp
+00429a16	string	spel.cpp
+00429a1f	string	spel.cpp
+00429a28	string	spel.cpp
+00429a31	string	spel.cpp
+00429a3a	string	spel.cpp
+00429a43	string	spel.cpp
+00429a4c	string	spel.cpp
+00429a55	string	spel.cpp
+00429a5e	string	spel.cpp
+00429a67	string	spel.cpp
+00429a70	string	spel.cpp
+00429a79	string	spel.cpp
+00429a82	string	spel.cpp
+00429a8b	string	spel.cpp
+00429a94	string	spel.cpp
+00429a9d	string	spel.cpp
+00429aa6	string	spel.cpp
+00429aaf	string	spel.cpp
+00429ab8	string	spel.cpp
+00429ac1	string	spel.cpp
+00429aca	string	spel.cpp
+00429ad3	string	spel.cpp
+00429adc	string	spel.cpp
+00429ae5	string	spel.cpp
+00429aee	string	spel.cpp
+00429b00	string	spel.cpp
+00429b09	string	\tslot[%d].tijd[%d] = %d\n
+00429b22	string	spel.cpp
+00429b2b	string	spel.cpp
+00429b34	string	spel.cpp
+00429b3d	string	spel.cpp
+00429b46	string	\tLevel score added at %d\n
+00429b60	string	\tLocal Level Menu Displayed\n
+00429b7d	string	spel.cpp
+00429b86	string	\tLast Level\n
+00429b93	string	spel.cpp
+00429b9c	string	spel.cpp
+00429ba5	string	spel.cpp
+00429bae	string	spel.cpp
+00429bb7	string	\tLast Level added at %d\n
+00429bd0	string	Jeroen Lutos
+00429bdd	string	Gijs Comara
+00429be9	string	Rudolf Porge
+00429bf6	string	Richard Viber
+00429c04	string	Brian Jakuar
+00429c14	string	snd_buffer = %d\n
+00429c25	string	snd_buffer is busy %d\n
+00429c3c	string	snd_buffer is stopped %d\n
+00429c56	string	not busy snd_buffer = %d\n
+00429c70	string	snd_buffer = %d\n
+00429c81	string	not busy snd_buffer = %d\n
+00429c9b	string	snd_buffer = %d\n
+00429cac	string	snd_buffer is busy %d\n
+00429cc4	string	inifile.cpp
+00429cd0	string	(set_ini_filename) %s(%d) : filename has incorrect lenght.
+00429d0d	string	inifile.cpp
+00429d19	string	(write_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
+00429d65	string	inifile.cpp
+00429d71	string	(write_ini_value_setting) %s(%d) : No ini file set, use set_ini_filename .
+00429dbc	string	inifile.cpp
+00429dc8	string	(read_ini_value_setting) %s(%d) : No ini file set, use set_ini_filename .
+00429e12	string	inifile.cpp
+00429e1e	string	(read_ini_string_setting) %s(%d) : No ini file set, use set_ini_filename .
+00429e70	string	debug.txt
+00429e7a	string	Releasing screen\n
+00429e8c	string	Releasing buffer screen\n
+00429ea5	string	Releasing buffer screen\n
+00429ebe	string	Releasing dd object\n
+00429ed3	string	post quit\n
+00429ede	string	[%d] %s\n
+00429eec	string	initlib.cpp
+00429ef8	string	 %s(%d) : error flipping surfaces\n
+00429f1b	string	initlib.cpp
+00429f27	string	 %s(%d) : blitting error (%s).
+00429f46	string	initlib.cpp
+00429f52	string	 %s(%d) : error predefined screen mode variable is out of bounds
+00429f93	string	initlib.cpp
+00429f9f	string	 %s(%d) : unknown variable (%d) requested
+00429fc9	string	initlib.cpp
+00429fd5	string	 %s(%d) : unknown variable (%d) requested
+00429fff	string	direct draw object already created
+0042a022	string	exclusive mode was already set
+0042a041	string	undefined error condition
+0042a05b	string	cooperative level for HWND already set. It cannot be reset while the process has surfaces or palettes created
+0042a0c9	string	dd is prevented from restoring state because of subclassing the HWND dd cooperative level
+0042a123	string	this surface was implicitly created, therefore restore is impossible
+0042a168	string	primary surface creation request is incompatible with existing primary surface
+0042a1b7	string	one or more of the capability bits are incorrect
+0042a1e8	string	direct draw invalid gui id
+0042a203	string	screen mode not supported
+0042a21d	string	pointer is not a dd object
+0042a238	string	one or more invalid parameters
+0042a257	string	pixel format is invalid
+0042a26f	string	surface type incompatible with operation
+0042a298	string	one or more surfaces of the dd object are locked
+0042a2c9	string	surface does not use an 8 bit palette, while the requested operation does
+0042a313	string	hardware does not support alpha acceleration
+0042a340	string	the setcooperativelevel must be called before attempting to create anything
+0042a38c	string	hardware only dd objects not allowed; driver does not support any hardware
+0042a3d7	string	there is no software emulation for the requested function
+0042a411	string	exclusive mode necessary for this operation
+0042a43d	string	(hardware) flipping of visible surfaces is not supported
+0042a476	string	(hardware) no mipmap texture mapping hardware is present
+0042a4af	string	there was no palette attached to the surface
+0042a4dc	string	there is no hardware support for 16- or 256 color palettes
+0042a517	string	the surface being used is not a palette based surface
+0042a54d	string	(hardware) no hardware support for zbuffering is present
+0042a586	string	hardware needed for this operation has already been allocated
+0042a5c4	string	application out of free memory
+0042a5e3	string	application out of video memory
+0042a603	string	application already created a primary surface
+0042a631	string	access to surface denied by other thread
+0042a65a	string	access to surface denied because memory is gone
+0042a68a	string	operation is not supported
+0042a6a5	string	display is currently in an unsuppported mode
+0042a6d2	string	previous blit is still in progress
+0042a6f5	string	surface was created in different mode
+0042a71b	string	unidentified error
+0042a72e	string	initlib.cpp
+0042a73a	string	 %s(%d) : could not lock surface (%s)\n
+0042a761	string	initlib.cpp
+0042a76d	string	 %s(%d) : unidentified focus error (%d).\n
+0042a797	string	initlib.cpp
+0042a7a3	string	 %s(%d) : could not lock surface (%s)\n
+0042a7ca	string	initlib.cpp
+0042a7d6	string	 %s(%d) : unidentified focus error (%d).\n
+0042a800	string	initlib.cpp
+0042a80c	string	 %s(%d) : could not lock surface (%s)\n
+0042a833	string	initlib.cpp
+0042a83f	string	 %s(%d) : could not lock surface (%s)\n
+0042a866	string	initlib.cpp
+0042a872	string	 %s(%d) : unidentified focus error (%d).\n
+0042a89c	string	initlib.cpp
+0042a8a8	string	 %s(%d) : could not unlock surface (%s)\n
+0042a8d1	string	initlib.cpp
+0042a8dd	string	 %s(%d) : could not unlock surface (%s)\n
+0042a906	string	initlib.cpp
+0042a912	string	 %s(%d) : could not create surface (%s)\n
+0042a93b	string	initlib.cpp
+0042a947	string	 %s(%d) : could not create surface (%s)\n
+0042a970	string	initlib.cpp
+0042a97c	string	 %s(%d) : could not create surface (%s)\n
+0042a9a5	string	initlib.cpp
+0042a9b1	string	 %s(%d) : could not create surface (%s)\n
+0042a9da	string	initlib.cpp
+0042a9e6	string	 %s(%d) : could not create surface (%s)\n
+0042aa0f	string	initlib.cpp
+0042aa1b	string	 %s(%d) : could not create surface (%s)\n
+0042aa44	string	initlib.cpp
+0042aa50	string	 %s(%d) : could not get desc of surface (%s)\n
+0042aa7e	string	initlib.cpp
+0042aa8a	string	 %s(%d) : unidentified focus error (%d).\n
+0042aab4	string	initlib.cpp
+0042aac0	string	 %s(%d) : blitting error (%s).
+0042aadf	string	initlib.cpp
+0042aaeb	string	 %s(%d) : blitting error (%s).
+0042ab0a	string	initlib.cpp
+0042ab16	string	 %s(%d) : blitting error (%s).
+0042ab35	string	creating\n
+0042ab3f	string	initlib.cpp
+0042ab4b	string	 %s(%d) : could not create primary surface (%s).
+0042ab7c	string	locking\n
+0042ab85	string	locking inter\n
+0042ab94	string	locking done\n
+0042aba2	string	back screen\n
+0042abaf	string	initlib.cpp
+0042abbb	string	 %s(%d) : unable to create attached surface (%s).
+0042abed	string	back screen locking\n
+0042ac02	string	back screen locking done\n
+0042ac1c	string	back screen\n
+0042ac29	string	back screen locking done\n
+0042ac43	string	init palette done\n
+0042ac56	string	getting pixel format\n
+0042ac6c	string	release buffer screen\n
+0042ac83	string	release back screen\n
+0042ac98	string	release primary surface\n
+0042acb1	string	*** init xvgalib ***\n
+0042acc7	string	failure to make window\n
+0042acdf	string	window defined\n
+0042acef	string	starting direct draw driver search\n
+0042ad13	string	Finished search\n
+0042ad24	string	create direct draw object\n
+0042ad3f	string	initlib.cpp
+0042ad4b	string	 %s(%d) : could not create dd object (%s).
+0042ad76	string	set cooperative level\n
+0042ad8d	string	initlib.cpp
+0042ad99	string	 %s(%d) : could not set cooperative level (%s).
+0042adc9	string	could not find mode\n
+0042adde	string	set display mode %dx%dx%d\n
+0042adf9	string	initlib.cpp
+0042ae05	string	 %s(%d) : could not set display mode (%s).
+0042ae30	string	screen update\n
+0042ae3f	string	init input\n
+0042ae4b	string	system info\n
+0042ae58	string	initlib.cpp
+0042ae64	string	 %s(%d) : error predefined screen mode variable is out of bounds
+0042aea5	string	initlib.cpp
+0042aeb1	string	 %s(%d) : mode is not available\n
+0042aed2	string	Setting display mode\n
+0042aee8	string	Setting display mode: %dx%dx%d\n
+0042af08	string	initlib.cpp
+0042af14	string	 %s(%d) : could not set display mode (%s).
+0042af3f	string	Setting display mode done\n
+0042af5a	string	initlib.cpp
+0042af66	string	 %s(%d) : could not set display mode (%s).
+0042af94	string	request failed because resources (like priority level) were already allocated
+0042afe2	string	specified format is not supported
+0042b004	string	invalid parameters passed to this function
+0042b02f	string	this function is not valid for the current state of the object
+0042b06e	string	no sound driver is installed/available
+0042b095	string	object doesn't support aggregation
+0042b0b8	string	not enough memory free for the direct sound subsystem
+0042b0ee	string	caller doesn't have the priority level needed for this function
+0042b12e	string	unitialized error ; call the initialize function first
+0042b165	string	this function is not supported at this time
+0042b191	string	error unidentified
+0042b1a4	string	 %s(%d) : not enough memory to retrieve driver info\n
+0042b1d9	string	%s, %s\n
+0042b1e1	string	SB16.VXD
+0042b1ea	string	sb16 driver found %d\n
+0042b205	string	secondary driver found %d\n
+0042b220	string	sound.cpp
+0042b22a	string	 %s(%d) : error creating sound buffer (%s)\n
+0042b256	string	sound.cpp
+0042b260	string	 %s(%d) : error setting format (%s)\n
+0042b285	string	sound.cpp
+0042b28f	string	 %s(%d) : error starting primary sound buffer (%s)\n
+0042b2c3	string	sound.cpp
+0042b2cd	string	 %s(%d) : error creating sound buffer (%s)\n
+0042b2f9	string	sound.cpp
+0042b303	string	 %s(%d) : error setting format (%s)\n
+0042b328	string	sound.cpp
+0042b332	string	 %s(%d) : error starting primary sound buffer (%s)\n
+0042b366	string	sound.cpp
+0042b370	string	 %s(%d) : error creating sound buffer (%s)\n
+0042b39c	string	sound.cpp
+0042b3a6	string	 %s(%d) : error creating sound buffer (%s)\n
+0042b3d2	string	sound.cpp
+0042b3dc	string	 %s(%d) : error creating 3d sound buffer (%s)\n
+0042b40b	string	sound.cpp
+0042b415	string	 %s(%d) : error duplicating sound buffer (%s)\n
+0042b444	string	sound.cpp
+0042b44e	string	 %s(%d) : illegal sound buffer index %d [0..%d]\n
+0042b47f	string	sound.cpp
+0042b489	string	 %s(%d) : getting sound status failed %d (%s)\n
+0042b4b8	string	sound.cpp
+0042b4c2	string	 %s(%d) : illegal sound buffer index %d [0..%d]\n
+0042b4f3	string	sound.cpp
+0042b4fd	string	 %s(%d) : getting sound status failed %d (%s)\n
+0042b52c	string	sound.cpp
+0042b536	string	 %s(%d) : error releasing sound buffer (%s)\n
+0042b563	string	sound.cpp
+0042b56d	string	 %s(%d) : error releasing sound buffer (%s)\n
+0042b59a	string	%d used %d\n
+0042b5a6	string	%d used %d\n
+0042b5b2	string	deleting %d\n
+0042b5bf	string	sound.cpp
+0042b5c9	string	 %s(%d) : error releasing sound buffer (%s)\n
+0042b5f6	string	Attempting to use sb16 driver\n
+0042b615	string	sound.cpp
+0042b61f	string	 %s(%d) : error creating sound object (%s)\n
+0042b64b	string	Attempting to use sb16 driver succesful\n
+0042b674	string	Attempting to use secondary driver\n
+0042b698	string	sound.cpp
+0042b6a2	string	 %s(%d) : error creating sound object (%s)\n
+0042b6ce	string	Attempting to use secondary (unknown) driver succesful\n
+0042b706	string	Using default driver\n
+0042b71c	string	sound.cpp
+0042b726	string	 %s(%d) : error creating sound object (%s)\n
+0042b752	string	Default driver init failure : No sound\n
+0042b77a	string	sound.cpp
+0042b784	string	 %s(%d) : error setting the coop level (%s)\n
+0042b7b1	string	sound.cpp
+0042b7bb	string	 %s(%d) : not enough memory to create sound buffers\n
+0042b7f0	string	 %s(%d) : error illegal sound mode selected\n
+0042b81d	string	STEREO
+0042b829	string	setting sound format %dHz %dbits %s\n
+0042b84e	string	init smacker\n
+0042b85c	string	init smacker done\n
+0042b86f	string	Attempting to use sb16 driver\n
+0042b88e	string	sound.cpp
+0042b898	string	 %s(%d) : error creating sound object (%s)\n
+0042b8c4	string	Attempting to use sb16 driver succesful\n
+0042b8ed	string	Attempting to use secondary driver\n
+0042b911	string	sound.cpp
+0042b91b	string	 %s(%d) : error creating sound object (%s)\n
+0042b947	string	Attempting to use secondary (unknown) driver succesful\n
+0042b97f	string	Using default driver\n
+0042b995	string	sound.cpp
+0042b99f	string	 %s(%d) : error creating sound object (%s)\n
+0042b9cb	string	Default driver init failure : No sound\n
+0042b9f3	string	sound.cpp
+0042b9fd	string	 %s(%d) : error setting the coop level (%s)\n
+0042ba2a	string	sound.cpp
+0042ba34	string	 %s(%d) : not enough memory to create sound buffers\n
+0042ba69	string	sound init\n
+0042ba75	string	 %s(%d) : error illegal sound mode selected\n
+0042baa2	string	setting 3d output format\n
+0042babc	string	STEREO
+0042bac8	string	setting sound format %dHz %dbits %s\n
+0042baed	string	query interface\n
+0042bafe	string	sound.cpp
+0042bb08	string	 %s(%d) : could not query interface for 3d listener (%s)\n
+0042bb42	string	init smacker\n
+0042bb50	string	init smacker done\n
+0042bb63	string	done\n
+0042bb69	string	sound.cpp
+0042bb73	string	 %s(%d) : sound buffer index illegal %d\n
+0042bb9c	string	sound.cpp
+0042bba6	string	 %s(%d) : attempt at setting buffer %d to illegal sound frequency %dHz\n
+0042bbee	string	sound.cpp
+0042bbf8	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0042bc26	string	sound.cpp
+0042bc30	string	 %s(%d) : sound buffer index illegal %d\n
+0042bc59	string	sound.cpp
+0042bc63	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0042bc91	string	sound.cpp
+0042bc9b	string	 %s(%d) : sound buffer index illegal %d\n
+0042bcc4	string	sound.cpp
+0042bcce	string	 %s(%d) : attempt at setting buffer %d to illegal volume %dDb\n
+0042bd0d	string	sound.cpp
+0042bd17	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0042bd45	string	sound.cpp
+0042bd4f	string	 %s(%d) : sound buffer index illegal %d\n
+0042bd78	string	sound.cpp
+0042bd82	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0042bdb0	string	sound.cpp
+0042bdba	string	 %s(%d) : sound buffer index illegal %d\n
+0042bde3	string	sound.cpp
+0042bded	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042be28	string	sound.cpp
+0042be32	string	 %s(%d) : attempt at setting buffer %d to pan %dDb\n
+0042be66	string	sound.cpp
+0042be70	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0042be9e	string	sound.cpp
+0042bea8	string	 %s(%d) : sound buffer index illegal %d\n
+0042bed1	string	sound.cpp
+0042bedb	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042bf16	string	sound.cpp
+0042bf20	string	 %s(%d) : sound buffer index illegal %d (%s)\n
+0042bf4e	string	sound.cpp
+0042bf58	string	 %s(%d) : error locking sound buffer (%d) (%s)\n
+0042bf88	string	sound.cpp
+0042bf92	string	 %s(%d) : error unlocking sound buffer (%d) (%s)\n
+0042bfc4	string	[%s]\n
+0042bfca	string	file        : %s\n
+0042bfdc	string	bufferlength:%d\n
+0042bfed	string	samplerate  :%d\n
+0042bffe	string	bpps        :%d\n
+0042c00f	string	align       :%d stereo %d\n
+0042c02a	string	sound.cpp
+0042c034	string	 %s(%d) : error playing sound %d (%s)\n
+0042c05b	string	sound.cpp
+0042c065	string	 %s(%d) : error playing sound %d (%s)\n
+0042c08c	string	new buffer used %d\n
+0042c0a0	string	sound.cpp
+0042c0aa	string	 %s(%d) : duplicate buffers\n
+0042c0c7	string	duplicate used %d\n
+0042c0da	string	sound.cpp
+0042c0e4	string	 %s(%d) : error playing sound %d (%s)\n
+0042c10b	string	new buffer used %d\n
+0042c11f	string	sound.cpp
+0042c129	string	 %s(%d) : duplicate buffers\n
+0042c146	string	duplicate used %d\n
+0042c159	string	sound.cpp
+0042c163	string	 %s(%d) : error playing sound %d (%s)\n
+0042c18a	string	new buffer used %d\n
+0042c19e	string	sound.cpp
+0042c1a8	string	 %s(%d) : duplicate buffers\n
+0042c1c5	string	duplicate used %d\n
+0042c1d8	string	sound.cpp
+0042c1e2	string	 %s(%d) : sound buffer index illegal %d\n
+0042c20b	string	sound.cpp
+0042c215	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042c250	string	sound.cpp
+0042c25a	string	 %s(%d) : error setting sound position %d (%s)\n
+0042c28a	string	sound.cpp
+0042c294	string	 %s(%d) : sound buffer index illegal %d\n
+0042c2bd	string	sound.cpp
+0042c2c7	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042c302	string	sound.cpp
+0042c30c	string	 %s(%d) : error setting sound position%d (%s)\n
+0042c33b	string	sound.cpp
+0042c345	string	 %s(%d) : sound buffer index illegal %d\n
+0042c36e	string	sound.cpp
+0042c378	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042c3b3	string	sound.cpp
+0042c3bd	string	 %s(%d) : error setting sound velocity %d (%s)\n
+0042c3ed	string	sound.cpp
+0042c3f7	string	 %s(%d) : sound buffer index illegal %d\n
+0042c420	string	sound.cpp
+0042c42a	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042c465	string	sound.cpp
+0042c46f	string	 %s(%d) : error setting sound velocity %d (%s)\n
+0042c49f	string	sound.cpp
+0042c4a9	string	 %s(%d) : sound buffer index illegal %d\n
+0042c4d2	string	sound.cpp
+0042c4dc	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042c517	string	sound.cpp
+0042c521	string	 %s(%d) : error getting sound position %d (%s)\n
+0042c551	string	sound.cpp
+0042c55b	string	 %s(%d) : sound buffer index illegal %d\n
+0042c584	string	sound.cpp
+0042c58e	string	 %s(%d) : type sound buffer %d index illegal for panning \n
+0042c5c9	string	sound.cpp
+0042c5d3	string	 %s(%d) : error getting sound position %d (%s)\n
+0042c603	string	sound.cpp
+0042c60d	string	 %s(%d) : error set listener position\n
+0042c634	string	sound.cpp
+0042c63e	string	 %s(%d) : error set listener position\n
+0042c665	string	sound.cpp
+0042c66f	string	 %s(%d) : error set listener position\n
+0042c696	string	sound.cpp
+0042c6a0	string	 %s(%d) : error set listener velocity\n
+0042c6c7	string	sound.cpp
+0042c6d1	string	 %s(%d) : error getting position (%s)\n
+0042c6f8	string	sound.cpp
+0042c702	string	 %s(%d) : error getting velocity (%s)\n
+0042c729	string	sound.cpp
+0042c733	string	 %s(%d) : error get listener position\n
+0042c75a	string	sound.cpp
+0042c764	string	 %s(%d) : error get listener velocity\n
+0042c78b	string	sound.cpp
+0042c795	string	 %s(%d) : error set listener orientation\n
+0042c7bf	string	sound.cpp
+0042c7c9	string	 %s(%d) : error set listener orientation\n
+0042c7f3	string	sound.cpp
+0042c7fd	string	 %s(%d) : error set listener orientation\n
+0042c82d	string	$@sound.cpp
+0042c839	string	 %s(%d) : error set listener orientation\n
+0042c869	string	$@sound.cpp
+0042c875	string	 %s(%d) : error set listener orientation\n
+0042c8a5	string	$@sound.cpp
+0042c8b1	string	 %s(%d) : error set listener orientation\n
+0042c8db	string	new 3d buffer used %d\n
+0042c8f2	string	sound.cpp
+0042c8fc	string	 %s(%d) : error playing sound %d (%s)\n
+0042c923	string	sound.cpp
+0042c92d	string	 %s(%d) : error setting position %d (%s)\n
+0042c957	string	sound.cpp
+0042c961	string	 %s(%d) : error setting position %d (%s)\n
+0042c98b	string	sound.cpp
+0042c995	string	 %s(%d) : error setting position %d (%s)\n
+0042c9bf	string	sound.cpp
+0042c9c9	string	 %s(%d) : error setting position %d (%s)\n
+0042c9f3	string	sound.cpp
+0042c9fd	string	 %s(%d) : sound buffer %d type %d was already playing\n
+0042ca34	string	new 3d buffer used %d\n
+0042ca4b	string	sound.cpp
+0042ca55	string	 %s(%d) : illegal sound buffer index %d [0..%d]\n
+0042ca86	string	sound.cpp
+0042ca90	string	 %s(%d) : getting sound status failed %d (%s)\n
+0042cabf	string	sound.cpp
+0042cac9	string	 %s(%d) : error releasing sound buffer (%s)\n
+0042cb12	string	fatal error : no program cdrom was found\n
+0042cb3c	string	program installation check failed\n
+0042cb61	string	path=%s\n
+0042cb6c	string	failed goto path=%s\n
+0042cb84	string	fileio.cpp
+0042cb8f	string	 %s(%d) : warning : double call to init_fileio potential error.\n
+0042cbd0	string	init fileio\n
+0042cbe0	string	fileio.cpp
+0042cbeb	string	%s(%d) : could not open <%s>
+0042cc08	string	fileio.cpp
+0042cc13	string	%s(%d) : could not open <%s>
+0042cc30	string	fileio.cpp
+0042cc3b	string	 %s(%d) : error not enough memory to allocate a file list\n
+0042cc7a	string	fileio.cpp
+0042cc85	string	 %s(%d) : error while reading file list\n
+0042ccb1	string	fileio.cpp
+0042ccbc	string	%s(%d) : could not open <%s>
+0042ccd9	string	%s is %d bytes\n
+0042cce9	string	fileio done\n
+0042ccf6	string	fileio.cpp
+0042cd01	string	%s(%d) : null ptr assignment !
+0042cd20	string	fileio.cpp
+0042cd2b	string	 %s(%d)  : direct fseek 1\n
+0042cd46	string	fileio.cpp
+0042cd51	string	 %s(%d)  : direct fseek 2\n
+0042cd6c	string	fileio.cpp
+0042cd77	string	%s(%d) : fseeking past end or begin of file!
+0042cda4	string	fileio.cpp
+0042cdaf	string	%s(%d) : fseeking past end file! (%d,%d,%d)
+0042cddb	string	fileio.cpp
+0042cde6	string	%s(%d) : illegal fseek cmd.\n
+0042ce03	string	fileio.cpp
+0042ce0e	string	%s(%d) : null ptr assignment !
+0042ce2d	string	fileio.cpp
+0042ce38	string	%s(%d) : attempt at reading unopened file length
+0042ce6c	string	fileio.cpp
+0042ce77	string	 %s(%d)  : file open failed [%s]\n
+0042ce99	string	fileio.cpp
+0042cea4	string	 %s(%d)  : file open succeeded [%s]\n
+0042cecc	string	fileio.cpp
+0042ced7	string	 %s(%d)  : file open failed [%s]\n
+0042cef9	string	fileio.cpp
+0042cf04	string	 %s(%d)  : file open succeeded [%s]\n
+0042cf29	string	fileio.cpp
+0042cf34	string	 %s(%d)  : file open succeeded [%s] %d/%d pos %d %d %d\n
+0042cf6c	string	fileio.cpp
+0042cf77	string	%s(%d) : null ptr assignment !
+0042cf96	string	fileio.cpp
+0042cfa1	string	 %s(%d)  : file close\n
+0042cfb8	string	fileio.cpp
+0042cfc3	string	 %s(%d) : unopened resource file access!
+0042cfec	string	fileio.cpp
+0042cff7	string	 %s(%d) : failure to free file list\n
+0042d01c	string	controls.cpp
+0042d029	string	 %s(%d) : (add_control_to_list) control is already in use (%d).
+0042d06c	string	mouse.cpp
+0042d076	string	 %s(%d) : (get_mouse_type) mouse not initialised
+0042d0a7	string	mouse.cpp
+0042d0b1	string	 %s(%d) : (set_mouse_type) Can't change type if mouse is already initialised
+0042d0fe	string	mouse.cpp
+0042d108	string	 %s(%d) : (set_mouse_type) Unknow mouse type (%d)
+0042d13a	string	mouse.cpp
+0042d144	string	 %s(%d) : (init_mouse) Unable to load default windows cursor
+0042d181	string	mouse.cpp
+0042d18b	string	 %s(%d) : (init_mouse) No mouse_anim initialised
+0042d1bc	string	mouse.cpp
+0042d1c6	string	 %s(%d) : (mouse_on) Mouse is not initialised
+0042d1f4	string	mouse.cpp
+0042d1fe	string	 %s(%d) : (mouse_off) Mouse is not initialised
+0042d22d	string	mouse.cpp
+0042d237	string	 %s(%d) : (set_mouse_anim) You can't change the windows default mouse
+0042d27d	string	mouse.cpp
+0042d287	string	 %s(%d) : (set_mouse_anim) illegal animation for mouse %d (max %d), current animation %d\n
+0042d2e1	string	mouse.cpp
+0042d2eb	string	 %s(%d) : (set_mouse_anim) illegal frame nr for mouse %d (max %d), current animation %d\n
+0042d344	string	mouse.cpp
+0042d34e	string	%s(%d) : (set_mouse_anim) image %d used, is out side bounds (%d).\n
+0042d391	string	mouse.cpp
+0042d39b	string	%s(%d) : (set_mouse_anim) mouse image (%d) is trying to dereference a NULL pointer.\n
+0042d3f0	string	mouse.cpp
+0042d3fa	string	 %s(%d) : (get_mouse_anim) Mouse is not initialised
+0042d42e	string	mouse.cpp
+0042d438	string	 %s(%d) : (get_mouse_anim) windows default mouse active
+0042d470	string	mouse.cpp
+0042d47a	string	 %s(%d) : (get_mouse_anim) No mouse animation is set
+0042d4af	string	mouse.cpp
+0042d4b9	string	 %s(%d) : (set_mouse_pos) Mouse is not initialised
+0042d4ec	string	mouse.cpp
+0042d4f6	string	 %s(%d) : (get_mouse_pos) Mouse is not initialised
+0042d529	string	mouse.cpp
+0042d533	string	 %s(%d) : (set_mouse_hotspot) Mouse is not initialised
+0042d56a	string	mouse.cpp
+0042d574	string	 %s(%d) : (get_mouse_hotspot) Mouse is not initialised
+0042d5ab	string	mouse.cpp
+0042d5b5	string	 %s(%d) : (draw_mouse) Mouse is not initialised
+0042d5e5	string	mouse.cpp
+0042d5ef	string	 %s(%d) : (draw_mouse) You can't change the windows default mouse
+0042d631	string	mouse.cpp
+0042d63b	string	 %s(%d) : (handle_mouse) Mouse is not initialised
+0042d679	string	 %s(%d) : failed to set color key(%s)\n
+0042d6a0	string	help.cpp
+0042d6a9	string	 %s(%d) : help grid blitting error
+0042d6cc	string	help.cpp
+0042d6d5	string	 %s(%d) : help grid blitting error
+0042d6f8	string	help.cpp
+0042d701	string	 %s(%d) : help grid blitting error
+0042d724	string	help.cpp
+0042d72d	string	 %s(%d) : (play_help) empty form or no form is active 
+0042d764	string	help.cpp
+0042d76d	string	 %s(%d) : (play_help) illegal form index found (%d)
+0042d7aa	string	 %s(%d) : (set_help_key) No free key availible max. : %d.
+0042d7e4	string	 %s(%d) : illegal mem image array index %d (max=%d) (xsize)\n
+0042d821	string	 %s(%d) : get xsize of mem image while not initialized\n
+0042d859	string	 %s(%d) : suspect illegal image xsize %d\n
+0042d883	string	 %s(%d) : illegal mem image array index %d (max=%d) (ysize)\n
+0042d8c0	string	 %s(%d) : get ysize of mem image while not initialized\n
+0042d8f8	string	 %s(%d) : suspect illegal image ysize %d\n
+0042d922	string	 %s(%d) : illegal mem image array index %d (max=%d) (mx)\n
+0042d95c	string	 %s(%d) : get mx of mem image while not initialized\n
+0042d991	string	 %s(%d) : illegal mem image array index %d (max=%d) (my)\n
+0042d9cb	string	 %s(%d) : get my of mem image while not initialized\n
+0042da00	string	sprite.cpp
+0042da0b	string	 %s(%d) : illegal sprite index %d\n
+0042da2e	string	sprite.cpp
+0042da39	string	 %s(%d) : illegal mem image index %d\n
+0042da5f	string	sprite.cpp
+0042da6a	string	 %s(%d) : illegal sprite index %d\n
+0042da8d	string	sprite.cpp
+0042da98	string	 %s(%d) : illegal mem image index %d\n
+0042dabe	string	sprite.cpp
+0042dac9	string	 %s(%d) : alloc_mem_images : unkown alloc type %d\n
+0042dafc	string	sprite.cpp
+0042db07	string	 %s(%d) : index out of mem_image array failure %d\n
+0042db3a	string	sprite.cpp
+0042db45	string	 %s(%d) : illegal mem_xsize ( %d ) = %d\n
+0042db6e	string	sprite.cpp
+0042db79	string	 %s(%d) : illegal mem_ysize ( %d ) = %d\n
+0042dba2	string	sprite.cpp
+0042dbad	string	 %s(%d) : error illegal mem image size %d (%d,%d)\n
+0042dbe0	string	sprite.cpp
+0042dbeb	string	 %s(%d) : failed to set color key(%s)\n
+0042dc12	string	sprite.cpp
+0042dc1d	string	 %s(%d) : illegal alloc type %d for mem image #%d\n
+0042dc50	string	sprite.cpp
+0042dc5b	string	 %s(%d) : index out of mem_image array failure %d\n
+0042dc8e	string	sprite.cpp
+0042dc99	string	 %s(%d) : illegal alloc type %d for mem image #%d\n
+0042dccc	string	sprite.cpp
+0042dcd7	string	 %s(%d) : index out of mem_image array failure %d\n
+0042dd0a	string	sprite.cpp
+0042dd15	string	 %s(%d) : index out of mem_image array failure %d\n
+0042dd48	string	sprite.cpp
+0042dd53	string	 %s(%d) : index out of mem_image array failure %d\n
+0042dd8c	string	sprite.cpp
+0042dd97	string	%s(%d) : index file seek error (probably wrong index %d)
+0042ddd0	string	converting to 16 bits\n
+0042dde7	string	converting to 24 bits\n
+0042ddfe	string	pf none\n
+0042de07	string	starting to show images 2\n
+0042de22	string	done show images\n
+0042de37	string	%s maxmemimages = %d\n
+0042de4d	string	%s allocating images\n
+0042de63	string	%s allocating image %d\n
+0042de7b	string	%s allocating images done\n
+0042de98	string	font.cpp
+0042dea1	string	 %s(%d) : unidentified focus error.\n
+0042dec6	string	font.cpp
+0042decf	string	 %s(%d) : unidentified focus error.\n
+0042def4	string	font.cpp
+0042defd	string	 %s(%d) : No Free Font index.\n
+0042df1c	string	font.cpp
+0042df25	string	 %s(%d) : Font index out of bounds max (%d).\n
+0042df53	string	font.cpp
+0042df5c	string	 %s(%d) : Font index already in use (%d).\n
+0042df87	string	font.cpp
+0042df90	string	 %s(%d) : Font index out of bounds max (%d).\n
+0042dfbe	string	font.cpp
+0042dfc7	string	 %s(%d) : Font is not loaded (%d).\n
+0042dfeb	string	font.cpp
+0042dff4	string	 %s(%d) : Font index out of bounds max (%d).\n
+0042e022	string	font.cpp
+0042e02b	string	 %s(%d) : Font index out of bounds max (%d).\n
+0042e059	string	font.cpp
+0042e062	string	 %s(%d) : illegal bkmode for font
+0042e084	string	font.cpp
+0042e08d	string	 %s(%d) : Font index out of bounds max (%d).\n
+0042e0bc	string	Error 0
+0042e0c4	string	No such file or directory
+0042e0de	string	Argument list too big
+0042e0f4	string	Exec format error
+0042e106	string	Bad file number
+0042e116	string	Not enough memory
+0042e128	string	Permission denied
+0042e13a	string	File exists
+0042e146	string	Cross-device link
+0042e158	string	Invalid argument
+0042e169	string	File table overflow
+0042e17d	string	Too many open files
+0042e191	string	No space left on device
+0042e1a9	string	Argument too large
+0042e1bc	string	Result too large
+0042e1cd	string	Resource deadlock would occur
+0042e1eb	string	unknown error
+0042e1fc	string	Joystick invalid params\n
+0042e215	string	Joystick invalid params\n
+0042e22e	string	Joystick invalid params\n
+0042e247	string	Joystick One Found\n
+0042e25b	string	(1)Xbase : %d\n
+0042e26a	string	(1)Ybase : %d\n
+0042e279	string	(1)Xmin : %d\n
+0042e287	string	(1)Xmax : %d\n
+0042e295	string	(1)Ymin : %d\n
+0042e2a3	string	(1)Ymax : %d\n
+0042e2b1	string	Joystick invalid param\n
+0042e2c9	string	Joystick Two Found\n
+0042e2dd	string	(2)Xbase : %d\n
+0042e2ec	string	(2)Ybase : %d\n
+0042e2fb	string	(2)Xmin : %d\n
+0042e309	string	(2)Xmax : %d\n
+0042e317	string	(2)Ymin : %d\n
+0042e325	string	(2)Ymax : %d\n
+0042e333	string	(set_joystick_keys) invalid joystick number (%d)\n
+0042e365	string	(set_joystick_keys) invalid joystick key type. (%d)\n
+0042e39a	string	(set_joystick_sencesibility) invalid percentage must be between 0.05 and 1
+0042e3ec	string	?(get_joystick_position) invalid joystick number (%d)\n
+0042e424	string	(keyispressed) illegal device requested (%d)
+0042e45c	string	 %s(%d) : DESTROY MESSAGE\n
+0042e47f	string	 %s(%d) : QUIT MESSAGE\n
+0042e498	string	clipblit.cpp
+0042e4a5	string	 %s(%d) : illegal clipping limit top x.
+0042e4cd	string	clipblit.cpp
+0042e4da	string	 %s(%d) : illegal clipping limit top y.
+0042e502	string	clipblit.cpp
+0042e50f	string	 %s(%d) : illegal clipping limit bottom x.
+0042e53a	string	clipblit.cpp
+0042e547	string	 %s(%d) : illegal clipping limit bottom y.
+0042e572	string	clipblit.cpp
+0042e57f	string	 %s(%d) : blitting error (%s).
+0042e59e	string	clipblit.cpp
+0042e5ab	string	 %s(%d) : blitting error (%s).
+0042e5ca	string	clipblit.cpp
+0042e5d7	string	 %s(%d) : blitting error (%s).
+0042e5f6	string	clipblit.cpp
+0042e603	string	 %s(%d) : blitting error (%s).
+0042e622	string	clipblit.cpp
+0042e62f	string	 %s(%d) : blitting error (%s).
+0042e64e	string	clipblit.cpp
+0042e65b	string	 %s(%d) : blitting error (%s).
+0042e67a	string	clipblit.cpp
+0042e687	string	 %s(%d) : unidentified focus error (%d).\n
+0042e6b1	string	clipblit.cpp
+0042e6be	string	 %s(%d) : unidentified focus error (%d).\n
+0042e6e8	string	clipblit.cpp
+0042e6f5	string	 %s(%d) : no clipping limit set\n
+0042e716	string	clipblit.cpp
+0042e723	string	 %s(%d) : unidentified focus error (%d).\n
+0042e74d	string	clipblit.cpp
+0042e75a	string	 %s(%d) : no clipping limit set\n
+0042e77b	string	clipblit.cpp
+0042e788	string	 %s(%d) : illegal array index %d\n
+0042e7aa	string	clipblit.cpp
+0042e7b7	string	 %s(%d) : blt with unallocated mem image %d\n
+0042e7e4	string	clipblit.cpp
+0042e7f1	string	 %s(%d) : unidentified focus error (%d).\n
+0042e81b	string	clipblit.cpp
+0042e828	string	 %s(%d) : no clipping limit set\n
+0042e849	string	clipblit.cpp
+0042e856	string	 %s(%d) : unidentified focus error (%d).\n
+0042e880	string	clipblit.cpp
+0042e88d	string	 %s(%d) : no clipping limit set\n
+0042e8ae	string	clipblit.cpp
+0042e8bb	string	 %s(%d) : had to restore %d\n
+0042e8d8	string	clipblit.cpp
+0042e8e5	string	 %s(%d) : xvga_screen lost (?) (%d) going to restore\n
+0042e91b	string	clipblit.cpp
+0042e928	string	 %s(%d) : restore xvga_screen (%s).
+0042e94c	string	clipblit.cpp
+0042e959	string	 %s(%d) : set mem image (%d) to screen blitting error (%d,%d) , (%d,%d) , (%d,%d) (%d,%d) (%s).
+0042e9b9	string	clipblit.cpp
+0042e9c6	string	 %s(%d) : xvga_back_screen lost (?) (%d) going to restore\n
+0042ea01	string	clipblit.cpp
+0042ea0e	string	 %s(%d) : restore xvga_back_screen (%s).
+0042ea37	string	clipblit.cpp
+0042ea44	string	 %s(%d) : set mem image (%d) to back screen blitting error (%d,%d) , (%d,%d) , (%d,%d) (%d,%d) (%s).
+0042eaa9	string	clipblit.cpp
+0042eab6	string	 %s(%d) : xvga_buffer_screen lost (?) (%d) going to restore\n
+0042eaf3	string	clipblit.cpp
+0042eb00	string	 %s(%d) : restore xvga_buffer_screen (%s).
+0042eb2b	string	clipblit.cpp
+0042eb38	string	 %s(%d) : set mem image (%d) to buffer screen blitting error (%d,%d) , (%d,%d) , (%d,%d) (%d,%d) (%s).
+0042eb9f	string	clipblit.cpp
+0042ebac	string	 %s(%d) : illegal array index %d\n
+0042ebce	string	clipblit.cpp
+0042ebdb	string	 %s(%d) : blt with unallocated mem image %d\n
+0042ec08	string	clipblit.cpp
+0042ec15	string	 %s(%d) : no clipping limit set\n
+0042ec38	string	rcpcx.cpp
+0042ec42	string	 %s(%d) : unidentified focus error (%d).\n
+0042ec76	string	 %s(%d) : error reading\n
+0042ec8f	string	rcpcx.cpp
+0042ec99	string	 %s(%d) : error reading\n
+0042ecb2	string	rcpcx.cpp
+0042ecbc	string	 %s(%d) : blitting error (%s).
+0042ecdb	string	rcpcx.cpp
+0042ece5	string	 %s(%d) : error reading\n
+0042ecfe	string	bpl %d, width %d\n
+0042ed1a	string	 %s(%d) : error reading\n
+0042ed3d	string	 %s(%d)  : header read]\n
+0042ed60	string	 %s(%d)  : no error header read]\n
+0042ed82	string	creating surface %d,%d\n
+0042ed9a	string	creation succesfull\n
+0042edb9	string	 %s(%d)  : closing\n
+0042edd7	string	 %s(%d) : error reading\n
+0042edfa	string	 %s(%d)  : header read]\n
+0042ee1d	string	 %s(%d)  : no error header read]\n
+0042ee3f	string	creating surface %d,%d\n
+0042ee57	string	creation succesfull\n
+0042ee76	string	 %s(%d)  : closing\n
+0042ee94	string	 %s(%d) : error reading\n
+0042eeb7	string	 %s(%d)  : header read]\n
+0042eeda	string	 %s(%d)  : no error header read]\n
+0042eefc	string	creating surface %d,%d\n
+0042ef14	string	creation succesfull\n
+0042ef33	string	 %s(%d)  : closing\n
+0042ef51	string	 %s(%d) : error reading\n
+0042ef74	string	 %s(%d)  : header read]\n
+0042ef97	string	 %s(%d)  : no error header read]\n
+0042efb9	string	creation succesfull\n
+0042efce	string	blitting to destination\n
+0042eff1	string	 %s(%d) : blitting error (%s)\n
+0042f010	string	Release buffer surface\n
+0042f032	string	 %s(%d)  : closing\n
+0042f050	string	 %s(%d)  : header read]\n
+0042f073	string	 %s(%d)  : no error header read]\n
+0042f095	string	creation succesfull\n
+0042f0aa	string	blitting to destination\n
+0042f0cd	string	 %s(%d) : blitting error (%s)\n
+0042f0ec	string	Release buffer surface\n
+0042f10e	string	 %s(%d)  : closing\n
+0042f124	string	wipes.cpp
+0042f12e	string	 %s(%d) : (handle_wipe) incorrect position or size x(%d) y(%d) w(%d) h(%d) 
+0042f17a	string	wipes.cpp
+0042f184	string	 %s(%d) : (handle_wipe) incorrect size (out side screen) w(%d) h(%d) 
+0042f1ca	string	wipes.cpp
+0042f1d4	string	 %s(%d) : (handle_wipe) incorrect width (must be 4 aligned w/4) w(%d) 
+0042f21c	string	forms.cpp
+0042f226	string	 %s(%d) : (dispatch_form_message) Unused control type found (%d) 
+0042f268	string	forms.cpp
+0042f272	string	 %s(%d) : (set_control_state) control doesn't existed (%d) nmbofcontrols (%d) 
+0042f2c1	string	forms.cpp
+0042f2cb	string	 %s(%d) : (set_control_state) No active from 
+0042f2f9	string	forms.cpp
+0042f303	string	 %s(%d) : (set_control_state) areabutton control's can't have focus (%d)
+0042f34c	string	forms.cpp
+0042f356	string	 %s(%d) : (enable_control) control doesn't existed (%d) nmbofcontrols (%d) 
+0042f3a2	string	forms.cpp
+0042f3ac	string	 %s(%d) : (enable_control) No active from 
+0042f3d7	string	forms.cpp
+0042f3e1	string	 %s(%d) : (disable_control) control doesn't existed (%d) nmbofcontrols (%d) 
+0042f42e	string	forms.cpp
+0042f438	string	 %s(%d) : (disable_control) No active from 
+0042f464	string	forms.cpp
+0042f46e	string	 %s(%d) : (focus_control) control doesn't existed (%d) nmbofcontrols (%d) 
+0042f4b9	string	forms.cpp
+0042f4c3	string	 %s(%d) : (focus_control) No active from 
+0042f4ed	string	forms.cpp
+0042f4f7	string	%s(%d) : control illegal frame image.
+0042f51d	string	forms.cpp
+0042f527	string	 %s(%d) : (check_control_position) upper left corner is off screen control (%d) x (%d) y (%d)
+0042f585	string	forms.cpp
+0042f58f	string	 %s(%d) : (check_control_position) width or height is negative or zero, control (%d) w (%d) h (%d)
+0042f5f2	string	forms.cpp
+0042f5fc	string	 %s(%d) : (check_control_position) lower rigth corner is off screen control (%d) w (%d) h (%d) w+x (%d) h+y (%d)
+0042f66d	string	forms.cpp
+0042f677	string	 %s(%d) : (get_previous_control_index) control doesn't existed (%d) nmbofcontrols (%d) 
+0042f6cf	string	forms.cpp
+0042f6d9	string	 %s(%d) : (get_next_control_index) control doesn't existed (%d) nmbofcontrols (%d) 
+0042f72d	string	forms.cpp
+0042f737	string	 %s(%d) : (get_old_control_state) control doesn't existed (%d) 
+0042f777	string	forms.cpp
+0042f781	string	 %s(%d) : (get_control_type) control doesn't existe (%d) 
+0042f7bb	string	forms.cpp
+0042f7c5	string	 %s(%d) : (get_control_state) control doesn't existed (%d) 
+0042f801	string	forms.cpp
+0042f80b	string	 %s(%d) : (get_control_x) control doesn't existed (%d) 
+0042f843	string	forms.cpp
+0042f84d	string	 %s(%d) : (get_control_x) control doesn't existed (%d) 
+0042f885	string	forms.cpp
+0042f88f	string	 %s(%d) : (get_control_y) control doesn't existed (%d) 
+0042f8c7	string	forms.cpp
+0042f8d1	string	 %s(%d) : (get_control_index) window isn't a control (%d) 
+0042f90c	string	forms.cpp
+0042f916	string	 %s(%d) : (get_control_index) window isn't a control (%d) 
+0042f951	string	forms.cpp
+0042f95b	string	 %s(%d) : (get_control_pointer) control doesn't exist (%d) max.(%d)
+0042f99f	string	forms.cpp
+0042f9a9	string	 %s(%d) : (call_help_function) control doesn't existed (%d) nmbofcontrols (%d) 
+0042f9f9	string	forms.cpp
+0042fa03	string	 %s(%d) : (destroy_form) Unused control type found (%d) 
+0042fa3c	string	forms.cpp
+0042fa46	string	 %s(%d) : (destroy_form) Unused control type found (%d) 
+0042fa7f	string	forms.cpp
+0042fa89	string	 %s(%d) : (destroy_form) Unused control type found (%d) 
+0042fac2	string	forms.cpp
+0042facc	string	 %s(%d) : (check_form_key_pressed) Unused control type found (%d) 
+0042fb0f	string	forms.cpp
+0042fb19	string	 %s(%d) : (handle_form) No active from to handle 
+0042fb4c	string	editbox.cpp
+0042fb58	string	 %s(%d) : (set_edit_keys_allowed) string to long max. (%d).
+0042fb94	string	abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.<,/?![]%$&*+-=>:;' 
+0042fbe7	string	editbox.cpp
+0042fbf3	string	 %s(%d) : (get_edit_box_text) control isn't a editbox (%d) 
+0042fc2f	string	editbox.cpp
+0042fc3b	string	 %s(%d) : (destroy_edit_box) edit box not initialised. (call init_edit_box) 
+0042fc88	string	editbox.cpp
+0042fc94	string	 %s(%d) : (destroy_edit_box) no valid window handle.
+0042fcc9	string	editbox.cpp
+0042fcd5	string	 %s(%d) : (edit_windows_box) edit box not initialised. (call init_edit_box) 
+0042fd22	string	editbox.cpp
+0042fd2e	string	 %s(%d) : (edit_windows_box) number of lines may not be zero or negative (min. 1)
+0042fd80	string	editbox.cpp
+0042fd8c	string	 %s(%d) : (edit_windows_box) number of chars may not be zero or negative 
+0042fdda	string	editbox.cpp
+0042fde6	string	 %s(%d) : (edit_windows_box) height of edit box (%d) to small for font height (%d) 
+0042fe4e	string	Unable to create a window for edit box (%d)
+0042fe7c	string	pure virtual function called!
+0042fe9c	string	ddinput.cpp
+0042fea8	string	 %s(%d) : failed to create direct input object (%s)\n
+0042fedd	string	ddinput.cpp
+0042fee9	string	 %s(%d) : not yet implemented\n
+0042ff08	string	ddinput.cpp
+0042ff14	string	 %s(%d) : failed to create keyboard device (%s)\n
+0042ff45	string	ddinput.cpp
+0042ff51	string	 %s(%d) : failed to set data format for the keyboard device (%s)\n
+0042ff93	string	ddinput.cpp
+0042ff9f	string	 %s(%d) : failed to set coop level for the keyboard device (%s)\n
+0042ffe0	string	ddinput.cpp
+0042ffec	string	 %s(%d) : failed to Acquire the keyboard device (%s)\n
+00430022	string	ddinput.cpp
+0043002e	string	 %s(%d) : error input devices have not benn initialized\n
+00430067	string	ddinput.cpp
+00430073	string	 %s(%d) : error running keyboard control panel (%s)\n
+004300a8	string	ddinput.cpp
+004300b4	string	 %s(%d) : error running mouse control panel (%s)\n
+004300e6	string	ddinput.cpp
+004300f2	string	 %s(%d) : error keyboard device wasn't initialized\n
+00430126	string	ddinput.cpp
+00430132	string	 %s(%d) : error getting keyboard device state  (%s)\n
+00430168	string	timer.cpp
+00430172	string	 %s(%d) : error not enough memory to allocate timer place holders\n
+004301b5	string	timer init ok = %d\n
+004301c9	string	timer.cpp
+004301d3	string	 %s(%d) : trying to reference uninitialized timer place holders\n
+00430214	string	timer.cpp
+0043021e	string	 %s(%d) : trying to reference uninitialized timer place holders\n
+0043025f	string	timer.cpp
+00430269	string	 %s(%d) : out of timer place holders max=%d\n
+00430296	string	timer set = %d\n
+004302b0	string	 %s(%d) : error not enough memory to allocate a palette\n
+004302f1	string	 %s(%d) : 16 bit screen mode -> ignore palette\n
+00430329	string	 %s(%d) : could not create a palette (%s)\n
+0043035c	string	 %s(%d) : palette was not initialized\n
+0043038b	string	 %s(%d) : could not set the palette (%s)\n
+004303bd	string	 %s(%d) : could not set the palette (%s)\n
+004303ef	string	 %s(%d) : could not set the palette (%s)\n
+00430421	string	 %s(%d) : unknown focus defined\n
+00430442	string	pal.cpp
+0043044a	string	 %s(%d) : palette was not initialized\n
+00430471	string	pal.cpp
+00430479	string	 %s(%d) : illegal palette base entry (%d)\n
+004304a4	string	pal.cpp
+004304ac	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+004304e9	string	pal.cpp
+004304f1	string	 %s(%d) : could set entries (%s)\n
+0043051b	string	 %s(%d) : palette was not initialized\n
+0043054a	string	 %s(%d) : illegal palette base entry (%d)\n
+0043057d	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+004305c2	string	 %s(%d) : could set entries (%s)\n
+004305ec	string	 %s(%d) : palette was not initialized\n
+0043061b	string	 %s(%d) : illegal palette base entry (%d)\n
+0043064e	string	 %s(%d) : trying to reference an illegal palette entry (%d)\n
+00430693	string	 %s(%d) : illegal flag value %d\n
+004306b4	string	pformat.cpp
+004306c0	string	 %s(%d) : error getting hdc of screen (%s)\n
+004306ec	string	pformat.cpp
+004306f8	string	 %s(%d) : error getting hdc of screen (%s)\n
+00430724	string	pformat.cpp
+00430730	string	 %s(%d) : error getting hdc of screen (%s)\n
+0043075c	string	pformat.cpp
+00430768	string	 %s(%d) : error getting hdc of screen (%s)\n
+00430794	string	pformat.cpp
+004307a0	string	 %s(%d) : could not set color key (%s)\n
+004307c8	string	pformat.cpp
+004307d4	string	 %s(%d) : error please use get_xvga_pixel_format first\n
+0043080c	string	not yet supported\n
+0043081f	string	not yet supported\n
+00430832	string	pformat.cpp
+0043083e	string	 %s(%d) : error please use get_xvga_pixel_format first\n
+00430876	string	not yet supported\n
+00430889	string	not yet supported\n
+0043089c	string	pformat.cpp
+004308a8	string	 %s(%d) : unable to get pixelformat (%s).
+004308d4	string	hwinfo.cpp
+004308df	string	 s(%d) : error attempting to find cdrom before drive list was made\n
+00430923	string	hwinfo.cpp
+0043092e	string	 %s(%d) : error not enough memory to allocate a palette\n
+0043096c	string	%s = UNAVAILABLE\n
+0043097e	string	%s = UNAVAILABLE\n
+00430990	string	%s = NETWORK\n
+0043099e	string	%s = CDROM\n
+004309aa	string	%s = HDD\n
+004309b4	string	%s = RAM\n
+004309be	string	%s = FLOPPY\n
+004309cb	string	Getting system information\n
+004309e7	string	Computername = %s\n
+004309fa	string	Username = %s\n
+00430a09	string	Total Physical Memory     : %d Kb\n
+00430a2c	string	Available Physical Memory : %d Kb\n
+00430a4f	string	Memory Load (of total)    : %d\n
+00430a6f	string	386 processor installed\n
+00430a88	string	486 processor installed\n
+00430aa1	string	Pentium processor installed\n
+00430abe	string	Unknown processor installed\n
+00430adb	string	Startup = Normal Boot\n
+00430af2	string	Startup = Safe Mode Boot\n
+00430b0c	string	Startup = Safe Mode Boot With Network\n
+00430b33	string	Mouse is present\n
+00430b45	string	Network is present\n
+00430b59	string	Windows 95 thinks this is a slow machine\n
+00430b83	string	 %s(%d) : not enough memory to retrieve driver info\n
+00430bb8	string	%s, %s\n
+00430bc0	string	DD3Dfx
+00430bc7	string	dd3ddfx driver found %d\n
+00430be4	string	Righteous dd3ddfx driver found %d\n
+00430c0c	string	secondary driver found %d\n
+00430c27	string	using 3dfx driver %d\n
+00430c3d	string	using unknown secondary driver %d\n
+00430c60	string	using 3dfx driver %d\n
+00430c76	string	using unknown secondary driver %d\n
+00430c99	string	mode %d,%d,%d\n
+00430ca8	string	getting screen mode info\n
+00430cc2	string	hwinfo.cpp
+00430ccd	string	 %s(%d) : could not get mode information (%s)\n
+00430cfc	string	done getting screen mode info\n
+00430d1b	string	hwinfo.cpp
+00430d26	string	 %s(%d) : illegal mode index, undefined internal mode\n
+00430d60	string	smacker.cpp
+00430d6c	string	 %s(%d) : failed to set directsound for smacker
+00430d9c	string	smacker.cpp
+00430da8	string	 %s(%d) : failed to set directsound for smacker
+00430dd8	string	smacker.cpp
+00430de4	string	 %s(%d) : blitting error (%s).
+00430e03	string	smacker.cpp
+00430e0f	string	 %s(%d) : blitting error (%s).
+00430e2e	string	smacker.cpp
+00430e3a	string	 %s(%d) : (playing_smacker) Smacker is not initialised
+00430e71	string	failed to open smacker file(%s)\n
+00430e92	string	smacker.cpp
+00430e9e	string	 %s(%d) : x or y is not on the screen (%d,%d) or illegal size (%d,%d).
+00430ee5	string	smacker.cpp
+00430ef1	string	 %s(%d) : the smacker is bigger than the screen size (%d,%d,%d,%d).
+00430f35	string	closing smacker\n
+00430f46	string	closing smacker done\n
+00430f5c	string	smacker.cpp
+00430f68	string	 %s(%d) : (set_smacker_key) No free key availible max. : %d.
+00430fa5	string	smacker.cpp
+00430fb1	string	 %s(%d) : (set_smacker_key) Unknow keytype (%d).
+00430fe4	string	buttons.cpp
+00430ff0	string	 %s(%d) : (destroy_button) no valid window handle.
+00431023	string	buttons.cpp
+0043102f	string	 %s(%d) : (create_button) not enough button states/frames in anim (4) (%d) 
+0043107b	string	BUTTON
+00431082	string	Unable to create a window for controlbutton (%d)
+004310b3	string	buttons.cpp
+004310bf	string	 %s(%d) : (create_button) Anim focus needs more frames then 1 (%d) 
+00431103	string	buttons.cpp
+0043110f	string	 %s(%d) : (draw_button) no valid window handle, not in form.
+0043114c	string	tgglbuts.cpp
+00431159	string	 %s(%d) : (get_togglebutton_togglestate) control doesn't exist (%d) 
+0043119e	string	tgglbuts.cpp
+004311ab	string	 %s(%d) : (get_togglebutton_togglestate) control isn't a togglebutton (%d) 
+004311f7	string	tgglbuts.cpp
+00431204	string	 %s(%d) : (set_togglebutton_togglestate) control doesn't exist (%d) 
+00431249	string	tgglbuts.cpp
+00431256	string	 %s(%d) : (get_togglebutton_togglestate) control isn't a togglebutton (%d) 
+004312a2	string	tgglbuts.cpp
+004312af	string	 %s(%d) : (set_togglebutton_togglestate) state doesn't exist (max.) (%d) 
+004312f9	string	tgglbuts.cpp
+00431306	string	 %s(%d) : (destroy_togglebutton) no valid window handle.
+0043133f	string	tgglbuts.cpp
+0043134c	string	 %s(%d) : (create_togglebutton) oneven togglebutton states/frames in anim (NMB_FRAME_STATES*states) (%d) 
+004313b6	string	BUTTON
+004313bd	string	Unable to create a window for togglebutton (%d)
+004313ed	string	tgglbuts.cpp
+004313fa	string	 %s(%d) : (draw_togglebutton) no valid window handle, not in form.
+00431440	string	areabuts.cpp
+0043144d	string	 %s(%d) : (destroy_areabutton) no valid window handle.
+00431484	string	areabuts.cpp
+00431491	string	 %s(%d) : (create_areabutton) no width or height given width (%d) height (%d).
+004314e0	string	STATIC
+004314e7	string	Unable to create a window for areabutton (%d)
+00431515	string	areabuts.cpp
+00431522	string	 %s(%d) : (draw_areabutton) no valid window handle, not in form.
+00431564	string	animbuts.cpp
+00431571	string	 %s(%d) : (destroy_animbutton) no valid window handle.
+004315a8	string	BUTTON
+004315af	string	Unable to create a window for animbutton (%d)
+004315dd	string	animbuts.cpp
+004315ea	string	 %s(%d) : (draw_animbutton) no valid window handle, not in form.
+0043162c	string	radiobut.cpp
+00431639	string	 %s(%d) : (destroy_radiobutton) no valid window handle.
+00431671	string	radiobut.cpp
+0043167e	string	 %s(%d) : (create_radiobutton) not enough button states/frames in anim (5) (%d) 
+004316cf	string	BUTTON
+004316d6	string	Unable to create a window for radiobutton (%d)
+00431705	string	radiobut.cpp
+00431712	string	 %s(%d) : (draw_radiobutton) no valid window handle, not in form.
+00431758	string	(wipe_vrollbarup) illegal call -> use handle_wipes
+0043178b	string	(wipe_vrollbardown) illegal call -> use handle_wipes
+004317c0	string	(wipe_draw_pixel_grid) illegal call -> use handle_wipes
+004317f8	string	(wipe_draw_pixel_grid) illegal focus
+0043181d	string	(wipe_pixelfade_full) illegal call -> use handle_wipes
+00431854	string	(wipe_scroll_in_left) illegal call -> use handle_wipes
+0043188b	string	wipescrl.cpp
+00431898	string	 %s(%d) : blitting error (%s).
+004318b7	string	wipescrl.cpp
+004318c4	string	 %s(%d) : blitting error (%s).
+004318e3	string	(wipe_scroll_in_right) illegal call -> use handle_wipes
+0043191b	string	coordinaten: %d, %d, %d, %d\n
+00431938	string	wipescrl.cpp
+00431945	string	 %s(%d) : blitting error (%s).
+00431964	string	wipescrl.cpp
+00431971	string	 %s(%d) : blitting error (%s).
+00431990	string	(wipe_scroll_in_top) illegal call -> use handle_wipes
+004319c6	string	wipescrl.cpp
+004319d3	string	 %s(%d) : blitting error (%s).
+004319f2	string	wipescrl.cpp
+004319ff	string	 %s(%d) : blitting error (%s).
+00431a1e	string	(wipe_scroll_in_bottom) illegal call -> use handle_wipes
+00431a57	string	wipescrl.cpp
+00431a64	string	 %s(%d) : blitting error (%s).
+00431a83	string	wipescrl.cpp
+00431a90	string	 %s(%d) : blitting error (%s).
+00431ab0	string	(wipe_luxaflex_horizontal) illegal call -> use handle_wipes
+00431aec	string	wipeluxa.cpp
+00431af9	string	 %s(%d) : wipe_luxafle_horizontal blitting error
+00431b2a	string	wipeluxa.cpp
+00431b37	string	 %s(%d) : wipe_luxafle_horizontal blitting error
+00431b68	string	(wipe_luxaflex_horizontal) illegal call -> use handle_wipes
+00431ba4	string	wipeluxa.cpp
+00431bb1	string	 %s(%d) : wipe_luxafle_horizontal blitting error
+00431be2	string	wipeluxa.cpp
+00431bef	string	 %s(%d) : wipe_luxafle_horizontal blitting error
+00431c24	string	read from
+00431c2e	string	written
+00431c36	string	The instruction at %08lx referenced memory at %08lx\nThe memory could not be %s
+00431c85	string	An privileged instruction was executed at address %08lx
+00431cbd	string	An illegal instruction was executed at address %08lx
+00431cf2	string	An integer divide by zero was encountered at address %08lx
+00431d2d	string	A stack overflow was encountered at address %08lx
+00431d5f	string	The program encountered a problem at address %08lx and cannot continue
+00431da6	string	user32.dll
+00431db1	string	MessageBoxExA
+00431dbf	string	Application Error: 
+00431dd3	string	\n\nClick on OK to terminate the application
+00431e00	string	Not enough memory to allocate file structures\r\n
+00431e30	string	Floating-point support not loaded\r\n
+00431e54	string	ABNORMAL TERMINATION\r\n
+00431e6c	string	conin$
+00431e73	string	conout$
+00431e7c	string	Thread has no thread-specific data\r\n
+00431ee1	string	acosh
+00431ef0	string	log10
+00431ef6	string	atanh
+00431efc	string	atan2
+00431f07	string	dpowi
+00431f26	string	cotan
+00431f31	string	yE>Domain error
+00431f41	string	Argument singularity
+00431f56	string	Overflow range error
+00431f6b	string	Underflow range error
+00431f81	string	Total loss of significance
+00431f9c	string	Partial loss of significance
+00432194	string	Jeroen
+004321c0	string	David
+004321ec	string	Rogier
+00432270	string	Richard
+0043229c	string	Brian
+004322f4	string	Milan
+0043234c	string	Arnoud
+00432378	string	Peter
+004323a4	string	Rogier
+004323d0	string	Jeroen
+00432428	string	Richard
+00432480	string	Stefan
+004324ac	string	Harry
+00432504	string	Karin
+00432530	string	Johan
+0043255c	string	David
+00432588	string	Brian
+0043260c	string	Stefanie
+00432638	string	Ronald
+00432690	string	Jeroen
+004326e8	string	George
+0043276c	string	Patrick
+00432798	string	Richard
+004327c4	string	Brian
+004327f0	string	Evelyne
+0043281c	string	Milan
+00432874	string	Sander
+004328cc	string	Harry
+00432950	string	Richard
+0043297c	string	Brian
+00432a58	string	Jeroen
+00432b34	string	Frans
+00432b60	string	Bianca
+00432b8c	string	Ingrid
+00432bb8	string	Willem
+00432be4	string	Jeroen
+00432c10	string	David
+00432c3c	string	Rogier
+00432cc0	string	Richard
+00432cec	string	Brian
+00432d44	string	Milan
+00443528	TerminatedCString	ADVAPI32.dll
+00443535	TerminatedCString	WINMM.dll
+0044353f	TerminatedCString	GDI32.dll
+00443549	TerminatedCString	USER32.dll
+00443554	TerminatedCString	KERNEL32.dll
+00443561	TerminatedCString	USER32.DLL
+0044356c	TerminatedCString	smackw32.dll
+00443579	TerminatedCString	DINPUT.dll
+00443584	TerminatedCString	KERNEL32.DLL
+00443591	TerminatedCString	DSOUND.dll
+0044359c	TerminatedCString	DDRAW.dll
+004435a8	TerminatedCString	GetUserNameA
+004435b8	TerminatedCString	joyGetDevCapsA
+004435ca	TerminatedCString	joyGetNumDevs
+004435da	TerminatedCString	joyGetPosEx
+004435e8	TerminatedCString	CreateFontA
+004435f6	TerminatedCString	CreateSolidBrush
+0044360a	TerminatedCString	DeleteObject
+0044361a	TerminatedCString	ExtTextOutA
+00443628	TerminatedCString	GetPixel
+00443634	TerminatedCString	GetTextExtentPoint32A
+0044364c	TerminatedCString	SelectObject
+0044365c	TerminatedCString	SetBkColor
+0044366a	TerminatedCString	SetBkMode
+00443676	TerminatedCString	SetPixel
+00443682	TerminatedCString	SetTextColor
+00443692	TerminatedCString	TextOutA
+0044369e	TerminatedCString	BeginPaint
+004436ac	TerminatedCString	CallWindowProcA
+004436be	TerminatedCString	CreateWindowExA
+004436d0	TerminatedCString	DefWindowProcA
+004436e2	TerminatedCString	DestroyWindow
+004436f2	TerminatedCString	DispatchMessageA
+00443706	TerminatedCString	EnableWindow
+00443716	TerminatedCString	EndPaint
+00443722	TerminatedCString	GetAsyncKeyState
+00443736	TerminatedCString	GetCursorPos
+00443746	TerminatedCString	GetFocus
+00443752	TerminatedCString	GetKeyState
+00443760	TerminatedCString	GetSystemMetrics
+00443774	TerminatedCString	GetWindowLongA
+00443786	TerminatedCString	InvalidateRect
+00443798	TerminatedCString	KillTimer
+004437a4	TerminatedCString	LoadCursorA
+004437b2	TerminatedCString	LoadIconA
+004437be	TerminatedCString	MessageBoxA
+004437cc	TerminatedCString	MessageBoxExA
+004437dc	TerminatedCString	PeekMessageA
+004437ec	TerminatedCString	PostMessageA
+004437fc	TerminatedCString	PostQuitMessage
+0044380e	TerminatedCString	RegisterClassA
+00443820	TerminatedCString	SendMessageA
+00443830	TerminatedCString	SetCursorPos
+00443840	TerminatedCString	SetCursor
+0044384c	TerminatedCString	SetFocus
+00443858	TerminatedCString	SetRect
+00443862	TerminatedCString	SetTimer
+0044386e	TerminatedCString	SetWindowLongA
+00443880	TerminatedCString	ShowCursor
+0044388e	TerminatedCString	ShowWindow
+0044389c	TerminatedCString	TranslateMessage
+004438b0	TerminatedCString	UpdateWindow
+004438c0	TerminatedCString	GetComputerNameA
+004438d4	TerminatedCString	GetDriveTypeA
+004438e4	TerminatedCString	GetPrivateProfileIntA
+004438fc	TerminatedCString	GetPrivateProfileStringA
+00443918	TerminatedCString	GetSystemInfo
+00443928	TerminatedCString	GetTickCount
+00443938	TerminatedCString	GlobalMemoryStatus
+0044394e	TerminatedCString	LocalAlloc
+0044395c	TerminatedCString	LocalFree
+00443968	TerminatedCString	LocalReAlloc
+00443978	TerminatedCString	OutputDebugStringA
+0044398e	TerminatedCString	Sleep
+00443996	TerminatedCString	WritePrivateProfileStringA
+004439b4	TerminatedCString	lstrlenA
+004439c0	TerminatedCString	GetActiveWindow
+004439d2	TerminatedCString	wsprintfA
+004439de	TerminatedCString	_SmackClose@4
+004439ee	TerminatedCString	_SmackColorRemap@16
+00443a04	TerminatedCString	_SmackDoFrame@4
+00443a16	TerminatedCString	_SmackNextFrame@4
+00443a2a	TerminatedCString	_SmackOpen@12
+00443a3a	TerminatedCString	_SmackSoundUseDirectSound@4
+00443a58	TerminatedCString	_SmackToBuffer@28
+00443a6c	TerminatedCString	_SmackWait@4
+00443a7c	TerminatedCString	DirectInputCreateA
+00443a92	TerminatedCString	CloseHandle
+00443aa0	TerminatedCString	CreateEventA
+00443ab0	TerminatedCString	CreateFileA
+00443abe	TerminatedCString	CreateMutexA
+00443ace	TerminatedCString	CreateThread
+00443ade	TerminatedCString	DeleteFileA
+00443aec	TerminatedCString	ExitProcess
+00443afa	TerminatedCString	ExitThread
+00443b08	TerminatedCString	GetCPInfo
+00443b14	TerminatedCString	GetCommandLineA
+00443b26	TerminatedCString	GetConsoleMode
+00443b38	TerminatedCString	GetCurrentDirectoryA
+00443b50	TerminatedCString	GetCurrentProcessId
+00443b66	TerminatedCString	GetCurrentThreadId
+00443b7c	TerminatedCString	GetCurrentThread
+00443b90	TerminatedCString	GetEnvironmentStrings
+00443ba8	TerminatedCString	GetFileAttributesA
+00443bbe	TerminatedCString	GetFileType
+00443bcc	TerminatedCString	GetLastError
+00443bdc	TerminatedCString	GetLocalTime
+00443bec	TerminatedCString	GetModuleFileNameA
+00443c02	TerminatedCString	GetModuleHandleA
+00443c16	TerminatedCString	GetProcAddress
+00443c28	TerminatedCString	GetStdHandle
+00443c38	TerminatedCString	GetTimeZoneInformation
+00443c52	TerminatedCString	GetVersion
+00443c60	TerminatedCString	LoadLibraryA
+00443c70	TerminatedCString	ReadConsoleInputA
+00443c84	TerminatedCString	ReadFile
+00443c90	TerminatedCString	ReleaseMutex
+00443ca0	TerminatedCString	SetConsoleCtrlHandler
+00443cb8	TerminatedCString	SetConsoleMode
+00443cca	TerminatedCString	SetEvent
+00443cd6	TerminatedCString	SetFilePointer
+00443ce8	TerminatedCString	SetStdHandle
+00443cf8	TerminatedCString	TlsAlloc
+00443d04	TerminatedCString	TlsFree
+00443d0e	TerminatedCString	TlsGetValue
+00443d1c	TerminatedCString	TlsSetValue
+00443d2a	TerminatedCString	VirtualAlloc
+00443d3a	TerminatedCString	VirtualFree
+00443d48	TerminatedCString	WaitForSingleObject
+00443d5e	TerminatedCString	WriteConsoleA
+00443d6e	TerminatedCString	WriteFile
+00443d7a	TerminatedCString	DirectSoundCreate
+00443d8e	TerminatedCString	DirectSoundEnumerateA
+00443da6	TerminatedCString	DirectDrawCreate
+00443dba	TerminatedCString	DirectDrawEnumerateA
