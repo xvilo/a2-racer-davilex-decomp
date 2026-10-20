@@ -6,15 +6,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Release builds carry SDL2 and SDL2_ttf inside (tools/build_static_sdl.sh). On Linux
+  # SDL still opens X11/Wayland, the sound server and OpenGL at run time, so the
+  # executable needs only glibc; 22.04's keeps it running on older distributions.
   linux:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Dependencies
-        run: sudo apt-get update && sudo apt-get install -y cmake libsdl2-dev libsdl2-ttf-dev
+      - name: Dependencies (SDL's video, sound and input back ends)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxfixes-dev libxi-dev libxss-dev libxkbcommon-dev libwayland-dev wayland-protocols \
+            libdecor-0-dev libegl1-mesa-dev libgl1-mesa-dev libasound2-dev libpulse-dev \
+            libpipewire-0.3-dev libudev-dev libdbus-1-dev
+      - name: SDL2 and SDL2_ttf, static
+        run: tools/build_static_sdl.sh deps
       - name: Build
         run: |
-          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release
+          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/deps
           cmake --build port/build -j 4 2>&1 | tee build.log
           exit ${PIPESTATUS[0]}
       - name: Report compiler errors
@@ -22,6 +32,8 @@ jobs:
         run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
       - name: Package
         run: |
+          ldd port/build/a2racer
+          if ldd port/build/a2racer | grep -iE "sdl|freetype"; then echo "::error::links SDL dynamically"; exit 1; fi
           mkdir -p dist/a2racer
           cp port/build/a2racer port/README.md dist/a2racer/
           tar -C dist -czf a2racer-linux-x86_64.tar.gz a2racer
@@ -32,39 +44,10 @@ jobs:
 
   macos:
     runs-on: macos-14
-    env:
-      SDL2_VERSION: 2.30.9
-      SDL2_TTF_VERSION: 2.22.0
     steps:
       - uses: actions/checkout@v4
-      # Homebrew's sdl2 is now sdl2-compat, which loads SDL3 at run time; building SDL2
-      # and SDL2_ttf (with its own FreeType) as static libraries gives one self-contained
-      # universal executable instead.
       - name: SDL2 and SDL2_ttf, static and universal
-        run: |
-          # Each step's output goes to a log; on failure its end becomes annotations, which
-          # can be read without logging in.
-          run() {
-            log=$1; shift
-            if ! "$@" > "$log" 2>&1; then
-              # At most 10 annotations show per step: the errors first.
-              { grep -iE -A4 "CMake Error|error:" "$log" || tail -10 "$log"; } | grep -v '^--$' | head -10 | tr -d '\r' | sed 's/^/::error::/'
-              tail -60 "$log"
-              exit 1
-            fi
-          }
-          run dl1.log curl -sSfL -o sdl.tar.gz https://github.com/libsdl-org/SDL/releases/download/release-$SDL2_VERSION/SDL2-$SDL2_VERSION.tar.gz
-          run dl2.log curl -sSfL -o ttf.tar.gz https://github.com/libsdl-org/SDL_ttf/releases/download/release-$SDL2_TTF_VERSION/SDL2_ttf-$SDL2_TTF_VERSION.tar.gz
-          tar xzf sdl.tar.gz
-          tar xzf ttf.tar.gz
-          # The runner's CMake 4 refuses the vendored FreeType's old cmake_minimum_required.
-          common=(-DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_INSTALL_PREFIX=$PWD/deps -DCMAKE_PREFIX_PATH=$PWD/deps -DCMAKE_POLICY_VERSION_MINIMUM=3.5)
-          run sdl-cfg.log cmake -S SDL2-$SDL2_VERSION -B sdl-build "${common[@]}" -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
-          run sdl-build.log cmake --build sdl-build -j 4
-          run sdl-install.log cmake --install sdl-build
-          run ttf-cfg.log cmake -S SDL2_ttf-$SDL2_TTF_VERSION -B ttf-build "${common[@]}" -DBUILD_SHARED_LIBS=OFF -DSDL2TTF_VENDORED=ON -DSDL2TTF_HARFBUZZ=OFF -DSDL2TTF_SAMPLES=OFF
-          run ttf-build.log cmake --build ttf-build -j 4
-          run ttf-install.log cmake --install ttf-build
+        run: tools/build_static_sdl.sh deps "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
       - name: Build
         run: |
           cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_PREFIX_PATH=$PWD/deps
