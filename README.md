@@ -10,6 +10,7 @@ This repo holds **only tooling and decompiled output**. The CD dump and the file
 |---|---|
 | `tools/` | Scripts to unpack the dump and to decompile the game modules |
 | `decompiled/<module>/` | Per module: `decompiled.c` (every function), `functions.tsv`, `strings.tsv`, and REA's `overview.json` |
+| `decompiled/<module>/src/` | The same functions split into the original source files (`opponent.c`, `camera.c`, …; C runtime under `crt/`). `sources.tsv` says how each function was placed: A2MENU's debug info, a name match with A2MENU, a `.cpp` name in an assert string, or its neighbours |
 | `build/` | Ghidra projects, REA snapshots and logs (not committed) |
 
 ## The dump (not in this repo)

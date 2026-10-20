@@ -61,4 +61,7 @@ for m in "${modules[@]}"; do
 		-postScript ExportDecompiled.java "$out" "$names" \
 		> "$ROOT/build/logs/$m.ghidra.log" 2>&1
 	grep -h -E 'ApplyWatcom.java>|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
+	# One file per original source file (A2MENU's debug info names them; see the script).
+	python3 -I "$ROOT/tools/split_sources.py" "$out" "$ROOT/build/watcom/A2MENU.DAT/globals.tsv" \
+		"$ROOT/symbols/A2MENU.DAT.modules.tsv" "$names"
 done
