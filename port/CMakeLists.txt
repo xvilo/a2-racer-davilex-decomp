@@ -47,9 +47,12 @@ add_executable(a2racer
 	src/menu/txttool.c
 	src/race/math3d.c
 	src/race/object3d.c
+	src/race/opponent.c
+	src/race/race.c
 	src/race/race_files.c
 	src/race/race_view.c
 	src/race/render.c
+	src/race/statobj.c
 	src/race/texture.c
 	src/race/weg.c
 )

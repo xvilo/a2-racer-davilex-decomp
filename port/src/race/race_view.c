@@ -6,8 +6,11 @@
 #include "platform/sys.h"
 #include "race/math3d.h"
 #include "race/object3d.h"
+#include "race/opponent.h"
+#include "race/race.h"
 #include "race/race_files.h"
 #include "race/render.h"
+#include "race/statobj.h"
 #include "race/texture.h"
 #include "race/weg.h"
 
@@ -56,6 +59,10 @@ int race_view(game_t *g, int stage)
 	if (load_weg_data(track_info[stage].track, 0x14))
 		return 1;
 	printf("race view: %s, %d chunks\n", track_info[stage].track, weg_chunk_count);
+	init_opponents(600);
+	load_static_object_textures();
+	load_static_object(0, 0.0f, 0.0f, 0); /* the sky (with the horizon option on) */
+	init_static_objects(stage);
 
 	float pos = 0.0f; /* chunks travelled */
 	uint32_t last = sys_ticks();
@@ -83,11 +90,16 @@ int race_view(game_t *g, int stage)
 		x += side[0] * 60.0f;
 		z += side[2] * 60.0f;
 		place_camera(x, y + 25.0f, z, s0->heading - 256, -20);
+		player_x = x;
+		player_z = z;
+		player_chunk = c;
+		check_objects3d_visibility((int)x - 4000, (int)z - 4000, (int)x + 4000, (int)z + 4000);
 		set_visible_weg_chunks(c - 2, c + 60);
 		sys_gl_begin_frame();
 		render_3d_frame();
 		sys_gl_swap();
 	}
+	exit_opponents();
 	free_weg_data();
 	free_textures();
 	free_objects3d();
