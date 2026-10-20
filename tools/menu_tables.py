@@ -23,6 +23,7 @@ LAYOUTS = {
     'areabutton_t': (17, '<iiiib', ('width', 'height', 'image', 'field_0c', 'hotkey')),
     'mst_slot_t': (8, '<ii', ('x', 'y')),
     'mc_keyset_t': (8, '<iI', ('vk', 'name')),
+    'single_score_t': (44, '<32sihhi', ('name32', 'time', 'stage', 'is_new', 'money')),
     'mc_config_key_t': (24, '<iiiiIi', ('x', 'y', 'x2', 'y2', 'label', 'key')),
     'edit_box_t': (44, '<iiiiIIIIIII', ('width', 'height', 'max_chars', 'lines', 'text',
                                        'background', 'foreground', 'brush', 'focus_background',
@@ -86,6 +87,10 @@ def main(binary, symbols, out):
     scalars = []  # (addr, name, C type, count, inner dimension or None)
     for i, (addr, name, dtype, mangled) in enumerate(rows):
         nxt = starts[i + 1] if i + 1 < len(starts) else addr + 4
+        if name == 'score_list':
+            # score_t: the overall top ten and six stage top tens, as one table.
+            tables.append((addr, name, 'single_score_t', 70))
+            continue
         m = re.fullmatch(r'(\w+)\[\]', dtype)
         if m and m.group(1) in LAYOUTS:
             t = m.group(1)
@@ -124,6 +129,9 @@ def main(binary, symbols, out):
                 if f in ('frames', 'control'):
                     r = ref(v)
                     parts.append(r if r else f'NULL /* {v:#x} */')
+                elif f == 'name32':
+                    raw = v.split(b'\0')[0].decode('latin1').replace('\\', '\\\\').replace('"', '\\"')
+                    parts.append('"' + raw + '"')
                 elif f in ('text', 'name', 'label'):
                     parts.append(c_string(read, v) if v else 'NULL')
                 elif f in ('brush', 'focus_brush'):

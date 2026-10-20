@@ -12,12 +12,15 @@
 #include "menu/menu_util.h"
 #include "menu/m_bedien.h"
 #include "menu/m_opties.h"
+#include "menu/m_score.h"
 #include "menu/mysound.h"
 #include "menu/optie.h"
 #include "menu/requesters.h"
+#include "menu/score.h"
 #include "menu/slot.h"
 #include "menu/txttool.h"
 #include "platform/sys.h"
+#include "xvga/fileio.h"
 #include "xvga/font.h"
 
 /* Controls of mm_form, by index. */
@@ -138,8 +141,27 @@ static void mm_open_screen_1(int first)
 	xvga_show();
 }
 
-/* "Opnieuw": the series starts over. After a stage or more, the result first goes into
- * the high scores (TODO: add_new_hiscore and menu_score, score.cpp and m_score.cpp). */
+/* The player's series so far, as a high-score entry. */
+static int add_slot_hiscore(void)
+{
+	slot_t *s = &slot_list[slot_check_index(active_slot)];
+	return add_new_hiscore(s->name, slot_count_total_tijd(active_slot, s->stage), s->stage - 1,
+		s->money);
+}
+
+/* "Score": the lists, with the player's series so far added for this viewing only. */
+static void mm_handle_tmp_hiscore(void)
+{
+	save_tmp_scoredbase("SCORE.TMP");
+	if (slot_list[slot_check_index(active_slot)].stage - 1 >= 0)
+		add_slot_hiscore();
+	menu_score(game, slot_list[slot_check_index(active_slot)].stage - 1);
+	load_tmp_scoredbase("SCORE.TMP");
+	file_delete("SCORE.TMP");
+}
+
+/* "Opnieuw": the series starts over. After a stage or more, the result goes into the
+ * high scores first, and the list is shown when it made the top ten. */
 static void mm_handle_opnieuw_spel(void)
 {
 	if (slot_list[slot_check_index(active_slot)].stage - 1 < 0) {
@@ -148,6 +170,10 @@ static void mm_handle_opnieuw_spel(void)
 	}
 	else {
 		mm_close_screen(0);
+		add_slot_hiscore();
+		int rank = get_last_entered_hiscore();
+		if (rank >= 0 && rank < 10)
+			menu_score(game, slot_list[slot_check_index(active_slot)].stage - 1);
 		reset_slot(active_slot);
 		mm_open_screen_1(0);
 	}
@@ -256,7 +282,10 @@ int menu_main(game_t *g)
 			break;
 		case MM_HISCORE:
 			snd_play(&click, "click1.wav");
-			fprintf(stderr, "menu_main: control %d is not ported yet\n", r);
+			mm_close_screen(0);
+			snd_wait(&click);
+			mm_handle_tmp_hiscore();
+			mm_open_screen_1(0);
 			break;
 		case FORM_ESCAPE:
 			/* Escape moves to "Einde" and leaves. */

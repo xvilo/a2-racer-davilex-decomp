@@ -4,6 +4,7 @@
 
 #include "menu/menu_types.h"
 
+extern single_score_t score_list[70];
 extern button_t mm_buttons[8];
 extern form_t mm_form[9];
 extern help_t mm_help[8];

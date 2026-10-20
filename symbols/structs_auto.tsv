@@ -55,13 +55,8 @@ pf_24_t	00	undefined2	field_00
 pf_24_t	3	-	__size	
 racer_object_t	20	void*	field_20	
 racer_object_t	30	IDirect3DExecuteBuffer*	field_30	
-score_t	2c	-	__size	
 screen_mode_t	00	int	field_00	
 screen_mode_t	10	-	__size	
-single_score_t	22	int	field_22	
-single_score_t	26	short	field_26	
-single_score_t	28	undefined4	field_28	
-single_score_t	2c	-	__size	
 snd_buf_t	38	-	__size	
 sound_info_t	02	char	field_02	
 sound_info_t	03	char	field_03	

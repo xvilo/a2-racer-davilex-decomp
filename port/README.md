@@ -16,7 +16,8 @@ The game's own data is not included. Point the port at the original CD, or at a 
 | Spoken help with the dimmed screen; yes/no and text requesters | done |
 | Options menu (display mode, sound, horizon, detail, dashboard, volumes; cancel restores) | done |
 | Controls menu (keyboard/joypad/wheel, key configuration with duplicate warning) | done |
-| Other menus (scores, new player), other wipe types | to do |
+| Score screens (overall and per-stage top tens, default names from the original, `SCORE.A2R`) | done |
+| New-player screen, post-race screens (standings, results), other wipe types | to do |
 | Movies (Smacker) | to do |
 | Race (A2SPEL: Direct3D execute buffers → OpenGL) | to do |
 

@@ -17,6 +17,7 @@
 #include "menu/menu_data.h"
 #include "menu/mysound.h"
 #include "menu/optie.h"
+#include "menu/score.h"
 #include "menu/slot.h"
 #include "platform/sys.h"
 #include "xvga/fileio.h"
@@ -102,6 +103,7 @@ int main(int argc, char **argv)
 	init_optie();
 	init_bedien();
 	init_slotdbase();
+	init_scoredbase();
 	int last = get_last_saved_slot();
 	if (slot_list[last].used)
 		set_active_slot(last);
@@ -129,6 +131,7 @@ int main(int argc, char **argv)
 		save_bedien();
 		update_active_slot_optie();
 		save_slotdbase();
+		save_scoredbase();
 	}
 	font_shutdown();
 	xvga_exit_sound();

@@ -78,6 +78,17 @@ typedef struct {
 	int key;
 } mc_config_key_t;
 
+/* One high-score entry (SCORE.A2R), laid out as in the file. */
+#pragma pack(push, 1)
+typedef struct {
+	char name[32];
+	int time;       /* seconds */
+	short stage;    /* last stage reached (overall list) */
+	short is_new;   /* 1 for the entry added last */
+	int money;
+} single_score_t;
+#pragma pack(pop)
+
 /* Help text for a control; a table ends with control_id -1. */
 typedef struct {
 	int control_id;

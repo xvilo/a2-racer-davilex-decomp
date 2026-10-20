@@ -217,3 +217,12 @@ mc_config_key_t	08	int	x2
 mc_config_key_t	0c	int	y2	
 mc_config_key_t	10	char*	label	
 mc_config_key_t	14	int	key	
+# single_score_t: one high-score entry (score.cpp), 44 bytes.
+single_score_t	00	char[32]	name	
+single_score_t	20	int	time	seconds
+single_score_t	24	short	stage	last stage reached (overall list)
+single_score_t	26	short	is_new	1 for the entry added last
+single_score_t	28	int	money	
+# score_t: SCORE.A2R; the overall top ten, then the top ten per stage.
+score_t	00	single_score_t[10]	hiscore	
+score_t	1b8	single_score_t[60]	levelscore	[stage * 10 + rank]

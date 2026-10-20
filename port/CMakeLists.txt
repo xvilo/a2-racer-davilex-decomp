@@ -27,9 +27,11 @@ add_executable(a2racer
 	src/menu/m_bedien.c
 	src/menu/m_main.c
 	src/menu/m_opties.c
+	src/menu/m_score.c
 	src/menu/m_start.c
 	src/menu/menu_util.c
 	src/menu/requesters.c
+	src/menu/score.c
 	src/menu/mysound.c
 	src/menu/optie.c
 	src/menu/slot.c
