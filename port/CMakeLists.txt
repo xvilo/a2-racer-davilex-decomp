@@ -45,6 +45,13 @@ add_executable(a2racer
 	src/menu/slot.c
 	src/menu/spel.c
 	src/menu/txttool.c
+	src/race/math3d.c
+	src/race/object3d.c
+	src/race/race_files.c
+	src/race/race_view.c
+	src/race/render.c
+	src/race/texture.c
+	src/race/weg.c
 )
 target_include_directories(a2racer PRIVATE src)
 target_link_libraries(a2racer PRIVATE SDL2::SDL2 SDL2_ttf::SDL2_ttf)

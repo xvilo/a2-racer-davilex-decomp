@@ -22,6 +22,7 @@
 #include "menu/slot.h"
 #include "menu/spel.h"
 #include "movie/movies.h"
+#include "race/race_view.h"
 #include "platform/sys.h"
 #include "xvga/fileio.h"
 #include "xvga/font.h"
@@ -44,6 +45,7 @@ static void usage(void)
 
 		"  --fake-race <pos>    instead of the race (not ported yet), finish it at this\n"
 		"                       position (1..6) with made-up times, to test what follows\n"
+		"  --race-view <stage>  fly along a stage's road (1..6; tests the 3D code)\n"
 		"  --screenshot <file>  open the main menu, save it as PNG and exit\n"
 		"  --script <file>      scripted input for testing (see platform/sys_sdl.c)\n");
 }
@@ -145,6 +147,7 @@ int main(int argc, char **argv)
 	 * that shows the logo intro. */
 	int first = 1;
 	int fake_race = 0;
+	int view_stage = -1;
 	g.data_dir = getenv("A2_DATA");
 	for (int i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "--data") && i + 1 < argc)
@@ -157,6 +160,8 @@ int main(int argc, char **argv)
 			opt.scale = atoi(argv[++i]);
 		else if (!strcmp(argv[i], "--script") && i + 1 < argc)
 			opt.script = argv[++i];
+		else if (!strcmp(argv[i], "--race-view") && i + 1 < argc)
+			view_stage = atoi(argv[++i]) - 1;
 		else if (!strcmp(argv[i], "--fake-race") && i + 1 < argc)
 			fake_race = atoi(argv[++i]);
 		else if (!strcmp(argv[i], "--screenshot") && i + 1 < argc)
@@ -189,7 +194,10 @@ int main(int argc, char **argv)
 	load_menu_fonts();
 
 	int result = 0;
-	if (g.screenshot) {
+	if (view_stage >= 0) {
+		result = race_view(&g, view_stage);
+	}
+	else if (g.screenshot) {
 		win_open_menu();
 		mm_open_screen(&g);
 		result = png_write_indexed(g.screenshot, screen.pixels[SCREEN_FRONT], SCREEN_W,
