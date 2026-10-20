@@ -292,6 +292,11 @@ void handle_player_controls(void)
 	player_start_lane = player_chunk;
 }
 
+int player_steering_position(void)
+{
+	return steering_position;
+}
+
 void halt_player_car(void)
 {
 	player_speed = 0.0f;

@@ -31,6 +31,8 @@ void handle_player_controls(void);
 /* The gearbox step for a speed (after collisions changed it). */
 void select_rpm_step_for_speed(float speed);
 void halt_player_car(void);
+/* 0..28, 14 straight (for the dashboard's steering wheel). */
+int player_steering_position(void);
 void stop_player_car(void);
 
 #endif

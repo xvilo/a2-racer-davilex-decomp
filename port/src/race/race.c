@@ -11,6 +11,7 @@
 #include "platform/sys.h"
 #include "race/camera.h"
 #include "race/driver.h"
+#include "race/hud.h"
 #include "race/object3d.h"
 #include "race/opponent.h"
 #include "race/player.h"
@@ -57,7 +58,7 @@ int money, fuel, time_left;
 
 static int texture_filtering;
 static int countdown_seconds, countdown_last_tick, countdown_step;
-static int intro_started, countdown_started, finish_started;
+static int intro_started, countdown_started, finish_started, finish_frame;
 static int time_clock;
 static int fine_count, current_fine;
 static const int fine_amounts[8] = { 250, 500, 800, 1200, 1500, 2000, 2000, 2000 };
@@ -427,10 +428,10 @@ int set_race_state(int state)
 	}
 }
 
-/* update_race: the states' timing. TODO: the HUD pictures each state shows (the
- * countdown digits, the finish flag, the messages and the fine). */
+/* update_race: the states' timing and the pictures they show. */
 static void update_race(void)
 {
+	int dash = dashboard_on_screen;
 	switch (race_state) {
 	case RACE_INTRO:
 		if (!intro_started) {
@@ -462,6 +463,7 @@ static void update_race(void)
 				start_countdown(1);
 			}
 		}
+		hud_image(0x12, countdown_step, 0x96, dash ? 0xa0 : 200, 2);
 		break;
 	case RACE_FINISHED:
 		if (!finish_started) {
@@ -471,23 +473,37 @@ static void update_race(void)
 		}
 		if (countdown_expired() || keyispressed(0x20) || keyispressed(0x0d))
 			race_state = RACE_EXIT;
+		/* The waving flag. */
+		hud_image(0x13, finish_frame, 0x140, dash ? 0xa0 : 200, 0);
+		finish_frame = (finish_frame + 1) % 0x10;
 		break;
-	case RACE_FINE:
+	case RACE_FINE: {
+		int x = 0x186, y = dash ? 0xbe : 0xe6;
+		hud_image(0x16, 0, 0xa0, dash ? 0x3c : 100, 2);
+		if (current_fine / 1000 != 0)
+			hud_image(0x1c, current_fine / 1000, x, y, 0);
+		hud_image(0x1c, current_fine % 1000 / 100, x + 0xc, y, 0);
+		hud_image(0x1c, current_fine % 100 / 10, x + 0xc * 2, y, 0);
+		hud_image(0x1c, current_fine % 10, x + 0xc * 3, y, 0);
 		if (countdown_expired() || keyispressed(0x0d) || keyispressed(0x20)) {
 			set_race_state(RACE_RUNNING);
 			pay_money(current_fine);
 		}
 		break;
+	}
 	case RACE_OUT_OF_TIME:
 	case RACE_OUT_OF_FUEL:
+		hud_image(race_state == RACE_OUT_OF_TIME ? 0x20 : 0x22, 0, 0x140, dash ? 0x8c : 0xf0, 0);
 		if (countdown_expired())
 			set_race_state(RACE_EXIT);
 		break;
 	case RACE_NO_MONEY:
+		hud_image(0x18, 0, 0xa0, dash ? 0x3c : 100, 2);
 		if (countdown_expired() || keyispressed(0x0d) || keyispressed(0x20))
 			set_race_state(RACE_EXIT);
 		break;
 	case RACE_PAUSED:
+		hud_image(0x1a, 0, 0xa0, dash ? 100 : 0x8c, 2);
 		if (keyispressed(0x50) || keyispressed(0x0d) || keyispressed(0x20)) {
 			while (keyispressed(0x50)) {
 				sys_input in;
@@ -499,8 +515,6 @@ static void update_race(void)
 		}
 		break;
 	}
-	if (race_state == RACE_RUNNING)
-		update_time_left();
 }
 
 /* --- WinMain --------------------------------------------------------------------- */
@@ -532,8 +546,10 @@ static int run(game_t *g)
 	init_race_settings();
 	init_math3d();
 	alloc_textures(0x50);
-	change_viewport_size(0, 0, 640, 480);
+	change_viewport_size(0, 0, 640, dashboard_on_screen ? 300 : 480);
 	set_background("back.pcx");
+	if (init_hud(g))
+		return 1;
 	if (texture_filtering)
 		set_texture_filter(1);
 	/* init_anims_and_standard_textures */
@@ -576,7 +592,15 @@ static int run(game_t *g)
 		update_racers();
 		sys_gl_begin_frame();
 		render_3d_frame();
+		hud_begin();
+		draw_radar();
+		/* draw_time_left keeps the clock still until the race runs. */
+		if (!race_running)
+			restart_time_clock();
+		update_time_left();
+		draw_dashboard();
 		update_race();
+		hud_end();
 		sys_gl_swap();
 		mark_active_racers();
 		if (keyispressed(0x50) && race_state == RACE_RUNNING) {
@@ -596,7 +620,8 @@ static int run(game_t *g)
 			set_camera_position(CAMERA_COCKPIT);
 		if (keyispressed(0x71))
 			set_camera_position(CAMERA_CHASE);
-		/* F5 toggles DAT_00458c24, whose use is not known yet. */
+		if (keyispressed(0x74))
+			radar_on = !radar_on;
 		if (keyispressed(0x1b) && race_state == RACE_RUNNING) {
 			infio.ended_by = 0;
 			race_finished_ok = 0;
@@ -634,6 +659,7 @@ static int run(game_t *g)
 	}
 	infio.race_finished = (uint8_t)(race_finished_ok != 0);
 	save_infio();
+	exit_hud();
 	(void)g;
 	return 0;
 }
