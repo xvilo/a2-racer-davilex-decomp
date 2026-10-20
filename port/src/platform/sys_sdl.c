@@ -6,9 +6,14 @@
 
 #include <SDL.h>
 
+#include "gfx/png.h"
 #include "gfx/screen.h"
+#include "platform/gl.h"
 
 static SDL_Window *window;
+/* OpenGL when available (needed by the race); else an SDL renderer for the menus. */
+static SDL_GLContext gl_context;
+static GLuint screen_texture;
 static SDL_Renderer *renderer;
 static SDL_Texture *texture;
 static uint32_t rgba[SCREEN_W * SCREEN_H];
@@ -26,6 +31,7 @@ static bool quit_requested;
  *   text <string>     type text
  *   click <x> <y>     left click at a 640x480 position
  *   shot <file.png>   save the front screen
+ *   glshot <file.png> save the window's picture as drawn (OpenGL only)
  *   quit              close the window
  */
 static char **script_lines;
@@ -34,6 +40,7 @@ static uint32_t script_resume;
 static sys_screenshot_fn screenshot_fn;
 static bool fake_alt;
 static SDL_Scancode fake_key = SDL_SCANCODE_UNKNOWN; /* held for keyispressed */
+static char glshot_path[512];
 static uint32_t fake_key_until;
 
 void sys_set_screenshot(sys_screenshot_fn fn)
@@ -124,6 +131,10 @@ static void run_script(void)
 			if (screenshot_fn)
 				screenshot_fn(cmd + 5);
 		}
+		else if (!strncmp(cmd, "glshot ", 7) && gl_context) {
+			/* Taken from the next frame, before it is shown. */
+			SDL_strlcpy(glshot_path, cmd + 7, sizeof glshot_path);
+		}
 		else if (!strcmp(cmd, "quit")) {
 			e.type = SDL_QUIT;
 			SDL_PushEvent(&e);
@@ -143,6 +154,36 @@ bool sys_init(const char *title, const sys_options *opt)
 		return false;
 	}
 	int scale = opt->scale > 0 ? opt->scale : 1;
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		SCREEN_W * scale, SCREEN_H * scale, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	if (window) {
+		gl_context = SDL_GL_CreateContext(window);
+		if (gl_context && !gl_load()) {
+			SDL_GL_DeleteContext(gl_context);
+			gl_context = NULL;
+		}
+		if (!gl_context) {
+			SDL_Log("no OpenGL (%s); the race needs it, the menus work without", SDL_GetError());
+			SDL_DestroyWindow(window);
+			window = NULL;
+		}
+	}
+	if (gl_context) {
+		SDL_GL_SetSwapInterval(1);
+		glGenTextures(1, &screen_texture);
+		glBindTexture(GL_TEXTURE_2D, screen_texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCREEN_W, SCREEN_H, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+			NULL);
+		SDL_StopTextInput(); /* only while an edit box is open */
+		return true;
+	}
+
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		SCREEN_W * scale, SCREEN_H * scale, SDL_WINDOW_RESIZABLE);
 	if (!window) {
@@ -166,6 +207,10 @@ bool sys_init(const char *title, const sys_options *opt)
 
 void sys_shutdown(void)
 {
+	if (gl_context) {
+		glDeleteTextures(1, &screen_texture);
+		SDL_GL_DeleteContext(gl_context);
+	}
 	if (texture)
 		SDL_DestroyTexture(texture);
 	if (renderer)
@@ -175,19 +220,187 @@ void sys_shutdown(void)
 	SDL_Quit();
 }
 
+/* The 4:3 picture's place in the window (letterboxed), in pixels of `w` x `h`. */
+static SDL_Rect fit_4_3(int w, int h)
+{
+	SDL_Rect r;
+	if (w * SCREEN_H > h * SCREEN_W) {
+		r.h = h;
+		r.w = h * SCREEN_W / SCREEN_H;
+	}
+	else {
+		r.w = w;
+		r.h = w * SCREEN_H / SCREEN_W;
+	}
+	r.x = (w - r.w) / 2;
+	r.y = (h - r.h) / 2;
+	return r;
+}
+
+static SDL_Rect gl_picture_rect(void)
+{
+	int w, h;
+	SDL_GL_GetDrawableSize(window, &w, &h);
+	return fit_4_3(w, h);
+}
+
+/* Window coordinates to 640x480. */
+static void map_mouse(int *x, int *y)
+{
+	if (!gl_context)
+		return; /* SDL_RenderSetLogicalSize already did it */
+	int w, h;
+	SDL_GetWindowSize(window, &w, &h);
+	SDL_Rect r = fit_4_3(w, h);
+	*x = r.w ? (*x - r.x) * SCREEN_W / r.w : 0;
+	*y = r.h ? (*y - r.y) * SCREEN_H / r.h : 0;
+}
+
+/* The indexed screen as RGBA; palette index `transparent` (or none for -1) clear. */
+static void screen_to_rgba(const uint8_t *pixels, const uint8_t palette[768], int transparent)
+{
+	uint32_t lut[256];
+	for (int i = 0; i < 256; i++) {
+		const uint8_t *c = &palette[i * 3];
+		/* RGBA bytes in memory order, for GL_RGBA/GL_UNSIGNED_BYTE and the SDL texture. */
+		uint32_t a = i == transparent ? 0 : 0xFF;
+		uint8_t px[4] = { c[0], c[1], c[2], (uint8_t)a };
+		memcpy(&lut[i], px, 4);
+	}
+	for (int i = 0; i < SCREEN_W * SCREEN_H; i++)
+		rgba[i] = lut[pixels[i]];
+}
+
+static void gl_swap(void)
+{
+	if (glshot_path[0]) {
+		int w, h;
+		sys_gl_read_picture(NULL, &w, &h);
+		uint8_t *rgb = malloc((size_t)w * h * 3);
+		if (rgb) {
+			sys_gl_read_picture(rgb, &w, &h);
+			png_write_rgb(glshot_path, rgb, w, h);
+			free(rgb);
+		}
+		glshot_path[0] = 0;
+	}
+	SDL_GL_SwapWindow(window);
+}
+
+/* Draws the screen texture over the whole picture area. */
+static void gl_draw_screen(bool blend)
+{
+	SDL_Rect r = gl_picture_rect();
+	glViewport(r.x, r.y, r.w, r.h);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_FOG);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, SCREEN_W, SCREEN_H, 0, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, screen_texture);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, SCREEN_W, SCREEN_H, GL_RGBA, GL_UNSIGNED_BYTE, rgba);
+	if (blend) {
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.5f);
+	}
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex2f(0, 0);
+	glTexCoord2f(1, 0);
+	glVertex2f(SCREEN_W, 0);
+	glTexCoord2f(1, 1);
+	glVertex2f(SCREEN_W, SCREEN_H);
+	glTexCoord2f(0, 1);
+	glVertex2f(0, SCREEN_H);
+	glEnd();
+	glDisable(GL_ALPHA_TEST);
+	glDisable(GL_TEXTURE_2D);
+}
+
 void sys_present(const uint8_t *pixels, const uint8_t palette[768])
 {
 	if (headless)
 		return;
-	uint32_t lut[256];
-	for (int i = 0; i < 256; i++)
-		lut[i] = 0xFF000000u | palette[i * 3] << 16 | palette[i * 3 + 1] << 8 | palette[i * 3 + 2];
-	for (int i = 0; i < SCREEN_W * SCREEN_H; i++)
-		rgba[i] = lut[pixels[i]];
+	if (gl_context) {
+		int w, h;
+		SDL_GL_GetDrawableSize(window, &w, &h);
+		glViewport(0, 0, w, h);
+		glClearColor(0, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		screen_to_rgba(pixels, palette, -1);
+		gl_draw_screen(false);
+		gl_swap();
+		return;
+	}
+	screen_to_rgba(pixels, palette, -1);
 	SDL_UpdateTexture(texture, NULL, rgba, SCREEN_W * 4);
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
+}
+
+bool sys_gl(void)
+{
+	return gl_context != NULL;
+}
+
+void sys_gl_begin_frame(void)
+{
+	int w, h;
+	SDL_GL_GetDrawableSize(window, &w, &h);
+	glViewport(0, 0, w, h);
+	glDisable(GL_SCISSOR_TEST);
+	glClearColor(0, 0, 0, 1);
+	glDepthMask(GL_TRUE);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void sys_gl_viewport(int x, int y, int w, int h)
+{
+	SDL_Rect r = gl_picture_rect();
+	int gx = r.x + x * r.w / SCREEN_W, gw = w * r.w / SCREEN_W;
+	int gh = h * r.h / SCREEN_H, gy = r.y + r.h - (y * r.h / SCREEN_H) - gh;
+	glViewport(gx, gy, gw, gh);
+	glScissor(gx, gy, gw, gh);
+	glEnable(GL_SCISSOR_TEST);
+}
+
+void sys_gl_overlay(const uint8_t *pixels, const uint8_t palette[768], int transparent)
+{
+	glDisable(GL_SCISSOR_TEST);
+	screen_to_rgba(pixels, palette, transparent);
+	gl_draw_screen(true);
+}
+
+void sys_gl_swap(void)
+{
+	gl_swap();
+}
+
+void sys_gl_read_picture(uint8_t *rgb, int *w, int *h)
+{
+	SDL_Rect r = gl_picture_rect();
+	*w = r.w;
+	*h = r.h;
+	if (!rgb)
+		return;
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glReadPixels(r.x, r.y, r.w, r.h, GL_RGB, GL_UNSIGNED_BYTE, rgb);
+	/* Bottom-up to top-down. */
+	size_t row = (size_t)r.w * 3;
+	uint8_t *tmp = malloc(row);
+	for (int y = 0; y < r.h / 2; y++) {
+		memcpy(tmp, rgb + y * row, row);
+		memcpy(rgb + y * row, rgb + (size_t)(r.h - 1 - y) * row, row);
+		memcpy(rgb + (size_t)(r.h - 1 - y) * row, tmp, row);
+	}
+	free(tmp);
 }
 
 static int map_key(SDL_Keycode k)
@@ -223,11 +436,13 @@ void sys_poll(sys_input *in)
 		case SDL_MOUSEMOTION:
 			mouse_x = e.motion.x;
 			mouse_y = e.motion.y;
+			map_mouse(&mouse_x, &mouse_y);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (e.button.button == SDL_BUTTON_LEFT) {
 				mouse_x = e.button.x;
 				mouse_y = e.button.y;
+				map_mouse(&mouse_x, &mouse_y);
 				mouse_down = true;
 				in->mouse_pressed = true;
 			}
@@ -236,6 +451,7 @@ void sys_poll(sys_input *in)
 			if (e.button.button == SDL_BUTTON_LEFT) {
 				mouse_x = e.button.x;
 				mouse_y = e.button.y;
+				map_mouse(&mouse_x, &mouse_y);
 				mouse_down = false;
 				in->mouse_clicked = true;
 			}

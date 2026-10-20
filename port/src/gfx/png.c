@@ -42,7 +42,8 @@ static void chunk(FILE *f, const char *tag, const uint8_t *body, uint32_t n)
 	fwrite(head, 1, 4, f);
 }
 
-int png_write_indexed(const char *path, const uint8_t *pixels, int w, int h,
+/* `bpp` bytes per pixel: 1 indexed (with palette) or 3 RGB. */
+static int png_write(const char *path, const uint8_t *pixels, int w, int h, int bpp,
 	const uint8_t palette[768])
 {
 	FILE *f = fopen(path, "wb");
@@ -54,13 +55,15 @@ int png_write_indexed(const char *path, const uint8_t *pixels, int w, int h,
 	put32(ihdr, (uint32_t)w);
 	put32(ihdr + 4, (uint32_t)h);
 	ihdr[8] = 8;  /* bit depth */
-	ihdr[9] = 3;  /* indexed colour */
+	ihdr[9] = bpp == 1 ? 3 : 2;  /* indexed colour or RGB */
 	ihdr[10] = ihdr[11] = ihdr[12] = 0;
 	chunk(f, "IHDR", ihdr, 13);
-	chunk(f, "PLTE", palette, 768);
+	if (bpp == 1)
+		chunk(f, "PLTE", palette, 768);
 
 	/* zlib stream of stored (uncompressed) deflate blocks. */
-	size_t raw_len = (size_t)(w + 1) * h;
+	size_t stride = (size_t)w * bpp;
+	size_t raw_len = (stride + 1) * h;
 	size_t blocks = (raw_len + 65534) / 65535;
 	size_t z_len = 2 + raw_len + blocks * 5 + 4;
 	uint8_t *z = malloc(z_len), *p = z;
@@ -72,7 +75,8 @@ int png_write_indexed(const char *path, const uint8_t *pixels, int w, int h,
 	*p++ = 0x01;
 	uint32_t a = 1, b = 0;
 	size_t done = 0;
-	int row = 0, col = -1; /* col -1: the row's filter byte */
+	size_t row = 0;
+	long col = -1; /* col -1: the row's filter byte */
 	while (done < raw_len) {
 		size_t n = raw_len - done > 65535 ? 65535 : raw_len - done;
 		*p++ = done + n == raw_len;
@@ -81,8 +85,8 @@ int png_write_indexed(const char *path, const uint8_t *pixels, int w, int h,
 		*p++ = (uint8_t)~n;
 		*p++ = (uint8_t)(~n >> 8);
 		for (size_t i = 0; i < n; i++) {
-			uint8_t v = col < 0 ? 0 : pixels[row * w + col];
-			if (++col == w) {
+			uint8_t v = col < 0 ? 0 : pixels[row * stride + (size_t)col];
+			if (++col == (long)stride) {
 				col = -1;
 				row++;
 			}
@@ -98,4 +102,15 @@ int png_write_indexed(const char *path, const uint8_t *pixels, int w, int h,
 	free(z);
 	chunk(f, "IEND", NULL, 0);
 	return fclose(f) == 0 ? 0 : -1;
+}
+
+int png_write_indexed(const char *path, const uint8_t *pixels, int w, int h,
+	const uint8_t palette[768])
+{
+	return png_write(path, pixels, w, h, 1, palette);
+}
+
+int png_write_rgb(const char *path, const uint8_t *rgb, int w, int h)
+{
+	return png_write(path, rgb, w, h, 3, NULL);
 }

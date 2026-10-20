@@ -13,6 +13,7 @@ find_package(SDL2_ttf REQUIRED CONFIG)
 add_executable(a2racer
 	src/main.c
 	src/platform/sys_sdl.c
+	src/platform/gl.c
 	src/res/archive.c
 	src/res/pcx.c
 	src/res/smacker.c
