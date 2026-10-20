@@ -5,6 +5,8 @@
 #define A2_INIFILE_H
 
 void set_ini_filename(const char *name);
+/* An INI file elsewhere (A2.INI on the disc). */
+void set_ini_file_path(const char *path);
 void write_ini_string_setting(const char *section, const char *key, const char *value);
 void write_ini_value_setting(const char *section, const char *key, int value);
 /* 0 when the file, the section or the key is missing (GetPrivateProfileInt's default). */

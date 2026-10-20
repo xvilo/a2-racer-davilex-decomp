@@ -49,6 +49,17 @@ int init_opponents(int count);
 void exit_opponents(void);
 int alloc_opponent_slot(void);
 
+/* The four corners of the object's box, turned to its heading (update_racer_corners). */
+void update_racer_corners(int opponent);
+/* Keeps a car between the median and the road's edge; 1 if it hit one. */
+int collide_racer_with_road_edge(int opponent);
+/* Stops the player at the track's ends. */
+void collide_player_with_track_ends(void);
+/* The lane (0..10) a car is in, or -1 off the road. */
+int get_racer_lane(int opponent);
+/* Moves every car one frame; the player first (update_racers). */
+void update_racers(void);
+
 /* objio.cpp: the object's bounding rectangle and radius into its opponent entry. */
 void compute_object_bounds(int object);
 

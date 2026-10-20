@@ -45,6 +45,8 @@ const uint8_t *named_archive_find(const named_archive *a, const char *file, size
 int sprite_archive_open(sprite_archive *a, const char *dir, const char *name);
 void sprite_archive_close(sprite_archive *a);
 
+/* The path of a file in dir, matching its name without regard to case; 0 if found. */
+int find_file_ci(const char *dir, const char *name, char *path, size_t path_size);
 /* Reads a whole file (case-insensitive name match inside dir). Caller frees. */
 uint8_t *read_file_ci(const char *dir, const char *name, size_t *size);
 

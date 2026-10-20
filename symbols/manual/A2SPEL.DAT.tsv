@@ -88,8 +88,8 @@ address	kind	name	cc	ret	params	dtype	mangled
 00404c39	function	place_camera_behind					
 00457744	data	control_type				int	
 00457748	data	steering_position				int	
-004765a0	data	sin_table					
-0047659c	data	cos_table					
+004765a0	data	cos_table					
+0047659c	data	sin_table					
 00457710	data	watched_opponent				int	
 # --- opponent.cpp: opponents, their slots on the road map ---------------------------
 004051fe	function	get_opponent_chunk					

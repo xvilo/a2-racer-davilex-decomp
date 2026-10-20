@@ -20,6 +20,12 @@ void set_ini_filename(const char *name)
 	ini_file_init_ok = 1;
 }
 
+void set_ini_file_path(const char *path)
+{
+	snprintf(ini_filename, sizeof ini_filename, "%s", path);
+	ini_file_init_ok = 1;
+}
+
 static void check_init(const char *who)
 {
 	if (!ini_file_init_ok) {

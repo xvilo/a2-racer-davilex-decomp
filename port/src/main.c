@@ -22,6 +22,7 @@
 #include "menu/slot.h"
 #include "menu/spel.h"
 #include "movie/movies.h"
+#include "race/race_main.h"
 #include "race/race_view.h"
 #include "platform/sys.h"
 #include "xvga/fileio.h"
@@ -43,8 +44,9 @@ static void usage(void)
 		"  --fonts <dir>        folder with ariblk.ttf (Arial Black) if not found otherwise\n"
 		"  --scale <n>          window size as a multiple of 640x480\n"
 
-		"  --fake-race <pos>    instead of the race (not ported yet), finish it at this\n"
-		"                       position (1..6) with made-up times, to test what follows\n"
+		"  --race <stage>       drive a stage (1..6) straight away, without the menu\n"
+		"  --fake-race <pos>    instead of driving, finish each race at this position\n"
+		"                       (1..6) with made-up times, to test what follows\n"
 		"  --race-view <stage>  fly along a stage's road (1..6; tests the 3D code)\n"
 		"  --screenshot <file>  open the main menu, save it as PNG and exit\n"
 		"  --script <file>      scripted input for testing (see platform/sys_sdl.c)\n");
@@ -113,12 +115,12 @@ static int win_handle_menu(game_t *g, int first)
 	return r;
 }
 
-/* A2SPEL.DAT's place. With --fake-race, a finished race is written to INFIO.INI the
- * way the race would: the player at `position`, the rivals in the other places. */
-static void run_race(int position)
+/* A2SPEL.DAT's place: the race. With --fake-race, a finished race is written to
+ * INFIO.INI instead, the player at `position` and the rivals in the other places. */
+static void run_race(game_t *g, int position)
 {
 	if (position < 1 || position > 6) {
-		printf("start race: the race (A2SPEL) is not ported yet\n");
+		race_main(g);
 		return;
 	}
 	init_infio();
@@ -148,6 +150,7 @@ int main(int argc, char **argv)
 	int first = 1;
 	int fake_race = 0;
 	int view_stage = -1;
+	int race_stage = -1;
 	g.data_dir = getenv("A2_DATA");
 	for (int i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "--data") && i + 1 < argc)
@@ -160,6 +163,8 @@ int main(int argc, char **argv)
 			opt.scale = atoi(argv[++i]);
 		else if (!strcmp(argv[i], "--script") && i + 1 < argc)
 			opt.script = argv[++i];
+		else if (!strcmp(argv[i], "--race") && i + 1 < argc)
+			race_stage = atoi(argv[++i]) - 1;
 		else if (!strcmp(argv[i], "--race-view") && i + 1 < argc)
 			view_stage = atoi(argv[++i]) - 1;
 		else if (!strcmp(argv[i], "--fake-race") && i + 1 < argc)
@@ -197,6 +202,15 @@ int main(int argc, char **argv)
 	if (view_stage >= 0) {
 		result = race_view(&g, view_stage);
 	}
+	else if (race_stage >= 0) {
+		win_open_menu();
+		reset_infio();
+		infio.stage = (int16_t)race_stage;
+		save_infio();
+		result = race_main(&g);
+		printf("race: finished %d, position %d, time %d s\n", infio.race_finished,
+			infio.position, infio.time);
+	}
 	else if (g.screenshot) {
 		win_open_menu();
 		mm_open_screen(&g);
@@ -209,7 +223,7 @@ int main(int argc, char **argv)
 		play_movie(g.data_dir, "a2intro.smk");
 		while (win_handle_menu(&g, first) == MENU_START_RACE && !sys_quit_requested()) {
 			first = 0;
-			run_race(fake_race);
+			run_race(&g, fake_race);
 			/* After the last stage, won: the winner's film. */
 			set_ini_filename("INFIO.INI");
 			int stage = (int)read_ini_value_setting("GAME", "ETAPPE");

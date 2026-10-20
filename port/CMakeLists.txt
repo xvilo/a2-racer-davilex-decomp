@@ -45,13 +45,17 @@ add_executable(a2racer
 	src/menu/slot.c
 	src/menu/spel.c
 	src/menu/txttool.c
+	src/race/camera.c
+	src/race/mapexec.c
 	src/race/math3d.c
 	src/race/object3d.c
 	src/race/opponent.c
+	src/race/player.c
 	src/race/race.c
 	src/race/race_files.c
 	src/race/race_view.c
 	src/race/render.c
+	src/race/sndfx.c
 	src/race/statobj.c
 	src/race/texture.c
 	src/race/weg.c

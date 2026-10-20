@@ -26,8 +26,9 @@ static bool quit_requested;
 
 /* Scripted input for tests: one command per line, run in order as time passes.
  *   wait <ms>         pause the script
+ *   hold <name> <ms>  hold a key down for a while (for keyispressed)
  *   key <name>        press and release a key (enter, escape, up, down, left, right,
- *                     tab, space, backspace, or a letter/digit; alt+<x> holds Alt)
+ *                     tab, space, backspace, f1..f12, or a letter/digit; alt+<x> holds Alt)
  *   text <string>     type text
  *   click <x> <y>     left click at a 640x480 position
  *   shot <file.png>   save the front screen
@@ -41,6 +42,8 @@ static sys_screenshot_fn screenshot_fn;
 static bool fake_alt;
 static SDL_Scancode fake_key = SDL_SCANCODE_UNKNOWN; /* held for keyispressed */
 static char glshot_path[512];
+static SDL_Scancode held_key[4];
+static uint32_t held_until[4];
 static uint32_t fake_key_until;
 
 void sys_set_screenshot(sys_screenshot_fn fn)
@@ -77,6 +80,8 @@ static SDL_Keycode key_by_name(const char *n)
 		if (!strcmp(n, keys[i].name))
 			return keys[i].key;
 	}
+	if (n[0] == 'f' && n[1] >= '1' && n[1] <= '9')
+		return SDLK_F1 + atoi(n + 1) - 1;
 	return (SDL_Keycode)(unsigned char)n[0];
 }
 
@@ -101,6 +106,18 @@ static void run_script(void)
 		fake_alt = false;
 		if (!strncmp(cmd, "wait ", 5)) {
 			script_resume = SDL_GetTicks() + (uint32_t)atoi(cmd + 5);
+		}
+		else if (!strncmp(cmd, "hold ", 5)) {
+			char name[32] = "";
+			int ms = 0;
+			sscanf(cmd + 5, "%31s %d", name, &ms);
+			for (int i = 0; i < 4; i++) {
+				if (held_until[i] <= SDL_GetTicks()) {
+					held_key[i] = SDL_GetScancodeFromKey(key_by_name(name));
+					held_until[i] = SDL_GetTicks() + (uint32_t)ms;
+					break;
+				}
+			}
 		}
 		else if (!strncmp(cmd, "key ", 4)) {
 			const char *k = cmd + 4;
@@ -491,6 +508,8 @@ static SDL_Scancode vk_to_scancode(int vk)
 		return (SDL_Scancode)(SDL_SCANCODE_A + vk - 'A');
 	if (vk >= '1' && vk <= '9')
 		return (SDL_Scancode)(SDL_SCANCODE_1 + vk - '1');
+	if (vk >= 0x70 && vk <= 0x7b)
+		return (SDL_Scancode)(SDL_SCANCODE_F1 + vk - 0x70);
 	if (vk >= 0x61 && vk <= 0x69)
 		return (SDL_Scancode)(SDL_SCANCODE_KP_1 + vk - 0x61);
 	switch (vk) {
@@ -530,6 +549,10 @@ bool keyispressed(int vk)
 		return false;
 	if (sc == fake_key && SDL_GetTicks() < fake_key_until)
 		return true;
+	for (int i = 0; i < 4; i++) {
+		if (sc == held_key[i] && SDL_GetTicks() < held_until[i])
+			return true;
+	}
 	if (vk == 0x10)
 		return state[SDL_SCANCODE_LSHIFT] || state[SDL_SCANCODE_RSHIFT];
 	if (vk == 0x11)

@@ -40,30 +40,40 @@ static uint8_t *read_path(const char *path, size_t *size)
 }
 
 /* The disc is ISO9660 (upper case); copies on other file systems may differ in case. */
-uint8_t *read_file_ci(const char *dir, const char *name, size_t *size)
+int find_file_ci(const char *dir, const char *name, char *path, size_t path_size)
 {
-	char path[1024];
-	snprintf(path, sizeof path, "%s/%s", dir, name);
-	uint8_t *buf = read_path(path, size);
-	if (buf)
-		return buf;
+	snprintf(path, path_size, "%s/%s", dir, name);
+	FILE *f = fopen(path, "rb");
+	if (f) {
+		fclose(f);
+		return 0;
+	}
 #ifdef _WIN32
-	return NULL; /* the Windows file system already ignores case */
+	return -1; /* the Windows file system already ignores case */
 #else
 	DIR *d = opendir(dir);
+	int found = -1;
 	if (!d)
-		return NULL;
+		return -1;
 	struct dirent *e;
 	while ((e = readdir(d)) != NULL) {
 		if (name_equal_ci(e->d_name, name)) {
-			snprintf(path, sizeof path, "%s/%s", dir, e->d_name);
-			buf = read_path(path, size);
+			snprintf(path, path_size, "%s/%s", dir, e->d_name);
+			found = 0;
 			break;
 		}
 	}
 	closedir(d);
-	return buf;
+	return found;
 #endif
+}
+
+uint8_t *read_file_ci(const char *dir, const char *name, size_t *size)
+{
+	char path[1024];
+	if (find_file_ci(dir, name, path, sizeof path))
+		return NULL;
+	return read_path(path, size);
 }
 
 static uint16_t rd16(const uint8_t *p) { return (uint16_t)(p[0] | p[1] << 8); }

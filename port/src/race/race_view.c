@@ -14,20 +14,6 @@
 #include "race/texture.h"
 #include "race/weg.h"
 
-/* track_info in A2SPEL.DAT: per stage the music, the track and its direction. */
-static const struct {
-	int music;
-	const char *track;
-	int forward;
-	int time_limit;
-} track_info[6] = {
-	{ 2, "etappe1.trk", 1, 600 },
-	{ 3, "etappe2.trk", 1, 900 },
-	{ 4, "etappe3.trk", 1, 1200 },
-	{ 5, "etappe3.trk", 0, 1200 },
-	{ 6, "etappe2.trk", 0, 900 },
-	{ 7, "etappe1.trk", 0, 600 },
-};
 
 static void place_camera(float x, float y, float z, int yaw, int pitch)
 {

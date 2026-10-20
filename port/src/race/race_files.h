@@ -13,4 +13,7 @@ const uint8_t *race_file(const char *name, size_t *size);
 /* A whole file from the disc directory (the tracks); caller frees. */
 uint8_t *race_disc_file(const char *name, size_t *size);
 
+/* Opens an INI file from the disc directory for read_ini_value_setting; 0 if found. */
+int race_disc_ini(const char *name);
+
 #endif

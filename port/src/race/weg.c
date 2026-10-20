@@ -125,6 +125,7 @@ static int build_weg_sections(int a, int b, int ground_count, int lanes)
 	ch->end = b;
 	ch->lanes = lanes;
 	ch->in_use = 1;
+	ch->visible = 1;
 	ch->section = alloc_weg_lanes(ground_count);
 	weg_section_t *s = &weg_sections[ch->section];
 
@@ -341,12 +342,16 @@ static int read_point(reader *r, vertex3d_t *v, int *n, int tex_left[64], int te
 
 static void draw_weg(void)
 {
-	for (int i = visible_first; i < visible_last && i < weg_chunk_count; i++)
-		mesh_draw(weg_chunks[i].mesh, NULL);
+	for (int i = visible_first; i < visible_last && i < weg_chunk_count; i++) {
+		if (weg_chunks[i].visible)
+			mesh_draw(weg_chunks[i].mesh, NULL);
+	}
 }
 
 void set_visible_weg_chunks(int first, int last)
 {
+	if (first < 0)
+		last = 0;
 	visible_first = first < 0 ? 0 : first;
 	visible_last = last;
 }
@@ -428,4 +433,47 @@ void free_weg_data(void)
 	weg_chunk_quads = NULL;
 	weg_chunk_count = weg_section_capacity = 0;
 	set_weg_renderer(NULL);
+}
+
+/* --- wegtools.cpp ---------------------------------------------------------------- */
+
+/* Which side of the line across the road at a section (right edge to left edge) the
+ * point is on, in whole units as the original. */
+static int point_side_of_chunk_edge(int section, float x, float z)
+{
+	const weg_section_t *s = &weg_sections[section];
+	int x1 = (int)vertices3d[s->edge_right].x, z1 = (int)vertices3d[s->edge_right].z;
+	int x2 = (int)vertices3d[s->edge_left].x, z2 = (int)vertices3d[s->edge_left].z;
+	int d = ((int)x - x1) * (z2 - z1) - (x2 - x1) * ((int)z - z1);
+	return d > 0 ? 1 : d < 0 ? -1 : 0;
+}
+
+static int point_between_chunk_edges(int chunk, float x, float z)
+{
+	return point_side_of_chunk_edge(chunk, x, z) != point_side_of_chunk_edge(chunk + 1, x, z);
+}
+
+int update_chunk_for_position(int chunk, float x, float z)
+{
+	if (chunk < 0 || weg_section_capacity <= chunk) {
+		fprintf(stderr, "chunk %d out of array bounds (%d)\n", chunk, weg_section_capacity);
+		exit(1);
+	}
+	/* Outwards from the chunk: chunk, chunk + 1, chunk - 1, chunk + 2, ... The last
+	 * section's neighbour does not exist, so the search stays below it. */
+	int down = chunk, up = chunk + 1;
+	while (down > 0 || up < weg_chunk_count) {
+		if (down > 0) {
+			if (point_between_chunk_edges(weg_chunk_quads[down], x, z))
+				return weg_chunk_quads[down];
+			down--;
+		}
+		if (up < weg_chunk_count) {
+			if (point_between_chunk_edges(weg_chunk_quads[up], x, z))
+				return weg_chunk_quads[up];
+			up++;
+		}
+	}
+	fprintf(stderr, "weg chunk is -1\n");
+	return chunk;
 }

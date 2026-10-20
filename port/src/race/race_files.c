@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "res/archive.h"
+#include "xvga/inifile.h"
 
 static named_archive rcs;
 static const char *disc_dir;
@@ -30,4 +31,13 @@ const uint8_t *race_file(const char *name, size_t *size)
 uint8_t *race_disc_file(const char *name, size_t *size)
 {
 	return read_file_ci(disc_dir, name, size);
+}
+
+int race_disc_ini(const char *name)
+{
+	char path[1024];
+	if (find_file_ci(disc_dir, name, path, sizeof path))
+		return -1;
+	set_ini_file_path(path);
+	return 0;
 }
