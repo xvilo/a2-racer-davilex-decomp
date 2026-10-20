@@ -15,6 +15,7 @@ add_executable(a2racer
 	src/platform/sys_sdl.c
 	src/platform/gl.c
 	src/res/archive.c
+	src/res/discimage.c
 	src/res/pcx.c
 	src/res/smacker.c
 	src/movie/movies.c

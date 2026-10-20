@@ -30,7 +30,7 @@ The game's own data is not included. Point the port at the original CD, or at a 
 
 ## Download
 
-Ready-made builds of the latest commit are on the [latest release](https://github.com/xvilo/a2-racer-davilex-decomp/releases/tag/latest): Windows (x86-64, with its DLLs), macOS (one universal executable for Apple Silicon and Intel, SDL built in) and Linux (x86-64; needs SDL2 and SDL2_ttf from the system, e.g. `sudo apt install libsdl2-2.0-0 libsdl2-ttf-2.0-0`). Unpack and run `a2racer --data /path/to/A2Racer-CD`. The macOS build isn't notarised, so macOS stops a downloaded copy: run `xattr -dr com.apple.quarantine /path/to/a2racer` once after unpacking.
+Ready-made builds of the latest commit are on the [latest release](https://github.com/xvilo/a2-racer-davilex-decomp/releases/tag/latest): Windows (x86-64, with its DLLs), macOS (one universal executable for Apple Silicon and Intel, SDL built in) and Linux (x86-64; needs SDL2 and SDL2_ttf from the system, e.g. `sudo apt install libsdl2-2.0-0 libsdl2-ttf-2.0-0`). Unpack and run `a2racer --data /path/to/A2RACER.BIN` (the CD image, `.bin` or `.iso`), or point `--data` at a folder with the CD's files. The macOS build isn't notarised, so macOS stops a downloaded copy: run `xattr -dr com.apple.quarantine /path/to/a2racer` once after unpacking.
 
 ## Build
 
@@ -47,7 +47,7 @@ port/build/a2racer --data /path/to/A2Racer-CD
 
 | Option | Does |
 |---|---|
-| `--data <dir>` | Where the game files are (the environment variable `A2_DATA` also works) |
+| `--data <dir or image>` | Where the game files are (the environment variable `A2_DATA` also works): a folder with the CD's files, or the CD image itself (`.bin` with raw 2352-byte sectors, or `.iso`). An image is unpacked once into `disc/` in the user's data folder |
 | `--save <dir>` | Where options and save slots go. Default: the user's data folder (`~/.local/share/Davilex/A2 Racer/` on Linux, `%APPDATA%\Davilex\A2 Racer\` on Windows). The files are byte-compatible with the original's |
 | `--fonts <dir>` | A folder with `ariblk.ttf` (Arial Black, the menus' font), if it isn't in the system font folders |
 | `--scale N` | Opens the window at N × 640×480. The window can also be resized freely and keeps 4:3 |

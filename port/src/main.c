@@ -25,6 +25,7 @@
 #include "race/race_main.h"
 #include "race/race_view.h"
 #include "platform/sys.h"
+#include "res/discimage.h"
 #include "xvga/fileio.h"
 #include "xvga/font.h"
 #include "xvga/inifile.h"
@@ -179,6 +180,17 @@ int main(int argc, char **argv)
 	if (!g.data_dir) {
 		usage();
 		return 2;
+	}
+	/* A CD image instead of a folder: its files are unpacked once into the user's data
+	 * folder. */
+	char disc_dir[1024];
+	if (is_disc_image(g.data_dir)) {
+		char *pref = SDL_GetPrefPath("Davilex", "A2 Racer");
+		snprintf(disc_dir, sizeof disc_dir, "%sdisc", pref ? pref : "./");
+		SDL_free(pref);
+		if (disc_image_unpack(g.data_dir, disc_dir))
+			return 1;
+		g.data_dir = disc_dir;
 	}
 	if (named_archive_open(&g.menu_files, g.data_dir, "A2MRCS") ||
 		sprite_archive_open(&g.menu_sprites, g.data_dir, "A2MRC")) {

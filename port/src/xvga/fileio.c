@@ -5,6 +5,14 @@
 
 #include <SDL.h>
 
+#ifdef _WIN32
+#include <direct.h>
+#define make_dir(p) _mkdir(p)
+#else
+#include <sys/stat.h>
+#define make_dir(p) mkdir(p, 0755)
+#endif
+
 static char save_dir[1024];
 
 void fileio_init(const char *dir)
@@ -14,6 +22,7 @@ void fileio_init(const char *dir)
 		size_t n = strlen(save_dir);
 		if (n && save_dir[n - 1] != '/' && save_dir[n - 1] != '\\')
 			snprintf(save_dir + n, sizeof save_dir - n, "/");
+		make_dir(dir); /* one level, like the user's data folder SDL makes */
 		return;
 	}
 	char *pref = SDL_GetPrefPath("Davilex", "A2 Racer");
