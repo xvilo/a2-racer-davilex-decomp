@@ -30,7 +30,7 @@ The game's own data is not included. Point the port at the original CD, or at a 
 
 ## Download
 
-Ready-made builds of the latest commit are on the [latest release](https://github.com/xvilo/a2-racer-davilex-decomp/releases/tag/latest): Windows (x86-64, with its DLLs), macOS (Apple Silicon, with its libraries) and Linux (x86-64; needs SDL2 and SDL2_ttf from the system, e.g. `sudo apt install libsdl2-2.0-0 libsdl2-ttf-2.0-0`). Unpack and run `a2racer --data /path/to/A2Racer-CD`. The macOS build isn't signed: the first time, open it with right-click → Open, or run `xattr -dr com.apple.quarantine a2racer`.
+Ready-made builds of the latest commit are on the [latest release](https://github.com/xvilo/a2-racer-davilex-decomp/releases/tag/latest): Windows (x86-64, with its DLLs), macOS (one universal executable for Apple Silicon and Intel, SDL built in) and Linux (x86-64; needs SDL2 and SDL2_ttf from the system, e.g. `sudo apt install libsdl2-2.0-0 libsdl2-ttf-2.0-0`). Unpack and run `a2racer --data /path/to/A2Racer-CD`. The macOS build isn't notarised, so macOS stops a downloaded copy: run `xattr -dr com.apple.quarantine /path/to/a2racer` once after unpacking.
 
 ## Build
 

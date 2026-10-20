@@ -32,29 +32,48 @@ jobs:
 
   macos:
     runs-on: macos-14
+    env:
+      SDL2_VERSION: 2.30.9
+      SDL2_TTF_VERSION: 2.22.0
     steps:
       - uses: actions/checkout@v4
-      - name: Dependencies
-        run: brew install sdl2 sdl2_ttf dylibbundler
+      # Homebrew's sdl2 is now sdl2-compat, which loads SDL3 at run time; building SDL2
+      # and SDL2_ttf (with its own FreeType) as static libraries gives one self-contained
+      # universal executable instead.
+      - name: SDL2 and SDL2_ttf, static and universal
+        run: |
+          curl -sSfL -o sdl.tar.gz https://github.com/libsdl-org/SDL/releases/download/release-$SDL2_VERSION/SDL2-$SDL2_VERSION.tar.gz
+          curl -sSfL -o ttf.tar.gz https://github.com/libsdl-org/SDL_ttf/releases/download/release-$SDL2_TTF_VERSION/SDL2_ttf-$SDL2_TTF_VERSION.tar.gz
+          tar xzf sdl.tar.gz
+          tar xzf ttf.tar.gz
+          common=(-DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_INSTALL_PREFIX=$PWD/deps -DCMAKE_PREFIX_PATH=$PWD/deps)
+          cmake -S SDL2-$SDL2_VERSION -B sdl-build "${common[@]}" -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
+          cmake --build sdl-build -j 4
+          cmake --install sdl-build
+          cmake -S SDL2_ttf-$SDL2_TTF_VERSION -B ttf-build "${common[@]}" -DBUILD_SHARED_LIBS=OFF -DSDL2TTF_VENDORED=ON -DSDL2TTF_HARFBUZZ=OFF -DSDL2TTF_SAMPLES=OFF
+          cmake --build ttf-build -j 4
+          cmake --install ttf-build
       - name: Build
         run: |
-          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release
+          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_PREFIX_PATH=$PWD/deps
           cmake --build port/build -j 4 2>&1 | tee build.log
           exit ${PIPESTATUS[0]}
       - name: Report compiler errors
         if: failure()
-        run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
-      - name: Package with its libraries
+        run: grep -E "error|warning|undefined|Undefined" build.log | head -50 | sed 's/^/::error::/' || true
+      - name: Package
         run: |
+          otool -L port/build/a2racer
+          if otool -L port/build/a2racer | grep -E "SDL|freetype|/opt/homebrew|/usr/local"; then echo "::error::links a non-system library"; exit 1; fi
+          lipo -info port/build/a2racer
           mkdir -p dist/a2racer
           cp port/build/a2racer port/README.md dist/a2racer/
-          dylibbundler -od -b -x dist/a2racer/a2racer -d dist/a2racer/libs -p @executable_path/libs/
-          codesign --force --sign - dist/a2racer/libs/*.dylib dist/a2racer/a2racer
-          (cd dist && zip -r ../a2racer-macos-arm64.zip a2racer)
+          codesign --force --sign - dist/a2racer/a2racer
+          (cd dist && zip -r ../a2racer-macos-universal.zip a2racer)
       - uses: actions/upload-artifact@v4
         with:
-          name: a2racer-macos-arm64
-          path: a2racer-macos-arm64.zip
+          name: a2racer-macos-universal
+          path: a2racer-macos-universal.zip
 
   windows-mingw:
     runs-on: windows-2022
