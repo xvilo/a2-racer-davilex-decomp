@@ -25,7 +25,7 @@ void __watcall destroy_animbutton(form_t *form)
 
 /* ==== 0041b962 create_animbutton ==== */
 
-void __watcall create_animbutton(form_t *form,int param_2)
+void __watcall create_animbutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -42,20 +42,20 @@ void __watcall create_animbutton(form_t *form,int param_2)
   if (piVar1[5] == -1) {
     piVar1[5] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[4],piVar1[5]);
+  check_control_position(form_index,form->x,form->y,piVar1[4],piVar1[5]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_004315a8,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[4],
-                           piVar1[5],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[5],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_an_004315af,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_an_004315af,form_index);
   }
   old_animbutton_windowproc = SetWindowLongA(form->hwnd,-4,0x41be27);
   if (form->state == 4) {
     form->state = 1;
   }
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   form->field_14 = 0;
   return;
 }
@@ -63,7 +63,7 @@ void __watcall create_animbutton(form_t *form,int param_2)
 
 /* ==== 0041ba4c draw_animation_animbutton ==== */
 
-void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int param_4)
+void __watcall draw_animation_animbutton(int anim_index,int form_index,int param_3,int param_4)
 
 {
   void *control_pointer_1;
@@ -72,31 +72,31 @@ void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int
   int iVar3;
   int iVar4;
   int control_x;
-  int j;
   int i;
+  int frame_index;
   int iVar5;
   
-  control_pointer_1 = get_control_pointer_1(param_2);
-  i = (&xvga_anims->field_00)[param_1 * 3];
+  control_pointer_1 = get_control_pointer_1(form_index);
+  frame_index = xvga_anims[anim_index].frame_count;
   iVar1 = *(int *)((int)control_pointer_1 + 0x10) / 2;
   iVar2 = *(int *)((int)control_pointer_1 + 0x14) / 2;
   if (((param_4 == 0) || ((uint)param_4 < 2)) || (param_4 != 2)) {
-    for (j = 0; j < i; j = j + 1) {
-      iVar3 = get_control_image_index(param_1,j);
+    for (i = 0; i < frame_index; i = i + 1) {
+      iVar3 = get_control_image_index(anim_index,i);
       iVar5 = 1;
-      iVar4 = get_control_y(param_2);
-      control_x = get_control_x(param_2);
+      iVar4 = get_control_y(form_index);
+      control_x = get_control_x(form_index);
       set_mem_image(0,iVar3,iVar1 + control_x,iVar2 + iVar4,iVar5);
       Sleep(param_3);
     }
   }
   else {
-    while (i = i + -1, -1 < i) {
-      j = get_control_image_index(param_1,i);
+    while (frame_index = frame_index + -1, -1 < frame_index) {
+      i = get_control_image_index(anim_index,frame_index);
       control_x = 1;
-      iVar3 = get_control_y(param_2);
-      iVar4 = get_control_x(param_2);
-      set_mem_image(0,j,iVar1 + iVar4,iVar2 + iVar3,control_x);
+      iVar3 = get_control_y(form_index);
+      iVar4 = get_control_x(form_index);
+      set_mem_image(0,i,iVar1 + iVar4,iVar2 + iVar3,control_x);
       Sleep(param_3);
     }
   }
@@ -112,36 +112,36 @@ void __watcall draw_help_animbutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
+  int form_index;
+  int anim_index;
   int iVar4;
-  int iVar5;
-  int iVar6;
   int control_x;
   uint control_state;
-  int iVar7;
+  int iVar5;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[4];
   iVar3 = piVar1[5];
-  iVar5 = get_control_image_index(*piVar1,(&xvga_anims->field_00)[*piVar1 * 3] + -1);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar4);
-  control_x = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar2 / 2 + control_x,iVar3 / 2 + iVar6,iVar7);
-  control_state = get_control_state(iVar4);
+  anim_index = get_control_image_index(*piVar1,xvga_anims[*piVar1].frame_count + -1);
+  iVar5 = 1;
+  iVar4 = get_control_y(form_index);
+  control_x = get_control_x(form_index);
+  set_mem_image(0,anim_index,iVar2 / 2 + control_x,iVar3 / 2 + iVar4,iVar5);
+  control_state = get_control_state(form_index);
   if ((control_state == 0) || ((1 < control_state && (control_state != 4)))) {
-    iVar6 = (&xvga_anims->field_00)[*piVar1 * 3];
-    iVar5 = *piVar1;
+    iVar4 = xvga_anims[*piVar1].frame_count;
+    anim_index = *piVar1;
   }
   else {
-    iVar6 = (&xvga_anims->field_00)[piVar1[3] * 3];
-    iVar5 = piVar1[3];
+    iVar4 = xvga_anims[piVar1[3]].frame_count;
+    anim_index = piVar1[3];
   }
-  iVar5 = get_control_image_index(iVar5,iVar6 + -1);
+  anim_index = get_control_image_index(anim_index,iVar4 + -1);
   control_x = 1;
-  iVar6 = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar2 / 2 + iVar4,iVar3 / 2 + iVar6,control_x);
+  iVar4 = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,anim_index,iVar2 / 2 + form_index,iVar3 / 2 + iVar4,control_x);
   return;
 }
 
@@ -152,94 +152,95 @@ void __watcall draw_animbutton(tagDRAWITEMSTRUCT *drawitemstruct)
 
 {
   uint uVar1;
-  int iVar2;
+  int form_index;
   int *control_pointer;
+  int anim_index;
+  int iVar2;
   int iVar3;
+  int anim_index_2;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
   
-  iVar2 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
-  iVar5 = control_pointer[4];
   iVar3 = control_pointer[4];
-  iVar7 = control_pointer[5];
-  if (iVar2 == -1) {
+  anim_index = control_pointer[4];
+  iVar4 = control_pointer[5];
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_animbutton__no_va_004315ea,s_animbuts_cpp_004315dd,0xb6);
   }
   hide_mouse();
   uVar1 = drawitemstruct->itemState;
   if (uVar1 < 0x10) {
     if (uVar1 == 4) {
-      iVar5 = get_old_control_state(iVar2);
-      if (iVar5 == 2) goto LAB_0041bc1e;
-      set_control_state(iVar2,2);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[2];
+      iVar3 = get_old_control_state(form_index);
+      if (iVar3 == 2) goto LAB_0041bc1e;
+      set_control_state(form_index,2);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[2];
       goto LAB_0041bcd4;
     }
 LAB_0041be13:
-    iVar6 = get_control_state(iVar2);
-    switch(iVar6) {
+    anim_index_2 = get_control_state(form_index);
+    switch(anim_index_2) {
     case 0:
-      iVar5 = get_old_control_state(iVar2);
-      if (iVar5 != 0) goto LAB_0041bc1e;
-      iVar7 = 1;
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = *control_pointer;
+      iVar3 = get_old_control_state(form_index);
+      if (iVar3 != 0) goto LAB_0041bc1e;
+      iVar4 = 1;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = *control_pointer;
       break;
     case 1:
     case 4:
-      set_control_state(iVar2,0);
-      iVar6 = *control_pointer;
-      iVar4 = (&xvga_anims->field_00)[iVar6 * 3];
+      set_control_state(form_index,0);
+      anim_index_2 = *control_pointer;
+      iVar2 = xvga_anims[anim_index_2].frame_count;
 LAB_0041bd0c:
-      iVar6 = get_control_image_index(iVar6,iVar4 + -1);
-      iVar8 = 1;
-      iVar4 = get_control_y(iVar2);
-      iVar2 = get_control_x(iVar2);
-      set_mem_image(0,iVar6,(iVar3 - (iVar5 >> 0x1f) >> 1) + iVar2,iVar4 + iVar7 / 2,iVar8);
+      anim_index_2 = get_control_image_index(anim_index_2,iVar2 + -1);
+      iVar5 = 1;
+      iVar2 = get_control_y(form_index);
+      form_index = get_control_x(form_index);
+      set_mem_image(0,anim_index_2,(anim_index - (iVar3 >> 0x1f) >> 1) + form_index,
+                    iVar2 + iVar4 / 2,iVar5);
       goto LAB_0041bc1e;
     case 2:
-      iVar7 = 2;
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[2];
+      iVar4 = 2;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[2];
       break;
     default:
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = *control_pointer;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = *control_pointer;
       goto LAB_0041bcd4;
     }
   }
   else {
     if (uVar1 < 0x11) {
-      iVar6 = get_control_state(iVar2);
-      if (iVar6 == 4) {
-        set_control_state(iVar2,1);
-        iVar4 = (&xvga_anims->field_00)[control_pointer[3] * 3];
-        iVar6 = control_pointer[3];
+      anim_index_2 = get_control_state(form_index);
+      if (anim_index_2 == 4) {
+        set_control_state(form_index,1);
+        iVar2 = xvga_anims[control_pointer[3]].frame_count;
+        anim_index_2 = control_pointer[3];
         goto LAB_0041bd0c;
       }
-      iVar7 = 1;
-      set_control_state(iVar2,1);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[3];
+      iVar4 = 1;
+      set_control_state(form_index,1);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[3];
       goto LAB_0041bcd8;
     }
     if (uVar1 != 0x11) goto LAB_0041be13;
-    set_control_state(iVar2,4);
-    iVar5 = control_pointer[6];
-    iVar3 = control_pointer[1];
+    set_control_state(form_index,4);
+    iVar3 = control_pointer[6];
+    anim_index = control_pointer[1];
 LAB_0041bcd4:
-    iVar7 = 1;
+    iVar4 = 1;
   }
 LAB_0041bcd8:
-  draw_animation_animbutton(iVar3,iVar2,iVar5,iVar7);
+  draw_animation_animbutton(anim_index,form_index,iVar3,iVar4);
 LAB_0041bc1e:
   show_mouse();
   return;
@@ -252,7 +253,7 @@ long AnimButtonWindowProc(void *param_1,uint param_2,uint param_3,long drawitems
 
 {
   SHORT SVar1;
-  int control_index;
+  int form_index;
   HWND pHVar2;
   
   if (param_2 < 0x100) {
@@ -293,8 +294,8 @@ long AnimButtonWindowProc(void *param_1,uint param_2,uint param_3,long drawitems
       }
       else if (0x200 < param_2) {
         if (param_2 < 0x202) {
-          control_index = get_control_index(param_1);
-          set_control_state(control_index,4);
+          form_index = get_control_index(param_1);
+          set_control_state(form_index,4);
         }
         else if (param_2 == 0x204) {
           return 1;

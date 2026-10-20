@@ -36,11 +36,10 @@ void __watcall create_slot(int param_1,char *param_2)
   int slot_check_level_result;
   int i;
   char *extraout_EDX;
-  undefined4 *puVar1;
   bedien_t *bedien;
+  undefined4 *puVar1;
   undefined4 *puVar2;
   undefined4 *puVar3;
-  bedien_t *bedien_2;
   byte bVar4;
   uint local_1c;
   
@@ -52,80 +51,80 @@ void __watcall create_slot(int param_1,char *param_2)
   debugmsg(s_Seeking_the_slot_that_was_saved_l_00425c6a,s_slot_cpp_00425c61,0x52);
   do {
     j = slot_check_index(i,s_slot_cpp_00425cc1,0x54);
-    if ((local_1c < (byte)(&DAT_0043725d)[j * 0x13c]) && (i != param_1)) {
+    if ((local_1c < (byte)(&slot_list[0].field_0x1)[j * 0x13c]) && (i != param_1)) {
       j = slot_check_index(i,s_slot_cpp_00425cca,0x55);
-      local_1c = (uint)(byte)(&DAT_0043725d)[j * 0x13c];
+      local_1c = (uint)(byte)(&slot_list[0].field_0x1)[j * 0x13c];
     }
     i = i + 1;
   } while (i < 10);
   debugmsg(s_Found_the_last_time__d_00425cdc,s_slot_cpp_00425cd3,0x58,local_1c);
   i = slot_check_index(param_1,extraout_EDX,0x59);
-  strncpy((char *)(i * 0x13c + 0x437296),param_2,0x20);
+  strncpy(&slot_list[0].field_0x3a + i * 0x13c,param_2,0x20);
   i = slot_check_index(param_1,s_slot_cpp_00425cff,0x5a);
-  (&DAT_0043725d)[i * 0x13c] = (char)local_1c + '\x01';
+  (&slot_list[0].field_0x1)[i * 0x13c] = (char)local_1c + '\x01';
   i = slot_check_index(param_1,s_slot_cpp_00425d08,0x5b);
-  *(undefined2 *)(&DAT_004372ba + i * 0x13c) = 0;
+  *(undefined2 *)(&slot_list[0].field_0x5e + i * 0x13c) = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425d11,0x5c);
-  (&slot_list)[i * 0x13c] = 1;
+  (&slot_list[0].field_0x0)[i * 0x13c] = 1;
   i = slot_check_index(param_1,s_slot_cpp_00425d1a,0x5d);
-  *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 1000;
+  *(undefined4 *)(&slot_list[0].field_0x78 + i * 0x13c) = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425d23,0x5e);
-  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
-  *(undefined4 *)(&DAT_0043725e + i * 0x13c) = _opties;
-  puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
-  puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-  *puVar3 = *puVar1;
-  puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
-  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar1 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar4 * -8);
+  *(undefined4 *)((int)&slot_list[0].field_02 + i * 0x13c) = _opties;
+  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
+  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+  *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+  *puVar2 = *puVar3;
+  puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
+  (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+       (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425d2c,0x5f);
   bedien = &control;
-  bedien_2 = (bedien_t *)(&DAT_00437272 + i * 0x13c);
+  puVar3 = (undefined4 *)(&slot_list[0].field_0x16 + i * 0x13c);
   for (j = 9; j != 0; j = j + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar4 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
+    *puVar3 = *(undefined4 *)bedien;
+    bedien = (bedien_t *)&bedien[-(uint)bVar4].field_04;
+    puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
   }
   i = 0;
   do {
     j = slot_check_index(param_1,s_slot_cpp_00425d35,0x61);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d3e,0x61);
-    *(undefined4 *)(&DAT_004372bc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372bc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425d47,0x62);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d50,0x62);
-    *(undefined2 *)(&DAT_004372d8 + slot_check_level_result * 2 + j * 0x13c) = 6;
+    *(undefined2 *)(j * 0x13c + 0x4372d8 + slot_check_level_result * 2) = 6;
     j = slot_check_index(param_1,s_slot_cpp_00425d59,99);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d62,99);
-    *(undefined2 *)(&DAT_0043735c + slot_check_level_result * 2 + j * 0x13c) = 1;
+    *(undefined2 *)(j * 0x13c + 0x43735c + slot_check_level_result * 2) = 1;
     j = slot_check_index(param_1,s_slot_cpp_00425d6b,100);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d74,100);
-    *(undefined2 *)(&DAT_00437368 + slot_check_level_result * 2 + j * 0x13c) = 2;
+    *(undefined2 *)(j * 0x13c + 0x437368 + slot_check_level_result * 2) = 2;
     j = slot_check_index(param_1,s_slot_cpp_00425d7d,0x65);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d86,0x65);
-    *(undefined2 *)(&DAT_00437374 + slot_check_level_result * 2 + j * 0x13c) = 3;
+    *(undefined2 *)(j * 0x13c + 0x437374 + slot_check_level_result * 2) = 3;
     j = slot_check_index(param_1,s_slot_cpp_00425d8f,0x66);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d98,0x66);
-    *(undefined2 *)(&DAT_00437380 + slot_check_level_result * 2 + j * 0x13c) = 4;
+    *(undefined2 *)(j * 0x13c + 0x437380 + slot_check_level_result * 2) = 4;
     j = slot_check_index(param_1,s_slot_cpp_00425da1,0x67);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425daa,0x67);
-    *(undefined2 *)(&DAT_0043738c + slot_check_level_result * 2 + j * 0x13c) = 5;
+    *(undefined2 *)(j * 0x13c + 0x43738c + slot_check_level_result * 2) = 5;
     j = slot_check_index(param_1,s_slot_cpp_00425db3,0x68);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425dbc,0x68);
-    *(undefined4 *)(&DAT_004372e4 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372e4 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425dc5,0x69);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425dce,0x69);
-    *(undefined4 *)(&DAT_004372fc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372fc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425dd7,0x6a);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425de0,0x6a);
-    *(undefined4 *)(&DAT_00437314 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437314 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425de9,0x6b);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425df2,0x6b);
-    *(undefined4 *)(&DAT_0043732c + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x43732c + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425dfb,0x6c);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425e04,0x6c);
     i = i + 1;
-    *(undefined4 *)(&DAT_00437344 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437344 + slot_check_level_result * 4) = 0;
   } while (i < 6);
   debugmsg(s_Slot__d_created___00425e0d,param_1);
   slots_already_loaded = 1;
@@ -149,58 +148,59 @@ void __watcall clear_slot(int param_1)
   do {
     j = slot_check_index(i,s_slot_cpp_00425e7d,0x7e);
     iVar1 = slot_check_index(param_1,s_slot_cpp_00425e86,0x7e);
-    if ((byte)(&DAT_0043725d)[iVar1 * 0x13c] < (byte)(&DAT_0043725d)[j * 0x13c]) {
+    if ((byte)(&slot_list[0].field_0x1)[iVar1 * 0x13c] < (byte)(&slot_list[0].field_0x1)[j * 0x13c])
+    {
       j = slot_check_index(i,s_slot_cpp_00425e8f,0x7f);
-      (&DAT_0043725d)[j * 0x13c] = (&DAT_0043725d)[j * 0x13c] + -1;
+      (&slot_list[0].field_0x1)[j * 0x13c] = (&slot_list[0].field_0x1)[j * 0x13c] + -1;
     }
     i = i + 1;
   } while (i < 10);
   debugmsg(s_Done_reset_00425ea1,s_slot_cpp_00425e98,0x82);
   i = slot_check_index(param_1,s_slot_cpp_00425eaf,0x83);
-  (&slot_list)[i * 0x13c] = 0;
+  (&slot_list[0].field_0x0)[i * 0x13c] = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425eb8,0x84);
-  (&DAT_0043725d)[i * 0x13c] = 0;
+  (&slot_list[0].field_0x1)[i * 0x13c] = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425ec1,0x85);
   j = 0;
-  *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 0;
+  *(undefined4 *)(&slot_list[0].field_0x78 + i * 0x13c) = 0;
   do {
     i = slot_check_index(param_1,s_slot_cpp_00425eca,0x87);
     iVar1 = slot_check_level(j,s_slot_cpp_00425ed3,0x87);
-    *(undefined4 *)(&DAT_004372bc + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x4372bc + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425edc,0x88);
     iVar1 = slot_check_level(j,s_slot_cpp_00425ee5,0x88);
-    *(undefined2 *)(&DAT_004372d8 + iVar1 * 2 + i * 0x13c) = 6;
+    *(undefined2 *)(i * 0x13c + 0x4372d8 + iVar1 * 2) = 6;
     i = slot_check_index(param_1,s_slot_cpp_00425eee,0x89);
     iVar1 = slot_check_level(j,s_slot_cpp_00425ef7,0x89);
-    *(undefined2 *)(&DAT_0043735c + iVar1 * 2 + i * 0x13c) = 1;
+    *(undefined2 *)(i * 0x13c + 0x43735c + iVar1 * 2) = 1;
     i = slot_check_index(param_1,s_slot_cpp_00425f00,0x8a);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f09,0x8a);
-    *(undefined2 *)(&DAT_00437368 + iVar1 * 2 + i * 0x13c) = 2;
+    *(undefined2 *)(i * 0x13c + 0x437368 + iVar1 * 2) = 2;
     i = slot_check_index(param_1,s_slot_cpp_00425f12,0x8b);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f1b,0x8b);
-    *(undefined2 *)(&DAT_00437374 + iVar1 * 2 + i * 0x13c) = 3;
+    *(undefined2 *)(i * 0x13c + 0x437374 + iVar1 * 2) = 3;
     i = slot_check_index(param_1,s_slot_cpp_00425f24,0x8c);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f2d,0x8c);
-    *(undefined2 *)(&DAT_00437380 + iVar1 * 2 + i * 0x13c) = 4;
+    *(undefined2 *)(i * 0x13c + 0x437380 + iVar1 * 2) = 4;
     i = slot_check_index(param_1,s_slot_cpp_00425f36,0x8d);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f3f,0x8d);
-    *(undefined2 *)(&DAT_0043738c + iVar1 * 2 + i * 0x13c) = 5;
+    *(undefined2 *)(i * 0x13c + 0x43738c + iVar1 * 2) = 5;
     i = slot_check_index(param_1,s_slot_cpp_00425f48,0x8e);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f51,0x8e);
-    *(undefined4 *)(&DAT_004372e4 + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x4372e4 + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f5a,0x8f);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f63,0x8f);
-    *(undefined4 *)(&DAT_004372fc + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x4372fc + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f6c,0x90);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f75,0x90);
-    *(undefined4 *)(&DAT_00437314 + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x437314 + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f7e,0x91);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f87,0x91);
-    *(undefined4 *)(&DAT_0043732c + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x43732c + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f90,0x92);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f99,0x92);
     j = j + 1;
-    *(undefined4 *)(&DAT_00437344 + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x437344 + iVar1 * 4) = 0;
   } while (j < 6);
   return;
 }
@@ -216,79 +216,78 @@ void __watcall reset_slot(int param_1)
   int i;
   int slot_check_level_result;
   int j;
-  undefined4 *puVar1;
   bedien_t *bedien;
+  undefined4 *puVar1;
   undefined4 *puVar2;
   undefined4 *puVar3;
-  bedien_t *bedien_2;
   byte bVar4;
   
   bVar4 = 0;
   debugmsg(s__s__d___reset_slot___d__00425fab,s_slot_cpp_00425fa2,0x9c,param_1);
   slot_check_index(param_1,s_slot_cpp_00425fc5,0x9d);
   i = slot_check_index(param_1,s_slot_cpp_00425fce,0x9e);
-  (&DAT_0043725d)[i * 0x13c] = 0;
+  (&slot_list[0].field_0x1)[i * 0x13c] = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425fd7,0x9f);
-  *(undefined2 *)(&DAT_004372ba + i * 0x13c) = 0;
+  *(undefined2 *)(&slot_list[0].field_0x5e + i * 0x13c) = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425fe0,0xa0);
-  *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 1000;
+  *(undefined4 *)(&slot_list[0].field_0x78 + i * 0x13c) = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425fe9,0xa1);
-  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
-  *(undefined4 *)(&DAT_0043725e + i * 0x13c) = _opties;
-  puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
-  puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-  *puVar3 = *puVar1;
-  puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
-  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar1 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar4 * -8);
+  *(undefined4 *)((int)&slot_list[0].field_02 + i * 0x13c) = _opties;
+  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
+  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+  *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+  *puVar2 = *puVar3;
+  puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
+  (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+       (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425ff2,0xa2);
   bedien = &control;
-  bedien_2 = (bedien_t *)(&DAT_00437272 + i * 0x13c);
+  puVar3 = (undefined4 *)(&slot_list[0].field_0x16 + i * 0x13c);
   for (j = 9; j != 0; j = j + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar4 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
+    *puVar3 = *(undefined4 *)bedien;
+    bedien = (bedien_t *)&bedien[-(uint)bVar4].field_04;
+    puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
   }
   i = 0;
   do {
     j = slot_check_index(param_1,s_slot_cpp_00425ffb,0xa4);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426004,0xa4);
-    *(undefined4 *)(&DAT_004372bc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372bc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_0042600d,0xa5);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426016,0xa5);
-    *(undefined2 *)(&DAT_004372d8 + slot_check_level_result * 2 + j * 0x13c) = 6;
+    *(undefined2 *)(j * 0x13c + 0x4372d8 + slot_check_level_result * 2) = 6;
     j = slot_check_index(param_1,s_slot_cpp_0042601f,0xa6);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426028,0xa6);
-    *(undefined2 *)(&DAT_0043735c + slot_check_level_result * 2 + j * 0x13c) = 1;
+    *(undefined2 *)(j * 0x13c + 0x43735c + slot_check_level_result * 2) = 1;
     j = slot_check_index(param_1,s_slot_cpp_00426031,0xa7);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_0042603a,0xa7);
-    *(undefined2 *)(&DAT_00437368 + slot_check_level_result * 2 + j * 0x13c) = 2;
+    *(undefined2 *)(j * 0x13c + 0x437368 + slot_check_level_result * 2) = 2;
     j = slot_check_index(param_1,s_slot_cpp_00426043,0xa8);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_0042604c,0xa8);
-    *(undefined2 *)(&DAT_00437374 + slot_check_level_result * 2 + j * 0x13c) = 3;
+    *(undefined2 *)(j * 0x13c + 0x437374 + slot_check_level_result * 2) = 3;
     j = slot_check_index(param_1,s_slot_cpp_00426055,0xa9);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_0042605e,0xa9);
-    *(undefined2 *)(&DAT_00437380 + slot_check_level_result * 2 + j * 0x13c) = 4;
+    *(undefined2 *)(j * 0x13c + 0x437380 + slot_check_level_result * 2) = 4;
     j = slot_check_index(param_1,s_slot_cpp_00426067,0xaa);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426070,0xaa);
-    *(undefined2 *)(&DAT_0043738c + slot_check_level_result * 2 + j * 0x13c) = 5;
+    *(undefined2 *)(j * 0x13c + 0x43738c + slot_check_level_result * 2) = 5;
     j = slot_check_index(param_1,s_slot_cpp_00426079,0xab);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426082,0xab);
-    *(undefined4 *)(&DAT_004372e4 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372e4 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_0042608b,0xac);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426094,0xac);
-    *(undefined4 *)(&DAT_004372fc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372fc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_0042609d,0xad);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_004260a6,0xad);
-    *(undefined4 *)(&DAT_00437314 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437314 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_004260af,0xae);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_004260b8,0xae);
-    *(undefined4 *)(&DAT_0043732c + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x43732c + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_004260c1,0xaf);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_004260ca,0xaf);
     i = i + 1;
-    *(undefined4 *)(&DAT_00437344 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437344 + slot_check_level_result * 4) = 0;
   } while (i < 6);
   return;
 }
@@ -306,7 +305,7 @@ void __watcall load_tmp_slotdbase(char *filename)
   if (iVar1 == 0) {
     fatal_exit(s__s__d___load_tmp_slotdbase____Fi_00426108,s_slot_cpp_004260ff,0xbe,filename);
   }
-  iVar1 = file_read(&slot_list,0xc58,filename);
+  iVar1 = file_read(slot_list,0xc58,filename);
   if (iVar1 != 0) {
     file_delete();
     init_slotdbase();
@@ -325,11 +324,10 @@ void __watcall init_slotdbase(void)
   int i;
   int slot_check_index_result;
   int j;
+  bedien_t *bedien;
   undefined4 *puVar1;
-  bedien_t *bedien_2;
   undefined4 *puVar2;
   undefined4 *puVar3;
-  bedien_t *bedien;
   byte bVar4;
   
   bVar4 = 0;
@@ -339,33 +337,33 @@ void __watcall init_slotdbase(void)
     i = 0;
     do {
       slot_check_index_result = slot_check_index(i,s_slot_cpp_004261f2,0xde);
-      strncpy((char *)(slot_check_index_result * 0x13c + 0x437296),&DAT_004261f1,0x20);
+      strncpy(&slot_list[0].field_0x3a + slot_check_index_result * 0x13c,&DAT_004261f1,0x20);
       slot_check_index_result = slot_check_index(i,s_slot_cpp_004261fb,0xdf);
-      (&DAT_0043725d)[slot_check_index_result * 0x13c] = 0;
+      (&slot_list[0].field_0x1)[slot_check_index_result * 0x13c] = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426204,0xe0);
-      *(undefined2 *)(&DAT_004372ba + slot_check_index_result * 0x13c) = 0;
+      *(undefined2 *)(&slot_list[0].field_0x5e + slot_check_index_result * 0x13c) = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_0042620d,0xe1);
-      *(undefined4 *)(&DAT_004372d4 + slot_check_index_result * 0x13c) = 0;
+      *(undefined4 *)(&slot_list[0].field_0x78 + slot_check_index_result * 0x13c) = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426216,0xe2);
-      (&slot_list)[slot_check_index_result * 0x13c] = 0;
+      (&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_0042621f,0xe3);
-      puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
-      *(undefined4 *)(&DAT_0043725e + slot_check_index_result * 0x13c) = _opties;
-      puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
-      puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-      *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-      *puVar3 = *puVar1;
-      puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
-      (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-           (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+      puVar1 = (undefined4 *)(slot_check_index_result * 0x13c + 0x437262 + (uint)bVar4 * -8);
+      *(undefined4 *)((int)&slot_list[0].field_02 + slot_check_index_result * 0x13c) = _opties;
+      puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
+      puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+      *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+      *puVar2 = *puVar3;
+      puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
+      (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+           (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426228,0xe4);
       i = i + 1;
-      bedien_2 = &control;
-      bedien = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
+      bedien = &control;
+      puVar3 = (undefined4 *)(&slot_list[0].field_0x16 + slot_check_index_result * 0x13c);
       for (j = 9; j != 0; j = j + -1) {
-        *bedien = *bedien_2;
-        bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
-        bedien = bedien + (uint)bVar4 * -2 + 1;
+        *puVar3 = *(undefined4 *)bedien;
+        bedien = (bedien_t *)&bedien[-(uint)bVar4].field_04;
+        puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
       }
     } while (i < 10);
     save_slotdbase();
@@ -389,7 +387,7 @@ void __watcall save_slotdbase(void)
   debugmsg(s__s__d___save_slotdbase___void___00426243,s_slot_cpp_0042623a,0xf2);
   debugmsg(s__s__d___save_tmp_slotdbase___s__00426159,s_slot_cpp_00426150,0xce,s_SLOT_A2R_00426266,
            extraout_EDX);
-  file_write_result = file_write(&slot_list,0xc58,s_SLOT_A2R_00426266);
+  file_write_result = file_write(slot_list,0xc58,s_SLOT_A2R_00426266);
   if (file_write_result != 0) {
     fatal_exit(s__s__d___save_tmp_slotdbase____Er_00426185,s_slot_cpp_0042617c,0xd0,
                file_write_result,s_SLOT_A2R_00426266);
@@ -407,7 +405,7 @@ void __watcall save_tmp_slotdbase(char *filename)
   int extraout_EDX;
   
   debugmsg(s__s__d___save_tmp_slotdbase___s__00426159,s_slot_cpp_00426150,0xce,filename);
-  arg4 = file_write(&slot_list,extraout_EDX,filename);
+  arg4 = file_write(slot_list,extraout_EDX,filename);
   if (arg4 != 0) {
     fatal_exit(s__s__d___save_tmp_slotdbase____Er_00426185,s_slot_cpp_0042617c,0xd0,arg4,filename);
   }
@@ -432,11 +430,11 @@ int __watcall get_last_saved_slot(void)
     i = 0;
     do {
       slot_check_index_result = slot_check_index(i,s_slot_cpp_0042629f,0x100);
-      if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+      if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
         slot_check_index_result = slot_check_index(i,s_slot_cpp_004262a8,0x101);
-        if (bVar1 < (byte)(&DAT_0043725d)[slot_check_index_result * 0x13c]) {
+        if (bVar1 < (byte)(&slot_list[0].field_0x1)[slot_check_index_result * 0x13c]) {
           slot_check_index_result_2 = slot_check_index(i,s_slot_cpp_004262b1,0x103);
-          bVar1 = (&DAT_0043725d)[slot_check_index_result_2 * 0x13c];
+          bVar1 = (&slot_list[0].field_0x1)[slot_check_index_result_2 * 0x13c];
           slot_check_index_result_2 = i;
         }
       }
@@ -454,39 +452,42 @@ int __watcall get_last_saved_slot(void)
 void __watcall set_active_slot(int param_1)
 
 {
+  undefined4 uVar1;
   int slot_check_index_result;
   int i;
-  undefined4 *puVar1;
   undefined4 *puVar2;
-  bedien_t *bedien;
   undefined4 *puVar3;
-  bedien_t *bedien_2;
-  byte bVar4;
+  undefined4 *puVar4;
+  bedien_t *bedien;
+  byte bVar5;
   
-  bVar4 = 0;
+  bVar5 = 0;
   debugmsg(s__s__d___set_active_slot___d__004262c3,s_slot_cpp_004262ba,0x110,param_1);
   slot_check_index(param_1,s_slot_cpp_004262e2,0x111);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004262eb,0x112);
-  if ((&slot_list)[slot_check_index_result * 0x13c] == '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] == '\0') {
     fatal_exit(s__s__d___set_active_slot____This_s_004262fd,s_slot_cpp_004262f4,0x113,param_1);
   }
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426355,0x115);
-  puVar1 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
-  _opties = *(undefined4 *)(&DAT_0043725e + slot_check_index_result * 0x13c);
-  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
-  *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2) = *puVar1;
-  *puVar3 = *puVar2;
-  puVar3[(uint)bVar4 * -2 + 1] = puVar2[(uint)bVar4 * -2 + 1];
-  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar2 = (undefined4 *)(slot_check_index_result * 0x13c + 0x437262 + (uint)bVar5 * -8);
+  _opties = *(undefined4 *)((int)&slot_list[0].field_02 + slot_check_index_result * 0x13c);
+  puVar4 = &DAT_00437228 + (uint)bVar5 * -2 + (uint)bVar5 * -2;
+  puVar3 = puVar2 + (uint)bVar5 * -2 + 1;
+  *(undefined4 *)((int)&DAT_00437222 + (uint)bVar5 * -8 + 2) = *puVar2;
+  *puVar4 = *puVar3;
+  puVar4[(uint)bVar5 * -2 + 1] = puVar3[(uint)bVar5 * -2 + 1];
+  (puVar4 + (uint)bVar5 * -2 + 1)[(uint)bVar5 * -2 + 1] =
+       (puVar3 + (uint)bVar5 * -2 + 1)[(uint)bVar5 * -2 + 1];
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042635e,0x116);
-  bedien = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
-  bedien_2 = &control;
+  puVar2 = (undefined4 *)(&slot_list[0].field_0x16 + slot_check_index_result * 0x13c);
+  bedien = &control;
   for (i = 9; i != 0; i = i + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar4 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
+    uVar1 = *puVar2;
+    bedien->field_00 = (char)uVar1;
+    bedien->field_01 = (char)((uint)uVar1 >> 8);
+    bedien->field_02 = (short)((uint)uVar1 >> 0x10);
+    puVar2 = puVar2 + (uint)bVar5 * -2 + 1;
+    bedien = (bedien_t *)&bedien[-(uint)bVar5].field_04;
   }
   active_slot = param_1;
   return;
@@ -510,12 +511,12 @@ void __watcall update_active_slot_optie(void)
   debugmsg(s__s__d____>_update_active_slot_op_00426370,s_slot_cpp_00426367,0x11f);
   slot_check_index(active_slot,s_slot_cpp_0042639b,0x120);
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_004263a4,0x121);
-  if ((&slot_list)[slot_check_index_result * 0x13c] == '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] == '\0') {
     fatal_exit(s__s__d___set_active_slot____This_s_004263b6,s_slot_cpp_004263ad,0x122,active_slot);
   }
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_0042640e,0x124);
-  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
-  *(undefined4 *)(&DAT_0043725e + slot_check_index_result * 0x13c) = _opties;
+  puVar2 = (undefined4 *)(slot_check_index_result * 0x13c + 0x437262 + (uint)bVar4 * -8);
+  *(undefined4 *)((int)&slot_list[0].field_02 + slot_check_index_result * 0x13c) = _opties;
   puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
   puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
   *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
@@ -535,23 +536,23 @@ void __watcall update_active_slot_bediening(void)
   int slot_check_index_result;
   int i;
   bedien_t *bedien;
-  bedien_t *bedien_2;
-  byte bVar1;
+  undefined4 *puVar1;
+  byte bVar2;
   
-  bVar1 = 0;
+  bVar2 = 0;
   debugmsg(s__s__d____>_update_active_slot_be_00426420,s_slot_cpp_00426417,300);
   slot_check_index(active_slot,s_slot_cpp_0042644f,0x12d);
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_00426458,0x12e);
-  if ((&slot_list)[slot_check_index_result * 0x13c] == '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] == '\0') {
     fatal_exit(s__s__d___set_active_slot____This_s_0042646a,s_slot_cpp_00426461,0x12f,active_slot);
   }
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_004264c2,0x131);
   bedien = &control;
-  bedien_2 = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
+  puVar1 = (undefined4 *)(&slot_list[0].field_0x16 + slot_check_index_result * 0x13c);
   for (i = 9; i != 0; i = i + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar1 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar1 * -2 + 1;
+    *puVar1 = *(undefined4 *)bedien;
+    bedien = (bedien_t *)&bedien[-(uint)bVar2].field_04;
+    puVar1 = puVar1 + (uint)bVar2 * -2 + 1;
   }
   return;
 }
@@ -566,9 +567,9 @@ char * __watcall slot_naam_string(int param_1)
   
   slot_check_index(param_1,s_slot_cpp_004264cb,0x13a);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004264d4,0x13b);
-  if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004264dd,0x13c);
-    return (char *)(slot_check_index_result * 0x13c + 0x437296);
+    return &slot_list[0].field_0x3a + slot_check_index_result * 0x13c;
   }
   return s_L_E_E_G_004264e6;
 }
@@ -583,9 +584,9 @@ char * __watcall slot_level_string(int param_1)
   
   slot_check_index(param_1,s_slot_cpp_004264ee,0x146);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004264f7,0x147);
-  if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426500,0x148);
-    return (&level_naam)[*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10];
+    return level_naam[*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10];
   }
   return &DAT_00426509;
 }
@@ -600,18 +601,21 @@ char * __watcall slot_tijd_string(int param_1)
   
   slot_check_index(param_1,s_slot_cpp_0042650a,0x153);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426513,0x154);
-  if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042651c,0x15a);
-    slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10)
+    slot_count_total_tijd
+              (param_1,*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10)
     ;
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426525,0x159);
-    slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10)
+    slot_count_total_tijd
+              (param_1,*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10)
     ;
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042652e,0x158);
-    slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10)
+    slot_count_total_tijd
+              (param_1,*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10)
     ;
     bprintf();
-    return &slot_str_buffer;
+    return slot_str_buffer;
   }
   return s___u__m__s_0042654d;
 }
@@ -630,12 +634,12 @@ int __watcall slot_count_total_tijd(int param_1,int param_2)
   slot_check_index(param_1,s_slot_cpp_00426557,0x167);
   i = slot_check_index(param_1,s_slot_cpp_00426560,0x168);
   iVar1 = 0;
-  if ((&slot_list)[i * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[i * 0x13c] != '\0') {
     for (i = 0; i < param_2; i = i + 1) {
       slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426569,0x16a);
       slot_check_level_result = slot_check_level(i,s_slot_cpp_00426572,0x16a);
-      iVar1 = iVar1 + *(int *)(&DAT_004372bc +
-                              slot_check_level_result * 4 + slot_check_index_result * 0x13c);
+      iVar1 = iVar1 + *(int *)(slot_check_index_result * 0x13c + 0x4372bc +
+                              slot_check_level_result * 4);
     }
   }
   return iVar1;
@@ -654,44 +658,45 @@ int __watcall slot_count_total_tijd_speler(int param_1,int param_2)
   
   i = slot_check_index(param_1,s_slot_cpp_0042657b,0x176);
   iVar1 = 0;
-  if ((&slot_list)[i * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[i * 0x13c] != '\0') {
     for (i = 0; slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426584,0x177),
-        i < *(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10; i = i + 1) {
+        i < *(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10; i = i + 1)
+    {
       switch(param_2) {
       case 0:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042659f,0x17d);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265a8,0x17d);
-        iVar1 = iVar1 + *(int *)(&DAT_004372e4 +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0x88 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 1:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265b1,0x180);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265ba,0x180);
-        iVar1 = iVar1 + *(int *)(&DAT_004372fc +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xa0 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 2:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265c3,0x183);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265cc,0x183);
-        iVar1 = iVar1 + *(int *)(&DAT_00437314 +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xb8 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 3:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265d5,0x186);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265de,0x186);
-        iVar1 = iVar1 + *(int *)(&DAT_0043732c +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xd0 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 4:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265e7,0x189);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265f0,0x189);
-        iVar1 = iVar1 + *(int *)(&DAT_00437344 +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xe8 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 5:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042658d,0x17a);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_00426596,0x17a);
-        iVar1 = iVar1 + *(int *)(&DAT_004372bc +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0x60 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
       }
     }

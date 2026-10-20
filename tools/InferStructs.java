@@ -41,6 +41,16 @@ public class InferStructs extends GhidraScript {
 		decomp.setSimplificationStyle("decompile");
 		decomp.openProgram(currentProgram);
 		FillOutStructureHelper helper = new FillOutStructureHelper(currentProgram, monitor);
+		// Structures with a layout already (structs.tsv, earlier runs) keep their size: a
+		// constant index into an array of them (anims[0x33]) looks like a large offset.
+		Map<String, Integer> fixedSize = new HashMap<>();
+		Iterator<Structure> pre = currentProgram.getDataTypeManager().getAllStructures();
+		while (pre.hasNext()) {
+			Structure s = pre.next();
+			if (GAME.equals(s.getCategoryPath()) && !s.isZeroLength()) {
+				fixedSize.put(s.getName(), s.getLength());
+			}
+		}
 
 		for (Function f : currentProgram.getFunctionManager().getFunctions(true)) {
 			if (monitor.isCancelled() || f.isThunk() || f.isExternal()) {
@@ -94,6 +104,14 @@ public class InferStructs extends GhidraScript {
 			if (!GAME.equals(s.getCategoryPath())) {
 				continue;
 			}
+			Integer keep = fixedSize.get(s.getName());
+			while (keep != null && s.getLength() > keep) {
+				DataTypeComponent last = s.getComponentContaining(s.getLength() - 1);
+				if (last == null || last.getOffset() < keep) {
+					break;
+				}
+				s.delete(last.getOrdinal());
+			}
 			for (DataTypeComponent c : s.getDefinedComponents()) {
 				if (c.getFieldName() == null) {
 					c.setFieldName(String.format("field_%02x", c.getOffset()));
@@ -103,7 +121,8 @@ public class InferStructs extends GhidraScript {
 		}
 		for (Map.Entry<String, Long> e : stride.entrySet()) {
 			Structure s = (Structure) dtm.getDataType(GAME, e.getKey());
-			if (s != null && e.getValue() > s.getLength() && e.getValue() < 0x10000) {
+			if (s != null && !fixedSize.containsKey(s.getName()) && e.getValue() > s.getLength() &&
+				e.getValue() < 0x10000) {
 				s.growStructure((int) (e.getValue() - s.getLength()));
 			}
 		}

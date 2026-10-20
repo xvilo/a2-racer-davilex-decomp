@@ -287,9 +287,9 @@ void __watcall draw_radar_contents_1(void)
   float10 fVar5;
   float10 fVar6;
   int local_40 [3];
-  uchar *surface_ptr_3_2;
-  int k;
   uchar *surface_ptr_3_3;
+  int k;
+  uchar *surface_ptr_3_2;
   int j;
   int local_24;
   int local_20;
@@ -300,7 +300,7 @@ void __watcall draw_radar_contents_1(void)
   ;
   j = *opponent_chunk;
   surface_ptr_3 = get_surface_ptr_3(radar_surface,local_40);
-  surface_ptr_3_2 = surface_ptr_3;
+  surface_ptr_3_3 = surface_ptr_3;
   clear_radar_surface((undefined4 *)surface_ptr_3,local_40[0]);
   local_40[0] = local_40[0] / 2;
   if (radar_scale == 0) {
@@ -331,7 +331,7 @@ void __watcall draw_radar_contents_1(void)
   k = 0;
   j = j + -10;
   local_24 = (-i & 0x3ffU) << 2;
-  surface_ptr_3_3 = surface_ptr_3;
+  surface_ptr_3_2 = surface_ptr_3;
   do {
     if ((-1 < j) && (j < weg_lane_chunks + -1)) {
       i = 0;
@@ -365,25 +365,25 @@ void __watcall draw_radar_contents_1(void)
              (local_1c < radar_height + -4)) {
             opponent_index = local_1c + 1;
             if (radar_scale == 0) {
-              *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + local_40[0] * opponent_index * 2 + local_20 * 2) =
+              *(undefined4 *)(surface_ptr_3_2 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar2;
+              *(undefined4 *)(surface_ptr_3_2 + local_40[0] * opponent_index * 2 + local_20 * 2) =
                    uVar2;
             }
             else if (radar_scale == 1) {
-              *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + local_40[0] * opponent_index * 2 + local_20 * 2) =
+              *(undefined4 *)(surface_ptr_3_2 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar2;
+              *(undefined4 *)(surface_ptr_3_2 + local_40[0] * opponent_index * 2 + local_20 * 2) =
                    uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + 4 + local_20 * 2) =
+              *(undefined4 *)(surface_ptr_3_2 + local_1c * local_40[0] * 2 + 4 + local_20 * 2) =
                    uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + local_40[0] * opponent_index * 2 + 4 + local_20 * 2)
+              *(undefined4 *)(surface_ptr_3_2 + local_40[0] * opponent_index * 2 + 4 + local_20 * 2)
                    = uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + local_40[0] * (local_1c + 2) * 2 + local_20 * 2) =
+              *(undefined4 *)(surface_ptr_3_2 + local_40[0] * (local_1c + 2) * 2 + local_20 * 2) =
                    uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + local_40[0] * (local_1c + 3) * 2 + local_20 * 2) =
+              *(undefined4 *)(surface_ptr_3_2 + local_40[0] * (local_1c + 3) * 2 + local_20 * 2) =
                    uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + local_40[0] * (local_1c + 2) * 2 + 4 + local_20 * 2)
+              *(undefined4 *)(surface_ptr_3_2 + local_40[0] * (local_1c + 2) * 2 + 4 + local_20 * 2)
                    = uVar2;
-              *(undefined4 *)(surface_ptr_3_3 + (local_1c + 3) * local_40[0] * 2 + 4 + local_20 * 2)
+              *(undefined4 *)(surface_ptr_3_2 + (local_1c + 3) * local_40[0] * 2 + 4 + local_20 * 2)
                    = uVar2;
             }
           }
@@ -394,7 +394,7 @@ void __watcall draw_radar_contents_1(void)
     j = j + 1;
     k = k + 1;
   } while (k < 0x14);
-  reset_surface_ptr_1(radar_surface,surface_ptr_3_2);
+  reset_surface_ptr_1(radar_surface,surface_ptr_3_3);
   return;
 }
 

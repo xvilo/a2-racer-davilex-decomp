@@ -26,13 +26,13 @@ int __watcall get_attached_joysticks(void)
   MVar1 = joyGetPosEx(0,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_004383c0 = 1;
+      joystickstate[0]._92_4_ = 1;
     }
     else if (MVar1 == 2) goto LAB_00413b5b;
   }
   else if (MVar1 < 7) {
 LAB_00413b5b:
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (10 < MVar1) {
     if (MVar1 < 0xc) {
@@ -43,7 +43,7 @@ LAB_00413b5b:
   MVar1 = joyGetPosEx(1,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_0043841c = 1;
+      joystickstate[0]._184_4_ = 1;
       goto LAB_00413be1;
     }
     if (MVar1 != 2) goto LAB_00413be1;
@@ -56,10 +56,10 @@ LAB_00413b5b:
     }
     if ((MVar1 < 0xa6) || (0xa7 < MVar1)) goto LAB_00413be1;
   }
-  DAT_0043841c = 0;
+  joystickstate[0]._184_4_ = 0;
 LAB_00413be1:
-  bVar2 = DAT_004383c0 != 0;
-  if (DAT_0043841c != 0) {
+  bVar2 = joystickstate[0]._92_4_ != 0;
+  if (joystickstate[0]._184_4_ != 0) {
     bVar2 = bVar2 + 2;
   }
   return (uint)bVar2;
@@ -82,18 +82,18 @@ void __watcall calibrate_joysticks(void)
   if (MVar1 < 6) {
     if (MVar1 == 0) {
       debugmsg(s_Joystick_One_Found_0042e247);
-      DAT_004383c0 = 1;
-      _DAT_00438404 = joystickinfo.dwXpos;
-      _DAT_00438408 = joystickinfo.dwYpos;
+      joystickstate[0]._92_4_ = 1;
+      joystickstate[0]._160_4_ = joystickinfo.dwXpos;
+      joystickstate[0]._164_4_ = joystickinfo.dwYpos;
       debugmsg(s__1_Xbase____d_0042e25b,joystickinfo.dwXpos);
       debugmsg(s__1_Ybase____d_0042e26a,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_004383c0 = 0;
+      joystickstate[0]._92_4_ = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -101,17 +101,17 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   MVar1 = joyGetDevCapsA(0,&joycaps,0x194);
   if (MVar1 == 0) {
-    _DAT_00438410 = joycaps.wXmin;
-    _DAT_0043840c = joycaps.wXmax;
-    _DAT_00438418 = joycaps.wYmin;
-    _DAT_00438414 = joycaps.wYmax;
+    joystickstate[0]._172_4_ = joycaps.wXmin;
+    joystickstate[0]._168_4_ = joycaps.wXmax;
+    joystickstate[0]._180_4_ = joycaps.wYmin;
+    joystickstate[0]._176_4_ = joycaps.wYmax;
     debugmsg(s__1_Xmin____d_0042e279,joycaps.wXmin);
     debugmsg(s__1_Xmax____d_0042e287,joycaps.wXmax);
     debugmsg(s__1_Ymin____d_0042e295,joycaps.wYmin);
@@ -125,16 +125,16 @@ void __watcall calibrate_joysticks(void)
       debugmsg(s_Joystick_Two_Found_0042e2c9);
       _DAT_00438460 = joystickinfo.dwXpos;
       _DAT_00438464 = joystickinfo.dwYpos;
-      DAT_0043841c = 1;
+      joystickstate[0]._184_4_ = 1;
       debugmsg(s__2_Xbase____d_0042e2dd,joystickinfo.dwXpos);
       debugmsg(s__2_Ybase____d_0042e2ec,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_0043841c = 0;
+      joystickstate[0]._184_4_ = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_0043841c = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -142,10 +142,10 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_0043841c = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_0043841c = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   MVar1 = joyGetDevCapsA(1,&joycaps,0x194);
   if (MVar1 == 0) {
@@ -167,14 +167,14 @@ void __watcall calibrate_joysticks(void)
 void __watcall clear_joystick_key_down_state(int param_1)
 
 {
-  *(undefined4 *)(&DAT_00438374 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043836c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043837c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_00438384 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043838c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_00438394 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043839c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004383a4 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x10 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x8 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x18 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x20 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x28 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x30 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x38 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x40 + param_1 * 0x5c) = 0;
   return;
 }
 
@@ -185,35 +185,35 @@ void __watcall check_joystick_movement(int param_1,int param_2,int param_3,int p
 
 {
   clear_joystick_key_down_state(param_1);
-  if ((double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) < (double)param_2) {
-    *(undefined4 *)(&DAT_00438374 + param_1 * 0x5c) = 1;
+  if ((double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) < (double)param_2) {
+    *(undefined4 *)(&joystickstate[0].field_0x10 + param_1 * 0x5c) = 1;
   }
   if ((double)param_2 <
-      (double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) * joysticksencesibility) {
-    *(undefined4 *)(&DAT_0043836c + param_1 * 0x5c) = 1;
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) -
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) * joysticksencesibility) {
+    *(undefined4 *)(&joystickstate[0].field_0x8 + param_1 * 0x5c) = 1;
   }
-  if ((double)*(int *)(&DAT_004383ac + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_004383ac + param_1 * 0x5c) < (double)param_3) {
-    *(undefined4 *)(&DAT_00438384 + param_1 * 0x5c) = 1;
+  if ((double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) < (double)param_3) {
+    *(undefined4 *)(&joystickstate[0].field_0x20 + param_1 * 0x5c) = 1;
   }
   if ((double)param_3 <
-      (double)*(int *)(&DAT_004383ac + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_004383ac + param_1 * 0x5c) * joysticksencesibility) {
-    *(undefined4 *)(&DAT_0043837c + param_1 * 0x5c) = 1;
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) -
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) * joysticksencesibility) {
+    *(undefined4 *)(&joystickstate[0].field_0x18 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 1U) != 0) {
-    *(undefined4 *)(&DAT_0043838c + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x28 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 2U) != 0) {
-    *(undefined4 *)(&DAT_00438394 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x30 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 4U) != 0) {
-    *(undefined4 *)(&DAT_0043839c + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x38 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 8U) != 0) {
-    *(undefined4 *)(&DAT_004383a4 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x40 + param_1 * 0x5c) = 1;
   }
   return;
 }
@@ -226,7 +226,7 @@ void __watcall handle_joystick(void)
 {
   MMRESULT MVar1;
   
-  if (DAT_004383c0 != 0) {
+  if (joystickstate[0]._92_4_ != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(0,&joystickinfo);
@@ -237,7 +237,7 @@ void __watcall handle_joystick(void)
       clear_joystick_key_down_state(1);
     }
   }
-  if (DAT_0043841c != 0) {
+  if (joystickstate[0]._184_4_ != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(1,&joystickinfo);
@@ -269,7 +269,7 @@ void __watcall set_joystick_keys(int param_1,int param_2,int param_3)
   case 5:
   case 6:
   case 7:
-    *(int *)(&DAT_00438368 + param_1 * 0x5c + param_2 * 8) = param_3;
+    *(int *)(param_2 * 8 + 0x438368 + param_1 * 0x5c) = param_3;
     return;
   default:
     fatal_exit(s__set_joystick_keys__invalid_joys_0042e365,param_2);
@@ -320,34 +320,34 @@ get_joystick_position(int param_1,int param_2,int param_3,int *param_4,int *para
   fatal_exit(s__get_joystick_position__invalid_j_0042e3ed,param_1);
 LAB_004142b7:
   iVar6 = param_1 * 0x5c;
-  if (*(int *)(&joystickstate + iVar6) != 0) {
+  if ((&joystickstate[0].field_00)[param_1 * 0x17] != 0) {
     *param_6 = 0;
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar5 = joyGetPosEx(local_10,&joystickinfo);
     if (MVar5 == 0) {
-      dVar1 = (double)*(int *)(&DAT_004383a8 + iVar6);
-      dVar2 = (double)*(int *)(&DAT_004383a8 + iVar6) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystickstate[0].field_0x44 + iVar6);
+      dVar2 = (double)*(int *)(&joystickstate[0].field_0x44 + iVar6) * joysticksencesibility;
       if ((double)joystickinfo.dwXpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwXpos) {
           *param_4 = iVar3;
         }
         else {
           *param_4 = joystickinfo.dwXpos /
-                     (uint)((*(int *)(&DAT_004383a8 + iVar6) - *(int *)(&DAT_004383b4 + iVar6)) /
-                           iVar3);
+                     (uint)((*(int *)(&joystickstate[0].field_0x44 + iVar6) -
+                            *(int *)(&joystickstate[0].field_0x50 + iVar6)) / iVar3);
           *(byte *)param_6 = (byte)*param_6 | 4;
         }
       }
       else {
         *param_4 = joystickinfo.dwXpos /
-                   (uint)((*(int *)(&DAT_004383b0 + iVar6) - *(int *)(&DAT_004383a8 + iVar6)) /
-                         iVar3);
+                   (uint)((*(int *)(&joystickstate[0].field_0x4c + iVar6) -
+                          *(int *)(&joystickstate[0].field_0x44 + iVar6)) / iVar3);
         *(byte *)param_6 = (byte)*param_6 | 8;
       }
       iVar3 = param_1 * 0x5c;
-      dVar1 = (double)*(int *)(&DAT_004383ac + iVar3);
-      dVar2 = (double)*(int *)(&DAT_004383ac + iVar3) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystickstate[0].field_0x48 + iVar3);
+      dVar2 = (double)*(int *)(&joystickstate[0].field_0x48 + iVar3) * joysticksencesibility;
       if ((double)joystickinfo.dwYpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwYpos) {
           *param_5 = iVar4;
@@ -355,16 +355,18 @@ LAB_004142b7:
         else {
           *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                           ((longlong)
-                           (*(int *)(&DAT_004383ac + iVar3) - *(int *)(&DAT_004383bc + iVar3)) /
-                           (longlong)iVar4 & 0xffffffffU));
+                           (*(int *)(&joystickstate[0].field_0x48 + iVar3) -
+                           *(int *)(&joystickstate[0].field_0x58 + iVar3)) / (longlong)iVar4 &
+                          0xffffffffU));
           *(byte *)param_6 = (byte)*param_6 | 1;
         }
       }
       else {
         *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                         ((longlong)
-                         (*(int *)(&DAT_004383b8 + iVar3) - *(int *)(&DAT_004383ac + iVar3)) /
-                         (longlong)iVar4 & 0xffffffffU));
+                         (*(int *)(&joystickstate[0].field_0x54 + iVar3) -
+                         *(int *)(&joystickstate[0].field_0x48 + iVar3)) / (longlong)iVar4 &
+                        0xffffffffU));
         *(byte *)param_6 = (byte)*param_6 | 2;
       }
       return 1;
@@ -386,9 +388,9 @@ int __watcall check_joystick_keys(int param_1)
     if (0x3f < iVar1) {
       return 0;
     }
-    if (((param_1 == *(int *)((int)&DAT_004383c4 + iVar1)) &&
-        (*(int *)((int)&DAT_004383c8 + iVar1) != 0)) ||
-       ((param_1 == *(int *)((int)&DAT_00438420 + iVar1) &&
+    if (((param_1 == *(int *)(&joystickstate[0].field_0x60 + iVar1)) &&
+        (*(int *)(&joystickstate[0].field_0x64 + iVar1) != 0)) ||
+       ((param_1 == *(int *)(&joystickstate[0].field_0xbc + iVar1) &&
         (*(int *)((int)&DAT_00438424 + iVar1) != 0)))) break;
     iVar1 = iVar1 + 8;
   }

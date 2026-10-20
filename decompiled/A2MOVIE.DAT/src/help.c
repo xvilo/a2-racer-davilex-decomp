@@ -26,11 +26,11 @@ int __watcall check_help_keys(void)
     if (0x27 < iVar1) {
       return 0;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) != -1) {
-      keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+    if (*(int *)((int)help_stop_keys + iVar1) != -1) {
+      keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
       if (keyispressed_result != 0) {
         while( true ) {
-          keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+          keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
           if (keyispressed_result == 0) break;
           handle_win_msg();
         }
@@ -56,7 +56,7 @@ int __watcall get_free_help_key(void)
     if (0x27 < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) == -1) break;
+    if (*(int *)((int)help_stop_keys + iVar1) == -1) break;
     iVar1 = iVar1 + 4;
     i = i + 1;
   }
@@ -75,7 +75,7 @@ void __watcall clear_help_keys(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 4;
-    *(undefined4 *)((int)&help_stop_keys + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)help_stop_keys + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 0x28);
   return;

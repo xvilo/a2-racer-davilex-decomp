@@ -3,14 +3,14 @@
 
 /* ==== 00407880 ms_af_image ==== */
 
-int __watcall ms_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall ms_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___ms_af_image_____Could_no_00428404,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___ms_af_image_____Could_no_00428404,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -121,8 +121,7 @@ void __watcall ms_print_hiscore(single_score_t *single_score,int param_2,int par
     arg5 = arg5 + 1;
     win_print_xy(1,param_2 + 0x2c,iVar7,s__d_00428461,arg5);
     win_bprintf(1,param_2 + 0x52,iVar7,0x84,s__s_00428464,single_score);
-    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_00428467,(&level_naam)[single_score->field_22 >> 0x10])
-    ;
+    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_00428467,level_naam[single_score->field_22 >> 0x10]);
     win_print_xy(1,param_2 + 0x162,iVar7,s__9d_0042846a,single_score->field_28);
     puVar1 = &single_score->field_0x20;
     uVar3 = (longlong)*(int *)&single_score->field_0x20 / 0x3c;
@@ -199,7 +198,7 @@ void __watcall ms_open_screen(int param_1)
   show_mouse();
   load_pcx_file(s_Score_pcx_004284fb,0x1f);
   ms_display_score(param_1);
-  activate_form(&ms_form);
+  activate_form(ms_form);
   focus_control(0);
   debugmsg(s_ms_open_screen_____ok_00428505);
   return;

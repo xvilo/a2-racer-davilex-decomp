@@ -214,9 +214,9 @@ void __watcall set_ini_filename(char *param_1)
   }
   fatal_exit(s__set_ini_filename___s__d____file_00418074,s_inifile_cpp_00418068,0x2c);
 LAB_004012c0:
-  getcwd((undefined4 *)&ini_filename,0x118);
+  getcwd((undefined4 *)ini_filename,0x118);
   j = 0xffffffff;
-  pcVar4 = &ini_filename;
+  pcVar4 = ini_filename;
   do {
     if (j == 0) break;
     j = j - 1;
@@ -226,7 +226,7 @@ LAB_004012c0:
   if (*(char *)(~j + 0x41f7b2) != '\\') {
     pcVar2 = s___004180af;
     i = -1;
-    pcVar4 = &ini_filename;
+    pcVar4 = ini_filename;
     do {
       pcVar3 = pcVar4;
       if (i == 0) break;
@@ -247,7 +247,7 @@ LAB_004012c0:
     } while (cVar1 != '\0');
   }
   i = -1;
-  pcVar4 = &ini_filename;
+  pcVar4 = ini_filename;
   do {
     pcVar2 = pcVar4;
     if (i == 0) break;
@@ -282,7 +282,7 @@ void __watcall write_ini_string_setting(char *param_1,char *param_2,char *param_
   if (ini_file_init_ok == 0) {
     fatal_exit(s__write_ini_string_setting___s__d_004180bd,s_inifile_cpp_004180b1,0x41);
   }
-  WritePrivateProfileStringA(param_1,param_2,param_3,&ini_filename);
+  WritePrivateProfileStringA(param_1,param_2,param_3,ini_filename);
   return;
 }
 
@@ -298,7 +298,7 @@ void __watcall write_ini_value_setting(char *param_1,char *param_2,int param_3)
     fatal_exit(s__write_ini_value_setting___s__d__00418115,s_inifile_cpp_00418109,0x4f);
   }
   itoa(param_3,local_30,10);
-  WritePrivateProfileStringA(param_1,param_2,local_30,&ini_filename);
+  WritePrivateProfileStringA(param_1,param_2,local_30,ini_filename);
   return;
 }
 
@@ -313,7 +313,7 @@ uint __watcall read_ini_value_setting(char *param_1,char *param_2)
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_value_setting___s__d____0041816c,s_inifile_cpp_00418160,0x5c);
   }
-  UVar1 = GetPrivateProfileIntA(param_1,param_2,0,&ini_filename);
+  UVar1 = GetPrivateProfileIntA(param_1,param_2,0,ini_filename);
   return UVar1;
 }
 
@@ -326,7 +326,7 @@ void __watcall read_ini_string_setting(char *param_1,char *param_2,char *param_3
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_string_setting___s__d__004181c2,s_inifile_cpp_004181b6,0x67);
   }
-  GetPrivateProfileStringA(param_1,param_2,&DAT_0041820d,param_3,param_4,&ini_filename);
+  GetPrivateProfileStringA(param_1,param_2,&DAT_0041820d,param_3,param_4,ini_filename);
   return;
 }
 
@@ -512,11 +512,11 @@ void __watcall set_xvga_vars(uint param_1,uint param_2,int param_3)
     if (((int)param_2 < 0) || (0x12 < (int)param_2)) {
       fatal_exit(s__s__d____error_predefined_screen_004182f6,s_initlib_cpp_004182ea,0xe4);
     }
-    DAT_0041f8e0 = param_2;
-    xvga_screen_xsize = (&xvga_screen_modes)[param_2 * 5];
-    xvga_screen_ysize = (&DAT_0041f900)[param_2 * 5];
-    xvga_screen_bpp = (&DAT_0041f904)[param_2 * 5];
-    xvga_allowmodex = *(int *)(&DAT_0041f908 + param_2 * 0x14);
+    ini_filename._300_4_ = param_2;
+    xvga_screen_xsize = *(int *)((int)xvga_screen_modes + param_2 * 0x14);
+    xvga_screen_ysize = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 4);
+    xvga_screen_bpp = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 8);
+    xvga_allowmodex = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 0xc);
     return;
   }
   if (1 < param_1) {
@@ -1177,7 +1177,7 @@ undefined4 __watcall init_xvga_lib(HINSTANCE param_1,int param_2,LPCSTR param_3,
     DAT_00421260 = 1;
   }
   xvga_get_screen_mode_info();
-  iVar1 = xvga_test_mode_available(DAT_0041f8e0);
+  iVar1 = xvga_test_mode_available(ini_filename._300_4_);
   if (iVar1 == 0) {
     debugmsg(s_could_not_find_mode_0041916d);
   }
@@ -1224,8 +1224,8 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     if (iVar1 == -1) {
       fatal_exit(s_No_cdrom_was_found_in_this_syste_00419352);
     }
-    cd_drive = (char)iVar1;
-    local_108[0] = cd_drive;
+    cd_drive[0] = (char)iVar1;
+    local_108[0] = cd_drive[0];
     iVar1 = access(local_108,0);
     if (iVar1 != 0) {
       fatal_exit(s_Incorrect_cdrom_was_found__pleas_00419374);
@@ -1233,7 +1233,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
   }
   else {
     env_value = (char *)getenv(s_NOCD_0041934d);
-    cd_drive = *env_value;
+    cd_drive[0] = *env_value;
   }
   return;
 }
@@ -1255,7 +1255,7 @@ char * __watcall file_path(char *filename,char *param_2)
   debugmsg(s_path__s_004193ca,filename);
   file = fopen(filename,(byte *)s_r_004193d3);
   if (file == 0) {
-    makepath((byte *)filename,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
+    makepath((byte *)filename,(byte *)cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_004193d5,filename);
   }
   else {
@@ -1420,7 +1420,7 @@ void __watcall mouse_off(void)
 
 /* ==== 00402e77 set_mouse_anim ==== */
 
-void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
+void __watcall set_mouse_anim(int anim_index,int frame_index,char param_3)
 
 {
   int arg4;
@@ -1428,15 +1428,15 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
   if (mouse_type == 1) {
     fatal_exit(s__s__d_____set_mouse_anim__You_ca_004195b7,s_mouse_cpp_004195ad,0xde);
   }
-  if ((param_1 < 0) || (max_anim_ptr <= param_1)) {
-    fatal_exit(s__s__d_____set_mouse_anim__illega_00419607,s_mouse_cpp_004195fd,0xe2,param_1,
+  if ((anim_index < 0) || (max_anim_ptr <= anim_index)) {
+    fatal_exit(s__s__d_____set_mouse_anim__illega_00419607,s_mouse_cpp_004195fd,0xe2,anim_index,
                max_anim_ptr);
   }
-  if ((param_2 < 0) || ((&xvga_anims->field_00)[param_1 * 3] <= param_2)) {
-    fatal_exit(s__s__d_____set_mouse_anim__illega_0041966b,s_mouse_cpp_00419661,0xe6,param_2,
-               (&xvga_anims->field_00)[param_1 * 3],param_1);
+  if ((frame_index < 0) || (xvga_anims[anim_index].frame_count <= frame_index)) {
+    fatal_exit(s__s__d_____set_mouse_anim__illega_0041966b,s_mouse_cpp_00419661,0xe6,frame_index,
+               xvga_anims[anim_index].frame_count,anim_index);
   }
-  arg4 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  arg4 = xvga_anims[anim_index].frames[frame_index].image;
   if ((arg4 < 0) || (max_mem_image_ptr <= arg4)) {
     fatal_exit(s__s__d_____set_mouse_anim__image___004196ce,s_mouse_cpp_004196c4,0xeb,arg4,
                max_mem_image_ptr);
@@ -1444,8 +1444,8 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
   if (*(int *)(arg4 * 0x20 + (int)xvga_mem_images) == 0) {
     fatal_exit(s__s__d_____set_mouse_anim__mouse_i_0041971b,s_mouse_cpp_00419711,0xee,arg4);
   }
-  mouse_anim = param_1;
-  mouse_frame = param_2;
+  mouse_anim = anim_index;
+  mouse_frame = frame_index;
   mouse_loop = param_3;
   mouse_anim_set = 1;
   return;
@@ -2377,10 +2377,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
-  int iVar4;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  undefined4 uVar7;
+  undefined4 uVar6;
   
   xvga_get_sound_info();
   if (init_sound_ok == 0) {
@@ -2391,9 +2390,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
           direct_sound_create = DirectSoundCreate(extraout_EDX_01,&xvga_ds_object,extraout_EDX_01);
           if (direct_sound_create != 0) {
             pcVar1 = ds_error_string(direct_sound_create);
-            uVar7 = 0x262;
-            pcVar6 = s_sound_cpp_0041a1bc;
-            pcVar5 = s__s__d____error_creating_sound_ob_0041a1c6;
+            uVar6 = 0x262;
+            pcVar5 = s_sound_cpp_0041a1bc;
+            pcVar4 = s__s__d____error_creating_sound_ob_0041a1c6;
             goto LAB_00403f77;
           }
           pcVar1 = s_Default_driver_init_failure___No_0041a1f2;
@@ -2405,9 +2404,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
                                  extraout_EDX_00);
           if (direct_sound_create != 0) {
             pcVar1 = ds_error_string(direct_sound_create);
-            uVar7 = 0x25a;
-            pcVar6 = s_sound_cpp_0041a138;
-            pcVar5 = s__s__d____error_creating_sound_ob_0041a142;
+            uVar6 = 0x25a;
+            pcVar5 = s_sound_cpp_0041a138;
+            pcVar4 = s__s__d____error_creating_sound_ob_0041a142;
             goto LAB_00403f77;
           }
           pcVar1 = s_Attempting_to_use_secondary__unk_0041a16e;
@@ -2420,9 +2419,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
                                extraout_EDX);
         if (direct_sound_create != 0) {
           pcVar1 = ds_error_string(direct_sound_create);
-          uVar7 = 0x251;
-          pcVar6 = s_sound_cpp_0041a0b5;
-          pcVar5 = s__s__d____error_creating_sound_ob_0041a0bf;
+          uVar6 = 0x251;
+          pcVar5 = s_sound_cpp_0041a0b5;
+          pcVar4 = s__s__d____error_creating_sound_ob_0041a0bf;
           goto LAB_00403f77;
         }
         pcVar1 = s_Attempting_to_use_sb16_driver_su_0041a0eb;
@@ -2434,11 +2433,11 @@ int __watcall xvga_init_sound(int param_1,int param_2)
       HVar2 = (*xvga_ds_object->lpVtbl->SetCooperativeLevel)(xvga_ds_object,xvga_hwnd,3);
       if ((HVar2 != 0) != 0) {
         pcVar1 = ds_error_string((uint)(HVar2 != 0));
-        uVar7 = 0x26d;
-        pcVar6 = s_sound_cpp_0041a21a;
-        pcVar5 = s__s__d____error_setting_the_coop_l_0041a224;
+        uVar6 = 0x26d;
+        pcVar5 = s_sound_cpp_0041a21a;
+        pcVar4 = s__s__d____error_setting_the_coop_l_0041a224;
 LAB_00403f77:
-        debugmsg(pcVar5,pcVar6,uVar7,pcVar1);
+        debugmsg(pcVar4,pcVar5,uVar6,pcVar1);
         return 0x2af9;
       }
       snd_coop_level_set = 1;
@@ -2460,21 +2459,21 @@ LAB_00403f77:
       fatal_exit(s__s__d____error_illegal_sound_mod_0041a290);
     }
     if ((param_2 != 0xe) && (snd_format_set == 0)) {
-      iVar4 = param_2 * 0x10;
-      iVar3 = set_output_format(*(int *)(&sound_modes + iVar4),*(int *)(&DAT_0041faac + iVar4),
-                                *(int *)(&DAT_0041fab4 + iVar4),*(int *)(&DAT_0041fab0 + iVar4));
+      iVar3 = set_output_format(sound_modes[param_2 * 4].field_00,
+                                sound_modes[param_2 * 4 + 1].field_00,
+                                sound_modes[param_2 * 4 + 3].field_00,
+                                sound_modes[param_2 * 4 + 2].field_00);
       if (iVar3 != 0) {
         return 0x2afa;
       }
-      if (*(int *)(&DAT_0041fab0 + iVar4) == 0) {
+      if (sound_modes[param_2 * 4 + 2].field_00 == 0) {
         pcVar1 = s_MONO_0041a2c4;
       }
       else {
         pcVar1 = s_STEREO_0041a2bd;
       }
-      debugmsg(s_setting_sound_format__dHz__dbits_0041a2c9,
-               *(undefined4 *)(&sound_modes + param_2 * 0x10),
-               *(undefined4 *)(&DAT_0041faac + param_2 * 0x10),pcVar1);
+      debugmsg(s_setting_sound_format__dHz__dbits_0041a2c9,sound_modes[param_2 * 4].field_00,
+               sound_modes[param_2 * 4 + 1].field_00,pcVar1);
       snd_format_set = 1;
     }
     debugmsg(s_init_smacker_0041a2ee);
@@ -2591,22 +2590,21 @@ LAB_0040427a:
     if (param_3 != 0xe) {
       debugmsg(s_setting_3d_output_format_0041a542);
       if (snd_format_set == 0) {
-        i = param_3 * 0x10;
         iVar3 = set_3d_output_format
-                          (*(int *)(&sound_modes + i),*(int *)(&DAT_0041faac + i),
-                           *(int *)(&DAT_0041fab4 + i),*(int *)(&DAT_0041fab0 + i));
+                          (sound_modes[param_3 * 4].field_00,sound_modes[param_3 * 4 + 1].field_00,
+                           sound_modes[param_3 * 4 + 3].field_00,
+                           sound_modes[param_3 * 4 + 2].field_00);
         if (iVar3 != 0) {
           return 0x2afa;
         }
-        if (*(int *)(&DAT_0041fab0 + i) == 0) {
+        if (sound_modes[param_3 * 4 + 2].field_00 == 0) {
           pcVar1 = s_MONO_0041a563;
         }
         else {
           pcVar1 = s_STEREO_0041a55c;
         }
-        debugmsg(s_setting_sound_format__dHz__dbits_0041a568,
-                 *(undefined4 *)(&sound_modes + param_3 * 0x10),
-                 *(undefined4 *)(&DAT_0041faac + param_3 * 0x10),pcVar1);
+        debugmsg(s_setting_sound_format__dHz__dbits_0041a568,sound_modes[param_3 * 4].field_00,
+                 sound_modes[param_3 * 4 + 1].field_00,pcVar1);
         snd_format_set = 1;
       }
     }
@@ -4065,18 +4063,17 @@ void __watcall check_smacker_keys(void)
 
 {
   uint uVar1;
-  int keyispressed_result;
   int iVar2;
+  int iVar3;
   
-  iVar2 = 0;
+  iVar3 = 0;
   do {
-    if (0x9f < iVar2) {
+    if (0x9f < iVar3) {
       return;
     }
-    if ((*(int *)((int)&smk_action_keys + iVar2) != -1) &&
-       (keyispressed_result = keyispressed(*(int *)((int)&smk_action_keys + iVar2)),
-       keyispressed_result != 0)) {
-      uVar1 = *(uint *)((int)&DAT_004212fc + iVar2);
+    iVar2 = *(int *)((int)&smk_action_keys[0].field_00 + iVar3);
+    if ((iVar2 != -1) && (iVar2 = keyispressed(iVar2), iVar2 != 0)) {
+      uVar1 = *(uint *)((int)&smk_action_keys[1].field_00 + iVar3);
       if (uVar1 != 0) {
         if (uVar1 < 2) {
           smacker_playing = 0;
@@ -4092,10 +4089,10 @@ void __watcall check_smacker_keys(void)
         }
       }
       do {
-        keyispressed_result = keyispressed(*(int *)((int)&smk_action_keys + iVar2));
-      } while (keyispressed_result != 0);
+        iVar2 = keyispressed(*(int *)((int)&smk_action_keys[0].field_00 + iVar3));
+      } while (iVar2 != 0);
     }
-    iVar2 = iVar2 + 8;
+    iVar3 = iVar3 + 8;
   } while( true );
 }
 
@@ -4163,7 +4160,7 @@ int __watcall get_free_smacker_key(void)
     if (0x9f < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&smk_action_keys + iVar1) == -1) break;
+    if (*(int *)((int)&smk_action_keys[0].field_00 + iVar1) == -1) break;
     iVar1 = iVar1 + 8;
     i = i + 1;
   }
@@ -4182,7 +4179,7 @@ void __watcall clear_smacker_keys(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 8;
-    *(undefined4 *)((int)&smk_action_keys + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)&smk_action_keys[0].field_00 + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 0xa0);
   return;
@@ -4207,8 +4204,8 @@ void __watcall set_smacker_key(int param_1,int param_2)
   else {
     free_smacker_key = get_free_smacker_key();
     if (free_smacker_key != -1) {
-      (&smk_action_keys)[free_smacker_key * 2] = param_2;
-      (&DAT_004212fc)[free_smacker_key * 2] = param_1;
+      smk_action_keys[free_smacker_key * 2].field_00 = param_2;
+      smk_action_keys[free_smacker_key * 2 + 1].field_00 = param_1;
       return;
     }
     param_1 = 0x14;
@@ -4767,11 +4764,11 @@ int __watcall check_help_keys(void)
     if (0x27 < iVar1) {
       return 0;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) != -1) {
-      keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+    if (*(int *)((int)help_stop_keys + iVar1) != -1) {
+      keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
       if (keyispressed_result != 0) {
         while( true ) {
-          keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+          keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
           if (keyispressed_result == 0) break;
           handle_win_msg();
         }
@@ -4797,7 +4794,7 @@ int __watcall get_free_help_key(void)
     if (0x27 < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) == -1) break;
+    if (*(int *)((int)help_stop_keys + iVar1) == -1) break;
     iVar1 = iVar1 + 4;
     i = i + 1;
   }
@@ -4816,7 +4813,7 @@ void __watcall clear_help_keys(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 4;
-    *(undefined4 *)((int)&help_stop_keys + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)help_stop_keys + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 0x28);
   return;
@@ -5645,12 +5642,12 @@ int __watcall get_key_state(int param_1)
   if (xvga_init_keyboard_ok == 0) {
     fatal_exit(s__s__d____error_keyboard_device_w_0041c2da,s_ddinput_cpp_0041c2ce,0x56);
   }
-  HVar1 = (*xvga_di_keyboard->lpVtbl->GetDeviceState)(xvga_di_keyboard,0x100,&xvga_keyboard_state);
+  HVar1 = (*xvga_di_keyboard->lpVtbl->GetDeviceState)(xvga_di_keyboard,0x100,xvga_keyboard_state);
   if (HVar1 != 0) {
     arg4 = dd_error_string(HVar1);
     fatal_exit(s__s__d____error_getting_keyboard_d_0041c31a,s_ddinput_cpp_0041c30e,0x5a,arg4);
   }
-  return (uint)(byte)(&xvga_keyboard_state)[param_1];
+  return (uint)xvga_keyboard_state[param_1];
 }
 
 
@@ -6615,14 +6612,14 @@ int __watcall xvga_get_system_info(void)
   
   debugmsg(s_Getting_system_information_0041cbb3);
   local_1c = 0x27;
-  BVar1 = GetComputerNameA(&xvga_computer_name,&local_1c);
+  BVar1 = GetComputerNameA((LPSTR)xvga_computer_name,&local_1c);
   if (BVar1 != 0) {
-    debugmsg(s_Computername____s_0041cbcf,&xvga_computer_name);
+    debugmsg(s_Computername____s_0041cbcf,xvga_computer_name);
   }
   local_1c = 0x27;
-  BVar1 = GetUserNameA(&xvga_user_name,&local_1c);
+  BVar1 = GetUserNameA((LPSTR)xvga_user_name,&local_1c);
   if (BVar1 != 0) {
-    debugmsg(s_Username____s_0041cbe2,&xvga_user_name);
+    debugmsg(s_Username____s_0041cbe2,xvga_user_name);
   }
   xvga_init_drive_info(0x1a);
   GlobalMemoryStatus(&memorystatus);
@@ -6704,9 +6701,9 @@ int __watcall search_screen_mode_index(int param_1,int param_2,int param_3)
     if (0xef < iVar1) {
       return -1;
     }
-    if (((param_1 == *(int *)((int)&xvga_screen_modes + iVar1)) &&
-        (param_2 == *(int *)((int)&DAT_0041f900 + iVar1))) &&
-       (param_3 == *(int *)((int)&DAT_0041f904 + iVar1))) break;
+    if (((param_1 == *(int *)((int)&xvga_screen_modes[0].field_00 + iVar1)) &&
+        (param_2 == *(int *)(&xvga_screen_modes[0].field_0x4 + iVar1))) &&
+       (param_3 == *(int *)(&xvga_screen_modes[0].field_0x8 + iVar1))) break;
     iVar1 = iVar1 + 0x14;
     i = i + 1;
   }
@@ -6726,7 +6723,7 @@ int __watcall test_screen_modes_available(void)
     if (0xef < iVar1) {
       return 0;
     }
-    if (*(int *)((int)&DAT_0041f90c + iVar1) == 0) break;
+    if (*(int *)((int)&xvga_screen_modes[1].field_00 + iVar1) == 0) break;
     iVar1 = iVar1 + 0x14;
   }
   return 1;
@@ -6923,7 +6920,7 @@ long mode_available_callback_func(_DDSURFACEDESC *ddsurfacedesc,void *param_2)
   if (search_screen_mode_index_result == -1) {
     return 1;
   }
-  (&DAT_0041f90c)[search_screen_mode_index_result * 5] = 1;
+  *(undefined4 *)((int)xvga_screen_modes + search_screen_mode_index_result * 0x14 + 0x10) = 1;
   return 1;
 }
 
@@ -6957,7 +6954,7 @@ int __watcall xvga_test_mode_available(int param_1)
   if ((param_1 < 0) || (0xb < param_1)) {
     fatal_exit(s__s__d____illegal_mode_index__und_0041cf0e,s_hwinfo_cpp_0041cf03,0x186);
   }
-  return (&DAT_0041f90c)[param_1 * 5];
+  return *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 0x10);
 }
 
 
@@ -7817,17 +7814,16 @@ int __watcall init_animations(anim_t *anim_2)
   int i;
   
   max_anim_ptr = 0;
-  for (anim = anim_2; (anim->field_04 != -1 && (anim->field_00 != -1));
-      anim = (anim_t *)&anim->field_0xc) {
+  for (anim = anim_2; (anim->mode != -1 && (anim->frame_count != -1)); anim = anim + 1) {
     max_anim_ptr = max_anim_ptr + 1;
   }
   i = alloc_animations(max_anim_ptr);
   if (i == 0) {
     for (i = 0; i < max_anim_ptr; i = i + 1) {
-      (&xvga_anims->field_00)[i * 3] = anim_2->field_00;
-      (&xvga_anims->field_04)[i * 3] = anim_2->field_04;
-      (&xvga_anims->field_08)[i * 3] = anim_2->field_08;
-      anim_2 = (anim_t *)&anim_2->field_0xc;
+      xvga_anims[i].frame_count = anim_2->frame_count;
+      xvga_anims[i].mode = anim_2->mode;
+      xvga_anims[i].frames = anim_2->frames;
+      anim_2 = anim_2 + 1;
     }
     i = 0;
     init_animation_ok = 1;
@@ -7852,9 +7848,9 @@ int __watcall alloc_animations(int param_1)
     return 2000;
   }
   for (iVar1 = 0; iVar1 < param_1 * 0xc; iVar1 = iVar1 + 0xc) {
-    *(undefined4 *)((int)&xvga_anims->field_08 + iVar1) = 0;
-    *(undefined4 *)((int)&xvga_anims->field_04 + iVar1) = 0;
-    *(undefined4 *)((int)&xvga_anims->field_00 + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->frames + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->mode + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->frame_count + iVar1) = 0;
   }
   return 0;
 }
@@ -7932,17 +7928,18 @@ long __watcall dispatch_form_message(void *param_1,uint param_2,uint param_3,lon
 
 {
   int iVar1;
-  int iVar2;
-  long lVar3;
+  int form_index;
+  long lVar2;
   
-  iVar2 = get_control_index(param_1);
-  iVar2 = (&activeform->type)[iVar2 * 7];
-  if ((iVar2 == -1) || (iVar1 = iVar2 * 0x19, (&control_list)[iVar1] == '\0')) {
-    fatal_exit(s__s__d_____dispatch_form_message__0041d54a,s_forms_cpp_0041d540,0x3a,iVar2);
+  form_index = get_control_index(param_1);
+  form_index = activeform[form_index].type;
+  if ((form_index == -1) ||
+     (iVar1 = form_index * 0x19, *(char *)((int)control_list + iVar1) == '\0')) {
+    fatal_exit(s__s__d_____dispatch_form_message__0041d54a,s_forms_cpp_0041d540,0x3a,form_index);
   }
-  else if (*(int *)(&DAT_004217c1 + iVar1) != 0) {
-    lVar3 = (**(code **)(&DAT_004217c1 + iVar1))(param_1,param_2,param_3,param_4);
-    return lVar3;
+  else if (*(int *)((int)control_list + iVar1 + 0x15) != 0) {
+    lVar2 = (**(code **)((int)control_list + iVar1 + 0x15))(param_1,param_2,param_3,param_4);
+    return lVar2;
   }
   return 0;
 }
@@ -7964,7 +7961,7 @@ void __watcall set_next_control_focus(void *param_1)
     else {
       i = i + 1;
     }
-    pHVar1 = SetFocus((&activeform->hwnd)[i * 7]);
+    pHVar1 = SetFocus(activeform[i].hwnd);
   } while (pHVar1 == (HWND)0x0);
   return;
 }
@@ -7977,16 +7974,16 @@ void __watcall set_previous_control_focus(void *param_1)
 {
   int control_index;
   HWND pHVar1;
-  int iVar2;
+  int form_index;
   
   control_index = get_control_index(param_1);
   do {
-    iVar2 = nmb_of_controls;
+    form_index = nmb_of_controls;
     if (control_index != 0) {
-      iVar2 = control_index + -1;
+      form_index = control_index + -1;
     }
-    pHVar1 = SetFocus((&activeform->hwnd)[iVar2 * 7]);
-    control_index = iVar2;
+    pHVar1 = SetFocus(activeform[form_index].hwnd);
+    control_index = form_index;
   } while (pHVar1 == (HWND)0x0);
   return;
 }
@@ -7994,48 +7991,49 @@ void __watcall set_previous_control_focus(void *param_1)
 
 /* ==== 0040aa70 set_control_state ==== */
 
-void __watcall set_control_state(int param_1,int param_2)
+void __watcall set_control_state(int form_index,int param_2)
 
 {
   HWND pHVar1;
   BOOL bEnable;
   form_t *form;
   
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____set_control_state__con_0041d596,s_forms_cpp_0041d58c,0x71,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____set_control_state__con_0041d596,s_forms_cpp_0041d58c,0x71,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____set_control_state__No_a_0041d5ef,s_forms_cpp_0041d5e5,0x76);
   }
-  (&activeform->field_14)[param_1 * 7] = (&activeform->state)[param_1 * 7];
-  (&activeform->state)[param_1 * 7] = param_2;
+  activeform[form_index].field_14 = activeform[form_index].state;
+  activeform[form_index].state = param_2;
   form = activeform;
   switch(param_2) {
   case 1:
     pHVar1 = GetFocus();
-    if (pHVar1 != (&form->hwnd)[param_1 * 7]) {
-      if ((&activeform->type)[param_1 * 7] == 4) {
-        fatal_exit(s__s__d_____set_control_state__are_0041d627,s_forms_cpp_0041d61d,0x8a,param_1);
+    if (pHVar1 != form[form_index].hwnd) {
+      if (activeform[form_index].type == 4) {
+        fatal_exit(s__s__d_____set_control_state__are_0041d627,s_forms_cpp_0041d61d,0x8a,form_index)
+        ;
         return;
       }
-      SetFocus((&activeform->hwnd)[param_1 * 7]);
+      SetFocus(activeform[form_index].hwnd);
       return;
     }
     break;
   case 2:
     bEnable = 0;
-    pHVar1 = (&activeform->hwnd)[param_1 * 7];
+    pHVar1 = activeform[form_index].hwnd;
     goto LAB_0040ab69;
   case 3:
     bEnable = 1;
-    pHVar1 = (&activeform->hwnd)[param_1 * 7];
+    pHVar1 = activeform[form_index].hwnd;
 LAB_0040ab69:
     EnableWindow(pHVar1,bEnable);
     return;
   case 4:
-    selected_control = param_1;
+    selected_control = form_index;
   }
   return;
 }
@@ -8043,36 +8041,36 @@ LAB_0040ab69:
 
 /* ==== 0040ab83 enable_control ==== */
 
-void __watcall enable_control(int param_1)
+void __watcall enable_control(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____enable_control__contro_0041d67a,s_forms_cpp_0041d670,0x9e,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____enable_control__contro_0041d67a,s_forms_cpp_0041d670,0x9e,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____enable_control__No_act_0041d6d0,s_forms_cpp_0041d6c6,0xa3);
   }
-  EnableWindow((&activeform->hwnd)[param_1 * 7],1);
+  EnableWindow(activeform[form_index].hwnd,1);
   return;
 }
 
 
 /* ==== 0040ac0a disable_control ==== */
 
-void __watcall disable_control(int param_1)
+void __watcall disable_control(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____disable_control__contr_0041d705,s_forms_cpp_0041d6fb,0xb0,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____disable_control__contr_0041d705,s_forms_cpp_0041d6fb,0xb0,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____disable_control__No_ac_0041d75c,s_forms_cpp_0041d752,0xb5);
   }
-  EnableWindow((&activeform->hwnd)[param_1 * 7],0);
+  EnableWindow(activeform[form_index].hwnd,0);
   return;
 }
 
@@ -8093,30 +8091,30 @@ int __watcall get_control_focus(void)
 
 /* ==== 0040ac96 focus_control ==== */
 
-void __watcall focus_control(int param_1)
+void __watcall focus_control(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____focus_control__control_0041d792,s_forms_cpp_0041d788,0xcd,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____focus_control__control_0041d792,s_forms_cpp_0041d788,0xcd,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____focus_control__No_acti_0041d7e7,s_forms_cpp_0041d7dd,0xd2);
   }
-  SetFocus((&activeform->hwnd)[param_1 * 7]);
+  SetFocus(activeform[form_index].hwnd);
   return;
 }
 
 
 /* ==== 0040ad1b get_control_image_index ==== */
 
-int __watcall get_control_image_index(int param_1,int param_2)
+int __watcall get_control_image_index(int anim_index,int frame_index)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____control_illegal_frame_i_0041d81b,s_forms_cpp_0041d811,0xe1);
   }
@@ -8194,7 +8192,7 @@ LAB_0040aed7:
     iVar2 = param_1 * 0x1c;
     do {
       if (nmb_of_controls * 0x1c <= iVar2) goto LAB_0040aed7;
-      piVar1 = (int *)((int)&activeform[1].x + iVar2);
+      piVar1 = (int *)((int)&activeform[1].type + iVar2);
       iVar2 = iVar2 + 0x1c;
       param_1 = param_1 + 1;
     } while (param_2 != *piVar1);
@@ -8214,79 +8212,79 @@ int __watcall get_numberofcontrols_inform(void)
 
 /* ==== 0040aee8 get_old_control_state ==== */
 
-int __watcall get_old_control_state(int param_1)
+int __watcall get_old_control_state(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_old_control_state__0041da5b,s_forms_cpp_0041da51,0x13e,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_old_control_state__0041da5b,s_forms_cpp_0041da51,0x13e,form_index);
   }
-  return (&activeform->field_14)[param_1 * 7];
+  return activeform[form_index].field_14;
 }
 
 
 /* ==== 0040af36 get_control_type ==== */
 
-int __watcall get_control_type(int param_1)
+int __watcall get_control_type(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_type__cont_0041daa5,s_forms_cpp_0041da9b,0x14b,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_type__cont_0041daa5,s_forms_cpp_0041da9b,0x14b,form_index);
   }
-  return (&activeform->type)[param_1 * 7];
+  return activeform[form_index].type;
 }
 
 
 /* ==== 0040af84 get_control_state ==== */
 
-int __watcall get_control_state(int param_1)
+int __watcall get_control_state(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_state__con_0041dae9,s_forms_cpp_0041dadf,0x158,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_state__con_0041dae9,s_forms_cpp_0041dadf,0x158,form_index);
   }
-  return (&activeform->state)[param_1 * 7];
+  return activeform[form_index].state;
 }
 
 
 /* ==== 0040afd2 get_control_hwnd ==== */
 
-void * __watcall get_control_hwnd(int param_1)
+void * __watcall get_control_hwnd(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_x__control_0041db2f,s_forms_cpp_0041db25,0x165,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_x__control_0041db2f,s_forms_cpp_0041db25,0x165,form_index);
   }
-  return (&activeform->hwnd)[param_1 * 7];
+  return activeform[form_index].hwnd;
 }
 
 
 /* ==== 0040b020 get_control_x ==== */
 
-int __watcall get_control_x(int param_1)
+int __watcall get_control_x(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_x__control_0041db71,s_forms_cpp_0041db67,0x172,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_x__control_0041db71,s_forms_cpp_0041db67,0x172,form_index);
   }
-  return (&activeform->x)[param_1 * 7];
+  return activeform[form_index].x;
 }
 
 
 /* ==== 0040b06d get_control_y ==== */
 
-int __watcall get_control_y(int param_1)
+int __watcall get_control_y(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_y__control_0041dbb3,s_forms_cpp_0041dba9,0x17f,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_y__control_0041dbb3,s_forms_cpp_0041dba9,0x17f,form_index);
   }
-  return (&activeform->y)[param_1 * 7];
+  return activeform[form_index].y;
 }
 
 
@@ -8335,36 +8333,36 @@ void * __watcall get_control_pointer(void *param_1)
 
 /* ==== 0040b145 get_control_pointer_1 ==== */
 
-void * __watcall get_control_pointer_1(int param_1)
+void * __watcall get_control_pointer_1(int form_index)
 
 {
-  if ((param_1 < 0) || (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_pointer__c_0041dc7f,s_forms_cpp_0041dc75,0x1b6,param_1,
+  if ((form_index < 0) || (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_pointer__c_0041dc7f,s_forms_cpp_0041dc75,0x1b6,form_index,
                nmb_of_controls);
   }
-  return (&activeform->control)[param_1 * 7];
+  return activeform[form_index].control;
 }
 
 
 /* ==== 0040b188 call_help_function ==== */
 
-void __watcall call_help_function(int param_1)
+void __watcall call_help_function(int form_index)
 
 {
   int iVar1;
   
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____call_help_function__co_0041dccd,s_forms_cpp_0041dcc3,0x1c2,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____call_help_function__co_0041dccd,s_forms_cpp_0041dcc3,0x1c2,form_index,
                nmb_of_controls);
   }
-  if (((&activeform->type)[param_1 * 7] == -1) ||
-     (iVar1 = (&activeform->type)[param_1 * 7] * 0x19, (&control_list)[iVar1] == '\0')) {
+  if ((activeform[form_index].type == -1) ||
+     (iVar1 = activeform[form_index].type * 0x19, *(char *)((int)control_list + iVar1) == '\0')) {
     fatal_exit(s__s__d_____destroy_form__Unused_c_0041dd27,s_forms_cpp_0041dd1d,0x1ce,
-               (&activeform->type)[param_1 * 7]);
+               activeform[form_index].type);
   }
-  else if (*(int *)(&DAT_004217b9 + iVar1) != 0) {
-    (**(code **)(&DAT_004217b9 + iVar1))();
+  else if (*(int *)((int)control_list + iVar1 + 0xd) != 0) {
+    (**(code **)((int)control_list + iVar1 + 0xd))();
     return;
   }
   return;
@@ -8383,12 +8381,12 @@ void __watcall destroy_form(void)
     for (iVar2 = 0; iVar1 = *(int *)((int)&activeform->type + iVar2), iVar1 != -1;
         iVar2 = iVar2 + 0x1c) {
       iVar1 = iVar1 * 0x19;
-      if ((&control_list)[iVar1] == '\0') {
+      if (*(char *)((int)control_list + iVar1) == '\0') {
         fatal_exit(s__s__d_____destroy_form__Unused_c_0041dd6a,s_forms_cpp_0041dd60,0x1ef,
                    *(undefined4 *)((int)&activeform->type + iVar2));
       }
-      else if (*(int *)(&DAT_004217b1 + iVar1) != 0) {
-        (**(code **)(&DAT_004217b1 + iVar1))();
+      else if (*(int *)((int)control_list + iVar1 + 5) != 0) {
+        (**(code **)((int)control_list + iVar1 + 5))();
       }
     }
     activeform = (form_t *)0x0;
@@ -8415,12 +8413,12 @@ void __watcall activate_form(form_t *form)
   for (iVar2 = 0; iVar1 = *(int *)((int)&activeform->type + iVar2), iVar1 != -1;
       iVar2 = iVar2 + 0x1c) {
     iVar1 = iVar1 * 0x19;
-    if ((&control_list)[iVar1] == '\0') {
+    if (*(char *)((int)control_list + iVar1) == '\0') {
       fatal_exit(s__s__d_____destroy_form__Unused_c_0041ddad,s_forms_cpp_0041dda3,0x214,
                  *(undefined4 *)((int)&activeform->type + iVar2));
     }
-    else if (*(int *)(&DAT_004217ad + iVar1) != 0) {
-      (**(code **)(&DAT_004217ad + iVar1))();
+    else if (*(int *)((int)control_list + iVar1 + 1) != 0) {
+      (**(code **)((int)control_list + iVar1 + 1))();
     }
     nmb_of_controls = nmb_of_controls + 1;
   }
@@ -8434,12 +8432,13 @@ void __watcall activate_form(form_t *form)
 int __watcall draw_form_animfocus_buttons(void)
 
 {
-  int iVar1;
+  int form_index;
   
-  iVar1 = get_control_focus();
-  if ((iVar1 != -1) &&
-     (iVar1 = (&activeform->type)[iVar1 * 7] * 0x19, *(int *)(&DAT_004217bd + iVar1) != 0)) {
-    (**(code **)(&DAT_004217bd + iVar1))();
+  form_index = get_control_focus();
+  if ((form_index != -1) &&
+     (form_index = activeform[form_index].type * 0x19,
+     *(int *)((int)control_list + form_index + 0x11) != 0)) {
+    (**(code **)((int)control_list + form_index + 0x11))();
   }
   return 1;
 }
@@ -8452,10 +8451,10 @@ void __watcall check_form_key_pressed(int param_1)
 {
   int iVar1;
   int iVar2;
-  int i;
+  int form_index;
   
   iVar1 = keyispressed(0x12);
-  i = 0;
+  form_index = 0;
   if (iVar1 == 0) {
     if ((uint)param_1 < 0x26) {
       if (0x1a < (uint)param_1) {
@@ -8481,21 +8480,21 @@ void __watcall check_form_key_pressed(int param_1)
     for (iVar1 = 0; iVar2 = *(int *)((int)&activeform->type + iVar1), iVar2 != -1;
         iVar1 = iVar1 + 0x1c) {
       iVar2 = iVar2 * 0x19;
-      if ((&control_list)[iVar2] == '\0') {
+      if (*(char *)((int)control_list + iVar2) == '\0') {
         fatal_exit(s__s__d_____check_form_key_pressed_0041ddf0,s_forms_cpp_0041dde6,0x24c,
                    *(undefined4 *)((int)&activeform->type + iVar1));
       }
-      else if ((*(int *)(&DAT_004217b5 + iVar2) != 0) &&
-              (iVar2 = (**(code **)(&DAT_004217b5 + iVar2))(), iVar2 != 0)) {
+      else if ((*(int *)((int)control_list + iVar2 + 9) != 0) &&
+              (iVar2 = (**(code **)((int)control_list + iVar2 + 9))(), iVar2 != 0)) {
         control_keypressed = param_1;
-        set_control_state(i,4);
+        set_control_state(form_index,4);
         SetFocus(*(HWND *)((int)&activeform->hwnd + iVar1));
         formdis.hwndItem = *(HWND *)((int)&activeform->hwnd + iVar1);
         formdis.itemState = 0x11;
         SendMessageA(*(HWND *)((int)&activeform->hwnd + iVar1),0x2b,0,0x4215fc);
         return;
       }
-      i = i + 1;
+      form_index = form_index + 1;
     }
   }
   return;
@@ -11577,13 +11576,13 @@ int __watcall get_attached_joysticks(void)
   MVar1 = joyGetPosEx(0,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_004216f4 = 1;
+      joystickstate[0]._92_4_ = 1;
     }
     else if (MVar1 == 2) goto LAB_0040de77;
   }
   else if (MVar1 < 7) {
 LAB_0040de77:
-    DAT_004216f4 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (10 < MVar1) {
     if (MVar1 < 0xc) {
@@ -11594,7 +11593,7 @@ LAB_0040de77:
   MVar1 = joyGetPosEx(1,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_00421750 = 1;
+      joystickstate[0]._184_4_ = 1;
       goto LAB_0040defd;
     }
     if (MVar1 != 2) goto LAB_0040defd;
@@ -11607,10 +11606,10 @@ LAB_0040de77:
     }
     if ((MVar1 < 0xa6) || (0xa7 < MVar1)) goto LAB_0040defd;
   }
-  DAT_00421750 = 0;
+  joystickstate[0]._184_4_ = 0;
 LAB_0040defd:
-  bVar2 = DAT_004216f4 != 0;
-  if (DAT_00421750 != 0) {
+  bVar2 = joystickstate[0]._92_4_ != 0;
+  if (joystickstate[0]._184_4_ != 0) {
     bVar2 = bVar2 + 2;
   }
   return (uint)bVar2;
@@ -11633,18 +11632,18 @@ void __watcall calibrate_joysticks(void)
   if (MVar1 < 6) {
     if (MVar1 == 0) {
       debugmsg(s_Joystick_One_Found_0041e357);
-      DAT_004216f4 = 1;
-      _DAT_00421738 = joystickinfo.dwXpos;
-      _DAT_0042173c = joystickinfo.dwYpos;
+      joystickstate[0]._92_4_ = 1;
+      joystickstate[0]._160_4_ = joystickinfo.dwXpos;
+      joystickstate[0]._164_4_ = joystickinfo.dwYpos;
       debugmsg(s__1_Xbase____d_0041e36b,joystickinfo.dwXpos);
       debugmsg(s__1_Ybase____d_0041e37a,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_004216f4 = 0;
+      joystickstate[0]._92_4_ = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_004216f4 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -11652,17 +11651,17 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_004216f4 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_004216f4 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   MVar1 = joyGetDevCapsA(0,&joycaps,0x194);
   if (MVar1 == 0) {
-    _DAT_00421744 = joycaps.wXmin;
-    _DAT_00421740 = joycaps.wXmax;
-    _DAT_0042174c = joycaps.wYmin;
-    _DAT_00421748 = joycaps.wYmax;
+    joystickstate[0]._172_4_ = joycaps.wXmin;
+    joystickstate[0]._168_4_ = joycaps.wXmax;
+    joystickstate[0]._180_4_ = joycaps.wYmin;
+    joystickstate[0]._176_4_ = joycaps.wYmax;
     debugmsg(s__1_Xmin____d_0041e389,joycaps.wXmin);
     debugmsg(s__1_Xmax____d_0041e397,joycaps.wXmax);
     debugmsg(s__1_Ymin____d_0041e3a5,joycaps.wYmin);
@@ -11676,16 +11675,16 @@ void __watcall calibrate_joysticks(void)
       debugmsg(s_Joystick_Two_Found_0041e3d9);
       _DAT_00421794 = joystickinfo.dwXpos;
       _DAT_00421798 = joystickinfo.dwYpos;
-      DAT_00421750 = 1;
+      joystickstate[0]._184_4_ = 1;
       debugmsg(s__2_Xbase____d_0041e3ed,joystickinfo.dwXpos);
       debugmsg(s__2_Ybase____d_0041e3fc,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_00421750 = 0;
+      joystickstate[0]._184_4_ = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_00421750 = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -11693,10 +11692,10 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_00421750 = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_00421750 = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   MVar1 = joyGetDevCapsA(1,&joycaps,0x194);
   if (MVar1 == 0) {
@@ -11718,14 +11717,14 @@ void __watcall calibrate_joysticks(void)
 void __watcall clear_joystick_key_down_state(int param_1)
 
 {
-  *(undefined4 *)(&DAT_004216a8 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004216a0 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004216b0 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004216b8 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004216c0 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004216c8 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004216d0 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004216d8 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x10 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x8 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x18 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x20 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x28 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x30 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x38 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x40 + param_1 * 0x5c) = 0;
   return;
 }
 
@@ -11736,35 +11735,35 @@ void __watcall check_joystick_movement(int param_1,int param_2,int param_3,int p
 
 {
   clear_joystick_key_down_state(param_1);
-  if ((double)*(int *)(&DAT_004216dc + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_004216dc + param_1 * 0x5c) < (double)param_2) {
-    *(undefined4 *)(&DAT_004216a8 + param_1 * 0x5c) = 1;
+  if ((double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) < (double)param_2) {
+    *(undefined4 *)(&joystickstate[0].field_0x10 + param_1 * 0x5c) = 1;
   }
   if ((double)param_2 <
-      (double)*(int *)(&DAT_004216dc + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_004216dc + param_1 * 0x5c) * joysticksencesibility) {
-    *(undefined4 *)(&DAT_004216a0 + param_1 * 0x5c) = 1;
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) -
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) * joysticksencesibility) {
+    *(undefined4 *)(&joystickstate[0].field_0x8 + param_1 * 0x5c) = 1;
   }
-  if ((double)*(int *)(&DAT_004216e0 + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_004216e0 + param_1 * 0x5c) < (double)param_3) {
-    *(undefined4 *)(&DAT_004216b8 + param_1 * 0x5c) = 1;
+  if ((double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) < (double)param_3) {
+    *(undefined4 *)(&joystickstate[0].field_0x20 + param_1 * 0x5c) = 1;
   }
   if ((double)param_3 <
-      (double)*(int *)(&DAT_004216e0 + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_004216e0 + param_1 * 0x5c) * joysticksencesibility) {
-    *(undefined4 *)(&DAT_004216b0 + param_1 * 0x5c) = 1;
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) -
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) * joysticksencesibility) {
+    *(undefined4 *)(&joystickstate[0].field_0x18 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 1U) != 0) {
-    *(undefined4 *)(&DAT_004216c0 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x28 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 2U) != 0) {
-    *(undefined4 *)(&DAT_004216c8 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x30 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 4U) != 0) {
-    *(undefined4 *)(&DAT_004216d0 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x38 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 8U) != 0) {
-    *(undefined4 *)(&DAT_004216d8 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x40 + param_1 * 0x5c) = 1;
   }
   return;
 }
@@ -11777,7 +11776,7 @@ void __watcall handle_joystick(void)
 {
   MMRESULT MVar1;
   
-  if (DAT_004216f4 != 0) {
+  if (joystickstate[0]._92_4_ != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(0,&joystickinfo);
@@ -11788,7 +11787,7 @@ void __watcall handle_joystick(void)
       clear_joystick_key_down_state(1);
     }
   }
-  if (DAT_00421750 != 0) {
+  if (joystickstate[0]._184_4_ != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(1,&joystickinfo);
@@ -11820,7 +11819,7 @@ void __watcall set_joystick_keys(int param_1,int param_2,int param_3)
   case 5:
   case 6:
   case 7:
-    *(int *)(&DAT_0042169c + param_1 * 0x5c + param_2 * 8) = param_3;
+    *(int *)(param_2 * 8 + 0x42169c + param_1 * 0x5c) = param_3;
     return;
   default:
     fatal_exit(s__set_joystick_keys__invalid_joys_0041e475,param_2);
@@ -11871,34 +11870,34 @@ get_joystick_position(int param_1,int param_2,int param_3,int *param_4,int *para
   fatal_exit(s__get_joystick_position__invalid_j_0041e4fd,param_1);
 LAB_0040e5d3:
   iVar6 = param_1 * 0x5c;
-  if (*(int *)(&joystickstate + iVar6) != 0) {
+  if ((&joystickstate[0].field_00)[param_1 * 0x17] != 0) {
     *param_6 = 0;
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar5 = joyGetPosEx(local_10,&joystickinfo);
     if (MVar5 == 0) {
-      dVar1 = (double)*(int *)(&DAT_004216dc + iVar6);
-      dVar2 = (double)*(int *)(&DAT_004216dc + iVar6) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystickstate[0].field_0x44 + iVar6);
+      dVar2 = (double)*(int *)(&joystickstate[0].field_0x44 + iVar6) * joysticksencesibility;
       if ((double)joystickinfo.dwXpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwXpos) {
           *param_4 = iVar3;
         }
         else {
           *param_4 = joystickinfo.dwXpos /
-                     (uint)((*(int *)(&DAT_004216dc + iVar6) - *(int *)(&DAT_004216e8 + iVar6)) /
-                           iVar3);
+                     (uint)((*(int *)(&joystickstate[0].field_0x44 + iVar6) -
+                            *(int *)(&joystickstate[0].field_0x50 + iVar6)) / iVar3);
           *(byte *)param_6 = (byte)*param_6 | 4;
         }
       }
       else {
         *param_4 = joystickinfo.dwXpos /
-                   (uint)((*(int *)(&DAT_004216e4 + iVar6) - *(int *)(&DAT_004216dc + iVar6)) /
-                         iVar3);
+                   (uint)((*(int *)(&joystickstate[0].field_0x4c + iVar6) -
+                          *(int *)(&joystickstate[0].field_0x44 + iVar6)) / iVar3);
         *(byte *)param_6 = (byte)*param_6 | 8;
       }
       iVar3 = param_1 * 0x5c;
-      dVar1 = (double)*(int *)(&DAT_004216e0 + iVar3);
-      dVar2 = (double)*(int *)(&DAT_004216e0 + iVar3) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystickstate[0].field_0x48 + iVar3);
+      dVar2 = (double)*(int *)(&joystickstate[0].field_0x48 + iVar3) * joysticksencesibility;
       if ((double)joystickinfo.dwYpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwYpos) {
           *param_5 = iVar4;
@@ -11906,16 +11905,18 @@ LAB_0040e5d3:
         else {
           *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                           ((longlong)
-                           (*(int *)(&DAT_004216e0 + iVar3) - *(int *)(&DAT_004216f0 + iVar3)) /
-                           (longlong)iVar4 & 0xffffffffU));
+                           (*(int *)(&joystickstate[0].field_0x48 + iVar3) -
+                           *(int *)(&joystickstate[0].field_0x58 + iVar3)) / (longlong)iVar4 &
+                          0xffffffffU));
           *(byte *)param_6 = (byte)*param_6 | 1;
         }
       }
       else {
         *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                         ((longlong)
-                         (*(int *)(&DAT_004216ec + iVar3) - *(int *)(&DAT_004216e0 + iVar3)) /
-                         (longlong)iVar4 & 0xffffffffU));
+                         (*(int *)(&joystickstate[0].field_0x54 + iVar3) -
+                         *(int *)(&joystickstate[0].field_0x48 + iVar3)) / (longlong)iVar4 &
+                        0xffffffffU));
         *(byte *)param_6 = (byte)*param_6 | 2;
       }
       return 1;
@@ -11937,9 +11938,9 @@ int __watcall check_joystick_keys(int param_1)
     if (0x3f < iVar1) {
       return 0;
     }
-    if (((param_1 == *(int *)((int)&DAT_004216f8 + iVar1)) &&
-        (*(int *)((int)&DAT_004216fc + iVar1) != 0)) ||
-       ((param_1 == *(int *)((int)&DAT_00421754 + iVar1) &&
+    if (((param_1 == *(int *)(&joystickstate[0].field_0x60 + iVar1)) &&
+        (*(int *)(&joystickstate[0].field_0x64 + iVar1) != 0)) ||
+       ((param_1 == *(int *)(&joystickstate[0].field_0xbc + iVar1) &&
         (*(int *)((int)&DAT_00421758 + iVar1) != 0)))) break;
     iVar1 = iVar1 + 8;
   }
@@ -11983,7 +11984,7 @@ void __watcall clear_control_list(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 0x19;
-    (&control_list)[iVar2] = 0;
+    *(undefined1 *)((int)&control_list[0].field_00 + iVar2) = 0;
     iVar2 = iVar1;
   } while (iVar1 != 0xfa);
   return;
@@ -12000,17 +12001,17 @@ add_control_to_list(int param_1,void *param_2,void *param_3,void *param_4,void *
   int iVar1;
   
   iVar1 = param_1 * 0x19;
-  if ((&control_list)[iVar1] != '\0') {
+  if (*(char *)((int)control_list + iVar1) != '\0') {
     fatal_exit(s__s__d_____add_control_to_list__c_0041e541,s_controls_cpp_0041e534,0x4e,param_1);
     return;
   }
-  *(void **)(&DAT_004217ad + iVar1) = param_2;
-  *(void **)(&DAT_004217b1 + iVar1) = param_3;
-  *(void **)(&DAT_004217b5 + iVar1) = param_4;
-  (&control_list)[iVar1] = 1;
-  *(void **)(&DAT_004217b9 + iVar1) = param_5;
-  *(void **)(&DAT_004217bd + iVar1) = param_6;
-  *(void **)(&DAT_004217c1 + iVar1) = param_7;
+  *(void **)((int)control_list + iVar1 + 1) = param_2;
+  *(void **)((int)control_list + iVar1 + 5) = param_3;
+  *(void **)((int)control_list + iVar1 + 9) = param_4;
+  *(undefined1 *)((int)control_list + iVar1) = 1;
+  *(void **)((int)control_list + iVar1 + 0xd) = param_5;
+  *(void **)((int)control_list + iVar1 + 0x11) = param_6;
+  *(void **)((int)control_list + iVar1 + 0x15) = param_7;
   return;
 }
 
@@ -13194,7 +13195,7 @@ sigabort(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 par
       return 0xffffffff;
     }
   }
-  if (((pcVar4 != (code *)0x1) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
+  if (((pcVar4 != (code *)&DAT_00000001) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
     iVar1 = (*(code *)GetThreadPtr)(pcVar4,param_2,param_4,param_3);
     *(undefined4 *)(iVar1 + 0x58 + iVar2 * 8) = 2;
     (*pcVar4)();
@@ -13238,7 +13239,7 @@ void __watcall raise(int param_1)
       return;
     }
   }
-  if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
+  if (((pcVar1 != (code *)&DAT_00000001) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x58 + iVar3 * 8) = 2;
     (*pcVar1)();
@@ -13261,7 +13262,7 @@ void __watcall sigfpe_handler(undefined4 param_1)
   
   iVar2 = (*(code *)GetThreadPtr)();
   pcVar1 = *(code **)(iVar2 + 0x68);
-  if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
+  if (((pcVar1 != (code *)&DAT_00000001) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x68) = 2;
     (*pcVar1)();
@@ -15021,7 +15022,7 @@ void __watcall clear_edit_keys_allowed(void)
   if (400 < ~i - 1) {
     fatal_exit(s__s__d_____set_edit_keys_allowed__0041e7c4,s_editbox_cpp_0041e7b8,0x3c,400);
   }
-  pcVar3 = &allowed_edit_keys;
+  pcVar3 = allowed_edit_keys;
   do {
     cVar1 = *pcVar2;
     *pcVar3 = cVar1;
@@ -15057,7 +15058,7 @@ void __watcall set_edit_keys_allowed(char *param_1)
   if (400 < ~i - 1) {
     fatal_exit(s__s__d_____set_edit_keys_allowed__0041e7c4,s_editbox_cpp_0041e7b8,0x3c,400);
   }
-  pcVar2 = &allowed_edit_keys;
+  pcVar2 = allowed_edit_keys;
   do {
     cVar1 = *param_1;
     *pcVar2 = cVar1;
@@ -15075,7 +15076,7 @@ void __watcall set_edit_keys_allowed(char *param_1)
 
 /* ==== 00410f3b get_edit_box_text ==== */
 
-void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
+void __watcall get_edit_box_text(int form_index,char *param_2,int param_3)
 
 {
   int control_type;
@@ -15083,17 +15084,18 @@ void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
   UINT Msg;
   WPARAM wParam;
   
-  control_type = get_control_type(param_1);
+  control_type = get_control_type(form_index);
   if (control_type != 0) {
-    control_type = get_control_type(param_1);
+    control_type = get_control_type(form_index);
     if (control_type != 3) {
-      fatal_exit(s__s__d_____get_edit_box_text__con_0041e85f,s_editbox_cpp_0041e853,0x52,param_1);
+      fatal_exit(s__s__d_____get_edit_box_text__con_0041e85f,s_editbox_cpp_0041e853,0x52,form_index)
+      ;
     }
   }
   wParam = 0;
   Msg = 0xc4;
   *(short *)param_2 = (short)param_3;
-  hWnd = get_control_hwnd(param_1);
+  hWnd = get_control_hwnd(form_index);
   SendMessageA(hWnd,Msg,wParam,(LPARAM)param_2);
   return;
 }
@@ -15157,7 +15159,7 @@ void __watcall destroy_edit_box(form_t *form)
 
 /* ==== 0041106a create_edit_box ==== */
 
-void __watcall create_edit_box(form_t *form,int param_2)
+void __watcall create_edit_box(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -15189,7 +15191,7 @@ void __watcall create_edit_box(form_t *form,int param_2)
     fatal_exit(s__s__d_____edit_windows_box__heig_0041ea52,s_editbox_cpp_0041ea46,0xa7,piVar1[1],
                iVar2);
   }
-  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+  check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
   if (piVar1[3] == 1) {
     if (form->type == 0) {
       lpParam = (LPVOID)0x0;
@@ -15235,11 +15237,11 @@ void __watcall create_edit_box(form_t *form,int param_2)
     lpClassName = s_EDIT_0041eab5;
   }
   pHVar4 = CreateWindowExA(0,lpClassName,(LPCSTR)0x0,dwStyle,X,Y,nWidth,iVar2,xvga_hwnd,
-                           (HMENU)param_2,hInstance,lpParam);
+                           (HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar4;
 LAB_00411143:
   if (form->hwnd == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ed_0041eaba,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ed_0041eaba,form_index);
   }
   old_edit_windowproc = SetWindowLongA(form->hwnd,-4,0x41134f);
   wParam = xvga_get_active_font();
@@ -15257,7 +15259,7 @@ LAB_00411143:
   piVar1[9] = 0xffffff;
   pHVar3 = CreateSolidBrush(piVar1[8]);
   piVar1[10] = (int)pHVar3;
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -15299,11 +15301,11 @@ long EditWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
   long set_windows_edit_box_colors_result;
   byte *found;
   HWND pHVar2;
-  byte bVar3;
-  bool bVar4;
-  undefined2 local_10;
+  bool bVar3;
+  byte local_10;
+  char cStack_f;
   
-  local_10 = EditWindowProc__key;
+  _local_10 = EditWindowProc__key._0_2_;
   if (param_2 < 0x102) {
     if (param_2 < 8) {
       if (param_2 != 7) goto LAB_00411476;
@@ -15344,22 +15346,22 @@ long EditWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
     }
     goto LAB_00411476;
   }
-  bVar3 = (byte)param_3;
-  local_10 = CONCAT11((char)((ushort)EditWindowProc__key >> 8),bVar3);
-  if (bVar3 < 8) {
-    bVar4 = bVar3 == 3;
+  local_10 = (byte)param_3;
+  cStack_f = SUB21(EditWindowProc__key._0_2_,1);
+  if (local_10 < 8) {
+    bVar3 = local_10 == 3;
 LAB_004113e6:
-    if (bVar4) goto LAB_00411476;
+    if (bVar3) goto LAB_00411476;
   }
   else {
-    if (bVar3 < 9) goto LAB_00411476;
-    if (0x15 < bVar3) {
-      if (bVar3 < 0x17) goto LAB_00411476;
-      bVar4 = bVar3 == 0x18;
+    if (local_10 < 9) goto LAB_00411476;
+    if (0x15 < local_10) {
+      if (local_10 < 0x17) goto LAB_00411476;
+      bVar3 = local_10 == 0x18;
       goto LAB_004113e6;
     }
   }
-  found = strstr(&allowed_edit_keys,(byte *)&local_10);
+  found = strstr((byte *)allowed_edit_keys,&local_10);
   if (found == (byte *)0x0) {
     return 0;
   }
@@ -15387,23 +15389,23 @@ void __watcall draw_focus_anim_button(form_t *form)
   int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar6;
+  int iVar5;
   
   pvVar1 = form->control;
   if (*(int *)((int)pvVar1 + 0xd) != -1) {
-    iVar5 = get_control_index(form->hwnd);
-    iVar2 = (&xvga_anims->field_00)[*(int *)((int)pvVar1 + 0xd) * 3];
+    form_index = get_control_index(form->hwnd);
+    iVar2 = xvga_anims[*(int *)((int)pvVar1 + 0xd)].frame_count;
     iVar3 = *(int *)((int)pvVar1 + 4);
     iVar4 = *(int *)((int)pvVar1 + 8);
     control_image_index =
          get_control_image_index(*(int *)((int)pvVar1 + 0xd),*(int *)((int)pvVar1 + 0x11));
-    iVar6 = 1;
-    control_y = get_control_y(iVar5);
-    iVar5 = get_control_x(iVar5);
-    set_mem_image(0,control_image_index,iVar5 + iVar3 / 2,iVar4 / 2 + control_y,iVar6);
+    iVar5 = 1;
+    control_y = get_control_y(form_index);
+    form_index = get_control_x(form_index);
+    set_mem_image(0,control_image_index,form_index + iVar3 / 2,iVar4 / 2 + control_y,iVar5);
     if (*(int *)((int)pvVar1 + 0x11) < iVar2 + -1) {
       *(int *)((int)pvVar1 + 0x11) = *(int *)((int)pvVar1 + 0x11) + 1;
     }
@@ -15430,7 +15432,7 @@ void __watcall destroy_button(form_t *form)
 
 /* ==== 0041157e create_button ==== */
 
-void __watcall create_button(form_t *form,int param_2)
+void __watcall create_button(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -15447,24 +15449,24 @@ void __watcall create_button(form_t *form,int param_2)
   if (piVar1[2] == -1) {
     piVar1[2] = *(int *)(control_image_index * 0x20 + 0xc + (int)xvga_mem_images);
   }
-  if ((&xvga_anims->field_00)[*piVar1 * 3] < 4) {
+  if (xvga_anims[*piVar1].frame_count < 4) {
     fatal_exit(s__s__d_____create_button__not_eno_0041eb33,s_buttons_cpp_0041eb27,0x6f,
-               (&xvga_anims->field_00)[*piVar1 * 3]);
+               xvga_anims[*piVar1].frame_count);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
+  check_control_position(form_index,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_0041eb7f,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
-                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[2],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_co_0041eb86,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_co_0041eb86,form_index);
   }
   old_button_windowproc = SetWindowLongA(form->hwnd,-4,0x411856);
   *(undefined4 *)((int)piVar1 + 0x11) = 0;
   if (*(int *)((int)piVar1 + 0xd) != -1) {
     get_control_image_index(*(int *)((int)piVar1 + 0xd),0);
-    if ((&xvga_anims->field_00)[*(int *)((int)piVar1 + 0xd) * 3] == 1) {
+    if (xvga_anims[*(int *)((int)piVar1 + 0xd)].frame_count == 1) {
       fatal_exit(s__s__d_____create_button__Anim_fo_0041ebc3,s_buttons_cpp_0041ebb7,0x8e,
                  *(undefined4 *)((int)piVar1 + 0xd));
     }
@@ -15472,7 +15474,7 @@ void __watcall create_button(form_t *form,int param_2)
   if (form->state == 4) {
     form->state = 1;
   }
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -15485,32 +15487,33 @@ void __watcall draw_help_button(form_t *form)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int *control_pointer;
   uint control_state;
-  int iVar5;
-  int control_y;
-  int iVar6;
+  int anim_index;
+  int frame_index;
+  int iVar4;
   
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   control_pointer = get_control_pointer(form->hwnd);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  control_state = get_control_state(iVar4);
+  control_state = get_control_state(form_index);
   if ((control_state == 0) || ((1 < control_state && (control_state != 4)))) {
-    iVar5 = *control_pointer;
-    control_y = 0;
+    anim_index = *control_pointer;
+    frame_index = 0;
   }
   else {
-    control_y = 1;
-    iVar5 = *control_pointer;
+    frame_index = 1;
+    anim_index = *control_pointer;
   }
-  iVar5 = get_control_image_index(iVar5,control_y);
-  iVar6 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar4 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + control_y,iVar6);
+  anim_index = get_control_image_index(anim_index,frame_index);
+  iVar4 = 1;
+  frame_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,anim_index,form_index + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + frame_index,
+                iVar4);
   return;
 }
 
@@ -15524,18 +15527,18 @@ void __watcall draw_button(tagDRAWITEMSTRUCT *drawitemstruct)
   int iVar2;
   int iVar3;
   uint uVar4;
-  int iVar5;
+  int form_index;
   int *control_pointer;
-  int iVar6;
-  int control_image_index;
-  int iVar7;
+  int anim_index;
+  int frame_index;
+  int iVar5;
   
-  iVar5 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  if (iVar5 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_button__no_valid_w_0041ec13,s_buttons_cpp_0041ec07,0xbe);
   }
   hide_mouse();
@@ -15543,31 +15546,31 @@ void __watcall draw_button(tagDRAWITEMSTRUCT *drawitemstruct)
   if (uVar4 < 0x10) {
     if (uVar4 != 4) {
 LAB_00411836:
-      set_control_state(iVar5,0);
-      iVar6 = *control_pointer;
-      control_image_index = 0;
+      set_control_state(form_index,0);
+      anim_index = *control_pointer;
+      frame_index = 0;
       goto LAB_004117eb;
     }
-    set_control_state(iVar5,2);
-    control_image_index = 2;
+    set_control_state(form_index,2);
+    frame_index = 2;
   }
   else if (uVar4 < 0x11) {
-    set_control_state(iVar5,1);
-    control_image_index = 3;
+    set_control_state(form_index,1);
+    frame_index = 3;
   }
   else {
     if (uVar4 != 0x11) goto LAB_00411836;
-    set_control_state(iVar5,4);
-    control_image_index = 1;
+    set_control_state(form_index,4);
+    frame_index = 1;
   }
-  iVar6 = *control_pointer;
+  anim_index = *control_pointer;
 LAB_004117eb:
-  control_image_index = get_control_image_index(iVar6,control_image_index);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar5);
-  iVar5 = get_control_x(iVar5);
-  set_mem_image(0,control_image_index,iVar5 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + iVar6,iVar7
-               );
+  frame_index = get_control_image_index(anim_index,frame_index);
+  iVar5 = 1;
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,frame_index,form_index + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + anim_index,
+                iVar5);
   show_mouse();
   return;
 }
@@ -15659,47 +15662,47 @@ int __watcall check_togglebutton_hotkey(form_t *form,int param_2)
 
 /* ==== 004119ae get_togglebutton_togglestate ==== */
 
-int __watcall get_togglebutton_togglestate(int param_1)
+int __watcall get_togglebutton_togglestate(int form_index)
 
 {
   int iVar1;
   void *control_pointer_1;
   
-  if (-1 < param_1) {
+  if (-1 < form_index) {
     iVar1 = get_numberofcontrols_inform();
-    if (param_1 <= iVar1) goto LAB_004119d3;
+    if (form_index <= iVar1) goto LAB_004119d3;
   }
-  fatal_exit(s__s__d_____get_togglebutton_toggl_0041ec5d,s_tgglbuts_cpp_0041ec50,0x40,param_1);
+  fatal_exit(s__s__d_____get_togglebutton_toggl_0041ec5d,s_tgglbuts_cpp_0041ec50,0x40,form_index);
 LAB_004119d3:
-  iVar1 = get_control_type(param_1);
+  iVar1 = get_control_type(form_index);
   if (iVar1 != 2) {
-    fatal_exit(s__s__d_____get_togglebutton_toggl_0041ecaf,s_tgglbuts_cpp_0041eca2,0x45,param_1);
+    fatal_exit(s__s__d_____get_togglebutton_toggl_0041ecaf,s_tgglbuts_cpp_0041eca2,0x45,form_index);
   }
-  control_pointer_1 = get_control_pointer_1(param_1);
+  control_pointer_1 = get_control_pointer_1(form_index);
   return *(int *)((int)control_pointer_1 + 0xd);
 }
 
 
 /* ==== 00411a00 set_togglebutton_togglestate ==== */
 
-void __watcall set_togglebutton_togglestate(int param_1,int param_2)
+void __watcall set_togglebutton_togglestate(int form_index,int param_2)
 
 {
   int iVar1;
   int *control_pointer_1;
   
-  if (-1 < param_1) {
+  if (-1 < form_index) {
     iVar1 = get_numberofcontrols_inform();
-    if (param_1 <= iVar1) goto LAB_00411a29;
+    if (form_index <= iVar1) goto LAB_00411a29;
   }
-  fatal_exit(s__s__d_____set_togglebutton_toggl_0041ed08,s_tgglbuts_cpp_0041ecfb,0x56,param_1);
+  fatal_exit(s__s__d_____set_togglebutton_toggl_0041ed08,s_tgglbuts_cpp_0041ecfb,0x56,form_index);
 LAB_00411a29:
-  iVar1 = get_control_type(param_1);
+  iVar1 = get_control_type(form_index);
   if (iVar1 != 2) {
-    fatal_exit(s__s__d_____get_togglebutton_toggl_0041ed5a,s_tgglbuts_cpp_0041ed4d,0x5b,param_1);
+    fatal_exit(s__s__d_____get_togglebutton_toggl_0041ed5a,s_tgglbuts_cpp_0041ed4d,0x5b,form_index);
   }
-  control_pointer_1 = get_control_pointer_1(param_1);
-  iVar1 = (&xvga_anims->field_00)[*control_pointer_1 * 3] / 2;
+  control_pointer_1 = get_control_pointer_1(form_index);
+  iVar1 = xvga_anims[*control_pointer_1].frame_count / 2;
   if (iVar1 < param_2) {
     fatal_exit(s__s__d_____set_togglebutton_toggl_0041edb3,s_tgglbuts_cpp_0041eda6,0x62,iVar1);
   }
@@ -15723,7 +15726,7 @@ void __watcall destroy_togglebutton(form_t *form)
 
 /* ==== 00411aba create_togglebutton ==== */
 
-void __watcall create_togglebutton(form_t *form,int param_2)
+void __watcall create_togglebutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -15740,18 +15743,18 @@ void __watcall create_togglebutton(form_t *form,int param_2)
   if (piVar1[2] == -1) {
     piVar1[2] = *(int *)(control_image_index * 0x20 + 0xc + (int)xvga_mem_images);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
+  check_control_position(form_index,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_0041eeba,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
-                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[2],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_to_0041eec1,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_to_0041eec1,form_index);
   }
-  set_togglebutton_togglestate(param_2,*(int *)((int)piVar1 + 0xd));
+  set_togglebutton_togglestate(form_index,*(int *)((int)piVar1 + 0xd));
   old_togglebutton_windowproc = SetWindowLongA(form->hwnd,-4,0x411d2e);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -15764,20 +15767,20 @@ void __watcall draw_help_togglebutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,*(int *)((int)piVar1 + 0xd) * 2);
-  iVar5 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+  iVar4 = 1;
+  control_y = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
   return;
 }
 
@@ -15790,64 +15793,64 @@ void __watcall draw_togglebutton(tagDRAWITEMSTRUCT *drawitemstruct)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int *control_pointer;
-  uint uVar5;
-  int iVar6;
+  uint uVar4;
+  int anim_index;
   int j;
   uint i;
-  int iVar7;
+  int iVar5;
   
-  iVar4 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
   i = *(uint *)((int)control_pointer + 0xd);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  if (iVar4 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_togglebutton__no_v_0041eefe,s_tgglbuts_cpp_0041eef1,0xbd);
   }
   hide_mouse();
-  uVar5 = drawitemstruct->itemState;
+  uVar4 = drawitemstruct->itemState;
   j = i * 2;
-  if (uVar5 < 0x10) {
-    if (uVar5 == 4) {
-      set_control_state(iVar4,2);
+  if (uVar4 < 0x10) {
+    if (uVar4 == 4) {
+      set_control_state(form_index,2);
       goto LAB_00411cd0;
     }
   }
   else {
-    if (uVar5 < 0x11) {
-      set_control_state(iVar4,1);
+    if (uVar4 < 0x11) {
+      set_control_state(form_index,1);
       j = j + 1;
 LAB_00411cd0:
-      iVar6 = *control_pointer;
+      anim_index = *control_pointer;
       goto LAB_00411bf3;
     }
-    if (uVar5 == 0x11) {
-      set_control_state(iVar4,4);
-      uVar5 = (&xvga_anims->field_00)[*control_pointer * 3] / 2 - 1;
-      if (i == uVar5) {
-        i = i ^ uVar5;
+    if (uVar4 == 0x11) {
+      set_control_state(form_index,4);
+      uVar4 = xvga_anims[*control_pointer].frame_count / 2 - 1;
+      if (i == uVar4) {
+        i = i ^ uVar4;
       }
       else {
         i = i + 1;
       }
-      set_togglebutton_togglestate(iVar4,i);
-      iVar6 = *control_pointer;
+      set_togglebutton_togglestate(form_index,i);
+      anim_index = *control_pointer;
       j = i * 2 + 1;
       goto LAB_00411bf3;
     }
   }
-  set_control_state(iVar4,0);
-  iVar6 = *control_pointer;
+  set_control_state(form_index,0);
+  anim_index = *control_pointer;
   j = i * 2;
 LAB_00411bf3:
-  j = get_control_image_index(iVar6,j);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,j,(iVar2 - (iVar1 >> 0x1f) >> 1) + iVar4,iVar3 / 2 + iVar6,iVar7);
+  j = get_control_image_index(anim_index,j);
+  iVar5 = 1;
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,j,(iVar2 - (iVar1 >> 0x1f) >> 1) + form_index,iVar3 / 2 + anim_index,iVar5);
   show_mouse();
   return;
 }
@@ -15945,7 +15948,7 @@ void __watcall destroy_areabutton(form_t *form)
 
 /* ==== 00411eae create_areabutton ==== */
 
-void __watcall create_areabutton(form_t *form,int param_2)
+void __watcall create_areabutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -15971,20 +15974,20 @@ void __watcall create_areabutton(form_t *form,int param_2)
     if (piVar1[1] == -1) {
       piVar1[1] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
     }
-    check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+    check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
     set_mem_image(0,control_image_index,form->x + iVar2 / 2,form->y + iVar3 / 2,1);
   }
-  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+  check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar4 = CreateWindowExA(0,s_STATIC_0041efe4,(LPCSTR)0x0,0x50000000,form->x,form->y,*piVar1,
-                           piVar1[1],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[1],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar4;
   if (pHVar4 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ar_0041efeb,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ar_0041efeb,form_index);
   }
   old_areabutton_windowproc = SetWindowLongA(form->hwnd,-4,0x412091);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -16029,7 +16032,7 @@ long AreaButtonWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
 {
   SHORT SVar1;
   HWND pHVar2;
-  int control_index;
+  int form_index;
   bool bVar3;
   tagPAINTSTRUCT tStack_4c;
   
@@ -16070,8 +16073,8 @@ LAB_004120d8:
     else if (0x104 < param_2) {
       if (param_2 < 0x201) goto LAB_0041216d;
       if (param_2 < 0x202) {
-        control_index = get_control_index(param_1);
-        set_control_state(control_index,4);
+        form_index = get_control_index(param_1);
+        set_control_state(form_index,4);
         goto LAB_0041216d;
       }
       bVar3 = param_2 == 0x204;
@@ -16109,7 +16112,7 @@ void __watcall destroy_animbutton(form_t *form)
 
 /* ==== 004121d6 create_animbutton ==== */
 
-void __watcall create_animbutton(form_t *form,int param_2)
+void __watcall create_animbutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -16126,20 +16129,20 @@ void __watcall create_animbutton(form_t *form,int param_2)
   if (piVar1[5] == -1) {
     piVar1[5] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[4],piVar1[5]);
+  check_control_position(form_index,form->x,form->y,piVar1[4],piVar1[5]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_0041f0ac,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[4],
-                           piVar1[5],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[5],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_an_0041f0b3,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_an_0041f0b3,form_index);
   }
   old_animbutton_windowproc = SetWindowLongA(form->hwnd,-4,0x41269b);
   if (form->state == 4) {
     form->state = 1;
   }
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   form->field_14 = 0;
   return;
 }
@@ -16147,7 +16150,7 @@ void __watcall create_animbutton(form_t *form,int param_2)
 
 /* ==== 004122c0 draw_animation_animbutton ==== */
 
-void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int param_4)
+void __watcall draw_animation_animbutton(int anim_index,int form_index,int param_3,int param_4)
 
 {
   void *control_pointer_1;
@@ -16156,31 +16159,31 @@ void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int
   int iVar3;
   int iVar4;
   int control_x;
-  int j;
   int i;
+  int frame_index;
   int iVar5;
   
-  control_pointer_1 = get_control_pointer_1(param_2);
-  i = (&xvga_anims->field_00)[param_1 * 3];
+  control_pointer_1 = get_control_pointer_1(form_index);
+  frame_index = xvga_anims[anim_index].frame_count;
   iVar1 = *(int *)((int)control_pointer_1 + 0x10) / 2;
   iVar2 = *(int *)((int)control_pointer_1 + 0x14) / 2;
   if (((param_4 == 0) || ((uint)param_4 < 2)) || (param_4 != 2)) {
-    for (j = 0; j < i; j = j + 1) {
-      iVar3 = get_control_image_index(param_1,j);
+    for (i = 0; i < frame_index; i = i + 1) {
+      iVar3 = get_control_image_index(anim_index,i);
       iVar5 = 1;
-      iVar4 = get_control_y(param_2);
-      control_x = get_control_x(param_2);
+      iVar4 = get_control_y(form_index);
+      control_x = get_control_x(form_index);
       set_mem_image(0,iVar3,iVar1 + control_x,iVar2 + iVar4,iVar5);
       Sleep(param_3);
     }
   }
   else {
-    while (i = i + -1, -1 < i) {
-      j = get_control_image_index(param_1,i);
+    while (frame_index = frame_index + -1, -1 < frame_index) {
+      i = get_control_image_index(anim_index,frame_index);
       control_x = 1;
-      iVar3 = get_control_y(param_2);
-      iVar4 = get_control_x(param_2);
-      set_mem_image(0,j,iVar1 + iVar4,iVar2 + iVar3,control_x);
+      iVar3 = get_control_y(form_index);
+      iVar4 = get_control_x(form_index);
+      set_mem_image(0,i,iVar1 + iVar4,iVar2 + iVar3,control_x);
       Sleep(param_3);
     }
   }
@@ -16196,36 +16199,36 @@ void __watcall draw_help_animbutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
+  int form_index;
+  int anim_index;
   int iVar4;
-  int iVar5;
-  int iVar6;
   int control_x;
   uint control_state;
-  int iVar7;
+  int iVar5;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[4];
   iVar3 = piVar1[5];
-  iVar5 = get_control_image_index(*piVar1,(&xvga_anims->field_00)[*piVar1 * 3] + -1);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar4);
-  control_x = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar2 / 2 + control_x,iVar3 / 2 + iVar6,iVar7);
-  control_state = get_control_state(iVar4);
+  anim_index = get_control_image_index(*piVar1,xvga_anims[*piVar1].frame_count + -1);
+  iVar5 = 1;
+  iVar4 = get_control_y(form_index);
+  control_x = get_control_x(form_index);
+  set_mem_image(0,anim_index,iVar2 / 2 + control_x,iVar3 / 2 + iVar4,iVar5);
+  control_state = get_control_state(form_index);
   if ((control_state == 0) || ((1 < control_state && (control_state != 4)))) {
-    iVar6 = (&xvga_anims->field_00)[*piVar1 * 3];
-    iVar5 = *piVar1;
+    iVar4 = xvga_anims[*piVar1].frame_count;
+    anim_index = *piVar1;
   }
   else {
-    iVar6 = (&xvga_anims->field_00)[piVar1[3] * 3];
-    iVar5 = piVar1[3];
+    iVar4 = xvga_anims[piVar1[3]].frame_count;
+    anim_index = piVar1[3];
   }
-  iVar5 = get_control_image_index(iVar5,iVar6 + -1);
+  anim_index = get_control_image_index(anim_index,iVar4 + -1);
   control_x = 1;
-  iVar6 = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar2 / 2 + iVar4,iVar3 / 2 + iVar6,control_x);
+  iVar4 = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,anim_index,iVar2 / 2 + form_index,iVar3 / 2 + iVar4,control_x);
   return;
 }
 
@@ -16236,94 +16239,95 @@ void __watcall draw_animbutton(tagDRAWITEMSTRUCT *drawitemstruct)
 
 {
   uint uVar1;
-  int iVar2;
+  int form_index;
   int *control_pointer;
+  int anim_index;
+  int iVar2;
   int iVar3;
+  int anim_index_2;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
   
-  iVar2 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
-  iVar5 = control_pointer[4];
   iVar3 = control_pointer[4];
-  iVar7 = control_pointer[5];
-  if (iVar2 == -1) {
+  anim_index = control_pointer[4];
+  iVar4 = control_pointer[5];
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_animbutton__no_va_0041f0ee,s_animbuts_cpp_0041f0e1,0xb6);
   }
   hide_mouse();
   uVar1 = drawitemstruct->itemState;
   if (uVar1 < 0x10) {
     if (uVar1 == 4) {
-      iVar5 = get_old_control_state(iVar2);
-      if (iVar5 == 2) goto LAB_00412492;
-      set_control_state(iVar2,2);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[2];
+      iVar3 = get_old_control_state(form_index);
+      if (iVar3 == 2) goto LAB_00412492;
+      set_control_state(form_index,2);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[2];
       goto LAB_00412548;
     }
 LAB_00412687:
-    iVar6 = get_control_state(iVar2);
-    switch(iVar6) {
+    anim_index_2 = get_control_state(form_index);
+    switch(anim_index_2) {
     case 0:
-      iVar5 = get_old_control_state(iVar2);
-      if (iVar5 != 0) goto LAB_00412492;
-      iVar7 = 1;
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = *control_pointer;
+      iVar3 = get_old_control_state(form_index);
+      if (iVar3 != 0) goto LAB_00412492;
+      iVar4 = 1;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = *control_pointer;
       break;
     case 1:
     case 4:
-      set_control_state(iVar2,0);
-      iVar6 = *control_pointer;
-      iVar4 = (&xvga_anims->field_00)[iVar6 * 3];
+      set_control_state(form_index,0);
+      anim_index_2 = *control_pointer;
+      iVar2 = xvga_anims[anim_index_2].frame_count;
 LAB_00412580:
-      iVar6 = get_control_image_index(iVar6,iVar4 + -1);
-      iVar8 = 1;
-      iVar4 = get_control_y(iVar2);
-      iVar2 = get_control_x(iVar2);
-      set_mem_image(0,iVar6,(iVar3 - (iVar5 >> 0x1f) >> 1) + iVar2,iVar4 + iVar7 / 2,iVar8);
+      anim_index_2 = get_control_image_index(anim_index_2,iVar2 + -1);
+      iVar5 = 1;
+      iVar2 = get_control_y(form_index);
+      form_index = get_control_x(form_index);
+      set_mem_image(0,anim_index_2,(anim_index - (iVar3 >> 0x1f) >> 1) + form_index,
+                    iVar2 + iVar4 / 2,iVar5);
       goto LAB_00412492;
     case 2:
-      iVar7 = 2;
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[2];
+      iVar4 = 2;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[2];
       break;
     default:
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = *control_pointer;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = *control_pointer;
       goto LAB_00412548;
     }
   }
   else {
     if (uVar1 < 0x11) {
-      iVar6 = get_control_state(iVar2);
-      if (iVar6 == 4) {
-        set_control_state(iVar2,1);
-        iVar4 = (&xvga_anims->field_00)[control_pointer[3] * 3];
-        iVar6 = control_pointer[3];
+      anim_index_2 = get_control_state(form_index);
+      if (anim_index_2 == 4) {
+        set_control_state(form_index,1);
+        iVar2 = xvga_anims[control_pointer[3]].frame_count;
+        anim_index_2 = control_pointer[3];
         goto LAB_00412580;
       }
-      iVar7 = 1;
-      set_control_state(iVar2,1);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[3];
+      iVar4 = 1;
+      set_control_state(form_index,1);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[3];
       goto LAB_0041254c;
     }
     if (uVar1 != 0x11) goto LAB_00412687;
-    set_control_state(iVar2,4);
-    iVar5 = control_pointer[6];
-    iVar3 = control_pointer[1];
+    set_control_state(form_index,4);
+    iVar3 = control_pointer[6];
+    anim_index = control_pointer[1];
 LAB_00412548:
-    iVar7 = 1;
+    iVar4 = 1;
   }
 LAB_0041254c:
-  draw_animation_animbutton(iVar3,iVar2,iVar5,iVar7);
+  draw_animation_animbutton(anim_index,form_index,iVar3,iVar4);
 LAB_00412492:
   show_mouse();
   return;
@@ -16336,7 +16340,7 @@ long AnimButtonWindowProc(void *param_1,uint param_2,uint param_3,long drawitems
 
 {
   SHORT SVar1;
-  int control_index;
+  int form_index;
   HWND pHVar2;
   
   if (param_2 < 0x100) {
@@ -16377,8 +16381,8 @@ long AnimButtonWindowProc(void *param_1,uint param_2,uint param_3,long drawitems
       }
       else if (0x200 < param_2) {
         if (param_2 < 0x202) {
-          control_index = get_control_index(param_1);
-          set_control_state(control_index,4);
+          form_index = get_control_index(param_1);
+          set_control_state(form_index,4);
         }
         else if (param_2 == 0x204) {
           return 1;
@@ -16427,7 +16431,7 @@ void __watcall destroy_radiobutton(form_t *form)
 
 /* ==== 00412842 create_radiobutton ==== */
 
-void __watcall create_radiobutton(form_t *form,int param_2)
+void __watcall create_radiobutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -16444,21 +16448,21 @@ void __watcall create_radiobutton(form_t *form,int param_2)
   if (piVar1[2] == -1) {
     piVar1[2] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  if ((&xvga_anims->field_00)[*piVar1 * 3] < 5) {
+  if (xvga_anims[*piVar1].frame_count < 5) {
     fatal_exit(s__s__d_____create_radiobutton__no_0041f182,s_radiobut_cpp_0041f175,0x58,
-               (&xvga_anims->field_00)[*piVar1 * 3]);
+               xvga_anims[*piVar1].frame_count);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
+  check_control_position(form_index,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_0041f1d3,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
-                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[2],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ra_0041f1da,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ra_0041f1da,form_index);
   }
   old_radiobutton_windowproc = SetWindowLongA(form->hwnd,-4,0x412b8f);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   *(int *)((int)piVar1 + 0xd) = form->state;
   return;
 }
@@ -16466,34 +16470,34 @@ void __watcall create_radiobutton(form_t *form,int param_2)
 
 /* ==== 0041294c unselect_radiobutton ==== */
 
-void __watcall unselect_radiobutton(int param_1)
+void __watcall unselect_radiobutton(int form_index_2)
 
 {
-  int previous_control_index;
+  int form_index;
   void *control_pointer_1;
   
-  previous_control_index = param_1;
+  form_index = form_index_2;
   do {
-    previous_control_index = get_previous_control_index(previous_control_index,6);
-    if (previous_control_index == -1) goto LAB_0041299c;
-    control_pointer_1 = get_control_pointer_1(previous_control_index);
+    form_index = get_previous_control_index(form_index,6);
+    if (form_index == -1) goto LAB_0041299c;
+    control_pointer_1 = get_control_pointer_1(form_index);
   } while (*(int *)((int)control_pointer_1 + 0xd) != 4);
   *(undefined4 *)((int)control_pointer_1 + 0xd) = 0;
-  dis_2.hwndItem = get_control_hwnd(previous_control_index);
+  dis_2.hwndItem = get_control_hwnd(form_index);
 LAB_004129e0:
   dis_2.itemState = 0;
   SendMessageA(dis_2.hwndItem,0x2b,0,0x421c54);
   return;
 LAB_0041299c:
   do {
-    param_1 = get_next_control_index(param_1,6);
-    if (param_1 == -1) {
+    form_index_2 = get_next_control_index(form_index_2,6);
+    if (form_index_2 == -1) {
       return;
     }
-    control_pointer_1 = get_control_pointer_1(param_1);
+    control_pointer_1 = get_control_pointer_1(form_index_2);
   } while (*(int *)((int)control_pointer_1 + 0xd) != 4);
   *(undefined4 *)((int)control_pointer_1 + 0xd) = 0;
-  dis_2.hwndItem = get_control_hwnd(param_1);
+  dis_2.hwndItem = get_control_hwnd(form_index_2);
   goto LAB_004129e0;
 }
 
@@ -16506,20 +16510,20 @@ void __watcall draw_help_radiobutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,0);
-  iVar5 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+  iVar4 = 1;
+  control_y = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
   return;
 }
 
@@ -16531,66 +16535,66 @@ void __watcall draw_radiobutton(tagDRAWITEMSTRUCT *drawitemstruct)
 {
   int iVar1;
   uint uVar2;
-  int iVar3;
+  int form_index;
   int *control_pointer;
-  int iVar4;
-  int control_image_index;
-  int iVar5;
+  int iVar3;
+  int frame_index;
+  int anim_index;
   int control_x;
-  int iVar6;
+  int iVar4;
   
-  iVar3 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
-  iVar4 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
+  iVar3 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
   iVar1 = control_pointer[2];
-  if (iVar3 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_radiobutton__no_v_0041f216,s_radiobut_cpp_0041f209,0xc4);
   }
   hide_mouse();
   uVar2 = drawitemstruct->itemState;
   if (uVar2 < 0x10) {
     if (uVar2 != 4) goto LAB_00412b6e;
-    set_control_state(iVar3,2);
-    control_image_index = 4;
+    set_control_state(form_index,2);
+    frame_index = 4;
 LAB_00412b22:
-    iVar5 = *control_pointer;
+    anim_index = *control_pointer;
   }
   else {
     if (uVar2 < 0x11) {
-      set_control_state(iVar3,1);
+      set_control_state(form_index,1);
       if (*(int *)((int)control_pointer + 0xd) == 4) {
-        control_image_index = 3;
+        frame_index = 3;
       }
       else {
-        control_image_index = 1;
+        frame_index = 1;
       }
       goto LAB_00412b22;
     }
     if (uVar2 == 0x11) {
-      set_control_state(iVar3,4);
+      set_control_state(form_index,4);
       *(undefined4 *)((int)control_pointer + 0xd) = 4;
-      control_image_index = get_control_image_index(*control_pointer,3);
-      iVar6 = 1;
-      iVar5 = get_control_y(iVar3);
-      control_x = get_control_x(iVar3);
-      set_mem_image(0,control_image_index,control_x + iVar4,iVar1 / 2 + iVar5,iVar6);
-      unselect_radiobutton(iVar3);
+      frame_index = get_control_image_index(*control_pointer,3);
+      iVar4 = 1;
+      anim_index = get_control_y(form_index);
+      control_x = get_control_x(form_index);
+      set_mem_image(0,frame_index,control_x + iVar3,iVar1 / 2 + anim_index,iVar4);
+      unselect_radiobutton(form_index);
       goto LAB_00412b84;
     }
 LAB_00412b6e:
-    set_control_state(iVar3,0);
+    set_control_state(form_index,0);
     if (*(int *)((int)control_pointer + 0xd) == 4) {
-      control_image_index = 2;
+      frame_index = 2;
       goto LAB_00412b22;
     }
-    iVar5 = *control_pointer;
-    control_image_index = 0;
+    anim_index = *control_pointer;
+    frame_index = 0;
   }
-  control_image_index = get_control_image_index(iVar5,control_image_index);
+  frame_index = get_control_image_index(anim_index,frame_index);
   control_x = 1;
-  iVar5 = get_control_y(iVar3);
-  iVar3 = get_control_x(iVar3);
-  set_mem_image(0,control_image_index,iVar3 + iVar4,iVar1 / 2 + iVar5,control_x);
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,frame_index,form_index + iVar3,iVar1 / 2 + anim_index,control_x);
 LAB_00412b84:
   show_mouse();
   return;
@@ -17222,7 +17226,7 @@ int __watcall get_string_width(char *param_1,int param_2)
   HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_18);
   if (HVar1 == 0) {
     if (xvga_font_set != 0) {
-      SelectObject(local_18,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SelectObject(local_18,xvga_fonts[xvga_font_index * 4].field_00);
     }
     GetTextExtentPoint32A(local_18,param_1,param_2,&size);
     (*xvga_screen->lpVtbl->ReleaseDC)(xvga_screen,local_18);
@@ -17246,7 +17250,7 @@ int __watcall get_string_height(char *param_1,int param_2)
   HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_18);
   if (HVar1 == 0) {
     if (xvga_font_set != 0) {
-      SelectObject(local_18,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SelectObject(local_18,xvga_fonts[xvga_font_index * 4].field_00);
     }
     GetTextExtentPoint32A(local_18,param_1,param_2,&size);
     (*xvga_screen->lpVtbl->ReleaseDC)(xvga_screen,local_18);
@@ -17274,12 +17278,12 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
   tagRECT tStack_68;
   tagRECT tStack_58;
   tagRECT tStack_48;
+  tagSIZE size;
   tagSIZE size_2;
   tagSIZE size_3;
-  tagSIZE size_4;
   undefined1 *local_20;
   HDC local_1c;
-  tagSIZE *size;
+  tagSIZE *size_4;
   
   local_20 = &stack0x00000014;
   vsprintf((int)aCStack_1f8,(byte *)param_4,(int *)&local_20);
@@ -17300,14 +17304,14 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       This = xvga_screen;
     }
     else {
-      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(local_1c,*(COLORREF *)(&DAT_00420228 + xvga_font_index * 0x10));
-      SetBkColor(local_1c,*(COLORREF *)(&DAT_00420224 + xvga_font_index * 0x10));
-      SetBkMode(local_1c,*(int *)(&DAT_00420220 + xvga_font_index * 0x10));
-      size = &size_2;
+      SelectObject(local_1c,xvga_fonts[xvga_font_index * 4].field_00);
+      SetTextColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 3].field_00);
+      SetBkColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 2].field_00);
+      SetBkMode(local_1c,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+      size_4 = &size;
       iVar2 = lstrlenA(aCStack_1f8);
-      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
-      SetRect(&tStack_48,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
+      SetRect(&tStack_48,param_2,param_3,size.cx + param_2,size.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_48,aCStack_1f8,UVar3,pIVar4);
@@ -17330,14 +17334,14 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       This = xvga_back_screen;
     }
     else {
-      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(local_1c,*(COLORREF *)(&DAT_00420228 + xvga_font_index * 0x10));
-      SetBkColor(local_1c,*(COLORREF *)(&DAT_00420224 + xvga_font_index * 0x10));
-      SetBkMode(local_1c,*(int *)(&DAT_00420220 + xvga_font_index * 0x10));
-      size = &size_4;
+      SelectObject(local_1c,xvga_fonts[xvga_font_index * 4].field_00);
+      SetTextColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 3].field_00);
+      SetBkColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 2].field_00);
+      SetBkMode(local_1c,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+      size_4 = &size_3;
       iVar2 = lstrlenA(aCStack_1f8);
-      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
-      SetRect(&tStack_58,param_2,param_3,size_4.cx + param_2,size_4.cy + param_3);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
+      SetRect(&tStack_58,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_58,aCStack_1f8,UVar3,pIVar4);
@@ -17364,14 +17368,14 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       This = xvga_buffer_screen;
     }
     else {
-      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(local_1c,*(COLORREF *)(&DAT_00420228 + xvga_font_index * 0x10));
-      SetBkColor(local_1c,*(COLORREF *)(&DAT_00420224 + xvga_font_index * 0x10));
-      SetBkMode(local_1c,*(int *)(&DAT_00420220 + xvga_font_index * 0x10));
-      size = &size_3;
+      SelectObject(local_1c,xvga_fonts[xvga_font_index * 4].field_00);
+      SetTextColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 3].field_00);
+      SetBkColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 2].field_00);
+      SetBkMode(local_1c,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+      size_4 = &size_2;
       iVar2 = lstrlenA(aCStack_1f8);
-      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
-      SetRect(&tStack_68,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
+      SetRect(&tStack_68,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_68,aCStack_1f8,UVar3,pIVar4);
@@ -17400,10 +17404,10 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
   tagRECT tStack_58;
   tagRECT tStack_48;
   tagRECT tStack_38;
-  tagSIZE size_2;
+  tagSIZE size;
   HDC local_20;
   undefined1 *local_1c;
-  tagSIZE *size;
+  tagSIZE *size_2;
   
   local_1c = &stack0x0000001c;
   vsprintf((int)aCStack_1e8,(byte *)param_6,(int *)&local_1c);
@@ -17421,14 +17425,14 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         TextOutA(local_20,param_2,param_3,aCStack_1e8,iVar2);
       }
       else {
-        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SelectObject(local_20,xvga_fonts[xvga_font_index * 4].field_00);
         SetTextColor(local_20,param_5);
         SetBkColor(local_20,param_4);
-        SetBkMode(local_20,*(int *)(&DAT_00420220 + xvga_font_index * 0x10));
-        size = &size_2;
+        SetBkMode(local_20,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+        size_2 = &size;
         iVar2 = lstrlenA(aCStack_1e8);
-        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
-        SetRect(&tStack_48,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size_2);
+        SetRect(&tStack_48,param_2,param_3,size.cx + param_2,size.cy + param_3);
         pIVar4 = (INT *)0x0;
         UVar3 = lstrlenA(aCStack_1e8);
         ExtTextOutA(local_20,param_2,param_3,0,&tStack_48,aCStack_1e8,UVar3,pIVar4);
@@ -17453,14 +17457,14 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         This = xvga_back_screen;
       }
       else {
-        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SelectObject(local_20,xvga_fonts[xvga_font_index * 4].field_00);
         SetTextColor(local_20,param_5);
         SetBkColor(local_20,param_4);
-        SetBkMode(local_20,*(int *)(&DAT_00420220 + xvga_font_index * 0x10));
-        size = &size_2;
+        SetBkMode(local_20,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+        size_2 = &size;
         iVar2 = lstrlenA(aCStack_1e8);
-        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
-        SetRect(&tStack_38,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size_2);
+        SetRect(&tStack_38,param_2,param_3,size.cx + param_2,size.cy + param_3);
         pIVar4 = (INT *)0x0;
         UVar3 = lstrlenA(aCStack_1e8);
         ExtTextOutA(local_20,param_2,param_3,0,&tStack_38,aCStack_1e8,UVar3,pIVar4);
@@ -17487,14 +17491,14 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         This = xvga_buffer_screen;
       }
       else {
-        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SelectObject(local_20,xvga_fonts[xvga_font_index * 4].field_00);
         SetTextColor(local_20,param_5);
         SetBkColor(local_20,param_4);
-        SetBkMode(local_20,*(int *)(&DAT_00420220 + xvga_font_index * 0x10));
-        size = &size_2;
+        SetBkMode(local_20,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+        size_2 = &size;
         iVar2 = lstrlenA(aCStack_1e8);
-        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
-        SetRect(&tStack_58,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size_2);
+        SetRect(&tStack_58,param_2,param_3,size.cx + param_2,size.cy + param_3);
         pIVar4 = (INT *)0x0;
         UVar3 = lstrlenA(aCStack_1e8);
         ExtTextOutA(local_20,param_2,param_3,0,&tStack_58,aCStack_1e8,UVar3,pIVar4);
@@ -17534,11 +17538,11 @@ int __watcall xvga_load_font(int param_1,char *param_2,int param_3,int param_4,i
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0041f335,s_font_cpp_0041f32c,0x131,5);
   }
-  if ((&xvga_fonts)[param_1 * 4] != 0) {
+  if (xvga_fonts[param_1 * 4].field_00 != (HGDIOBJ)0x0) {
     fatal_exit(s__s__d____Font_index_already_in_u_0041f36c,s_font_cpp_0041f363,0x136,param_1);
   }
   pHVar1 = CreateFontA(param_3,0,0,0,400,param_4,param_5,0,0,0,0,0,2,param_2);
-  (&xvga_fonts)[param_1 * 4] = pHVar1;
+  xvga_fonts[param_1 * 4].field_00 = pHVar1;
   if (pHVar1 == (HFONT)0x0) {
     return 10000;
   }
@@ -17554,7 +17558,7 @@ int __watcall xvga_select_font(int param_1)
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0041f3a0,s_font_cpp_0041f397,0x14e,5);
   }
-  if ((&xvga_fonts)[param_1 * 4] == 0) {
+  if (xvga_fonts[param_1 * 4].field_00 == (HGDIOBJ)0x0) {
     fatal_exit(s__s__d____Font_is_not_loaded___d__0041f3d7,s_font_cpp_0041f3ce,0x153,param_1);
   }
   xvga_font_index = param_1;
@@ -17571,8 +17575,8 @@ void __watcall xvga_set_font_colors(int param_1,ulong param_2,ulong param_3)
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0041f404,s_font_cpp_0041f3fb,0x163,5);
   }
-  *(ulong *)(&DAT_00420224 + param_1 * 0x10) = param_2;
-  *(ulong *)(&DAT_00420228 + param_1 * 0x10) = param_3;
+  xvga_fonts[param_1 * 4 + 2].field_00 = (HGDIOBJ)param_2;
+  xvga_fonts[param_1 * 4 + 3].field_00 = (HGDIOBJ)param_3;
   return;
 }
 
@@ -17587,11 +17591,11 @@ void __watcall xvga_set_font_bkmode(int param_1,int param_2)
   }
   if (param_2 != 0) {
     if ((uint)param_2 < 2) {
-      *(undefined4 *)(&DAT_00420220 + param_1 * 0x10) = 1;
+      xvga_fonts[param_1 * 4 + 1].field_00 = (HGDIOBJ)0x1;
       return;
     }
     if (param_2 == 2) {
-      *(undefined4 *)(&DAT_00420220 + param_1 * 0x10) = 2;
+      xvga_fonts[param_1 * 4 + 1].field_00 = (HGDIOBJ)0x2;
       return;
     }
   }
@@ -17608,13 +17612,13 @@ void __watcall xvga_free_font(int param_1)
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0041f49d,s_font_cpp_0041f494,0x189,5);
   }
-  if ((&xvga_fonts)[param_1 * 4] != 0) {
+  if (xvga_fonts[param_1 * 4].field_00 != (HGDIOBJ)0x0) {
     if (param_1 == xvga_font_index) {
       xvga_font_set = 0;
       xvga_font_index = -1;
     }
-    DeleteObject((HGDIOBJ)(&xvga_fonts)[param_1 * 4]);
-    (&xvga_fonts)[param_1 * 4] = 0;
+    DeleteObject(xvga_fonts[param_1 * 4].field_00);
+    xvga_fonts[param_1 * 4].field_00 = (HGDIOBJ)0x0;
   }
   return;
 }
@@ -17625,13 +17629,15 @@ void __watcall xvga_free_font(int param_1)
 void __watcall xvga_release_fonts(void)
 
 {
+  HGDIOBJ ho;
   int iVar1;
   
   iVar1 = 0;
   do {
-    if (*(HGDIOBJ *)((int)&xvga_fonts + iVar1) != (HGDIOBJ)0x0) {
-      DeleteObject(*(HGDIOBJ *)((int)&xvga_fonts + iVar1));
-      *(undefined4 *)((int)&xvga_fonts + iVar1) = 0;
+    ho = *(HGDIOBJ *)((int)&xvga_fonts[0].field_00 + iVar1);
+    if (ho != (HGDIOBJ)0x0) {
+      DeleteObject(ho);
+      *(undefined4 *)((int)&xvga_fonts[0].field_00 + iVar1) = 0;
     }
     iVar1 = iVar1 + 0x10;
   } while (iVar1 != 0x50);
@@ -17647,7 +17653,7 @@ void * __watcall xvga_get_active_font(void)
 
 {
   if (xvga_font_index != -1) {
-    return (void *)(&xvga_fonts)[xvga_font_index * 4];
+    return xvga_fonts[xvga_font_index * 4].field_00;
   }
   return (void *)0x0;
 }
@@ -17667,7 +17673,7 @@ int __watcall get_free_font_index(void)
     if (0x4f < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&xvga_fonts + iVar1) == 0) break;
+    if (*(int *)((int)&xvga_fonts[0].field_00 + iVar1) == 0) break;
     iVar1 = iVar1 + 0x10;
     i = i + 1;
   }
@@ -17795,21 +17801,22 @@ uint __watcall do_getch(HANDLE console_input)
   _INPUT_RECORD input_record;
   DWORD local_14;
   
-  if (DAT_0042029c != 0) {
-    if (DAT_0042029c < 2) {
+  if (xvga_fonts[0x20].field_00 != (HGDIOBJ)0x0) {
+    if (xvga_fonts[0x20].field_00 <= &DAT_00000001) {
       DAT_00421c94 = DAT_00421c94 + -1;
       if (DAT_00421c90 == 0) {
-        DAT_0042029c = 2;
+        xvga_fonts[0x20] = (font_t)0x2;
         return 0;
       }
       if (DAT_00421c94 != 0) {
         return DAT_00421c90;
       }
-      DAT_0042029c = 0;
+      xvga_fonts[0x20] = (font_t)0x0;
       return DAT_00421c90;
     }
-    if (DAT_0042029c == 2) {
-      DAT_0042029c = (uint)(DAT_00421c94 != 0);
+    if (xvga_fonts[0x20].field_00 == (HGDIOBJ)0x2) {
+      xvga_fonts[0x20].field_00._1_3_ = 0;
+      xvga_fonts[0x20].field_00._0_1_ = DAT_00421c94 != 0;
       return DAT_00421c8c;
     }
   }
@@ -17823,13 +17830,13 @@ uint __watcall do_getch(HANDLE console_input)
   DAT_00421c90 = (uint)(byte)input_record.Event.MouseEvent.dwControlKeyState._2_1_;
   if (((input_record.Event.KeyEvent.dwControlKeyState._1_1_ & 1) == 0) && (DAT_00421c90 != 0)) {
     if (input_record.Event.KeyEvent.wRepeatCount - 1 != 0) {
-      DAT_0042029c = 1;
+      xvga_fonts[0x20].field_00 = &DAT_00000001;
     }
   }
   else {
     DAT_00421c8c = (uint)input_record.Event.KeyEvent.wVirtualScanCode;
     DAT_00421c90 = 0;
-    DAT_0042029c = 2;
+    xvga_fonts[0x20].field_00 = (HGDIOBJ)0x2;
   }
   DAT_00421c94 = input_record.Event.KeyEvent.wRepeatCount - 1;
   return DAT_00421c90;

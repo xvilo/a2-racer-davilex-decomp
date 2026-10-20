@@ -669,8 +669,8 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00457634	data	HugeValue			?		__HugeValue	reference
 0045763c	data	Msgs			?		_Msgs	reference
 00457678	data	BigPow10Table			?		__BigPow10Table	reference
-00458a54	data	anims			?		W?anims$n[]$anim_t$$	reference
-004591b4	data	ini_filename			?		W?ini_filename$n[]a	reference
+00458a54	data	anims			?	anim_t[]	W?anims$n[]$anim_t$$	reference
+004591b4	data	ini_filename			?	char[]	W?ini_filename$n[]a	reference
 004592e0	data	xvga_screen_mode			?	int	W?xvga_screen_mode$ni	reference
 004592e4	data	xvga_screen_xsize			?	int	W?xvga_screen_xsize$ni	reference
 004592e8	data	xvga_screen_ysize			?	int	W?xvga_screen_ysize$ni	reference
@@ -678,9 +678,9 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004592f0	data	xvga_coop_level			?	int	W?xvga_coop_level$ni	reference
 004592f4	data	xvga_back_buffers			?	int	W?xvga_back_buffers$ni	reference
 004592f8	data	xvga_dd_guid			?	int	W?xvga_dd_guid$ni	reference
-004592fc	data	xvga_screen_modes			?		W?xvga_screen_modes$n[]$screen_mode_t$$	reference
+004592fc	data	xvga_screen_modes			?	screen_mode_t[]	W?xvga_screen_modes$n[]$screen_mode_t$$	reference
 00459464	data	debugmsg_toggle			?	int	W?debugmsg_toggle$ni	reference
-00459468	data	fatal_exit__mb_flags			?		W?$Wsi0dmb_flags$n[]i$:.0$:?fatal_exit$n(pnae)inx[]i	reference
+00459468	data	fatal_exit__mb_flags			?	int[]	W?$Wsi0dmb_flags$n[]i$:.0$:?fatal_exit$n(pnae)inx[]i	reference
 00459484	data	joysticksencesibility			?	double	W?joysticksencesibility$nd	reference
 0045948c	data	mouse_show			?	int	W?mouse_show$ni	reference
 00459490	data	mouse_old_xpos			?	int	W?mouse_old_xpos$ni	reference
@@ -688,20 +688,20 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004594a4	data	mouse_anim			?	int	W?mouse_anim$ni	reference
 004594a8	data	mouse_frame			?	int	W?mouse_frame$ni	reference
 004594ac	data	mouse_type			?	int	W?mouse_type$ni	reference
-004594b0	data	sound_modes			?		W?sound_modes$n[]$sound_mode_t$$	reference
+004594b0	data	sound_modes			?	sound_mode_t[]	W?sound_modes$n[]$sound_mode_t$$	reference
 00459590	data	sb16_driver_index			?	int	W?sb16_driver_index$ni	reference
 00459594	data	secondary_driver_index			?	int	W?secondary_driver_index$ni	reference
 004596c0	data	8087			?		__8087	reference
 004596c1	data	real87			?		__real87	reference
 00459704	data	xvga_font_index			?	int	W?xvga_font_index$ni	reference
-00459708	data	xvga_fonts			?		W?xvga_fonts$n[]$__3etm0cfont_t$$	reference
+00459708	data	xvga_fonts			?	font_t[]	W?xvga_fonts$n[]$__3etm0cfont_t$$	reference
 00459788	data	max_anim_ptr			?	int	W?max_anim_ptr$ni	reference
 0045978c	data	max_mem_image_ptr			?	int	W?max_mem_image_ptr$ni	reference
 00459790	data	mem_image_color_key			?	_DDCOLORKEY	W?mem_image_color_key$n$_DDCOLORKEY$$	reference
 0045979c	data	sys_errlist			?		_sys_errlist	reference
 004597dc	data	wint_pure_error_flag			?		__wint_pure_error_flag	reference
-004597e4	data	grid			?		W?grid$n[]uc	reference
-0045982c	data	help_stop_keys			?		W?help_stop_keys$n[]i	reference
+004597e4	data	grid			?	uchar[]	W?grid$n[]uc	reference
+0045982c	data	help_stop_keys			?	int[]	W?help_stop_keys$n[]i	reference
 00459860	data	atexit			?		___atexit	reference
 00459864	data	int23_exit			?		___int23_exit	reference
 00459868	data	FPE_handler_exit			?		___FPE_handler_exit	reference
@@ -788,14 +788,14 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00459ebc	data	console_out			?		_console_out	reference
 00459ec0	data	RWD_matherr			?		__RWD_matherr	reference
 00459ec4	data	heap_enabled			?		___heap_enabled	reference
-00459ec8	data	EditWindowProc__key			?		W?$Wsi08key$n[]a$:.0$:?EditWindowProc$n(pnvuiuil)lnx[]a	reference
+00459ec8	data	EditWindowProc__key			?	char[]	W?$Wsi08key$n[]a$:.0$:?EditWindowProc$n(pnvuiuil)lnx[]a	reference
 00459ecc	data	BeginThread			?		___BeginThread	reference
 00459ed0	data	EndThread			?		___EndThread	reference
 00459ed4	data	InitThread			?		___InitThread	reference
 00459f20	data	IID_IDirectSound3DBuffer			?		_IID_IDirectSound3DBuffer	reference
 00459f30	data	IID_IDirectSound3DListener			?		_IID_IDirectSound3DListener	reference
 00459f40	data	GUID_SysKeyboard			?		_GUID_SysKeyboard	reference
-00473050	data	buffer1			?		W?buffer1$n[]a	reference
+00473050	data	buffer1			?	char[]	W?buffer1$n[]a	reference
 004731e0	data	init_anims_ok			?	int	W?init_anims_ok$ni	reference
 004759d0	data	infio			?	infio_t	W?infio$n$infio_t$$	reference
 00475f18	data	ini_file_init_ok			?	int	W?ini_file_init_ok$ni	reference
@@ -819,9 +819,9 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00475f64	data	xvga_allowmodex			?	int	W?xvga_allowmodex$ni	reference
 00475f68	data	debugmsg_channel			?	int	W?debugmsg_channel$ni	reference
 00475f70	data	joystickinfo			?	joyinfoex_tag	W?joystickinfo$n$joyinfoex_tag$$	reference
-00475fa4	data	joystickstate			?		W?joystickstate$n[]$__ajdnjjoystickstate_t$$	reference
+00475fa4	data	joystickstate			?	joystickstate_t[]	W?joystickstate$n[]$__ajdnjjoystickstate_t$$	reference
 004760b8	data	cd_directory			?	char*	W?cd_directory$npna	reference
-004760bc	data	cd_drive			?		W?cd_drive$n[]a	reference
+004760bc	data	cd_drive			?	char[]	W?cd_drive$n[]a	reference
 004760c0	data	res_fp			?	__iobuf*	W?res_fp$npn$__iobuf$$	reference
 004760c4	data	data_fp			?	__iobuf*	W?data_fp$npn$__iobuf$$	reference
 004760c8	data	file_begin_pos			?	long	W?file_begin_pos$nl	reference
@@ -882,7 +882,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00477100	data	xvga_sprites			?	sprite_t*	W?xvga_sprites$npn$sprite_t$$	reference
 00477104	data	max_sprite_ptr			?	int	W?max_sprite_ptr$ni	reference
 00477108	data	init_sprites_ok			?	int	W?init_sprites_ok$ni	reference
-0047710c	data	anim_base			?		W?anim_base$n[]l	reference
+0047710c	data	anim_base			?	long[]	W?anim_base$n[]l	reference
 00480d4c	data	anim_base_ptr			?	long	W?anim_base_ptr$nl	reference
 00480d50	data	reset_anim_base_ok			?	char	W?reset_anim_base_ok$na	reference
 00480d58	data	clip_limit_set			?	int	W?clip_limit_set$ni	reference
@@ -897,7 +897,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00480d9c	data	xvga_init_input_ok			?	int	W?xvga_init_input_ok$ni	reference
 00480da0	data	xvga_init_keyboard_ok			?	int	W?xvga_init_keyboard_ok$ni	reference
 00480da4	data	xvga_init_mouse_ok			?	int	W?xvga_init_mouse_ok$ni	reference
-00480da8	data	xvga_keyboard_state			?		W?xvga_keyboard_state$n[]uc	reference
+00480da8	data	xvga_keyboard_state			?	uchar[]	W?xvga_keyboard_state$n[]uc	reference
 00480ea8	data	xvga_timer_ptr			?	xvga_timer_t*	W?xvga_timer_ptr$npn$xvga_timer_t$$	reference
 00480eac	data	xvga_max_timers			?	int	W?xvga_max_timers$ni	reference
 00480eb0	data	xvga_timer_init_ok			?	int	W?xvga_timer_init_ok$ni	reference
@@ -909,8 +909,8 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00480ec8	data	xvga_phys_mem			?	int	W?xvga_phys_mem$ni	reference
 00480ecc	data	xvga_phys_mem_free			?	int	W?xvga_phys_mem_free$ni	reference
 00480ed0	data	xvga_mem_usage			?	int	W?xvga_mem_usage$ni	reference
-00480ed4	data	xvga_computer_name			?		W?xvga_computer_name$n[]uc	reference
-00480efc	data	xvga_user_name			?		W?xvga_user_name$n[]uc	reference
+00480ed4	data	xvga_computer_name			?	uchar[]	W?xvga_computer_name$n[]uc	reference
+00480efc	data	xvga_user_name			?	uchar[]	W?xvga_user_name$n[]uc	reference
 00480f24	data	xvga_drive_list			?	drive_info_t*	W?xvga_drive_list$npn$drive_info_t$$	reference
 00480f28	data	max_xvga_drive_list			?	int	W?max_xvga_drive_list$ni	reference
 00480f2c	data	init_drive_list_ok			?	int	W?init_drive_list_ok$ni	reference
@@ -922,7 +922,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00480f44	data	smkfile			?	SmackTag*	W?smkfile$npn$SmackTag$$	reference
 00480f48	data	smacker_paused			?	int	W?smacker_paused$ni	reference
 00480f4c	data	smacker_playing			?	int	W?smacker_playing$ni	reference
-00480f50	data	smk_action_keys			?		W?smk_action_keys$n[]$__5lcqt3KEYACTIONS_STRUCT$$	reference
+00480f50	data	smk_action_keys			?	KEYACTIONS_STRUCT[]	W?smk_action_keys$n[]$__5lcqt3KEYACTIONS_STRUCT$$	reference
 00481000	data	MiniHeapFreeRover			?		___MiniHeapFreeRover	reference
 00481004	data	WinMainProc			?		__WinMainProc	reference
 00481008	data	Is_DLL			?		___Is_DLL	reference
@@ -944,10 +944,10 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00483298	data	InitSemaphore			?		_InitSemaphore	reference
 004832a8	data	TDListSemaphore			?		_TDListSemaphore	reference
 004832b8	data	FListSemaphore			?		_FListSemaphore	reference
-004832c8	data	control_list			?		W?control_list$n[]$__93rdtcontrols_t$$	reference
+004832c8	data	control_list			?	controls_t[]	W?control_list$n[]$__93rdtcontrols_t$$	reference
 00483638	data	thread_data_list			?		___thread_data_list	reference
 0048363c	data	init_edit_box_ok			?	char	W?init_edit_box_ok$na	reference
-00483640	data	allowed_edit_keys			?		W?allowed_edit_keys$n[]a	reference
+00483640	data	allowed_edit_keys			?	char[]	W?allowed_edit_keys$n[]a	reference
 004837d0	data	old_edit_windowproc			?	long	W?old_edit_windowproc$nl	reference
 004837d4	data	old_button_windowproc			?	long	W?old_button_windowproc$nl	reference
 004837d8	data	dis			?	tagDRAWITEMSTRUCT	W?dis$n$tagDRAWITEMSTRUCT$$	reference

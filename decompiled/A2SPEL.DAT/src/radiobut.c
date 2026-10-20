@@ -25,7 +25,7 @@ void __watcall destroy_radiobutton(form_t *form)
 
 /* ==== 0043e2d6 create_radiobutton ==== */
 
-void __watcall create_radiobutton(form_t *form,int param_2)
+void __watcall create_radiobutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -42,21 +42,21 @@ void __watcall create_radiobutton(form_t *form,int param_2)
   if (piVar1[2] == -1) {
     piVar1[2] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  if ((&xvga_anims->field_00)[*piVar1 * 3] < 5) {
+  if (xvga_anims[*piVar1].frame_count < 5) {
     fatal_exit(s__s__d_____create_radiobutton__no_00457402,s_radiobut_cpp_004573f5,0x58,
-               (&xvga_anims->field_00)[*piVar1 * 3]);
+               xvga_anims[*piVar1].frame_count);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
+  check_control_position(form_index,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_00457453,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
-                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[2],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ra_0045745a,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ra_0045745a,form_index);
   }
   old_radiobutton_windowproc = SetWindowLongA(form->hwnd,-4,0x43e623);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   *(int *)((int)piVar1 + 0xd) = form->state;
   return;
 }
@@ -64,34 +64,34 @@ void __watcall create_radiobutton(form_t *form,int param_2)
 
 /* ==== 0043e3e0 unselect_radiobutton ==== */
 
-void __watcall unselect_radiobutton(int param_1)
+void __watcall unselect_radiobutton(int form_index_2)
 
 {
-  int previous_control_index;
+  int form_index;
   void *control_pointer_1;
   
-  previous_control_index = param_1;
+  form_index = form_index_2;
   do {
-    previous_control_index = get_previous_control_index(previous_control_index,6);
-    if (previous_control_index == -1) goto LAB_0043e430;
-    control_pointer_1 = get_control_pointer_1(previous_control_index);
+    form_index = get_previous_control_index(form_index,6);
+    if (form_index == -1) goto LAB_0043e430;
+    control_pointer_1 = get_control_pointer_1(form_index);
   } while (*(int *)((int)control_pointer_1 + 0xd) != 4);
   *(undefined4 *)((int)control_pointer_1 + 0xd) = 0;
-  dis_2.hwndItem = get_control_hwnd(previous_control_index);
+  dis_2.hwndItem = get_control_hwnd(form_index);
 LAB_0043e474:
   dis_2.itemState = 0;
   SendMessageA(dis_2.hwndItem,0x2b,0,0x483878);
   return;
 LAB_0043e430:
   do {
-    param_1 = get_next_control_index(param_1,6);
-    if (param_1 == -1) {
+    form_index_2 = get_next_control_index(form_index_2,6);
+    if (form_index_2 == -1) {
       return;
     }
-    control_pointer_1 = get_control_pointer_1(param_1);
+    control_pointer_1 = get_control_pointer_1(form_index_2);
   } while (*(int *)((int)control_pointer_1 + 0xd) != 4);
   *(undefined4 *)((int)control_pointer_1 + 0xd) = 0;
-  dis_2.hwndItem = get_control_hwnd(param_1);
+  dis_2.hwndItem = get_control_hwnd(form_index_2);
   goto LAB_0043e474;
 }
 
@@ -104,20 +104,20 @@ void __watcall draw_help_radiobutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,0);
-  iVar5 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+  iVar4 = 1;
+  control_y = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
   return;
 }
 
@@ -129,66 +129,66 @@ void __watcall draw_radiobutton(tagDRAWITEMSTRUCT *drawitemstruct)
 {
   int iVar1;
   uint uVar2;
-  int iVar3;
+  int form_index;
   int *control_pointer;
-  int iVar4;
-  int control_image_index;
-  int iVar5;
+  int iVar3;
+  int frame_index;
+  int anim_index;
   int control_x;
-  int iVar6;
+  int iVar4;
   
-  iVar3 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
-  iVar4 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
+  iVar3 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
   iVar1 = control_pointer[2];
-  if (iVar3 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_radiobutton__no_v_00457496,s_radiobut_cpp_00457489,0xc4);
   }
   hide_mouse();
   uVar2 = drawitemstruct->itemState;
   if (uVar2 < 0x10) {
     if (uVar2 != 4) goto LAB_0043e602;
-    set_control_state(iVar3,2);
-    control_image_index = 4;
+    set_control_state(form_index,2);
+    frame_index = 4;
 LAB_0043e5b6:
-    iVar5 = *control_pointer;
+    anim_index = *control_pointer;
   }
   else {
     if (uVar2 < 0x11) {
-      set_control_state(iVar3,1);
+      set_control_state(form_index,1);
       if (*(int *)((int)control_pointer + 0xd) == 4) {
-        control_image_index = 3;
+        frame_index = 3;
       }
       else {
-        control_image_index = 1;
+        frame_index = 1;
       }
       goto LAB_0043e5b6;
     }
     if (uVar2 == 0x11) {
-      set_control_state(iVar3,4);
+      set_control_state(form_index,4);
       *(undefined4 *)((int)control_pointer + 0xd) = 4;
-      control_image_index = get_control_image_index(*control_pointer,3);
-      iVar6 = 1;
-      iVar5 = get_control_y(iVar3);
-      control_x = get_control_x(iVar3);
-      set_mem_image(0,control_image_index,control_x + iVar4,iVar1 / 2 + iVar5,iVar6);
-      unselect_radiobutton(iVar3);
+      frame_index = get_control_image_index(*control_pointer,3);
+      iVar4 = 1;
+      anim_index = get_control_y(form_index);
+      control_x = get_control_x(form_index);
+      set_mem_image(0,frame_index,control_x + iVar3,iVar1 / 2 + anim_index,iVar4);
+      unselect_radiobutton(form_index);
       goto LAB_0043e618;
     }
 LAB_0043e602:
-    set_control_state(iVar3,0);
+    set_control_state(form_index,0);
     if (*(int *)((int)control_pointer + 0xd) == 4) {
-      control_image_index = 2;
+      frame_index = 2;
       goto LAB_0043e5b6;
     }
-    iVar5 = *control_pointer;
-    control_image_index = 0;
+    anim_index = *control_pointer;
+    frame_index = 0;
   }
-  control_image_index = get_control_image_index(iVar5,control_image_index);
+  frame_index = get_control_image_index(anim_index,frame_index);
   control_x = 1;
-  iVar5 = get_control_y(iVar3);
-  iVar3 = get_control_x(iVar3);
-  set_mem_image(0,control_image_index,iVar3 + iVar4,iVar1 / 2 + iVar5,control_x);
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,frame_index,form_index + iVar3,iVar1 / 2 + anim_index,control_x);
 LAB_0043e618:
   show_mouse();
   return;

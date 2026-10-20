@@ -117,8 +117,8 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   xvga_flip_page();
   xvga_locate_cdrom((char *)0x0,s_a2intro_smk_0042528a);
   debugmsg(s_xvga_init_fileio___s__004252a1,s_a2mrcs_img_00425296);
-  file_path_result = file_path(&path_buffer2,s_a2mrcs_img_004252b9);
-  filename_2 = file_path(&path_buffer,s_a2mrcs_ind_004252c4);
+  file_path_result = file_path(path_buffer2,s_a2mrcs_img_004252b9);
+  filename_2 = file_path(path_buffer,s_a2mrcs_ind_004252c4);
   iVar1 = xvga_init_fileio(filename_2,file_path_result);
   if (iVar1 != 0) {
     fatal_exit(s__s__d____Unable_to_initialize_re_004252e3,s_main_cpp_004252da,0xb1,

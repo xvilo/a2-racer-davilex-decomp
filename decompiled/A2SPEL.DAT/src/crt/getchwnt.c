@@ -3,7 +3,7 @@
 
 /* ==== 00439ecd do_getch ==== */
 
-uint __watcall do_getch(HANDLE console_input)
+controls_t __watcall do_getch(HANDLE console_input)
 
 {
   BOOL BVar1;
@@ -14,73 +14,75 @@ uint __watcall do_getch(HANDLE console_input)
   if (getch_pending != 0) {
     if ((uint)getch_pending < 2) {
       getch_buffer_count = getch_buffer_count + -1;
-      if (DAT_004833c8 == 0) {
+      if (control_list[0x40].field_00 == (void *)0x0) {
         getch_pending = 2;
-        return 0;
+        return (controls_t)(void *)0x0;
       }
       if (getch_buffer_count != 0) {
-        return DAT_004833c8;
+        return (controls_t)control_list[0x40].field_00;
       }
       getch_pending = 0;
-      return DAT_004833c8;
+      return (controls_t)control_list[0x40].field_00;
     }
     if (getch_pending == 2) {
       getch_pending = (uint)(getch_buffer_count != 0);
-      return DAT_004833c4;
+      return (controls_t)control_list[0x3f].field_00;
     }
   }
   do {
     BVar1 = ReadConsoleInputA(console_input,&input_record,1,&local_14);
     if (BVar1 == 0) {
-      return 0xffffffff;
+      return (controls_t)(void *)0xffffffff;
     }
     nt_real_key = NTRealKey((short *)&input_record);
   } while (nt_real_key == 0);
-  DAT_004833c8 = (uint)(byte)input_record.Event.MouseEvent.dwControlKeyState._2_1_;
-  if (((input_record.Event.KeyEvent.dwControlKeyState._1_1_ & 1) == 0) && (DAT_004833c8 != 0)) {
+  control_list[0x40].field_00 =
+       (void *)(uint)(byte)input_record.Event.MouseEvent.dwControlKeyState._2_1_;
+  if (((input_record.Event.KeyEvent.dwControlKeyState._1_1_ & 1) == 0) &&
+     (control_list[0x40].field_00 != (void *)0x0)) {
     if (input_record.Event.KeyEvent.wRepeatCount - 1 != 0) {
       getch_pending = 1;
     }
   }
   else {
-    DAT_004833c4 = (uint)input_record.Event.KeyEvent.wVirtualScanCode;
-    DAT_004833c8 = 0;
+    control_list[0x3f].field_00 = (void *)(uint)input_record.Event.KeyEvent.wVirtualScanCode;
+    control_list[0x40].field_00 = (void *)0x0;
     getch_pending = 2;
   }
   getch_buffer_count = input_record.Event.KeyEvent.wRepeatCount - 1;
-  return DAT_004833c8;
+  return (controls_t)control_list[0x40].field_00;
 }
 
 
 /* ==== 00439fd8 getch ==== */
 
-uint __watcall getch(void)
+controls_t __watcall getch(void)
 
 {
-  uint uVar1;
+  controls_t controls;
   HANDLE hConsoleHandle;
   DWORD DStack_14;
   
-  uVar1 = cbyte;
-  if (cbyte == 0) {
+  controls.field_00 = cbyte;
+  if (cbyte == (void *)0x0) {
     if (WindowsGetch == (code *)0x0) {
       (*(code *)AccessFileH_1)();
       hConsoleHandle = (HANDLE)NTConsoleInput();
       GetConsoleMode(hConsoleHandle,&DStack_14);
       SetConsoleMode(hConsoleHandle,0);
-      uVar1 = do_getch(hConsoleHandle);
+      controls = do_getch(hConsoleHandle);
       SetConsoleMode(hConsoleHandle,DStack_14);
       (*(code *)ReleaseFileH_1)();
     }
     else {
       (*WindowsIsWindowedHandle)();
-      uVar1 = (*WindowsGetch)();
+      controls.field_00 = (void *)(*WindowsGetch)();
     }
   }
   else {
-    cbyte = 0;
+    cbyte = (void *)0x0;
   }
-  return uVar1;
+  return (controls_t)controls.field_00;
 }
 
 

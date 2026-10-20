@@ -36,9 +36,9 @@ void __watcall set_ini_filename(char *param_1)
   }
   fatal_exit(s__set_ini_filename___s__d____file_00418074,s_inifile_cpp_00418068,0x2c);
 LAB_004012c0:
-  getcwd((undefined4 *)&ini_filename,0x118);
+  getcwd((undefined4 *)ini_filename,0x118);
   j = 0xffffffff;
-  pcVar4 = &ini_filename;
+  pcVar4 = ini_filename;
   do {
     if (j == 0) break;
     j = j - 1;
@@ -48,7 +48,7 @@ LAB_004012c0:
   if (*(char *)(~j + 0x41f7b2) != '\\') {
     pcVar2 = s___004180af;
     i = -1;
-    pcVar4 = &ini_filename;
+    pcVar4 = ini_filename;
     do {
       pcVar3 = pcVar4;
       if (i == 0) break;
@@ -69,7 +69,7 @@ LAB_004012c0:
     } while (cVar1 != '\0');
   }
   i = -1;
-  pcVar4 = &ini_filename;
+  pcVar4 = ini_filename;
   do {
     pcVar2 = pcVar4;
     if (i == 0) break;
@@ -104,7 +104,7 @@ void __watcall write_ini_string_setting(char *param_1,char *param_2,char *param_
   if (ini_file_init_ok == 0) {
     fatal_exit(s__write_ini_string_setting___s__d_004180bd,s_inifile_cpp_004180b1,0x41);
   }
-  WritePrivateProfileStringA(param_1,param_2,param_3,&ini_filename);
+  WritePrivateProfileStringA(param_1,param_2,param_3,ini_filename);
   return;
 }
 
@@ -120,7 +120,7 @@ void __watcall write_ini_value_setting(char *param_1,char *param_2,int param_3)
     fatal_exit(s__write_ini_value_setting___s__d__00418115,s_inifile_cpp_00418109,0x4f);
   }
   itoa(param_3,local_30,10);
-  WritePrivateProfileStringA(param_1,param_2,local_30,&ini_filename);
+  WritePrivateProfileStringA(param_1,param_2,local_30,ini_filename);
   return;
 }
 
@@ -135,7 +135,7 @@ uint __watcall read_ini_value_setting(char *param_1,char *param_2)
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_value_setting___s__d____0041816c,s_inifile_cpp_00418160,0x5c);
   }
-  UVar1 = GetPrivateProfileIntA(param_1,param_2,0,&ini_filename);
+  UVar1 = GetPrivateProfileIntA(param_1,param_2,0,ini_filename);
   return UVar1;
 }
 
@@ -148,7 +148,7 @@ void __watcall read_ini_string_setting(char *param_1,char *param_2,char *param_3
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_string_setting___s__d__004181c2,s_inifile_cpp_004181b6,0x67);
   }
-  GetPrivateProfileStringA(param_1,param_2,&DAT_0041820d,param_3,param_4,&ini_filename);
+  GetPrivateProfileStringA(param_1,param_2,&DAT_0041820d,param_3,param_4,ini_filename);
   return;
 }
 

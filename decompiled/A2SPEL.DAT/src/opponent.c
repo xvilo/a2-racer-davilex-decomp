@@ -1756,13 +1756,13 @@ undefined4 __watcall alloc_opponent_slot(void)
 
 /* ==== 004070df check_opponent_collisions ==== */
 
-undefined4 __watcall check_opponent_collisions(int racer_a_val,int opponent_index)
+undefined4 __watcall check_opponent_collisions(int racer_a_val,int opponent_index_2)
 
 {
   int racer_b;
   int *opponent_chunk;
   int *opponent_chunk_2;
-  int opponent_index_2;
+  int opponent_index;
   uint uVar1;
   int i;
   int local_18;
@@ -1773,16 +1773,16 @@ undefined4 __watcall check_opponent_collisions(int racer_a_val,int opponent_inde
     if (nearby_opponent_count <= i) {
       return 0;
     }
-    opponent_index_2 = *(int *)(nearby_opponent_list + local_18);
-    if (opponent_index_2 != opponent_index) {
-      racer_b = opponent_data[opponent_index_2].object;
-      opponent_chunk = get_opponent_chunk(s_opponent_cpp_0044273c,0x450,opponent_index_2);
-      opponent_chunk_2 = get_opponent_chunk(s_opponent_cpp_00442749,0x450,opponent_index);
+    opponent_index = *(int *)(nearby_opponent_list + local_18);
+    if (opponent_index != opponent_index_2) {
+      racer_b = opponent_data[opponent_index].object;
+      opponent_chunk = get_opponent_chunk(s_opponent_cpp_0044273c,0x450,opponent_index);
+      opponent_chunk_2 = get_opponent_chunk(s_opponent_cpp_00442749,0x450,opponent_index_2);
       uVar1 = *opponent_chunk - *opponent_chunk_2 >> 0x1f;
       if ((int)((*opponent_chunk - *opponent_chunk_2 ^ uVar1) - uVar1) < 2) {
-        update_racer_corners(opponent_index_2);
-        opponent_index_2 = racers_collide(racer_a_val,racer_b);
-        if (opponent_index_2 != 0) {
+        update_racer_corners(opponent_index);
+        opponent_index = racers_collide(racer_a_val,racer_b);
+        if (opponent_index != 0) {
           return 1;
         }
       }

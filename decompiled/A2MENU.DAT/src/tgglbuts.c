@@ -12,47 +12,47 @@ int __watcall check_togglebutton_hotkey(form_t *form,int param_2)
 
 /* ==== 0041b13a get_togglebutton_togglestate ==== */
 
-int __watcall get_togglebutton_togglestate(int param_1)
+int __watcall get_togglebutton_togglestate(int form_index)
 
 {
   int iVar1;
   void *control_pointer_1;
   
-  if (-1 < param_1) {
+  if (-1 < form_index) {
     iVar1 = get_numberofcontrols_inform();
-    if (param_1 <= iVar1) goto LAB_0041b15f;
+    if (form_index <= iVar1) goto LAB_0041b15f;
   }
-  fatal_exit(s__s__d_____get_togglebutton_toggl_00431159,s_tgglbuts_cpp_0043114c,0x40,param_1);
+  fatal_exit(s__s__d_____get_togglebutton_toggl_00431159,s_tgglbuts_cpp_0043114c,0x40,form_index);
 LAB_0041b15f:
-  iVar1 = get_control_type(param_1);
+  iVar1 = get_control_type(form_index);
   if (iVar1 != 2) {
-    fatal_exit(s__s__d_____get_togglebutton_toggl_004311ab,s_tgglbuts_cpp_0043119e,0x45,param_1);
+    fatal_exit(s__s__d_____get_togglebutton_toggl_004311ab,s_tgglbuts_cpp_0043119e,0x45,form_index);
   }
-  control_pointer_1 = get_control_pointer_1(param_1);
+  control_pointer_1 = get_control_pointer_1(form_index);
   return *(int *)((int)control_pointer_1 + 0xd);
 }
 
 
 /* ==== 0041b18c set_togglebutton_togglestate ==== */
 
-void __watcall set_togglebutton_togglestate(int param_1,int param_2)
+void __watcall set_togglebutton_togglestate(int form_index,int param_2)
 
 {
   int iVar1;
   int *control_pointer_1;
   
-  if (-1 < param_1) {
+  if (-1 < form_index) {
     iVar1 = get_numberofcontrols_inform();
-    if (param_1 <= iVar1) goto LAB_0041b1b5;
+    if (form_index <= iVar1) goto LAB_0041b1b5;
   }
-  fatal_exit(s__s__d_____set_togglebutton_toggl_00431204,s_tgglbuts_cpp_004311f7,0x56,param_1);
+  fatal_exit(s__s__d_____set_togglebutton_toggl_00431204,s_tgglbuts_cpp_004311f7,0x56,form_index);
 LAB_0041b1b5:
-  iVar1 = get_control_type(param_1);
+  iVar1 = get_control_type(form_index);
   if (iVar1 != 2) {
-    fatal_exit(s__s__d_____get_togglebutton_toggl_00431256,s_tgglbuts_cpp_00431249,0x5b,param_1);
+    fatal_exit(s__s__d_____get_togglebutton_toggl_00431256,s_tgglbuts_cpp_00431249,0x5b,form_index);
   }
-  control_pointer_1 = get_control_pointer_1(param_1);
-  iVar1 = (&xvga_anims->field_00)[*control_pointer_1 * 3] / 2;
+  control_pointer_1 = get_control_pointer_1(form_index);
+  iVar1 = xvga_anims[*control_pointer_1].frame_count / 2;
   if (iVar1 < param_2) {
     fatal_exit(s__s__d_____set_togglebutton_toggl_004312af,s_tgglbuts_cpp_004312a2,0x62,iVar1);
   }
@@ -76,7 +76,7 @@ void __watcall destroy_togglebutton(form_t *form)
 
 /* ==== 0041b246 create_togglebutton ==== */
 
-void __watcall create_togglebutton(form_t *form,int param_2)
+void __watcall create_togglebutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -93,18 +93,18 @@ void __watcall create_togglebutton(form_t *form,int param_2)
   if (piVar1[2] == -1) {
     piVar1[2] = *(int *)(control_image_index * 0x20 + 0xc + (int)xvga_mem_images);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
+  check_control_position(form_index,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_004313b6,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
-                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[2],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_to_004313bd,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_to_004313bd,form_index);
   }
-  set_togglebutton_togglestate(param_2,*(int *)((int)piVar1 + 0xd));
+  set_togglebutton_togglestate(form_index,*(int *)((int)piVar1 + 0xd));
   old_togglebutton_windowproc = SetWindowLongA(form->hwnd,-4,0x41b4ba);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -117,20 +117,20 @@ void __watcall draw_help_togglebutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,*(int *)((int)piVar1 + 0xd) * 2);
-  iVar5 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+  iVar4 = 1;
+  control_y = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
   return;
 }
 
@@ -143,64 +143,64 @@ void __watcall draw_togglebutton(tagDRAWITEMSTRUCT *drawitemstruct)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int *control_pointer;
-  uint uVar5;
-  int iVar6;
+  uint uVar4;
+  int anim_index;
   int j;
   uint i;
-  int iVar7;
+  int iVar5;
   
-  iVar4 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
   i = *(uint *)((int)control_pointer + 0xd);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  if (iVar4 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_togglebutton__no_v_004313fa,s_tgglbuts_cpp_004313ed,0xbd);
   }
   hide_mouse();
-  uVar5 = drawitemstruct->itemState;
+  uVar4 = drawitemstruct->itemState;
   j = i * 2;
-  if (uVar5 < 0x10) {
-    if (uVar5 == 4) {
-      set_control_state(iVar4,2);
+  if (uVar4 < 0x10) {
+    if (uVar4 == 4) {
+      set_control_state(form_index,2);
       goto LAB_0041b45c;
     }
   }
   else {
-    if (uVar5 < 0x11) {
-      set_control_state(iVar4,1);
+    if (uVar4 < 0x11) {
+      set_control_state(form_index,1);
       j = j + 1;
 LAB_0041b45c:
-      iVar6 = *control_pointer;
+      anim_index = *control_pointer;
       goto LAB_0041b37f;
     }
-    if (uVar5 == 0x11) {
-      set_control_state(iVar4,4);
-      uVar5 = (&xvga_anims->field_00)[*control_pointer * 3] / 2 - 1;
-      if (i == uVar5) {
-        i = i ^ uVar5;
+    if (uVar4 == 0x11) {
+      set_control_state(form_index,4);
+      uVar4 = xvga_anims[*control_pointer].frame_count / 2 - 1;
+      if (i == uVar4) {
+        i = i ^ uVar4;
       }
       else {
         i = i + 1;
       }
-      set_togglebutton_togglestate(iVar4,i);
-      iVar6 = *control_pointer;
+      set_togglebutton_togglestate(form_index,i);
+      anim_index = *control_pointer;
       j = i * 2 + 1;
       goto LAB_0041b37f;
     }
   }
-  set_control_state(iVar4,0);
-  iVar6 = *control_pointer;
+  set_control_state(form_index,0);
+  anim_index = *control_pointer;
   j = i * 2;
 LAB_0041b37f:
-  j = get_control_image_index(iVar6,j);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,j,(iVar2 - (iVar1 >> 0x1f) >> 1) + iVar4,iVar3 / 2 + iVar6,iVar7);
+  j = get_control_image_index(anim_index,j);
+  iVar5 = 1;
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,j,(iVar2 - (iVar1 >> 0x1f) >> 1) + form_index,iVar3 / 2 + anim_index,iVar5);
   show_mouse();
   return;
 }

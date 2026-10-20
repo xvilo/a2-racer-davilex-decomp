@@ -120,11 +120,11 @@ int __watcall init_anims(void)
   int iVar1;
   char *filename_val;
   
-  iVar1 = init_animations((anim_t *)&anims);
+  iVar1 = init_animations(anims);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animations_004438f0);
   }
-  filename_val = file_path(&buffer1,s_gamespr_img_00443911);
+  filename_val = file_path(buffer1,s_gamespr_img_00443911);
   iVar1 = init_mem_images(filename_val,4);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animation_d_0044391d,max_mem_image_ptr);
@@ -143,11 +143,11 @@ int __watcall init_anims_1(int param_1)
   int iVar1;
   char *filename_val;
   
-  iVar1 = init_animations((anim_t *)&anims);
+  iVar1 = init_animations(anims);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animations_00443942);
   }
-  filename_val = file_path(&buffer1,s_gamespr_img_00443963);
+  filename_val = file_path(buffer1,s_gamespr_img_00443963);
   iVar1 = init_mem_images(filename_val,param_1);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animation_d_0044396f,max_mem_image_ptr);
@@ -170,14 +170,14 @@ void __watcall use_dashboard_anims_0(undefined4 param_1)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___004439a1,s_menuanim_cpp_00443994,0x24e);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_00458988);
-  filename_val_2 = file_path(&DAT_00473118,s_gamespr_ind_004439cb);
-  filename_val = file_path(&buffer1,s_gamespr_img_004439d7);
-  use_mem_images_result = use_mem_images(filename_val,filename_val_2,&anim_base);
+  add_array_to_anim_base(anims,(long *)&DAT_00458988);
+  filename_val_2 = file_path(buffer1 + 200,s_gamespr_ind_004439cb);
+  filename_val = file_path(buffer1,s_gamespr_img_004439d7);
+  use_mem_images_result = use_mem_images(filename_val,filename_val_2,anim_base);
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
   }
   return;
 }
@@ -192,8 +192,8 @@ void __watcall free_dashboard_anims_0(undefined4 param_1)
     fatal_exit(s__s__d____please_call_init_anims___004439f0,s_menuanim_cpp_004439e3,0x25d);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_00458988);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,(long *)&DAT_00458988);
+  disable_mem_images(anim_base);
   return;
 }
 
@@ -210,14 +210,14 @@ void __watcall use_dashboard_anims_1(undefined4 param_1)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00443a27,s_menuanim_cpp_00443a1a,0x267);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_004589d4);
-  filename_val_2 = file_path(&DAT_00473118,s_gamespr_ind_00443a51);
-  filename_val = file_path(&buffer1,s_gamespr_img_00443a5d);
-  use_mem_images_result = use_mem_images(filename_val,filename_val_2,&anim_base);
+  add_array_to_anim_base(anims,(long *)&DAT_004589d4);
+  filename_val_2 = file_path(buffer1 + 200,s_gamespr_ind_00443a51);
+  filename_val = file_path(buffer1,s_gamespr_img_00443a5d);
+  use_mem_images_result = use_mem_images(filename_val,filename_val_2,anim_base);
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
   }
   return;
 }
@@ -232,8 +232,8 @@ void __watcall free_dashboard_anims_1(undefined4 param_1)
     fatal_exit(s__s__d____please_call_init_anims___00443a76,s_menuanim_cpp_00443a69,0x276);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_004589d4);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,(long *)&DAT_004589d4);
+  disable_mem_images(anim_base);
   return;
 }
 
@@ -250,14 +250,14 @@ void __watcall use_dashboard_anims_2(undefined4 param_1)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00443aad,s_menuanim_cpp_00443aa0,0x280);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_00458a14);
-  filename_val_2 = file_path(&DAT_00473118,s_gamespr_ind_00443ad7);
-  filename_val = file_path(&buffer1,s_gamespr_img_00443ae3);
-  use_mem_images_result = use_mem_images(filename_val,filename_val_2,&anim_base);
+  add_array_to_anim_base(anims,(long *)&DAT_00458a14);
+  filename_val_2 = file_path(buffer1 + 200,s_gamespr_ind_00443ad7);
+  filename_val = file_path(buffer1,s_gamespr_img_00443ae3);
+  use_mem_images_result = use_mem_images(filename_val,filename_val_2,anim_base);
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
   }
   return;
 }
@@ -272,8 +272,8 @@ void __watcall free_dashboard_anims_2(undefined4 param_1)
     fatal_exit(s__s__d____please_call_init_anims___00443afc,s_menuanim_cpp_00443aef,0x28f);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_00458a14);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,(long *)&DAT_00458a14);
+  disable_mem_images(anim_base);
   return;
 }
 

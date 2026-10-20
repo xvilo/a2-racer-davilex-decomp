@@ -125,12 +125,12 @@ void __watcall qsort(int *param_1,int *param_2,int *param_3,undefined *param_4)
   local_160 = param_1;
 LAB_00414647:
   do {
-    if ((int *)0x1 < local_164) {
+    if (&DAT_00000001 < local_164) {
       if ((int *)0xf < local_164) {
         piVar5 = (int *)((int)local_160 + ((uint)local_164 >> 1) * (int)param_3);
         if ((int *)0x1d < local_164) {
           local_48 = local_160;
-          piVar4 = (int *)(((int)local_164 + -1) * (int)param_3 + (int)local_160);
+          piVar4 = (int *)((int)((int)local_164 + -1) * (int)param_3 + (int)local_160);
           param_2 = piVar5;
           if ((int *)0x2a < local_164) {
             local_38 = (int)param_3 * ((uint)local_164 >> 3);
@@ -150,7 +150,7 @@ LAB_00414647:
           local_40 = local_160;
           byteswap(local_160,param_2,piVar4,(uint)param_3);
         }
-        piVar5 = (int *)(((int)local_164 + -1) * (int)param_3);
+        piVar5 = (int *)((int)((int)local_164 + -1) * (int)param_3);
         local_24 = local_160;
         piVar4 = (int *)((int)local_160 + (int)piVar5);
         local_20 = piVar4;

@@ -10,17 +10,16 @@ int __watcall init_animations(anim_t *anim)
   int i;
   
   max_anim_ptr = 0;
-  for (anim_2 = anim; (anim_2->field_04 != -1 && (anim_2->field_00 != -1));
-      anim_2 = (anim_t *)&anim_2->field_0xc) {
+  for (anim_2 = anim; (anim_2->mode != -1 && (anim_2->frame_count != -1)); anim_2 = anim_2 + 1) {
     max_anim_ptr = max_anim_ptr + 1;
   }
   i = alloc_animations(max_anim_ptr);
   if (i == 0) {
     for (i = 0; i < max_anim_ptr; i = i + 1) {
-      (&xvga_anims->field_00)[i * 3] = anim->field_00;
-      (&xvga_anims->field_04)[i * 3] = anim->field_04;
-      (&xvga_anims->field_08)[i * 3] = anim->field_08;
-      anim = (anim_t *)&anim->field_0xc;
+      xvga_anims[i].frame_count = anim->frame_count;
+      xvga_anims[i].mode = anim->mode;
+      xvga_anims[i].frames = anim->frames;
+      anim = anim + 1;
     }
     i = 0;
     init_animation_ok = 1;
@@ -45,9 +44,9 @@ int __watcall alloc_animations(int param_1)
     return 2000;
   }
   for (iVar1 = 0; iVar1 < param_1 * 0xc; iVar1 = iVar1 + 0xc) {
-    *(undefined4 *)((int)&xvga_anims->field_08 + iVar1) = 0;
-    *(undefined4 *)((int)&xvga_anims->field_04 + iVar1) = 0;
-    *(undefined4 *)((int)&xvga_anims->field_00 + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->frames + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->mode + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->frame_count + iVar1) = 0;
   }
   return 0;
 }

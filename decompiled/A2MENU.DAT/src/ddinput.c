@@ -94,12 +94,12 @@ int __watcall get_key_state(int param_1)
   if (xvga_init_keyboard_ok == 0) {
     fatal_exit(s__s__d____error_keyboard_device_w_004300f2,s_ddinput_cpp_004300e6,0x56);
   }
-  HVar1 = (*xvga_di_keyboard->lpVtbl->GetDeviceState)(xvga_di_keyboard,0x100,&xvga_keyboard_state);
+  HVar1 = (*xvga_di_keyboard->lpVtbl->GetDeviceState)(xvga_di_keyboard,0x100,xvga_keyboard_state);
   if (HVar1 != 0) {
     arg4 = dd_error_string(HVar1);
     fatal_exit(s__s__d____error_getting_keyboard_d_00430132,s_ddinput_cpp_00430126,0x5a,arg4);
   }
-  return (uint)(byte)(&xvga_keyboard_state)[param_1];
+  return (uint)xvga_keyboard_state[param_1];
 }
 
 

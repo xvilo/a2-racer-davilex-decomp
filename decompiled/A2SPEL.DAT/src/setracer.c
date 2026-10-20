@@ -171,7 +171,7 @@ void __watcall draw_big_digit_1(int digit,int frame)
   
   if (screen_resolution == 0) {
     unaff_EBX = 0x96;
-    frame = *(int *)(xvga_anims->field_e0 + 4 + digit * 8);
+    frame = xvga_anims[0x12].frames[digit].image;
     unaff_ECX = 200;
     if (dashboard_on_screen != 0) {
       unaff_ECX = 0xa0;
@@ -179,7 +179,7 @@ void __watcall draw_big_digit_1(int digit,int frame)
   }
   else if (screen_resolution == 1) {
     unaff_ECX = 0x4b;
-    frame = *(int *)(xvga_anims->field_d4 + 4 + digit * 8);
+    frame = xvga_anims[0x11].frames[digit].image;
     unaff_EBX = unaff_ECX;
   }
   set_mem_image(1,frame,unaff_EBX,unaff_ECX,2);
@@ -197,7 +197,7 @@ void __watcall draw_big_digit_2(int digit,int frame)
   
   if (screen_resolution == 0) {
     unaff_EBX = 0x140;
-    frame = *(int *)(xvga_anims->field_ec + 4 + digit * 8);
+    frame = xvga_anims[0x13].frames[digit].image;
     unaff_ECX = 200;
     if (dashboard_on_screen != 0) {
       unaff_ECX = 0xa0;
@@ -206,7 +206,7 @@ void __watcall draw_big_digit_2(int digit,int frame)
   else if (screen_resolution == 1) {
     unaff_EBX = 0xa0;
     unaff_ECX = 100;
-    frame = *(int *)(xvga_anims->field_f8 + 4 + digit * 8);
+    frame = xvga_anims[0x14].frames[digit].image;
   }
   set_mem_image(1,frame,unaff_EBX,unaff_ECX,0);
   return;

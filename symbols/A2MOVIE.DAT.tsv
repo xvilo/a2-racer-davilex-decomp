@@ -601,12 +601,12 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 0041f740	data	HugeValue			?		__HugeValue	reference
 0041f748	data	BigPow10Table			?		__BigPow10Table	reference
 0041f798	data	Msgs			?		_Msgs	reference
-0041f7b4	data	ini_filename			?		W?ini_filename$n[]a	reference
+0041f7b4	data	ini_filename			?	char[]	W?ini_filename$n[]a	reference
 0041f8e4	data	xvga_screen_xsize			?	int	W?xvga_screen_xsize$ni	reference
 0041f8e8	data	xvga_screen_ysize			?	int	W?xvga_screen_ysize$ni	reference
 0041f8ec	data	xvga_screen_bpp			?	int	W?xvga_screen_bpp$ni	reference
 0041f8f4	data	xvga_back_buffers			?	int	W?xvga_back_buffers$ni	reference
-0041f8fc	data	xvga_screen_modes			?		W?xvga_screen_modes$n[]$screen_mode_t$$	reference
+0041f8fc	data	xvga_screen_modes			?	screen_mode_t[]	W?xvga_screen_modes$n[]$screen_mode_t$$	reference
 0041fa64	data	debugmsg_toggle			?	int	W?debugmsg_toggle$ni	reference
 0041fa84	data	mouse_show			?	int	W?mouse_show$ni	reference
 0041fa88	data	mouse_old_xpos			?	int	W?mouse_old_xpos$ni	reference
@@ -614,10 +614,10 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 0041fa9c	data	mouse_anim			?	int	W?mouse_anim$ni	reference
 0041faa0	data	mouse_frame			?	int	W?mouse_frame$ni	reference
 0041faa4	data	mouse_type			?	int	W?mouse_type$ni	reference
-0041faa8	data	sound_modes			?		W?sound_modes$n[]$sound_mode_t$$	reference
+0041faa8	data	sound_modes			?	sound_mode_t[]	W?sound_modes$n[]$sound_mode_t$$	reference
 0041fb88	data	sb16_driver_index			?	int	W?sb16_driver_index$ni	reference
 0041fb8c	data	secondary_driver_index			?	int	W?secondary_driver_index$ni	reference
-0041fbd8	data	help_stop_keys			?		W?help_stop_keys$n[]i	reference
+0041fbd8	data	help_stop_keys			?	int[]	W?help_stop_keys$n[]i	reference
 0041fc0c	data	max_mem_image_ptr			?	int	W?max_mem_image_ptr$ni	reference
 0041fc10	data	mem_image_color_key			?	_DDCOLORKEY	W?mem_image_color_key$n$_DDCOLORKEY$$	reference
 0041fc18	data	atexit			?		___atexit	reference
@@ -701,7 +701,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004201a8	data	stzone			?		_stzone	reference
 004201c7	data	dtzone			?		_dtzone	reference
 004201ee	data	tzFlag			?		_tzFlag	reference
-004201f4	data	EditWindowProc__key			?		W?$Wsi08key$n[]a$:.0$:?EditWindowProc$n(pnvuiuil)lnx[]a	reference
+004201f4	data	EditWindowProc__key			?	char[]	W?$Wsi08key$n[]a$:.0$:?EditWindowProc$n(pnvuiuil)lnx[]a	reference
 004201f8	data	Save8087			?		___Save8087	reference
 004201fc	data	Rest8087			?		___Rest8087	reference
 00420200	data	8087cw			?		__8087cw	reference
@@ -711,7 +711,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00420210	data	console_in			?		_console_in	reference
 00420214	data	console_out			?		_console_out	reference
 00420218	data	xvga_font_index			?	int	W?xvga_font_index$ni	reference
-0042021c	data	xvga_fonts			?		W?xvga_fonts$n[]$__3etm0cfont_t$$	reference
+0042021c	data	xvga_fonts			?	font_t[]	W?xvga_fonts$n[]$__3etm0cfont_t$$	reference
 004202a4	data	BeginThread			?		___BeginThread	reference
 004202a8	data	EndThread			?		___EndThread	reference
 004202ac	data	InitThread			?		___InitThread	reference
@@ -735,7 +735,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00421264	data	xvga_allowmodex			?	int	W?xvga_allowmodex$ni	reference
 00421268	data	debugmsg_channel			?	int	W?debugmsg_channel$ni	reference
 00421270	data	cd_directory			?	char*	W?cd_directory$npna	reference
-00421274	data	cd_drive			?		W?cd_drive$n[]a	reference
+00421274	data	cd_drive			?	char[]	W?cd_drive$n[]a	reference
 00421278	data	mouse_init_ok			?	int	W?mouse_init_ok$ni	reference
 0042127c	data	mouse_on_off			?	int	W?mouse_on_off$ni	reference
 00421280	data	mouse_anim_set			?	int	W?mouse_anim_set$ni	reference
@@ -764,7 +764,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004212ec	data	smkfile			?	SmackTag*	W?smkfile$npn$SmackTag$$	reference
 004212f0	data	smacker_paused			?	int	W?smacker_paused$ni	reference
 004212f4	data	smacker_playing			?	int	W?smacker_playing$ni	reference
-004212f8	data	smk_action_keys			?		W?smk_action_keys$n[]$__5lcqt3KEYACTIONS_STRUCT$$	reference
+004212f8	data	smk_action_keys			?	KEYACTIONS_STRUCT[]	W?smk_action_keys$n[]$__5lcqt3KEYACTIONS_STRUCT$$	reference
 0042139c	data	xvga_mem_images			?	mem_image_t*	W?xvga_mem_images$npn$mem_image_t$$	reference
 004213a0	data	mem_image_usage			?	int	W?mem_image_usage$ni	reference
 004213a4	data	alloc_mem_images_ok			?	int	W?alloc_mem_images_ok$ni	reference
@@ -778,7 +778,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004213c4	data	xvga_init_input_ok			?	int	W?xvga_init_input_ok$ni	reference
 004213c8	data	xvga_init_keyboard_ok			?	int	W?xvga_init_keyboard_ok$ni	reference
 004213cc	data	xvga_init_mouse_ok			?	int	W?xvga_init_mouse_ok$ni	reference
-004213d0	data	xvga_keyboard_state			?		W?xvga_keyboard_state$n[]uc	reference
+004213d0	data	xvga_keyboard_state			?	uchar[]	W?xvga_keyboard_state$n[]uc	reference
 004214d0	data	xvga_timer_ptr			?	xvga_timer_t*	W?xvga_timer_ptr$npn$xvga_timer_t$$	reference
 004214d4	data	xvga_max_timers			?	int	W?xvga_max_timers$ni	reference
 004214d8	data	xvga_timer_init_ok			?	int	W?xvga_timer_init_ok$ni	reference
@@ -809,8 +809,8 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00421558	data	xvga_phys_mem			?	int	W?xvga_phys_mem$ni	reference
 0042155c	data	xvga_phys_mem_free			?	int	W?xvga_phys_mem_free$ni	reference
 00421560	data	xvga_mem_usage			?	int	W?xvga_mem_usage$ni	reference
-00421564	data	xvga_computer_name			?		W?xvga_computer_name$n[]uc	reference
-0042158c	data	xvga_user_name			?		W?xvga_user_name$n[]uc	reference
+00421564	data	xvga_computer_name			?	uchar[]	W?xvga_computer_name$n[]uc	reference
+0042158c	data	xvga_user_name			?	uchar[]	W?xvga_user_name$n[]uc	reference
 004215b4	data	xvga_drive_list			?	drive_info_t*	W?xvga_drive_list$npn$drive_info_t$$	reference
 004215b8	data	max_xvga_drive_list			?	int	W?max_xvga_drive_list$ni	reference
 004215bc	data	init_drive_list_ok			?	int	W?init_drive_list_ok$ni	reference
@@ -842,8 +842,8 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00421658	data	OpenStreams			?		___OpenStreams	reference
 0042165c	data	MiniHeapFreeRover			?		___MiniHeapFreeRover	reference
 00421664	data	joystickinfo			?	joyinfoex_tag	W?joystickinfo$n$joyinfoex_tag$$	reference
-00421698	data	joystickstate			?		W?joystickstate$n[]$__ajdnjjoystickstate_t$$	reference
-004217ac	data	control_list			?		W?control_list$n[]$__93rdtcontrols_t$$	reference
+00421698	data	joystickstate			?	joystickstate_t[]	W?joystickstate$n[]$__ajdnjjoystickstate_t$$	reference
+004217ac	data	control_list			?	controls_t[]	W?control_list$n[]$__93rdtcontrols_t$$	reference
 004218a8	data	nheap_clean			?		___nheap_clean	reference
 004218a9	data	fheap_clean			?		___fheap_clean	reference
 004218ac	data	topFileID			?		_topFileID	reference
@@ -856,7 +856,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004219f8	data	TDListSemaphore			?		_TDListSemaphore	reference
 00421a08	data	FListSemaphore			?		_FListSemaphore	reference
 00421a18	data	init_edit_box_ok			?	char	W?init_edit_box_ok$na	reference
-00421a1c	data	allowed_edit_keys			?		W?allowed_edit_keys$n[]a	reference
+00421a1c	data	allowed_edit_keys			?	char[]	W?allowed_edit_keys$n[]a	reference
 00421bac	data	old_edit_windowproc			?	long	W?old_edit_windowproc$nl	reference
 00421bb0	data	old_button_windowproc			?	long	W?old_button_windowproc$nl	reference
 00421bb4	data	dis			?	tagDRAWITEMSTRUCT	W?dis$n$tagDRAWITEMSTRUCT$$	reference

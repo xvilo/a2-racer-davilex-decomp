@@ -577,13 +577,11 @@ int __watcall set_race_state(int param_1)
 int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param_4)
 
 {
-  int iVar1;
-  int effect_val;
+  int frame_index;
+  int frame_index_3;
+  int frame_index_2;
   uint countdown_expired_result;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
+  int frame_index_4;
   int unaff_ESI;
   int unaff_EDI;
   int local_3c;
@@ -593,23 +591,24 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
   int local_28;
   int local_24;
   int local_20;
+  frame_t *frame_val_2;
   
-  effect_val = race_state + -1;
-  switch(effect_val) {
+  frame_index = race_state + -1;
+  switch(frame_index) {
   case 0:
     if (DAT_00475a2c == 0) {
       start_camera_intro();
     }
     camera_height = camera_height + -10.0;
-    effect_val = CONCAT22((short)((uint)effect_val >> 0x10),
-                          (ushort)(0.0 < camera_height) << 8 | (ushort)NAN(camera_height) << 10 |
-                          (ushort)(camera_height == 0.0) << 0xe);
+    frame_index = CONCAT22((short)((uint)frame_index >> 0x10),
+                           (ushort)(0.0 < camera_height) << 8 | (ushort)NAN(camera_height) << 10 |
+                           (ushort)(camera_height == 0.0) << 0xe);
     if (0.0 >= camera_height) {
-      effect_val = 2;
+      frame_index = 2;
       set_camera_position(2);
       race_state = 2;
     }
-    return effect_val;
+    return frame_index;
   case 1:
     if (DAT_00475a34 == 0) {
       begin_start_countdown();
@@ -626,39 +625,39 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
       }
       else {
         if (countdown_step < 4) {
-          effect_val = 0x1a;
+          frame_index = 0x1a;
         }
         else {
-          effect_val = 0x1b;
+          frame_index = 0x1b;
         }
         frame_val = 0;
-        play_sound_effect(effect_val,0);
+        play_sound_effect(frame_index,0);
         start_countdown(1);
       }
     }
-    effect_val = countdown_step;
+    frame_index = countdown_step;
     draw_big_digit_1(countdown_step,frame_val);
-    return effect_val;
+    return frame_index;
   case 2:
     if (DAT_00475a30 == 0) {
       stop_player_car();
     }
     countdown_expired_result = countdown_expired();
-    if (((countdown_expired_result != 0) || (effect_val = keyispressed(0x20), effect_val != 0)) ||
-       (effect_val = keyispressed(0xd), effect_val != 0)) {
+    if (((countdown_expired_result != 0) || (frame_index = keyispressed(0x20), frame_index != 0)) ||
+       (frame_index = keyispressed(0xd), frame_index != 0)) {
       race_state = 8;
     }
     draw_big_digit_2(DAT_00475a28,frame_val);
-    effect_val = DAT_00475a28 + 1;
-    DAT_00475a28 = effect_val % 0x10;
-    return effect_val / 0x10;
+    frame_index = DAT_00475a28 + 1;
+    DAT_00475a28 = frame_index % 0x10;
+    return frame_index / 0x10;
   case 3:
     break;
   case 4:
     if (screen_resolution == 0) {
       param_3 = 0x140;
       param_4 = 0xf0;
-      frame_val = *(int *)(xvga_anims->field_188 + 4);
+      frame_val = (xvga_anims[0x20].frames)->image;
       if (dashboard_on_screen != 0) {
         param_4 = 0x8c;
       }
@@ -666,20 +665,20 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0xa0;
       param_4 = 100;
-      frame_val = *(int *)(xvga_anims->field_17c + 4);
+      frame_val = (xvga_anims[0x1f].frames)->image;
     }
     set_mem_image(1,frame_val,param_3,param_4,0);
     countdown_expired_result = countdown_expired();
-    effect_val = 0;
+    frame_index = 0;
     if (countdown_expired_result != 0) {
-      effect_val = set_race_state(8);
+      frame_index = set_race_state(8);
     }
-    return effect_val;
+    return frame_index;
   case 5:
     if (screen_resolution == 0) {
       param_3 = 0xa0;
       param_4 = 100;
-      frame_val = *(int *)(xvga_anims->field_128 + 4);
+      frame_val = (xvga_anims[0x18].frames)->image;
       if (dashboard_on_screen != 0) {
         param_4 = 0x3c;
       }
@@ -687,21 +686,21 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0x4b;
       param_4 = 0x1e;
-      frame_val = *(int *)(xvga_anims->field_11c + 4);
+      frame_val = (xvga_anims[0x17].frames)->image;
     }
     set_mem_image(1,frame_val,param_3,param_4,2);
     countdown_expired_result = countdown_expired();
-    if (((countdown_expired_result == 0) && (effect_val = keyispressed(0xd), effect_val == 0)) &&
-       (effect_val = keyispressed(0x20), effect_val == 0)) {
+    if (((countdown_expired_result == 0) && (frame_index = keyispressed(0xd), frame_index == 0)) &&
+       (frame_index = keyispressed(0x20), frame_index == 0)) {
       return 0;
     }
-    effect_val = set_race_state(8);
-    return effect_val;
+    frame_index = set_race_state(8);
+    return frame_index;
   case 6:
     if (screen_resolution == 0) {
       param_3 = 0x140;
       param_4 = 0xf0;
-      frame_val = *(int *)(xvga_anims->field_1a0 + 4);
+      frame_val = (xvga_anims[0x22].frames)->image;
       if (dashboard_on_screen != 0) {
         param_4 = 0x8c;
       }
@@ -709,22 +708,22 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0xa0;
       param_4 = 100;
-      frame_val = *(int *)(xvga_anims->field_194 + 4);
+      frame_val = (xvga_anims[0x21].frames)->image;
     }
     set_mem_image(1,frame_val,param_3,param_4,0);
     countdown_expired_result = countdown_expired();
-    effect_val = 0;
+    frame_index = 0;
     if (countdown_expired_result != 0) {
-      effect_val = set_race_state(8);
+      frame_index = set_race_state(8);
     }
-    return effect_val;
+    return frame_index;
   default:
-    return effect_val;
+    return frame_index;
   case 8:
     if (screen_resolution == 0) {
       param_3 = 0xa0;
       param_4 = 0x8c;
-      frame_val = *(int *)(xvga_anims->field_140 + 4);
+      frame_val = (xvga_anims[0x1a].frames)->image;
       if (dashboard_on_screen != 0) {
         param_4 = 100;
       }
@@ -732,37 +731,36 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0x50;
       param_4 = 0x32;
-      frame_val = *(int *)(xvga_anims->field_134 + 4);
+      frame_val = (xvga_anims[0x19].frames)->image;
     }
     set_mem_image(1,frame_val,param_3,param_4,2);
-    effect_val = keyispressed(0x50);
-    if (((effect_val == 0) && (effect_val = keyispressed(0xd), effect_val == 0)) &&
-       (effect_val = keyispressed(0x20), effect_val == 0)) {
+    frame_index = keyispressed(0x50);
+    if (((frame_index == 0) && (frame_index = keyispressed(0xd), frame_index == 0)) &&
+       (frame_index = keyispressed(0x20), frame_index == 0)) {
       return 0;
     }
     do {
-      effect_val = keyispressed(0x50);
-    } while (effect_val != 0);
+      frame_index = keyispressed(0x50);
+    } while (frame_index != 0);
     restart_time_clock();
-    effect_val = set_race_state(0);
-    return effect_val;
+    frame_index = set_race_state(0);
+    return frame_index;
   }
-  effect_val = current_fine / 1000;
-  iVar2 = (current_fine % 1000) % 100;
-  iVar3 = (iVar2 % 10) * 8;
-  iVar2 = (iVar2 / 10) * 8;
-  iVar4 = ((current_fine % 1000) / 100) * 8;
-  iVar5 = effect_val * 8;
+  frame_index = current_fine / 1000;
+  frame_index_3 = (current_fine % 1000) / 100;
+  frame_index_4 = (current_fine % 1000) % 100;
+  frame_index_2 = frame_index_4 / 10;
+  frame_index_4 = frame_index_4 % 10;
   if (screen_resolution == 0) {
-    local_2c = *(int *)(xvga_anims->field_110 + 4);
-    iVar1 = xvga_anims->field_158;
-    local_28 = *(int *)(iVar5 + 4 + iVar1);
-    local_34 = *(int *)(iVar4 + 4 + iVar1);
-    local_24 = *(int *)(iVar2 + 4 + iVar1);
+    local_2c = (xvga_anims[0x16].frames)->image;
+    frame_val_2 = xvga_anims[0x1c].frames;
+    local_28 = frame_val_2[frame_index].image;
+    local_34 = frame_val_2[frame_index_3].image;
+    local_24 = frame_val_2[frame_index_2].image;
     unaff_EDI = 0x186;
     unaff_ESI = 0xe6;
     local_3c = 0xa0;
-    local_38 = *(int *)(iVar1 + iVar3 + 4);
+    local_38 = frame_val_2[frame_index_4].image;
     local_20 = 0xc;
     param_4 = 100;
     if (dashboard_on_screen != 0) {
@@ -771,34 +769,34 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     }
   }
   else if (screen_resolution == 1) {
-    local_2c = *(int *)(xvga_anims->field_104 + 4);
-    iVar1 = xvga_anims->field_14c;
+    local_2c = (xvga_anims[0x15].frames)->image;
+    frame_val_2 = xvga_anims[0x1b].frames;
     local_3c = 0x4b;
-    local_28 = *(int *)(iVar5 + 4 + iVar1);
-    local_34 = *(int *)(iVar4 + 4 + iVar1);
-    local_24 = *(int *)(iVar2 + 4 + iVar1);
+    local_28 = frame_val_2[frame_index].image;
+    local_34 = frame_val_2[frame_index_3].image;
+    local_24 = frame_val_2[frame_index_2].image;
     param_4 = 0x1e;
     unaff_EDI = 0xc3;
     unaff_ESI = 0x5f;
-    local_38 = *(int *)(iVar1 + iVar3 + 4);
+    local_38 = frame_val_2[frame_index_4].image;
     local_20 = 6;
   }
   set_mem_image(1,local_2c,local_3c,param_4,2);
-  if (effect_val != 0) {
+  if (frame_index != 0) {
     set_mem_image(1,local_28,unaff_EDI,unaff_ESI,0);
   }
   set_mem_image(1,local_34,local_20 + unaff_EDI,unaff_ESI,0);
   set_mem_image(1,local_24,local_20 * 2 + unaff_EDI,unaff_ESI,0);
   set_mem_image(1,local_38,unaff_EDI + local_20 * 3,unaff_ESI,0);
   countdown_expired_result = countdown_expired();
-  if (((countdown_expired_result == 0) && (effect_val = keyispressed(0xd), effect_val == 0)) &&
-     (effect_val = keyispressed(0x20), effect_val == 0)) {
+  if (((countdown_expired_result == 0) && (frame_index = keyispressed(0xd), frame_index == 0)) &&
+     (frame_index = keyispressed(0x20), frame_index == 0)) {
     return 0;
   }
   set_race_state(0);
-  effect_val = current_fine;
+  frame_index = current_fine;
   pay_money(current_fine);
-  return effect_val;
+  return frame_index;
 }
 
 

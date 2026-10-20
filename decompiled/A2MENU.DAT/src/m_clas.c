@@ -21,8 +21,6 @@ int __watcall mdc_compare_score(void *param_1,void *param_2)
 
 /* ==== 004093b3 mdc_create_huidige_stand ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall mdc_create_huidige_stand(void)
 
 {
@@ -31,34 +29,36 @@ void __watcall mdc_create_huidige_stand(void)
   
   debugmsg(s__s__d___mdc_create_huidige_stand_00428cbf,s_m_clas_cpp_00428cb4,0x85);
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428ce5,0x86);
-  _mdc_stand_list =
-       slot_count_total_tijd
-                 (active_slot,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10);
+  mdc_stand_list[0].field_00 =
+       (int *)slot_count_total_tijd
+                        (active_slot,
+                         *(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >>
+                         0x10);
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428cf0,0x87);
-  _DAT_00437f34 = slot_check_index_result * 0x13c + 0x437296;
-  DAT_00437f38 = 1;
+  mdc_stand_list[0]._4_4_ = slot_check_index_result * 0x13c + 0x437296;
+  mdc_stand_list[1].field_00._0_1_ = 1;
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428cfb,0x89);
-  _DAT_00437f39 = slot_count_total_tijd_speler(slot_check_index_result,0);
-  DAT_00437f41 = 0;
-  _DAT_00437f3d = speler_namen;
+  mdc_stand_list[1]._1_4_ = slot_count_total_tijd_speler(slot_check_index_result,0);
+  mdc_stand_list[2].field_00._1_1_ = 0;
+  mdc_stand_list._13_4_ = speler_namen[0];
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d06,0x8c);
-  _DAT_00437f42 = slot_count_total_tijd_speler(slot_check_index_result,1);
-  DAT_00437f4a = 0;
-  _DAT_00437f46 = PTR_s_Gijs_Comara_00435a1c;
+  mdc_stand_list[2]._2_4_ = slot_count_total_tijd_speler(slot_check_index_result,1);
+  mdc_stand_list[3].field_00._2_1_ = 0;
+  mdc_stand_list._22_4_ = speler_namen[1];
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d11,0x8f);
-  _DAT_00437f4b = slot_count_total_tijd_speler(slot_check_index_result,2);
-  _DAT_00437f4f = PTR_s_Rudolf_Porge_00435a20;
-  DAT_00437f53 = 0;
+  mdc_stand_list[3]._3_4_ = slot_count_total_tijd_speler(slot_check_index_result,2);
+  mdc_stand_list._31_4_ = speler_namen[2];
+  mdc_stand_list[4].field_00._3_1_ = 0;
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d1c,0x92);
-  _DAT_00437f54 = slot_count_total_tijd_speler(slot_check_index_result,3);
-  DAT_00437f5c = 0;
-  _DAT_00437f58 = PTR_s_Richard_Viber_00435a24;
+  mdc_stand_list[4]._4_4_ = slot_count_total_tijd_speler(slot_check_index_result,3);
+  mdc_stand_list[5]._4_1_ = 0;
+  mdc_stand_list[5].field_00 = (int *)speler_namen[3];
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d27,0x95);
-  _DAT_00437f5d = slot_count_total_tijd_speler(slot_check_index_result,4);
-  DAT_00437f65 = 0;
-  _DAT_00437f61 = PTR_s_Brian_Jakuar_00435a28;
+  mdc_stand_list._45_4_ = slot_count_total_tijd_speler(slot_check_index_result,4);
+  mdc_stand_list[6]._5_1_ = 0;
+  mdc_stand_list[6]._1_4_ = speler_namen[4];
   debugmsg(s_Done_initializing_current_score_t_00428d32);
-  qsort((int *)&mdc_stand_list,extraout_EDX,(int *)0x9,mdc_compare_score);
+  qsort((int *)mdc_stand_list,extraout_EDX,(int *)0x9,mdc_compare_score);
   return;
 }
 
@@ -70,7 +70,7 @@ void __watcall mdc_display_huidige_stand(int param_1,int param_2,int param_3)
 {
   int *piVar1;
   int *piVar2;
-  int *piVar3;
+  ulonglong uVar3;
   int iVar4;
   ulong uVar5;
   ulong uVar6;
@@ -92,21 +92,22 @@ void __watcall mdc_display_huidige_stand(int param_1,int param_2,int param_3)
   iVar4 = 0;
   do {
     uVar5 = uVar6;
-    if ((&DAT_00437f38)[iVar4] != '\0') {
+    if (*(char *)((int)&mdc_stand_list[1].field_00 + iVar4) != '\0') {
       uVar5 = uVar8;
     }
     xvga_set_font_colors(2,uVar5,uVar5);
     i = i + 1;
     win_print_xy(1,param_1 + 0x2c,iVar7,s__d_00428d79,i);
-    win_print_xy(1,param_1 + 0x52,iVar7,s__s_00428d7c,*(undefined4 *)(&DAT_00437f34 + iVar4));
-    piVar1 = (int *)(&mdc_stand_list + iVar4);
-    piVar2 = (int *)(&mdc_stand_list + iVar4);
-    piVar3 = (int *)(&mdc_stand_list + iVar4);
+    win_print_xy(1,param_1 + 0x52,iVar7,s__s_00428d7c,
+                 *(undefined4 *)(&mdc_stand_list[0].field_0x4 + iVar4));
+    piVar1 = (int *)((int)&mdc_stand_list[0].field_00 + iVar4);
+    uVar3 = (longlong)*(int *)((int)&mdc_stand_list[0].field_00 + iVar4) / 0x3c;
+    piVar2 = (int *)((int)&mdc_stand_list[0].field_00 + iVar4);
     iVar4 = iVar4 + 9;
-    win_print_xy(1,param_1 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_00428d7f,*piVar3 / 0xe10,
+    win_print_xy(1,param_1 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_00428d7f,*piVar2 / 0xe10,
                  (int)((longlong)
-                       ((ulonglong)(uint)((int)((longlong)*piVar2 / 0x3c) >> 0x1f) << 0x20 |
-                       (longlong)*piVar2 / 0x3c & 0xffffffffU) % 0x3c),*piVar1 % 0x3c);
+                       ((ulonglong)(uint)((int)uVar3 >> 0x1f) << 0x20 | uVar3 & 0xffffffff) % 0x3c),
+                 *piVar1 % 0x3c);
     iVar7 = iVar7 + 0x19;
   } while (i < 6);
   return;
@@ -140,7 +141,7 @@ void __watcall mdc_open_screen(void)
   char *filename;
   
   iVar1 = slot_check_index(active_slot,s_m_clas_cpp_00428d95,0xe8);
-  if (*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10 < 6) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10 < 6) {
     filename = s_TStand_pcx_00428dac;
   }
   else {
@@ -156,7 +157,7 @@ void __watcall mdc_open_screen(void)
   handle_wipe(2,3,600);
   show_mouse();
   mdc_display_score();
-  activate_form(&mdc_form);
+  activate_form(mdc_form);
   focus_control(0);
   debugmsg(s_mdc_open_screen_____ok_00428de8);
   return;

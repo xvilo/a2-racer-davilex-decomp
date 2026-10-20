@@ -1036,157 +1036,157 @@ address	kind	name	cc	ret	params	dtype	mangled
 0043218c	data	msghandle			?	int	W?msghandle$ni
 00432190	data	active_slot			?	int	W?active_slot$ni
 00432194	data	score_list			?	score_t	W?score_list$n$score_t$$
-00432d9c	data	level_naam			?		W?level_naam$n[]pna
-00432dc4	data	toets_define			?		W?toets_define$n[]s
-00432dd0	data	mm_buttons			?		W?mm_buttons$n[]$__m9tmqbutton_t$$
-00432e78	data	mm_form			?		W?mm_form$n[]$__2e8n7fform_t$$
-00432f74	data	mm_help			?		W?mm_help$n[]$__1uqkethelp_t$$
-00432fb4	data	mm_tune			?		W?mm_tune$n[]pna
+00432d9c	data	level_naam			?	char*[]	W?level_naam$n[]pna
+00432dc4	data	toets_define			?	short[]	W?toets_define$n[]s
+00432dd0	data	mm_buttons			?	button_t[]	W?mm_buttons$n[]$__m9tmqbutton_t$$
+00432e78	data	mm_form			?	form_t[]	W?mm_form$n[]$__2e8n7fform_t$$
+00432f74	data	mm_help			?	help_t[]	W?mm_help$n[]$__1uqkethelp_t$$
+00432fb4	data	mm_tune			?	char*[]	W?mm_tune$n[]pna
 00432fcc	data	mm_tune_buffer			?	int	W?mm_tune_buffer$ni
-00432fd0	data	mm_entree_anim_tabel			?		W?mm_entree_anim_tabel$n[][12]s
-00433060	data	mst_slot_list			?		W?mst_slot_list$n[]$mst_slot_t$$
-004330b0	data	mst_buttons			?		W?mst_buttons$n[]$__m9tmqbutton_t$$
-00433104	data	mst_areabuttons			?		W?mst_areabuttons$n[]$__4cup74areabutton_t$$
-004331b0	data	mst_form			?		W?mst_form$n[]$__2e8n7fform_t$$
-00433354	data	mst_help			?		W?mst_help$n[]$__1uqkethelp_t$$
-00433374	data	mc_buttons			?		W?mc_buttons$n[]$__m9tmqbutton_t$$
-004333c8	data	mc_areabuttons			?		W?mc_areabuttons$n[]$__4cup74areabutton_t$$
-004333fc	data	mc_form			?		W?mc_form$n[]$__2e8n7fform_t$$
-004334dc	data	mc_form_joy			?		W?mc_form_joy$n[]$__2e8n7fform_t$$
-004335a0	data	mc_help			?		W?mc_help$n[]$__1uqkethelp_t$$
-004335d0	data	mc_help2			?		W?mc_help2$n[]$__1uqkethelp_t$$
-004335f0	data	key_list			?		W?key_list$n[]$mc_keyset_t$$
-00433748	data	config_key			?		W?config_key$n[]$mc_config_key_t$$
-004337d8	data	mc_instel_wav			?		W?mc_instel_wav$n[]pna
-004337e8	data	mc_entree_anim_tabel			?		W?mc_entree_anim_tabel$n[][8]s
-00433808	data	mo_buttons			?		W?mo_buttons$n[]$__m9tmqbutton_t$$
-00433848	data	mo_areabuttons			?		W?mo_areabuttons$n[]$__4cup74areabutton_t$$
-0043397c	data	mo_form_3D			?		W?mo_form_3D$n[]$__2e8n7fform_t$$
-00433bc8	data	mo_form_320			?		W?mo_form_320$n[]$__2e8n7fform_t$$
-00433e14	data	mo_form_640			?		W?mo_form_640$n[]$__2e8n7fform_t$$
-00434060	data	mo_help			?		W?mo_help$n[]$__1uqkethelp_t$$
-00434090	data	mo_entree_anim_tabel			?		W?mo_entree_anim_tabel$n[][8]s
-004340b0	data	ms_buttons			?		W?ms_buttons$n[]$__m9tmqbutton_t$$
-004340c8	data	ms_areabuttons			?		W?ms_areabuttons$n[]$__4cup74areabutton_t$$
-00434140	data	ms_form			?		W?ms_form$n[]$__2e8n7fform_t$$
-0043423c	data	mds_buttons			?		W?mds_buttons$n[]$__m9tmqbutton_t$$
-00434254	data	mds_form			?		W?mds_form$n[]$__2e8n7fform_t$$
-0043428c	data	mns_slot_list			?		W?mns_slot_list$n[]$mns_slot_t$$
-004342dc	data	mns_buttons			?		W?mns_buttons$n[]$__m9tmqbutton_t$$
-00434330	data	mns_areabuttons			?		W?mns_areabuttons$n[]$__4cup74areabutton_t$$
-004343dc	data	mns_form			?		W?mns_form$n[]$__2e8n7fform_t$$
-00434580	data	mns_help			?		W?mns_help$n[]$__1uqkethelp_t$$
-004345a0	data	mdt_buttons			?		W?mdt_buttons$n[]$__m9tmqbutton_t$$
-004345b8	data	mdt_form			?		W?mdt_form$n[]$__2e8n7fform_t$$
-004345f0	data	mdt_stand_pcx			?		W?mdt_stand_pcx$n[]pna
-00434608	data	mdt_display_stand__leeg			?		W?$Wsi09leeg$n[]a$:.0$:?mdt_display_stand$n(iiii)vnx[]a
-0043460c	data	mdc_buttons			?		W?mdc_buttons$n[]$__m9tmqbutton_t$$
-00434624	data	mdc_form			?		W?mdc_form$n[]$__2e8n7fform_t$$
-0043465c	data	mns_regel			?		W?mns_regel$n[]$frame_t$$
-0043466c	data	mns_ok			?		W?mns_ok$n[]$frame_t$$
-0043468c	data	mns_verwijder			?		W?mns_verwijder$n[]$frame_t$$
-004346ac	data	mns_help_1			?		W?mns_help$n[]$frame_t$$
-004346cc	data	mns_annul			?		W?mns_annul$n[]$frame_t$$
-004346ec	data	mst_regel			?		W?mst_regel$n[]$frame_t$$
-004346fc	data	mst_ok			?		W?mst_ok$n[]$frame_t$$
-0043471c	data	mst_verwijder			?		W?mst_verwijder$n[]$frame_t$$
-0043473c	data	mst_einde			?		W?mst_einde$n[]$frame_t$$
-0043475c	data	mst_help_1			?		W?mst_help$n[]$frame_t$$
-0043477c	data	reqi_ok			?		W?reqi_ok$n[]$frame_t$$
-0043479c	data	reqi_annul			?		W?reqi_annul$n[]$frame_t$$
-004347bc	data	reqi_window			?		W?reqi_window$n[]$frame_t$$
-004347c4	data	reqv_ja			?		W?reqv_ja$n[]$frame_t$$
-004347e4	data	reqv_nee			?		W?reqv_nee$n[]$frame_t$$
-00434804	data	reqv_window			?		W?reqv_window$n[]$frame_t$$
-0043480c	data	reqw_ok			?		W?reqw_ok$n[]$frame_t$$
-0043482c	data	reqw_window			?		W?reqw_window$n[]$frame_t$$
-00434834	data	mm_help_1			?		W?mm_help$n[]$frame_t$$
-00434854	data	mm_einde			?		W?mm_einde$n[]$frame_t$$
-00434874	data	mm_start			?		W?mm_start$n[]$frame_t$$
-00434894	data	mm_bediening			?		W?mm_bediening$n[]$frame_t$$
-004348b4	data	mm_opties			?		W?mm_opties$n[]$frame_t$$
-004348d4	data	mm_opnieuw			?		W?mm_opnieuw$n[]$frame_t$$
-004348f4	data	mm_hiscore			?		W?mm_hiscore$n[]$frame_t$$
-00434914	data	mm_nieuwspel			?		W?mm_nieuwspel$n[]$frame_t$$
-00434934	data	mma1_start			?		W?mma1_start$n[]$frame_t$$
-00434974	data	mma1_bediening			?		W?mma1_bediening$n[]$frame_t$$
-004349b4	data	mma1_opties			?		W?mma1_opties$n[]$frame_t$$
-004349f4	data	mma1_opnieuw			?		W?mma1_opnieuw$n[]$frame_t$$
-00434a34	data	mma1_hiscore			?		W?mma1_hiscore$n[]$frame_t$$
-00434a74	data	mma1_nieuwspel			?		W?mma1_nieuwspel$n[]$frame_t$$
-00434ab4	data	mma2_start			?		W?mma2_start$n[]$frame_t$$
-00434afc	data	mma2_bediening			?		W?mma2_bediening$n[]$frame_t$$
-00434b44	data	mma2_opties			?		W?mma2_opties$n[]$frame_t$$
-00434b8c	data	mma2_opnieuw			?		W?mma2_opnieuw$n[]$frame_t$$
-00434bd4	data	mma2_hiscore			?		W?mma2_hiscore$n[]$frame_t$$
-00434c1c	data	mma2_nieuwspel			?		W?mma2_nieuwspel$n[]$frame_t$$
-00434c64	data	mm_map			?		W?mm_map$n[]$frame_t$$
-00434c94	data	mca_textbox			?		W?mca_textbox$n[]$frame_t$$
-00434cd4	data	mc_ok			?		W?mc_ok$n[]$frame_t$$
-00434cf4	data	mc_annuleren			?		W?mc_annuleren$n[]$frame_t$$
-00434d14	data	mca1_ok			?		W?mca1_ok$n[]$frame_t$$
-00434d54	data	mca1_annuleren			?		W?mca1_annuleren$n[]$frame_t$$
-00434d94	data	mca2_ok			?		W?mca2_ok$n[]$frame_t$$
-00434ddc	data	mca2_annuleren			?		W?mca2_annuleren$n[]$frame_t$$
-00434e24	data	mc_keyboard			?		W?mc_keyboard$n[]$frame_t$$
-00434e4c	data	mc_joystick			?		W?mc_joystick$n[]$frame_t$$
-00434e74	data	mc_stuur			?		W?mc_stuur$n[]$frame_t$$
-00434e9c	data	mc_instellen			?		W?mc_instellen$n[]$frame_t$$
-00434ebc	data	mc_help_1			?		W?mc_help$n[]$frame_t$$
-00434edc	data	mc_control			?		W?mc_control$n[]$frame_t$$
-00434efc	data	mc_kb_slot			?		W?mc_kb_slot$n[]$frame_t$$
-00434f04	data	mo_tablet			?		W?mo_tablet$n[]$frame_t$$
-00434f1c	data	mo_snd_bord			?		W?mo_snd_bord$n[]$frame_t$$
-00434f2c	data	mo_light_on			?		W?mo_light_on$n[]$frame_t$$
-00434f54	data	mo_light_off			?		W?mo_light_off$n[]$frame_t$$
-00434f7c	data	mo_arrow_left			?		W?mo_arrow_left$n[]$frame_t$$
-00434f9c	data	mo_arrow_right			?		W?mo_arrow_right$n[]$frame_t$$
-00434fbc	data	mo_radio			?		W?mo_radio$n[]$frame_t$$
-00434fcc	data	mo_ok			?		W?mo_ok$n[]$frame_t$$
-00434fec	data	mo_annuleren			?		W?mo_annuleren$n[]$frame_t$$
-0043500c	data	mo_help_1			?		W?mo_help$n[]$frame_t$$
-0043502c	data	moa1_ok			?		W?moa1_ok$n[]$frame_t$$
-0043506c	data	moa1_annuleren			?		W?moa1_annuleren$n[]$frame_t$$
-004350ac	data	moa2_ok			?		W?moa2_ok$n[]$frame_t$$
-004350f4	data	moa2_annuleren			?		W?moa2_annuleren$n[]$frame_t$$
-0043513c	data	mo_txt_geluid			?		W?mo_txt_geluid$n[]$frame_t$$
-00435164	data	mo_txt_detail			?		W?mo_txt_detail$n[]$frame_t$$
-0043517c	data	mo_txt_horizon			?		W?mo_txt_horizon$n[]$frame_t$$
-00435194	data	mo_txt_dashbord			?		W?mo_txt_dashbord$n[]$frame_t$$
-004351ac	data	mo_txt_camera			?		W?mo_txt_camera$n[]$frame_t$$
-004351cc	data	mo_view			?		W?mo_view$n[]$frame_t$$
-004351ec	data	mo_geluid			?		W?mo_geluid$n[]$frame_t$$
-0043521c	data	mo_resolutie			?		W?mo_resolutie$n[]$frame_t$$
-0043523c	data	mds_terug			?		W?mds_terug$n[]$frame_t$$
-0043525c	data	mdt_terug			?		W?mdt_terug$n[]$frame_t$$
-0043527c	data	mdc_terug			?		W?mdc_terug$n[]$frame_t$$
-0043529c	data	ms_terug			?		W?ms_terug$n[]$frame_t$$
-004352bc	data	ms_help			?		W?ms_help$n[]$frame_t$$
-004352dc	data	ms_bord_score			?		W?ms_bord_score$n[]$frame_t$$
-00435314	data	ms_bord_head			?		W?ms_bord_head$n[]$frame_t$$
-00435324	data	mm_menu_cfg			?		W?mm_menu_cfg$n[]l
-0043537c	data	mc_menu_cfg			?		W?mc_menu_cfg$n[]l
-004353b8	data	mo_menu_cfg			?		W?mo_menu_cfg$n[]l
-00435414	data	ms_menu_cfg			?		W?ms_menu_cfg$n[]l
-00435428	data	reqwarn_cfg			?		W?reqwarn_cfg$n[]l
-00435434	data	reqvraag_cfg			?		W?reqvraag_cfg$n[]l
-00435444	data	reqinput_cfg			?		W?reqinput_cfg$n[]l
-00435454	data	mst_menu_cfg			?		W?mst_menu_cfg$n[]l
-0043546c	data	mds_menu_cfg			?		W?mds_menu_cfg$n[]l
-00435474	data	mdt_menu_cfg			?		W?mdt_menu_cfg$n[]l
-0043547c	data	mdc_menu_cfg			?		W?mdc_menu_cfg$n[]l
-00435484	data	mns_menu_cfg			?		W?mns_menu_cfg$n[]l
-0043549c	data	anims			?		W?anims$n[]$anim_t$$
-00435880	data	reqw_buttons			?		W?reqw_buttons$n[]$__m9tmqbutton_t$$
-00435898	data	reqw_form			?		W?reqw_form$n[]$__2e8n7fform_t$$
-004358d0	data	reqv_buttons			?		W?reqv_buttons$n[]$__m9tmqbutton_t$$
-004358fc	data	reqv_form			?		W?reqv_form$n[]$__2e8n7fform_t$$
-00435950	data	reqi_buttons			?		W?reqi_buttons$n[]$__m9tmqbutton_t$$
-0043597c	data	reqi_edit_box			?		W?reqi_edit_box$n[]$__2u792fedit_box_t$$
-004359a8	data	reqi_form			?		W?reqi_form$n[]$__2e8n7fform_t$$
-00435a18	data	speler_namen			?		W?speler_namen$n[]pna
+00432fd0	data	mm_entree_anim_tabel			?	short[]	W?mm_entree_anim_tabel$n[][12]s
+00433060	data	mst_slot_list			?	mst_slot_t[]	W?mst_slot_list$n[]$mst_slot_t$$
+004330b0	data	mst_buttons			?	button_t[]	W?mst_buttons$n[]$__m9tmqbutton_t$$
+00433104	data	mst_areabuttons			?	areabutton_t[]	W?mst_areabuttons$n[]$__4cup74areabutton_t$$
+004331b0	data	mst_form			?	form_t[]	W?mst_form$n[]$__2e8n7fform_t$$
+00433354	data	mst_help			?	help_t[]	W?mst_help$n[]$__1uqkethelp_t$$
+00433374	data	mc_buttons			?	button_t[]	W?mc_buttons$n[]$__m9tmqbutton_t$$
+004333c8	data	mc_areabuttons			?	areabutton_t[]	W?mc_areabuttons$n[]$__4cup74areabutton_t$$
+004333fc	data	mc_form			?	form_t[]	W?mc_form$n[]$__2e8n7fform_t$$
+004334dc	data	mc_form_joy			?	form_t[]	W?mc_form_joy$n[]$__2e8n7fform_t$$
+004335a0	data	mc_help			?	help_t[]	W?mc_help$n[]$__1uqkethelp_t$$
+004335d0	data	mc_help2			?	help_t[]	W?mc_help2$n[]$__1uqkethelp_t$$
+004335f0	data	key_list			?	mc_keyset_t[]	W?key_list$n[]$mc_keyset_t$$
+00433748	data	config_key			?	mc_config_key_t[]	W?config_key$n[]$mc_config_key_t$$
+004337d8	data	mc_instel_wav			?	char*[]	W?mc_instel_wav$n[]pna
+004337e8	data	mc_entree_anim_tabel			?	short[]	W?mc_entree_anim_tabel$n[][8]s
+00433808	data	mo_buttons			?	button_t[]	W?mo_buttons$n[]$__m9tmqbutton_t$$
+00433848	data	mo_areabuttons			?	areabutton_t[]	W?mo_areabuttons$n[]$__4cup74areabutton_t$$
+0043397c	data	mo_form_3D			?	form_t[]	W?mo_form_3D$n[]$__2e8n7fform_t$$
+00433bc8	data	mo_form_320			?	form_t[]	W?mo_form_320$n[]$__2e8n7fform_t$$
+00433e14	data	mo_form_640			?	form_t[]	W?mo_form_640$n[]$__2e8n7fform_t$$
+00434060	data	mo_help			?	help_t[]	W?mo_help$n[]$__1uqkethelp_t$$
+00434090	data	mo_entree_anim_tabel			?	short[]	W?mo_entree_anim_tabel$n[][8]s
+004340b0	data	ms_buttons			?	button_t[]	W?ms_buttons$n[]$__m9tmqbutton_t$$
+004340c8	data	ms_areabuttons			?	areabutton_t[]	W?ms_areabuttons$n[]$__4cup74areabutton_t$$
+00434140	data	ms_form			?	form_t[]	W?ms_form$n[]$__2e8n7fform_t$$
+0043423c	data	mds_buttons			?	button_t[]	W?mds_buttons$n[]$__m9tmqbutton_t$$
+00434254	data	mds_form			?	form_t[]	W?mds_form$n[]$__2e8n7fform_t$$
+0043428c	data	mns_slot_list			?	mns_slot_t[]	W?mns_slot_list$n[]$mns_slot_t$$
+004342dc	data	mns_buttons			?	button_t[]	W?mns_buttons$n[]$__m9tmqbutton_t$$
+00434330	data	mns_areabuttons			?	areabutton_t[]	W?mns_areabuttons$n[]$__4cup74areabutton_t$$
+004343dc	data	mns_form			?	form_t[]	W?mns_form$n[]$__2e8n7fform_t$$
+00434580	data	mns_help			?	help_t[]	W?mns_help$n[]$__1uqkethelp_t$$
+004345a0	data	mdt_buttons			?	button_t[]	W?mdt_buttons$n[]$__m9tmqbutton_t$$
+004345b8	data	mdt_form			?	form_t[]	W?mdt_form$n[]$__2e8n7fform_t$$
+004345f0	data	mdt_stand_pcx			?	char*[]	W?mdt_stand_pcx$n[]pna
+00434608	data	mdt_display_stand__leeg			?	char[]	W?$Wsi09leeg$n[]a$:.0$:?mdt_display_stand$n(iiii)vnx[]a
+0043460c	data	mdc_buttons			?	button_t[]	W?mdc_buttons$n[]$__m9tmqbutton_t$$
+00434624	data	mdc_form			?	form_t[]	W?mdc_form$n[]$__2e8n7fform_t$$
+0043465c	data	mns_regel			?	frame_t[]	W?mns_regel$n[]$frame_t$$
+0043466c	data	mns_ok			?	frame_t[]	W?mns_ok$n[]$frame_t$$
+0043468c	data	mns_verwijder			?	frame_t[]	W?mns_verwijder$n[]$frame_t$$
+004346ac	data	mns_help_1			?	frame_t[]	W?mns_help$n[]$frame_t$$
+004346cc	data	mns_annul			?	frame_t[]	W?mns_annul$n[]$frame_t$$
+004346ec	data	mst_regel			?	frame_t[]	W?mst_regel$n[]$frame_t$$
+004346fc	data	mst_ok			?	frame_t[]	W?mst_ok$n[]$frame_t$$
+0043471c	data	mst_verwijder			?	frame_t[]	W?mst_verwijder$n[]$frame_t$$
+0043473c	data	mst_einde			?	frame_t[]	W?mst_einde$n[]$frame_t$$
+0043475c	data	mst_help_1			?	frame_t[]	W?mst_help$n[]$frame_t$$
+0043477c	data	reqi_ok			?	frame_t[]	W?reqi_ok$n[]$frame_t$$
+0043479c	data	reqi_annul			?	frame_t[]	W?reqi_annul$n[]$frame_t$$
+004347bc	data	reqi_window			?	frame_t[]	W?reqi_window$n[]$frame_t$$
+004347c4	data	reqv_ja			?	frame_t[]	W?reqv_ja$n[]$frame_t$$
+004347e4	data	reqv_nee			?	frame_t[]	W?reqv_nee$n[]$frame_t$$
+00434804	data	reqv_window			?	frame_t[]	W?reqv_window$n[]$frame_t$$
+0043480c	data	reqw_ok			?	frame_t[]	W?reqw_ok$n[]$frame_t$$
+0043482c	data	reqw_window			?	frame_t[]	W?reqw_window$n[]$frame_t$$
+00434834	data	mm_help_1			?	frame_t[]	W?mm_help$n[]$frame_t$$
+00434854	data	mm_einde			?	frame_t[]	W?mm_einde$n[]$frame_t$$
+00434874	data	mm_start			?	frame_t[]	W?mm_start$n[]$frame_t$$
+00434894	data	mm_bediening			?	frame_t[]	W?mm_bediening$n[]$frame_t$$
+004348b4	data	mm_opties			?	frame_t[]	W?mm_opties$n[]$frame_t$$
+004348d4	data	mm_opnieuw			?	frame_t[]	W?mm_opnieuw$n[]$frame_t$$
+004348f4	data	mm_hiscore			?	frame_t[]	W?mm_hiscore$n[]$frame_t$$
+00434914	data	mm_nieuwspel			?	frame_t[]	W?mm_nieuwspel$n[]$frame_t$$
+00434934	data	mma1_start			?	frame_t[]	W?mma1_start$n[]$frame_t$$
+00434974	data	mma1_bediening			?	frame_t[]	W?mma1_bediening$n[]$frame_t$$
+004349b4	data	mma1_opties			?	frame_t[]	W?mma1_opties$n[]$frame_t$$
+004349f4	data	mma1_opnieuw			?	frame_t[]	W?mma1_opnieuw$n[]$frame_t$$
+00434a34	data	mma1_hiscore			?	frame_t[]	W?mma1_hiscore$n[]$frame_t$$
+00434a74	data	mma1_nieuwspel			?	frame_t[]	W?mma1_nieuwspel$n[]$frame_t$$
+00434ab4	data	mma2_start			?	frame_t[]	W?mma2_start$n[]$frame_t$$
+00434afc	data	mma2_bediening			?	frame_t[]	W?mma2_bediening$n[]$frame_t$$
+00434b44	data	mma2_opties			?	frame_t[]	W?mma2_opties$n[]$frame_t$$
+00434b8c	data	mma2_opnieuw			?	frame_t[]	W?mma2_opnieuw$n[]$frame_t$$
+00434bd4	data	mma2_hiscore			?	frame_t[]	W?mma2_hiscore$n[]$frame_t$$
+00434c1c	data	mma2_nieuwspel			?	frame_t[]	W?mma2_nieuwspel$n[]$frame_t$$
+00434c64	data	mm_map			?	frame_t[]	W?mm_map$n[]$frame_t$$
+00434c94	data	mca_textbox			?	frame_t[]	W?mca_textbox$n[]$frame_t$$
+00434cd4	data	mc_ok			?	frame_t[]	W?mc_ok$n[]$frame_t$$
+00434cf4	data	mc_annuleren			?	frame_t[]	W?mc_annuleren$n[]$frame_t$$
+00434d14	data	mca1_ok			?	frame_t[]	W?mca1_ok$n[]$frame_t$$
+00434d54	data	mca1_annuleren			?	frame_t[]	W?mca1_annuleren$n[]$frame_t$$
+00434d94	data	mca2_ok			?	frame_t[]	W?mca2_ok$n[]$frame_t$$
+00434ddc	data	mca2_annuleren			?	frame_t[]	W?mca2_annuleren$n[]$frame_t$$
+00434e24	data	mc_keyboard			?	frame_t[]	W?mc_keyboard$n[]$frame_t$$
+00434e4c	data	mc_joystick			?	frame_t[]	W?mc_joystick$n[]$frame_t$$
+00434e74	data	mc_stuur			?	frame_t[]	W?mc_stuur$n[]$frame_t$$
+00434e9c	data	mc_instellen			?	frame_t[]	W?mc_instellen$n[]$frame_t$$
+00434ebc	data	mc_help_1			?	frame_t[]	W?mc_help$n[]$frame_t$$
+00434edc	data	mc_control			?	frame_t[]	W?mc_control$n[]$frame_t$$
+00434efc	data	mc_kb_slot			?	frame_t[]	W?mc_kb_slot$n[]$frame_t$$
+00434f04	data	mo_tablet			?	frame_t[]	W?mo_tablet$n[]$frame_t$$
+00434f1c	data	mo_snd_bord			?	frame_t[]	W?mo_snd_bord$n[]$frame_t$$
+00434f2c	data	mo_light_on			?	frame_t[]	W?mo_light_on$n[]$frame_t$$
+00434f54	data	mo_light_off			?	frame_t[]	W?mo_light_off$n[]$frame_t$$
+00434f7c	data	mo_arrow_left			?	frame_t[]	W?mo_arrow_left$n[]$frame_t$$
+00434f9c	data	mo_arrow_right			?	frame_t[]	W?mo_arrow_right$n[]$frame_t$$
+00434fbc	data	mo_radio			?	frame_t[]	W?mo_radio$n[]$frame_t$$
+00434fcc	data	mo_ok			?	frame_t[]	W?mo_ok$n[]$frame_t$$
+00434fec	data	mo_annuleren			?	frame_t[]	W?mo_annuleren$n[]$frame_t$$
+0043500c	data	mo_help_1			?	frame_t[]	W?mo_help$n[]$frame_t$$
+0043502c	data	moa1_ok			?	frame_t[]	W?moa1_ok$n[]$frame_t$$
+0043506c	data	moa1_annuleren			?	frame_t[]	W?moa1_annuleren$n[]$frame_t$$
+004350ac	data	moa2_ok			?	frame_t[]	W?moa2_ok$n[]$frame_t$$
+004350f4	data	moa2_annuleren			?	frame_t[]	W?moa2_annuleren$n[]$frame_t$$
+0043513c	data	mo_txt_geluid			?	frame_t[]	W?mo_txt_geluid$n[]$frame_t$$
+00435164	data	mo_txt_detail			?	frame_t[]	W?mo_txt_detail$n[]$frame_t$$
+0043517c	data	mo_txt_horizon			?	frame_t[]	W?mo_txt_horizon$n[]$frame_t$$
+00435194	data	mo_txt_dashbord			?	frame_t[]	W?mo_txt_dashbord$n[]$frame_t$$
+004351ac	data	mo_txt_camera			?	frame_t[]	W?mo_txt_camera$n[]$frame_t$$
+004351cc	data	mo_view			?	frame_t[]	W?mo_view$n[]$frame_t$$
+004351ec	data	mo_geluid			?	frame_t[]	W?mo_geluid$n[]$frame_t$$
+0043521c	data	mo_resolutie			?	frame_t[]	W?mo_resolutie$n[]$frame_t$$
+0043523c	data	mds_terug			?	frame_t[]	W?mds_terug$n[]$frame_t$$
+0043525c	data	mdt_terug			?	frame_t[]	W?mdt_terug$n[]$frame_t$$
+0043527c	data	mdc_terug			?	frame_t[]	W?mdc_terug$n[]$frame_t$$
+0043529c	data	ms_terug			?	frame_t[]	W?ms_terug$n[]$frame_t$$
+004352bc	data	ms_help			?	frame_t[]	W?ms_help$n[]$frame_t$$
+004352dc	data	ms_bord_score			?	frame_t[]	W?ms_bord_score$n[]$frame_t$$
+00435314	data	ms_bord_head			?	frame_t[]	W?ms_bord_head$n[]$frame_t$$
+00435324	data	mm_menu_cfg			?	long[]	W?mm_menu_cfg$n[]l
+0043537c	data	mc_menu_cfg			?	long[]	W?mc_menu_cfg$n[]l
+004353b8	data	mo_menu_cfg			?	long[]	W?mo_menu_cfg$n[]l
+00435414	data	ms_menu_cfg			?	long[]	W?ms_menu_cfg$n[]l
+00435428	data	reqwarn_cfg			?	long[]	W?reqwarn_cfg$n[]l
+00435434	data	reqvraag_cfg			?	long[]	W?reqvraag_cfg$n[]l
+00435444	data	reqinput_cfg			?	long[]	W?reqinput_cfg$n[]l
+00435454	data	mst_menu_cfg			?	long[]	W?mst_menu_cfg$n[]l
+0043546c	data	mds_menu_cfg			?	long[]	W?mds_menu_cfg$n[]l
+00435474	data	mdt_menu_cfg			?	long[]	W?mdt_menu_cfg$n[]l
+0043547c	data	mdc_menu_cfg			?	long[]	W?mdc_menu_cfg$n[]l
+00435484	data	mns_menu_cfg			?	long[]	W?mns_menu_cfg$n[]l
+0043549c	data	anims			?	anim_t[]	W?anims$n[]$anim_t$$
+00435880	data	reqw_buttons			?	button_t[]	W?reqw_buttons$n[]$__m9tmqbutton_t$$
+00435898	data	reqw_form			?	form_t[]	W?reqw_form$n[]$__2e8n7fform_t$$
+004358d0	data	reqv_buttons			?	button_t[]	W?reqv_buttons$n[]$__m9tmqbutton_t$$
+004358fc	data	reqv_form			?	form_t[]	W?reqv_form$n[]$__2e8n7fform_t$$
+00435950	data	reqi_buttons			?	button_t[]	W?reqi_buttons$n[]$__m9tmqbutton_t$$
+0043597c	data	reqi_edit_box			?	edit_box_t[]	W?reqi_edit_box$n[]$__2u792fedit_box_t$$
+004359a8	data	reqi_form			?	form_t[]	W?reqi_form$n[]$__2e8n7fform_t$$
+00435a18	data	speler_namen			?	char*[]	W?speler_namen$n[]pna
 00435a30	data	movie_on			?	int	W?movie_on$ni
-00435a34	data	ini_filename			?		W?ini_filename$n[]a
+00435a34	data	ini_filename			?	char[]	W?ini_filename$n[]a
 00435b60	data	xvga_screen_mode			?	int	W?xvga_screen_mode$ni
 00435b64	data	xvga_screen_xsize			?	int	W?xvga_screen_xsize$ni
 00435b68	data	xvga_screen_ysize			?	int	W?xvga_screen_ysize$ni
@@ -1194,10 +1194,10 @@ address	kind	name	cc	ret	params	dtype	mangled
 00435b70	data	xvga_coop_level			?	int	W?xvga_coop_level$ni
 00435b74	data	xvga_back_buffers			?	int	W?xvga_back_buffers$ni
 00435b78	data	xvga_dd_guid			?	int	W?xvga_dd_guid$ni
-00435b7c	data	xvga_screen_modes			?		W?xvga_screen_modes$n[]$screen_mode_t$$
+00435b7c	data	xvga_screen_modes			?	screen_mode_t[]	W?xvga_screen_modes$n[]$screen_mode_t$$
 00435ce4	data	debugmsg_toggle			?	int	W?debugmsg_toggle$ni
-00435ce8	data	fatal_exit__mb_flags			?		W?$Wsi0dmb_flags$n[]i$:.0$:?fatal_exit$n(pnae)inx[]i
-00435d04	data	sound_modes			?		W?sound_modes$n[]$sound_mode_t$$
+00435ce8	data	fatal_exit__mb_flags			?	int[]	W?$Wsi0dmb_flags$n[]i$:.0$:?fatal_exit$n(pnae)inx[]i
+00435d04	data	sound_modes			?	sound_mode_t[]	W?sound_modes$n[]$sound_mode_t$$
 00435de4	data	sb16_driver_index			?	int	W?sb16_driver_index$ni
 00435de8	data	secondary_driver_index			?	int	W?secondary_driver_index$ni
 00435dec	data	mouse_show			?	int	W?mouse_show$ni
@@ -1209,12 +1209,12 @@ address	kind	name	cc	ret	params	dtype	mangled
 00435e04	data	mouse_anim			?	int	W?mouse_anim$ni
 00435e08	data	mouse_frame			?	int	W?mouse_frame$ni
 00435e0c	data	mouse_type			?	int	W?mouse_type$ni
-00435e10	data	grid			?		W?grid$n[]uc
-00435e58	data	help_stop_keys			?		W?help_stop_keys$n[]i
+00435e10	data	grid			?	uchar[]	W?grid$n[]uc
+00435e58	data	help_stop_keys			?	int[]	W?help_stop_keys$n[]i
 00435e8c	data	max_mem_image_ptr			?	int	W?max_mem_image_ptr$ni
 00435e90	data	mem_image_color_key			?	_DDCOLORKEY	W?mem_image_color_key$n$_DDCOLORKEY$$
 00435e98	data	xvga_font_index			?	int	W?xvga_font_index$ni
-00435e9c	data	xvga_fonts			?		W?xvga_fonts$n[]$__3etm0cfont_t$$
+00435e9c	data	xvga_fonts			?	font_t[]	W?xvga_fonts$n[]$__3etm0cfont_t$$
 00435f1c	data	sys_nerr			?		_sys_nerr
 00435f20	data	sys_errlist			?		_sys_errlist
 00435f60	data	joysticksencesibility			?	double	W?joysticksencesibility$nd
@@ -1222,7 +1222,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 00435f6c	data	form_anim_timer			?	int	W?form_anim_timer$ni
 00435f70	data	selected_control			?	int	W?selected_control$ni
 00435f74	data	control_keypressed			?	int	W?control_keypressed$ni
-00435f78	data	EditWindowProc__key			?		W?$Wsi08key$n[]a$:.0$:?EditWindowProc$n(pnvuiuil)lnx[]a
+00435f78	data	EditWindowProc__key			?	char[]	W?$Wsi08key$n[]a$:.0$:?EditWindowProc$n(pnvuiuil)lnx[]a
 00435f7c	data	atexit			?		___atexit
 00435f80	data	int23_exit			?		___int23_exit
 00435f84	data	FPE_handler_exit			?		___FPE_handler_exit
@@ -1270,8 +1270,8 @@ address	kind	name	cc	ret	params	dtype	mangled
 0043622c	data	WindowsGetche			?		__WindowsGetche
 00436230	data	WindowsPutch			?		__WindowsPutch
 00436234	data	WindowExitRtn			?		__WindowExitRtn
-00436238	data	roll_tabledraw			?		W?roll_tabledraw$n[]i
-00436330	data	raster			?		W?raster$n[]$__1ps8pgrid_t$$
+00436238	data	roll_tabledraw			?	int[]	W?roll_tabledraw$n[]i
+00436330	data	raster			?	grid_t[]	W?raster$n[]$__1ps8pgrid_t$$
 00436370	data	xlat			?		_xlat
 00436384	data	nheapbeg			?		___nheapbeg
 00436388	data	MiniHeapRover			?		___MiniHeapRover
@@ -1356,19 +1356,19 @@ address	kind	name	cc	ret	params	dtype	mangled
 00436786	data	AccessSema4Fini			?		___AccessSema4Fini
 00437010	data	debug_on			?	int	W?debug_on$ni
 00437014	data	sndformaat			?	int	W?sndformaat$ni
-00437018	data	path_buffer			?		W?path_buffer$n[]a
-0043711c	data	path_buffer2			?		W?path_buffer2$n[]a
+00437018	data	path_buffer			?	char[]	W?path_buffer$n[]a
+0043711c	data	path_buffer2			?	char[]	W?path_buffer2$n[]a
 00437220	data	opties			?	opties_t	W?opties$n$opties_t$$
 00437234	data	available_joy			?	int	W?available_joy$ni
 00437238	data	control			?	bedien_t	W?control$n$bedien_t$$
-0043725c	data	slot_list			?		W?slot_list$n[]$slot_t$$
-00437eb4	data	slot_str_buffer			?		W?slot_str_buffer$n[]a
+0043725c	data	slot_list			?	slot_t[]	W?slot_list$n[]$slot_t$$
+00437eb4	data	slot_str_buffer			?	char[]	W?slot_str_buffer$n[]a
 00437ed4	data	slots_already_loaded			?	int	W?slots_already_loaded$ni
 00437ed8	data	score_already_loaded			?	int	W?score_already_loaded$ni
 00437edc	data	infio			?	infio_t	W?infio$n$infio_t$$
-00437f30	data	mdc_stand_list			?		W?mdc_stand_list$n[]$mdc_stand_t$$
-00437f8c	data	buffer1			?		W?buffer1$n[]a
-00438054	data	buffer2			?		W?buffer2$n[]a
+00437f30	data	mdc_stand_list			?	mdc_stand_t[]	W?mdc_stand_list$n[]$mdc_stand_t$$
+00437f8c	data	buffer1			?	char[]	W?buffer1$n[]a
+00438054	data	buffer2			?	char[]	W?buffer2$n[]a
 0043811c	data	init_anims_ok			?	int	W?init_anims_ok$ni
 00438120	data	mysnd_state			?	short	W?mysnd_state$ns
 00438124	data	ini_file_init_ok			?	int	W?ini_file_init_ok$ni
@@ -1412,7 +1412,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004381bc	data	snd_buffer_alloc			?	int	W?snd_buffer_alloc$ni
 004381c0	data	snd_format_set			?	int	W?snd_format_set$ni
 004381c4	data	cd_directory			?	char*	W?cd_directory$npna
-004381c8	data	cd_drive			?		W?cd_drive$n[]a
+004381c8	data	cd_drive			?	char[]	W?cd_drive$n[]a
 004381cc	data	res_fp			?	__iobuf*	W?res_fp$npn$__iobuf$$
 004381d0	data	data_fp			?	__iobuf*	W?data_fp$npn$__iobuf$$
 004381d4	data	file_begin_pos			?	long	W?file_begin_pos$nl
@@ -1420,7 +1420,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004381dc	data	xvga_rc_files			?	fileio_t*	W?xvga_rc_files$npn$fileio_t$$
 004381e0	data	max_xvga_rc_files			?	int	W?max_xvga_rc_files$ni
 004381e4	data	init_fileio_ok			?	int	W?init_fileio_ok$ni
-004381e8	data	control_list			?		W?control_list$n[]$__93rdtcontrols_t$$
+004381e8	data	control_list			?	controls_t[]	W?control_list$n[]$__93rdtcontrols_t$$
 004382e4	data	mouse_init_ok			?	int	W?mouse_init_ok$ni
 004382e8	data	mouse_on_off			?	int	W?mouse_on_off$ni
 004382ec	data	mouse_anim_set			?	int	W?mouse_anim_set$ni
@@ -1441,7 +1441,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 00438328	data	init_sprites_ok			?	int	W?init_sprites_ok$ni
 0043832c	data	xvga_font_set			?	int	W?xvga_font_set$ni
 00438330	data	joystickinfo			?	joyinfoex_tag	W?joystickinfo$n$joyinfoex_tag$$
-00438364	data	joystickstate			?		W?joystickstate$n[]$__ajdnjjoystickstate_t$$
+00438364	data	joystickstate			?	joystickstate_t[]	W?joystickstate$n[]$__ajdnjjoystickstate_t$$
 00438478	data	clipping_on			?	int	W?clipping_on$ni
 0043847c	data	clip_limit_set			?	int	W?clip_limit_set$ni
 00438480	data	clip_tx			?	int	W?clip_tx$ni
@@ -1450,8 +1450,8 @@ address	kind	name	cc	ret	params	dtype	mangled
 0043848c	data	clip_by			?	int	W?clip_by$ni
 00438490	data	xvga_anims			?	anim_t*	W?xvga_anims$npn$anim_t$$
 00438494	data	init_animation_ok			?	int	W?init_animation_ok$ni
-00438498	data	xvga_lib_pal			?		W?xvga_lib_pal$n[]uc
-00438798	data	anim_base			?		W?anim_base$n[]l
+00438498	data	xvga_lib_pal			?	uchar[]	W?xvga_lib_pal$n[]uc
+00438798	data	anim_base			?	long[]	W?anim_base$n[]l
 004423d8	data	anim_base_ptr			?	long	W?anim_base_ptr$nl
 004423dc	data	reset_anim_base_ok			?	char	W?reset_anim_base_ok$na
 004423e0	data	called_true_handle_wipe			?	int	W?called_true_handle_wipe$ni
@@ -1460,7 +1460,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004423ec	data	activeform			?	form_t*	W?activeform$npn$__2e8n7fform_t$$
 004423f0	data	formdis			?	tagDRAWITEMSTRUCT	W?formdis$n$tagDRAWITEMSTRUCT$$
 00442420	data	init_edit_box_ok			?	char	W?init_edit_box_ok$na
-00442424	data	allowed_edit_keys			?		W?allowed_edit_keys$n[]a
+00442424	data	allowed_edit_keys			?	char[]	W?allowed_edit_keys$n[]a
 004425b4	data	old_edit_windowproc			?	long	W?old_edit_windowproc$nl
 004425b8	data	xvga_di_object			?	IDirectInputA*	W?xvga_di_object$npn$IDirectInputA$$
 004425bc	data	xvga_di_keyboard			?	IDirectInputDeviceA*	W?xvga_di_keyboard$npn$IDirectInputDeviceA$$
@@ -1468,7 +1468,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004425c4	data	xvga_init_input_ok			?	int	W?xvga_init_input_ok$ni
 004425c8	data	xvga_init_keyboard_ok			?	int	W?xvga_init_keyboard_ok$ni
 004425cc	data	xvga_init_mouse_ok			?	int	W?xvga_init_mouse_ok$ni
-004425d0	data	xvga_keyboard_state			?		W?xvga_keyboard_state$n[]uc
+004425d0	data	xvga_keyboard_state			?	uchar[]	W?xvga_keyboard_state$n[]uc
 004426d0	data	xvga_timer_ptr			?	xvga_timer_t*	W?xvga_timer_ptr$npn$xvga_timer_t$$
 004426d4	data	xvga_max_timers			?	int	W?xvga_max_timers$ni
 004426d8	data	xvga_timer_init_ok			?	int	W?xvga_timer_init_ok$ni
@@ -1499,8 +1499,8 @@ address	kind	name	cc	ret	params	dtype	mangled
 00442758	data	xvga_phys_mem			?	int	W?xvga_phys_mem$ni
 0044275c	data	xvga_phys_mem_free			?	int	W?xvga_phys_mem_free$ni
 00442760	data	xvga_mem_usage			?	int	W?xvga_mem_usage$ni
-00442764	data	xvga_computer_name			?		W?xvga_computer_name$n[]uc
-0044278c	data	xvga_user_name			?		W?xvga_user_name$n[]uc
+00442764	data	xvga_computer_name			?	uchar[]	W?xvga_computer_name$n[]uc
+0044278c	data	xvga_user_name			?	uchar[]	W?xvga_user_name$n[]uc
 004427b4	data	xvga_drive_list			?	drive_info_t*	W?xvga_drive_list$npn$drive_info_t$$
 004427b8	data	max_xvga_drive_list			?	int	W?max_xvga_drive_list$ni
 004427bc	data	init_drive_list_ok			?	int	W?init_drive_list_ok$ni
@@ -1512,7 +1512,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004427d4	data	smkfile			?	SmackTag*	W?smkfile$npn$SmackTag$$
 004427d8	data	smacker_paused			?	int	W?smacker_paused$ni
 004427dc	data	smacker_playing			?	int	W?smacker_playing$ni
-004427e0	data	smk_action_keys			?		W?smk_action_keys$n[]$__5lcqt3KEYACTIONS_STRUCT$$
+004427e0	data	smk_action_keys			?	KEYACTIONS_STRUCT[]	W?smk_action_keys$n[]$__5lcqt3KEYACTIONS_STRUCT$$
 00442880	data	Is_DLL			?		___Is_DLL
 00442884	data	FirstThreadData			?		___FirstThreadData
 00442888	data	old_button_windowproc			?	long	W?old_button_windowproc$nl

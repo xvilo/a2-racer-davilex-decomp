@@ -6,7 +6,9 @@ Usage: merge_structs.py <structs.tsv> <structs_auto.tsv> <module.tsv>...
 Inputs are InferStructs.java outputs, in priority order (A2MENU.DAT first: its debug
 info types the most variables). Rows already in structs_auto.tsv are kept unless a
 module output disagrees. A field is dropped where it overlaps a hand-written field in
-structs.tsv or an earlier, higher-priority inferred field; "__size" keeps the maximum.
+structs.tsv or an earlier, higher-priority inferred field. For a structure laid out in
+structs.tsv, inferred fields only fill gaps inside its size (array indexing into a
+structure of unknown size looks like large offsets); "__size" otherwise keeps the maximum.
 """
 import os
 import re
@@ -37,16 +39,22 @@ def rows(path):
 
 def main(manual, auto, *modules):
     taken = {}  # struct -> list of (off, end)
+    extent = {}  # hand-written struct -> its size; inferred fields stay inside it
     for s, off, t, n in rows(manual):
+        end = off if n == '__size' else off + size_of(t)
+        extent[s] = max(extent.get(s, 0), end)
         if n != '__size':
-            taken.setdefault(s, []).append((off, off + size_of(t)))
+            taken.setdefault(s, []).append((off, end))
     fields, sizes = {}, {}
     for src in list(modules) + [auto]:
         for s, off, t, n in rows(src):
             if n == '__size':
-                sizes[s] = max(sizes.get(s, 0), off)
+                if s not in extent:
+                    sizes[s] = max(sizes.get(s, 0), off)
                 continue
             end = off + size_of(t)
+            if s in extent and end > extent[s]:
+                continue
             if any(o < end and off < e for o, e in taken.get(s, [])):
                 continue
             taken.setdefault(s, []).append((off, end))

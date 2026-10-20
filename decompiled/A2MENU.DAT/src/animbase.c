@@ -13,7 +13,7 @@ void __watcall reset_anim_base(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 4;
-    *(undefined4 *)((int)&anim_base + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)anim_base + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 40000);
   reset_anim_base_ok = '\x01';
@@ -34,15 +34,15 @@ void __watcall add_anim_base(anim_t *anim)
   i = 0;
   iVar3 = 0;
   do {
-    if (anim->field_00 <= i) {
+    if (anim->frame_count <= i) {
       return;
     }
-    iVar1 = *(int *)(iVar3 + 4 + anim->field_08);
+    iVar1 = *(int *)((int)&anim->frames->image + iVar3);
     for (iVar2 = 0; iVar2 < anim_base_ptr * 4; iVar2 = iVar2 + 4) {
-      if (iVar1 == *(int *)((int)&anim_base + iVar2)) goto LAB_00416fa1;
+      if (iVar1 == *(int *)((int)anim_base + iVar2)) goto LAB_00416fa1;
     }
     anim_base_ptr = anim_base_ptr + 1;
-    *(int *)(&DAT_00438794 + anim_base_ptr * 4) = iVar1;
+    *(int *)(xvga_lib_pal + anim_base_ptr * 4 + 0x2fc) = iVar1;
 LAB_00416fa1:
     iVar3 = iVar3 + 8;
     i = i + 1;
@@ -56,7 +56,7 @@ void __watcall add_array_to_anim_base(anim_t *anim,long *param_2)
 
 {
   for (; *param_2 != -1; param_2 = param_2 + 1) {
-    add_anim_base((anim_t *)(&anim->field_00 + *param_2 * 3));
+    add_anim_base(anim + *param_2);
   }
   return;
 }
@@ -68,20 +68,20 @@ void __watcall add_demi_array_to_anim_base(anim_t *anim,long *param_2)
 
 {
   int iVar1;
-  int iVar2;
   uint i;
   undefined4 unaff_ESI;
+  int anim_index;
   
-  for (; iVar1 = *param_2, iVar1 != -1; param_2 = param_2 + 1) {
-    iVar2 = 0;
-    for (i = 0; (int)i < (&anim->field_00)[iVar1 * 3]; i = i + 1) {
+  for (; anim_index = *param_2, anim_index != -1; param_2 = param_2 + 1) {
+    iVar1 = 0;
+    for (i = 0; (int)i < anim[anim_index].frame_count; i = i + 1) {
       if ((i & 1) == 0) {
-        unaff_ESI = *(undefined4 *)(iVar2 + 4 + (&anim->field_00 + iVar1 * 3)[2]);
+        unaff_ESI = *(undefined4 *)((int)&(anim[anim_index].frames)->image + iVar1);
       }
-      *(undefined4 *)(iVar2 + 4 + (&anim->field_08)[iVar1 * 3]) = unaff_ESI;
-      iVar2 = iVar2 + 8;
+      *(undefined4 *)((int)&(anim[anim_index].frames)->image + iVar1) = unaff_ESI;
+      iVar1 = iVar1 + 8;
     }
-    add_anim_base((anim_t *)(&anim->field_00 + *param_2 * 3));
+    add_anim_base(anim + *param_2);
   }
   return;
 }

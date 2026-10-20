@@ -3,18 +3,18 @@
 
 /* ==== 00432fd6 getche ==== */
 
-uint __watcall getche(void)
+void * __watcall getche(void)
 
 {
   int iVar1;
-  uint getch_result;
+  controls_t getch_result;
   
   iVar1 = cbyte;
   getch_result = getch();
-  if ((getch_result != 0xffffffff) && (iVar1 == 0)) {
-    putch(getch_result);
+  if ((getch_result.field_00 != (void *)0xffffffff) && (iVar1 == 0)) {
+    putch(getch_result.field_00);
   }
-  return getch_result;
+  return getch_result.field_00;
 }
 
 

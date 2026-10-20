@@ -103,7 +103,7 @@ sigabort(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 par
       return 0xffffffff;
     }
   }
-  if (((pcVar4 != (code *)0x1) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
+  if (((pcVar4 != (code *)&DAT_00000001) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
     iVar1 = (*(code *)GetThreadPtr)(pcVar4,param_2,param_4,param_3);
     *(undefined4 *)(iVar1 + 0x58 + iVar2 * 8) = 2;
     (*pcVar4)();
@@ -147,7 +147,7 @@ void __watcall raise(int param_1)
       return;
     }
   }
-  if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
+  if (((pcVar1 != (code *)&DAT_00000001) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x58 + iVar3 * 8) = 2;
     (*pcVar1)();
@@ -170,7 +170,7 @@ void __watcall sigfpe_handler(undefined4 param_1)
   
   iVar2 = (*(code *)GetThreadPtr)();
   pcVar1 = *(code **)(iVar2 + 0x68);
-  if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
+  if (((pcVar1 != (code *)&DAT_00000001) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x68) = 2;
     (*pcVar1)();

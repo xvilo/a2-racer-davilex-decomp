@@ -111,14 +111,14 @@ int __watcall xvga_get_system_info(void)
   
   debugmsg(s_Getting_system_information_0041cbb3);
   local_1c = 0x27;
-  BVar1 = GetComputerNameA(&xvga_computer_name,&local_1c);
+  BVar1 = GetComputerNameA((LPSTR)xvga_computer_name,&local_1c);
   if (BVar1 != 0) {
-    debugmsg(s_Computername____s_0041cbcf,&xvga_computer_name);
+    debugmsg(s_Computername____s_0041cbcf,xvga_computer_name);
   }
   local_1c = 0x27;
-  BVar1 = GetUserNameA(&xvga_user_name,&local_1c);
+  BVar1 = GetUserNameA((LPSTR)xvga_user_name,&local_1c);
   if (BVar1 != 0) {
-    debugmsg(s_Username____s_0041cbe2,&xvga_user_name);
+    debugmsg(s_Username____s_0041cbe2,xvga_user_name);
   }
   xvga_init_drive_info(0x1a);
   GlobalMemoryStatus(&memorystatus);
@@ -200,9 +200,9 @@ int __watcall search_screen_mode_index(int param_1,int param_2,int param_3)
     if (0xef < iVar1) {
       return -1;
     }
-    if (((param_1 == *(int *)((int)&xvga_screen_modes + iVar1)) &&
-        (param_2 == *(int *)((int)&DAT_0041f900 + iVar1))) &&
-       (param_3 == *(int *)((int)&DAT_0041f904 + iVar1))) break;
+    if (((param_1 == *(int *)((int)&xvga_screen_modes[0].field_00 + iVar1)) &&
+        (param_2 == *(int *)(&xvga_screen_modes[0].field_0x4 + iVar1))) &&
+       (param_3 == *(int *)(&xvga_screen_modes[0].field_0x8 + iVar1))) break;
     iVar1 = iVar1 + 0x14;
     i = i + 1;
   }
@@ -222,7 +222,7 @@ int __watcall test_screen_modes_available(void)
     if (0xef < iVar1) {
       return 0;
     }
-    if (*(int *)((int)&DAT_0041f90c + iVar1) == 0) break;
+    if (*(int *)((int)&xvga_screen_modes[1].field_00 + iVar1) == 0) break;
     iVar1 = iVar1 + 0x14;
   }
   return 1;
@@ -419,7 +419,7 @@ long mode_available_callback_func(_DDSURFACEDESC *ddsurfacedesc,void *param_2)
   if (search_screen_mode_index_result == -1) {
     return 1;
   }
-  (&DAT_0041f90c)[search_screen_mode_index_result * 5] = 1;
+  *(undefined4 *)((int)xvga_screen_modes + search_screen_mode_index_result * 0x14 + 0x10) = 1;
   return 1;
 }
 
@@ -453,7 +453,7 @@ int __watcall xvga_test_mode_available(int param_1)
   if ((param_1 < 0) || (0xb < param_1)) {
     fatal_exit(s__s__d____illegal_mode_index__und_0041cf0e,s_hwinfo_cpp_0041cf03,0x186);
   }
-  return (&DAT_0041f90c)[param_1 * 5];
+  return *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 0x10);
 }
 
 

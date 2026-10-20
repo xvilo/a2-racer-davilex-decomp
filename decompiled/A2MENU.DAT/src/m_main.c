@@ -113,17 +113,17 @@ void __watcall mm_draw_info_text(int param_1,int param_2)
   win_bprintf(1,iVar1,param_2 + 0x8c,0x5a,s___16s_00427032,pcVar2);
   slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427038,0x119);
   win_print_xy(1,iVar1,param_2 + 0x9d,s___9d_00427043,
-               *(undefined4 *)(&DAT_004372d4 + slot_check_index_result * 0x13c));
+               *(undefined4 *)(&slot_list[0].field_0x78 + slot_check_index_result * 0x13c));
   slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427048,0x11d);
   pcVar2 = slot_tijd_string(slot_check_index_result);
   win_print_xy(1,iVar1,param_2 + 0xae,s___6s_00427053,pcVar2);
-  if (control == (bedien_t)0x0) {
+  if (control._0_4_ == 0) {
     pcVar2 = s_Toetsenbord_00427058;
   }
-  else if (control == (bedien_t)0x1) {
+  else if (control._0_4_ == 1) {
     pcVar2 = s_Joypad_1_00427064;
   }
-  else if (control == (bedien_t)0x2) {
+  else if (control._0_4_ == 2) {
     pcVar2 = s_Stuur_0042706d;
   }
   else {
@@ -172,14 +172,14 @@ void __watcall mm_display_info(void)
 
 /* ==== 004043be mm_af_image ==== */
 
-int __watcall mm_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall mm_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___mm_af_image_____Could_no_004270df,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___mm_af_image_____Could_no_004270df,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -205,24 +205,24 @@ void __watcall mm_animate_buttons(void)
                            s_m_main_cpp_0042711b,0x16e);
     set_mem_image(0,af_image,0,0x7c,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1b,*(int *)((int)&DAT_00432fe6 + iVar3) >> 0x10,s_m_main_cpp_00427126,
-                           0x175);
+    af_image = mm_af_image(0x1b,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x16) >> 0x10,
+                           s_m_main_cpp_00427126,0x175);
     set_mem_image(0,af_image,0,0xb0,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1c,*(int *)((int)&DAT_00432ffe + iVar3) >> 0x10,s_m_main_cpp_00427131,
-                           0x17c);
+    af_image = mm_af_image(0x1c,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x2e) >> 0x10,
+                           s_m_main_cpp_00427131,0x17c);
     set_mem_image(0,af_image,0,0xe4,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1e,*(int *)((int)&DAT_00433016 + iVar3) >> 0x10,s_m_main_cpp_0042713c,
-                           0x183);
+    af_image = mm_af_image(0x1e,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x46) >> 0x10,
+                           s_m_main_cpp_0042713c,0x183);
     set_mem_image(0,af_image,0,0x116,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1d,*(int *)((int)&DAT_0043302e + iVar3) >> 0x10,s_m_main_cpp_00427147,
-                           0x18a);
+    af_image = mm_af_image(0x1d,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x5e) >> 0x10,
+                           s_m_main_cpp_00427147,0x18a);
     set_mem_image(0,af_image,0,0x14b,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1f,*(int *)((int)&DAT_00433046 + iVar3) >> 0x10,s_m_main_cpp_00427152,
-                           0x191);
+    af_image = mm_af_image(0x1f,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x76) >> 0x10,
+                           s_m_main_cpp_00427152,0x191);
     set_mem_image(0,af_image,0,0x17e,iVar4);
     do {
       handle_win_msg();
@@ -243,14 +243,14 @@ void __watcall mm_animate_map(int param_1)
   int iVar1;
   int iVar2;
   int af_image;
-  int extraout_EDX;
+  int frame_index;
   
   hide_mouse();
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d___mm_animate_map____Illega_00427168,s_m_main_cpp_0042715d,0x1a6,param_1,6);
   }
   debugmsg(s_LEVEL_SHOWN____d_004271a6,param_1);
-  af_image = mm_af_image(0x26,extraout_EDX,s_m_main_cpp_004271bb,0x1a9);
+  af_image = mm_af_image(0x26,frame_index,s_m_main_cpp_004271bb,0x1a9);
   iVar1 = *(int *)((int)xvga_mem_images + af_image * 0x20 + 8);
   iVar2 = *(int *)((int)xvga_mem_images + af_image * 0x20 + 0xc);
   set_mem_image(1,af_image,0x15d,0xf5,2);
@@ -294,9 +294,9 @@ int __watcall mm_open_screen(int param_1)
   mm_display_info();
   mm_animate_buttons();
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_0042724f,0x1ce);
-  mm_animate_map(*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10);
+  mm_animate_map(*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10);
   debugmsg(s_activate_form_0042725a);
-  activate_form(&mm_form);
+  activate_form(mm_form);
   debugmsg(s_end_open_00427269);
   return 1;
 }
@@ -338,19 +338,20 @@ void __watcall mm_handle_tmp_hiscore(void)
   
   save_tmp_scoredbase(s_SCORE_TMP_004272e0);
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_004272ea,499);
-  if (-1 < (*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1) {
+  if (-1 < (*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1) {
     iVar1 = slot_check_index(active_slot,s_m_main_cpp_004272f5,0x1f7);
-    iVar1 = *(int *)(&DAT_004372d4 + iVar1 * 0x13c);
+    iVar1 = *(int *)(&slot_list[0].field_0x78 + iVar1 * 0x13c);
     iVar2 = slot_check_index(active_slot,s_m_main_cpp_00427300,0x1f6);
-    iVar2 = *(int *)(&DAT_004372b8 + iVar2 * 0x13c);
+    iVar2 = *(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c);
     iVar3 = slot_check_index(active_slot,s_m_main_cpp_0042730b,0x1f5);
-    iVar3 = slot_count_total_tijd(active_slot,*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10);
+    iVar3 = slot_count_total_tijd
+                      (active_slot,*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10);
     slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427316,500);
-    add_new_hiscore((char *)(slot_check_index_result * 0x13c + 0x437296),iVar3,(iVar2 >> 0x10) + -1,
-                    iVar1);
+    add_new_hiscore(&slot_list[0].field_0x3a + slot_check_index_result * 0x13c,iVar3,
+                    (iVar2 >> 0x10) + -1,iVar1);
   }
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_00427321,0x1f9);
-  menu_score((*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1);
+  menu_score((*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1);
   load_tmp_scoredbase(s_SCORE_TMP_0042732c);
   file_delete();
   return;
@@ -368,25 +369,26 @@ void __watcall mm_handle_opnieuw_spel(void)
   int slot_check_index_result;
   
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_00427340,0x205);
-  if ((*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1 < 0) {
+  if ((*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1 < 0) {
     reset_slot(active_slot);
     mm_display_info();
   }
   else {
     mm_close_screen(0);
     iVar1 = slot_check_index(active_slot,s_m_main_cpp_0042734b,0x20a);
-    iVar1 = *(int *)(&DAT_004372d4 + iVar1 * 0x13c);
+    iVar1 = *(int *)(&slot_list[0].field_0x78 + iVar1 * 0x13c);
     iVar2 = slot_check_index(active_slot,s_m_main_cpp_00427356,0x209);
-    iVar2 = *(int *)(&DAT_004372b8 + iVar2 * 0x13c);
+    iVar2 = *(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c);
     iVar3 = slot_check_index(active_slot,s_m_main_cpp_00427361,0x208);
-    iVar3 = slot_count_total_tijd(active_slot,*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10);
+    iVar3 = slot_count_total_tijd
+                      (active_slot,*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10);
     slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_0042736c,0x207);
-    add_new_hiscore((char *)(slot_check_index_result * 0x13c + 0x437296),iVar3,(iVar2 >> 0x10) + -1,
-                    iVar1);
+    add_new_hiscore(&slot_list[0].field_0x3a + slot_check_index_result * 0x13c,iVar3,
+                    (iVar2 >> 0x10) + -1,iVar1);
     iVar1 = get_last_entered_hiscore();
     if ((-1 < iVar1) && (iVar1 < 10)) {
       iVar1 = slot_check_index(active_slot,s_m_main_cpp_00427377,0x20d);
-      menu_score((*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1);
+      menu_score((*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1);
     }
     reset_slot(active_slot);
     mm_open_screen(0);
@@ -403,17 +405,18 @@ int __watcall menu_main(int param_1)
 
 {
   bool bVar1;
-  int iVar2;
+  int form_index;
   uint handle_form_result;
-  int iVar3;
+  int iVar2;
   int local_1c;
   
   bVar1 = true;
-  iVar3 = 0xff;
+  iVar2 = 0xff;
   local_1c = -1;
   if ((DAT_00437222 >> 0x10 == 0) || (DAT_00437222 >> 0x10 == 3)) {
-    iVar2 = slot_check_index(active_slot,s_m_main_cpp_00427382,0x221);
-    snd_play_looping(&mm_tune_buffer,(&mm_tune)[*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10]);
+    form_index = slot_check_index(active_slot,s_m_main_cpp_00427382,0x221);
+    snd_play_looping(&mm_tune_buffer,
+                     mm_tune[*(int *)(&slot_list[0].field_0x5c + form_index * 0x13c) >> 0x10]);
   }
   mm_open_screen(1);
 LAB_00404c7a:
@@ -421,13 +424,13 @@ LAB_00404c7a:
     snd_wait(&local_1c);
     mm_close_screen(1);
     snd_stop(&mm_tune_buffer);
-    return iVar3;
+    return iVar2;
   }
   handle_form_result = handle_form();
   if (handle_form_result < 5) {
     if (1 < handle_form_result) {
       if (handle_form_result < 3) {
-        iVar3 = 0x28;
+        iVar2 = 0x28;
         snd_play(&local_1c,s_click1_wav_004273b9);
         wait_form_key_released();
         wait_enter_pressed();
@@ -447,8 +450,9 @@ LAB_00404c7a:
           snd_play(&local_1c,s_click1_wav_004273cf);
           mm_close_screen(0);
           snd_wait(&local_1c);
-          iVar2 = slot_check_index(active_slot,s_m_main_cpp_004273da,0x287);
-          menu_opties(&mm_tune_buffer,(&mm_tune)[*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10]);
+          form_index = slot_check_index(active_slot,s_m_main_cpp_004273da,0x287);
+          menu_opties(&mm_tune_buffer,
+                      mm_tune[*(int *)(&slot_list[0].field_0x5c + form_index * 0x13c) >> 0x10]);
           update_active_slot_optie();
         }
 LAB_00404c73:
@@ -462,7 +466,7 @@ LAB_00404c73:
       wait_enter_pressed();
       snd_wait(&local_1c);
       snd_set_volume(&mm_tune_buffer,-8000);
-      play_help(&mm_help,1);
+      play_help(mm_help,1);
 LAB_00404c1b:
       snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
       goto LAB_00404c7a;
@@ -487,14 +491,14 @@ LAB_00404baf:
         snd_wait(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
         snd_play(&local_1c,s_MM_07_wav_004273fb);
-        iVar2 = req_vraag(s_De_huidige_race_wordt_afgelast__A_00427405);
-        if (iVar2 != 0) {
+        form_index = req_vraag(s_De_huidige_race_wordt_afgelast__A_00427405);
+        if (form_index != 0) {
           snd_stop(&local_1c);
           mm_handle_opnieuw_spel();
         }
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
         snd_stop(&local_1c);
-        activate_form(&mm_form);
+        activate_form(mm_form);
       }
       else if (handle_form_result == 7) {
         snd_play(&local_1c,s_click1_wav_00427481);
@@ -503,10 +507,10 @@ LAB_00404baf:
         snd_wait(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
         snd_play(&local_1c,s_MM_06_wav_0042748c);
-        iVar2 = req_vraag(s_Weet_je_zeker_dat_je_de_huidige_r_00427496);
-        if (iVar2 == 0) {
+        form_index = req_vraag(s_Weet_je_zeker_dat_je_de_huidige_r_00427496);
+        if (form_index == 0) {
           snd_stop(&local_1c);
-          activate_form(&mm_form);
+          activate_form(mm_form);
           goto LAB_00404c1b;
         }
         snd_stop(&local_1c);
@@ -524,54 +528,54 @@ LAB_00404baf:
     if (0x2711 < handle_form_result) {
       if (handle_form_result == 0x2712) {
         snd_play(&local_1c,s_click3_wav_00427398);
-        iVar2 = get_control_focus();
-        switch(iVar2) {
+        form_index = get_control_focus();
+        switch(form_index) {
         case 2:
-          iVar2 = 3;
+          form_index = 3;
           break;
         case 3:
-          iVar2 = 4;
+          form_index = 4;
           break;
         case 4:
-          iVar2 = 5;
+          form_index = 5;
           break;
         case 5:
-          iVar2 = 6;
+          form_index = 6;
           break;
         case 6:
-          iVar2 = 7;
+          form_index = 7;
           break;
         default:
-          iVar2 = 2;
+          form_index = 2;
         }
-        focus_control(iVar2);
+        focus_control(form_index);
         wait_cursor_down_pressed();
         goto LAB_00404b02;
       }
       goto LAB_00404c7a;
     }
     snd_play(&local_1c,s_click3_wav_0042738d);
-    iVar2 = get_control_focus();
-    switch(iVar2) {
+    form_index = get_control_focus();
+    switch(form_index) {
     default:
-      iVar2 = 7;
+      form_index = 7;
       break;
     case 3:
-      iVar2 = 2;
+      form_index = 2;
       break;
     case 4:
-      iVar2 = 3;
+      form_index = 3;
       break;
     case 5:
-      iVar2 = 4;
+      form_index = 4;
       break;
     case 6:
-      iVar2 = 5;
+      form_index = 5;
       break;
     case 7:
-      iVar2 = 6;
+      form_index = 6;
     }
-    focus_control(iVar2);
+    focus_control(form_index);
     wait_cursor_up_pressed();
   }
 LAB_00404b02:

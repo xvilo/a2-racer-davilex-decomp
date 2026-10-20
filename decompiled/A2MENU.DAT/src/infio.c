@@ -188,7 +188,7 @@ void __watcall init_infio(void)
     infio.money = extraout_EDX;
     do {
       iVar2 = iVar1 + 2;
-      *(undefined2 *)((int)&infio.key_left + iVar1) = *(undefined2 *)((int)&toets_define + iVar1);
+      *(undefined2 *)((int)&infio.key_left + iVar1) = *(undefined2 *)((int)toets_define + iVar1);
       iVar1 = iVar2;
     } while (iVar2 != 0xc);
     save_infio();

@@ -18,23 +18,23 @@ void __watcall draw_focus_anim_button(form_t *form)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   button_t *button;
   
   button = form->control;
   if (button->focus_anim != -1) {
-    iVar4 = get_control_index(form->hwnd);
-    iVar1 = (&xvga_anims->field_00)[button->focus_anim * 3];
+    form_index = get_control_index(form->hwnd);
+    iVar1 = xvga_anims[button->focus_anim].frame_count;
     iVar2 = button->width;
     iVar3 = button->height;
     control_image_index = get_control_image_index(button->focus_anim,button->focus_frame);
-    iVar5 = 1;
-    control_y = get_control_y(iVar4);
-    iVar4 = get_control_x(iVar4);
-    set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+    iVar4 = 1;
+    control_y = get_control_y(form_index);
+    form_index = get_control_x(form_index);
+    set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
     if (button->focus_frame < iVar1 + -1) {
       button->focus_frame = button->focus_frame + 1;
     }
@@ -61,7 +61,7 @@ void __watcall destroy_button(form_t *form)
 
 /* ==== 0041ad0a create_button ==== */
 
-void __watcall create_button(form_t *form,int param_2)
+void __watcall create_button(form_t *form,int form_index)
 
 {
   int control_image_index;
@@ -78,24 +78,24 @@ void __watcall create_button(form_t *form,int param_2)
   if (button->height == -1) {
     button->height = *(int *)(control_image_index * 0x20 + 0xc + (int)xvga_mem_images);
   }
-  if ((&xvga_anims->field_00)[button->image * 3] < 4) {
+  if (xvga_anims[button->image].frame_count < 4) {
     fatal_exit(s__s__d_____create_button__not_eno_0043102f,s_buttons_cpp_00431023,0x6f,
-               (&xvga_anims->field_00)[button->image * 3]);
+               xvga_anims[button->image].frame_count);
   }
-  check_control_position(param_2,form->x,form->y,button->width,button->height);
+  check_control_position(form_index,form->x,form->y,button->width,button->height);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar1 = CreateWindowExA(0,s_BUTTON_0043107b,(LPCSTR)0x0,0x5001000b,form->x,form->y,button->width,
-                           button->height,xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           button->height,xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar1;
   if (pHVar1 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_co_00431082,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_co_00431082,form_index);
   }
   old_button_windowproc = SetWindowLongA(form->hwnd,-4,0x41afe2);
   button->focus_frame = 0;
   if (button->focus_anim != -1) {
     get_control_image_index(button->focus_anim,0);
-    if ((&xvga_anims->field_00)[button->focus_anim * 3] == 1) {
+    if (xvga_anims[button->focus_anim].frame_count == 1) {
       fatal_exit(s__s__d_____create_button__Anim_fo_004310bf,s_buttons_cpp_004310b3,0x8e,
                  button->focus_anim);
     }
@@ -103,7 +103,7 @@ void __watcall create_button(form_t *form,int param_2)
   if (form->state == 4) {
     form->state = 1;
   }
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -116,32 +116,33 @@ void __watcall draw_help_button(form_t *form)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int *control_pointer;
   uint control_state;
-  int iVar5;
-  int control_y;
-  int iVar6;
+  int anim_index;
+  int frame_index;
+  int iVar4;
   
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   control_pointer = get_control_pointer(form->hwnd);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  control_state = get_control_state(iVar4);
+  control_state = get_control_state(form_index);
   if ((control_state == 0) || ((1 < control_state && (control_state != 4)))) {
-    iVar5 = *control_pointer;
-    control_y = 0;
+    anim_index = *control_pointer;
+    frame_index = 0;
   }
   else {
-    control_y = 1;
-    iVar5 = *control_pointer;
+    frame_index = 1;
+    anim_index = *control_pointer;
   }
-  iVar5 = get_control_image_index(iVar5,control_y);
-  iVar6 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar4 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + control_y,iVar6);
+  anim_index = get_control_image_index(anim_index,frame_index);
+  iVar4 = 1;
+  frame_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,anim_index,form_index + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + frame_index,
+                iVar4);
   return;
 }
 
@@ -155,18 +156,18 @@ void __watcall draw_button(tagDRAWITEMSTRUCT *drawitemstruct)
   int iVar2;
   int iVar3;
   uint uVar4;
-  int iVar5;
+  int form_index;
   int *control_pointer;
-  int iVar6;
-  int control_image_index;
-  int iVar7;
+  int anim_index;
+  int frame_index;
+  int iVar5;
   
-  iVar5 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  if (iVar5 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_button__no_valid_w_0043110f,s_buttons_cpp_00431103,0xbe);
   }
   hide_mouse();
@@ -174,31 +175,31 @@ void __watcall draw_button(tagDRAWITEMSTRUCT *drawitemstruct)
   if (uVar4 < 0x10) {
     if (uVar4 != 4) {
 LAB_0041afc2:
-      set_control_state(iVar5,0);
-      iVar6 = *control_pointer;
-      control_image_index = 0;
+      set_control_state(form_index,0);
+      anim_index = *control_pointer;
+      frame_index = 0;
       goto LAB_0041af77;
     }
-    set_control_state(iVar5,2);
-    control_image_index = 2;
+    set_control_state(form_index,2);
+    frame_index = 2;
   }
   else if (uVar4 < 0x11) {
-    set_control_state(iVar5,1);
-    control_image_index = 3;
+    set_control_state(form_index,1);
+    frame_index = 3;
   }
   else {
     if (uVar4 != 0x11) goto LAB_0041afc2;
-    set_control_state(iVar5,4);
-    control_image_index = 1;
+    set_control_state(form_index,4);
+    frame_index = 1;
   }
-  iVar6 = *control_pointer;
+  anim_index = *control_pointer;
 LAB_0041af77:
-  control_image_index = get_control_image_index(iVar6,control_image_index);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar5);
-  iVar5 = get_control_x(iVar5);
-  set_mem_image(0,control_image_index,iVar5 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + iVar6,iVar7
-               );
+  frame_index = get_control_image_index(anim_index,frame_index);
+  iVar5 = 1;
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,frame_index,form_index + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + anim_index,
+                iVar5);
   show_mouse();
   return;
 }

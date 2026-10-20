@@ -11,21 +11,22 @@ uint __watcall do_getch(HANDLE console_input)
   _INPUT_RECORD input_record;
   DWORD local_14;
   
-  if (DAT_0042029c != 0) {
-    if (DAT_0042029c < 2) {
+  if (xvga_fonts[0x20].field_00 != (HGDIOBJ)0x0) {
+    if (xvga_fonts[0x20].field_00 <= &DAT_00000001) {
       DAT_00421c94 = DAT_00421c94 + -1;
       if (DAT_00421c90 == 0) {
-        DAT_0042029c = 2;
+        xvga_fonts[0x20] = (font_t)0x2;
         return 0;
       }
       if (DAT_00421c94 != 0) {
         return DAT_00421c90;
       }
-      DAT_0042029c = 0;
+      xvga_fonts[0x20] = (font_t)0x0;
       return DAT_00421c90;
     }
-    if (DAT_0042029c == 2) {
-      DAT_0042029c = (uint)(DAT_00421c94 != 0);
+    if (xvga_fonts[0x20].field_00 == (HGDIOBJ)0x2) {
+      xvga_fonts[0x20].field_00._1_3_ = 0;
+      xvga_fonts[0x20].field_00._0_1_ = DAT_00421c94 != 0;
       return DAT_00421c8c;
     }
   }
@@ -39,13 +40,13 @@ uint __watcall do_getch(HANDLE console_input)
   DAT_00421c90 = (uint)(byte)input_record.Event.MouseEvent.dwControlKeyState._2_1_;
   if (((input_record.Event.KeyEvent.dwControlKeyState._1_1_ & 1) == 0) && (DAT_00421c90 != 0)) {
     if (input_record.Event.KeyEvent.wRepeatCount - 1 != 0) {
-      DAT_0042029c = 1;
+      xvga_fonts[0x20].field_00 = &DAT_00000001;
     }
   }
   else {
     DAT_00421c8c = (uint)input_record.Event.KeyEvent.wVirtualScanCode;
     DAT_00421c90 = 0;
-    DAT_0042029c = 2;
+    xvga_fonts[0x20].field_00 = (HGDIOBJ)0x2;
   }
   DAT_00421c94 = input_record.Event.KeyEvent.wRepeatCount - 1;
   return DAT_00421c90;

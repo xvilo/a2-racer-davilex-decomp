@@ -115,7 +115,7 @@ int __cdecl fatal_exit(char *param_1,...)
   undefined1 *local_1c;
   
   local_1c = &stack0x00000008;
-  pUVar1 = &fatal_exit__mb_flags;
+  pUVar1 = (UINT *)fatal_exit__mb_flags;
   pUVar2 = local_38;
   for (i = 7; i != 0; i = i + -1) {
     *pUVar2 = *pUVar1;
@@ -193,10 +193,10 @@ int __watcall set_xvga_vars(int param_1,int param_2,int param_3)
       fatal_exit(s__s__d____error_predefined_screen_00446ffa,s_initlib_cpp_00446fee,0xe5);
     }
     xvga_screen_mode = param_2;
-    xvga_screen_xsize = (&xvga_screen_modes)[param_2 * 5];
-    xvga_screen_ysize = (&DAT_00459300)[param_2 * 5];
-    xvga_screen_bpp = (&DAT_00459304)[param_2 * 5];
-    xvga_allowmodex = *(int *)(&DAT_00459308 + param_2 * 0x14);
+    xvga_screen_xsize = *(int *)((int)xvga_screen_modes + param_2 * 0x14);
+    xvga_screen_ysize = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 4);
+    xvga_screen_bpp = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 8);
+    xvga_allowmodex = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 0xc);
     return 0;
   }
   if (1 < (uint)param_1) {
@@ -1161,10 +1161,10 @@ int __watcall set_xvga_resolution(int param_1)
   }
   exit_lib_surfaces();
   debugmsg(s_Setting_display_mode_00447f7a);
-  xvga_screen_xsize = (&xvga_screen_modes)[param_1 * 5];
-  xvga_screen_ysize = (&DAT_00459300)[param_1 * 5];
-  xvga_screen_bpp = (&DAT_00459304)[param_1 * 5];
-  xvga_allowmodex = *(int *)(&DAT_00459308 + param_1 * 0x14);
+  xvga_screen_xsize = *(int *)((int)xvga_screen_modes + param_1 * 0x14);
+  xvga_screen_ysize = *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 4);
+  xvga_screen_bpp = *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 8);
+  xvga_allowmodex = *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 0xc);
   xvga_screen_mode = param_1;
   debugmsg(s_Setting_display_mode___dx_dx_d_00447f90,xvga_screen_xsize,xvga_screen_ysize,
            xvga_screen_bpp);

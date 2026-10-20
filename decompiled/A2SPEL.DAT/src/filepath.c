@@ -24,8 +24,8 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     if (iVar1 == -1) {
       fatal_exit(s_fatal_error___no_program_cdrom_w_0044827e);
     }
-    cd_drive = (char)iVar1;
-    local_108[0] = cd_drive;
+    cd_drive[0] = (char)iVar1;
+    local_108[0] = cd_drive[0];
     iVar1 = access(local_108,0);
     if (iVar1 != 0) {
       fatal_exit(s_program_installation_check_faile_004482a8);
@@ -33,7 +33,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
   }
   else {
     env_value = (char *)getenv(s_NOCD_00448279);
-    cd_drive = *env_value;
+    cd_drive[0] = *env_value;
   }
   return;
 }
@@ -55,7 +55,7 @@ char * __watcall file_path(char *filename_val,char *param_2)
   debugmsg(s_path__s_004482cd,filename_val);
   file = fopen(filename_val,(byte *)s_r_004482d6);
   if (file == 0) {
-    makepath((byte *)filename_val,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
+    makepath((byte *)filename_val,(byte *)cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_004482d8,filename_val);
   }
   else {

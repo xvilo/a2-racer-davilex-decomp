@@ -74,6 +74,7 @@ undefined4 __watcall fill_buffer(undefined4 *param_1)
 
 {
   uint uVar1;
+  void *getche_result;
   DWORD DVar2;
   
   if (param_1[2] == 0) {
@@ -87,9 +88,9 @@ undefined4 __watcall fill_buffer(undefined4 *param_1)
   *(byte *)(param_1 + 3) = *(byte *)(param_1 + 3) & 0xfb;
   if (((uVar1 & 0x2400) == 0x2400) && (param_1[4] == 0)) {
     param_1[1] = 0;
-    uVar1 = getche();
-    if (uVar1 != 0xffffffff) {
-      *(char *)*param_1 = (char)uVar1;
+    getche_result = getche();
+    if (getche_result != (void *)0xffffffff) {
+      *(char *)*param_1 = (char)getche_result;
       param_1[1] = 1;
     }
   }

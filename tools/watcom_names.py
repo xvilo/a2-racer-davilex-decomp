@@ -113,7 +113,7 @@ def demangle(sym, known):
     if m:  # function-local static: <var> inside <function>
         p = Parser(m.group(2))
         t = p.type()
-        return f'{m.group(3)}__{m.group(1)}', '', '', None, '' if t[3] is not None else fmt(t, known), False
+        return f'{m.group(3)}__{m.group(1)}', '', '', None, fmt(t, known) + (f'[{t[3]}]' if t[3] is not None else ''), False
     m = re.match(r'W\?([A-Za-z_][A-Za-z0-9_]*)\$n(.*)$', sym)
     if m:
         name, enc = m.groups()
@@ -131,7 +131,7 @@ def demangle(sym, known):
                 plist = []
             return name, '__cdecl' if variadic else '__watcall', fmt(ret, known), plist, '', True
         t = p.type()
-        return name, '', '', None, '' if t[3] is not None else fmt(t, known), False
+        return name, '', '', None, fmt(t, known) + (f'[{t[3]}]' if t[3] is not None else ''), False
     m = re.match(r'_([A-Za-z0-9_]+)@(\d+)$', sym)
     if m:  # stdcall (Win32 API import stubs, WinMain)
         return m.group(1), '__stdcall', '', None, '', True

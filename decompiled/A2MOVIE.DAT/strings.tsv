@@ -1025,7 +1025,14 @@ address	type	value
 0041f5a9	string	Total loss of significance
 0041f5c4	string	Partial loss of significance
 0041f5e1	string	 in 
+0041f7b4	char[304]	
 0041fe70	string	a
+004201f4	char[4]	 
+00421274	char[4]	null
+004213d0	uchar[256]	null
+00421564	uchar[40]	null
+0042158c	uchar[40]	null
+00421a1c	char[400]	null
 00422520	TerminatedCString	ADVAPI32.dll
 0042252d	TerminatedCString	KERNEL32.dll
 0042253a	TerminatedCString	USER32.dll

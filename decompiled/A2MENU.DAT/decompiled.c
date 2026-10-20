@@ -116,8 +116,8 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   xvga_flip_page();
   xvga_locate_cdrom((char *)0x0,s_a2intro_smk_0042528a);
   debugmsg(s_xvga_init_fileio___s__004252a1,s_a2mrcs_img_00425296);
-  file_path_result = file_path(&path_buffer2,s_a2mrcs_img_004252b9);
-  filename_2 = file_path(&path_buffer,s_a2mrcs_ind_004252c4);
+  file_path_result = file_path(path_buffer2,s_a2mrcs_img_004252b9);
+  filename_2 = file_path(path_buffer,s_a2mrcs_ind_004252c4);
   iVar1 = xvga_init_fileio(filename_2,file_path_result);
   if (iVar1 != 0) {
     fatal_exit(s__s__d____Unable_to_initialize_re_004252e3,s_main_cpp_004252da,0xb1,
@@ -580,8 +580,12 @@ void __watcall init_bedien(void)
   iVar1 = file_exist(s_BEDIEN_A2R_00425b17);
   if (iVar1 == 0) {
     debugmsg(s_Creating_controls_file__s_00425b2d,s_BEDIEN_A2R_00425b22);
-    DAT_0043723c = 0;
-    control = (bedien_t)0x0;
+    control.field_04 = '\0';
+    control.field_05 = '\0';
+    control.field_06 = 0;
+    control.field_00 = '\0';
+    control.field_01 = '\0';
+    control.field_02 = 0;
     _DAT_00437240 = 1;
     DAT_00437248 = 0x27;
     _DAT_00437250 = 0x28;
@@ -670,11 +674,10 @@ void __watcall create_slot(int param_1,char *param_2)
   int slot_check_level_result;
   int i;
   char *extraout_EDX;
-  undefined4 *puVar1;
   bedien_t *bedien;
+  undefined4 *puVar1;
   undefined4 *puVar2;
   undefined4 *puVar3;
-  bedien_t *bedien_2;
   byte bVar4;
   uint local_1c;
   
@@ -686,80 +689,80 @@ void __watcall create_slot(int param_1,char *param_2)
   debugmsg(s_Seeking_the_slot_that_was_saved_l_00425c6a,s_slot_cpp_00425c61,0x52);
   do {
     j = slot_check_index(i,s_slot_cpp_00425cc1,0x54);
-    if ((local_1c < (byte)(&DAT_0043725d)[j * 0x13c]) && (i != param_1)) {
+    if ((local_1c < (byte)(&slot_list[0].field_0x1)[j * 0x13c]) && (i != param_1)) {
       j = slot_check_index(i,s_slot_cpp_00425cca,0x55);
-      local_1c = (uint)(byte)(&DAT_0043725d)[j * 0x13c];
+      local_1c = (uint)(byte)(&slot_list[0].field_0x1)[j * 0x13c];
     }
     i = i + 1;
   } while (i < 10);
   debugmsg(s_Found_the_last_time__d_00425cdc,s_slot_cpp_00425cd3,0x58,local_1c);
   i = slot_check_index(param_1,extraout_EDX,0x59);
-  strncpy((char *)(i * 0x13c + 0x437296),param_2,0x20);
+  strncpy(&slot_list[0].field_0x3a + i * 0x13c,param_2,0x20);
   i = slot_check_index(param_1,s_slot_cpp_00425cff,0x5a);
-  (&DAT_0043725d)[i * 0x13c] = (char)local_1c + '\x01';
+  (&slot_list[0].field_0x1)[i * 0x13c] = (char)local_1c + '\x01';
   i = slot_check_index(param_1,s_slot_cpp_00425d08,0x5b);
-  *(undefined2 *)(&DAT_004372ba + i * 0x13c) = 0;
+  *(undefined2 *)(&slot_list[0].field_0x5e + i * 0x13c) = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425d11,0x5c);
-  (&slot_list)[i * 0x13c] = 1;
+  (&slot_list[0].field_0x0)[i * 0x13c] = 1;
   i = slot_check_index(param_1,s_slot_cpp_00425d1a,0x5d);
-  *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 1000;
+  *(undefined4 *)(&slot_list[0].field_0x78 + i * 0x13c) = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425d23,0x5e);
-  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
-  *(undefined4 *)(&DAT_0043725e + i * 0x13c) = _opties;
-  puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
-  puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-  *puVar3 = *puVar1;
-  puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
-  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar1 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar4 * -8);
+  *(undefined4 *)((int)&slot_list[0].field_02 + i * 0x13c) = _opties;
+  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
+  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+  *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+  *puVar2 = *puVar3;
+  puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
+  (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+       (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425d2c,0x5f);
   bedien = &control;
-  bedien_2 = (bedien_t *)(&DAT_00437272 + i * 0x13c);
+  puVar3 = (undefined4 *)(&slot_list[0].field_0x16 + i * 0x13c);
   for (j = 9; j != 0; j = j + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar4 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
+    *puVar3 = *(undefined4 *)bedien;
+    bedien = (bedien_t *)&bedien[-(uint)bVar4].field_04;
+    puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
   }
   i = 0;
   do {
     j = slot_check_index(param_1,s_slot_cpp_00425d35,0x61);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d3e,0x61);
-    *(undefined4 *)(&DAT_004372bc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372bc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425d47,0x62);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d50,0x62);
-    *(undefined2 *)(&DAT_004372d8 + slot_check_level_result * 2 + j * 0x13c) = 6;
+    *(undefined2 *)(j * 0x13c + 0x4372d8 + slot_check_level_result * 2) = 6;
     j = slot_check_index(param_1,s_slot_cpp_00425d59,99);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d62,99);
-    *(undefined2 *)(&DAT_0043735c + slot_check_level_result * 2 + j * 0x13c) = 1;
+    *(undefined2 *)(j * 0x13c + 0x43735c + slot_check_level_result * 2) = 1;
     j = slot_check_index(param_1,s_slot_cpp_00425d6b,100);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d74,100);
-    *(undefined2 *)(&DAT_00437368 + slot_check_level_result * 2 + j * 0x13c) = 2;
+    *(undefined2 *)(j * 0x13c + 0x437368 + slot_check_level_result * 2) = 2;
     j = slot_check_index(param_1,s_slot_cpp_00425d7d,0x65);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d86,0x65);
-    *(undefined2 *)(&DAT_00437374 + slot_check_level_result * 2 + j * 0x13c) = 3;
+    *(undefined2 *)(j * 0x13c + 0x437374 + slot_check_level_result * 2) = 3;
     j = slot_check_index(param_1,s_slot_cpp_00425d8f,0x66);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425d98,0x66);
-    *(undefined2 *)(&DAT_00437380 + slot_check_level_result * 2 + j * 0x13c) = 4;
+    *(undefined2 *)(j * 0x13c + 0x437380 + slot_check_level_result * 2) = 4;
     j = slot_check_index(param_1,s_slot_cpp_00425da1,0x67);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425daa,0x67);
-    *(undefined2 *)(&DAT_0043738c + slot_check_level_result * 2 + j * 0x13c) = 5;
+    *(undefined2 *)(j * 0x13c + 0x43738c + slot_check_level_result * 2) = 5;
     j = slot_check_index(param_1,s_slot_cpp_00425db3,0x68);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425dbc,0x68);
-    *(undefined4 *)(&DAT_004372e4 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372e4 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425dc5,0x69);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425dce,0x69);
-    *(undefined4 *)(&DAT_004372fc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372fc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425dd7,0x6a);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425de0,0x6a);
-    *(undefined4 *)(&DAT_00437314 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437314 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425de9,0x6b);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425df2,0x6b);
-    *(undefined4 *)(&DAT_0043732c + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x43732c + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_00425dfb,0x6c);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00425e04,0x6c);
     i = i + 1;
-    *(undefined4 *)(&DAT_00437344 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437344 + slot_check_level_result * 4) = 0;
   } while (i < 6);
   debugmsg(s_Slot__d_created___00425e0d,param_1);
   slots_already_loaded = 1;
@@ -783,58 +786,59 @@ void __watcall clear_slot(int param_1)
   do {
     j = slot_check_index(i,s_slot_cpp_00425e7d,0x7e);
     iVar1 = slot_check_index(param_1,s_slot_cpp_00425e86,0x7e);
-    if ((byte)(&DAT_0043725d)[iVar1 * 0x13c] < (byte)(&DAT_0043725d)[j * 0x13c]) {
+    if ((byte)(&slot_list[0].field_0x1)[iVar1 * 0x13c] < (byte)(&slot_list[0].field_0x1)[j * 0x13c])
+    {
       j = slot_check_index(i,s_slot_cpp_00425e8f,0x7f);
-      (&DAT_0043725d)[j * 0x13c] = (&DAT_0043725d)[j * 0x13c] + -1;
+      (&slot_list[0].field_0x1)[j * 0x13c] = (&slot_list[0].field_0x1)[j * 0x13c] + -1;
     }
     i = i + 1;
   } while (i < 10);
   debugmsg(s_Done_reset_00425ea1,s_slot_cpp_00425e98,0x82);
   i = slot_check_index(param_1,s_slot_cpp_00425eaf,0x83);
-  (&slot_list)[i * 0x13c] = 0;
+  (&slot_list[0].field_0x0)[i * 0x13c] = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425eb8,0x84);
-  (&DAT_0043725d)[i * 0x13c] = 0;
+  (&slot_list[0].field_0x1)[i * 0x13c] = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425ec1,0x85);
   j = 0;
-  *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 0;
+  *(undefined4 *)(&slot_list[0].field_0x78 + i * 0x13c) = 0;
   do {
     i = slot_check_index(param_1,s_slot_cpp_00425eca,0x87);
     iVar1 = slot_check_level(j,s_slot_cpp_00425ed3,0x87);
-    *(undefined4 *)(&DAT_004372bc + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x4372bc + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425edc,0x88);
     iVar1 = slot_check_level(j,s_slot_cpp_00425ee5,0x88);
-    *(undefined2 *)(&DAT_004372d8 + iVar1 * 2 + i * 0x13c) = 6;
+    *(undefined2 *)(i * 0x13c + 0x4372d8 + iVar1 * 2) = 6;
     i = slot_check_index(param_1,s_slot_cpp_00425eee,0x89);
     iVar1 = slot_check_level(j,s_slot_cpp_00425ef7,0x89);
-    *(undefined2 *)(&DAT_0043735c + iVar1 * 2 + i * 0x13c) = 1;
+    *(undefined2 *)(i * 0x13c + 0x43735c + iVar1 * 2) = 1;
     i = slot_check_index(param_1,s_slot_cpp_00425f00,0x8a);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f09,0x8a);
-    *(undefined2 *)(&DAT_00437368 + iVar1 * 2 + i * 0x13c) = 2;
+    *(undefined2 *)(i * 0x13c + 0x437368 + iVar1 * 2) = 2;
     i = slot_check_index(param_1,s_slot_cpp_00425f12,0x8b);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f1b,0x8b);
-    *(undefined2 *)(&DAT_00437374 + iVar1 * 2 + i * 0x13c) = 3;
+    *(undefined2 *)(i * 0x13c + 0x437374 + iVar1 * 2) = 3;
     i = slot_check_index(param_1,s_slot_cpp_00425f24,0x8c);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f2d,0x8c);
-    *(undefined2 *)(&DAT_00437380 + iVar1 * 2 + i * 0x13c) = 4;
+    *(undefined2 *)(i * 0x13c + 0x437380 + iVar1 * 2) = 4;
     i = slot_check_index(param_1,s_slot_cpp_00425f36,0x8d);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f3f,0x8d);
-    *(undefined2 *)(&DAT_0043738c + iVar1 * 2 + i * 0x13c) = 5;
+    *(undefined2 *)(i * 0x13c + 0x43738c + iVar1 * 2) = 5;
     i = slot_check_index(param_1,s_slot_cpp_00425f48,0x8e);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f51,0x8e);
-    *(undefined4 *)(&DAT_004372e4 + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x4372e4 + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f5a,0x8f);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f63,0x8f);
-    *(undefined4 *)(&DAT_004372fc + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x4372fc + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f6c,0x90);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f75,0x90);
-    *(undefined4 *)(&DAT_00437314 + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x437314 + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f7e,0x91);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f87,0x91);
-    *(undefined4 *)(&DAT_0043732c + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x43732c + iVar1 * 4) = 0;
     i = slot_check_index(param_1,s_slot_cpp_00425f90,0x92);
     iVar1 = slot_check_level(j,s_slot_cpp_00425f99,0x92);
     j = j + 1;
-    *(undefined4 *)(&DAT_00437344 + iVar1 * 4 + i * 0x13c) = 0;
+    *(undefined4 *)(i * 0x13c + 0x437344 + iVar1 * 4) = 0;
   } while (j < 6);
   return;
 }
@@ -850,79 +854,78 @@ void __watcall reset_slot(int param_1)
   int i;
   int slot_check_level_result;
   int j;
-  undefined4 *puVar1;
   bedien_t *bedien;
+  undefined4 *puVar1;
   undefined4 *puVar2;
   undefined4 *puVar3;
-  bedien_t *bedien_2;
   byte bVar4;
   
   bVar4 = 0;
   debugmsg(s__s__d___reset_slot___d__00425fab,s_slot_cpp_00425fa2,0x9c,param_1);
   slot_check_index(param_1,s_slot_cpp_00425fc5,0x9d);
   i = slot_check_index(param_1,s_slot_cpp_00425fce,0x9e);
-  (&DAT_0043725d)[i * 0x13c] = 0;
+  (&slot_list[0].field_0x1)[i * 0x13c] = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425fd7,0x9f);
-  *(undefined2 *)(&DAT_004372ba + i * 0x13c) = 0;
+  *(undefined2 *)(&slot_list[0].field_0x5e + i * 0x13c) = 0;
   i = slot_check_index(param_1,s_slot_cpp_00425fe0,0xa0);
-  *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 1000;
+  *(undefined4 *)(&slot_list[0].field_0x78 + i * 0x13c) = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425fe9,0xa1);
-  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
-  *(undefined4 *)(&DAT_0043725e + i * 0x13c) = _opties;
-  puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
-  puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-  *puVar3 = *puVar1;
-  puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
-  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar1 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar4 * -8);
+  *(undefined4 *)((int)&slot_list[0].field_02 + i * 0x13c) = _opties;
+  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
+  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+  *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+  *puVar2 = *puVar3;
+  puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
+  (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+       (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425ff2,0xa2);
   bedien = &control;
-  bedien_2 = (bedien_t *)(&DAT_00437272 + i * 0x13c);
+  puVar3 = (undefined4 *)(&slot_list[0].field_0x16 + i * 0x13c);
   for (j = 9; j != 0; j = j + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar4 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
+    *puVar3 = *(undefined4 *)bedien;
+    bedien = (bedien_t *)&bedien[-(uint)bVar4].field_04;
+    puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
   }
   i = 0;
   do {
     j = slot_check_index(param_1,s_slot_cpp_00425ffb,0xa4);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426004,0xa4);
-    *(undefined4 *)(&DAT_004372bc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372bc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_0042600d,0xa5);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426016,0xa5);
-    *(undefined2 *)(&DAT_004372d8 + slot_check_level_result * 2 + j * 0x13c) = 6;
+    *(undefined2 *)(j * 0x13c + 0x4372d8 + slot_check_level_result * 2) = 6;
     j = slot_check_index(param_1,s_slot_cpp_0042601f,0xa6);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426028,0xa6);
-    *(undefined2 *)(&DAT_0043735c + slot_check_level_result * 2 + j * 0x13c) = 1;
+    *(undefined2 *)(j * 0x13c + 0x43735c + slot_check_level_result * 2) = 1;
     j = slot_check_index(param_1,s_slot_cpp_00426031,0xa7);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_0042603a,0xa7);
-    *(undefined2 *)(&DAT_00437368 + slot_check_level_result * 2 + j * 0x13c) = 2;
+    *(undefined2 *)(j * 0x13c + 0x437368 + slot_check_level_result * 2) = 2;
     j = slot_check_index(param_1,s_slot_cpp_00426043,0xa8);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_0042604c,0xa8);
-    *(undefined2 *)(&DAT_00437374 + slot_check_level_result * 2 + j * 0x13c) = 3;
+    *(undefined2 *)(j * 0x13c + 0x437374 + slot_check_level_result * 2) = 3;
     j = slot_check_index(param_1,s_slot_cpp_00426055,0xa9);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_0042605e,0xa9);
-    *(undefined2 *)(&DAT_00437380 + slot_check_level_result * 2 + j * 0x13c) = 4;
+    *(undefined2 *)(j * 0x13c + 0x437380 + slot_check_level_result * 2) = 4;
     j = slot_check_index(param_1,s_slot_cpp_00426067,0xaa);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426070,0xaa);
-    *(undefined2 *)(&DAT_0043738c + slot_check_level_result * 2 + j * 0x13c) = 5;
+    *(undefined2 *)(j * 0x13c + 0x43738c + slot_check_level_result * 2) = 5;
     j = slot_check_index(param_1,s_slot_cpp_00426079,0xab);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426082,0xab);
-    *(undefined4 *)(&DAT_004372e4 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372e4 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_0042608b,0xac);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_00426094,0xac);
-    *(undefined4 *)(&DAT_004372fc + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x4372fc + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_0042609d,0xad);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_004260a6,0xad);
-    *(undefined4 *)(&DAT_00437314 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437314 + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_004260af,0xae);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_004260b8,0xae);
-    *(undefined4 *)(&DAT_0043732c + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x43732c + slot_check_level_result * 4) = 0;
     j = slot_check_index(param_1,s_slot_cpp_004260c1,0xaf);
     slot_check_level_result = slot_check_level(i,s_slot_cpp_004260ca,0xaf);
     i = i + 1;
-    *(undefined4 *)(&DAT_00437344 + slot_check_level_result * 4 + j * 0x13c) = 0;
+    *(undefined4 *)(j * 0x13c + 0x437344 + slot_check_level_result * 4) = 0;
   } while (i < 6);
   return;
 }
@@ -940,7 +943,7 @@ void __watcall load_tmp_slotdbase(char *filename)
   if (iVar1 == 0) {
     fatal_exit(s__s__d___load_tmp_slotdbase____Fi_00426108,s_slot_cpp_004260ff,0xbe,filename);
   }
-  iVar1 = file_read(&slot_list,0xc58,filename);
+  iVar1 = file_read(slot_list,0xc58,filename);
   if (iVar1 != 0) {
     file_delete();
     init_slotdbase();
@@ -959,11 +962,10 @@ void __watcall init_slotdbase(void)
   int i;
   int slot_check_index_result;
   int j;
+  bedien_t *bedien;
   undefined4 *puVar1;
-  bedien_t *bedien_2;
   undefined4 *puVar2;
   undefined4 *puVar3;
-  bedien_t *bedien;
   byte bVar4;
   
   bVar4 = 0;
@@ -973,33 +975,33 @@ void __watcall init_slotdbase(void)
     i = 0;
     do {
       slot_check_index_result = slot_check_index(i,s_slot_cpp_004261f2,0xde);
-      strncpy((char *)(slot_check_index_result * 0x13c + 0x437296),&DAT_004261f1,0x20);
+      strncpy(&slot_list[0].field_0x3a + slot_check_index_result * 0x13c,&DAT_004261f1,0x20);
       slot_check_index_result = slot_check_index(i,s_slot_cpp_004261fb,0xdf);
-      (&DAT_0043725d)[slot_check_index_result * 0x13c] = 0;
+      (&slot_list[0].field_0x1)[slot_check_index_result * 0x13c] = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426204,0xe0);
-      *(undefined2 *)(&DAT_004372ba + slot_check_index_result * 0x13c) = 0;
+      *(undefined2 *)(&slot_list[0].field_0x5e + slot_check_index_result * 0x13c) = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_0042620d,0xe1);
-      *(undefined4 *)(&DAT_004372d4 + slot_check_index_result * 0x13c) = 0;
+      *(undefined4 *)(&slot_list[0].field_0x78 + slot_check_index_result * 0x13c) = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426216,0xe2);
-      (&slot_list)[slot_check_index_result * 0x13c] = 0;
+      (&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_0042621f,0xe3);
-      puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
-      *(undefined4 *)(&DAT_0043725e + slot_check_index_result * 0x13c) = _opties;
-      puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
-      puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-      *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-      *puVar3 = *puVar1;
-      puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
-      (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-           (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+      puVar1 = (undefined4 *)(slot_check_index_result * 0x13c + 0x437262 + (uint)bVar4 * -8);
+      *(undefined4 *)((int)&slot_list[0].field_02 + slot_check_index_result * 0x13c) = _opties;
+      puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
+      puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+      *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+      *puVar2 = *puVar3;
+      puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
+      (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+           (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426228,0xe4);
       i = i + 1;
-      bedien_2 = &control;
-      bedien = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
+      bedien = &control;
+      puVar3 = (undefined4 *)(&slot_list[0].field_0x16 + slot_check_index_result * 0x13c);
       for (j = 9; j != 0; j = j + -1) {
-        *bedien = *bedien_2;
-        bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
-        bedien = bedien + (uint)bVar4 * -2 + 1;
+        *puVar3 = *(undefined4 *)bedien;
+        bedien = (bedien_t *)&bedien[-(uint)bVar4].field_04;
+        puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
       }
     } while (i < 10);
     save_slotdbase();
@@ -1023,7 +1025,7 @@ void __watcall save_slotdbase(void)
   debugmsg(s__s__d___save_slotdbase___void___00426243,s_slot_cpp_0042623a,0xf2);
   debugmsg(s__s__d___save_tmp_slotdbase___s__00426159,s_slot_cpp_00426150,0xce,s_SLOT_A2R_00426266,
            extraout_EDX);
-  file_write_result = file_write(&slot_list,0xc58,s_SLOT_A2R_00426266);
+  file_write_result = file_write(slot_list,0xc58,s_SLOT_A2R_00426266);
   if (file_write_result != 0) {
     fatal_exit(s__s__d___save_tmp_slotdbase____Er_00426185,s_slot_cpp_0042617c,0xd0,
                file_write_result,s_SLOT_A2R_00426266);
@@ -1041,7 +1043,7 @@ void __watcall save_tmp_slotdbase(char *filename)
   int extraout_EDX;
   
   debugmsg(s__s__d___save_tmp_slotdbase___s__00426159,s_slot_cpp_00426150,0xce,filename);
-  arg4 = file_write(&slot_list,extraout_EDX,filename);
+  arg4 = file_write(slot_list,extraout_EDX,filename);
   if (arg4 != 0) {
     fatal_exit(s__s__d___save_tmp_slotdbase____Er_00426185,s_slot_cpp_0042617c,0xd0,arg4,filename);
   }
@@ -1066,11 +1068,11 @@ int __watcall get_last_saved_slot(void)
     i = 0;
     do {
       slot_check_index_result = slot_check_index(i,s_slot_cpp_0042629f,0x100);
-      if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+      if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
         slot_check_index_result = slot_check_index(i,s_slot_cpp_004262a8,0x101);
-        if (bVar1 < (byte)(&DAT_0043725d)[slot_check_index_result * 0x13c]) {
+        if (bVar1 < (byte)(&slot_list[0].field_0x1)[slot_check_index_result * 0x13c]) {
           slot_check_index_result_2 = slot_check_index(i,s_slot_cpp_004262b1,0x103);
-          bVar1 = (&DAT_0043725d)[slot_check_index_result_2 * 0x13c];
+          bVar1 = (&slot_list[0].field_0x1)[slot_check_index_result_2 * 0x13c];
           slot_check_index_result_2 = i;
         }
       }
@@ -1088,39 +1090,42 @@ int __watcall get_last_saved_slot(void)
 void __watcall set_active_slot(int param_1)
 
 {
+  undefined4 uVar1;
   int slot_check_index_result;
   int i;
-  undefined4 *puVar1;
   undefined4 *puVar2;
-  bedien_t *bedien;
   undefined4 *puVar3;
-  bedien_t *bedien_2;
-  byte bVar4;
+  undefined4 *puVar4;
+  bedien_t *bedien;
+  byte bVar5;
   
-  bVar4 = 0;
+  bVar5 = 0;
   debugmsg(s__s__d___set_active_slot___d__004262c3,s_slot_cpp_004262ba,0x110,param_1);
   slot_check_index(param_1,s_slot_cpp_004262e2,0x111);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004262eb,0x112);
-  if ((&slot_list)[slot_check_index_result * 0x13c] == '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] == '\0') {
     fatal_exit(s__s__d___set_active_slot____This_s_004262fd,s_slot_cpp_004262f4,0x113,param_1);
   }
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426355,0x115);
-  puVar1 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
-  _opties = *(undefined4 *)(&DAT_0043725e + slot_check_index_result * 0x13c);
-  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
-  *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2) = *puVar1;
-  *puVar3 = *puVar2;
-  puVar3[(uint)bVar4 * -2 + 1] = puVar2[(uint)bVar4 * -2 + 1];
-  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar2 = (undefined4 *)(slot_check_index_result * 0x13c + 0x437262 + (uint)bVar5 * -8);
+  _opties = *(undefined4 *)((int)&slot_list[0].field_02 + slot_check_index_result * 0x13c);
+  puVar4 = &DAT_00437228 + (uint)bVar5 * -2 + (uint)bVar5 * -2;
+  puVar3 = puVar2 + (uint)bVar5 * -2 + 1;
+  *(undefined4 *)((int)&DAT_00437222 + (uint)bVar5 * -8 + 2) = *puVar2;
+  *puVar4 = *puVar3;
+  puVar4[(uint)bVar5 * -2 + 1] = puVar3[(uint)bVar5 * -2 + 1];
+  (puVar4 + (uint)bVar5 * -2 + 1)[(uint)bVar5 * -2 + 1] =
+       (puVar3 + (uint)bVar5 * -2 + 1)[(uint)bVar5 * -2 + 1];
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042635e,0x116);
-  bedien = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
-  bedien_2 = &control;
+  puVar2 = (undefined4 *)(&slot_list[0].field_0x16 + slot_check_index_result * 0x13c);
+  bedien = &control;
   for (i = 9; i != 0; i = i + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar4 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
+    uVar1 = *puVar2;
+    bedien->field_00 = (char)uVar1;
+    bedien->field_01 = (char)((uint)uVar1 >> 8);
+    bedien->field_02 = (short)((uint)uVar1 >> 0x10);
+    puVar2 = puVar2 + (uint)bVar5 * -2 + 1;
+    bedien = (bedien_t *)&bedien[-(uint)bVar5].field_04;
   }
   active_slot = param_1;
   return;
@@ -1144,12 +1149,12 @@ void __watcall update_active_slot_optie(void)
   debugmsg(s__s__d____>_update_active_slot_op_00426370,s_slot_cpp_00426367,0x11f);
   slot_check_index(active_slot,s_slot_cpp_0042639b,0x120);
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_004263a4,0x121);
-  if ((&slot_list)[slot_check_index_result * 0x13c] == '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] == '\0') {
     fatal_exit(s__s__d___set_active_slot____This_s_004263b6,s_slot_cpp_004263ad,0x122,active_slot);
   }
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_0042640e,0x124);
-  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
-  *(undefined4 *)(&DAT_0043725e + slot_check_index_result * 0x13c) = _opties;
+  puVar2 = (undefined4 *)(slot_check_index_result * 0x13c + 0x437262 + (uint)bVar4 * -8);
+  *(undefined4 *)((int)&slot_list[0].field_02 + slot_check_index_result * 0x13c) = _opties;
   puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
   puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
   *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
@@ -1169,23 +1174,23 @@ void __watcall update_active_slot_bediening(void)
   int slot_check_index_result;
   int i;
   bedien_t *bedien;
-  bedien_t *bedien_2;
-  byte bVar1;
+  undefined4 *puVar1;
+  byte bVar2;
   
-  bVar1 = 0;
+  bVar2 = 0;
   debugmsg(s__s__d____>_update_active_slot_be_00426420,s_slot_cpp_00426417,300);
   slot_check_index(active_slot,s_slot_cpp_0042644f,0x12d);
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_00426458,0x12e);
-  if ((&slot_list)[slot_check_index_result * 0x13c] == '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] == '\0') {
     fatal_exit(s__s__d___set_active_slot____This_s_0042646a,s_slot_cpp_00426461,0x12f,active_slot);
   }
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_004264c2,0x131);
   bedien = &control;
-  bedien_2 = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
+  puVar1 = (undefined4 *)(&slot_list[0].field_0x16 + slot_check_index_result * 0x13c);
   for (i = 9; i != 0; i = i + -1) {
-    *bedien_2 = *bedien;
-    bedien = bedien + (uint)bVar1 * -2 + 1;
-    bedien_2 = bedien_2 + (uint)bVar1 * -2 + 1;
+    *puVar1 = *(undefined4 *)bedien;
+    bedien = (bedien_t *)&bedien[-(uint)bVar2].field_04;
+    puVar1 = puVar1 + (uint)bVar2 * -2 + 1;
   }
   return;
 }
@@ -1200,9 +1205,9 @@ char * __watcall slot_naam_string(int param_1)
   
   slot_check_index(param_1,s_slot_cpp_004264cb,0x13a);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004264d4,0x13b);
-  if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004264dd,0x13c);
-    return (char *)(slot_check_index_result * 0x13c + 0x437296);
+    return &slot_list[0].field_0x3a + slot_check_index_result * 0x13c;
   }
   return s_L_E_E_G_004264e6;
 }
@@ -1217,9 +1222,9 @@ char * __watcall slot_level_string(int param_1)
   
   slot_check_index(param_1,s_slot_cpp_004264ee,0x146);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004264f7,0x147);
-  if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426500,0x148);
-    return (&level_naam)[*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10];
+    return level_naam[*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10];
   }
   return &DAT_00426509;
 }
@@ -1234,18 +1239,21 @@ char * __watcall slot_tijd_string(int param_1)
   
   slot_check_index(param_1,s_slot_cpp_0042650a,0x153);
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426513,0x154);
-  if ((&slot_list)[slot_check_index_result * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[slot_check_index_result * 0x13c] != '\0') {
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042651c,0x15a);
-    slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10)
+    slot_count_total_tijd
+              (param_1,*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10)
     ;
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426525,0x159);
-    slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10)
+    slot_count_total_tijd
+              (param_1,*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10)
     ;
     slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042652e,0x158);
-    slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10)
+    slot_count_total_tijd
+              (param_1,*(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10)
     ;
     bprintf();
-    return &slot_str_buffer;
+    return slot_str_buffer;
   }
   return s___u__m__s_0042654d;
 }
@@ -1264,12 +1272,12 @@ int __watcall slot_count_total_tijd(int param_1,int param_2)
   slot_check_index(param_1,s_slot_cpp_00426557,0x167);
   i = slot_check_index(param_1,s_slot_cpp_00426560,0x168);
   iVar1 = 0;
-  if ((&slot_list)[i * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[i * 0x13c] != '\0') {
     for (i = 0; i < param_2; i = i + 1) {
       slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426569,0x16a);
       slot_check_level_result = slot_check_level(i,s_slot_cpp_00426572,0x16a);
-      iVar1 = iVar1 + *(int *)(&DAT_004372bc +
-                              slot_check_level_result * 4 + slot_check_index_result * 0x13c);
+      iVar1 = iVar1 + *(int *)(slot_check_index_result * 0x13c + 0x4372bc +
+                              slot_check_level_result * 4);
     }
   }
   return iVar1;
@@ -1288,44 +1296,45 @@ int __watcall slot_count_total_tijd_speler(int param_1,int param_2)
   
   i = slot_check_index(param_1,s_slot_cpp_0042657b,0x176);
   iVar1 = 0;
-  if ((&slot_list)[i * 0x13c] != '\0') {
+  if ((&slot_list[0].field_0x0)[i * 0x13c] != '\0') {
     for (i = 0; slot_check_index_result = slot_check_index(param_1,s_slot_cpp_00426584,0x177),
-        i < *(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10; i = i + 1) {
+        i < *(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >> 0x10; i = i + 1)
+    {
       switch(param_2) {
       case 0:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042659f,0x17d);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265a8,0x17d);
-        iVar1 = iVar1 + *(int *)(&DAT_004372e4 +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0x88 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 1:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265b1,0x180);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265ba,0x180);
-        iVar1 = iVar1 + *(int *)(&DAT_004372fc +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xa0 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 2:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265c3,0x183);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265cc,0x183);
-        iVar1 = iVar1 + *(int *)(&DAT_00437314 +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xb8 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 3:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265d5,0x186);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265de,0x186);
-        iVar1 = iVar1 + *(int *)(&DAT_0043732c +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xd0 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 4:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_004265e7,0x189);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_004265f0,0x189);
-        iVar1 = iVar1 + *(int *)(&DAT_00437344 +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0xe8 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
         break;
       case 5:
         slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042658d,0x17a);
         slot_check_level_result = slot_check_level(i,s_slot_cpp_00426596,0x17a);
-        iVar1 = iVar1 + *(int *)(&DAT_004372bc +
+        iVar1 = iVar1 + *(int *)(&slot_list[0].field_0x60 +
                                 slot_check_level_result * 4 + slot_check_index_result * 0x13c);
       }
     }
@@ -1868,7 +1877,7 @@ void __watcall init_infio(void)
     infio.money = extraout_EDX;
     do {
       iVar2 = iVar1 + 2;
-      *(undefined2 *)((int)&infio.key_left + iVar1) = *(undefined2 *)((int)&toets_define + iVar1);
+      *(undefined2 *)((int)&infio.key_left + iVar1) = *(undefined2 *)((int)toets_define + iVar1);
       iVar1 = iVar2;
     } while (iVar2 != 0xc);
     save_infio();
@@ -1993,17 +2002,17 @@ void __watcall mm_draw_info_text(int param_1,int param_2)
   win_bprintf(1,iVar1,param_2 + 0x8c,0x5a,s___16s_00427032,pcVar2);
   slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427038,0x119);
   win_print_xy(1,iVar1,param_2 + 0x9d,s___9d_00427043,
-               *(undefined4 *)(&DAT_004372d4 + slot_check_index_result * 0x13c));
+               *(undefined4 *)(&slot_list[0].field_0x78 + slot_check_index_result * 0x13c));
   slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427048,0x11d);
   pcVar2 = slot_tijd_string(slot_check_index_result);
   win_print_xy(1,iVar1,param_2 + 0xae,s___6s_00427053,pcVar2);
-  if (control == (bedien_t)0x0) {
+  if (control._0_4_ == 0) {
     pcVar2 = s_Toetsenbord_00427058;
   }
-  else if (control == (bedien_t)0x1) {
+  else if (control._0_4_ == 1) {
     pcVar2 = s_Joypad_1_00427064;
   }
-  else if (control == (bedien_t)0x2) {
+  else if (control._0_4_ == 2) {
     pcVar2 = s_Stuur_0042706d;
   }
   else {
@@ -2052,14 +2061,14 @@ void __watcall mm_display_info(void)
 
 /* ==== 004043be mm_af_image ==== */
 
-int __watcall mm_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall mm_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___mm_af_image_____Could_no_004270df,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___mm_af_image_____Could_no_004270df,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -2085,24 +2094,24 @@ void __watcall mm_animate_buttons(void)
                            s_m_main_cpp_0042711b,0x16e);
     set_mem_image(0,af_image,0,0x7c,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1b,*(int *)((int)&DAT_00432fe6 + iVar3) >> 0x10,s_m_main_cpp_00427126,
-                           0x175);
+    af_image = mm_af_image(0x1b,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x16) >> 0x10,
+                           s_m_main_cpp_00427126,0x175);
     set_mem_image(0,af_image,0,0xb0,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1c,*(int *)((int)&DAT_00432ffe + iVar3) >> 0x10,s_m_main_cpp_00427131,
-                           0x17c);
+    af_image = mm_af_image(0x1c,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x2e) >> 0x10,
+                           s_m_main_cpp_00427131,0x17c);
     set_mem_image(0,af_image,0,0xe4,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1e,*(int *)((int)&DAT_00433016 + iVar3) >> 0x10,s_m_main_cpp_0042713c,
-                           0x183);
+    af_image = mm_af_image(0x1e,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x46) >> 0x10,
+                           s_m_main_cpp_0042713c,0x183);
     set_mem_image(0,af_image,0,0x116,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1d,*(int *)((int)&DAT_0043302e + iVar3) >> 0x10,s_m_main_cpp_00427147,
-                           0x18a);
+    af_image = mm_af_image(0x1d,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x5e) >> 0x10,
+                           s_m_main_cpp_00427147,0x18a);
     set_mem_image(0,af_image,0,0x14b,iVar4);
     iVar4 = 2;
-    af_image = mm_af_image(0x1f,*(int *)((int)&DAT_00433046 + iVar3) >> 0x10,s_m_main_cpp_00427152,
-                           0x191);
+    af_image = mm_af_image(0x1f,*(int *)((int)mm_entree_anim_tabel + iVar3 + 0x76) >> 0x10,
+                           s_m_main_cpp_00427152,0x191);
     set_mem_image(0,af_image,0,0x17e,iVar4);
     do {
       handle_win_msg();
@@ -2123,14 +2132,14 @@ void __watcall mm_animate_map(int param_1)
   int iVar1;
   int iVar2;
   int af_image;
-  int extraout_EDX;
+  int frame_index;
   
   hide_mouse();
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d___mm_animate_map____Illega_00427168,s_m_main_cpp_0042715d,0x1a6,param_1,6);
   }
   debugmsg(s_LEVEL_SHOWN____d_004271a6,param_1);
-  af_image = mm_af_image(0x26,extraout_EDX,s_m_main_cpp_004271bb,0x1a9);
+  af_image = mm_af_image(0x26,frame_index,s_m_main_cpp_004271bb,0x1a9);
   iVar1 = *(int *)((int)xvga_mem_images + af_image * 0x20 + 8);
   iVar2 = *(int *)((int)xvga_mem_images + af_image * 0x20 + 0xc);
   set_mem_image(1,af_image,0x15d,0xf5,2);
@@ -2174,9 +2183,9 @@ int __watcall mm_open_screen(int param_1)
   mm_display_info();
   mm_animate_buttons();
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_0042724f,0x1ce);
-  mm_animate_map(*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10);
+  mm_animate_map(*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10);
   debugmsg(s_activate_form_0042725a);
-  activate_form(&mm_form);
+  activate_form(mm_form);
   debugmsg(s_end_open_00427269);
   return 1;
 }
@@ -2218,19 +2227,20 @@ void __watcall mm_handle_tmp_hiscore(void)
   
   save_tmp_scoredbase(s_SCORE_TMP_004272e0);
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_004272ea,499);
-  if (-1 < (*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1) {
+  if (-1 < (*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1) {
     iVar1 = slot_check_index(active_slot,s_m_main_cpp_004272f5,0x1f7);
-    iVar1 = *(int *)(&DAT_004372d4 + iVar1 * 0x13c);
+    iVar1 = *(int *)(&slot_list[0].field_0x78 + iVar1 * 0x13c);
     iVar2 = slot_check_index(active_slot,s_m_main_cpp_00427300,0x1f6);
-    iVar2 = *(int *)(&DAT_004372b8 + iVar2 * 0x13c);
+    iVar2 = *(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c);
     iVar3 = slot_check_index(active_slot,s_m_main_cpp_0042730b,0x1f5);
-    iVar3 = slot_count_total_tijd(active_slot,*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10);
+    iVar3 = slot_count_total_tijd
+                      (active_slot,*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10);
     slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427316,500);
-    add_new_hiscore((char *)(slot_check_index_result * 0x13c + 0x437296),iVar3,(iVar2 >> 0x10) + -1,
-                    iVar1);
+    add_new_hiscore(&slot_list[0].field_0x3a + slot_check_index_result * 0x13c,iVar3,
+                    (iVar2 >> 0x10) + -1,iVar1);
   }
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_00427321,0x1f9);
-  menu_score((*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1);
+  menu_score((*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1);
   load_tmp_scoredbase(s_SCORE_TMP_0042732c);
   file_delete();
   return;
@@ -2248,25 +2258,26 @@ void __watcall mm_handle_opnieuw_spel(void)
   int slot_check_index_result;
   
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_00427340,0x205);
-  if ((*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1 < 0) {
+  if ((*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1 < 0) {
     reset_slot(active_slot);
     mm_display_info();
   }
   else {
     mm_close_screen(0);
     iVar1 = slot_check_index(active_slot,s_m_main_cpp_0042734b,0x20a);
-    iVar1 = *(int *)(&DAT_004372d4 + iVar1 * 0x13c);
+    iVar1 = *(int *)(&slot_list[0].field_0x78 + iVar1 * 0x13c);
     iVar2 = slot_check_index(active_slot,s_m_main_cpp_00427356,0x209);
-    iVar2 = *(int *)(&DAT_004372b8 + iVar2 * 0x13c);
+    iVar2 = *(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c);
     iVar3 = slot_check_index(active_slot,s_m_main_cpp_00427361,0x208);
-    iVar3 = slot_count_total_tijd(active_slot,*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10);
+    iVar3 = slot_count_total_tijd
+                      (active_slot,*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10);
     slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_0042736c,0x207);
-    add_new_hiscore((char *)(slot_check_index_result * 0x13c + 0x437296),iVar3,(iVar2 >> 0x10) + -1,
-                    iVar1);
+    add_new_hiscore(&slot_list[0].field_0x3a + slot_check_index_result * 0x13c,iVar3,
+                    (iVar2 >> 0x10) + -1,iVar1);
     iVar1 = get_last_entered_hiscore();
     if ((-1 < iVar1) && (iVar1 < 10)) {
       iVar1 = slot_check_index(active_slot,s_m_main_cpp_00427377,0x20d);
-      menu_score((*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) + -1);
+      menu_score((*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) + -1);
     }
     reset_slot(active_slot);
     mm_open_screen(0);
@@ -2283,17 +2294,18 @@ int __watcall menu_main(int param_1)
 
 {
   bool bVar1;
-  int iVar2;
+  int form_index;
   uint handle_form_result;
-  int iVar3;
+  int iVar2;
   int local_1c;
   
   bVar1 = true;
-  iVar3 = 0xff;
+  iVar2 = 0xff;
   local_1c = -1;
   if ((DAT_00437222 >> 0x10 == 0) || (DAT_00437222 >> 0x10 == 3)) {
-    iVar2 = slot_check_index(active_slot,s_m_main_cpp_00427382,0x221);
-    snd_play_looping(&mm_tune_buffer,(&mm_tune)[*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10]);
+    form_index = slot_check_index(active_slot,s_m_main_cpp_00427382,0x221);
+    snd_play_looping(&mm_tune_buffer,
+                     mm_tune[*(int *)(&slot_list[0].field_0x5c + form_index * 0x13c) >> 0x10]);
   }
   mm_open_screen(1);
 LAB_00404c7a:
@@ -2301,13 +2313,13 @@ LAB_00404c7a:
     snd_wait(&local_1c);
     mm_close_screen(1);
     snd_stop(&mm_tune_buffer);
-    return iVar3;
+    return iVar2;
   }
   handle_form_result = handle_form();
   if (handle_form_result < 5) {
     if (1 < handle_form_result) {
       if (handle_form_result < 3) {
-        iVar3 = 0x28;
+        iVar2 = 0x28;
         snd_play(&local_1c,s_click1_wav_004273b9);
         wait_form_key_released();
         wait_enter_pressed();
@@ -2327,8 +2339,9 @@ LAB_00404c7a:
           snd_play(&local_1c,s_click1_wav_004273cf);
           mm_close_screen(0);
           snd_wait(&local_1c);
-          iVar2 = slot_check_index(active_slot,s_m_main_cpp_004273da,0x287);
-          menu_opties(&mm_tune_buffer,(&mm_tune)[*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10]);
+          form_index = slot_check_index(active_slot,s_m_main_cpp_004273da,0x287);
+          menu_opties(&mm_tune_buffer,
+                      mm_tune[*(int *)(&slot_list[0].field_0x5c + form_index * 0x13c) >> 0x10]);
           update_active_slot_optie();
         }
 LAB_00404c73:
@@ -2342,7 +2355,7 @@ LAB_00404c73:
       wait_enter_pressed();
       snd_wait(&local_1c);
       snd_set_volume(&mm_tune_buffer,-8000);
-      play_help(&mm_help,1);
+      play_help(mm_help,1);
 LAB_00404c1b:
       snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
       goto LAB_00404c7a;
@@ -2367,14 +2380,14 @@ LAB_00404baf:
         snd_wait(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
         snd_play(&local_1c,s_MM_07_wav_004273fb);
-        iVar2 = req_vraag(s_De_huidige_race_wordt_afgelast__A_00427405);
-        if (iVar2 != 0) {
+        form_index = req_vraag(s_De_huidige_race_wordt_afgelast__A_00427405);
+        if (form_index != 0) {
           snd_stop(&local_1c);
           mm_handle_opnieuw_spel();
         }
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
         snd_stop(&local_1c);
-        activate_form(&mm_form);
+        activate_form(mm_form);
       }
       else if (handle_form_result == 7) {
         snd_play(&local_1c,s_click1_wav_00427481);
@@ -2383,10 +2396,10 @@ LAB_00404baf:
         snd_wait(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
         snd_play(&local_1c,s_MM_06_wav_0042748c);
-        iVar2 = req_vraag(s_Weet_je_zeker_dat_je_de_huidige_r_00427496);
-        if (iVar2 == 0) {
+        form_index = req_vraag(s_Weet_je_zeker_dat_je_de_huidige_r_00427496);
+        if (form_index == 0) {
           snd_stop(&local_1c);
-          activate_form(&mm_form);
+          activate_form(mm_form);
           goto LAB_00404c1b;
         }
         snd_stop(&local_1c);
@@ -2404,54 +2417,54 @@ LAB_00404baf:
     if (0x2711 < handle_form_result) {
       if (handle_form_result == 0x2712) {
         snd_play(&local_1c,s_click3_wav_00427398);
-        iVar2 = get_control_focus();
-        switch(iVar2) {
+        form_index = get_control_focus();
+        switch(form_index) {
         case 2:
-          iVar2 = 3;
+          form_index = 3;
           break;
         case 3:
-          iVar2 = 4;
+          form_index = 4;
           break;
         case 4:
-          iVar2 = 5;
+          form_index = 5;
           break;
         case 5:
-          iVar2 = 6;
+          form_index = 6;
           break;
         case 6:
-          iVar2 = 7;
+          form_index = 7;
           break;
         default:
-          iVar2 = 2;
+          form_index = 2;
         }
-        focus_control(iVar2);
+        focus_control(form_index);
         wait_cursor_down_pressed();
         goto LAB_00404b02;
       }
       goto LAB_00404c7a;
     }
     snd_play(&local_1c,s_click3_wav_0042738d);
-    iVar2 = get_control_focus();
-    switch(iVar2) {
+    form_index = get_control_focus();
+    switch(form_index) {
     default:
-      iVar2 = 7;
+      form_index = 7;
       break;
     case 3:
-      iVar2 = 2;
+      form_index = 2;
       break;
     case 4:
-      iVar2 = 3;
+      form_index = 3;
       break;
     case 5:
-      iVar2 = 4;
+      form_index = 4;
       break;
     case 6:
-      iVar2 = 5;
+      form_index = 5;
       break;
     case 7:
-      iVar2 = 6;
+      form_index = 6;
     }
-    focus_control(iVar2);
+    focus_control(form_index);
     wait_cursor_up_pressed();
   }
 LAB_00404b02:
@@ -2467,31 +2480,30 @@ void __watcall mst_draw_selected_slot_info(int param_1)
 {
   int iVar1;
   char *pcVar2;
-  int iVar3;
   
-  iVar1 = *(int *)(xvga_anims->field_44 + 0xc);
+  iVar1 = xvga_anims[5].frames[1].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mst_draw_selected_slot_i_00427560,s_m_start_cpp_00427554,0x106,1,5);
   }
-  iVar3 = param_1 * 8;
-  set_mem_image(1,iVar1,*(int *)(mst_slot_list + iVar3),*(int *)(&DAT_00433064 + iVar3),2);
+  set_mem_image(1,iVar1,mst_slot_list[param_1 * 2].field_00,mst_slot_list[param_1 * 2 + 1].field_00,
+                2);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xfafafa,0xfafafa);
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275ad,0x10f);
   pcVar2 = slot_naam_string(iVar1);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 10,*(int *)(&DAT_00433064 + iVar3),0x80,
-              s___16s_004275b9,pcVar2);
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 10,mst_slot_list[param_1 * 2 + 1].field_00,
+              0x80,s___16s_004275b9,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275bf,0x114);
   pcVar2 = slot_level_string(iVar1);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 0x94,*(int *)(&DAT_00433064 + iVar3),0xfa,
-              s___16s_004275cb,pcVar2);
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x94,mst_slot_list[param_1 * 2 + 1].field_00,
+              0xfa,s___16s_004275cb,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275d1,0x119);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 0xfe,*(int *)(&DAT_00433064 + iVar3),0xfa,
-              s__9d_004275dd,*(undefined4 *)(&DAT_004372d4 + iVar1 * 0x13c));
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0xfe,mst_slot_list[param_1 * 2 + 1].field_00,
+              0xfa,s__9d_004275dd,*(undefined4 *)(&slot_list[0].field_0x78 + iVar1 * 0x13c));
   iVar1 = slot_check_index(param_1,s_m_start_cpp_004275e1,0x11e);
   pcVar2 = slot_tijd_string(iVar1);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar3) + 0x189,*(int *)(&DAT_00433064 + iVar3),0x80,
-              s___6s_004275ed,pcVar2);
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x189,mst_slot_list[param_1 * 2 + 1].field_00,
+              0x80,s___6s_004275ed,pcVar2);
   return;
 }
 
@@ -2507,22 +2519,21 @@ void __watcall mst_draw_slot_info(int param_1)
   int iVar3;
   char *pcVar4;
   char *extraout_EDX;
-  int iVar5;
   
-  iVar3 = *(int *)(xvga_anims->field_44 + 4);
+  iVar3 = (xvga_anims[5].frames)->image;
   debugmsg(s__s__d___mst_draw_slot_info__d___i_004275fe,s_m_start_cpp_004275f2,0x129,param_1);
   if ((iVar3 < 0) || (max_mem_image_ptr < iVar3)) {
     fatal_exit(s__s__d___mst_draw_slot_info______C_00427638,s_m_start_cpp_0042762c,299,0,5);
   }
   iVar1 = slot_check_index(param_1,s_m_start_cpp_0042767c,0x12d);
-  iVar1 = slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10);
+  iVar1 = slot_count_total_tijd(param_1,*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10);
   iVar2 = slot_check_index(param_1,s_m_start_cpp_00427688,0x12d);
-  iVar2 = *(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10;
+  iVar2 = *(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10;
   slot_check_index_result = slot_check_index(param_1,s_m_start_cpp_00427694,0x12d);
-  iVar5 = param_1 * 8;
   debugmsg(s__d>__naam__s__level__d__tijd__d_004276a0,param_1,
            slot_check_index_result * 0x13c + 0x437296,iVar2,iVar1);
-  set_mem_image(1,iVar3,*(int *)(mst_slot_list + iVar5),*(int *)(&DAT_00433064 + iVar5),2);
+  set_mem_image(1,iVar3,mst_slot_list[param_1 * 2].field_00,mst_slot_list[param_1 * 2 + 1].field_00,
+                2);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_004276c2,0x12f);
   pcVar4 = slot_naam_string(iVar3);
   debugmsg(s_printing__s_004276ce,pcVar4);
@@ -2530,19 +2541,19 @@ void __watcall mst_draw_slot_info(int param_1)
   xvga_set_font_colors(2,0xafaff,0xafaff);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_004276dc,0x136);
   pcVar4 = slot_naam_string(iVar3);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 10,*(int *)(&DAT_00433064 + iVar5),0x80,
-              s___16s_004276e8,pcVar4);
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 10,mst_slot_list[param_1 * 2 + 1].field_00,
+              0x80,s___16s_004276e8,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_004276ee,0x13b);
   pcVar4 = slot_level_string(iVar3);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 0x94,*(int *)(&DAT_00433064 + iVar5),0xfa,
-              s___16s_004276fa,pcVar4);
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x94,mst_slot_list[param_1 * 2 + 1].field_00,
+              0xfa,s___16s_004276fa,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_start_cpp_00427700,0x140);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 0xfe,*(int *)(&DAT_00433064 + iVar5),0xfa,
-              s__9d_0042770c,*(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c));
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0xfe,mst_slot_list[param_1 * 2 + 1].field_00,
+              0xfa,s__9d_0042770c,*(undefined4 *)(&slot_list[0].field_0x78 + iVar3 * 0x13c));
   iVar3 = slot_check_index(param_1,extraout_EDX,0x145);
   pcVar4 = slot_tijd_string(iVar3);
-  win_bprintf(1,*(int *)(mst_slot_list + iVar5) + 0x189,*(int *)(&DAT_00433064 + iVar5),0x80,
-              s___6s_0042771c,pcVar4);
+  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x189,mst_slot_list[param_1 * 2 + 1].field_00,
+              0x80,s___6s_0042771c,pcVar4);
   return;
 }
 
@@ -2643,7 +2654,7 @@ void __watcall mst_open_screen(int param_1)
   debugmsg(s__s__d___mst_open_screen____initi_0042789e,s_m_start_cpp_00427892,0x1a9);
   mst_print_slot(param_1);
   debugmsg(s__s__d___mst_open_screen____initi_004278d6,s_m_start_cpp_004278ca,0x1ab);
-  activate_form((form_t *)mst_form);
+  activate_form(mst_form);
   return;
 }
 
@@ -2692,7 +2703,7 @@ LAB_00405647:
   else {
     iVar3 = get_last_saved_slot();
     iVar3 = slot_check_index(iVar3,s_m_start_cpp_0042794d,0x1cd);
-    if ((&slot_list)[iVar3 * 0x13c] != '\0') goto LAB_00405647;
+    if ((&slot_list[0].field_0x0)[iVar3 * 0x13c] != '\0') goto LAB_00405647;
     iVar3 = 1;
   }
   mst_handle_intro(iVar3);
@@ -2703,7 +2714,7 @@ LAB_00405647:
   }
   iVar4 = get_last_saved_slot();
   iVar4 = slot_check_index(iVar4,s_m_start_cpp_00427964,0x1d2);
-  if ((&slot_list)[iVar4 * 0x13c] == '\0') {
+  if ((&slot_list[0].field_0x0)[iVar4 * 0x13c] == '\0') {
     snd_wait(&local_1c);
     snd_play(&local_1c,s_MNS_01_wav_00427970);
     iVar4 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_0042797b);
@@ -2717,7 +2728,7 @@ LAB_00405647:
     snd_stop(&local_1c);
   }
   debugmsg(s__s__d___activate_form_004279ba,s_m_start_cpp_004279ae,0x1e0);
-  activate_form((form_t *)mst_form);
+  activate_form(mst_form);
   while (bVar1) {
     handle_form_result = handle_form();
     if (handle_form_result < 3) {
@@ -2728,12 +2739,12 @@ LAB_00405647:
           wait_enter_pressed();
           snd_wait(&local_1c);
           snd_set_volume(&mm_tune_buffer,-8000);
-          play_help(&mst_help,1);
+          play_help(mst_help,1);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
           goto LAB_00405aac;
         }
         iVar4 = slot_check_index(iVar3,s_m_start_cpp_00427a71,0x222);
-        if ((&slot_list)[iVar4 * 0x13c] != '\0') {
+        if ((&slot_list[0].field_0x0)[iVar4 * 0x13c] != '\0') {
           snd_play(&local_1c,s_click1_wav_00427a7d);
           snd_wait(&local_1c);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
@@ -2750,13 +2761,13 @@ LAB_00405647:
           mst_print_slot(iVar3);
         }
 LAB_004058a7:
-        activate_form((form_t *)mst_form);
+        activate_form(mst_form);
         goto LAB_00405aac;
       }
 LAB_00405810:
       snd_play(&local_1c,s_click1_wav_004279fd);
       iVar4 = slot_check_index(iVar3,s_m_start_cpp_00427a08,0x20e);
-      if ((&slot_list)[iVar4 * 0x13c] == '\0') {
+      if ((&slot_list[0].field_0x0)[iVar4 * 0x13c] == '\0') {
         snd_wait(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
         snd_play(&local_1c,s_MNS_01_wav_00427a14);
@@ -2829,14 +2840,14 @@ LAB_00405089:
 
 /* ==== 00405ab8 mc_af_image ==== */
 
-int __watcall mc_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall mc_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___mm_af_image_____Could_no_00427af4,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___mm_af_image_____Could_no_00427af4,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -2899,7 +2910,7 @@ int __watcall scan_2_ckey(int param_1)
     if (0x157 < iVar1) {
       return 0;
     }
-    if (param_1 == *(int *)((int)&key_list + iVar1)) break;
+    if (param_1 == *(int *)(&key_list + iVar1)) break;
     iVar1 = iVar1 + 8;
     i = i + 1;
   }
@@ -2923,7 +2934,7 @@ void __watcall load_ckey(void)
       iVar2 = 0;
     }
     i = i + 1;
-    (&DAT_0043375c)[iVar2 * 6] = *(undefined4 *)((int)&DAT_00437244 + iVar1);
+    config_key[iVar2 * 6 + 5].field_00 = *(int *)((int)&DAT_00437244 + iVar1);
     iVar1 = iVar1 + 4;
   } while (i < 4);
   return;
@@ -2946,7 +2957,7 @@ void __watcall save_ckey(void)
       iVar2 = 0;
     }
     i = i + 1;
-    *(undefined4 *)((int)&DAT_00437244 + iVar1) = (&DAT_0043375c)[iVar2 * 6];
+    *(int *)((int)&DAT_00437244 + iVar1) = config_key[iVar2 * 6 + 5].field_00;
     iVar1 = iVar1 + 4;
   } while (i < 4);
   return;
@@ -2972,18 +2983,18 @@ void __watcall print_keys(void)
     if ((i < 0) || (iVar1 = i, 3 < i)) {
       iVar1 = 0;
     }
-    iVar1 = (&DAT_0043374c)[iVar1 * 6];
+    iVar1 = config_key[iVar1 * 6 + 1].field_00;
     if ((i < 0) || (iVar2 = i, 3 < i)) {
       iVar2 = 0;
     }
-    iVar2 = (&config_key)[iVar2 * 6];
+    iVar2 = config_key[iVar2 * 6].field_00;
     af_image = mc_af_image(0x34,0,s_m_bedien_cpp_00427b4a,0x1c4);
     set_mem_image(0,af_image,iVar2 + -8,iVar1 + -8,scan_2_ckey_result);
     xvga_set_font_colors(3,0,0xfaf0ff);
     if ((i < 0) || (scan_2_ckey_result = i, 3 < i)) {
       scan_2_ckey_result = 0;
     }
-    scan_2_ckey_result = scan_2_ckey((&DAT_0043375c)[scan_2_ckey_result * 6]);
+    scan_2_ckey_result = scan_2_ckey(config_key[scan_2_ckey_result * 6 + 5].field_00);
     if ((i < 0) || (iVar1 = i, 3 < i)) {
       iVar1 = 0;
     }
@@ -2991,8 +3002,8 @@ void __watcall print_keys(void)
       iVar2 = 0;
     }
     i = i + 1;
-    win_print_xy(0,(&config_key)[iVar2 * 6],(&DAT_0043374c)[iVar1 * 6],s___8s_00427b57,
-                 (&PTR_DAT_004335f4)[scan_2_ckey_result * 2]);
+    win_print_xy(0,config_key[iVar2 * 6].field_00,config_key[iVar1 * 6 + 1].field_00,s___8s_00427b57
+                 ,*(undefined4 *)(&DAT_004335f4 + scan_2_ckey_result * 8));
   } while (i < 4);
   show_mouse();
   return;
@@ -3018,11 +3029,11 @@ void __watcall clear_keys(void)
     if ((i < 0) || (iVar1 = i, 3 < i)) {
       iVar1 = 0;
     }
-    iVar1 = (&DAT_0043374c)[iVar1 * 6];
+    iVar1 = config_key[iVar1 * 6 + 1].field_00;
     if ((i < 0) || (iVar2 = i, 3 < i)) {
       iVar2 = 0;
     }
-    iVar2 = (&config_key)[iVar2 * 6];
+    iVar2 = config_key[iVar2 * 6].field_00;
     af_image = mc_af_image(0x34,0,s_m_bedien_cpp_00427b5c,0x1d9);
     i = i + 1;
     set_mem_image(0,af_image,iVar2 + -8,iVar1 + -8,iVar3);
@@ -3046,7 +3057,7 @@ void __watcall clear_all_ckey(void)
       iVar1 = 0;
     }
     i = i + 1;
-    (&DAT_0043375c)[iVar1 * 6] = 0xffffffff;
+    config_key[iVar1 * 6 + 5].field_00 = -1;
   } while (i < 4);
   return;
 }
@@ -3090,7 +3101,7 @@ int __watcall ckey_new_define(int param_1)
     if ((i < 0) || (iVar1 = i, 3 < i)) {
       iVar1 = 0;
     }
-    if (param_1 == (&DAT_0043375c)[iVar1 * 6]) break;
+    if (param_1 == config_key[iVar1 * 6 + 5].field_00) break;
     i = i + 1;
   }
   return i;
@@ -3117,14 +3128,14 @@ int __watcall mb_read_key(void)
       return 0x1b;
     }
     for (iVar1 = 8; iVar1 < 0x158; iVar1 = iVar1 + 8) {
-      keyispressed_result = keyispressed(*(int *)((int)&key_list + iVar1));
+      keyispressed_result = keyispressed(*(int *)(&key_list + iVar1));
       if (keyispressed_result != 0) {
         while( true ) {
-          keyispressed_result = keyispressed(*(int *)((int)&key_list + iVar1));
+          keyispressed_result = keyispressed(*(int *)(&key_list + iVar1));
           if (keyispressed_result == 0) break;
           handle_win_msg();
         }
-        return *(int *)((int)&key_list + iVar1);
+        return *(int *)(&key_list + iVar1);
       }
     }
   } while( true );
@@ -3139,22 +3150,22 @@ void __watcall mc_animate_open_textbox(void)
   DWORD DVar1;
   int af_image;
   DWORD DVar2;
-  int i;
+  int frame_index;
   int iVar3;
   
   hide_mouse();
-  i = 0;
+  frame_index = 0;
   do {
     DVar1 = GetTickCount();
     iVar3 = 2;
-    af_image = mc_af_image(0x27,i,s_m_bedien_cpp_00427b69,0x233);
+    af_image = mc_af_image(0x27,frame_index,s_m_bedien_cpp_00427b69,0x233);
     set_mem_image(0,af_image,0x17,0x79,iVar3);
     do {
       handle_win_msg();
       DVar2 = GetTickCount();
     } while (DVar2 - DVar1 < 0x21);
-    i = i + 1;
-  } while (i < 8);
+    frame_index = frame_index + 1;
+  } while (frame_index < 8);
   show_mouse();
   return;
 }
@@ -3168,22 +3179,22 @@ void __watcall mc_animate_close_textbox(void)
   DWORD DVar1;
   int af_image;
   DWORD DVar2;
-  int i;
+  int frame_index;
   int iVar3;
   
   hide_mouse();
-  i = 7;
+  frame_index = 7;
   do {
     DVar1 = GetTickCount();
     iVar3 = 2;
-    af_image = mc_af_image(0x27,i,s_m_bedien_cpp_00427b76,0x24b);
+    af_image = mc_af_image(0x27,frame_index,s_m_bedien_cpp_00427b76,0x24b);
     set_mem_image(0,af_image,0x17,0x79,iVar3);
     do {
       handle_win_msg();
       DVar2 = GetTickCount();
     } while (DVar2 - DVar1 < 0x21);
-    i = i + -1;
-  } while (-1 < i);
+    frame_index = frame_index + -1;
+  } while (-1 < frame_index);
   show_mouse();
   return;
 }
@@ -3219,7 +3230,7 @@ int __watcall config_keys(void)
       return 1;
     }
     print_keys();
-    snd_play(local_20,*(char **)((int)&mc_instel_wav + iVar2));
+    snd_play(local_20,*(char **)((int)mc_instel_wav + iVar2));
     while( true ) {
       do {
         handle_win_msg();
@@ -3227,7 +3238,7 @@ int __watcall config_keys(void)
           iVar1 = 0;
         }
         mc_print_text_bar(s__s__s_00427b9c,s_Kies_nu_een_toets_voor__00427b83,
-                          (&PTR_s_LINKS_00433758)[iVar1 * 6]);
+                          config_key[iVar1 * 6 + 4].field_00);
         iVar1 = mb_read_key();
         if (iVar1 == 0x1b) {
           snd_stop(local_20 + 1);
@@ -3247,7 +3258,8 @@ int __watcall config_keys(void)
       clear_keys();
       snd_play(local_20,s_MC_09_wav_00427bb8);
       iVar1 = scan_2_ckey(iVar1);
-      req_warning(s_Deze_toets__<_s>__is_eerder_gede_00427bc2,(&PTR_DAT_004335f4)[iVar1 * 2]);
+      req_warning(s_Deze_toets__<_s>__is_eerder_gede_00427bc2,
+                  *(undefined4 *)(&DAT_004335f4 + iVar1 * 8));
       snd_stop(local_20);
       print_keys();
     }
@@ -3256,7 +3268,7 @@ int __watcall config_keys(void)
     }
     iVar2 = iVar2 + 4;
     i = i + 1;
-    (&DAT_0043375c)[ckey_new_define_result * 6] = iVar1;
+    config_key[ckey_new_define_result * 6 + 5].field_00 = iVar1;
     print_keys();
   } while( true );
 }
@@ -3276,7 +3288,7 @@ void __watcall display_keys(void)
   else {
     arg4 = 0;
   }
-  iVar1 = *(int *)(xvga_anims->field_26c + 4 + arg4 * 8);
+  iVar1 = xvga_anims[0x33].frames[arg4].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____illegal_keyboard_frame_i_00427c38,s_m_bedien_cpp_00427c2b,0x29f,arg4,0x33)
     ;
@@ -3297,7 +3309,7 @@ void __watcall display_joystick(void)
 {
   int iVar1;
   
-  iVar1 = *(int *)(xvga_anims->field_26c + 0xc);
+  iVar1 = xvga_anims[0x33].frames[1].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____illegal_joystick_frame___00427c7a,s_m_bedien_cpp_00427c6d,0x2b5,1,0x33);
   }
@@ -3316,7 +3328,7 @@ void __watcall display_stuur(void)
 {
   int iVar1;
   
-  iVar1 = *(int *)(xvga_anims->field_26c + 0x14);
+  iVar1 = xvga_anims[0x33].frames[2].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____illegal_wheel_frame__d_i_00427cbc,s_m_bedien_cpp_00427caf,0x2c7,2,0x33);
   }
@@ -3330,39 +3342,37 @@ void __watcall display_stuur(void)
 
 /* ==== 00406363 mc_display_controls ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall mc_display_controls(void)
 
 {
   if (available_joy == 0) {
-    control = (bedien_t)available_joy;
+    control._0_4_ = available_joy;
   }
-  if (control == (bedien_t)0x0) {
+  if (control._0_4_ == 0) {
     display_keys();
     if (available_joy == 0) {
-      _DAT_0043347c = 0;
+      mc_form[4].state = 0;
     }
     else {
-      _DAT_0043347c = 3;
+      mc_form[4].state = 3;
     }
-    _DAT_00433498 = _DAT_0043347c;
+    mc_form[5].state = mc_form[4].state;
     return;
   }
-  if ((uint)control < 2) {
+  if ((uint)control._0_4_ < 2) {
     display_joystick();
-    _DAT_0043355c = 3;
-    _DAT_00433578 = 3;
-    _DAT_00433540 = 3;
+    mc_form_joy[4].state = 3;
+    mc_form_joy[5].state = 3;
+    mc_form_joy[3].state = 3;
     return;
   }
-  if (control != (bedien_t)0x2) {
+  if (control._0_4_ != 2) {
     return;
   }
   display_stuur();
-  _DAT_00433578 = 3;
-  _DAT_0043355c = 3;
-  _DAT_00433540 = 3;
+  mc_form_joy[5].state = 3;
+  mc_form_joy[4].state = 3;
+  mc_form_joy[3].state = 3;
   return;
 }
 
@@ -3383,12 +3393,12 @@ void __watcall mc_animate_buttons(void)
   do {
     DVar1 = GetTickCount();
     iVar4 = 2;
-    af_image = mc_af_image(0x2a,*(int *)((int)&DAT_004337e6 + iVar3) >> 0x10,s_m_bedien_cpp_00427cee
-                           ,0x308);
+    af_image = mc_af_image(0x2a,*(int *)((int)mc_instel_wav + iVar3 + 0xe) >> 0x10,
+                           s_m_bedien_cpp_00427cee,0x308);
     set_mem_image(0,af_image,0,0x14b,iVar4);
     iVar4 = 2;
-    af_image = mc_af_image(0x2b,*(int *)((int)&DAT_004337f6 + iVar3) >> 0x10,s_m_bedien_cpp_00427cfb
-                           ,0x30f);
+    af_image = mc_af_image(0x2b,*(int *)((int)mc_entree_anim_tabel + iVar3 + 0xe) >> 0x10,
+                           s_m_bedien_cpp_00427cfb,0x30f);
     set_mem_image(0,af_image,0,0x17e,iVar4);
     do {
       handle_win_msg();
@@ -3422,11 +3432,11 @@ int __watcall mc_open_screen(void)
   load_ckey();
   mc_display_controls();
   mc_animate_buttons();
-  if (control == (bedien_t)0x0) {
-    form = &mc_form;
+  if (control._0_4_ == 0) {
+    form = mc_form;
   }
   else {
-    form = (form_t *)&mc_form_joy;
+    form = mc_form_joy;
   }
   activate_form(form);
   focus_control(0);
@@ -3458,7 +3468,7 @@ int __watcall menu_bedien(void)
 {
   bool bVar1;
   bool bVar2;
-  int iVar3;
+  int form_index;
   form_t *form;
   help_t *help;
   uint handle_form_result;
@@ -3466,11 +3476,11 @@ int __watcall menu_bedien(void)
   
   local_1c = -1;
   debugmsg(s__s__d_____>_START_MENU_BEDIEN_<*_00427d75,s_m_bedien_cpp_00427d68,0x350);
-  iVar3 = get_attached_joysticks();
+  form_index = get_attached_joysticks();
   bVar1 = true;
   bVar2 = false;
   debugmsg(s__s__d___joystick_available__d__j_00427da6,s_m_bedien_cpp_00427d99,0x351,available_joy,
-           iVar3);
+           form_index);
   save_tmp_bedien(s_BEDIEN_TMP_00427dd2);
   mc_open_screen();
   do {
@@ -3505,10 +3515,10 @@ LAB_00406669:
           snd_wait(&local_1c);
           snd_set_volume(&mm_tune_buffer,-8000);
           if (available_joy == 0) {
-            help = (help_t *)&mc_help2;
+            help = mc_help2;
           }
           else {
-            help = (help_t *)&mc_help;
+            help = mc_help;
           }
           play_help(help,1);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
@@ -3517,11 +3527,13 @@ LAB_00406669:
         snd_play(&local_1c,s_click2_wav_00427e09);
         wait_form_key_released();
         wait_enter_pressed();
-        if (control != (bedien_t)0x0) {
-          control = (bedien_t)0x0;
+        if (control._0_4_ != 0) {
+          control.field_00 = '\0';
+          control.field_01 = '\0';
+          control.field_02 = 0;
           destroy_form();
           display_keys();
-          form = &mc_form;
+          form = mc_form;
           goto LAB_004066d1;
         }
       }
@@ -3534,17 +3546,19 @@ LAB_004066df:
         snd_play(&local_1c,s_click2_wav_00427e14);
         wait_form_key_released();
         wait_enter_pressed();
-        if (control != (bedien_t)0x1) {
-          control = (bedien_t)0x1;
+        if (control._0_4_ != 1) {
+          control.field_00 = '\x01';
+          control.field_01 = '\0';
+          control.field_02 = 0;
           destroy_form();
           display_joystick();
 LAB_004066cc:
-          form = (form_t *)&mc_form_joy;
+          form = mc_form_joy;
 LAB_004066d1:
           activate_form(form);
-          iVar3 = 0;
+          form_index = 0;
 LAB_004066d8:
-          focus_control(iVar3);
+          focus_control(form_index);
         }
         goto LAB_004066df;
       }
@@ -3555,21 +3569,21 @@ LAB_004066d8:
         }
         if (handle_form_result < 0x2712) {
           snd_play(&local_1c,s_click3_wav_00427ddd);
-          iVar3 = get_control_focus();
-          if ((iVar3 == 0) || (iVar3 != 1)) {
-            iVar3 = 1;
+          form_index = get_control_focus();
+          if ((form_index == 0) || (form_index != 1)) {
+            form_index = 1;
           }
           else {
-            iVar3 = 0;
+            form_index = 0;
           }
-          focus_control(iVar3);
+          focus_control(form_index);
           wait_cursor_up_pressed();
         }
         else {
           if (handle_form_result != 0x2712) goto LAB_0040688e;
           snd_play(&local_1c,s_click3_wav_00427de8);
-          iVar3 = get_control_focus();
-          focus_control((uint)(iVar3 == 0));
+          form_index = get_control_focus();
+          focus_control((uint)(form_index == 0));
           wait_cursor_down_pressed();
         }
         goto LAB_004066df;
@@ -3579,8 +3593,10 @@ LAB_004066d8:
           snd_play(&local_1c,s_click2_wav_00427e1f);
           wait_form_key_released();
           wait_enter_pressed();
-          if (control != (bedien_t)0x2) {
-            control = (bedien_t)0x2;
+          if (control._0_4_ != 2) {
+            control.field_00 = '\x02';
+            control.field_01 = '\0';
+            control.field_02 = 0;
             destroy_form();
             display_stuur();
             goto LAB_004066cc;
@@ -3588,7 +3604,7 @@ LAB_004066d8:
           goto LAB_004066df;
         }
       }
-      else if ((handle_form_result == 6) && (control == (bedien_t)0x0)) {
+      else if ((handle_form_result == 6) && (control._0_4_ == 0)) {
         snd_play(&local_1c,s_click1_wav_00427e2a);
         wait_form_key_released();
         wait_enter_pressed();
@@ -3597,8 +3613,8 @@ LAB_004066d8:
         config_keys();
         display_keys();
         mc_display_controls();
-        activate_form(&mc_form);
-        iVar3 = 6;
+        activate_form(mc_form);
+        form_index = 6;
         goto LAB_004066d8;
       }
     }
@@ -3610,14 +3626,14 @@ LAB_0040688e:
 
 /* ==== 00406898 mo_af_image ==== */
 
-int __watcall mo_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall mo_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___mo_af_image_____Could_no_00428010,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___mo_af_image_____Could_no_00428010,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -3632,13 +3648,13 @@ void __watcall mc_active_form(void)
   
   destroy_form();
   if (DAT_00437226 == 0) {
-    form = (form_t *)&mo_form_3D;
+    form = mo_form_3D;
   }
   else if ((DAT_00437226 < 2) || (DAT_00437226 != 2)) {
-    form = (form_t *)&mo_form_320;
+    form = mo_form_320;
   }
   else {
-    form = (form_t *)&mo_form_640;
+    form = mo_form_640;
   }
   activate_form(form);
   focus_control(0);
@@ -3802,7 +3818,7 @@ void __watcall mc_display_snd_setting(void)
 
 {
   int i;
-  int af_image;
+  int anim_index;
   int iVar1;
   int iVar2;
   
@@ -3816,24 +3832,24 @@ void __watcall mc_display_snd_setting(void)
     i = 0;
     do {
       if (((short)DAT_00437230 < i) || (DAT_00437222 >> 0x10 == 1)) {
-        af_image = 0x38;
+        anim_index = 0x38;
       }
       else {
-        af_image = 0x37;
+        anim_index = 0x37;
       }
       iVar2 = 2;
-      af_image = mo_af_image(af_image,i,s_m_opties_cpp_00428191,0x250);
-      set_mem_image(1,af_image,iVar1,0x9f,iVar2);
+      anim_index = mo_af_image(anim_index,i,s_m_opties_cpp_00428191,0x250);
+      set_mem_image(1,anim_index,iVar1,0x9f,iVar2);
       if ((DAT_00437230._2_2_ < i) || (DAT_00437222 >> 0x10 == 3)) {
-        af_image = 0x38;
+        anim_index = 0x38;
       }
       else {
-        af_image = 0x37;
+        anim_index = 0x37;
       }
       iVar2 = 2;
-      af_image = mo_af_image(af_image,i,s_m_opties_cpp_0042819e,0x256);
+      anim_index = mo_af_image(anim_index,i,s_m_opties_cpp_0042819e,0x256);
       i = i + 1;
-      set_mem_image(1,af_image,iVar1,0xe5,iVar2);
+      set_mem_image(1,anim_index,iVar1,0xe5,iVar2);
       iVar1 = iVar1 + 0x1a;
     } while (i < 5);
   }
@@ -3849,25 +3865,25 @@ void __watcall mc_display_tableau(void)
 
 {
   int af_image;
-  int af_image_2;
+  int frame_index;
   int iVar1;
   
-  af_image_2 = 0;
+  frame_index = 0;
   if (DAT_00437226 != 0) {
     if (DAT_00437226 < 2) {
-      af_image_2 = 1;
+      frame_index = 1;
     }
     else if (DAT_00437226 == 2) {
-      af_image_2 = 2;
+      frame_index = 2;
     }
   }
   hide_mouse();
   iVar1 = 2;
-  af_image = mo_af_image(0x35,af_image_2,s_m_opties_cpp_004281ab,0x27a);
+  af_image = mo_af_image(0x35,frame_index,s_m_opties_cpp_004281ab,0x27a);
   set_mem_image(2,af_image,0,0x70,iVar1);
   af_image = 2;
-  af_image_2 = mo_af_image(0x35,af_image_2,s_m_opties_cpp_004281b8,0x281);
-  set_mem_image(0,af_image_2,0,0x70,af_image);
+  frame_index = mo_af_image(0x35,frame_index,s_m_opties_cpp_004281b8,0x281);
+  set_mem_image(0,frame_index,0,0x70,af_image);
   mc_display_inhoud();
   mc_display_snd_setting();
   show_mouse();
@@ -3891,12 +3907,12 @@ void __watcall mo_animate_buttons(void)
   do {
     DVar1 = GetTickCount();
     iVar4 = 2;
-    af_image = mo_af_image(0x3f,*(int *)((int)&DAT_0043408e + iVar3) >> 0x10,s_m_opties_cpp_004281c5
-                           ,0x2a0);
+    af_image = mo_af_image(0x3f,*(int *)((int)&mo_help[5].text + iVar3 + 2) >> 0x10,
+                           s_m_opties_cpp_004281c5,0x2a0);
     set_mem_image(0,af_image,0,0x14b,iVar4);
     iVar4 = 2;
-    af_image = mo_af_image(0x40,*(int *)((int)&DAT_0043409e + iVar3) >> 0x10,s_m_opties_cpp_004281d2
-                           ,0x2a7);
+    af_image = mo_af_image(0x40,*(int *)((int)mo_entree_anim_tabel + iVar3 + 0xe) >> 0x10,
+                           s_m_opties_cpp_004281d2,0x2a7);
     set_mem_image(0,af_image,0,0x17e,iVar4);
     do {
       handle_win_msg();
@@ -3997,14 +4013,14 @@ int __watcall menu_opties(int *param_1,char *param_2)
 
 /* ==== 00407880 ms_af_image ==== */
 
-int __watcall ms_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall ms_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___ms_af_image_____Could_no_00428404,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___ms_af_image_____Could_no_00428404,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -4115,8 +4131,7 @@ void __watcall ms_print_hiscore(single_score_t *single_score,int param_2,int par
     arg5 = arg5 + 1;
     win_print_xy(1,param_2 + 0x2c,iVar7,s__d_00428461,arg5);
     win_bprintf(1,param_2 + 0x52,iVar7,0x84,s__s_00428464,single_score);
-    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_00428467,(&level_naam)[single_score->field_22 >> 0x10])
-    ;
+    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_00428467,level_naam[single_score->field_22 >> 0x10]);
     win_print_xy(1,param_2 + 0x162,iVar7,s__9d_0042846a,single_score->field_28);
     puVar1 = &single_score->field_0x20;
     uVar3 = (longlong)*(int *)&single_score->field_0x20 / 0x3c;
@@ -4193,7 +4208,7 @@ void __watcall ms_open_screen(int param_1)
   show_mouse();
   load_pcx_file(s_Score_pcx_004284fb,0x1f);
   ms_display_score(param_1);
-  activate_form(&ms_form);
+  activate_form(ms_form);
   focus_control(0);
   debugmsg(s_ms_open_screen_____ok_00428505);
   return;
@@ -4275,14 +4290,14 @@ LAB_00407e61:
 
 /* ==== 00407ed0 mds_af_image ==== */
 
-int __watcall mds_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall mds_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___mds_af_image_____Could_n_00428560,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___mds_af_image_____Could_n_00428560,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -4395,8 +4410,7 @@ void __watcall mds_print_hiscore(single_score_t *single_score,int param_2,int pa
     arg5 = arg5 + 1;
     win_print_xy(1,param_2 + 0x2c,iVar7,s__2d_004285be,arg5);
     win_bprintf(1,param_2 + 0x52,iVar7,0x84,s__s_004285c2,single_score);
-    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_004285c5,(&level_naam)[single_score->field_22 >> 0x10])
-    ;
+    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_004285c5,level_naam[single_score->field_22 >> 0x10]);
     puVar1 = &single_score->field_0x20;
     uVar3 = (longlong)*(int *)&single_score->field_0x20 / 0x3c;
     puVar2 = &single_score->field_0x20;
@@ -4466,7 +4480,7 @@ void __watcall mds_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   mds_display_score(param_1);
-  activate_form(&mds_form);
+  activate_form(mds_form);
   focus_control(0);
   debugmsg(s_mds_open_screen_____ok_0042864e);
   return;
@@ -4531,31 +4545,30 @@ void __watcall mns_draw_selected_slot_info(int param_1)
 {
   int iVar1;
   char *pcVar2;
-  int iVar3;
   
-  iVar1 = *(int *)(xvga_anims->field_08 + 0xc);
+  iVar1 = xvga_anims->frames[1].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mns_draw_selected_slot_i_004286a4,s_m_nsplr_cpp_00428698,0x107,1,0);
   }
-  iVar3 = param_1 * 8;
-  set_mem_image(2,iVar1,*(int *)(mns_slot_list + iVar3),*(int *)(&DAT_00434290 + iVar3),2);
+  set_mem_image(2,iVar1,mns_slot_list[param_1 * 2].field_00,mns_slot_list[param_1 * 2 + 1].field_00,
+                2);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xfafafa,0xfafafa);
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_004286f1,0x112);
   pcVar2 = slot_naam_string(iVar1);
-  win_bprintf(2,*(int *)(mns_slot_list + iVar3) + 10,*(int *)(&DAT_00434290 + iVar3),0x80,
-              s___16s_004286fd,pcVar2);
+  win_bprintf(2,mns_slot_list[param_1 * 2].field_00 + 10,mns_slot_list[param_1 * 2 + 1].field_00,
+              0x80,s___16s_004286fd,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_00428703,0x116);
   pcVar2 = slot_level_string(iVar1);
-  win_print_xy(2,*(int *)(mns_slot_list + iVar3) + 0x94,*(int *)(&DAT_00434290 + iVar3),
+  win_print_xy(2,mns_slot_list[param_1 * 2].field_00 + 0x94,mns_slot_list[param_1 * 2 + 1].field_00,
                s___16s_0042870f,pcVar2);
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_00428715,0x11a);
-  win_print_xy(2,*(int *)(mns_slot_list + iVar3) + 0xfe,*(int *)(&DAT_00434290 + iVar3),
-               s__9d_00428721,*(undefined4 *)(&DAT_004372d4 + iVar1 * 0x13c));
+  win_print_xy(2,mns_slot_list[param_1 * 2].field_00 + 0xfe,mns_slot_list[param_1 * 2 + 1].field_00,
+               s__9d_00428721,*(undefined4 *)(&slot_list[0].field_0x78 + iVar1 * 0x13c));
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_00428725,0x11e);
   pcVar2 = slot_tijd_string(iVar1);
-  win_print_xy(2,*(int *)(mns_slot_list + iVar3) + 0x189,*(int *)(&DAT_00434290 + iVar3),
-               s___6s_00428731,pcVar2);
+  win_print_xy(2,mns_slot_list[param_1 * 2].field_00 + 0x189,mns_slot_list[param_1 * 2 + 1].field_00
+               ,s___6s_00428731,pcVar2);
   return;
 }
 
@@ -4570,39 +4583,38 @@ void __watcall mns_draw_slot_info(int param_1)
   int slot_check_index_result;
   int iVar3;
   char *pcVar4;
-  int iVar5;
   
-  iVar3 = *(int *)(xvga_anims->field_08 + 4);
+  iVar3 = xvga_anims->frames->image;
   debugmsg(s__s__d___mns_draw_slot_info__d___i_00428742,s_m_nsplr_cpp_00428736,0x129,param_1);
   if ((iVar3 < 0) || (max_mem_image_ptr < iVar3)) {
     fatal_exit(s__s__d___mns_draw_slot_info______C_0042877c,s_m_nsplr_cpp_00428770,299,0,0);
   }
   iVar1 = slot_check_index(param_1,s_m_nsplr_cpp_004287c0,0x12d);
-  iVar1 = slot_count_total_tijd(param_1,*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10);
+  iVar1 = slot_count_total_tijd(param_1,*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10);
   iVar2 = slot_check_index(param_1,s_m_nsplr_cpp_004287cc,0x12d);
-  iVar2 = *(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10;
+  iVar2 = *(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10;
   slot_check_index_result = slot_check_index(param_1,s_m_nsplr_cpp_004287d8,0x12d);
-  iVar5 = param_1 * 8;
   debugmsg(s__d>__naam__s__level__d__tijd__d_004287e4,param_1,
            slot_check_index_result * 0x13c + 0x437296,iVar2,iVar1);
-  set_mem_image(2,iVar3,*(int *)(mns_slot_list + iVar5),*(int *)(&DAT_00434290 + iVar5),2);
+  set_mem_image(2,iVar3,mns_slot_list[param_1 * 2].field_00,mns_slot_list[param_1 * 2 + 1].field_00,
+                2);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xafaff,0xafaff);
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_00428806,0x137);
   pcVar4 = slot_naam_string(iVar3);
-  win_bprintf(2,*(int *)(mns_slot_list + iVar5) + 10,*(int *)(&DAT_00434290 + iVar5),0x80,
-              s___16s_00428812,pcVar4);
+  win_bprintf(2,mns_slot_list[param_1 * 2].field_00 + 10,mns_slot_list[param_1 * 2 + 1].field_00,
+              0x80,s___16s_00428812,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_00428818,0x13b);
   pcVar4 = slot_level_string(iVar3);
-  win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0x94,*(int *)(&DAT_00434290 + iVar5),
+  win_print_xy(2,mns_slot_list[param_1 * 2].field_00 + 0x94,mns_slot_list[param_1 * 2 + 1].field_00,
                s___16s_00428824,pcVar4);
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_0042882a,0x13f);
-  win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0xfe,*(int *)(&DAT_00434290 + iVar5),
-               s__9d_00428836,*(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c));
+  win_print_xy(2,mns_slot_list[param_1 * 2].field_00 + 0xfe,mns_slot_list[param_1 * 2 + 1].field_00,
+               s__9d_00428836,*(undefined4 *)(&slot_list[0].field_0x78 + iVar3 * 0x13c));
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_0042883a,0x143);
   pcVar4 = slot_tijd_string(iVar3);
-  win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0x189,*(int *)(&DAT_00434290 + iVar5),
-               s___6s_00428846,pcVar4);
+  win_print_xy(2,mns_slot_list[param_1 * 2].field_00 + 0x189,mns_slot_list[param_1 * 2 + 1].field_00
+               ,s___6s_00428846,pcVar4);
   return;
 }
 
@@ -4666,7 +4678,7 @@ void __watcall mns_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   mns_print_slot(param_1);
-  activate_form((form_t *)mns_form);
+  activate_form(mns_form);
   return;
 }
 
@@ -4724,7 +4736,7 @@ int __watcall menu_nieuwesplr(void)
 LAB_00408abd:
         snd_play(&local_1c,s_click1_wav_004289c5);
         iVar4 = slot_check_index(iVar3,s_m_nsplr_cpp_004289d0,0x1ca);
-        if ((&slot_list)[iVar4 * 0x13c] == '\0') {
+        if ((&slot_list[0].field_0x0)[iVar4 * 0x13c] == '\0') {
           snd_wait(&local_1c);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
           snd_play(&local_1c,s_MNS_01_wav_004289dc);
@@ -4744,7 +4756,7 @@ LAB_00408abd:
       else {
         if (handle_form_result < 2) {
           iVar4 = slot_check_index(iVar3,s_m_nsplr_cpp_00428a1a,0x1de);
-          if ((&slot_list)[iVar4 * 0x13c] != '\0') {
+          if ((&slot_list[0].field_0x0)[iVar4 * 0x13c] != '\0') {
             snd_play(&local_1c,s_click1_wav_00428a26);
             snd_wait(&local_1c);
             snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
@@ -4762,7 +4774,7 @@ LAB_00408abd:
             snd_wait(&local_1c);
           }
 LAB_00408b79:
-          activate_form((form_t *)mns_form);
+          activate_form(mns_form);
           goto LAB_00408d72;
         }
 LAB_004089ed:
@@ -4779,7 +4791,7 @@ LAB_00408a06:
       wait_enter_pressed();
       snd_wait(&local_1c);
       snd_set_volume(&mm_tune_buffer,-8000);
-      play_help(&mns_help,1);
+      play_help(mns_help,1);
       snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
     }
     else if (handle_form_result < 10000) {
@@ -4829,12 +4841,12 @@ LAB_00408d72:
 void __watcall mdt_display_stand(int param_1,int param_2,int param_3,int param_4)
 
 {
-  undefined *puVar1;
+  char *pcVar1;
   int slot_check_level_result;
   int iVar2;
-  undefined4 *puVar3;
+  char *pcVar3;
   int arg5;
-  undefined4 local_30;
+  char local_30 [4];
   int local_2c;
   int local_28;
   ulong local_24;
@@ -4866,69 +4878,75 @@ void __watcall mdt_display_stand(int param_1,int param_2,int param_3,int param_4
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428ab4,0x8a);
       iVar2 = 0;
-      puVar3 = &local_30;
-      if (arg5 == *(int *)(&DAT_004372d6 + slot_check_level_result * 2 + local_2c) >> 0x10) {
+      pcVar3 = local_30;
+      if (arg5 == *(int *)(&slot_list[0].field_0x7a + slot_check_level_result * 2 + local_2c) >>
+                  0x10) {
         local_14 = local_24;
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428ac0,0x8c);
-        puVar3 = (undefined4 *)(iVar2 * 0x13c + 0x437296);
+        pcVar3 = &slot_list[0].field_0x3a + iVar2 * 0x13c;
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428acc,0x8d);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428ad8,0x8d);
-        iVar2 = *(int *)(&DAT_004372bc + slot_check_level_result * 4 + iVar2 * 0x13c);
+        iVar2 = *(int *)(iVar2 * 0x13c + 0x4372bc + slot_check_level_result * 4);
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428ae4,0x8f);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428af0,0x8f);
-      puVar1 = speler_namen;
-      if (arg5 == *(int *)(&DAT_0043735a + slot_check_level_result * 2 + local_2c) >> 0x10) {
+      pcVar1 = speler_namen[0];
+      if (arg5 == *(int *)(&slot_list[0].field_0xfe + slot_check_level_result * 2 + local_2c) >>
+                  0x10) {
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428afc,0x91);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b08,0x91);
-        iVar2 = *(int *)(&DAT_004372e4 + slot_check_level_result * 4 + iVar2 * 0x13c);
-        puVar3 = (undefined4 *)puVar1;
+        iVar2 = *(int *)(iVar2 * 0x13c + 0x4372e4 + slot_check_level_result * 4);
+        pcVar3 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b14,0x93);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b20,0x93);
-      puVar1 = PTR_s_Gijs_Comara_00435a1c;
-      if (arg5 == *(int *)(&DAT_00437366 + slot_check_level_result * 2 + local_2c) >> 0x10) {
+      pcVar1 = speler_namen[1];
+      if (arg5 == *(int *)(&slot_list[0].field_0x10a + slot_check_level_result * 2 + local_2c) >>
+                  0x10) {
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b2c,0x95);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b38,0x95);
-        iVar2 = *(int *)(&DAT_004372fc + slot_check_level_result * 4 + iVar2 * 0x13c);
-        puVar3 = (undefined4 *)puVar1;
+        iVar2 = *(int *)(iVar2 * 0x13c + 0x4372fc + slot_check_level_result * 4);
+        pcVar3 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b44,0x97);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b50,0x97);
-      puVar1 = PTR_s_Rudolf_Porge_00435a20;
-      if (arg5 == *(int *)(&DAT_00437372 + slot_check_level_result * 2 + local_2c) >> 0x10) {
+      pcVar1 = speler_namen[2];
+      if (arg5 == *(int *)(&slot_list[0].field_0x116 + slot_check_level_result * 2 + local_2c) >>
+                  0x10) {
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b5c,0x99);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b68,0x99);
-        iVar2 = *(int *)(&DAT_00437314 + slot_check_level_result * 4 + iVar2 * 0x13c);
-        puVar3 = (undefined4 *)puVar1;
+        iVar2 = *(int *)(iVar2 * 0x13c + 0x437314 + slot_check_level_result * 4);
+        pcVar3 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b74,0x9b);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b80,0x9b);
-      puVar1 = PTR_s_Richard_Viber_00435a24;
-      if (arg5 == *(int *)(&DAT_0043737e + slot_check_level_result * 2 + local_2c) >> 0x10) {
+      pcVar1 = speler_namen[3];
+      if (arg5 == *(int *)(&slot_list[0].field_0x122 + slot_check_level_result * 2 + local_2c) >>
+                  0x10) {
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b8c,0x9d);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b98,0x9d);
-        iVar2 = *(int *)(&DAT_0043732c + slot_check_level_result * 4 + iVar2 * 0x13c);
-        puVar3 = (undefined4 *)puVar1;
+        iVar2 = *(int *)(iVar2 * 0x13c + 0x43732c + slot_check_level_result * 4);
+        pcVar3 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428ba4,0x9f);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428bb0,0x9f);
-      puVar1 = PTR_s_Brian_Jakuar_00435a28;
-      if (arg5 == *(int *)(&DAT_0043738a + slot_check_level_result * 2 + local_2c) >> 0x10) {
+      pcVar1 = speler_namen[4];
+      if (arg5 == *(int *)(&slot_list[0].field_0x12e + slot_check_level_result * 2 + local_2c) >>
+                  0x10) {
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428bbc,0xa1);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428bc8,0xa1);
-        iVar2 = *(int *)(&DAT_00437344 + slot_check_level_result * 4 + iVar2 * 0x13c);
-        puVar3 = (undefined4 *)puVar1;
+        iVar2 = *(int *)(iVar2 * 0x13c + 0x437344 + slot_check_level_result * 4);
+        pcVar3 = pcVar1;
       }
       xvga_set_font_colors(2,local_14,local_14);
       slot_check_level_result = local_10;
       win_print_xy(1,local_18,local_10,s__d_00428bd4,arg5);
-      win_print_xy(1,local_28,slot_check_level_result,s__s_00428bd7,puVar3);
+      win_print_xy(1,local_28,slot_check_level_result,s__s_00428bd7,pcVar3);
       win_print_xy(1,local_1c,slot_check_level_result,s___2_2du__2_2dm__2_2ds_00428bda,iVar2 / 0xe10
                    ,(int)((longlong)
                           ((ulonglong)(uint)((int)((longlong)iVar2 / 0x3c) >> 0x1f) << 0x20 |
@@ -4965,7 +4983,7 @@ void __watcall mdt_open_screen(int param_1)
 {
   int use_mdt_menu_cfg_anims_result;
   
-  load_pcx_file_1(2,(&mdt_stand_pcx)[param_1 % 6],0x1f);
+  load_pcx_file_1(2,mdt_stand_pcx[param_1 % 6],0x1f);
   use_mdt_menu_cfg_anims_result = use_mdt_menu_cfg_anims();
   if (use_mdt_menu_cfg_anims_result != 0) {
     fatal_exit(s__s__d____Could_not_load_mdt_menu_00428bfc,s_m_stand_cpp_00428bf0,0xd9);
@@ -4975,7 +4993,7 @@ void __watcall mdt_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   mdt_display_score(param_1);
-  activate_form(&mdt_form);
+  activate_form(mdt_form);
   focus_control(0);
   debugmsg(s_mdt_open_screen_____ok_00428c22);
   return;
@@ -5052,8 +5070,6 @@ int __watcall mdc_compare_score(void *param_1,void *param_2)
 
 /* ==== 004093b3 mdc_create_huidige_stand ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall mdc_create_huidige_stand(void)
 
 {
@@ -5062,34 +5078,36 @@ void __watcall mdc_create_huidige_stand(void)
   
   debugmsg(s__s__d___mdc_create_huidige_stand_00428cbf,s_m_clas_cpp_00428cb4,0x85);
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428ce5,0x86);
-  _mdc_stand_list =
-       slot_count_total_tijd
-                 (active_slot,*(int *)(&DAT_004372b8 + slot_check_index_result * 0x13c) >> 0x10);
+  mdc_stand_list[0].field_00 =
+       (int *)slot_count_total_tijd
+                        (active_slot,
+                         *(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >>
+                         0x10);
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428cf0,0x87);
-  _DAT_00437f34 = slot_check_index_result * 0x13c + 0x437296;
-  DAT_00437f38 = 1;
+  mdc_stand_list[0]._4_4_ = slot_check_index_result * 0x13c + 0x437296;
+  mdc_stand_list[1].field_00._0_1_ = 1;
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428cfb,0x89);
-  _DAT_00437f39 = slot_count_total_tijd_speler(slot_check_index_result,0);
-  DAT_00437f41 = 0;
-  _DAT_00437f3d = speler_namen;
+  mdc_stand_list[1]._1_4_ = slot_count_total_tijd_speler(slot_check_index_result,0);
+  mdc_stand_list[2].field_00._1_1_ = 0;
+  mdc_stand_list._13_4_ = speler_namen[0];
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d06,0x8c);
-  _DAT_00437f42 = slot_count_total_tijd_speler(slot_check_index_result,1);
-  DAT_00437f4a = 0;
-  _DAT_00437f46 = PTR_s_Gijs_Comara_00435a1c;
+  mdc_stand_list[2]._2_4_ = slot_count_total_tijd_speler(slot_check_index_result,1);
+  mdc_stand_list[3].field_00._2_1_ = 0;
+  mdc_stand_list._22_4_ = speler_namen[1];
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d11,0x8f);
-  _DAT_00437f4b = slot_count_total_tijd_speler(slot_check_index_result,2);
-  _DAT_00437f4f = PTR_s_Rudolf_Porge_00435a20;
-  DAT_00437f53 = 0;
+  mdc_stand_list[3]._3_4_ = slot_count_total_tijd_speler(slot_check_index_result,2);
+  mdc_stand_list._31_4_ = speler_namen[2];
+  mdc_stand_list[4].field_00._3_1_ = 0;
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d1c,0x92);
-  _DAT_00437f54 = slot_count_total_tijd_speler(slot_check_index_result,3);
-  DAT_00437f5c = 0;
-  _DAT_00437f58 = PTR_s_Richard_Viber_00435a24;
+  mdc_stand_list[4]._4_4_ = slot_count_total_tijd_speler(slot_check_index_result,3);
+  mdc_stand_list[5]._4_1_ = 0;
+  mdc_stand_list[5].field_00 = (int *)speler_namen[3];
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d27,0x95);
-  _DAT_00437f5d = slot_count_total_tijd_speler(slot_check_index_result,4);
-  DAT_00437f65 = 0;
-  _DAT_00437f61 = PTR_s_Brian_Jakuar_00435a28;
+  mdc_stand_list._45_4_ = slot_count_total_tijd_speler(slot_check_index_result,4);
+  mdc_stand_list[6]._5_1_ = 0;
+  mdc_stand_list[6]._1_4_ = speler_namen[4];
   debugmsg(s_Done_initializing_current_score_t_00428d32);
-  qsort((int *)&mdc_stand_list,extraout_EDX,(int *)0x9,mdc_compare_score);
+  qsort((int *)mdc_stand_list,extraout_EDX,(int *)0x9,mdc_compare_score);
   return;
 }
 
@@ -5101,7 +5119,7 @@ void __watcall mdc_display_huidige_stand(int param_1,int param_2,int param_3)
 {
   int *piVar1;
   int *piVar2;
-  int *piVar3;
+  ulonglong uVar3;
   int iVar4;
   ulong uVar5;
   ulong uVar6;
@@ -5123,21 +5141,22 @@ void __watcall mdc_display_huidige_stand(int param_1,int param_2,int param_3)
   iVar4 = 0;
   do {
     uVar5 = uVar6;
-    if ((&DAT_00437f38)[iVar4] != '\0') {
+    if (*(char *)((int)&mdc_stand_list[1].field_00 + iVar4) != '\0') {
       uVar5 = uVar8;
     }
     xvga_set_font_colors(2,uVar5,uVar5);
     i = i + 1;
     win_print_xy(1,param_1 + 0x2c,iVar7,s__d_00428d79,i);
-    win_print_xy(1,param_1 + 0x52,iVar7,s__s_00428d7c,*(undefined4 *)(&DAT_00437f34 + iVar4));
-    piVar1 = (int *)(&mdc_stand_list + iVar4);
-    piVar2 = (int *)(&mdc_stand_list + iVar4);
-    piVar3 = (int *)(&mdc_stand_list + iVar4);
+    win_print_xy(1,param_1 + 0x52,iVar7,s__s_00428d7c,
+                 *(undefined4 *)(&mdc_stand_list[0].field_0x4 + iVar4));
+    piVar1 = (int *)((int)&mdc_stand_list[0].field_00 + iVar4);
+    uVar3 = (longlong)*(int *)((int)&mdc_stand_list[0].field_00 + iVar4) / 0x3c;
+    piVar2 = (int *)((int)&mdc_stand_list[0].field_00 + iVar4);
     iVar4 = iVar4 + 9;
-    win_print_xy(1,param_1 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_00428d7f,*piVar3 / 0xe10,
+    win_print_xy(1,param_1 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_00428d7f,*piVar2 / 0xe10,
                  (int)((longlong)
-                       ((ulonglong)(uint)((int)((longlong)*piVar2 / 0x3c) >> 0x1f) << 0x20 |
-                       (longlong)*piVar2 / 0x3c & 0xffffffffU) % 0x3c),*piVar1 % 0x3c);
+                       ((ulonglong)(uint)((int)uVar3 >> 0x1f) << 0x20 | uVar3 & 0xffffffff) % 0x3c),
+                 *piVar1 % 0x3c);
     iVar7 = iVar7 + 0x19;
   } while (i < 6);
   return;
@@ -5171,7 +5190,7 @@ void __watcall mdc_open_screen(void)
   char *filename;
   
   iVar1 = slot_check_index(active_slot,s_m_clas_cpp_00428d95,0xe8);
-  if (*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10 < 6) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10 < 6) {
     filename = s_TStand_pcx_00428dac;
   }
   else {
@@ -5187,7 +5206,7 @@ void __watcall mdc_open_screen(void)
   handle_wipe(2,3,600);
   show_mouse();
   mdc_display_score();
-  activate_form(&mdc_form);
+  activate_form(mdc_form);
   focus_control(0);
   debugmsg(s_mdc_open_screen_____ok_00428de8);
   return;
@@ -5252,11 +5271,11 @@ int __watcall init_anims(void)
   int iVar1;
   char *filename;
   
-  iVar1 = init_animations(&anims);
+  iVar1 = init_animations(anims);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animations_00428e30);
   }
-  filename = file_path(&buffer1,s_a2mrc_img_00428e51);
+  filename = file_path(buffer1,s_a2mrc_img_00428e51);
   iVar1 = init_mem_images(filename,4);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animation_d_00428e5b,max_mem_image_ptr);
@@ -5275,11 +5294,11 @@ int __watcall init_anims_1(int param_1)
   int iVar1;
   char *filename;
   
-  iVar1 = init_animations(&anims);
+  iVar1 = init_animations(anims);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animations_00428e80);
   }
-  filename = file_path(&buffer1,s_a2mrc_img_00428ea1);
+  filename = file_path(buffer1,s_a2mrc_img_00428ea1);
   iVar1 = init_mem_images(filename,param_1);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animation_d_00428eab,max_mem_image_ptr);
@@ -5303,15 +5322,15 @@ int __watcall use_mm_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00428edd,s_menuanim_cpp_00428ed0,0x3a3);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mm_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_00428f07);
-  filename = file_path(&buffer1,s_a2mrc_img_00428f11);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mm_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_00428f07);
+  filename = file_path(buffer1,s_a2mrc_img_00428f11);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5327,8 +5346,8 @@ int __watcall free_mm_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00428f28,s_menuanim_cpp_00428f1b,0x3b2);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mm_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mm_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5346,15 +5365,15 @@ int __watcall use_mc_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00428f5f,s_menuanim_cpp_00428f52,0x3bc);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mc_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_00428f89);
-  filename = file_path(&buffer1,s_a2mrc_img_00428f93);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mc_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_00428f89);
+  filename = file_path(buffer1,s_a2mrc_img_00428f93);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5370,8 +5389,8 @@ int __watcall free_mc_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00428faa,s_menuanim_cpp_00428f9d,0x3cb);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mc_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mc_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5389,15 +5408,15 @@ int __watcall use_mo_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00428fe1,s_menuanim_cpp_00428fd4,0x3d5);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mo_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_0042900b);
-  filename = file_path(&buffer1,s_a2mrc_img_00429015);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mo_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_0042900b);
+  filename = file_path(buffer1,s_a2mrc_img_00429015);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5413,8 +5432,8 @@ int __watcall free_mo_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___0042902c,s_menuanim_cpp_0042901f,0x3e4);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mo_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mo_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5432,15 +5451,15 @@ int __watcall use_ms_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00429063,s_menuanim_cpp_00429056,0x3ee);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)ms_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_0042908d);
-  filename = file_path(&buffer1,s_a2mrc_img_00429097);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,ms_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_0042908d);
+  filename = file_path(buffer1,s_a2mrc_img_00429097);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5456,8 +5475,8 @@ int __watcall free_ms_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004290ae,s_menuanim_cpp_004290a1,0x3fd);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)ms_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,ms_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5475,15 +5494,15 @@ int __watcall use_reqwarn_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___004290e5,s_menuanim_cpp_004290d8,0x407);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)&reqwarn_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_0042910f);
-  filename = file_path(&buffer1,s_a2mrc_img_00429119);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,reqwarn_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_0042910f);
+  filename = file_path(buffer1,s_a2mrc_img_00429119);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5499,8 +5518,8 @@ int __watcall free_reqwarn_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429130,s_menuanim_cpp_00429123,0x416);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)&reqwarn_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,reqwarn_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5518,15 +5537,15 @@ int __watcall use_reqvraag_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00429167,s_menuanim_cpp_0042915a,0x420);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)reqvraag_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_00429191);
-  filename = file_path(&buffer1,s_a2mrc_img_0042919b);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,reqvraag_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_00429191);
+  filename = file_path(buffer1,s_a2mrc_img_0042919b);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5542,8 +5561,8 @@ int __watcall free_reqvraag_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004291b2,s_menuanim_cpp_004291a5,0x42f);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)reqvraag_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,reqvraag_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5561,15 +5580,15 @@ int __watcall use_reqinput_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___004291e9,s_menuanim_cpp_004291dc,0x439);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)reqinput_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_00429213);
-  filename = file_path(&buffer1,s_a2mrc_img_0042921d);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,reqinput_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_00429213);
+  filename = file_path(buffer1,s_a2mrc_img_0042921d);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5585,8 +5604,8 @@ int __watcall free_reqinput_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429234,s_menuanim_cpp_00429227,0x448);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)reqinput_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,reqinput_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5604,15 +5623,15 @@ int __watcall use_mst_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___0042926b,s_menuanim_cpp_0042925e,0x452);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)&mst_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_00429295);
-  filename = file_path(&buffer1,s_a2mrc_img_0042929f);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mst_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_00429295);
+  filename = file_path(buffer1,s_a2mrc_img_0042929f);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5628,8 +5647,8 @@ int __watcall free_mst_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004292b6,s_menuanim_cpp_004292a9,0x461);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)&mst_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mst_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5647,15 +5666,15 @@ int __watcall use_mds_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___004292ed,s_menuanim_cpp_004292e0,0x46b);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mds_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_00429317);
-  filename = file_path(&buffer1,s_a2mrc_img_00429321);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mds_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_00429317);
+  filename = file_path(buffer1,s_a2mrc_img_00429321);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5671,8 +5690,8 @@ int __watcall free_mds_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429338,s_menuanim_cpp_0042932b,0x47a);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mds_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mds_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5690,15 +5709,15 @@ int __watcall use_mdt_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___0042936f,s_menuanim_cpp_00429362,0x484);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mdt_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_00429399);
-  filename = file_path(&buffer1,s_a2mrc_img_004293a3);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mdt_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_00429399);
+  filename = file_path(buffer1,s_a2mrc_img_004293a3);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5714,8 +5733,8 @@ int __watcall free_mdt_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004293ba,s_menuanim_cpp_004293ad,0x493);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mdt_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mdt_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5733,15 +5752,15 @@ int __watcall use_mdc_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___004293f1,s_menuanim_cpp_004293e4,0x49d);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mdc_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_0042941b);
-  filename = file_path(&buffer1,s_a2mrc_img_00429425);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mdc_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_0042941b);
+  filename = file_path(buffer1,s_a2mrc_img_00429425);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5757,8 +5776,8 @@ int __watcall free_mdc_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___0042943c,s_menuanim_cpp_0042942f,0x4ac);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)mdc_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mdc_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5776,15 +5795,15 @@ int __watcall use_mns_menu_cfg_anims(void)
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00429473,s_menuanim_cpp_00429466,0x4b6);
   }
-  disable_mem_images(&anim_base);
+  disable_mem_images(anim_base);
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)&mns_menu_cfg);
-  filename_2 = file_path(&buffer2,s_a2mrc_ind_0042949d);
-  filename = file_path(&buffer1,s_a2mrc_img_004294a7);
-  use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
+  add_array_to_anim_base(anims,mns_menu_cfg);
+  filename_2 = file_path(buffer2,s_a2mrc_ind_0042949d);
+  filename = file_path(buffer1,s_a2mrc_img_004294a7);
+  use_mem_images_result = use_mem_images(filename,filename_2,anim_base);
   iVar1 = 0;
   if (use_mem_images_result != 0) {
-    disable_mem_images(&anim_base);
+    disable_mem_images(anim_base);
     iVar1 = 2000;
   }
   return iVar1;
@@ -5800,8 +5819,8 @@ int __watcall free_mns_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004294be,s_menuanim_cpp_004294b1,0x4c5);
   }
   reset_anim_base();
-  add_array_to_anim_base(&anims,(long *)&mns_menu_cfg);
-  disable_mem_images(&anim_base);
+  add_array_to_anim_base(anims,mns_menu_cfg);
+  disable_mem_images(anim_base);
   return 0;
 }
 
@@ -5817,7 +5836,7 @@ void __watcall reqw_open(char *param_1)
   if (iVar1 != 0) {
     fatal_exit(s__s__d___reqw_open______Could_not_004294f4,s_reqwarn_cpp_004294e8,0x67);
   }
-  iVar1 = *(int *)(xvga_anims->field_d4 + 4);
+  iVar1 = (xvga_anims[0x11].frames)->image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___reqw_open______Could_not_00429536,s_reqwarn_cpp_0042952a,0x6b,0,0x11);
   }
@@ -5829,7 +5848,7 @@ void __watcall reqw_open(char *param_1)
   xvga_set_font_colors(1,0,0x1efaff);
   win_printwrapped(0,0x105,0x7a,0xcd,param_1);
   show_mouse();
-  activate_form(&reqw_form);
+  activate_form(reqw_form);
   focus_control(0);
   return;
 }
@@ -5950,7 +5969,7 @@ void __watcall reqv_open(char *param_1)
   if (iVar1 != 0) {
     fatal_exit(s__s__d___reqv_open______Could_not_00429624,s_reqvraag_cpp_00429617,0x93);
   }
-  iVar1 = *(int *)(xvga_anims->field_bc + 4);
+  iVar1 = (xvga_anims[0xf].frames)->image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___reqv_open______Could_not_00429668,s_reqvraag_cpp_0042965b,0x97,0,0xf);
   }
@@ -5962,7 +5981,7 @@ void __watcall reqv_open(char *param_1)
   xvga_set_font_colors(1,0,0x1efaff);
   win_printwrapped(0,0x105,0x7a,0xcd,param_1);
   show_mouse();
-  activate_form(&reqv_form);
+  activate_form(reqv_form);
   focus_control(0);
   return;
 }
@@ -6099,7 +6118,7 @@ void __watcall reqi_open(char *param_1)
   if (iVar1 != 0) {
     fatal_exit(s__s__d___reqi_open______Could_not_0042976c,s_reqinput_cpp_0042975f,0xa2);
   }
-  iVar1 = *(int *)(xvga_anims->field_98 + 4);
+  iVar1 = (xvga_anims[0xc].frames)->image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___reqi_open______Could_not_004297b0,s_reqinput_cpp_004297a3,0xa6,0,0xc);
   }
@@ -6114,7 +6133,7 @@ void __watcall reqi_open(char *param_1)
   xvga_set_font_colors(2,0,0xf0fafa);
   xvga_set_font_bkmode(2,2);
   show_mouse();
-  activate_form(&reqi_form);
+  activate_form(reqi_form);
   focus_control(2);
   return;
 }
@@ -6459,12 +6478,13 @@ void __watcall reset_infio(void)
   
   infio.race_finished = '\0';
   iVar2 = slot_check_index(active_slot,s_spel_cpp_00429904,0x45);
-  infio.money = *(int *)(&DAT_004372d4 + iVar2 * 0x13c);
+  infio.money = *(int *)(&slot_list[0].field_0x78 + iVar2 * 0x13c);
   infio.active_slot = (short)active_slot;
   infio.sound = DAT_00437222._2_2_;
   infio.resolution = (short)DAT_00437222;
   infio.view = _opties;
-  infio.control_type = control._0_2_;
+  infio.control_type._0_1_ = control.field_00;
+  infio.control_type._1_1_ = control.field_01;
   infio.display_mode = DAT_00437226;
   infio.horizon = (short)DAT_00437228;
   infio.dashboard = DAT_00437228._2_2_;
@@ -6473,72 +6493,72 @@ void __watcall reset_infio(void)
   infio.music_volume = (short)DAT_00437230;
   infio.effects_volume = DAT_00437230._2_2_;
   iVar2 = slot_check_index(active_slot,s_spel_cpp_0042990d,0x52);
-  infio.stage = *(short *)(&DAT_004372ba + iVar2 * 0x13c);
+  infio.stage = *(short *)(&slot_list[0].field_0x5e + iVar2 * 0x13c);
   iVar2 = slot_check_index(active_slot,s_spel_cpp_00429916,0x53);
-  if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
     infio.position = 6;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_0042991f,0x53);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429931,0x53);
-    iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
+    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_00429928,0x53);
-    infio.position = *(short *)(&DAT_004372d8 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.position = *(short *)(iVar2 * 0x13c + 0x4372d8 + iVar3 * 2);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_0042993a,0x54);
-  if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
     infio.racer_1 = 1;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_00429943,0x54);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429955,0x54);
-    iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
+    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_0042994c,0x54);
-    infio.racer_1 = *(short *)(&DAT_0043735c + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_1 = *(short *)(iVar2 * 0x13c + 0x43735c + iVar3 * 2);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_0042995e,0x55);
-  if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
     infio.racer_2 = 2;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_00429967,0x55);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429979,0x55);
-    iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
+    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_00429970,0x55);
-    infio.racer_2 = *(short *)(&DAT_00437368 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_2 = *(short *)(iVar2 * 0x13c + 0x437368 + iVar3 * 2);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_00429982,0x56);
-  if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
     infio.racer_3 = 3;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_0042998b,0x56);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_0042999d,0x56);
-    iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
+    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_00429994,0x56);
-    infio.racer_3 = *(short *)(&DAT_00437374 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_3 = *(short *)(iVar2 * 0x13c + 0x437374 + iVar3 * 2);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_004299a6,0x57);
-  if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
     infio.racer_4 = 4;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_004299af,0x57);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_004299c1,0x57);
-    iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
+    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_004299b8,0x57);
-    infio.racer_4 = *(short *)(&DAT_00437380 + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_4 = *(short *)(iVar2 * 0x13c + 0x437380 + iVar3 * 2);
   }
   iVar2 = slot_check_index(active_slot,s_spel_cpp_004299ca,0x58);
-  if (*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10 < 1) {
+  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
     infio.racer_5 = 5;
   }
   else {
     iVar2 = slot_check_index(active_slot,s_spel_cpp_004299d3,0x58);
     iVar3 = slot_check_index(active_slot,s_spel_cpp_004299e5,0x58);
-    iVar3 = slot_check_level((*(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10) + -1,
+    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
                              s_spel_cpp_004299dc,0x58);
-    infio.racer_5 = *(short *)(&DAT_0043738c + iVar3 * 2 + iVar2 * 0x13c);
+    infio.racer_5 = *(short *)(iVar2 * 0x13c + 0x43738c + iVar3 * 2);
   }
   infio.time = 0;
   infio.time_racer_1 = 0;
@@ -6582,63 +6602,64 @@ int __watcall handle_game(void)
   if (infio.race_finished != '\0') {
     infio.race_finished = '\0';
     iVar1 = slot_check_index(active_slot,s_spel_cpp_00429a04,0x73);
-    iVar1 = *(int *)(&DAT_004372b8 + iVar1 * 0x13c);
+    iVar1 = *(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c);
     iVar2 = slot_check_index(active_slot,s_spel_cpp_00429a0d,0x74);
     iVar3 = active_slot;
-    *(short *)(&DAT_004372ba + iVar2 * 0x13c) = *(short *)(&DAT_004372ba + iVar2 * 0x13c) + 1;
+    *(short *)(&slot_list[0].field_0x5e + iVar2 * 0x13c) =
+         *(short *)(&slot_list[0].field_0x5e + iVar2 * 0x13c) + 1;
     iVar3 = slot_check_index(iVar3,s_spel_cpp_00429a16,0x75);
-    *(int *)(&DAT_004372d4 + iVar3 * 0x13c) = infio.money;
+    *(int *)(&slot_list[0].field_0x78 + iVar3 * 0x13c) = infio.money;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a1f,0x76);
     iVar1 = iVar1 >> 0x10;
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a28,0x76);
-    *(int *)(&DAT_004372bc + iVar2 * 4 + iVar3 * 0x13c) = infio.time;
+    *(int *)(iVar3 * 0x13c + 0x4372bc + iVar2 * 4) = infio.time;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a31,0x77);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a3a,0x77);
-    *(short *)(&DAT_004372d8 + iVar2 * 2 + iVar3 * 0x13c) = infio.position;
+    *(short *)(iVar3 * 0x13c + 0x4372d8 + iVar2 * 2) = infio.position;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a43,0x78);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a4c,0x78);
-    *(short *)(&DAT_0043735c + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_1;
+    *(short *)(iVar3 * 0x13c + 0x43735c + iVar2 * 2) = infio.racer_1;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a55,0x79);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a5e,0x79);
-    *(short *)(&DAT_00437368 + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_2;
+    *(short *)(iVar3 * 0x13c + 0x437368 + iVar2 * 2) = infio.racer_2;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a67,0x7a);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a70,0x7a);
-    *(short *)(&DAT_00437374 + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_3;
+    *(short *)(iVar3 * 0x13c + 0x437374 + iVar2 * 2) = infio.racer_3;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a79,0x7b);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a82,0x7b);
-    *(short *)(&DAT_00437380 + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_4;
+    *(short *)(iVar3 * 0x13c + 0x437380 + iVar2 * 2) = infio.racer_4;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a8b,0x7c);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a94,0x7c);
-    *(short *)(&DAT_0043738c + iVar2 * 2 + iVar3 * 0x13c) = infio.racer_5;
+    *(short *)(iVar3 * 0x13c + 0x43738c + iVar2 * 2) = infio.racer_5;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a9d,0x7d);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aa6,0x7d);
-    *(int *)(&DAT_004372e4 + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_1;
+    *(int *)(iVar3 * 0x13c + 0x4372e4 + iVar2 * 4) = infio.time_racer_1;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429aaf,0x7e);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429ab8,0x7e);
-    *(int *)(&DAT_004372fc + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_2;
+    *(int *)(iVar3 * 0x13c + 0x4372fc + iVar2 * 4) = infio.time_racer_2;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ac1,0x7f);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aca,0x7f);
-    *(int *)(&DAT_00437314 + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_3;
+    *(int *)(iVar3 * 0x13c + 0x437314 + iVar2 * 4) = infio.time_racer_3;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ad3,0x80);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429adc,0x80);
-    *(int *)(&DAT_0043732c + iVar2 * 4 + iVar3 * 0x13c) = infio.time_racer_4;
+    *(int *)(iVar3 * 0x13c + 0x43732c + iVar2 * 4) = infio.time_racer_4;
     iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ae5,0x81);
     iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aee,0x81);
-    *(uint *)(&DAT_00437344 + iVar3 * 0x13c + iVar2 * 4) =
+    *(uint *)(iVar2 * 4 + 0x437344 + iVar3 * 0x13c) =
          CONCAT22(infio.time_racer_5._2_2_,(undefined2)infio.time_racer_5);
     snd_play_looping(&local_18,s_rock_wav_00429af7);
     menu_display_stand(iVar1);
     menu_display_classe();
     iVar3 = slot_check_index(iVar1,s_spel_cpp_00429b00,0x85);
     debugmsg(s_slot__d__tijd__d_____d_00429b09,active_slot,iVar1,
-             *(int *)(&DAT_004372b8 + iVar3 * 0x13c) >> 0x10);
+             *(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10);
     iVar3 = slot_check_index(active_slot,extraout_EDX,0x89);
-    iVar3 = *(int *)(&DAT_004372d4 + iVar3 * 0x13c);
+    iVar3 = *(int *)(&slot_list[0].field_0x78 + iVar3 * 0x13c);
     iVar2 = slot_check_index(active_slot,s_spel_cpp_00429b2b,0x87);
     iVar4 = slot_check_level(iVar1,s_spel_cpp_00429b34,0x87);
-    iVar2 = *(int *)(&DAT_004372bc + iVar4 * 4 + iVar2 * 0x13c);
+    iVar2 = *(int *)(iVar2 * 0x13c + 0x4372bc + iVar4 * 4);
     iVar4 = slot_check_index(active_slot,s_spel_cpp_00429b3d,0x86);
-    add_new_levelscore((char *)(iVar4 * 0x13c + 0x437296),iVar2,iVar1,iVar3);
+    add_new_levelscore(&slot_list[0].field_0x3a + iVar4 * 0x13c,iVar2,iVar1,iVar3);
     iVar3 = get_last_entered_levelscore(iVar1);
     debugmsg(s_Level_score_added_at__d_00429b46,iVar3);
     if ((-1 < extraout_EDX_00) && (extraout_EDX_00 < 10)) {
@@ -6649,20 +6670,21 @@ int __watcall handle_game(void)
     } while (iVar1 != 0);
     debugmsg(s_Local_Level_Menu_Displayed_00429b60);
     iVar1 = slot_check_index(active_slot,s_spel_cpp_00429b7d,0x91);
-    if (5 < *(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10) {
+    if (5 < *(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) {
       debugmsg(s_Last_Level_00429b86);
       movie_play_outtro();
       clear_screen(2,0);
       handle_wipe(2,3,600);
       clear_screen(1,0);
       iVar1 = slot_check_index(active_slot,s_spel_cpp_00429b93,0x9b);
-      iVar1 = *(int *)(&DAT_004372d4 + iVar1 * 0x13c);
+      iVar1 = *(int *)(&slot_list[0].field_0x78 + iVar1 * 0x13c);
       iVar3 = slot_check_index(active_slot,s_spel_cpp_00429b9c,0x9a);
-      iVar3 = *(int *)(&DAT_004372b8 + iVar3 * 0x13c);
+      iVar3 = *(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c);
       iVar2 = slot_check_index(active_slot,s_spel_cpp_00429ba5,0x99);
-      iVar2 = slot_count_total_tijd(active_slot,*(int *)(&DAT_004372b8 + iVar2 * 0x13c) >> 0x10);
+      iVar2 = slot_count_total_tijd
+                        (active_slot,*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10);
       iVar4 = slot_check_index(active_slot,s_spel_cpp_00429bae,0x98);
-      add_new_hiscore((char *)(iVar4 * 0x13c + 0x437296),iVar2,iVar3 >> 0x10,iVar1);
+      add_new_hiscore(&slot_list[0].field_0x3a + iVar4 * 0x13c,iVar2,iVar3 >> 0x10,iVar1);
       iVar1 = get_last_entered_hiscore();
       debugmsg(s_Last_Level_added_at__d_00429bb7,iVar1);
       if ((-1 < iVar1) && (iVar1 < 10)) {
@@ -6914,9 +6936,9 @@ void __watcall set_ini_filename(char *param_1)
   }
   fatal_exit(s__set_ini_filename___s__d____file_00429cd0,s_inifile_cpp_00429cc4,0x2c);
 LAB_0040bc04:
-  getcwd((undefined4 *)&ini_filename,0x118);
+  getcwd((undefined4 *)ini_filename,0x118);
   j = 0xffffffff;
-  pcVar4 = &ini_filename;
+  pcVar4 = ini_filename;
   do {
     if (j == 0) break;
     j = j - 1;
@@ -6926,7 +6948,7 @@ LAB_0040bc04:
   if (*(char *)((int)&movie_on + ~j + 2) != '\\') {
     pcVar2 = s___00429d0b;
     i = -1;
-    pcVar4 = &ini_filename;
+    pcVar4 = ini_filename;
     do {
       pcVar3 = pcVar4;
       if (i == 0) break;
@@ -6947,7 +6969,7 @@ LAB_0040bc04:
     } while (cVar1 != '\0');
   }
   i = -1;
-  pcVar4 = &ini_filename;
+  pcVar4 = ini_filename;
   do {
     pcVar2 = pcVar4;
     if (i == 0) break;
@@ -6982,7 +7004,7 @@ void __watcall write_ini_string_setting(char *param_1,char *param_2,char *param_
   if (ini_file_init_ok == 0) {
     fatal_exit(s__write_ini_string_setting___s__d_00429d19,s_inifile_cpp_00429d0d,0x41);
   }
-  WritePrivateProfileStringA(param_1,param_2,param_3,&ini_filename);
+  WritePrivateProfileStringA(param_1,param_2,param_3,ini_filename);
   return;
 }
 
@@ -6998,7 +7020,7 @@ void __watcall write_ini_value_setting(char *param_1,char *param_2,int param_3)
     fatal_exit(s__write_ini_value_setting___s__d__00429d71,s_inifile_cpp_00429d65,0x4f);
   }
   itoa_1(param_3,local_30,10);
-  WritePrivateProfileStringA(param_1,param_2,local_30,&ini_filename);
+  WritePrivateProfileStringA(param_1,param_2,local_30,ini_filename);
   return;
 }
 
@@ -7013,7 +7035,7 @@ uint __watcall read_ini_value_setting(char *param_1,char *param_2)
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_value_setting___s__d____00429dc8,s_inifile_cpp_00429dbc,0x5c);
   }
-  UVar1 = GetPrivateProfileIntA(param_1,param_2,0,&ini_filename);
+  UVar1 = GetPrivateProfileIntA(param_1,param_2,0,ini_filename);
   return UVar1;
 }
 
@@ -7026,7 +7048,7 @@ void __watcall read_ini_string_setting(char *param_1,char *param_2,char *param_3
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_string_setting___s__d__00429e1e,s_inifile_cpp_00429e12,0x67);
   }
-  GetPrivateProfileStringA(param_1,param_2,&DAT_00429e69,param_3,param_4,&ini_filename);
+  GetPrivateProfileStringA(param_1,param_2,&DAT_00429e69,param_3,param_4,ini_filename);
   return;
 }
 
@@ -7145,7 +7167,7 @@ int __cdecl fatal_exit(char *param_1,...)
   undefined1 *local_1c;
   
   local_1c = &stack0x00000008;
-  pUVar1 = &fatal_exit__mb_flags;
+  pUVar1 = (UINT *)fatal_exit__mb_flags;
   pUVar2 = local_38;
   for (i = 7; i != 0; i = i + -1) {
     *pUVar2 = *pUVar1;
@@ -7223,10 +7245,10 @@ int __watcall set_xvga_vars(int param_1,int param_2,int param_3)
       fatal_exit(s__s__d____error_predefined_screen_00429f52,s_initlib_cpp_00429f46,0xe5);
     }
     xvga_screen_mode = param_2;
-    xvga_screen_xsize = (&xvga_screen_modes)[param_2 * 5];
-    xvga_screen_ysize = (&DAT_00435b80)[param_2 * 5];
-    xvga_screen_bpp = (&DAT_00435b84)[param_2 * 5];
-    xvga_allowmodex = *(int *)(&DAT_00435b88 + param_2 * 0x14);
+    xvga_screen_xsize = *(int *)((int)xvga_screen_modes + param_2 * 0x14);
+    xvga_screen_ysize = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 4);
+    xvga_screen_bpp = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 8);
+    xvga_allowmodex = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 0xc);
     return 0;
   }
   if (1 < (uint)param_1) {
@@ -8191,10 +8213,10 @@ int __watcall set_xvga_resolution(int param_1)
   }
   exit_lib_surfaces();
   debugmsg(s_Setting_display_mode_0042aed2);
-  xvga_screen_xsize = (&xvga_screen_modes)[param_1 * 5];
-  xvga_screen_ysize = (&DAT_00435b80)[param_1 * 5];
-  xvga_screen_bpp = (&DAT_00435b84)[param_1 * 5];
-  xvga_allowmodex = *(int *)(&DAT_00435b88 + param_1 * 0x14);
+  xvga_screen_xsize = *(int *)((int)xvga_screen_modes + param_1 * 0x14);
+  xvga_screen_ysize = *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 4);
+  xvga_screen_bpp = *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 8);
+  xvga_allowmodex = *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 0xc);
   xvga_screen_mode = param_1;
   debugmsg(s_Setting_display_mode___dx_dx_d_0042aee8,xvga_screen_xsize,xvga_screen_ysize,
            xvga_screen_bpp);
@@ -8901,10 +8923,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
-  int iVar4;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  undefined4 uVar7;
+  undefined4 uVar6;
   
   xvga_get_sound_info();
   if (init_sound_ok == 0) {
@@ -8915,9 +8936,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
           direct_sound_create = DirectSoundCreate(extraout_EDX_01,&xvga_ds_object,extraout_EDX_01);
           if (direct_sound_create != 0) {
             pcVar1 = ds_error_string(direct_sound_create);
-            uVar7 = 0x262;
-            pcVar6 = s_sound_cpp_0042b71c;
-            pcVar5 = s__s__d____error_creating_sound_ob_0042b726;
+            uVar6 = 0x262;
+            pcVar5 = s_sound_cpp_0042b71c;
+            pcVar4 = s__s__d____error_creating_sound_ob_0042b726;
             goto LAB_0040dfe7;
           }
           pcVar1 = s_Default_driver_init_failure___No_0042b752;
@@ -8929,9 +8950,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
                                  extraout_EDX_00);
           if (direct_sound_create != 0) {
             pcVar1 = ds_error_string(direct_sound_create);
-            uVar7 = 0x25a;
-            pcVar6 = s_sound_cpp_0042b698;
-            pcVar5 = s__s__d____error_creating_sound_ob_0042b6a2;
+            uVar6 = 0x25a;
+            pcVar5 = s_sound_cpp_0042b698;
+            pcVar4 = s__s__d____error_creating_sound_ob_0042b6a2;
             goto LAB_0040dfe7;
           }
           pcVar1 = s_Attempting_to_use_secondary__unk_0042b6ce;
@@ -8944,9 +8965,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
                                extraout_EDX);
         if (direct_sound_create != 0) {
           pcVar1 = ds_error_string(direct_sound_create);
-          uVar7 = 0x251;
-          pcVar6 = s_sound_cpp_0042b615;
-          pcVar5 = s__s__d____error_creating_sound_ob_0042b61f;
+          uVar6 = 0x251;
+          pcVar5 = s_sound_cpp_0042b615;
+          pcVar4 = s__s__d____error_creating_sound_ob_0042b61f;
           goto LAB_0040dfe7;
         }
         pcVar1 = s_Attempting_to_use_sb16_driver_su_0042b64b;
@@ -8958,11 +8979,11 @@ int __watcall xvga_init_sound(int param_1,int param_2)
       HVar2 = (*xvga_ds_object->lpVtbl->SetCooperativeLevel)(xvga_ds_object,xvga_hwnd,3);
       if ((HVar2 != 0) != 0) {
         pcVar1 = ds_error_string((uint)(HVar2 != 0));
-        uVar7 = 0x26d;
-        pcVar6 = s_sound_cpp_0042b77a;
-        pcVar5 = s__s__d____error_setting_the_coop_l_0042b784;
+        uVar6 = 0x26d;
+        pcVar5 = s_sound_cpp_0042b77a;
+        pcVar4 = s__s__d____error_setting_the_coop_l_0042b784;
 LAB_0040dfe7:
-        debugmsg(pcVar5,pcVar6,uVar7,pcVar1);
+        debugmsg(pcVar4,pcVar5,uVar6,pcVar1);
         return 0x2af9;
       }
       snd_coop_level_set = 1;
@@ -8984,21 +9005,21 @@ LAB_0040dfe7:
       fatal_exit(s__s__d____error_illegal_sound_mod_0042b7f0);
     }
     if ((param_2 != 0xe) && (snd_format_set == 0)) {
-      iVar4 = param_2 * 0x10;
-      iVar3 = set_output_format(*(int *)(&sound_modes + iVar4),*(int *)(&DAT_00435d08 + iVar4),
-                                *(int *)(&DAT_00435d10 + iVar4),*(int *)(&DAT_00435d0c + iVar4));
+      iVar3 = set_output_format(sound_modes[param_2 * 4].field_00,
+                                sound_modes[param_2 * 4 + 1].field_00,
+                                sound_modes[param_2 * 4 + 3].field_00,
+                                sound_modes[param_2 * 4 + 2].field_00);
       if (iVar3 != 0) {
         return 0x2afa;
       }
-      if (*(int *)(&DAT_00435d0c + iVar4) == 0) {
+      if (sound_modes[param_2 * 4 + 2].field_00 == 0) {
         pcVar1 = s_MONO_0042b824;
       }
       else {
         pcVar1 = s_STEREO_0042b81d;
       }
-      debugmsg(s_setting_sound_format__dHz__dbits_0042b829,
-               *(undefined4 *)(&sound_modes + param_2 * 0x10),
-               *(undefined4 *)(&DAT_00435d08 + param_2 * 0x10),pcVar1);
+      debugmsg(s_setting_sound_format__dHz__dbits_0042b829,sound_modes[param_2 * 4].field_00,
+               sound_modes[param_2 * 4 + 1].field_00,pcVar1);
       snd_format_set = 1;
     }
     debugmsg(s_init_smacker_0042b84e);
@@ -9115,22 +9136,21 @@ LAB_0040e2ea:
     if (param_3 != 0xe) {
       debugmsg(s_setting_3d_output_format_0042baa2);
       if (snd_format_set == 0) {
-        i = param_3 * 0x10;
         iVar3 = set_3d_output_format
-                          (*(int *)(&sound_modes + i),*(int *)(&DAT_00435d08 + i),
-                           *(int *)(&DAT_00435d10 + i),*(int *)(&DAT_00435d0c + i));
+                          (sound_modes[param_3 * 4].field_00,sound_modes[param_3 * 4 + 1].field_00,
+                           sound_modes[param_3 * 4 + 3].field_00,
+                           sound_modes[param_3 * 4 + 2].field_00);
         if (iVar3 != 0) {
           return 0x2afa;
         }
-        if (*(int *)(&DAT_00435d0c + i) == 0) {
+        if (sound_modes[param_3 * 4 + 2].field_00 == 0) {
           pcVar1 = s_MONO_0042bac3;
         }
         else {
           pcVar1 = s_STEREO_0042babc;
         }
-        debugmsg(s_setting_sound_format__dHz__dbits_0042bac8,
-                 *(undefined4 *)(&sound_modes + param_3 * 0x10),
-                 *(undefined4 *)(&DAT_00435d08 + param_3 * 0x10),pcVar1);
+        debugmsg(s_setting_sound_format__dHz__dbits_0042bac8,sound_modes[param_3 * 4].field_00,
+                 sound_modes[param_3 * 4 + 1].field_00,pcVar1);
         snd_format_set = 1;
       }
     }
@@ -10551,8 +10571,8 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     if (iVar1 == -1) {
       fatal_exit(s_fatal_error___no_program_cdrom_w_0042cb12);
     }
-    cd_drive = (char)iVar1;
-    local_108[0] = cd_drive;
+    cd_drive[0] = (char)iVar1;
+    local_108[0] = cd_drive[0];
     iVar1 = access_1(local_108,0);
     if (iVar1 != 0) {
       fatal_exit(s_program_installation_check_faile_0042cb3c);
@@ -10560,7 +10580,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
   }
   else {
     env_value = (char *)getenv(s_NOCD_0042cb0d);
-    cd_drive = *env_value;
+    cd_drive[0] = *env_value;
   }
   return;
 }
@@ -10582,7 +10602,7 @@ char * __watcall file_path(char *filename,char *param_2)
   debugmsg(s_path__s_0042cb61,filename);
   file = fopen(filename,(byte *)s_r_0042cb6a);
   if (file == 0) {
-    makepath((byte *)filename,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
+    makepath((byte *)filename,(byte *)cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_0042cb6c,filename);
   }
   else {
@@ -10937,7 +10957,7 @@ void __watcall clear_control_list(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 0x19;
-    (&control_list)[iVar2] = 0;
+    *(undefined1 *)((int)&control_list[0].field_00 + iVar2) = 0;
     iVar2 = iVar1;
   } while (iVar1 != 0xfa);
   return;
@@ -10954,17 +10974,17 @@ add_control_to_list(int param_1,void *param_2,void *param_3,void *param_4,void *
   int iVar1;
   
   iVar1 = param_1 * 0x19;
-  if ((&control_list)[iVar1] != '\0') {
+  if (*(char *)((int)control_list + iVar1) != '\0') {
     fatal_exit(s__s__d_____add_control_to_list__c_0042d029,s_controls_cpp_0042d01c,0x4e,param_1);
     return;
   }
-  *(void **)(&DAT_004381e9 + iVar1) = param_2;
-  *(void **)(&DAT_004381ed + iVar1) = param_3;
-  *(void **)(&DAT_004381f1 + iVar1) = param_4;
-  (&control_list)[iVar1] = 1;
-  *(void **)(&DAT_004381f5 + iVar1) = param_5;
-  *(void **)(&DAT_004381f9 + iVar1) = param_6;
-  *(void **)(&DAT_004381fd + iVar1) = param_7;
+  *(void **)((int)control_list + iVar1 + 1) = param_2;
+  *(void **)((int)control_list + iVar1 + 5) = param_3;
+  *(void **)((int)control_list + iVar1 + 9) = param_4;
+  *(undefined1 *)((int)control_list + iVar1) = 1;
+  *(void **)((int)control_list + iVar1 + 0xd) = param_5;
+  *(void **)((int)control_list + iVar1 + 0x11) = param_6;
+  *(void **)((int)control_list + iVar1 + 0x15) = param_7;
   return;
 }
 
@@ -11124,7 +11144,7 @@ void __watcall mouse_off(void)
 
 /* ==== 00410927 set_mouse_anim ==== */
 
-void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
+void __watcall set_mouse_anim(int anim_index,int frame_index,char param_3)
 
 {
   int arg4;
@@ -11132,15 +11152,15 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
   if (mouse_type == 1) {
     fatal_exit(s__s__d_____set_mouse_anim__You_ca_0042d237,s_mouse_cpp_0042d22d,0xde);
   }
-  if ((param_1 < 0) || (max_anim_ptr <= param_1)) {
-    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d287,s_mouse_cpp_0042d27d,0xe2,param_1,
+  if ((anim_index < 0) || (max_anim_ptr <= anim_index)) {
+    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d287,s_mouse_cpp_0042d27d,0xe2,anim_index,
                max_anim_ptr);
   }
-  if ((param_2 < 0) || ((&xvga_anims->field_00)[param_1 * 3] <= param_2)) {
-    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d2eb,s_mouse_cpp_0042d2e1,0xe6,param_2,
-               (&xvga_anims->field_00)[param_1 * 3],param_1);
+  if ((frame_index < 0) || (xvga_anims[anim_index].frame_count <= frame_index)) {
+    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d2eb,s_mouse_cpp_0042d2e1,0xe6,frame_index,
+               xvga_anims[anim_index].frame_count,anim_index);
   }
-  arg4 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  arg4 = xvga_anims[anim_index].frames[frame_index].image;
   if ((arg4 < 0) || (max_mem_image_ptr <= arg4)) {
     fatal_exit(s__s__d_____set_mouse_anim__image___0042d34e,s_mouse_cpp_0042d344,0xeb,arg4,
                max_mem_image_ptr);
@@ -11148,8 +11168,8 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
   if (*(int *)(arg4 * 0x20 + (int)xvga_mem_images) == 0) {
     fatal_exit(s__s__d_____set_mouse_anim__mouse_i_0042d39b,s_mouse_cpp_0042d391,0xee,arg4);
   }
-  mouse_anim = param_1;
-  mouse_frame = param_2;
+  mouse_anim = anim_index;
+  mouse_frame = frame_index;
   mouse_loop = param_3;
   mouse_anim_set = 1;
   return;
@@ -11354,11 +11374,11 @@ void __watcall init_help(void)
     puVar5 = puVar3;
     do {
       if (pf_conversion_mode == 0) {
-        *puVar4 = (&grid)[j];
+        *puVar4 = grid[j];
         puVar4 = puVar4 + 1;
       }
       else if (pf_conversion_mode == 1) {
-        translate_pixel_result = translate_pixel((uint)(byte)(&grid)[j],8);
+        translate_pixel_result = translate_pixel((uint)grid[j],8);
         *(short *)puVar5 = (short)translate_pixel_result;
         puVar5 = puVar5 + 2;
       }
@@ -11506,11 +11526,11 @@ int __watcall check_help_keys(void)
     if (0x27 < iVar1) {
       return 0;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) != -1) {
-      keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+    if (*(int *)((int)help_stop_keys + iVar1) != -1) {
+      keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
       if (keyispressed_result != 0) {
         while( true ) {
-          keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+          keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
           if (keyispressed_result == 0) break;
           handle_win_msg();
         }
@@ -11536,7 +11556,7 @@ int __watcall get_free_help_key(void)
     if (0x27 < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) == -1) break;
+    if (*(int *)((int)help_stop_keys + iVar1) == -1) break;
     iVar1 = iVar1 + 4;
     i = i + 1;
   }
@@ -11555,7 +11575,7 @@ void __watcall clear_help_keys(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 4;
-    *(undefined4 *)((int)&help_stop_keys + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)help_stop_keys + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 0x28);
   return;
@@ -11571,7 +11591,7 @@ void __watcall set_help_key(int param_1)
   
   free_help_key = get_free_help_key();
   if (free_help_key != -1) {
-    (&help_stop_keys)[free_help_key] = param_1;
+    help_stop_keys[free_help_key] = param_1;
     return;
   }
   fatal_exit(s__s__d_____set_help_key__No_free_k_0042d7aa,s_help_cpp_0042d7a1,0x143,10);
@@ -12442,7 +12462,7 @@ int __watcall get_string_width(char *param_1,int param_2)
   HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_18);
   if (HVar1 == 0) {
     if (xvga_font_set != 0) {
-      SelectObject(local_18,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SelectObject(local_18,xvga_fonts[xvga_font_index * 4].field_00);
     }
     GetTextExtentPoint32A(local_18,param_1,param_2,&size);
     (*xvga_screen->lpVtbl->ReleaseDC)(xvga_screen,local_18);
@@ -12466,7 +12486,7 @@ int __watcall get_string_height(char *param_1,int param_2)
   HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_18);
   if (HVar1 == 0) {
     if (xvga_font_set != 0) {
-      SelectObject(local_18,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SelectObject(local_18,xvga_fonts[xvga_font_index * 4].field_00);
     }
     GetTextExtentPoint32A(local_18,param_1,param_2,&size);
     (*xvga_screen->lpVtbl->ReleaseDC)(xvga_screen,local_18);
@@ -12494,12 +12514,12 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
   tagRECT tStack_68;
   tagRECT tStack_58;
   tagRECT tStack_48;
-  tagSIZE size_4;
   tagSIZE size_3;
   tagSIZE size_2;
+  tagSIZE size;
   undefined1 *local_20;
   HDC local_1c;
-  tagSIZE *size;
+  tagSIZE *size_4;
   
   local_20 = &stack0x00000014;
   vsprintf((int)aCStack_1f8,(byte *)param_4,(int *)&local_20);
@@ -12520,14 +12540,14 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       This = xvga_screen;
     }
     else {
-      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(local_1c,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
-      SetBkColor(local_1c,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
-      SetBkMode(local_1c,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
-      size = &size_4;
+      SelectObject(local_1c,xvga_fonts[xvga_font_index * 4].field_00);
+      SetTextColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 3].field_00);
+      SetBkColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 2].field_00);
+      SetBkMode(local_1c,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+      size_4 = &size_3;
       iVar2 = lstrlenA(aCStack_1f8);
-      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
-      SetRect(&tStack_48,param_2,param_3,size_4.cx + param_2,size_4.cy + param_3);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
+      SetRect(&tStack_48,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_48,aCStack_1f8,UVar3,pIVar4);
@@ -12550,14 +12570,14 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       This = xvga_back_screen;
     }
     else {
-      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(local_1c,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
-      SetBkColor(local_1c,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
-      SetBkMode(local_1c,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
-      size = &size_2;
+      SelectObject(local_1c,xvga_fonts[xvga_font_index * 4].field_00);
+      SetTextColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 3].field_00);
+      SetBkColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 2].field_00);
+      SetBkMode(local_1c,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+      size_4 = &size;
       iVar2 = lstrlenA(aCStack_1f8);
-      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
-      SetRect(&tStack_58,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
+      SetRect(&tStack_58,param_2,param_3,size.cx + param_2,size.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_58,aCStack_1f8,UVar3,pIVar4);
@@ -12584,14 +12604,14 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       This = xvga_buffer_screen;
     }
     else {
-      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(local_1c,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
-      SetBkColor(local_1c,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
-      SetBkMode(local_1c,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
-      size = &size_3;
+      SelectObject(local_1c,xvga_fonts[xvga_font_index * 4].field_00);
+      SetTextColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 3].field_00);
+      SetBkColor(local_1c,(COLORREF)xvga_fonts[xvga_font_index * 4 + 2].field_00);
+      SetBkMode(local_1c,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+      size_4 = &size_2;
       iVar2 = lstrlenA(aCStack_1f8);
-      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
-      SetRect(&tStack_68,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
+      SetRect(&tStack_68,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_68,aCStack_1f8,UVar3,pIVar4);
@@ -12620,10 +12640,10 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
   tagRECT tStack_58;
   tagRECT tStack_48;
   tagRECT tStack_38;
-  tagSIZE size_2;
+  tagSIZE size;
   HDC local_20;
   undefined1 *local_1c;
-  tagSIZE *size;
+  tagSIZE *size_2;
   
   local_1c = &stack0x0000001c;
   vsprintf((int)aCStack_1e8,(byte *)param_6,(int *)&local_1c);
@@ -12641,14 +12661,14 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         TextOutA(local_20,param_2,param_3,aCStack_1e8,iVar2);
       }
       else {
-        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SelectObject(local_20,xvga_fonts[xvga_font_index * 4].field_00);
         SetTextColor(local_20,param_5);
         SetBkColor(local_20,param_4);
-        SetBkMode(local_20,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
-        size = &size_2;
+        SetBkMode(local_20,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+        size_2 = &size;
         iVar2 = lstrlenA(aCStack_1e8);
-        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
-        SetRect(&tStack_48,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size_2);
+        SetRect(&tStack_48,param_2,param_3,size.cx + param_2,size.cy + param_3);
         pIVar4 = (INT *)0x0;
         UVar3 = lstrlenA(aCStack_1e8);
         ExtTextOutA(local_20,param_2,param_3,0,&tStack_48,aCStack_1e8,UVar3,pIVar4);
@@ -12673,14 +12693,14 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         This = xvga_back_screen;
       }
       else {
-        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SelectObject(local_20,xvga_fonts[xvga_font_index * 4].field_00);
         SetTextColor(local_20,param_5);
         SetBkColor(local_20,param_4);
-        SetBkMode(local_20,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
-        size = &size_2;
+        SetBkMode(local_20,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+        size_2 = &size;
         iVar2 = lstrlenA(aCStack_1e8);
-        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
-        SetRect(&tStack_38,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size_2);
+        SetRect(&tStack_38,param_2,param_3,size.cx + param_2,size.cy + param_3);
         pIVar4 = (INT *)0x0;
         UVar3 = lstrlenA(aCStack_1e8);
         ExtTextOutA(local_20,param_2,param_3,0,&tStack_38,aCStack_1e8,UVar3,pIVar4);
@@ -12707,14 +12727,14 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         This = xvga_buffer_screen;
       }
       else {
-        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SelectObject(local_20,xvga_fonts[xvga_font_index * 4].field_00);
         SetTextColor(local_20,param_5);
         SetBkColor(local_20,param_4);
-        SetBkMode(local_20,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
-        size = &size_2;
+        SetBkMode(local_20,(int)xvga_fonts[xvga_font_index * 4 + 1].field_00);
+        size_2 = &size;
         iVar2 = lstrlenA(aCStack_1e8);
-        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
-        SetRect(&tStack_58,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size_2);
+        SetRect(&tStack_58,param_2,param_3,size.cx + param_2,size.cy + param_3);
         pIVar4 = (INT *)0x0;
         UVar3 = lstrlenA(aCStack_1e8);
         ExtTextOutA(local_20,param_2,param_3,0,&tStack_58,aCStack_1e8,UVar3,pIVar4);
@@ -12754,11 +12774,11 @@ int __watcall xvga_load_font(int param_1,char *param_2,int param_3,int param_4,i
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0042df25,s_font_cpp_0042df1c,0x131,5);
   }
-  if ((&xvga_fonts)[param_1 * 4] != 0) {
+  if (xvga_fonts[param_1 * 4].field_00 != (HGDIOBJ)0x0) {
     fatal_exit(s__s__d____Font_index_already_in_u_0042df5c,s_font_cpp_0042df53,0x136,param_1);
   }
   pHVar1 = CreateFontA(param_3,0,0,0,400,param_4,param_5,0,0,0,0,0,2,param_2);
-  (&xvga_fonts)[param_1 * 4] = pHVar1;
+  xvga_fonts[param_1 * 4].field_00 = pHVar1;
   if (pHVar1 == (HFONT)0x0) {
     return 10000;
   }
@@ -12774,7 +12794,7 @@ int __watcall xvga_select_font(int param_1)
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0042df90,s_font_cpp_0042df87,0x14e,5);
   }
-  if ((&xvga_fonts)[param_1 * 4] == 0) {
+  if (xvga_fonts[param_1 * 4].field_00 == (HGDIOBJ)0x0) {
     fatal_exit(s__s__d____Font_is_not_loaded___d__0042dfc7,s_font_cpp_0042dfbe,0x153,param_1);
   }
   xvga_font_index = param_1;
@@ -12791,8 +12811,8 @@ void __watcall xvga_set_font_colors(int param_1,ulong param_2,ulong param_3)
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0042dff4,s_font_cpp_0042dfeb,0x163,5);
   }
-  *(ulong *)(&DAT_00435ea4 + param_1 * 0x10) = param_2;
-  *(ulong *)(&DAT_00435ea8 + param_1 * 0x10) = param_3;
+  xvga_fonts[param_1 * 4 + 2].field_00 = (HGDIOBJ)param_2;
+  xvga_fonts[param_1 * 4 + 3].field_00 = (HGDIOBJ)param_3;
   return;
 }
 
@@ -12807,11 +12827,11 @@ void __watcall xvga_set_font_bkmode(int param_1,int param_2)
   }
   if (param_2 != 0) {
     if ((uint)param_2 < 2) {
-      *(undefined4 *)(&DAT_00435ea0 + param_1 * 0x10) = 1;
+      xvga_fonts[param_1 * 4 + 1].field_00 = (HGDIOBJ)0x1;
       return;
     }
     if (param_2 == 2) {
-      *(undefined4 *)(&DAT_00435ea0 + param_1 * 0x10) = 2;
+      xvga_fonts[param_1 * 4 + 1].field_00 = (HGDIOBJ)0x2;
       return;
     }
   }
@@ -12828,13 +12848,13 @@ void __watcall xvga_free_font(int param_1)
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_0042e08d,s_font_cpp_0042e084,0x189,5);
   }
-  if ((&xvga_fonts)[param_1 * 4] != 0) {
+  if (xvga_fonts[param_1 * 4].field_00 != (HGDIOBJ)0x0) {
     if (param_1 == xvga_font_index) {
       xvga_font_set = 0;
       xvga_font_index = -1;
     }
-    DeleteObject((HGDIOBJ)(&xvga_fonts)[param_1 * 4]);
-    (&xvga_fonts)[param_1 * 4] = 0;
+    DeleteObject(xvga_fonts[param_1 * 4].field_00);
+    xvga_fonts[param_1 * 4].field_00 = (HGDIOBJ)0x0;
   }
   return;
 }
@@ -12845,13 +12865,15 @@ void __watcall xvga_free_font(int param_1)
 void __watcall xvga_release_fonts(void)
 
 {
+  HGDIOBJ ho;
   int iVar1;
   
   iVar1 = 0;
   do {
-    if (*(HGDIOBJ *)((int)&xvga_fonts + iVar1) != (HGDIOBJ)0x0) {
-      DeleteObject(*(HGDIOBJ *)((int)&xvga_fonts + iVar1));
-      *(undefined4 *)((int)&xvga_fonts + iVar1) = 0;
+    ho = *(HGDIOBJ *)((int)&xvga_fonts[0].field_00 + iVar1);
+    if (ho != (HGDIOBJ)0x0) {
+      DeleteObject(ho);
+      *(undefined4 *)((int)&xvga_fonts[0].field_00 + iVar1) = 0;
     }
     iVar1 = iVar1 + 0x10;
   } while (iVar1 != 0x50);
@@ -12867,7 +12889,7 @@ void * __watcall xvga_get_active_font(void)
 
 {
   if (xvga_font_index != -1) {
-    return (void *)(&xvga_fonts)[xvga_font_index * 4];
+    return xvga_fonts[xvga_font_index * 4].field_00;
   }
   return (void *)0x0;
 }
@@ -12887,7 +12909,7 @@ int __watcall get_free_font_index(void)
     if (0x4f < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&xvga_fonts + iVar1) == 0) break;
+    if (*(int *)((int)&xvga_fonts[0].field_00 + iVar1) == 0) break;
     iVar1 = iVar1 + 0x10;
     i = i + 1;
   }
@@ -13695,13 +13717,13 @@ int __watcall get_attached_joysticks(void)
   MVar1 = joyGetPosEx(0,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_004383c0 = 1;
+      joystickstate[0]._92_4_ = 1;
     }
     else if (MVar1 == 2) goto LAB_00413b5b;
   }
   else if (MVar1 < 7) {
 LAB_00413b5b:
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (10 < MVar1) {
     if (MVar1 < 0xc) {
@@ -13712,7 +13734,7 @@ LAB_00413b5b:
   MVar1 = joyGetPosEx(1,&joystickinfo);
   if (MVar1 < 6) {
     if (MVar1 == 0) {
-      DAT_0043841c = 1;
+      joystickstate[0]._184_4_ = 1;
       goto LAB_00413be1;
     }
     if (MVar1 != 2) goto LAB_00413be1;
@@ -13725,10 +13747,10 @@ LAB_00413b5b:
     }
     if ((MVar1 < 0xa6) || (0xa7 < MVar1)) goto LAB_00413be1;
   }
-  DAT_0043841c = 0;
+  joystickstate[0]._184_4_ = 0;
 LAB_00413be1:
-  bVar2 = DAT_004383c0 != 0;
-  if (DAT_0043841c != 0) {
+  bVar2 = joystickstate[0]._92_4_ != 0;
+  if (joystickstate[0]._184_4_ != 0) {
     bVar2 = bVar2 + 2;
   }
   return (uint)bVar2;
@@ -13751,18 +13773,18 @@ void __watcall calibrate_joysticks(void)
   if (MVar1 < 6) {
     if (MVar1 == 0) {
       debugmsg(s_Joystick_One_Found_0042e247);
-      DAT_004383c0 = 1;
-      _DAT_00438404 = joystickinfo.dwXpos;
-      _DAT_00438408 = joystickinfo.dwYpos;
+      joystickstate[0]._92_4_ = 1;
+      joystickstate[0]._160_4_ = joystickinfo.dwXpos;
+      joystickstate[0]._164_4_ = joystickinfo.dwYpos;
       debugmsg(s__1_Xbase____d_0042e25b,joystickinfo.dwXpos);
       debugmsg(s__1_Ybase____d_0042e26a,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_004383c0 = 0;
+      joystickstate[0]._92_4_ = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -13770,17 +13792,17 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_004383c0 = 0;
+    joystickstate[0]._92_4_ = 0;
   }
   MVar1 = joyGetDevCapsA(0,&joycaps,0x194);
   if (MVar1 == 0) {
-    _DAT_00438410 = joycaps.wXmin;
-    _DAT_0043840c = joycaps.wXmax;
-    _DAT_00438418 = joycaps.wYmin;
-    _DAT_00438414 = joycaps.wYmax;
+    joystickstate[0]._172_4_ = joycaps.wXmin;
+    joystickstate[0]._168_4_ = joycaps.wXmax;
+    joystickstate[0]._180_4_ = joycaps.wYmin;
+    joystickstate[0]._176_4_ = joycaps.wYmax;
     debugmsg(s__1_Xmin____d_0042e279,joycaps.wXmin);
     debugmsg(s__1_Xmax____d_0042e287,joycaps.wXmax);
     debugmsg(s__1_Ymin____d_0042e295,joycaps.wYmin);
@@ -13794,16 +13816,16 @@ void __watcall calibrate_joysticks(void)
       debugmsg(s_Joystick_Two_Found_0042e2c9);
       _DAT_00438460 = joystickinfo.dwXpos;
       _DAT_00438464 = joystickinfo.dwYpos;
-      DAT_0043841c = 1;
+      joystickstate[0]._184_4_ = 1;
       debugmsg(s__2_Xbase____d_0042e2dd,joystickinfo.dwXpos);
       debugmsg(s__2_Ybase____d_0042e2ec,joystickinfo.dwYpos);
     }
     else if (MVar1 == 2) {
-      DAT_0043841c = 0;
+      joystickstate[0]._184_4_ = 0;
     }
   }
   else if (MVar1 < 7) {
-    DAT_0043841c = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   else if (MVar1 < 0xa6) {
     if (MVar1 == 0xb) {
@@ -13811,10 +13833,10 @@ void __watcall calibrate_joysticks(void)
     }
   }
   else if (MVar1 < 0xa7) {
-    DAT_0043841c = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   else if (MVar1 == 0xa7) {
-    DAT_0043841c = 0;
+    joystickstate[0]._184_4_ = 0;
   }
   MVar1 = joyGetDevCapsA(1,&joycaps,0x194);
   if (MVar1 == 0) {
@@ -13836,14 +13858,14 @@ void __watcall calibrate_joysticks(void)
 void __watcall clear_joystick_key_down_state(int param_1)
 
 {
-  *(undefined4 *)(&DAT_00438374 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043836c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043837c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_00438384 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043838c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_00438394 + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_0043839c + param_1 * 0x5c) = 0;
-  *(undefined4 *)(&DAT_004383a4 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x10 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x8 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x18 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x20 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x28 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x30 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x38 + param_1 * 0x5c) = 0;
+  *(undefined4 *)(&joystickstate[0].field_0x40 + param_1 * 0x5c) = 0;
   return;
 }
 
@@ -13854,35 +13876,35 @@ void __watcall check_joystick_movement(int param_1,int param_2,int param_3,int p
 
 {
   clear_joystick_key_down_state(param_1);
-  if ((double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) < (double)param_2) {
-    *(undefined4 *)(&DAT_00438374 + param_1 * 0x5c) = 1;
+  if ((double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) < (double)param_2) {
+    *(undefined4 *)(&joystickstate[0].field_0x10 + param_1 * 0x5c) = 1;
   }
   if ((double)param_2 <
-      (double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_004383a8 + param_1 * 0x5c) * joysticksencesibility) {
-    *(undefined4 *)(&DAT_0043836c + param_1 * 0x5c) = 1;
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) -
+      (double)*(int *)(&joystickstate[0].field_0x44 + param_1 * 0x5c) * joysticksencesibility) {
+    *(undefined4 *)(&joystickstate[0].field_0x8 + param_1 * 0x5c) = 1;
   }
-  if ((double)*(int *)(&DAT_004383ac + param_1 * 0x5c) * joysticksencesibility +
-      (double)*(int *)(&DAT_004383ac + param_1 * 0x5c) < (double)param_3) {
-    *(undefined4 *)(&DAT_00438384 + param_1 * 0x5c) = 1;
+  if ((double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) * joysticksencesibility +
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) < (double)param_3) {
+    *(undefined4 *)(&joystickstate[0].field_0x20 + param_1 * 0x5c) = 1;
   }
   if ((double)param_3 <
-      (double)*(int *)(&DAT_004383ac + param_1 * 0x5c) -
-      (double)*(int *)(&DAT_004383ac + param_1 * 0x5c) * joysticksencesibility) {
-    *(undefined4 *)(&DAT_0043837c + param_1 * 0x5c) = 1;
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) -
+      (double)*(int *)(&joystickstate[0].field_0x48 + param_1 * 0x5c) * joysticksencesibility) {
+    *(undefined4 *)(&joystickstate[0].field_0x18 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 1U) != 0) {
-    *(undefined4 *)(&DAT_0043838c + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x28 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 2U) != 0) {
-    *(undefined4 *)(&DAT_00438394 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x30 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 4U) != 0) {
-    *(undefined4 *)(&DAT_0043839c + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x38 + param_1 * 0x5c) = 1;
   }
   if ((param_4 & 8U) != 0) {
-    *(undefined4 *)(&DAT_004383a4 + param_1 * 0x5c) = 1;
+    *(undefined4 *)(&joystickstate[0].field_0x40 + param_1 * 0x5c) = 1;
   }
   return;
 }
@@ -13895,7 +13917,7 @@ void __watcall handle_joystick(void)
 {
   MMRESULT MVar1;
   
-  if (DAT_004383c0 != 0) {
+  if (joystickstate[0]._92_4_ != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(0,&joystickinfo);
@@ -13906,7 +13928,7 @@ void __watcall handle_joystick(void)
       clear_joystick_key_down_state(1);
     }
   }
-  if (DAT_0043841c != 0) {
+  if (joystickstate[0]._184_4_ != 0) {
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar1 = joyGetPosEx(1,&joystickinfo);
@@ -13938,7 +13960,7 @@ void __watcall set_joystick_keys(int param_1,int param_2,int param_3)
   case 5:
   case 6:
   case 7:
-    *(int *)(&DAT_00438368 + param_1 * 0x5c + param_2 * 8) = param_3;
+    *(int *)(param_2 * 8 + 0x438368 + param_1 * 0x5c) = param_3;
     return;
   default:
     fatal_exit(s__set_joystick_keys__invalid_joys_0042e365,param_2);
@@ -13989,34 +14011,34 @@ get_joystick_position(int param_1,int param_2,int param_3,int *param_4,int *para
   fatal_exit(s__get_joystick_position__invalid_j_0042e3ed,param_1);
 LAB_004142b7:
   iVar6 = param_1 * 0x5c;
-  if (*(int *)(&joystickstate + iVar6) != 0) {
+  if ((&joystickstate[0].field_00)[param_1 * 0x17] != 0) {
     *param_6 = 0;
     joystickinfo.dwSize = 0x34;
     joystickinfo.dwFlags = 0x83;
     MVar5 = joyGetPosEx(local_10,&joystickinfo);
     if (MVar5 == 0) {
-      dVar1 = (double)*(int *)(&DAT_004383a8 + iVar6);
-      dVar2 = (double)*(int *)(&DAT_004383a8 + iVar6) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystickstate[0].field_0x44 + iVar6);
+      dVar2 = (double)*(int *)(&joystickstate[0].field_0x44 + iVar6) * joysticksencesibility;
       if ((double)joystickinfo.dwXpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwXpos) {
           *param_4 = iVar3;
         }
         else {
           *param_4 = joystickinfo.dwXpos /
-                     (uint)((*(int *)(&DAT_004383a8 + iVar6) - *(int *)(&DAT_004383b4 + iVar6)) /
-                           iVar3);
+                     (uint)((*(int *)(&joystickstate[0].field_0x44 + iVar6) -
+                            *(int *)(&joystickstate[0].field_0x50 + iVar6)) / iVar3);
           *(byte *)param_6 = (byte)*param_6 | 4;
         }
       }
       else {
         *param_4 = joystickinfo.dwXpos /
-                   (uint)((*(int *)(&DAT_004383b0 + iVar6) - *(int *)(&DAT_004383a8 + iVar6)) /
-                         iVar3);
+                   (uint)((*(int *)(&joystickstate[0].field_0x4c + iVar6) -
+                          *(int *)(&joystickstate[0].field_0x44 + iVar6)) / iVar3);
         *(byte *)param_6 = (byte)*param_6 | 8;
       }
       iVar3 = param_1 * 0x5c;
-      dVar1 = (double)*(int *)(&DAT_004383ac + iVar3);
-      dVar2 = (double)*(int *)(&DAT_004383ac + iVar3) * joysticksencesibility;
+      dVar1 = (double)*(int *)(&joystickstate[0].field_0x48 + iVar3);
+      dVar2 = (double)*(int *)(&joystickstate[0].field_0x48 + iVar3) * joysticksencesibility;
       if ((double)joystickinfo.dwYpos <= dVar1 + dVar2) {
         if (dVar1 - dVar2 <= (double)joystickinfo.dwYpos) {
           *param_5 = iVar4;
@@ -14024,16 +14046,18 @@ LAB_004142b7:
         else {
           *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                           ((longlong)
-                           (*(int *)(&DAT_004383ac + iVar3) - *(int *)(&DAT_004383bc + iVar3)) /
-                           (longlong)iVar4 & 0xffffffffU));
+                           (*(int *)(&joystickstate[0].field_0x48 + iVar3) -
+                           *(int *)(&joystickstate[0].field_0x58 + iVar3)) / (longlong)iVar4 &
+                          0xffffffffU));
           *(byte *)param_6 = (byte)*param_6 | 1;
         }
       }
       else {
         *param_5 = (int)((ulonglong)joystickinfo.dwYpos /
                         ((longlong)
-                         (*(int *)(&DAT_004383b8 + iVar3) - *(int *)(&DAT_004383ac + iVar3)) /
-                         (longlong)iVar4 & 0xffffffffU));
+                         (*(int *)(&joystickstate[0].field_0x54 + iVar3) -
+                         *(int *)(&joystickstate[0].field_0x48 + iVar3)) / (longlong)iVar4 &
+                        0xffffffffU));
         *(byte *)param_6 = (byte)*param_6 | 2;
       }
       return 1;
@@ -14055,9 +14079,9 @@ int __watcall check_joystick_keys(int param_1)
     if (0x3f < iVar1) {
       return 0;
     }
-    if (((param_1 == *(int *)((int)&DAT_004383c4 + iVar1)) &&
-        (*(int *)((int)&DAT_004383c8 + iVar1) != 0)) ||
-       ((param_1 == *(int *)((int)&DAT_00438420 + iVar1) &&
+    if (((param_1 == *(int *)(&joystickstate[0].field_0x60 + iVar1)) &&
+        (*(int *)(&joystickstate[0].field_0x64 + iVar1) != 0)) ||
+       ((param_1 == *(int *)(&joystickstate[0].field_0xbc + iVar1) &&
         (*(int *)((int)&DAT_00438424 + iVar1) != 0)))) break;
     iVar1 = iVar1 + 8;
   }
@@ -14280,12 +14304,12 @@ void __watcall qsort(int *param_1,int *param_2,int *param_3,undefined *param_4)
   local_160 = param_1;
 LAB_00414647:
   do {
-    if ((int *)0x1 < local_164) {
+    if (&DAT_00000001 < local_164) {
       if ((int *)0xf < local_164) {
         piVar5 = (int *)((int)local_160 + ((uint)local_164 >> 1) * (int)param_3);
         if ((int *)0x1d < local_164) {
           local_48 = local_160;
-          piVar4 = (int *)(((int)local_164 + -1) * (int)param_3 + (int)local_160);
+          piVar4 = (int *)((int)((int)local_164 + -1) * (int)param_3 + (int)local_160);
           param_2 = piVar5;
           if ((int *)0x2a < local_164) {
             local_38 = (int)param_3 * ((uint)local_164 >> 3);
@@ -14305,7 +14329,7 @@ LAB_00414647:
           local_40 = local_160;
           byteswap(local_160,param_2,piVar4,(uint)param_3);
         }
-        piVar5 = (int *)(((int)local_164 + -1) * (int)param_3);
+        piVar5 = (int *)((int)((int)local_164 + -1) * (int)param_3);
         local_24 = local_160;
         piVar4 = (int *)((int)local_160 + (int)piVar5);
         local_20 = piVar4;
@@ -15325,17 +15349,16 @@ int __watcall init_animations(anim_t *anim)
   int i;
   
   max_anim_ptr = 0;
-  for (anim_2 = anim; (anim_2->field_04 != -1 && (anim_2->field_00 != -1));
-      anim_2 = (anim_t *)&anim_2->field_0xc) {
+  for (anim_2 = anim; (anim_2->mode != -1 && (anim_2->frame_count != -1)); anim_2 = anim_2 + 1) {
     max_anim_ptr = max_anim_ptr + 1;
   }
   i = alloc_animations(max_anim_ptr);
   if (i == 0) {
     for (i = 0; i < max_anim_ptr; i = i + 1) {
-      (&xvga_anims->field_00)[i * 3] = anim->field_00;
-      (&xvga_anims->field_04)[i * 3] = anim->field_04;
-      (&xvga_anims->field_08)[i * 3] = anim->field_08;
-      anim = (anim_t *)&anim->field_0xc;
+      xvga_anims[i].frame_count = anim->frame_count;
+      xvga_anims[i].mode = anim->mode;
+      xvga_anims[i].frames = anim->frames;
+      anim = anim + 1;
     }
     i = 0;
     init_animation_ok = 1;
@@ -15360,9 +15383,9 @@ int __watcall alloc_animations(int param_1)
     return 2000;
   }
   for (iVar1 = 0; iVar1 < param_1 * 0xc; iVar1 = iVar1 + 0xc) {
-    *(undefined4 *)((int)&xvga_anims->field_08 + iVar1) = 0;
-    *(undefined4 *)((int)&xvga_anims->field_04 + iVar1) = 0;
-    *(undefined4 *)((int)&xvga_anims->field_00 + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->frames + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->mode + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->frame_count + iVar1) = 0;
   }
   return 0;
 }
@@ -16238,7 +16261,7 @@ void __watcall reset_anim_base(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 4;
-    *(undefined4 *)((int)&anim_base + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)anim_base + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 40000);
   reset_anim_base_ok = '\x01';
@@ -16259,15 +16282,15 @@ void __watcall add_anim_base(anim_t *anim)
   i = 0;
   iVar3 = 0;
   do {
-    if (anim->field_00 <= i) {
+    if (anim->frame_count <= i) {
       return;
     }
-    iVar1 = *(int *)(iVar3 + 4 + anim->field_08);
+    iVar1 = *(int *)((int)&anim->frames->image + iVar3);
     for (iVar2 = 0; iVar2 < anim_base_ptr * 4; iVar2 = iVar2 + 4) {
-      if (iVar1 == *(int *)((int)&anim_base + iVar2)) goto LAB_00416fa1;
+      if (iVar1 == *(int *)((int)anim_base + iVar2)) goto LAB_00416fa1;
     }
     anim_base_ptr = anim_base_ptr + 1;
-    *(int *)(&DAT_00438794 + anim_base_ptr * 4) = iVar1;
+    *(int *)(xvga_lib_pal + anim_base_ptr * 4 + 0x2fc) = iVar1;
 LAB_00416fa1:
     iVar3 = iVar3 + 8;
     i = i + 1;
@@ -16281,7 +16304,7 @@ void __watcall add_array_to_anim_base(anim_t *anim,long *param_2)
 
 {
   for (; *param_2 != -1; param_2 = param_2 + 1) {
-    add_anim_base((anim_t *)(&anim->field_00 + *param_2 * 3));
+    add_anim_base(anim + *param_2);
   }
   return;
 }
@@ -16293,20 +16316,20 @@ void __watcall add_demi_array_to_anim_base(anim_t *anim,long *param_2)
 
 {
   int iVar1;
-  int iVar2;
   uint i;
   undefined4 unaff_ESI;
+  int anim_index;
   
-  for (; iVar1 = *param_2, iVar1 != -1; param_2 = param_2 + 1) {
-    iVar2 = 0;
-    for (i = 0; (int)i < (&anim->field_00)[iVar1 * 3]; i = i + 1) {
+  for (; anim_index = *param_2, anim_index != -1; param_2 = param_2 + 1) {
+    iVar1 = 0;
+    for (i = 0; (int)i < anim[anim_index].frame_count; i = i + 1) {
       if ((i & 1) == 0) {
-        unaff_ESI = *(undefined4 *)(iVar2 + 4 + (&anim->field_00 + iVar1 * 3)[2]);
+        unaff_ESI = *(undefined4 *)((int)&(anim[anim_index].frames)->image + iVar1);
       }
-      *(undefined4 *)(iVar2 + 4 + (&anim->field_08)[iVar1 * 3]) = unaff_ESI;
-      iVar2 = iVar2 + 8;
+      *(undefined4 *)((int)&(anim[anim_index].frames)->image + iVar1) = unaff_ESI;
+      iVar1 = iVar1 + 8;
     }
-    add_anim_base((anim_t *)(&anim->field_00 + *param_2 * 3));
+    add_anim_base(anim + *param_2);
   }
   return;
 }
@@ -16442,17 +16465,18 @@ long __watcall dispatch_form_message(void *param_1,uint param_2,uint param_3,lon
 
 {
   int iVar1;
-  int iVar2;
-  long lVar3;
+  int form_index;
+  long lVar2;
   
-  iVar2 = get_control_index(param_1);
-  iVar2 = (&activeform->type)[iVar2 * 7];
-  if ((iVar2 == -1) || (iVar1 = iVar2 * 0x19, (&control_list)[iVar1] == '\0')) {
-    fatal_exit(s__s__d_____dispatch_form_message__0042f226,s_forms_cpp_0042f21c,0x3a,iVar2);
+  form_index = get_control_index(param_1);
+  form_index = activeform[form_index].type;
+  if ((form_index == -1) ||
+     (iVar1 = form_index * 0x19, *(char *)((int)control_list + iVar1) == '\0')) {
+    fatal_exit(s__s__d_____dispatch_form_message__0042f226,s_forms_cpp_0042f21c,0x3a,form_index);
   }
-  else if (*(int *)(&DAT_004381fd + iVar1) != 0) {
-    lVar3 = (**(code **)(&DAT_004381fd + iVar1))(param_1,param_2,param_3,param_4);
-    return lVar3;
+  else if (*(int *)((int)control_list + iVar1 + 0x15) != 0) {
+    lVar2 = (**(code **)((int)control_list + iVar1 + 0x15))(param_1,param_2,param_3,param_4);
+    return lVar2;
   }
   return 0;
 }
@@ -16474,7 +16498,7 @@ void __watcall set_next_control_focus(void *param_1)
     else {
       i = i + 1;
     }
-    pHVar1 = SetFocus((&activeform->hwnd)[i * 7]);
+    pHVar1 = SetFocus(activeform[i].hwnd);
   } while (pHVar1 == (HWND)0x0);
   return;
 }
@@ -16487,16 +16511,16 @@ void __watcall set_previous_control_focus(void *param_1)
 {
   int control_index;
   HWND pHVar1;
-  int iVar2;
+  int form_index;
   
   control_index = get_control_index(param_1);
   do {
-    iVar2 = nmb_of_controls;
+    form_index = nmb_of_controls;
     if (control_index != 0) {
-      iVar2 = control_index + -1;
+      form_index = control_index + -1;
     }
-    pHVar1 = SetFocus((&activeform->hwnd)[iVar2 * 7]);
-    control_index = iVar2;
+    pHVar1 = SetFocus(activeform[form_index].hwnd);
+    control_index = form_index;
   } while (pHVar1 == (HWND)0x0);
   return;
 }
@@ -16504,48 +16528,49 @@ void __watcall set_previous_control_focus(void *param_1)
 
 /* ==== 00417404 set_control_state ==== */
 
-void __watcall set_control_state(int param_1,int param_2)
+void __watcall set_control_state(int form_index,int param_2)
 
 {
   HWND pHVar1;
   BOOL bEnable;
   form_t *form;
   
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____set_control_state__con_0042f272,s_forms_cpp_0042f268,0x71,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____set_control_state__con_0042f272,s_forms_cpp_0042f268,0x71,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____set_control_state__No_a_0042f2cb,s_forms_cpp_0042f2c1,0x76);
   }
-  (&activeform->field_14)[param_1 * 7] = (&activeform->state)[param_1 * 7];
-  (&activeform->state)[param_1 * 7] = param_2;
+  activeform[form_index].field_14 = activeform[form_index].state;
+  activeform[form_index].state = param_2;
   form = activeform;
   switch(param_2) {
   case 1:
     pHVar1 = GetFocus();
-    if (pHVar1 != (&form->hwnd)[param_1 * 7]) {
-      if ((&activeform->type)[param_1 * 7] == 4) {
-        fatal_exit(s__s__d_____set_control_state__are_0042f303,s_forms_cpp_0042f2f9,0x8a,param_1);
+    if (pHVar1 != form[form_index].hwnd) {
+      if (activeform[form_index].type == 4) {
+        fatal_exit(s__s__d_____set_control_state__are_0042f303,s_forms_cpp_0042f2f9,0x8a,form_index)
+        ;
         return;
       }
-      SetFocus((&activeform->hwnd)[param_1 * 7]);
+      SetFocus(activeform[form_index].hwnd);
       return;
     }
     break;
   case 2:
     bEnable = 0;
-    pHVar1 = (&activeform->hwnd)[param_1 * 7];
+    pHVar1 = activeform[form_index].hwnd;
     goto LAB_004174fd;
   case 3:
     bEnable = 1;
-    pHVar1 = (&activeform->hwnd)[param_1 * 7];
+    pHVar1 = activeform[form_index].hwnd;
 LAB_004174fd:
     EnableWindow(pHVar1,bEnable);
     return;
   case 4:
-    selected_control = param_1;
+    selected_control = form_index;
   }
   return;
 }
@@ -16553,36 +16578,36 @@ LAB_004174fd:
 
 /* ==== 00417517 enable_control ==== */
 
-void __watcall enable_control(int param_1)
+void __watcall enable_control(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____enable_control__contro_0042f356,s_forms_cpp_0042f34c,0x9e,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____enable_control__contro_0042f356,s_forms_cpp_0042f34c,0x9e,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____enable_control__No_act_0042f3ac,s_forms_cpp_0042f3a2,0xa3);
   }
-  EnableWindow((&activeform->hwnd)[param_1 * 7],1);
+  EnableWindow(activeform[form_index].hwnd,1);
   return;
 }
 
 
 /* ==== 0041759e disable_control ==== */
 
-void __watcall disable_control(int param_1)
+void __watcall disable_control(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____disable_control__contr_0042f3e1,s_forms_cpp_0042f3d7,0xb0,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____disable_control__contr_0042f3e1,s_forms_cpp_0042f3d7,0xb0,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____disable_control__No_ac_0042f438,s_forms_cpp_0042f42e,0xb5);
   }
-  EnableWindow((&activeform->hwnd)[param_1 * 7],0);
+  EnableWindow(activeform[form_index].hwnd,0);
   return;
 }
 
@@ -16603,30 +16628,30 @@ int __watcall get_control_focus(void)
 
 /* ==== 0041762a focus_control ==== */
 
-void __watcall focus_control(int param_1)
+void __watcall focus_control(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____focus_control__control_0042f46e,s_forms_cpp_0042f464,0xcd,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____focus_control__control_0042f46e,s_forms_cpp_0042f464,0xcd,form_index,
                nmb_of_controls);
   }
   if (activeform == (form_t *)0x0) {
     fatal_exit(s__s__d_____focus_control__No_acti_0042f4c3,s_forms_cpp_0042f4b9,0xd2);
   }
-  SetFocus((&activeform->hwnd)[param_1 * 7]);
+  SetFocus(activeform[form_index].hwnd);
   return;
 }
 
 
 /* ==== 004176af get_control_image_index ==== */
 
-int __watcall get_control_image_index(int param_1,int param_2)
+int __watcall get_control_image_index(int anim_index,int frame_index)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____control_illegal_frame_i_0042f4f7,s_forms_cpp_0042f4ed,0xe1);
   }
@@ -16704,7 +16729,7 @@ LAB_0041786b:
     iVar2 = param_1 * 0x1c;
     do {
       if (nmb_of_controls * 0x1c <= iVar2) goto LAB_0041786b;
-      piVar1 = (int *)((int)&activeform[1].x + iVar2);
+      piVar1 = (int *)((int)&activeform[1].type + iVar2);
       iVar2 = iVar2 + 0x1c;
       param_1 = param_1 + 1;
     } while (param_2 != *piVar1);
@@ -16724,79 +16749,79 @@ int __watcall get_numberofcontrols_inform(void)
 
 /* ==== 0041787c get_old_control_state ==== */
 
-int __watcall get_old_control_state(int param_1)
+int __watcall get_old_control_state(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_old_control_state__0042f737,s_forms_cpp_0042f72d,0x13e,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_old_control_state__0042f737,s_forms_cpp_0042f72d,0x13e,form_index);
   }
-  return (&activeform->field_14)[param_1 * 7];
+  return activeform[form_index].field_14;
 }
 
 
 /* ==== 004178ca get_control_type ==== */
 
-int __watcall get_control_type(int param_1)
+int __watcall get_control_type(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_type__cont_0042f781,s_forms_cpp_0042f777,0x14b,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_type__cont_0042f781,s_forms_cpp_0042f777,0x14b,form_index);
   }
-  return (&activeform->type)[param_1 * 7];
+  return activeform[form_index].type;
 }
 
 
 /* ==== 00417918 get_control_state ==== */
 
-int __watcall get_control_state(int param_1)
+int __watcall get_control_state(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_state__con_0042f7c5,s_forms_cpp_0042f7bb,0x158,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_state__con_0042f7c5,s_forms_cpp_0042f7bb,0x158,form_index);
   }
-  return (&activeform->state)[param_1 * 7];
+  return activeform[form_index].state;
 }
 
 
 /* ==== 00417966 get_control_hwnd ==== */
 
-void * __watcall get_control_hwnd(int param_1)
+void * __watcall get_control_hwnd(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_x__control_0042f80b,s_forms_cpp_0042f801,0x165,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_x__control_0042f80b,s_forms_cpp_0042f801,0x165,form_index);
   }
-  return (&activeform->hwnd)[param_1 * 7];
+  return activeform[form_index].hwnd;
 }
 
 
 /* ==== 004179b4 get_control_x ==== */
 
-int __watcall get_control_x(int param_1)
+int __watcall get_control_x(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_x__control_0042f84d,s_forms_cpp_0042f843,0x172,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_x__control_0042f84d,s_forms_cpp_0042f843,0x172,form_index);
   }
-  return (&activeform->x)[param_1 * 7];
+  return activeform[form_index].x;
 }
 
 
 /* ==== 00417a01 get_control_y ==== */
 
-int __watcall get_control_y(int param_1)
+int __watcall get_control_y(int form_index)
 
 {
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_y__control_0042f88f,s_forms_cpp_0042f885,0x17f,param_1);
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_y__control_0042f88f,s_forms_cpp_0042f885,0x17f,form_index);
   }
-  return (&activeform->y)[param_1 * 7];
+  return activeform[form_index].y;
 }
 
 
@@ -16845,36 +16870,36 @@ void * __watcall get_control_pointer(void *param_1)
 
 /* ==== 00417ad9 get_control_pointer_1 ==== */
 
-void * __watcall get_control_pointer_1(int param_1)
+void * __watcall get_control_pointer_1(int form_index)
 
 {
-  if ((param_1 < 0) || (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____get_control_pointer__c_0042f95b,s_forms_cpp_0042f951,0x1b6,param_1,
+  if ((form_index < 0) || (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____get_control_pointer__c_0042f95b,s_forms_cpp_0042f951,0x1b6,form_index,
                nmb_of_controls);
   }
-  return (&activeform->control)[param_1 * 7];
+  return activeform[form_index].control;
 }
 
 
 /* ==== 00417b1c call_help_function ==== */
 
-void __watcall call_help_function(int param_1)
+void __watcall call_help_function(int form_index)
 
 {
   int iVar1;
   
-  if ((((&activeform->hwnd)[param_1 * 7] == (HWND)0x0) || (param_1 < 0)) ||
-     (nmb_of_controls < param_1)) {
-    fatal_exit(s__s__d_____call_help_function__co_0042f9a9,s_forms_cpp_0042f99f,0x1c2,param_1,
+  if (((activeform[form_index].hwnd == (HWND)0x0) || (form_index < 0)) ||
+     (nmb_of_controls < form_index)) {
+    fatal_exit(s__s__d_____call_help_function__co_0042f9a9,s_forms_cpp_0042f99f,0x1c2,form_index,
                nmb_of_controls);
   }
-  if (((&activeform->type)[param_1 * 7] == -1) ||
-     (iVar1 = (&activeform->type)[param_1 * 7] * 0x19, (&control_list)[iVar1] == '\0')) {
+  if ((activeform[form_index].type == -1) ||
+     (iVar1 = activeform[form_index].type * 0x19, *(char *)((int)control_list + iVar1) == '\0')) {
     fatal_exit(s__s__d_____destroy_form__Unused_c_0042fa03,s_forms_cpp_0042f9f9,0x1ce,
-               (&activeform->type)[param_1 * 7]);
+               activeform[form_index].type);
   }
-  else if (*(int *)(&DAT_004381f5 + iVar1) != 0) {
-    (**(code **)(&DAT_004381f5 + iVar1))();
+  else if (*(int *)((int)control_list + iVar1 + 0xd) != 0) {
+    (**(code **)((int)control_list + iVar1 + 0xd))();
     return;
   }
   return;
@@ -16893,12 +16918,12 @@ void __watcall destroy_form(void)
     for (iVar2 = 0; iVar1 = *(int *)((int)&activeform->type + iVar2), iVar1 != -1;
         iVar2 = iVar2 + 0x1c) {
       iVar1 = iVar1 * 0x19;
-      if ((&control_list)[iVar1] == '\0') {
+      if (*(char *)((int)control_list + iVar1) == '\0') {
         fatal_exit(s__s__d_____destroy_form__Unused_c_0042fa46,s_forms_cpp_0042fa3c,0x1ef,
                    *(undefined4 *)((int)&activeform->type + iVar2));
       }
-      else if (*(int *)(&DAT_004381ed + iVar1) != 0) {
-        (**(code **)(&DAT_004381ed + iVar1))();
+      else if (*(int *)((int)control_list + iVar1 + 5) != 0) {
+        (**(code **)((int)control_list + iVar1 + 5))();
       }
     }
     activeform = (form_t *)0x0;
@@ -16925,12 +16950,12 @@ void __watcall activate_form(form_t *form)
   for (iVar2 = 0; iVar1 = *(int *)((int)&activeform->type + iVar2), iVar1 != -1;
       iVar2 = iVar2 + 0x1c) {
     iVar1 = iVar1 * 0x19;
-    if ((&control_list)[iVar1] == '\0') {
+    if (*(char *)((int)control_list + iVar1) == '\0') {
       fatal_exit(s__s__d_____destroy_form__Unused_c_0042fa89,s_forms_cpp_0042fa7f,0x214,
                  *(undefined4 *)((int)&activeform->type + iVar2));
     }
-    else if (*(int *)(&DAT_004381e9 + iVar1) != 0) {
-      (**(code **)(&DAT_004381e9 + iVar1))();
+    else if (*(int *)((int)control_list + iVar1 + 1) != 0) {
+      (**(code **)((int)control_list + iVar1 + 1))();
     }
     nmb_of_controls = nmb_of_controls + 1;
   }
@@ -16944,12 +16969,13 @@ void __watcall activate_form(form_t *form)
 int __watcall draw_form_animfocus_buttons(void)
 
 {
-  int iVar1;
+  int form_index;
   
-  iVar1 = get_control_focus();
-  if ((iVar1 != -1) &&
-     (iVar1 = (&activeform->type)[iVar1 * 7] * 0x19, *(int *)(&DAT_004381f9 + iVar1) != 0)) {
-    (**(code **)(&DAT_004381f9 + iVar1))();
+  form_index = get_control_focus();
+  if ((form_index != -1) &&
+     (form_index = activeform[form_index].type * 0x19,
+     *(int *)((int)control_list + form_index + 0x11) != 0)) {
+    (**(code **)((int)control_list + form_index + 0x11))();
   }
   return 1;
 }
@@ -16962,10 +16988,10 @@ void __watcall check_form_key_pressed(int param_1)
 {
   int iVar1;
   int iVar2;
-  int i;
+  int form_index;
   
   iVar1 = keyispressed(0x12);
-  i = 0;
+  form_index = 0;
   if (iVar1 == 0) {
     if ((uint)param_1 < 0x26) {
       if (0x1a < (uint)param_1) {
@@ -16991,21 +17017,21 @@ void __watcall check_form_key_pressed(int param_1)
     for (iVar1 = 0; iVar2 = *(int *)((int)&activeform->type + iVar1), iVar2 != -1;
         iVar1 = iVar1 + 0x1c) {
       iVar2 = iVar2 * 0x19;
-      if ((&control_list)[iVar2] == '\0') {
+      if (*(char *)((int)control_list + iVar2) == '\0') {
         fatal_exit(s__s__d_____check_form_key_pressed_0042facc,s_forms_cpp_0042fac2,0x24c,
                    *(undefined4 *)((int)&activeform->type + iVar1));
       }
-      else if ((*(int *)(&DAT_004381f1 + iVar2) != 0) &&
-              (iVar2 = (**(code **)(&DAT_004381f1 + iVar2))(), iVar2 != 0)) {
+      else if ((*(int *)((int)control_list + iVar2 + 9) != 0) &&
+              (iVar2 = (**(code **)((int)control_list + iVar2 + 9))(), iVar2 != 0)) {
         control_keypressed = param_1;
-        set_control_state(i,4);
+        set_control_state(form_index,4);
         SetFocus(*(HWND *)((int)&activeform->hwnd + iVar1));
         formdis.hwndItem = *(HWND *)((int)&activeform->hwnd + iVar1);
         formdis.itemState = 0x11;
         SendMessageA(*(HWND *)((int)&activeform->hwnd + iVar1),0x2b,0,0x4423f0);
         return;
       }
-      i = i + 1;
+      form_index = form_index + 1;
     }
   }
   return;
@@ -17091,7 +17117,7 @@ void __watcall clear_edit_keys_allowed(void)
   if (400 < ~i - 1) {
     fatal_exit(s__s__d_____set_edit_keys_allowed__0042fb58,s_editbox_cpp_0042fb4c,0x3c,400);
   }
-  pcVar3 = &allowed_edit_keys;
+  pcVar3 = allowed_edit_keys;
   do {
     cVar1 = *pcVar2;
     *pcVar3 = cVar1;
@@ -17127,7 +17153,7 @@ void __watcall set_edit_keys_allowed(char *param_1)
   if (400 < ~i - 1) {
     fatal_exit(s__s__d_____set_edit_keys_allowed__0042fb58,s_editbox_cpp_0042fb4c,0x3c,400);
   }
-  pcVar2 = &allowed_edit_keys;
+  pcVar2 = allowed_edit_keys;
   do {
     cVar1 = *param_1;
     *pcVar2 = cVar1;
@@ -17145,7 +17171,7 @@ void __watcall set_edit_keys_allowed(char *param_1)
 
 /* ==== 00417f93 get_edit_box_text ==== */
 
-void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
+void __watcall get_edit_box_text(int form_index,char *param_2,int param_3)
 
 {
   int control_type;
@@ -17153,17 +17179,18 @@ void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
   UINT Msg;
   WPARAM wParam;
   
-  control_type = get_control_type(param_1);
+  control_type = get_control_type(form_index);
   if (control_type != 0) {
-    control_type = get_control_type(param_1);
+    control_type = get_control_type(form_index);
     if (control_type != 3) {
-      fatal_exit(s__s__d_____get_edit_box_text__con_0042fbf3,s_editbox_cpp_0042fbe7,0x52,param_1);
+      fatal_exit(s__s__d_____get_edit_box_text__con_0042fbf3,s_editbox_cpp_0042fbe7,0x52,form_index)
+      ;
     }
   }
   wParam = 0;
   Msg = 0xc4;
   *(short *)param_2 = (short)param_3;
-  hWnd = get_control_hwnd(param_1);
+  hWnd = get_control_hwnd(form_index);
   SendMessageA(hWnd,Msg,wParam,(LPARAM)param_2);
   return;
 }
@@ -17227,7 +17254,7 @@ void __watcall destroy_edit_box(form_t *form)
 
 /* ==== 004180c2 create_edit_box ==== */
 
-void __watcall create_edit_box(form_t *form,int param_2)
+void __watcall create_edit_box(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -17259,7 +17286,7 @@ void __watcall create_edit_box(form_t *form,int param_2)
     fatal_exit(s__s__d_____edit_windows_box__heig_0042fde6,s_editbox_cpp_0042fdda,0xa7,piVar1[1],
                iVar2);
   }
-  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+  check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
   if (piVar1[3] == 1) {
     if (form->type == 0) {
       lpParam = (LPVOID)0x0;
@@ -17305,11 +17332,11 @@ void __watcall create_edit_box(form_t *form,int param_2)
     lpClassName = s_EDIT_0042fe49;
   }
   pHVar4 = CreateWindowExA(0,lpClassName,(LPCSTR)0x0,dwStyle,X,Y,nWidth,iVar2,xvga_hwnd,
-                           (HMENU)param_2,hInstance,lpParam);
+                           (HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar4;
 LAB_0041819b:
   if (form->hwnd == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ed_0042fe4e,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ed_0042fe4e,form_index);
   }
   old_edit_windowproc = SetWindowLongA(form->hwnd,-4,0x4183a7);
   wParam = xvga_get_active_font();
@@ -17327,7 +17354,7 @@ LAB_0041819b:
   piVar1[9] = 0xffffff;
   pHVar3 = CreateSolidBrush(piVar1[8]);
   piVar1[10] = (int)pHVar3;
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -17369,11 +17396,11 @@ long EditWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
   long set_windows_edit_box_colors_result;
   byte *found;
   HWND pHVar2;
-  byte bVar3;
-  bool bVar4;
-  undefined2 local_10;
+  bool bVar3;
+  byte local_10;
+  char cStack_f;
   
-  local_10 = EditWindowProc__key;
+  _local_10 = EditWindowProc__key._0_2_;
   if (param_2 < 0x102) {
     if (param_2 < 8) {
       if (param_2 != 7) goto LAB_004184ce;
@@ -17414,22 +17441,22 @@ long EditWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
     }
     goto LAB_004184ce;
   }
-  bVar3 = (byte)param_3;
-  local_10 = CONCAT11((char)((ushort)EditWindowProc__key >> 8),bVar3);
-  if (bVar3 < 8) {
-    bVar4 = bVar3 == 3;
+  local_10 = (byte)param_3;
+  cStack_f = SUB21(EditWindowProc__key._0_2_,1);
+  if (local_10 < 8) {
+    bVar3 = local_10 == 3;
 LAB_0041843e:
-    if (bVar4) goto LAB_004184ce;
+    if (bVar3) goto LAB_004184ce;
   }
   else {
-    if (bVar3 < 9) goto LAB_004184ce;
-    if (0x15 < bVar3) {
-      if (bVar3 < 0x17) goto LAB_004184ce;
-      bVar4 = bVar3 == 0x18;
+    if (local_10 < 9) goto LAB_004184ce;
+    if (0x15 < local_10) {
+      if (local_10 < 0x17) goto LAB_004184ce;
+      bVar3 = local_10 == 0x18;
       goto LAB_0041843e;
     }
   }
-  found = strstr(&allowed_edit_keys,(byte *)&local_10);
+  found = strstr((byte *)allowed_edit_keys,&local_10);
   if (found == (byte *)0x0) {
     return 0;
   }
@@ -17676,12 +17703,12 @@ int __watcall get_key_state(int param_1)
   if (xvga_init_keyboard_ok == 0) {
     fatal_exit(s__s__d____error_keyboard_device_w_004300f2,s_ddinput_cpp_004300e6,0x56);
   }
-  HVar1 = (*xvga_di_keyboard->lpVtbl->GetDeviceState)(xvga_di_keyboard,0x100,&xvga_keyboard_state);
+  HVar1 = (*xvga_di_keyboard->lpVtbl->GetDeviceState)(xvga_di_keyboard,0x100,xvga_keyboard_state);
   if (HVar1 != 0) {
     arg4 = dd_error_string(HVar1);
     fatal_exit(s__s__d____error_getting_keyboard_d_00430132,s_ddinput_cpp_00430126,0x5a,arg4);
   }
-  return (uint)(byte)(&xvga_keyboard_state)[param_1];
+  return (uint)xvga_keyboard_state[param_1];
 }
 
 
@@ -18608,14 +18635,14 @@ int __watcall xvga_get_system_info(void)
   
   debugmsg(s_Getting_system_information_004309cb);
   local_1c = 0x27;
-  BVar1 = GetComputerNameA(&xvga_computer_name,&local_1c);
+  BVar1 = GetComputerNameA((LPSTR)xvga_computer_name,&local_1c);
   if (BVar1 != 0) {
-    debugmsg(s_Computername____s_004309e7,&xvga_computer_name);
+    debugmsg(s_Computername____s_004309e7,xvga_computer_name);
   }
   local_1c = 0x27;
-  BVar1 = GetUserNameA(&xvga_user_name,&local_1c);
+  BVar1 = GetUserNameA((LPSTR)xvga_user_name,&local_1c);
   if (BVar1 != 0) {
-    debugmsg(s_Username____s_004309fa,&xvga_user_name);
+    debugmsg(s_Username____s_004309fa,xvga_user_name);
   }
   xvga_init_drive_info(0x1a);
   GlobalMemoryStatus(&memorystatus);
@@ -18697,9 +18724,9 @@ int __watcall search_screen_mode_index(int param_1,int param_2,int param_3)
     if (0xef < iVar1) {
       return -1;
     }
-    if (((param_1 == *(int *)((int)&xvga_screen_modes + iVar1)) &&
-        (param_2 == *(int *)((int)&DAT_00435b80 + iVar1))) &&
-       (param_3 == *(int *)((int)&DAT_00435b84 + iVar1))) break;
+    if (((param_1 == *(int *)((int)&xvga_screen_modes[0].field_00 + iVar1)) &&
+        (param_2 == *(int *)(&xvga_screen_modes[0].field_0x4 + iVar1))) &&
+       (param_3 == *(int *)(&xvga_screen_modes[0].field_0x8 + iVar1))) break;
     iVar1 = iVar1 + 0x14;
     i = i + 1;
   }
@@ -18719,7 +18746,7 @@ int __watcall test_screen_modes_available(void)
     if (0xef < iVar1) {
       return 0;
     }
-    if (*(int *)((int)&DAT_00435b8c + iVar1) == 0) break;
+    if (*(int *)((int)&xvga_screen_modes[1].field_00 + iVar1) == 0) break;
     iVar1 = iVar1 + 0x14;
   }
   return 1;
@@ -18917,7 +18944,7 @@ long mode_available_callback_func(_DDSURFACEDESC *ddsurfacedesc,void *param_2)
   if (search_screen_mode_index_result == -1) {
     return 1;
   }
-  (&DAT_00435b8c)[search_screen_mode_index_result * 5] = 1;
+  *(undefined4 *)((int)xvga_screen_modes + search_screen_mode_index_result * 0x14 + 0x10) = 1;
   return 1;
 }
 
@@ -18951,7 +18978,7 @@ int __watcall xvga_test_mode_available(int param_1)
   if ((param_1 < 0) || (0xb < param_1)) {
     fatal_exit(s__s__d____illegal_mode_index__und_00430d26,s_hwinfo_cpp_00430d1b,0x186);
   }
-  return (&DAT_00435b8c)[param_1 * 5];
+  return *(int *)((int)xvga_screen_modes + param_1 * 0x14 + 0x10);
 }
 
 
@@ -19172,18 +19199,17 @@ void __watcall check_smacker_keys(void)
 
 {
   uint uVar1;
-  int keyispressed_result;
   int iVar2;
+  int iVar3;
   
-  iVar2 = 0;
+  iVar3 = 0;
   do {
-    if (0x9f < iVar2) {
+    if (0x9f < iVar3) {
       return;
     }
-    if ((*(int *)((int)&smk_action_keys + iVar2) != -1) &&
-       (keyispressed_result = keyispressed(*(int *)((int)&smk_action_keys + iVar2)),
-       keyispressed_result != 0)) {
-      uVar1 = *(uint *)((int)&DAT_004427e4 + iVar2);
+    iVar2 = *(int *)((int)&smk_action_keys[0].field_00 + iVar3);
+    if ((iVar2 != -1) && (iVar2 = keyispressed(iVar2), iVar2 != 0)) {
+      uVar1 = *(uint *)((int)&smk_action_keys[1].field_00 + iVar3);
       if (uVar1 != 0) {
         if (uVar1 < 2) {
           smacker_playing = 0;
@@ -19199,10 +19225,10 @@ void __watcall check_smacker_keys(void)
         }
       }
       do {
-        keyispressed_result = keyispressed(*(int *)((int)&smk_action_keys + iVar2));
-      } while (keyispressed_result != 0);
+        iVar2 = keyispressed(*(int *)((int)&smk_action_keys[0].field_00 + iVar3));
+      } while (iVar2 != 0);
     }
-    iVar2 = iVar2 + 8;
+    iVar3 = iVar3 + 8;
   } while( true );
 }
 
@@ -19269,7 +19295,7 @@ int __watcall get_free_smacker_key(void)
     if (0x9f < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&smk_action_keys + iVar1) == -1) break;
+    if (*(int *)((int)&smk_action_keys[0].field_00 + iVar1) == -1) break;
     iVar1 = iVar1 + 8;
     i = i + 1;
   }
@@ -19288,7 +19314,7 @@ void __watcall clear_smacker_keys(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 8;
-    *(undefined4 *)((int)&smk_action_keys + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)&smk_action_keys[0].field_00 + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 0xa0);
   return;
@@ -19313,8 +19339,8 @@ void __watcall set_smacker_key(int param_1,int param_2)
   else {
     free_smacker_key = get_free_smacker_key();
     if (free_smacker_key != -1) {
-      (&smk_action_keys)[free_smacker_key * 2] = param_2;
-      (&DAT_004427e4)[free_smacker_key * 2] = param_1;
+      smk_action_keys[free_smacker_key * 2].field_00 = param_2;
+      smk_action_keys[free_smacker_key * 2 + 1].field_00 = param_1;
       return;
     }
     param_1 = 0x14;
@@ -19932,23 +19958,23 @@ void __watcall draw_focus_anim_button(form_t *form)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   button_t *button;
   
   button = form->control;
   if (button->focus_anim != -1) {
-    iVar4 = get_control_index(form->hwnd);
-    iVar1 = (&xvga_anims->field_00)[button->focus_anim * 3];
+    form_index = get_control_index(form->hwnd);
+    iVar1 = xvga_anims[button->focus_anim].frame_count;
     iVar2 = button->width;
     iVar3 = button->height;
     control_image_index = get_control_image_index(button->focus_anim,button->focus_frame);
-    iVar5 = 1;
-    control_y = get_control_y(iVar4);
-    iVar4 = get_control_x(iVar4);
-    set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+    iVar4 = 1;
+    control_y = get_control_y(form_index);
+    form_index = get_control_x(form_index);
+    set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
     if (button->focus_frame < iVar1 + -1) {
       button->focus_frame = button->focus_frame + 1;
     }
@@ -19975,7 +20001,7 @@ void __watcall destroy_button(form_t *form)
 
 /* ==== 0041ad0a create_button ==== */
 
-void __watcall create_button(form_t *form,int param_2)
+void __watcall create_button(form_t *form,int form_index)
 
 {
   int control_image_index;
@@ -19992,24 +20018,24 @@ void __watcall create_button(form_t *form,int param_2)
   if (button->height == -1) {
     button->height = *(int *)(control_image_index * 0x20 + 0xc + (int)xvga_mem_images);
   }
-  if ((&xvga_anims->field_00)[button->image * 3] < 4) {
+  if (xvga_anims[button->image].frame_count < 4) {
     fatal_exit(s__s__d_____create_button__not_eno_0043102f,s_buttons_cpp_00431023,0x6f,
-               (&xvga_anims->field_00)[button->image * 3]);
+               xvga_anims[button->image].frame_count);
   }
-  check_control_position(param_2,form->x,form->y,button->width,button->height);
+  check_control_position(form_index,form->x,form->y,button->width,button->height);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar1 = CreateWindowExA(0,s_BUTTON_0043107b,(LPCSTR)0x0,0x5001000b,form->x,form->y,button->width,
-                           button->height,xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           button->height,xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar1;
   if (pHVar1 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_co_00431082,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_co_00431082,form_index);
   }
   old_button_windowproc = SetWindowLongA(form->hwnd,-4,0x41afe2);
   button->focus_frame = 0;
   if (button->focus_anim != -1) {
     get_control_image_index(button->focus_anim,0);
-    if ((&xvga_anims->field_00)[button->focus_anim * 3] == 1) {
+    if (xvga_anims[button->focus_anim].frame_count == 1) {
       fatal_exit(s__s__d_____create_button__Anim_fo_004310bf,s_buttons_cpp_004310b3,0x8e,
                  button->focus_anim);
     }
@@ -20017,7 +20043,7 @@ void __watcall create_button(form_t *form,int param_2)
   if (form->state == 4) {
     form->state = 1;
   }
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -20030,32 +20056,33 @@ void __watcall draw_help_button(form_t *form)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int *control_pointer;
   uint control_state;
-  int iVar5;
-  int control_y;
-  int iVar6;
+  int anim_index;
+  int frame_index;
+  int iVar4;
   
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   control_pointer = get_control_pointer(form->hwnd);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  control_state = get_control_state(iVar4);
+  control_state = get_control_state(form_index);
   if ((control_state == 0) || ((1 < control_state && (control_state != 4)))) {
-    iVar5 = *control_pointer;
-    control_y = 0;
+    anim_index = *control_pointer;
+    frame_index = 0;
   }
   else {
-    control_y = 1;
-    iVar5 = *control_pointer;
+    frame_index = 1;
+    anim_index = *control_pointer;
   }
-  iVar5 = get_control_image_index(iVar5,control_y);
-  iVar6 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar4 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + control_y,iVar6);
+  anim_index = get_control_image_index(anim_index,frame_index);
+  iVar4 = 1;
+  frame_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,anim_index,form_index + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + frame_index,
+                iVar4);
   return;
 }
 
@@ -20069,18 +20096,18 @@ void __watcall draw_button(tagDRAWITEMSTRUCT *drawitemstruct)
   int iVar2;
   int iVar3;
   uint uVar4;
-  int iVar5;
+  int form_index;
   int *control_pointer;
-  int iVar6;
-  int control_image_index;
-  int iVar7;
+  int anim_index;
+  int frame_index;
+  int iVar5;
   
-  iVar5 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  if (iVar5 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_button__no_valid_w_0043110f,s_buttons_cpp_00431103,0xbe);
   }
   hide_mouse();
@@ -20088,31 +20115,31 @@ void __watcall draw_button(tagDRAWITEMSTRUCT *drawitemstruct)
   if (uVar4 < 0x10) {
     if (uVar4 != 4) {
 LAB_0041afc2:
-      set_control_state(iVar5,0);
-      iVar6 = *control_pointer;
-      control_image_index = 0;
+      set_control_state(form_index,0);
+      anim_index = *control_pointer;
+      frame_index = 0;
       goto LAB_0041af77;
     }
-    set_control_state(iVar5,2);
-    control_image_index = 2;
+    set_control_state(form_index,2);
+    frame_index = 2;
   }
   else if (uVar4 < 0x11) {
-    set_control_state(iVar5,1);
-    control_image_index = 3;
+    set_control_state(form_index,1);
+    frame_index = 3;
   }
   else {
     if (uVar4 != 0x11) goto LAB_0041afc2;
-    set_control_state(iVar5,4);
-    control_image_index = 1;
+    set_control_state(form_index,4);
+    frame_index = 1;
   }
-  iVar6 = *control_pointer;
+  anim_index = *control_pointer;
 LAB_0041af77:
-  control_image_index = get_control_image_index(iVar6,control_image_index);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar5);
-  iVar5 = get_control_x(iVar5);
-  set_mem_image(0,control_image_index,iVar5 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + iVar6,iVar7
-               );
+  frame_index = get_control_image_index(anim_index,frame_index);
+  iVar5 = 1;
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,frame_index,form_index + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + anim_index,
+                iVar5);
   show_mouse();
   return;
 }
@@ -20204,47 +20231,47 @@ int __watcall check_togglebutton_hotkey(form_t *form,int param_2)
 
 /* ==== 0041b13a get_togglebutton_togglestate ==== */
 
-int __watcall get_togglebutton_togglestate(int param_1)
+int __watcall get_togglebutton_togglestate(int form_index)
 
 {
   int iVar1;
   void *control_pointer_1;
   
-  if (-1 < param_1) {
+  if (-1 < form_index) {
     iVar1 = get_numberofcontrols_inform();
-    if (param_1 <= iVar1) goto LAB_0041b15f;
+    if (form_index <= iVar1) goto LAB_0041b15f;
   }
-  fatal_exit(s__s__d_____get_togglebutton_toggl_00431159,s_tgglbuts_cpp_0043114c,0x40,param_1);
+  fatal_exit(s__s__d_____get_togglebutton_toggl_00431159,s_tgglbuts_cpp_0043114c,0x40,form_index);
 LAB_0041b15f:
-  iVar1 = get_control_type(param_1);
+  iVar1 = get_control_type(form_index);
   if (iVar1 != 2) {
-    fatal_exit(s__s__d_____get_togglebutton_toggl_004311ab,s_tgglbuts_cpp_0043119e,0x45,param_1);
+    fatal_exit(s__s__d_____get_togglebutton_toggl_004311ab,s_tgglbuts_cpp_0043119e,0x45,form_index);
   }
-  control_pointer_1 = get_control_pointer_1(param_1);
+  control_pointer_1 = get_control_pointer_1(form_index);
   return *(int *)((int)control_pointer_1 + 0xd);
 }
 
 
 /* ==== 0041b18c set_togglebutton_togglestate ==== */
 
-void __watcall set_togglebutton_togglestate(int param_1,int param_2)
+void __watcall set_togglebutton_togglestate(int form_index,int param_2)
 
 {
   int iVar1;
   int *control_pointer_1;
   
-  if (-1 < param_1) {
+  if (-1 < form_index) {
     iVar1 = get_numberofcontrols_inform();
-    if (param_1 <= iVar1) goto LAB_0041b1b5;
+    if (form_index <= iVar1) goto LAB_0041b1b5;
   }
-  fatal_exit(s__s__d_____set_togglebutton_toggl_00431204,s_tgglbuts_cpp_004311f7,0x56,param_1);
+  fatal_exit(s__s__d_____set_togglebutton_toggl_00431204,s_tgglbuts_cpp_004311f7,0x56,form_index);
 LAB_0041b1b5:
-  iVar1 = get_control_type(param_1);
+  iVar1 = get_control_type(form_index);
   if (iVar1 != 2) {
-    fatal_exit(s__s__d_____get_togglebutton_toggl_00431256,s_tgglbuts_cpp_00431249,0x5b,param_1);
+    fatal_exit(s__s__d_____get_togglebutton_toggl_00431256,s_tgglbuts_cpp_00431249,0x5b,form_index);
   }
-  control_pointer_1 = get_control_pointer_1(param_1);
-  iVar1 = (&xvga_anims->field_00)[*control_pointer_1 * 3] / 2;
+  control_pointer_1 = get_control_pointer_1(form_index);
+  iVar1 = xvga_anims[*control_pointer_1].frame_count / 2;
   if (iVar1 < param_2) {
     fatal_exit(s__s__d_____set_togglebutton_toggl_004312af,s_tgglbuts_cpp_004312a2,0x62,iVar1);
   }
@@ -20268,7 +20295,7 @@ void __watcall destroy_togglebutton(form_t *form)
 
 /* ==== 0041b246 create_togglebutton ==== */
 
-void __watcall create_togglebutton(form_t *form,int param_2)
+void __watcall create_togglebutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -20285,18 +20312,18 @@ void __watcall create_togglebutton(form_t *form,int param_2)
   if (piVar1[2] == -1) {
     piVar1[2] = *(int *)(control_image_index * 0x20 + 0xc + (int)xvga_mem_images);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
+  check_control_position(form_index,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_004313b6,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
-                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[2],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_to_004313bd,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_to_004313bd,form_index);
   }
-  set_togglebutton_togglestate(param_2,*(int *)((int)piVar1 + 0xd));
+  set_togglebutton_togglestate(form_index,*(int *)((int)piVar1 + 0xd));
   old_togglebutton_windowproc = SetWindowLongA(form->hwnd,-4,0x41b4ba);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -20309,20 +20336,20 @@ void __watcall draw_help_togglebutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,*(int *)((int)piVar1 + 0xd) * 2);
-  iVar5 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+  iVar4 = 1;
+  control_y = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
   return;
 }
 
@@ -20335,64 +20362,64 @@ void __watcall draw_togglebutton(tagDRAWITEMSTRUCT *drawitemstruct)
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int *control_pointer;
-  uint uVar5;
-  int iVar6;
+  uint uVar4;
+  int anim_index;
   int j;
   uint i;
-  int iVar7;
+  int iVar5;
   
-  iVar4 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
   i = *(uint *)((int)control_pointer + 0xd);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
   iVar3 = control_pointer[2];
-  if (iVar4 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_togglebutton__no_v_004313fa,s_tgglbuts_cpp_004313ed,0xbd);
   }
   hide_mouse();
-  uVar5 = drawitemstruct->itemState;
+  uVar4 = drawitemstruct->itemState;
   j = i * 2;
-  if (uVar5 < 0x10) {
-    if (uVar5 == 4) {
-      set_control_state(iVar4,2);
+  if (uVar4 < 0x10) {
+    if (uVar4 == 4) {
+      set_control_state(form_index,2);
       goto LAB_0041b45c;
     }
   }
   else {
-    if (uVar5 < 0x11) {
-      set_control_state(iVar4,1);
+    if (uVar4 < 0x11) {
+      set_control_state(form_index,1);
       j = j + 1;
 LAB_0041b45c:
-      iVar6 = *control_pointer;
+      anim_index = *control_pointer;
       goto LAB_0041b37f;
     }
-    if (uVar5 == 0x11) {
-      set_control_state(iVar4,4);
-      uVar5 = (&xvga_anims->field_00)[*control_pointer * 3] / 2 - 1;
-      if (i == uVar5) {
-        i = i ^ uVar5;
+    if (uVar4 == 0x11) {
+      set_control_state(form_index,4);
+      uVar4 = xvga_anims[*control_pointer].frame_count / 2 - 1;
+      if (i == uVar4) {
+        i = i ^ uVar4;
       }
       else {
         i = i + 1;
       }
-      set_togglebutton_togglestate(iVar4,i);
-      iVar6 = *control_pointer;
+      set_togglebutton_togglestate(form_index,i);
+      anim_index = *control_pointer;
       j = i * 2 + 1;
       goto LAB_0041b37f;
     }
   }
-  set_control_state(iVar4,0);
-  iVar6 = *control_pointer;
+  set_control_state(form_index,0);
+  anim_index = *control_pointer;
   j = i * 2;
 LAB_0041b37f:
-  j = get_control_image_index(iVar6,j);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,j,(iVar2 - (iVar1 >> 0x1f) >> 1) + iVar4,iVar3 / 2 + iVar6,iVar7);
+  j = get_control_image_index(anim_index,j);
+  iVar5 = 1;
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,j,(iVar2 - (iVar1 >> 0x1f) >> 1) + form_index,iVar3 / 2 + anim_index,iVar5);
   show_mouse();
   return;
 }
@@ -20490,7 +20517,7 @@ void __watcall destroy_areabutton(form_t *form)
 
 /* ==== 0041b63a create_areabutton ==== */
 
-void __watcall create_areabutton(form_t *form,int param_2)
+void __watcall create_areabutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -20516,20 +20543,20 @@ void __watcall create_areabutton(form_t *form,int param_2)
     if (piVar1[1] == -1) {
       piVar1[1] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
     }
-    check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+    check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
     set_mem_image(0,control_image_index,form->x + iVar2 / 2,form->y + iVar3 / 2,1);
   }
-  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+  check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar4 = CreateWindowExA(0,s_STATIC_004314e0,(LPCSTR)0x0,0x50000000,form->x,form->y,*piVar1,
-                           piVar1[1],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[1],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar4;
   if (pHVar4 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ar_004314e7,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ar_004314e7,form_index);
   }
   old_areabutton_windowproc = SetWindowLongA(form->hwnd,-4,0x41b81d);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -20574,7 +20601,7 @@ long AreaButtonWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
 {
   SHORT SVar1;
   HWND pHVar2;
-  int control_index;
+  int form_index;
   bool bVar3;
   tagPAINTSTRUCT tStack_4c;
   
@@ -20615,8 +20642,8 @@ LAB_0041b864:
     else if (0x104 < param_2) {
       if (param_2 < 0x201) goto LAB_0041b8f9;
       if (param_2 < 0x202) {
-        control_index = get_control_index(param_1);
-        set_control_state(control_index,4);
+        form_index = get_control_index(param_1);
+        set_control_state(form_index,4);
         goto LAB_0041b8f9;
       }
       bVar3 = param_2 == 0x204;
@@ -20654,7 +20681,7 @@ void __watcall destroy_animbutton(form_t *form)
 
 /* ==== 0041b962 create_animbutton ==== */
 
-void __watcall create_animbutton(form_t *form,int param_2)
+void __watcall create_animbutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -20671,20 +20698,20 @@ void __watcall create_animbutton(form_t *form,int param_2)
   if (piVar1[5] == -1) {
     piVar1[5] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[4],piVar1[5]);
+  check_control_position(form_index,form->x,form->y,piVar1[4],piVar1[5]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_004315a8,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[4],
-                           piVar1[5],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[5],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_an_004315af,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_an_004315af,form_index);
   }
   old_animbutton_windowproc = SetWindowLongA(form->hwnd,-4,0x41be27);
   if (form->state == 4) {
     form->state = 1;
   }
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   form->field_14 = 0;
   return;
 }
@@ -20692,7 +20719,7 @@ void __watcall create_animbutton(form_t *form,int param_2)
 
 /* ==== 0041ba4c draw_animation_animbutton ==== */
 
-void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int param_4)
+void __watcall draw_animation_animbutton(int anim_index,int form_index,int param_3,int param_4)
 
 {
   void *control_pointer_1;
@@ -20701,31 +20728,31 @@ void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int
   int iVar3;
   int iVar4;
   int control_x;
-  int j;
   int i;
+  int frame_index;
   int iVar5;
   
-  control_pointer_1 = get_control_pointer_1(param_2);
-  i = (&xvga_anims->field_00)[param_1 * 3];
+  control_pointer_1 = get_control_pointer_1(form_index);
+  frame_index = xvga_anims[anim_index].frame_count;
   iVar1 = *(int *)((int)control_pointer_1 + 0x10) / 2;
   iVar2 = *(int *)((int)control_pointer_1 + 0x14) / 2;
   if (((param_4 == 0) || ((uint)param_4 < 2)) || (param_4 != 2)) {
-    for (j = 0; j < i; j = j + 1) {
-      iVar3 = get_control_image_index(param_1,j);
+    for (i = 0; i < frame_index; i = i + 1) {
+      iVar3 = get_control_image_index(anim_index,i);
       iVar5 = 1;
-      iVar4 = get_control_y(param_2);
-      control_x = get_control_x(param_2);
+      iVar4 = get_control_y(form_index);
+      control_x = get_control_x(form_index);
       set_mem_image(0,iVar3,iVar1 + control_x,iVar2 + iVar4,iVar5);
       Sleep(param_3);
     }
   }
   else {
-    while (i = i + -1, -1 < i) {
-      j = get_control_image_index(param_1,i);
+    while (frame_index = frame_index + -1, -1 < frame_index) {
+      i = get_control_image_index(anim_index,frame_index);
       control_x = 1;
-      iVar3 = get_control_y(param_2);
-      iVar4 = get_control_x(param_2);
-      set_mem_image(0,j,iVar1 + iVar4,iVar2 + iVar3,control_x);
+      iVar3 = get_control_y(form_index);
+      iVar4 = get_control_x(form_index);
+      set_mem_image(0,i,iVar1 + iVar4,iVar2 + iVar3,control_x);
       Sleep(param_3);
     }
   }
@@ -20741,36 +20768,36 @@ void __watcall draw_help_animbutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
+  int form_index;
+  int anim_index;
   int iVar4;
-  int iVar5;
-  int iVar6;
   int control_x;
   uint control_state;
-  int iVar7;
+  int iVar5;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[4];
   iVar3 = piVar1[5];
-  iVar5 = get_control_image_index(*piVar1,(&xvga_anims->field_00)[*piVar1 * 3] + -1);
-  iVar7 = 1;
-  iVar6 = get_control_y(iVar4);
-  control_x = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar2 / 2 + control_x,iVar3 / 2 + iVar6,iVar7);
-  control_state = get_control_state(iVar4);
+  anim_index = get_control_image_index(*piVar1,xvga_anims[*piVar1].frame_count + -1);
+  iVar5 = 1;
+  iVar4 = get_control_y(form_index);
+  control_x = get_control_x(form_index);
+  set_mem_image(0,anim_index,iVar2 / 2 + control_x,iVar3 / 2 + iVar4,iVar5);
+  control_state = get_control_state(form_index);
   if ((control_state == 0) || ((1 < control_state && (control_state != 4)))) {
-    iVar6 = (&xvga_anims->field_00)[*piVar1 * 3];
-    iVar5 = *piVar1;
+    iVar4 = xvga_anims[*piVar1].frame_count;
+    anim_index = *piVar1;
   }
   else {
-    iVar6 = (&xvga_anims->field_00)[piVar1[3] * 3];
-    iVar5 = piVar1[3];
+    iVar4 = xvga_anims[piVar1[3]].frame_count;
+    anim_index = piVar1[3];
   }
-  iVar5 = get_control_image_index(iVar5,iVar6 + -1);
+  anim_index = get_control_image_index(anim_index,iVar4 + -1);
   control_x = 1;
-  iVar6 = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,iVar5,iVar2 / 2 + iVar4,iVar3 / 2 + iVar6,control_x);
+  iVar4 = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,anim_index,iVar2 / 2 + form_index,iVar3 / 2 + iVar4,control_x);
   return;
 }
 
@@ -20781,94 +20808,95 @@ void __watcall draw_animbutton(tagDRAWITEMSTRUCT *drawitemstruct)
 
 {
   uint uVar1;
-  int iVar2;
+  int form_index;
   int *control_pointer;
+  int anim_index;
+  int iVar2;
   int iVar3;
+  int anim_index_2;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
   
-  iVar2 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
-  iVar5 = control_pointer[4];
   iVar3 = control_pointer[4];
-  iVar7 = control_pointer[5];
-  if (iVar2 == -1) {
+  anim_index = control_pointer[4];
+  iVar4 = control_pointer[5];
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_animbutton__no_va_004315ea,s_animbuts_cpp_004315dd,0xb6);
   }
   hide_mouse();
   uVar1 = drawitemstruct->itemState;
   if (uVar1 < 0x10) {
     if (uVar1 == 4) {
-      iVar5 = get_old_control_state(iVar2);
-      if (iVar5 == 2) goto LAB_0041bc1e;
-      set_control_state(iVar2,2);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[2];
+      iVar3 = get_old_control_state(form_index);
+      if (iVar3 == 2) goto LAB_0041bc1e;
+      set_control_state(form_index,2);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[2];
       goto LAB_0041bcd4;
     }
 LAB_0041be13:
-    iVar6 = get_control_state(iVar2);
-    switch(iVar6) {
+    anim_index_2 = get_control_state(form_index);
+    switch(anim_index_2) {
     case 0:
-      iVar5 = get_old_control_state(iVar2);
-      if (iVar5 != 0) goto LAB_0041bc1e;
-      iVar7 = 1;
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = *control_pointer;
+      iVar3 = get_old_control_state(form_index);
+      if (iVar3 != 0) goto LAB_0041bc1e;
+      iVar4 = 1;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = *control_pointer;
       break;
     case 1:
     case 4:
-      set_control_state(iVar2,0);
-      iVar6 = *control_pointer;
-      iVar4 = (&xvga_anims->field_00)[iVar6 * 3];
+      set_control_state(form_index,0);
+      anim_index_2 = *control_pointer;
+      iVar2 = xvga_anims[anim_index_2].frame_count;
 LAB_0041bd0c:
-      iVar6 = get_control_image_index(iVar6,iVar4 + -1);
-      iVar8 = 1;
-      iVar4 = get_control_y(iVar2);
-      iVar2 = get_control_x(iVar2);
-      set_mem_image(0,iVar6,(iVar3 - (iVar5 >> 0x1f) >> 1) + iVar2,iVar4 + iVar7 / 2,iVar8);
+      anim_index_2 = get_control_image_index(anim_index_2,iVar2 + -1);
+      iVar5 = 1;
+      iVar2 = get_control_y(form_index);
+      form_index = get_control_x(form_index);
+      set_mem_image(0,anim_index_2,(anim_index - (iVar3 >> 0x1f) >> 1) + form_index,
+                    iVar2 + iVar4 / 2,iVar5);
       goto LAB_0041bc1e;
     case 2:
-      iVar7 = 2;
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[2];
+      iVar4 = 2;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[2];
       break;
     default:
-      set_control_state(iVar2,0);
-      iVar5 = control_pointer[6];
-      iVar3 = *control_pointer;
+      set_control_state(form_index,0);
+      iVar3 = control_pointer[6];
+      anim_index = *control_pointer;
       goto LAB_0041bcd4;
     }
   }
   else {
     if (uVar1 < 0x11) {
-      iVar6 = get_control_state(iVar2);
-      if (iVar6 == 4) {
-        set_control_state(iVar2,1);
-        iVar4 = (&xvga_anims->field_00)[control_pointer[3] * 3];
-        iVar6 = control_pointer[3];
+      anim_index_2 = get_control_state(form_index);
+      if (anim_index_2 == 4) {
+        set_control_state(form_index,1);
+        iVar2 = xvga_anims[control_pointer[3]].frame_count;
+        anim_index_2 = control_pointer[3];
         goto LAB_0041bd0c;
       }
-      iVar7 = 1;
-      set_control_state(iVar2,1);
-      iVar5 = control_pointer[6];
-      iVar3 = control_pointer[3];
+      iVar4 = 1;
+      set_control_state(form_index,1);
+      iVar3 = control_pointer[6];
+      anim_index = control_pointer[3];
       goto LAB_0041bcd8;
     }
     if (uVar1 != 0x11) goto LAB_0041be13;
-    set_control_state(iVar2,4);
-    iVar5 = control_pointer[6];
-    iVar3 = control_pointer[1];
+    set_control_state(form_index,4);
+    iVar3 = control_pointer[6];
+    anim_index = control_pointer[1];
 LAB_0041bcd4:
-    iVar7 = 1;
+    iVar4 = 1;
   }
 LAB_0041bcd8:
-  draw_animation_animbutton(iVar3,iVar2,iVar5,iVar7);
+  draw_animation_animbutton(anim_index,form_index,iVar3,iVar4);
 LAB_0041bc1e:
   show_mouse();
   return;
@@ -20881,7 +20909,7 @@ long AnimButtonWindowProc(void *param_1,uint param_2,uint param_3,long drawitems
 
 {
   SHORT SVar1;
-  int control_index;
+  int form_index;
   HWND pHVar2;
   
   if (param_2 < 0x100) {
@@ -20922,8 +20950,8 @@ long AnimButtonWindowProc(void *param_1,uint param_2,uint param_3,long drawitems
       }
       else if (0x200 < param_2) {
         if (param_2 < 0x202) {
-          control_index = get_control_index(param_1);
-          set_control_state(control_index,4);
+          form_index = get_control_index(param_1);
+          set_control_state(form_index,4);
         }
         else if (param_2 == 0x204) {
           return 1;
@@ -20972,7 +21000,7 @@ void __watcall destroy_radiobutton(form_t *form)
 
 /* ==== 0041bfce create_radiobutton ==== */
 
-void __watcall create_radiobutton(form_t *form,int param_2)
+void __watcall create_radiobutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -20989,21 +21017,21 @@ void __watcall create_radiobutton(form_t *form,int param_2)
   if (piVar1[2] == -1) {
     piVar1[2] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  if ((&xvga_anims->field_00)[*piVar1 * 3] < 5) {
+  if (xvga_anims[*piVar1].frame_count < 5) {
     fatal_exit(s__s__d_____create_radiobutton__no_0043167e,s_radiobut_cpp_00431671,0x58,
-               (&xvga_anims->field_00)[*piVar1 * 3]);
+               xvga_anims[*piVar1].frame_count);
   }
-  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
+  check_control_position(form_index,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar2 = CreateWindowExA(0,s_BUTTON_004316cf,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
-                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[2],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ra_004316d6,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ra_004316d6,form_index);
   }
   old_radiobutton_windowproc = SetWindowLongA(form->hwnd,-4,0x41c31b);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   *(int *)((int)piVar1 + 0xd) = form->state;
   return;
 }
@@ -21011,34 +21039,34 @@ void __watcall create_radiobutton(form_t *form,int param_2)
 
 /* ==== 0041c0d8 unselect_radiobutton ==== */
 
-void __watcall unselect_radiobutton(int param_1)
+void __watcall unselect_radiobutton(int form_index_2)
 
 {
-  int previous_control_index;
+  int form_index;
   void *control_pointer_1;
   
-  previous_control_index = param_1;
+  form_index = form_index_2;
   do {
-    previous_control_index = get_previous_control_index(previous_control_index,6);
-    if (previous_control_index == -1) goto LAB_0041c128;
-    control_pointer_1 = get_control_pointer_1(previous_control_index);
+    form_index = get_previous_control_index(form_index,6);
+    if (form_index == -1) goto LAB_0041c128;
+    control_pointer_1 = get_control_pointer_1(form_index);
   } while (*(int *)((int)control_pointer_1 + 0xd) != 4);
   *(undefined4 *)((int)control_pointer_1 + 0xd) = 0;
-  dis_2.hwndItem = get_control_hwnd(previous_control_index);
+  dis_2.hwndItem = get_control_hwnd(form_index);
 LAB_0041c16c:
   dis_2.itemState = 0;
   SendMessageA(dis_2.hwndItem,0x2b,0,0x44292c);
   return;
 LAB_0041c128:
   do {
-    param_1 = get_next_control_index(param_1,6);
-    if (param_1 == -1) {
+    form_index_2 = get_next_control_index(form_index_2,6);
+    if (form_index_2 == -1) {
       return;
     }
-    control_pointer_1 = get_control_pointer_1(param_1);
+    control_pointer_1 = get_control_pointer_1(form_index_2);
   } while (*(int *)((int)control_pointer_1 + 0xd) != 4);
   *(undefined4 *)((int)control_pointer_1 + 0xd) = 0;
-  dis_2.hwndItem = get_control_hwnd(param_1);
+  dis_2.hwndItem = get_control_hwnd(form_index_2);
   goto LAB_0041c16c;
 }
 
@@ -21051,20 +21079,20 @@ void __watcall draw_help_radiobutton(form_t *form)
   int *piVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
+  int form_index;
   int control_image_index;
   int control_y;
-  int iVar5;
+  int iVar4;
   
   piVar1 = form->control;
-  iVar4 = get_control_index(form->hwnd);
+  form_index = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,0);
-  iVar5 = 1;
-  control_y = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,control_image_index,iVar4 + iVar2 / 2,iVar3 / 2 + control_y,iVar5);
+  iVar4 = 1;
+  control_y = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,control_image_index,form_index + iVar2 / 2,iVar3 / 2 + control_y,iVar4);
   return;
 }
 
@@ -21076,66 +21104,66 @@ void __watcall draw_radiobutton(tagDRAWITEMSTRUCT *drawitemstruct)
 {
   int iVar1;
   uint uVar2;
-  int iVar3;
+  int form_index;
   int *control_pointer;
-  int iVar4;
-  int control_image_index;
-  int iVar5;
+  int iVar3;
+  int frame_index;
+  int anim_index;
   int control_x;
-  int iVar6;
+  int iVar4;
   
-  iVar3 = get_control_index(drawitemstruct->hwndItem);
+  form_index = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
-  iVar4 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
+  iVar3 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
   iVar1 = control_pointer[2];
-  if (iVar3 == -1) {
+  if (form_index == -1) {
     fatal_exit(s__s__d_____draw_radiobutton__no_v_00431712,s_radiobut_cpp_00431705,0xc4);
   }
   hide_mouse();
   uVar2 = drawitemstruct->itemState;
   if (uVar2 < 0x10) {
     if (uVar2 != 4) goto LAB_0041c2fa;
-    set_control_state(iVar3,2);
-    control_image_index = 4;
+    set_control_state(form_index,2);
+    frame_index = 4;
 LAB_0041c2ae:
-    iVar5 = *control_pointer;
+    anim_index = *control_pointer;
   }
   else {
     if (uVar2 < 0x11) {
-      set_control_state(iVar3,1);
+      set_control_state(form_index,1);
       if (*(int *)((int)control_pointer + 0xd) == 4) {
-        control_image_index = 3;
+        frame_index = 3;
       }
       else {
-        control_image_index = 1;
+        frame_index = 1;
       }
       goto LAB_0041c2ae;
     }
     if (uVar2 == 0x11) {
-      set_control_state(iVar3,4);
+      set_control_state(form_index,4);
       *(undefined4 *)((int)control_pointer + 0xd) = 4;
-      control_image_index = get_control_image_index(*control_pointer,3);
-      iVar6 = 1;
-      iVar5 = get_control_y(iVar3);
-      control_x = get_control_x(iVar3);
-      set_mem_image(0,control_image_index,control_x + iVar4,iVar1 / 2 + iVar5,iVar6);
-      unselect_radiobutton(iVar3);
+      frame_index = get_control_image_index(*control_pointer,3);
+      iVar4 = 1;
+      anim_index = get_control_y(form_index);
+      control_x = get_control_x(form_index);
+      set_mem_image(0,frame_index,control_x + iVar3,iVar1 / 2 + anim_index,iVar4);
+      unselect_radiobutton(form_index);
       goto LAB_0041c310;
     }
 LAB_0041c2fa:
-    set_control_state(iVar3,0);
+    set_control_state(form_index,0);
     if (*(int *)((int)control_pointer + 0xd) == 4) {
-      control_image_index = 2;
+      frame_index = 2;
       goto LAB_0041c2ae;
     }
-    iVar5 = *control_pointer;
-    control_image_index = 0;
+    anim_index = *control_pointer;
+    frame_index = 0;
   }
-  control_image_index = get_control_image_index(iVar5,control_image_index);
+  frame_index = get_control_image_index(anim_index,frame_index);
   control_x = 1;
-  iVar5 = get_control_y(iVar3);
-  iVar3 = get_control_x(iVar3);
-  set_mem_image(0,control_image_index,iVar3 + iVar4,iVar1 / 2 + iVar5,control_x);
+  anim_index = get_control_y(form_index);
+  form_index = get_control_x(form_index);
+  set_mem_image(0,frame_index,form_index + iVar3,iVar1 / 2 + anim_index,control_x);
 LAB_0041c310:
   show_mouse();
   return;
@@ -22940,7 +22968,7 @@ void __watcall wipe_vrollbarup(int param_1,int param_2,int param_3,int param_4,i
     }
     iVar2 = 0;
     do {
-      iVar1 = local_2c + *(int *)((int)&roll_tabledraw + iVar2);
+      iVar1 = local_2c + *(int *)((int)roll_tabledraw + iVar2);
       if (((iVar1 <= param_4) && (i <= param_4)) && (-1 < i)) {
         copyblock_tosurface(surface_ptr_2,surface_ptr,param_1,iVar1,param_3,1,param_1,i);
       }
@@ -22994,7 +23022,7 @@ void __watcall wipe_vrollbardown(int param_1,int param_2,int param_3,int param_4
     }
     iVar2 = 0;
     do {
-      iVar1 = local_28 + *(int *)((int)&roll_tabledraw + iVar2);
+      iVar1 = local_28 + *(int *)((int)roll_tabledraw + iVar2);
       if ((param_2 <= iVar1) && (i <= param_4)) {
         copyblock_tosurface(surface_ptr,surface_ptr_3,param_1,iVar1,param_3,1,param_1,i);
       }
@@ -23065,19 +23093,19 @@ wipe_draw_pixel_grid(int param_1,int param_2,int param_3,int param_4,int param_5
       do {
         iVar2 = local_30 * i;
         iVar3 = local_34 * i;
-        if ((&raster)[j] != '\0') {
+        if (*(char *)((int)&raster[0].field_00 + j) != '\0') {
           local_2c = local_18 + iVar2 + local_14;
           *local_2c = local_10[iVar3];
         }
-        if ((&DAT_00436334)[j] != '\0') {
+        if ((&raster[0].field_0x4)[j] != '\0') {
           local_2c = local_18 + iVar2 + local_14;
           local_2c[1] = local_10[iVar3 + 1];
         }
-        if ((&DAT_00436338)[j] != '\0') {
+        if ((&raster[0].field_0x8)[j] != '\0') {
           local_2c = local_18 + iVar2 + local_14;
           local_2c[2] = local_10[iVar3 + 2];
         }
-        if ((&DAT_0043633c)[j] != '\0') {
+        if ((&raster[0].field_0xc)[j] != '\0') {
           local_18[iVar2 + local_14 + 3] = local_10[iVar3 + 3];
         }
         i = i + 1;
@@ -24767,7 +24795,7 @@ sigabort(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 par
       return 0xffffffff;
     }
   }
-  if (((pcVar4 != (code *)0x1) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
+  if (((pcVar4 != (code *)&DAT_00000001) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
     iVar1 = (*(code *)GetThreadPtr)(pcVar4,param_2,param_4,param_3);
     *(undefined4 *)(iVar1 + 0x58 + iVar2 * 8) = 2;
     (*pcVar4)();
@@ -24811,7 +24839,7 @@ void __watcall raise(int param_1)
       return;
     }
   }
-  if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
+  if (((pcVar1 != (code *)&DAT_00000001) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x58 + iVar3 * 8) = 2;
     (*pcVar1)();
@@ -24834,7 +24862,7 @@ void __watcall sigfpe_handler(undefined4 param_1)
   
   iVar2 = (*(code *)GetThreadPtr)();
   pcVar1 = *(code **)(iVar2 + 0x68);
-  if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
+  if (((pcVar1 != (code *)&DAT_00000001) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x68) = 2;
     (*pcVar1)();

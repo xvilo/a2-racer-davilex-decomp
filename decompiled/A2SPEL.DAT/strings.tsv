@@ -3195,7 +3195,16 @@ address	type	value
 00459039	string	finish.wav
 00459048	string	loser.wav
 00459066	string	sp_r2.wav
+004591b4	char[300]	
+004597e4	uchar[72]	�
 00459b24	string	a
+00459ec8	char[4]	 
+00473050	char[400]	null
+004760bc	char[4]	null
+00480da8	uchar[256]	null
+00480ed4	uchar[40]	null
+00480efc	uchar[40]	null
+00483640	char[400]	null
 004845f0	TerminatedCString	WINMM.dll
 004845fa	TerminatedCString	ADVAPI32.dll
 00484607	TerminatedCString	GDI32.dll

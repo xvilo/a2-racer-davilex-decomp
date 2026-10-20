@@ -135,3 +135,10 @@ button_t	11	int	focus_frame
 # help_t: help text for a control id (help.cpp); tables end with id -1.
 help_t	00	int	control_id	
 help_t	04	char*	text	
+# anim_t: one menu animation (animbase.cpp); anims and xvga_anims are arrays of them.
+anim_t	00	int	frame_count	
+anim_t	04	int	mode	1 in every table entry
+anim_t	08	frame_t*	frames	
+# frame_t: one animation frame.
+frame_t	00	int	duration	ticks the frame stays up
+frame_t	04	int	image	mem image index

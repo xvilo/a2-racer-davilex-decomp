@@ -630,6 +630,13 @@ address	type	value
 00427481	string	click1.wav
 0042748c	string	MM_06.wav
 00427496	string	Weet je zeker dat je de huidige race wil onderbreken?
+004274cc	string	MM_00.wav
+004274d6	string	MM_01.wav
+004274e0	string	MM_02.wav
+004274ea	string	MM_05.wav
+004274f4	string	MM_04.wav
+004274fe	string	MM_03.wav
+00427508	string	MNS_05.wav
 00427514	string	speed.wav
 0042751e	string	energy.wav
 00427529	string	jammin.wav
@@ -708,6 +715,9 @@ address	type	value
 00427a93	string	m_start.cpp
 00427a9f	string	Wil je deze speler '%s' verwijderen?
 00427ac4	string	click1.wav
+00427acf	string	MNS_03.wav
+00427ada	string	MNS_04.wav
+00427ae5	string	MNS_05.wav
 00427af4	string	%s(%d), mm_af_image() : Could not load frame %d of ANIM %d\n
 00427b30	string	m_bedien.cpp
 00427b3d	string	m_bedien.cpp
@@ -755,6 +765,14 @@ address	type	value
 00427e4b	string	BEDIEN.TMP
 00427e56	string	m_bedien.cpp
 00427e63	string	\n\n%s(%d) : *> STOP MENU BEDIEN <*\n
+00427e86	string	MC_00.wav
+00427e90	string	MC_01.wav
+00427e9a	string	MC_03.wav
+00427ea4	string	MC_04.wav
+00427eae	string	MC_02.wav
+00427eb9	string	MC_00.wav
+00427ec3	string	MC_01.wav
+00427ecd	string	MC_03.wav
 00427f44	string	NUMPAD 0
 00427f4d	string	NUMPAD 1
 00427f56	string	NUMPAD 2
@@ -774,6 +792,7 @@ address	type	value
 00427fe7	string	MC_05.wav
 00427ff1	string	MC_06.wav
 00427ffb	string	MC_07.wav
+00428005	string	MC_08.wav
 00428010	string	%s(%d), mo_af_image() : Could not load frame %d of ANIM %d\n
 0042804c	string	m_opties.cpp
 00428059	string	m_opties.cpp
@@ -840,6 +859,11 @@ address	type	value
 00428396	string	Opties.TMP
 004283a1	string	m_opties.cpp
 004283ae	string	\n\n%s(%d) : *> STOP MENU OPTIES <*\n
+004283d1	string	MO_00.wav
+004283db	string	MO_01.wav
+004283e5	string	MO_04.wav
+004283ef	string	MO_02.wav
+004283f9	string	MO_03.wav
 00428404	string	%s(%d), ms_af_image() : Could not load frame %d of ANIM %d\n
 00428440	string	%2d
 00428444	string	%s
@@ -937,6 +961,9 @@ address	type	value
 00428a48	string	Wil je deze speler '%s' verwijderen?
 00428a6d	string	click1.wav
 00428a78	string	OPSTART.TMP
+00428a84	string	MNS_03.wav
+00428a8f	string	MNS_04.wav
+00428a9a	string	MNS_06.wav
 00428aa8	string	m_stand.cpp
 00428ab4	string	m_stand.cpp
 00428ac0	string	m_stand.cpp
@@ -2397,20 +2424,22 @@ address	type	value
 00432cc0	string	Richard
 00432cec	string	Brian
 00432d44	string	Milan
-00433060	string	B
-004331b0	string	o
-0043428c	string	B
-004343dc	string	P
-00435324	string	&
-0043537c	string	4
-004353b8	string	6
-00435414	string	Q
-00435434	string	\r
-00435444	string	\n
-0043546c	string	K
-00435474	string	L
-0043547c	string	M
+00434608	char[4]	
+00435a34	char[300]	
+00435e10	uchar[72]	�
+00435f78	char[4]	 
 004361e8	string	a
+00437018	char[260]	null
+0043711c	char[260]	null
+00437eb4	char[32]	null
+00437f8c	char[200]	null
+00438054	char[200]	null
+004381c8	char[4]	null
+00438498	uchar[768]	null
+00442424	char[400]	null
+004425d0	uchar[256]	null
+00442764	uchar[40]	null
+0044278c	uchar[40]	null
 00443528	TerminatedCString	ADVAPI32.dll
 00443535	TerminatedCString	WINMM.dll
 0044353f	TerminatedCString	GDI32.dll

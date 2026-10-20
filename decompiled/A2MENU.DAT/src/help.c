@@ -56,11 +56,11 @@ void __watcall init_help(void)
     puVar5 = puVar3;
     do {
       if (pf_conversion_mode == 0) {
-        *puVar4 = (&grid)[j];
+        *puVar4 = grid[j];
         puVar4 = puVar4 + 1;
       }
       else if (pf_conversion_mode == 1) {
-        translate_pixel_result = translate_pixel((uint)(byte)(&grid)[j],8);
+        translate_pixel_result = translate_pixel((uint)grid[j],8);
         *(short *)puVar5 = (short)translate_pixel_result;
         puVar5 = puVar5 + 2;
       }
@@ -208,11 +208,11 @@ int __watcall check_help_keys(void)
     if (0x27 < iVar1) {
       return 0;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) != -1) {
-      keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+    if (*(int *)((int)help_stop_keys + iVar1) != -1) {
+      keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
       if (keyispressed_result != 0) {
         while( true ) {
-          keyispressed_result = keyispressed(*(int *)((int)&help_stop_keys + iVar1));
+          keyispressed_result = keyispressed(*(int *)((int)help_stop_keys + iVar1));
           if (keyispressed_result == 0) break;
           handle_win_msg();
         }
@@ -238,7 +238,7 @@ int __watcall get_free_help_key(void)
     if (0x27 < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&help_stop_keys + iVar1) == -1) break;
+    if (*(int *)((int)help_stop_keys + iVar1) == -1) break;
     iVar1 = iVar1 + 4;
     i = i + 1;
   }
@@ -257,7 +257,7 @@ void __watcall clear_help_keys(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 4;
-    *(undefined4 *)((int)&help_stop_keys + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)help_stop_keys + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 0x28);
   return;
@@ -273,7 +273,7 @@ void __watcall set_help_key(int param_1)
   
   free_help_key = get_free_help_key();
   if (free_help_key != -1) {
-    (&help_stop_keys)[free_help_key] = param_1;
+    help_stop_keys[free_help_key] = param_1;
     return;
   }
   fatal_exit(s__s__d_____set_help_key__No_free_k_0042d7aa,s_help_cpp_0042d7a1,0x143,10);

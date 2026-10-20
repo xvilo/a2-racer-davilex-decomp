@@ -51,19 +51,19 @@ wipe_draw_pixel_grid(int param_1,int param_2,int param_3,int param_4,int param_5
       do {
         iVar2 = local_30 * i;
         iVar3 = local_34 * i;
-        if ((&raster)[j] != '\0') {
+        if (*(char *)((int)&raster[0].field_00 + j) != '\0') {
           local_2c = local_18 + iVar2 + local_14;
           *local_2c = local_10[iVar3];
         }
-        if ((&DAT_00436334)[j] != '\0') {
+        if ((&raster[0].field_0x4)[j] != '\0') {
           local_2c = local_18 + iVar2 + local_14;
           local_2c[1] = local_10[iVar3 + 1];
         }
-        if ((&DAT_00436338)[j] != '\0') {
+        if ((&raster[0].field_0x8)[j] != '\0') {
           local_2c = local_18 + iVar2 + local_14;
           local_2c[2] = local_10[iVar3 + 2];
         }
-        if ((&DAT_0043633c)[j] != '\0') {
+        if ((&raster[0].field_0xc)[j] != '\0') {
           local_18[iVar2 + local_14 + 3] = local_10[iVar3 + 3];
         }
         i = i + 1;

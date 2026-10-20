@@ -20,6 +20,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import ghidra.app.script.GhidraScript;
 import ghidra.program.database.SpecExtension;
@@ -147,6 +148,17 @@ public class ApplyWatcom extends GhidraScript {
 		openWindowsArchive();
 		int funcs = 0, typed = 0, labels = 0, data = 0, failed = 0;
 		Set<Address> named = new HashSet<>();
+		// Start of every named data item or label: open arrays run up to the next one.
+		TreeSet<Address> dataStarts = new TreeSet<>();
+		try (BufferedReader r = new BufferedReader(new FileReader(tsv))) {
+			String line = r.readLine();
+			while ((line = r.readLine()) != null) {
+				String[] c = line.split("\t", -1);
+				if (c.length > 1 && (c[1].equals("data") || c[1].equals("label"))) {
+					dataStarts.add(toAddr(c[0]));
+				}
+			}
+		}
 		try (BufferedReader r = new BufferedReader(new FileReader(tsv))) {
 			String line = r.readLine(); // header
 			while ((line = r.readLine()) != null) {
@@ -195,8 +207,11 @@ public class ApplyWatcom extends GhidraScript {
 						createLabel(a, name, !named.contains(a), SourceType.IMPORTED);
 						named.add(a);
 						data++;
-						if (!dtype.isEmpty()) {
-							DataType dt = resolve(dtype);
+						if (dtype.endsWith("[]")) {
+							createOpenArray(a, dtype.substring(0, dtype.length() - 2), dataStarts);
+						}
+						else if (!dtype.isEmpty()) {
+							DataType dt = resolveArray(dtype);
 							if (dt != null && dt.getLength() > 0 && getDataAt(a) == null &&
 								getInstructionAt(a) == null) {
 								try {
@@ -335,6 +350,31 @@ public class ApplyWatcom extends GhidraScript {
 			}
 		}
 		return rows;
+	}
+
+	/**
+	 * An array whose length the symbol does not give (Watcom's "name[]"): it runs to the
+	 * next symbol. Nothing is created while the element type's size is still unknown.
+	 */
+	private void createOpenArray(Address a, String elementType, TreeSet<Address> starts) {
+		DataType el = resolve(elementType);
+		if (el == null || el.getLength() <= 0) {
+			return;
+		}
+		Address next = starts.higher(a);
+		long room = next == null ? el.getLength() : next.subtract(a);
+		int count = (int) Math.max(1, room / el.getLength());
+		Address end = a.add((long) count * el.getLength() - 1);
+		try {
+			if (getInstructionContaining(end) != null) {
+				return;
+			}
+			clearListing(a, end);
+			createData(a, new ArrayDataType(el, count, el.getLength()));
+		}
+		catch (Exception e) {
+			// overlaps something defined: keep the label only
+		}
 	}
 
 	private DataType resolveArray(String t) {

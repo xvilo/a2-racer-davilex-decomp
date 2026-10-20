@@ -173,18 +173,17 @@ void __watcall check_smacker_keys(void)
 
 {
   uint uVar1;
-  int keyispressed_result;
   int iVar2;
+  int iVar3;
   
-  iVar2 = 0;
+  iVar3 = 0;
   do {
-    if (0x9f < iVar2) {
+    if (0x9f < iVar3) {
       return;
     }
-    if ((*(int *)((int)&smk_action_keys + iVar2) != -1) &&
-       (keyispressed_result = keyispressed(*(int *)((int)&smk_action_keys + iVar2)),
-       keyispressed_result != 0)) {
-      uVar1 = *(uint *)((int)&DAT_00480f54 + iVar2);
+    iVar2 = *(int *)((int)&smk_action_keys[0].field_00 + iVar3);
+    if ((iVar2 != -1) && (iVar2 = keyispressed(iVar2), iVar2 != 0)) {
+      uVar1 = *(uint *)((int)&smk_action_keys[1].field_00 + iVar3);
       if (uVar1 != 0) {
         if (uVar1 < 2) {
           smacker_playing = 0;
@@ -200,10 +199,10 @@ void __watcall check_smacker_keys(void)
         }
       }
       do {
-        keyispressed_result = keyispressed(*(int *)((int)&smk_action_keys + iVar2));
-      } while (keyispressed_result != 0);
+        iVar2 = keyispressed(*(int *)((int)&smk_action_keys[0].field_00 + iVar3));
+      } while (iVar2 != 0);
     }
-    iVar2 = iVar2 + 8;
+    iVar3 = iVar3 + 8;
   } while( true );
 }
 
@@ -270,7 +269,7 @@ int __watcall get_free_smacker_key(void)
     if (0x9f < iVar1) {
       return -1;
     }
-    if (*(int *)((int)&smk_action_keys + iVar1) == -1) break;
+    if (*(int *)((int)&smk_action_keys[0].field_00 + iVar1) == -1) break;
     iVar1 = iVar1 + 8;
     i = i + 1;
   }
@@ -289,7 +288,7 @@ void __watcall clear_smacker_keys(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 8;
-    *(undefined4 *)((int)&smk_action_keys + iVar2) = 0xffffffff;
+    *(undefined4 *)((int)&smk_action_keys[0].field_00 + iVar2) = 0xffffffff;
     iVar2 = iVar1;
   } while (iVar1 != 0xa0);
   return;
@@ -314,8 +313,8 @@ void __watcall set_smacker_key(int param_1,int param_2)
   else {
     free_smacker_key = get_free_smacker_key();
     if (free_smacker_key != -1) {
-      (&smk_action_keys)[free_smacker_key * 2] = param_2;
-      (&DAT_00480f54)[free_smacker_key * 2] = param_1;
+      smk_action_keys[free_smacker_key * 2].field_00 = param_2;
+      smk_action_keys[free_smacker_key * 2 + 1].field_00 = param_1;
       return;
     }
     param_1 = 0x14;

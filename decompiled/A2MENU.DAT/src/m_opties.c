@@ -3,14 +3,14 @@
 
 /* ==== 00406898 mo_af_image ==== */
 
-int __watcall mo_af_image(int param_1,int param_2,char *param_3,int param_4)
+int __watcall mo_af_image(int anim_index,int frame_index,char *param_3,int param_4)
 
 {
   int iVar1;
   
-  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  iVar1 = xvga_anims[anim_index].frames[frame_index].image;
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d___mo_af_image_____Could_no_00428010,param_3,param_4,param_2,param_1);
+    fatal_exit(s__s__d___mo_af_image_____Could_no_00428010,param_3,param_4,frame_index,anim_index);
   }
   return iVar1;
 }
@@ -25,13 +25,13 @@ void __watcall mc_active_form(void)
   
   destroy_form();
   if (DAT_00437226 == 0) {
-    form = (form_t *)&mo_form_3D;
+    form = mo_form_3D;
   }
   else if ((DAT_00437226 < 2) || (DAT_00437226 != 2)) {
-    form = (form_t *)&mo_form_320;
+    form = mo_form_320;
   }
   else {
-    form = (form_t *)&mo_form_640;
+    form = mo_form_640;
   }
   activate_form(form);
   focus_control(0);
@@ -195,7 +195,7 @@ void __watcall mc_display_snd_setting(void)
 
 {
   int i;
-  int af_image;
+  int anim_index;
   int iVar1;
   int iVar2;
   
@@ -209,24 +209,24 @@ void __watcall mc_display_snd_setting(void)
     i = 0;
     do {
       if (((short)DAT_00437230 < i) || (DAT_00437222 >> 0x10 == 1)) {
-        af_image = 0x38;
+        anim_index = 0x38;
       }
       else {
-        af_image = 0x37;
+        anim_index = 0x37;
       }
       iVar2 = 2;
-      af_image = mo_af_image(af_image,i,s_m_opties_cpp_00428191,0x250);
-      set_mem_image(1,af_image,iVar1,0x9f,iVar2);
+      anim_index = mo_af_image(anim_index,i,s_m_opties_cpp_00428191,0x250);
+      set_mem_image(1,anim_index,iVar1,0x9f,iVar2);
       if ((DAT_00437230._2_2_ < i) || (DAT_00437222 >> 0x10 == 3)) {
-        af_image = 0x38;
+        anim_index = 0x38;
       }
       else {
-        af_image = 0x37;
+        anim_index = 0x37;
       }
       iVar2 = 2;
-      af_image = mo_af_image(af_image,i,s_m_opties_cpp_0042819e,0x256);
+      anim_index = mo_af_image(anim_index,i,s_m_opties_cpp_0042819e,0x256);
       i = i + 1;
-      set_mem_image(1,af_image,iVar1,0xe5,iVar2);
+      set_mem_image(1,anim_index,iVar1,0xe5,iVar2);
       iVar1 = iVar1 + 0x1a;
     } while (i < 5);
   }
@@ -242,25 +242,25 @@ void __watcall mc_display_tableau(void)
 
 {
   int af_image;
-  int af_image_2;
+  int frame_index;
   int iVar1;
   
-  af_image_2 = 0;
+  frame_index = 0;
   if (DAT_00437226 != 0) {
     if (DAT_00437226 < 2) {
-      af_image_2 = 1;
+      frame_index = 1;
     }
     else if (DAT_00437226 == 2) {
-      af_image_2 = 2;
+      frame_index = 2;
     }
   }
   hide_mouse();
   iVar1 = 2;
-  af_image = mo_af_image(0x35,af_image_2,s_m_opties_cpp_004281ab,0x27a);
+  af_image = mo_af_image(0x35,frame_index,s_m_opties_cpp_004281ab,0x27a);
   set_mem_image(2,af_image,0,0x70,iVar1);
   af_image = 2;
-  af_image_2 = mo_af_image(0x35,af_image_2,s_m_opties_cpp_004281b8,0x281);
-  set_mem_image(0,af_image_2,0,0x70,af_image);
+  frame_index = mo_af_image(0x35,frame_index,s_m_opties_cpp_004281b8,0x281);
+  set_mem_image(0,frame_index,0,0x70,af_image);
   mc_display_inhoud();
   mc_display_snd_setting();
   show_mouse();
@@ -284,12 +284,12 @@ void __watcall mo_animate_buttons(void)
   do {
     DVar1 = GetTickCount();
     iVar4 = 2;
-    af_image = mo_af_image(0x3f,*(int *)((int)&DAT_0043408e + iVar3) >> 0x10,s_m_opties_cpp_004281c5
-                           ,0x2a0);
+    af_image = mo_af_image(0x3f,*(int *)((int)&mo_help[5].text + iVar3 + 2) >> 0x10,
+                           s_m_opties_cpp_004281c5,0x2a0);
     set_mem_image(0,af_image,0,0x14b,iVar4);
     iVar4 = 2;
-    af_image = mo_af_image(0x40,*(int *)((int)&DAT_0043409e + iVar3) >> 0x10,s_m_opties_cpp_004281d2
-                           ,0x2a7);
+    af_image = mo_af_image(0x40,*(int *)((int)mo_entree_anim_tabel + iVar3 + 0xe) >> 0x10,
+                           s_m_opties_cpp_004281d2,0x2a7);
     set_mem_image(0,af_image,0,0x17e,iVar4);
     do {
       handle_win_msg();

@@ -25,7 +25,7 @@ void __watcall destroy_areabutton(form_t *form)
 
 /* ==== 00411eae create_areabutton ==== */
 
-void __watcall create_areabutton(form_t *form,int param_2)
+void __watcall create_areabutton(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -51,20 +51,20 @@ void __watcall create_areabutton(form_t *form,int param_2)
     if (piVar1[1] == -1) {
       piVar1[1] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
     }
-    check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+    check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
     set_mem_image(0,control_image_index,form->x + iVar2 / 2,form->y + iVar3 / 2,1);
   }
-  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+  check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
   pHVar4 = CreateWindowExA(0,s_STATIC_0041efe4,(LPCSTR)0x0,0x50000000,form->x,form->y,*piVar1,
-                           piVar1[1],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+                           piVar1[1],xvga_hwnd,(HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar4;
   if (pHVar4 == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ar_0041efeb,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ar_0041efeb,form_index);
   }
   old_areabutton_windowproc = SetWindowLongA(form->hwnd,-4,0x412091);
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -109,7 +109,7 @@ long AreaButtonWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
 {
   SHORT SVar1;
   HWND pHVar2;
-  int control_index;
+  int form_index;
   bool bVar3;
   tagPAINTSTRUCT tStack_4c;
   
@@ -150,8 +150,8 @@ LAB_004120d8:
     else if (0x104 < param_2) {
       if (param_2 < 0x201) goto LAB_0041216d;
       if (param_2 < 0x202) {
-        control_index = get_control_index(param_1);
-        set_control_state(control_index,4);
+        form_index = get_control_index(param_1);
+        set_control_state(form_index,4);
         goto LAB_0041216d;
       }
       bVar3 = param_2 == 0x204;

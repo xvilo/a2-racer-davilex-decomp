@@ -673,10 +673,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
-  int iVar4;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  undefined4 uVar7;
+  undefined4 uVar6;
   
   xvga_get_sound_info();
   if (init_sound_ok == 0) {
@@ -687,9 +686,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
           direct_sound_create = DirectSoundCreate(extraout_EDX_01,&xvga_ds_object,extraout_EDX_01);
           if (direct_sound_create != 0) {
             pcVar1 = ds_error_string(direct_sound_create);
-            uVar7 = 0x262;
-            pcVar6 = s_sound_cpp_00449c20;
-            pcVar5 = s__s__d____error_creating_sound_ob_00449c2a;
+            uVar6 = 0x262;
+            pcVar5 = s_sound_cpp_00449c20;
+            pcVar4 = s__s__d____error_creating_sound_ob_00449c2a;
             goto LAB_00419a37;
           }
           pcVar1 = s_Default_driver_init_failure___No_00449c56;
@@ -701,9 +700,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
                                  extraout_EDX_00);
           if (direct_sound_create != 0) {
             pcVar1 = ds_error_string(direct_sound_create);
-            uVar7 = 0x25a;
-            pcVar6 = s_sound_cpp_00449b9c;
-            pcVar5 = s__s__d____error_creating_sound_ob_00449ba6;
+            uVar6 = 0x25a;
+            pcVar5 = s_sound_cpp_00449b9c;
+            pcVar4 = s__s__d____error_creating_sound_ob_00449ba6;
             goto LAB_00419a37;
           }
           pcVar1 = s_Attempting_to_use_secondary__unk_00449bd2;
@@ -716,9 +715,9 @@ int __watcall xvga_init_sound(int param_1,int param_2)
                                extraout_EDX);
         if (direct_sound_create != 0) {
           pcVar1 = ds_error_string(direct_sound_create);
-          uVar7 = 0x251;
-          pcVar6 = s_sound_cpp_00449b19;
-          pcVar5 = s__s__d____error_creating_sound_ob_00449b23;
+          uVar6 = 0x251;
+          pcVar5 = s_sound_cpp_00449b19;
+          pcVar4 = s__s__d____error_creating_sound_ob_00449b23;
           goto LAB_00419a37;
         }
         pcVar1 = s_Attempting_to_use_sb16_driver_su_00449b4f;
@@ -730,11 +729,11 @@ int __watcall xvga_init_sound(int param_1,int param_2)
       HVar2 = (*xvga_ds_object->lpVtbl->SetCooperativeLevel)(xvga_ds_object,xvga_hwnd,3);
       if ((HVar2 != 0) != 0) {
         pcVar1 = ds_error_string((uint)(HVar2 != 0));
-        uVar7 = 0x26d;
-        pcVar6 = s_sound_cpp_00449c7e;
-        pcVar5 = s__s__d____error_setting_the_coop_l_00449c88;
+        uVar6 = 0x26d;
+        pcVar5 = s_sound_cpp_00449c7e;
+        pcVar4 = s__s__d____error_setting_the_coop_l_00449c88;
 LAB_00419a37:
-        debugmsg(pcVar5,pcVar6,uVar7,pcVar1);
+        debugmsg(pcVar4,pcVar5,uVar6,pcVar1);
         return 0x2af9;
       }
       snd_coop_level_set = 1;
@@ -756,21 +755,21 @@ LAB_00419a37:
       fatal_exit(s__s__d____error_illegal_sound_mod_00449cf4);
     }
     if ((param_2 != 0xe) && (snd_format_set == 0)) {
-      iVar4 = param_2 * 0x10;
-      iVar3 = set_output_format(*(int *)(&sound_modes + iVar4),*(int *)(&DAT_004594b4 + iVar4),
-                                *(int *)(&DAT_004594bc + iVar4),*(int *)(&DAT_004594b8 + iVar4));
+      iVar3 = set_output_format(sound_modes[param_2 * 4].field_00,
+                                sound_modes[param_2 * 4 + 1].field_00,
+                                sound_modes[param_2 * 4 + 3].field_00,
+                                sound_modes[param_2 * 4 + 2].field_00);
       if (iVar3 != 0) {
         return 0x2afa;
       }
-      if (*(int *)(&DAT_004594b8 + iVar4) == 0) {
+      if (sound_modes[param_2 * 4 + 2].field_00 == 0) {
         pcVar1 = s_MONO_00449d28;
       }
       else {
         pcVar1 = s_STEREO_00449d21;
       }
-      debugmsg(s_setting_sound_format__dHz__dbits_00449d2d,
-               *(undefined4 *)(&sound_modes + param_2 * 0x10),
-               *(undefined4 *)(&DAT_004594b4 + param_2 * 0x10),pcVar1);
+      debugmsg(s_setting_sound_format__dHz__dbits_00449d2d,sound_modes[param_2 * 4].field_00,
+               sound_modes[param_2 * 4 + 1].field_00,pcVar1);
       snd_format_set = 1;
     }
     debugmsg(s_init_smacker_00449d52);
@@ -887,22 +886,21 @@ LAB_00419d3a:
     if (param_3 != 0xe) {
       debugmsg(s_setting_3d_output_format_00449fa6);
       if (snd_format_set == 0) {
-        i = param_3 * 0x10;
         iVar3 = set_3d_output_format
-                          (*(int *)(&sound_modes + i),*(int *)(&DAT_004594b4 + i),
-                           *(int *)(&DAT_004594bc + i),*(int *)(&DAT_004594b8 + i));
+                          (sound_modes[param_3 * 4].field_00,sound_modes[param_3 * 4 + 1].field_00,
+                           sound_modes[param_3 * 4 + 3].field_00,
+                           sound_modes[param_3 * 4 + 2].field_00);
         if (iVar3 != 0) {
           return 0x2afa;
         }
-        if (*(int *)(&DAT_004594b8 + i) == 0) {
+        if (sound_modes[param_3 * 4 + 2].field_00 == 0) {
           pcVar1 = s_MONO_00449fc7;
         }
         else {
           pcVar1 = s_STEREO_00449fc0;
         }
-        debugmsg(s_setting_sound_format__dHz__dbits_00449fcc,
-                 *(undefined4 *)(&sound_modes + param_3 * 0x10),
-                 *(undefined4 *)(&DAT_004594b4 + param_3 * 0x10),pcVar1);
+        debugmsg(s_setting_sound_format__dHz__dbits_00449fcc,sound_modes[param_3 * 4].field_00,
+                 sound_modes[param_3 * 4 + 1].field_00,pcVar1);
         snd_format_set = 1;
       }
     }

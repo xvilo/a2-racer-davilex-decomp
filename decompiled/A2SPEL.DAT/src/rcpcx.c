@@ -692,7 +692,7 @@ load_pcx_file_surface_2(char *filename_val,int *param_2,int *param_3,int param_4
 /* ==== 00418a87 load_pcx_file_surface_3 ==== */
 
 int __watcall
-load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surface_3,int param_3)
+load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surface_2,int param_3)
 
 {
   int iVar1;
@@ -715,7 +715,7 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
   RECT rect_2;
   int local_1c;
   int local_18;
-  IDirectDrawSurface *direct_draw_surface_2;
+  IDirectDrawSurface *direct_draw_surface_3;
   
   file = xvga_src_fopen(filename_val);
   if (file == (__iobuf *)0x0) {
@@ -745,7 +745,7 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
     debugmsg(s__s__d____header_read__004492e8,s_rcpcx_cpp_004492de,0x276);
     if ((file->field_0c & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__0044930b,s_rcpcx_cpp_00449301,0x27c);
-      get_surface_info(direct_draw_surface_3,&local_1c,&local_18);
+      get_surface_info(direct_draw_surface_2,&local_1c,&local_18);
       if ((local_bc == '\n') && (local_bb == '\x05')) {
         rect_2.right = ((int)sStack_b4 - (int)sStack_b8) + 1;
         rect_2.top = 0;
@@ -757,19 +757,19 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
         rect.right = local_1c;
         rect_2.bottom = iVar4;
         direct_draw_surface = create_surface(rect_2.right,iVar4);
-        direct_draw_surface_2 = direct_draw_surface;
+        direct_draw_surface_3 = direct_draw_surface;
         debugmsg(s_creation_succesfull_0044932d);
         unpack_pcx_file_surface(direct_draw_surface,file,local_7c >> 0x10,iVar4);
         debugmsg(s_blitting_to_destination_00449342);
-        HVar3 = (*direct_draw_surface_3->lpVtbl->Blt)
-                          (direct_draw_surface_3,&rect,direct_draw_surface,&rect_2,0,(DDBLTFX *)0x0)
+        HVar3 = (*direct_draw_surface_2->lpVtbl->Blt)
+                          (direct_draw_surface_2,&rect,direct_draw_surface,&rect_2,0,(DDBLTFX *)0x0)
         ;
         if (HVar3 != 0) {
           arg4 = dd_error_string(HVar3);
           fatal_exit(s__s__d____blitting_error___s__00449365,s_rcpcx_cpp_0044935b,0x294,arg4);
         }
         debugmsg(s_Release_buffer_surface_00449384);
-        (*direct_draw_surface_2->lpVtbl->Release)(direct_draw_surface_2);
+        (*direct_draw_surface_3->lpVtbl->Release)(direct_draw_surface_3);
       }
       debugmsg(s__s__d____closing_004493a6,s_rcpcx_cpp_0044939c,0x29a);
       iVar4 = 0;

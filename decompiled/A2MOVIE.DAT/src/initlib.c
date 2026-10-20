@@ -182,11 +182,11 @@ void __watcall set_xvga_vars(uint param_1,uint param_2,int param_3)
     if (((int)param_2 < 0) || (0x12 < (int)param_2)) {
       fatal_exit(s__s__d____error_predefined_screen_004182f6,s_initlib_cpp_004182ea,0xe4);
     }
-    DAT_0041f8e0 = param_2;
-    xvga_screen_xsize = (&xvga_screen_modes)[param_2 * 5];
-    xvga_screen_ysize = (&DAT_0041f900)[param_2 * 5];
-    xvga_screen_bpp = (&DAT_0041f904)[param_2 * 5];
-    xvga_allowmodex = *(int *)(&DAT_0041f908 + param_2 * 0x14);
+    ini_filename._300_4_ = param_2;
+    xvga_screen_xsize = *(int *)((int)xvga_screen_modes + param_2 * 0x14);
+    xvga_screen_ysize = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 4);
+    xvga_screen_bpp = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 8);
+    xvga_allowmodex = *(int *)((int)xvga_screen_modes + param_2 * 0x14 + 0xc);
     return;
   }
   if (1 < param_1) {
@@ -847,7 +847,7 @@ undefined4 __watcall init_xvga_lib(HINSTANCE param_1,int param_2,LPCSTR param_3,
     DAT_00421260 = 1;
   }
   xvga_get_screen_mode_info();
-  iVar1 = xvga_test_mode_available(DAT_0041f8e0);
+  iVar1 = xvga_test_mode_available(ini_filename._300_4_);
   if (iVar1 == 0) {
     debugmsg(s_could_not_find_mode_0041916d);
   }

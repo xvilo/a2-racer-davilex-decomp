@@ -35,7 +35,7 @@ void __watcall wipe_vrollbarup(int param_1,int param_2,int param_3,int param_4,i
     }
     iVar2 = 0;
     do {
-      iVar1 = local_2c + *(int *)((int)&roll_tabledraw + iVar2);
+      iVar1 = local_2c + *(int *)((int)roll_tabledraw + iVar2);
       if (((iVar1 <= param_4) && (i <= param_4)) && (-1 < i)) {
         copyblock_tosurface(surface_ptr_2,surface_ptr,param_1,iVar1,param_3,1,param_1,i);
       }
@@ -89,7 +89,7 @@ void __watcall wipe_vrollbardown(int param_1,int param_2,int param_3,int param_4
     }
     iVar2 = 0;
     do {
-      iVar1 = local_28 + *(int *)((int)&roll_tabledraw + iVar2);
+      iVar1 = local_28 + *(int *)((int)roll_tabledraw + iVar2);
       if ((param_2 <= iVar1) && (i <= param_4)) {
         copyblock_tosurface(surface_ptr,surface_ptr_3,param_1,iVar1,param_3,1,param_1,i);
       }

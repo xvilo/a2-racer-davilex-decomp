@@ -34,7 +34,7 @@ void __watcall clear_edit_keys_allowed(void)
   if (400 < ~i - 1) {
     fatal_exit(s__s__d_____set_edit_keys_allowed__00456a44,s_editbox_cpp_00456a38,0x3c,400);
   }
-  pcVar3 = &allowed_edit_keys;
+  pcVar3 = allowed_edit_keys;
   do {
     cVar1 = *pcVar2;
     *pcVar3 = cVar1;
@@ -70,7 +70,7 @@ void __watcall set_edit_keys_allowed(char *param_1)
   if (400 < ~i - 1) {
     fatal_exit(s__s__d_____set_edit_keys_allowed__00456a44,s_editbox_cpp_00456a38,0x3c,400);
   }
-  pcVar2 = &allowed_edit_keys;
+  pcVar2 = allowed_edit_keys;
   do {
     cVar1 = *param_1;
     *pcVar2 = cVar1;
@@ -88,7 +88,7 @@ void __watcall set_edit_keys_allowed(char *param_1)
 
 /* ==== 0043c9cf get_edit_box_text ==== */
 
-void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
+void __watcall get_edit_box_text(int form_index,char *param_2,int param_3)
 
 {
   int control_type_val;
@@ -96,17 +96,18 @@ void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
   UINT Msg;
   WPARAM wParam;
   
-  control_type_val = get_control_type(param_1);
+  control_type_val = get_control_type(form_index);
   if (control_type_val != 0) {
-    control_type_val = get_control_type(param_1);
+    control_type_val = get_control_type(form_index);
     if (control_type_val != 3) {
-      fatal_exit(s__s__d_____get_edit_box_text__con_00456adf,s_editbox_cpp_00456ad3,0x52,param_1);
+      fatal_exit(s__s__d_____get_edit_box_text__con_00456adf,s_editbox_cpp_00456ad3,0x52,form_index)
+      ;
     }
   }
   wParam = 0;
   Msg = 0xc4;
   *(short *)param_2 = (short)param_3;
-  hWnd = get_control_hwnd(param_1);
+  hWnd = get_control_hwnd(form_index);
   SendMessageA(hWnd,Msg,wParam,(LPARAM)param_2);
   return;
 }
@@ -170,7 +171,7 @@ void __watcall destroy_edit_box(form_t *form)
 
 /* ==== 0043cafe create_edit_box ==== */
 
-void __watcall create_edit_box(form_t *form,int param_2)
+void __watcall create_edit_box(form_t *form,int form_index)
 
 {
   int *piVar1;
@@ -202,7 +203,7 @@ void __watcall create_edit_box(form_t *form,int param_2)
     fatal_exit(s__s__d_____edit_windows_box__heig_00456cd2,s_editbox_cpp_00456cc6,0xa7,piVar1[1],
                iVar2);
   }
-  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+  check_control_position(form_index,form->x,form->y,*piVar1,piVar1[1]);
   if (piVar1[3] == 1) {
     if (form->type == 0) {
       lpParam = (LPVOID)0x0;
@@ -248,11 +249,11 @@ void __watcall create_edit_box(form_t *form,int param_2)
     lpClassName = s_EDIT_00456d35;
   }
   pHVar4 = CreateWindowExA(0,lpClassName,(LPCSTR)0x0,dwStyle,X,Y,nWidth,iVar2,xvga_hwnd,
-                           (HMENU)param_2,hInstance,lpParam);
+                           (HMENU)form_index,hInstance,lpParam);
   form->hwnd = pHVar4;
 LAB_0043cbd7:
   if (form->hwnd == (HWND)0x0) {
-    fatal_exit(s_Unable_to_create_a_window_for_ed_00456d3a,param_2);
+    fatal_exit(s_Unable_to_create_a_window_for_ed_00456d3a,form_index);
   }
   old_edit_windowproc = SetWindowLongA(form->hwnd,-4,0x43cde3);
   wParam = xvga_get_active_font();
@@ -270,7 +271,7 @@ LAB_0043cbd7:
   piVar1[9] = 0xffffff;
   pHVar3 = CreateSolidBrush(piVar1[8]);
   piVar1[10] = (int)pHVar3;
-  set_control_state(param_2,form->state);
+  set_control_state(form_index,form->state);
   return;
 }
 
@@ -312,11 +313,11 @@ long EditWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
   long set_windows_edit_box_colors_result;
   byte *found;
   HWND pHVar2;
-  byte bVar3;
-  bool bVar4;
-  undefined2 local_10;
+  bool bVar3;
+  byte local_10;
+  char cStack_f;
   
-  local_10 = EditWindowProc__key;
+  _local_10 = EditWindowProc__key._0_2_;
   if (param_2 < 0x102) {
     if (param_2 < 8) {
       if (param_2 != 7) goto LAB_0043cf0a;
@@ -357,22 +358,22 @@ long EditWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
     }
     goto LAB_0043cf0a;
   }
-  bVar3 = (byte)param_3;
-  local_10 = CONCAT11((char)((ushort)EditWindowProc__key >> 8),bVar3);
-  if (bVar3 < 8) {
-    bVar4 = bVar3 == 3;
+  local_10 = (byte)param_3;
+  cStack_f = SUB21(EditWindowProc__key._0_2_,1);
+  if (local_10 < 8) {
+    bVar3 = local_10 == 3;
 LAB_0043ce7a:
-    if (bVar4) goto LAB_0043cf0a;
+    if (bVar3) goto LAB_0043cf0a;
   }
   else {
-    if (bVar3 < 9) goto LAB_0043cf0a;
-    if (0x15 < bVar3) {
-      if (bVar3 < 0x17) goto LAB_0043cf0a;
-      bVar4 = bVar3 == 0x18;
+    if (local_10 < 9) goto LAB_0043cf0a;
+    if (0x15 < local_10) {
+      if (local_10 < 0x17) goto LAB_0043cf0a;
+      bVar3 = local_10 == 0x18;
       goto LAB_0043ce7a;
     }
   }
-  found = strstr(&allowed_edit_keys,(byte *)&local_10);
+  found = strstr((byte *)allowed_edit_keys,&local_10);
   if (found == (byte *)0x0) {
     return 0;
   }

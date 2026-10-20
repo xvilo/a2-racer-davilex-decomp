@@ -37,7 +37,7 @@ void __watcall clear_control_list(void)
   iVar2 = 0;
   do {
     iVar1 = iVar2 + 0x19;
-    (&control_list)[iVar2] = 0;
+    *(undefined1 *)((int)&control_list[0].field_00 + iVar2) = 0;
     iVar2 = iVar1;
   } while (iVar1 != 0xfa);
   return;
@@ -54,17 +54,17 @@ add_control_to_list(int param_1,void *param_2,void *param_3,void *param_4,void *
   int iVar1;
   
   iVar1 = param_1 * 0x19;
-  if ((&control_list)[iVar1] != '\0') {
+  if (*(char *)((int)control_list + iVar1) != '\0') {
     fatal_exit(s__s__d_____add_control_to_list__c_0041e541,s_controls_cpp_0041e534,0x4e,param_1);
     return;
   }
-  *(void **)(&DAT_004217ad + iVar1) = param_2;
-  *(void **)(&DAT_004217b1 + iVar1) = param_3;
-  *(void **)(&DAT_004217b5 + iVar1) = param_4;
-  (&control_list)[iVar1] = 1;
-  *(void **)(&DAT_004217b9 + iVar1) = param_5;
-  *(void **)(&DAT_004217bd + iVar1) = param_6;
-  *(void **)(&DAT_004217c1 + iVar1) = param_7;
+  *(void **)((int)control_list + iVar1 + 1) = param_2;
+  *(void **)((int)control_list + iVar1 + 5) = param_3;
+  *(void **)((int)control_list + iVar1 + 9) = param_4;
+  *(undefined1 *)((int)control_list + iVar1) = 1;
+  *(void **)((int)control_list + iVar1 + 0xd) = param_5;
+  *(void **)((int)control_list + iVar1 + 0x11) = param_6;
+  *(void **)((int)control_list + iVar1 + 0x15) = param_7;
   return;
 }
 

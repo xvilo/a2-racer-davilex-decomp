@@ -156,7 +156,7 @@ void __watcall mouse_off(void)
 
 /* ==== 00410927 set_mouse_anim ==== */
 
-void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
+void __watcall set_mouse_anim(int anim_index,int frame_index,char param_3)
 
 {
   int arg4;
@@ -164,15 +164,15 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
   if (mouse_type == 1) {
     fatal_exit(s__s__d_____set_mouse_anim__You_ca_0042d237,s_mouse_cpp_0042d22d,0xde);
   }
-  if ((param_1 < 0) || (max_anim_ptr <= param_1)) {
-    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d287,s_mouse_cpp_0042d27d,0xe2,param_1,
+  if ((anim_index < 0) || (max_anim_ptr <= anim_index)) {
+    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d287,s_mouse_cpp_0042d27d,0xe2,anim_index,
                max_anim_ptr);
   }
-  if ((param_2 < 0) || ((&xvga_anims->field_00)[param_1 * 3] <= param_2)) {
-    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d2eb,s_mouse_cpp_0042d2e1,0xe6,param_2,
-               (&xvga_anims->field_00)[param_1 * 3],param_1);
+  if ((frame_index < 0) || (xvga_anims[anim_index].frame_count <= frame_index)) {
+    fatal_exit(s__s__d_____set_mouse_anim__illega_0042d2eb,s_mouse_cpp_0042d2e1,0xe6,frame_index,
+               xvga_anims[anim_index].frame_count,anim_index);
   }
-  arg4 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
+  arg4 = xvga_anims[anim_index].frames[frame_index].image;
   if ((arg4 < 0) || (max_mem_image_ptr <= arg4)) {
     fatal_exit(s__s__d_____set_mouse_anim__image___0042d34e,s_mouse_cpp_0042d344,0xeb,arg4,
                max_mem_image_ptr);
@@ -180,8 +180,8 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
   if (*(int *)(arg4 * 0x20 + (int)xvga_mem_images) == 0) {
     fatal_exit(s__s__d_____set_mouse_anim__mouse_i_0042d39b,s_mouse_cpp_0042d391,0xee,arg4);
   }
-  mouse_anim = param_1;
-  mouse_frame = param_2;
+  mouse_anim = anim_index;
+  mouse_frame = frame_index;
   mouse_loop = param_3;
   mouse_anim_set = 1;
   return;
