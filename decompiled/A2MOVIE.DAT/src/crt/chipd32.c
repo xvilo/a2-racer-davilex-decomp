@@ -214,22 +214,21 @@ void __watcall __fdivrp_sti_st(void)
 
 /* ==== 00415a68 fdiv_m64 ==== */
 
-undefined4 __watcall
-fdiv_m64(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-        undefined4 param_5,uint param_6)
+undefined4 __watcall fdiv_m64(undefined4 param_1,uint param_2)
 
 {
+  undefined4 in_EAX;
   ushort in_FPUStatusWord;
   
-  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
-    return param_1;
+  if ((param_2 & 0x7ff00000) == 0x7ff00000) {
+    return in_EAX;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
     __fdivp_sti_st();
-    return param_1;
+    return in_EAX;
   }
   __fdivp_sti_st();
-  return param_1;
+  return in_EAX;
 }
 
 
@@ -241,43 +240,41 @@ fdiv_m64(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 par
    Libraries: Visual Studio 1998 Debug, Visual Studio 1998 Release, Visual Studio 2003 Debug, Visual
    Studio 2003 Release */
 
-undefined4 __watcall
-__adj_fdivr_m32(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-               uint param_5)
+undefined4 __watcall __adj_fdivr_m32(uint param_1)
 
 {
+  undefined4 in_EAX;
   ushort in_FPUStatusWord;
   
-  if ((param_5 & 0x7f800000) == 0x7f800000) {
-    return param_1;
+  if ((param_1 & 0x7f800000) == 0x7f800000) {
+    return in_EAX;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
     __fdivrp_sti_st();
-    return param_1;
+    return in_EAX;
   }
   __fdivrp_sti_st();
-  return param_1;
+  return in_EAX;
 }
 
 
 /* ==== 00415b00 fdivr_checked ==== */
 
-undefined4 __watcall
-fdivr_checked(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-             undefined4 param_5,uint param_6)
+undefined4 __watcall fdivr_checked(undefined4 param_1,uint param_2)
 
 {
+  undefined4 in_EAX;
   ushort in_FPUStatusWord;
   
-  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
-    return param_1;
+  if ((param_2 & 0x7ff00000) == 0x7ff00000) {
+    return in_EAX;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
     __fdivrp_sti_st();
-    return param_1;
+    return in_EAX;
   }
   __fdivrp_sti_st();
-  return param_1;
+  return in_EAX;
 }
 
 

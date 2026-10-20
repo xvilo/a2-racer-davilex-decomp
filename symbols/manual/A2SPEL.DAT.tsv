@@ -383,10 +383,10 @@ address	kind	name	cc	ret	params	dtype	mangled
 00426137	function	build_map_execute_buffers					
 00426c74	function	update_visible_tiles	__watcall	void	int:x|int:z		
 00426ea7	function	return_zero_float					
-00426eac	function	road_height_at					
+00426eac	function	road_height_at	__watcall_s1	float	int:chunk|float:x|float:z		
 00426f39	function	build_tile_execute_buffer					
 00427414	function	find_free_camera					
-00427c2a	function	set_camera					
+00427c2a	function	set_camera	__watcall_s1	void	int:camera|float:x|float:y|float:z|int:pitch|int:yaw|int:roll		
 00427e58	function	init_cameras					
 00427f31	function	atan2_checked					
 # --- Watcom C runtime / FPU helpers ----------------------------------------------------

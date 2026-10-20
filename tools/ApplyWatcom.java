@@ -80,6 +80,25 @@ public class ApplyWatcom extends GhidraScript {
 	}
 
 	/**
+	 * __watcall_sN: N register parameters, then the rest on the stack. Watcom passes a
+	 * floating-point argument on the stack, and every argument after it as well (seen at
+	 * the call sites of set_camera: the camera index in EAX, then x, y, z and the angles
+	 * pushed), so a function can have stack parameters with fewer than four registers.
+	 */
+	static String watcallStackXml(int n) {
+		String[] regs = { "EAX", "EDX", "EBX", "ECX" };
+		StringBuilder input = new StringBuilder();
+		for (int i = 0; i < n; i++) {
+			input.append("    <pentry minsize=\"1\" maxsize=\"4\"><register name=\"")
+				.append(regs[i]).append("\"/></pentry>\n");
+		}
+		input.append("    <pentry minsize=\"1\" maxsize=\"500\" align=\"4\">" +
+			"<addr offset=\"4\" space=\"stack\"/></pentry>\n");
+		return watcallXml(n).replace("name=\"__watcall" + n + "\"", "name=\"__watcall_s" + n + "\"")
+			.replaceAll("(?s)<input>.*</input>", "<input>\n" + input + "  </input>");
+	}
+
+	/**
 	 * Watcom variadic functions take every argument on the stack (the caller pops them)
 	 * but, unlike Microsoft's __cdecl, preserve every register except EAX.
 	 */
@@ -112,6 +131,9 @@ public class ApplyWatcom extends GhidraScript {
 			spec.addReplaceCompilerSpecExtension(WATCALL_XML, monitor);
 			for (int n = 0; n <= 4; n++) {
 				spec.addReplaceCompilerSpecExtension(watcallXml(n), monitor);
+			}
+			for (int n = 0; n < 4; n++) {
+				spec.addReplaceCompilerSpecExtension(watcallStackXml(n), monitor);
 			}
 			spec.addReplaceCompilerSpecExtension(VARARGS_XML, monitor);
 			// This heuristic marks a function non-returning when calls to it sit right before

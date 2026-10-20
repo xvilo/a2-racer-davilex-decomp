@@ -3,7 +3,7 @@
 
 /* ==== 00421be2 strtod ==== */
 
-byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,uint param_4)
+byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,undefined4 param_4)
 
 {
   byte bVar1;
@@ -26,10 +26,10 @@ byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,uin
   for (pbVar2 = param_1; (bVar7 = *pbVar2, bVar7 == 0x20 || ((8 < bVar7 && (bVar7 < 0xe))));
       pbVar2 = pbVar2 + 1) {
   }
-  uVar5 = param_4 & 0xffffff00;
+  uVar5 = 0;
   pbVar3 = pbVar2 + 1;
   if ((bVar7 != 0x2b) && (pbVar3 = pbVar2, bVar7 == 0x2d)) {
-    uVar5 = CONCAT31((int3)(param_4 >> 8),1);
+    uVar5 = 1;
     pbVar3 = pbVar2 + 1;
   }
   i = 0;
@@ -39,15 +39,15 @@ byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,uin
   while( true ) {
     while( true ) {
       bVar1 = *pbVar3;
-      uVar5 = CONCAT22((short)(uVar5 >> 0x10),CONCAT11((char)uVar5,(char)uVar5)) & 0xffff08ff;
+      uVar5 = CONCAT11((char)uVar5,(char)uVar5) & 0xffff08ff;
       pbVar2 = pbVar3 + 1;
       if (bVar1 != 0x2e) break;
-      if ((uVar5 >> 8 & 0xff) != 0) goto LAB_00421c6f;
+      if (uVar5 >> 8 != 0) goto LAB_00421c6f;
       uVar5 = uVar5 | 8;
       pbVar3 = pbVar2;
     }
     if ((bVar1 < 0x30) || (0x39 < bVar1)) break;
-    if ((uVar5 >> 8 & 0xff) != 0) {
+    if (uVar5 >> 8 != 0) {
       j = j + 1;
     }
     bVar7 = bVar7 | bVar1;
@@ -107,7 +107,7 @@ LAB_00421c6f:
         goto LAB_00421dbd;
       }
       if (k != 0) {
-        Scale10V(i,uStack_24,local_28,uVar5,local_28,uStack_24,k);
+        Scale10V(local_28,uStack_24,k);
       }
       pbVar2 = (byte *)(uint)((byte)uVar5 & 1);
       pbVar4 = pbVar2;

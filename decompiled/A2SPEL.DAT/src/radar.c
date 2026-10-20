@@ -296,8 +296,7 @@ void __watcall draw_radar_contents_1(void)
   int local_1c;
   
   i = player_heading;
-  opponent_chunk =
-       get_opponent_chunk(s_radar_cpp_0044580d,0x13c,(int)objects3d[player_index].opponent);
+  opponent_chunk = get_opponent_chunk(s_radar_cpp_0044580d,0x13c,objects3d[player_index].opponent);
   j = *opponent_chunk;
   surface_ptr_3 = get_surface_ptr_3(radar_surface,local_40);
   surface_ptr_3_2 = surface_ptr_3;
@@ -427,8 +426,7 @@ void __watcall draw_radar_contents_2(void)
   opponent_t *opponent;
   
   k = player_heading;
-  opponent_chunk =
-       get_opponent_chunk(s_radar_cpp_0044581f,0x1a7,(int)objects3d[player_index].opponent);
+  opponent_chunk = get_opponent_chunk(s_radar_cpp_0044581f,0x1a7,objects3d[player_index].opponent);
   j = *opponent_chunk;
   surface_ptr_3 = get_surface_ptr_3(radar_surface,local_48);
   surface_ptr_3_2 = surface_ptr_3;

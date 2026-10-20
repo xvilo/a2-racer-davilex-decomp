@@ -45,8 +45,8 @@ int __watcall mds_get_current_display(int param_1)
 void __watcall mds_print_score(single_score_t *single_score,int param_2,int param_3,int param_4)
 
 {
-  undefined1 *puVar1;
-  undefined1 *puVar2;
+  int *piVar1;
+  int *piVar2;
   ulonglong uVar3;
   ulong uVar4;
   ulong uVar5;
@@ -67,22 +67,22 @@ void __watcall mds_print_score(single_score_t *single_score,int param_2,int para
   iVar7 = param_3 + 0x9b;
   do {
     uVar6 = uVar4;
-    if (single_score->field_26 != 0) {
+    if (single_score->is_new != 0) {
       uVar6 = uVar5;
     }
     xvga_set_font_colors(2,uVar6,uVar6);
     arg5 = arg5 + 1;
     win_print_xy(1,param_2 + 0x2c,iVar7,s__2d_0042859d,arg5);
     win_bprintf(1,param_2 + 0x52,iVar7,0x84,s__s_004285a1,single_score);
-    win_bprintf(1,param_2 + 0x10c,iVar7,0x96,s__9d_004285a4,single_score->field_28);
-    puVar1 = &single_score->field_0x20;
-    uVar3 = (longlong)*(int *)&single_score->field_0x20 / 0x3c;
-    puVar2 = &single_score->field_0x20;
+    win_bprintf(1,param_2 + 0x10c,iVar7,0x96,s__9d_004285a4,single_score->money);
+    piVar1 = &single_score->time;
+    uVar3 = (longlong)single_score->time / 0x3c;
+    piVar2 = &single_score->time;
     single_score = single_score + 1;
-    win_print_xy(1,param_2 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_004285a8,*(int *)puVar2 / 0xe10,
+    win_print_xy(1,param_2 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_004285a8,*piVar2 / 0xe10,
                  (int)((longlong)
                        ((ulonglong)(uint)((int)uVar3 >> 0x1f) << 0x20 | uVar3 & 0xffffffff) % 0x3c),
-                 *(int *)puVar1 % 0x3c);
+                 *piVar1 % 0x3c);
     iVar7 = iVar7 + 0x19;
   } while (arg5 < 10);
   return;
@@ -94,8 +94,8 @@ void __watcall mds_print_score(single_score_t *single_score,int param_2,int para
 void __watcall mds_print_hiscore(single_score_t *single_score,int param_2,int param_3,int param_4)
 
 {
-  undefined1 *puVar1;
-  undefined1 *puVar2;
+  int *piVar1;
+  int *piVar2;
   ulonglong uVar3;
   ulong uVar4;
   ulong uVar5;
@@ -116,22 +116,23 @@ void __watcall mds_print_hiscore(single_score_t *single_score,int param_2,int pa
   iVar7 = param_3 + 0x9b;
   do {
     uVar6 = uVar4;
-    if (single_score->field_26 != 0) {
+    if (single_score->is_new != 0) {
       uVar6 = uVar5;
     }
     xvga_set_font_colors(2,uVar6,uVar6);
     arg5 = arg5 + 1;
     win_print_xy(1,param_2 + 0x2c,iVar7,s__2d_004285be,arg5);
     win_bprintf(1,param_2 + 0x52,iVar7,0x84,s__s_004285c2,single_score);
-    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_004285c5,level_naam[single_score->field_22 >> 0x10]);
-    puVar1 = &single_score->field_0x20;
-    uVar3 = (longlong)*(int *)&single_score->field_0x20 / 0x3c;
-    puVar2 = &single_score->field_0x20;
+    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_004285c5,
+                 level_naam[*(int *)((int)&single_score->time + 2) >> 0x10]);
+    piVar1 = &single_score->time;
+    uVar3 = (longlong)single_score->time / 0x3c;
+    piVar2 = &single_score->time;
     single_score = single_score + 1;
-    win_print_xy(1,param_2 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_004285c8,*(int *)puVar2 / 0xe10,
+    win_print_xy(1,param_2 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_004285c8,*piVar2 / 0xe10,
                  (int)((longlong)
                        ((ulonglong)(uint)((int)uVar3 >> 0x1f) << 0x20 | uVar3 & 0xffffffff) % 0x3c),
-                 *(int *)puVar1 % 0x3c);
+                 *piVar1 % 0x3c);
     iVar7 = iVar7 + 0x19;
   } while (arg5 < 10);
   return;

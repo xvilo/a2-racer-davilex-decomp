@@ -3,7 +3,7 @@
 
 /* ==== 00412e70 cnvs2d ==== */
 
-byte * __watcall cnvs2d(byte *param_1,double *param_2,undefined4 param_3,uint param_4)
+byte * __watcall cnvs2d(byte *param_1,double *param_2,undefined4 param_3,undefined4 param_4)
 
 {
   byte *strtod_result;

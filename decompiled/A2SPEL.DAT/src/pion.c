@@ -228,11 +228,11 @@ void __watcall place_pion_left(float weg_section_idx,float param_2)
   float fVar2;
   float fVar3;
   int iVar4;
-  float fVar5;
-  weg_section_t *weg_section;
-  float *pfVar6;
+  float *pfVar5;
   int i;
-  float10 in_ST0;
+  float fVar6;
+  undefined6 extraout_var;
+  float10 fVar7;
   
   if (((int)weg_section_idx < 0) || (weg_chunk_count < (int)weg_section_idx)) {
     fatal_exit(s__s__d____Chunk_value_out_of_boun_00446900,s_pion_cpp_004468f7,0x60);
@@ -248,26 +248,25 @@ void __watcall place_pion_left(float weg_section_idx,float param_2)
   if (i == pion_count) {
     fatal_exit(s__s__d____No_more_free_pion_objec_0044695b,s_pion_cpp_00446952,0x6a);
   }
-  pfVar6 = (float *)(pionnen + i * 0x2c);
-  pfVar6[8] = weg_section_idx;
-  pfVar6[9] = param_2;
+  pfVar5 = (float *)(pionnen + i * 0x2c);
+  pfVar5[8] = weg_section_idx;
+  pfVar5[9] = param_2;
   fVar3 = *(float *)(&lane_offsets + (int)param_2 * 4);
-  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar3 +
+  *pfVar5 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar3 +
             vertices3d[weg_sections[(int)weg_section_idx].point].x) -
             *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * 40.0;
-  fVar5 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
+  fVar6 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
   fVar1 = vertices3d[weg_sections[(int)weg_section_idx].point].z;
   fVar2 = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38);
-  pfVar6[6] = 1.4013e-45;
-  pfVar6[7] = 0.0;
-  pfVar6[2] = fVar2 * 40.0 + fVar5 * fVar3 + fVar1;
-  weg_section = weg_sections + (int)weg_section_idx;
-  iVar4 = 0x100 - weg_section->heading;
-  road_height_at(weg_section_idx,pfVar6,i,weg_section,*pfVar6,pfVar6[2]);
+  pfVar5[6] = 1.4013e-45;
+  pfVar5[7] = 0.0;
+  pfVar5[2] = fVar2 * 40.0 + fVar6 * fVar3 + fVar1;
+  iVar4 = 0x100 - weg_sections[(int)weg_section_idx].heading;
+  fVar6 = road_height_at((int)weg_section_idx,*pfVar5,pfVar5[2]);
+  fVar7 = (float10)CONCAT64(extraout_var,fVar6);
   CHP();
-  fVar5 = (float)load_pion_object(0x13,pfVar6,i,weg_section,*pfVar6,pfVar6[2],(int)ROUND(in_ST0),
-                                  iVar4);
-  pfVar6[10] = fVar5;
+  fVar6 = (float)load_pion_object(0x13,*pfVar5,pfVar5[2],(int)ROUND(fVar7),iVar4);
+  pfVar5[10] = fVar6;
   return;
 }
 
@@ -280,12 +279,12 @@ void __watcall place_pion_right(float weg_section_idx,float param_2)
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  int iVar5;
-  weg_section_t *weg_section;
-  float *pfVar6;
+  int iVar4;
+  float *pfVar5;
   int i;
-  float10 in_ST0;
+  float fVar6;
+  undefined6 extraout_var;
+  float10 fVar7;
   
   if (((int)weg_section_idx < 0) || (weg_chunk_count < (int)weg_section_idx)) {
     fatal_exit(s__s__d____Chunk_value_out_of_boun_00446991,s_pion_cpp_00446988,0x8e);
@@ -294,33 +293,32 @@ void __watcall place_pion_right(float weg_section_idx,float param_2)
     fatal_exit(s__s__d____Lane_value_out_of_bound_004469bf,s_pion_cpp_004469b6,0x91);
   }
   i = 0;
-  for (iVar5 = 0; (iVar5 < pion_count * 0x2c && (*(int *)(pionnen + 0x18 + iVar5) != 0));
-      iVar5 = iVar5 + 0x2c) {
+  for (iVar4 = 0; (iVar4 < pion_count * 0x2c && (*(int *)(pionnen + 0x18 + iVar4) != 0));
+      iVar4 = iVar4 + 0x2c) {
     i = i + 1;
   }
   if (i == pion_count) {
     fatal_exit(s__s__d____No_more_free_pion_objec_004469ec,s_pion_cpp_004469e3,0x98);
   }
-  pfVar6 = (float *)(pionnen + i * 0x2c);
-  pfVar6[8] = weg_section_idx;
-  pfVar6[9] = param_2;
+  pfVar5 = (float *)(pionnen + i * 0x2c);
+  pfVar5[8] = weg_section_idx;
+  pfVar5[9] = param_2;
   fVar3 = *(float *)(&lane_offsets + (int)param_2 * 4);
-  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar3 +
+  *pfVar5 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar3 +
             vertices3d[weg_sections[(int)weg_section_idx].point].x) -
             *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * 40.0;
-  fVar4 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
+  fVar6 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
   fVar1 = vertices3d[weg_sections[(int)weg_section_idx].point].z;
   fVar2 = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38);
-  pfVar6[6] = 1.4013e-45;
-  pfVar6[7] = 0.0;
-  pfVar6[2] = fVar2 * 40.0 + fVar4 * fVar3 + fVar1;
-  weg_section = weg_sections + (int)weg_section_idx;
-  iVar5 = 0x100 - weg_section->heading;
-  road_height_at(weg_section_idx,pfVar6,i,weg_section,*pfVar6,pfVar6[2]);
+  pfVar5[6] = 1.4013e-45;
+  pfVar5[7] = 0.0;
+  pfVar5[2] = fVar2 * 40.0 + fVar6 * fVar3 + fVar1;
+  iVar4 = 0x100 - weg_sections[(int)weg_section_idx].heading;
+  fVar6 = road_height_at((int)weg_section_idx,*pfVar5,pfVar5[2]);
+  fVar7 = (float10)CONCAT64(extraout_var,fVar6);
   CHP();
-  fVar4 = (float)load_pion_object(0x14,pfVar6,i,weg_section,*pfVar6,pfVar6[2],(int)ROUND(in_ST0),
-                                  iVar5);
-  pfVar6[10] = fVar4;
+  fVar6 = (float)load_pion_object(0x14,*pfVar5,pfVar5[2],(int)ROUND(fVar7),iVar4);
+  pfVar5[10] = fVar6;
   return;
 }
 
@@ -518,8 +516,7 @@ void __watcall update_pionnen(void)
 /* ==== 00413ece load_pion_object ==== */
 
 int __watcall
-load_pion_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5,
-                float param_6,int param_7,undefined4 param_8)
+load_pion_object(int param_1,float param_2,float param_3,int param_4,undefined4 param_5)
 
 {
   int object;
@@ -556,9 +553,9 @@ load_pion_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 pa
   debugmsg(s_setting_static_object_handle_00446bf4);
   objects3d[object].update = update_pion_object;
   debugmsg(s_setting_static_object_position_00446c12);
-  objects3d[object].x = param_5;
-  objects3d[object].y = (float)param_7 + 0.1;
-  objects3d[object].z = param_6;
+  objects3d[object].x = param_2;
+  objects3d[object].y = (float)param_4 + 0.1;
+  objects3d[object].z = param_3;
   objects3d[object].field_3f = 0;
   objects3d[object].field_3b = 0;
   objects3d[object].field_43 = 0;

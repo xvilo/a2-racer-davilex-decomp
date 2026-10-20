@@ -29,7 +29,7 @@ void __watcall init_static_objects(int param_1)
   __iobuf *file;
   int arg4;
   float10 fVar2;
-  float weg_section_idx;
+  int chunk_val;
   int local_30;
   int local_2c;
   int local_28;
@@ -48,17 +48,17 @@ void __watcall init_static_objects(int param_1)
   fread((char *)&local_20,1,4,(int *)file);
   debugmsg(s_count___d_004460d4,local_20);
   for (arg4 = 0; arg4 < local_20; arg4 = arg4 + 1) {
-    fread((char *)&weg_section_idx,1,0x14,(int *)file);
-    if ((((-1 < local_28) && (local_28 < 0x30)) && (-1 < (int)weg_section_idx)) &&
+    fread((char *)&chunk_val,1,0x14,(int *)file);
+    if ((((-1 < local_28) && (local_28 < 0x30)) && (-1 < chunk_val)) &&
        ((-1 < local_2c && (-1 < local_30)))) {
       debugmsg(s__s__d____i__d__ID__d__chunk__d__p_004460eb,s_mkstobj_cpp_004460df,0x6d,arg4,
-               local_28,weg_section_idx,local_2c,local_30,SUB84((double)local_24,0),
+               local_28,chunk_val,local_2c,local_30,SUB84((double)local_24,0),
                (int)((ulonglong)(double)local_24 >> 0x20));
       iVar1 = local_2c;
       fVar2 = (float10)local_24;
       CHP();
       local_1c = (int)ROUND(fVar2);
-      place_static_object_on_road(local_28,weg_section_idx,iVar1,local_30,local_1c);
+      place_static_object_on_road(local_28,chunk_val,iVar1,local_30,local_1c);
     }
   }
   xvga_src_fclose(file);

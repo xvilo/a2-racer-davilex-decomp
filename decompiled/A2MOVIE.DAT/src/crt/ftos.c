@@ -151,17 +151,16 @@ FtoS(char *param_1,double *param_2,char *param_3,undefined4 param_4,int param_5,
 
 {
   double dVar1;
-  uint uVar2;
+  undefined4 uVar2;
   undefined4 uVar3;
-  undefined4 uVar4;
   int j;
-  char *pcVar5;
+  char *pcVar4;
   int do_e_format;
-  uint uVar6;
-  char *pcVar7;
+  uint uVar5;
+  char *pcVar6;
   float10 in_ST0;
+  float10 fVar7;
   float10 fVar8;
-  float10 fVar9;
   float10 in_ST1;
   char local_44 [20];
   undefined8 local_30;
@@ -172,30 +171,29 @@ FtoS(char *param_1,double *param_2,char *param_3,undefined4 param_4,int param_5,
   char *local_14;
   char *local_10;
   
-  pcVar7 = (char *)CONCAT22((short)((uint)param_4 >> 0x10),CONCAT11((char)param_4,(char)param_4));
+  pcVar6 = (char *)CONCAT22((short)((uint)param_4 >> 0x10),CONCAT11((char)param_4,(char)param_4));
   local_10 = param_1;
-  j = Nan_Inf(*(undefined4 *)param_2,param_2,param_3,pcVar7,*(undefined4 *)param_2,
-              *(uint *)((int)param_2 + 4),(undefined4 *)local_44);
+  j = Nan_Inf(*(int *)param_2,*(uint *)((int)param_2 + 4),(undefined4 *)local_44);
   if (j == 0) {
-    uVar6 = CONCAT31((int3)((uint)pcVar7 >> 8),(char)param_9);
+    uVar5 = CONCAT31((int3)((uint)pcVar6 >> 8),(char)param_9);
     if ((char)param_9 == 'G') {
       local_30 = ABS(*param_2);
       if ((((ulonglong)local_30 & 0x7fffffff00000000) != 0) || ((int)local_30 != 0)) {
-        fVar8 = (float10)local_30;
-        fVar9 = in_ST0;
+        fVar7 = (float10)local_30;
+        fVar8 = in_ST0;
         in_ST0 = in_ST1;
-        IF_DLOG10((int)local_30,param_2,(int)param_3,uVar6);
-        dVar1 = (double)fVar8;
+        IF_DLOG10((int)local_30,param_2,(int)param_3,uVar5);
+        dVar1 = (double)fVar7;
         local_30._4_4_ = (undefined4)((ulonglong)dVar1 >> 0x20);
-        uVar3 = local_30._4_4_;
+        uVar2 = local_30._4_4_;
         local_30._0_4_ = SUB84(dVar1,0);
-        uVar4 = (int)local_30;
+        uVar3 = (int)local_30;
         local_30 = dVar1;
-        floor(uVar3,param_2,param_3,uVar6,uVar4,uVar3);
+        floor(uVar2,param_2,param_3,uVar3,uVar2);
         CHP();
-        i = (int)ROUND(fVar9);
+        i = (int)ROUND(fVar8);
         if ((i < -4) || ((int)param_3 <= i)) {
-          uVar6 = CONCAT31((int3)(uVar6 >> 8),0x45);
+          uVar5 = CONCAT31((int3)(uVar5 >> 8),0x45);
           goto LAB_004144f7;
         }
         if (0.0 <= local_30) {
@@ -206,11 +204,11 @@ FtoS(char *param_1,double *param_2,char *param_3,undefined4 param_4,int param_5,
           param_3 = param_3 + -1;
         }
       }
-      uVar6 = CONCAT31((int3)(uVar6 >> 8),0x46);
+      uVar5 = CONCAT31((int3)(uVar5 >> 8),0x46);
       param_6 = 0;
     }
 LAB_004144f7:
-    if (((uVar6 & 0xff) == 0x45) && ((param_6 <= -(int)param_3 || ((int)(param_3 + 2) <= param_6))))
+    if (((uVar5 & 0xff) == 0x45) && ((param_6 <= -(int)param_3 || ((int)(param_3 + 2) <= param_6))))
     goto LAB_00414512;
     if ((char)param_9 == 'E') {
       if (param_6 < 1) {
@@ -222,19 +220,18 @@ LAB_004144f7:
         param_3 = param_3 + 1;
       }
     }
-    j = *(int *)param_2;
-    uVar2 = *(uint *)((int)param_2 + 4);
     local_28 = *param_2;
-    if (((((uVar2 & 0x7fffffff) != 0) || (j != 0)) && ((uVar6 & 0xff) != 0x45)) && (param_6 != 0)) {
-      Scale10V(j,param_2,uVar2,uVar6,j,uVar2,param_6);
+    if (((((*(uint *)((int)param_2 + 4) & 0x7fffffff) != 0) || (*(int *)param_2 != 0)) &&
+        ((uVar5 & 0xff) != 0x45)) && (param_6 != 0)) {
+      Scale10V(*(int *)param_2,*(uint *)((int)param_2 + 4),param_6);
       local_28 = (double)in_ST0;
     }
-    cvt(&local_20,local_28._4_4_,(int)local_28,uVar6,(int)local_28,local_28._4_4_,(int)param_3,
-        &local_20,&local_1c,uVar6 & 0xff,local_44);
-    pcVar7 = local_10;
+    cvt(&local_20,local_28._4_4_,(int)local_28,uVar5,(int)local_28,local_28._4_4_,(int)param_3,
+        &local_20,&local_1c,uVar5 & 0xff,local_44);
+    pcVar6 = local_10;
     local_14 = local_10;
     if (local_1c == 0) {
-      if ((char)(uVar6 >> 8) != '\0') {
+      if ((char)(uVar5 >> 8) != '\0') {
         *local_10 = '+';
         local_14 = local_10 + 1;
       }
@@ -244,10 +241,10 @@ LAB_004144f7:
       local_14 = local_10 + 1;
     }
     j = param_5 + 1;
-    if ((uVar6 & 0xff) == 0x45) {
-      pcVar7 = param_3 + -param_6;
-      if ((int)pcVar7 <= param_5) {
-        local_14 = DoFFormat(local_14,local_44,param_6,(int)pcVar7);
+    if ((uVar5 & 0xff) == 0x45) {
+      pcVar6 = param_3 + -param_6;
+      if ((int)pcVar6 <= param_5) {
+        local_14 = DoFFormat(local_14,local_44,param_6,(int)pcVar6);
         j = (int)local_14 - (int)local_10;
         if (((char)param_8 != '\0') && (j < param_5)) {
           *local_14 = (char)param_8;
@@ -257,28 +254,28 @@ LAB_004144f7:
         if ((((ulonglong)local_28 & 0x7fffffff00000000) != 0) || ((int)local_28 != 0)) {
           local_20 = local_20 - param_6;
         }
-        pcVar7 = (char *)(param_5 - j);
-        do_e_format = DoEFormat(local_14,local_20,param_7,(int)pcVar7);
+        pcVar6 = (char *)(param_5 - j);
+        do_e_format = DoEFormat(local_14,local_20,param_7,(int)pcVar6);
         j = j + do_e_format;
       }
     }
     else if ((int)(param_3 + (int)(local_14 + ((local_20 + 1) - (int)local_10))) <= param_5) {
-      pcVar5 = DoFFormat(local_14,local_44,local_20,(int)param_3);
-      j = (int)pcVar5 - (int)pcVar7;
-      pcVar7 = param_3;
+      pcVar4 = DoFFormat(local_14,local_44,local_20,(int)param_3);
+      j = (int)pcVar4 - (int)pcVar6;
+      pcVar6 = param_3;
     }
   }
   else {
-    pcVar5 = local_10;
+    pcVar4 = local_10;
     for (j = 0; local_44[j] != '\0'; j = j + 1) {
       if (j < param_5) {
-        *pcVar5 = local_44[j];
+        *pcVar4 = local_44[j];
       }
-      pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
     }
   }
   if (j <= param_5) {
-    AdjField((undefined4 *)local_10,j,param_5,pcVar7);
+    AdjField((undefined4 *)local_10,j,param_5,pcVar6);
     return;
   }
 LAB_00414512:

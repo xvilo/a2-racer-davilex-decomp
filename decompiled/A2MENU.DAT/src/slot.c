@@ -30,21 +30,20 @@ int __watcall slot_check_level(int param_1,char *param_2,int param_3)
 void __watcall create_slot(int param_1,char *param_2)
 
 {
-  uchar uVar1;
-  short sVar2;
+  short sVar1;
   int j;
   int slot_check_level_result;
   int i;
   char *extraout_EDX;
-  undefined4 *puVar3;
+  undefined4 *puVar2;
   bedien_t *bedien;
+  undefined4 *puVar3;
   undefined4 *puVar4;
-  undefined4 *puVar5;
   bedien_t *bedien_2;
-  byte bVar6;
+  byte bVar5;
   uint local_1c;
   
-  bVar6 = 0;
+  bVar5 = 0;
   local_1c = 0;
   debugmsg(s__s__d__create_slot___d__s__00425c3b,s_slot_cpp_00425c32,0x50,param_1,param_2);
   slot_check_index(param_1,s_slot_cpp_00425c58,0x51);
@@ -70,28 +69,24 @@ void __watcall create_slot(int param_1,char *param_2)
   i = slot_check_index(param_1,s_slot_cpp_00425d1a,0x5d);
   slot_list[i].money = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425d23,0x5e);
-  puVar4 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar6 * -8);
-  sVar2 = opties.resolution;
+  puVar3 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar5 * -8);
+  sVar1 = opties.resolution;
   slot_list[i].opties.view = opties.view;
-  slot_list[i].opties.resolution = sVar2;
-  puVar5 = puVar4 + (uint)bVar6 * -2 + 1;
-  puVar3 = (undefined4 *)((uint)bVar6 * -8 + 0x437228 + (uint)bVar6 * -8);
-  *puVar4 = *(undefined4 *)((int)&opties + (uint)bVar6 * -8 + 4);
-  puVar4 = puVar3 + (uint)bVar6 * -2 + 1;
-  *puVar5 = *puVar3;
-  puVar5[(uint)bVar6 * -2 + 1] = *puVar4;
-  (puVar5 + (uint)bVar6 * -2 + 1)[(uint)bVar6 * -2 + 1] = puVar4[(uint)bVar6 * -2 + 1];
+  slot_list[i].opties.resolution = sVar1;
+  puVar4 = puVar3 + (uint)bVar5 * -2 + 1;
+  puVar2 = (undefined4 *)((uint)bVar5 * -8 + 0x437228 + (uint)bVar5 * -8);
+  *puVar3 = *(undefined4 *)((int)&opties + (uint)bVar5 * -8 + 4);
+  puVar3 = puVar2 + (uint)bVar5 * -2 + 1;
+  *puVar4 = *puVar2;
+  puVar4[(uint)bVar5 * -2 + 1] = *puVar3;
+  (puVar4 + (uint)bVar5 * -2 + 1)[(uint)bVar5 * -2 + 1] = puVar3[(uint)bVar5 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425d2c,0x5f);
   bedien = &control;
   bedien_2 = &slot_list[i].control;
   for (j = 9; j != 0; j = j + -1) {
-    uVar1 = bedien->field_01;
-    sVar2 = bedien->field_02;
-    bedien_2->field_00 = bedien->field_00;
-    bedien_2->field_01 = uVar1;
-    bedien_2->field_02 = sVar2;
-    bedien = (bedien_t *)((int)bedien + ((uint)bVar6 * -2 + 1) * 4);
-    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar6 * -2 + 1) * 4);
+    bedien_2->control_type = bedien->control_type;
+    bedien = (bedien_t *)((int)bedien + ((uint)bVar5 * -2 + 1) * 4);
+    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar5 * -2 + 1) * 4);
   }
   i = 0;
   do {
@@ -217,19 +212,18 @@ void __watcall clear_slot(int param_1)
 void __watcall reset_slot(int param_1)
 
 {
-  uchar uVar1;
-  short sVar2;
+  short sVar1;
   int i;
   int slot_check_level_result;
   int j;
-  undefined4 *puVar3;
+  undefined4 *puVar2;
   bedien_t *bedien;
+  undefined4 *puVar3;
   undefined4 *puVar4;
-  undefined4 *puVar5;
   bedien_t *bedien_2;
-  byte bVar6;
+  byte bVar5;
   
-  bVar6 = 0;
+  bVar5 = 0;
   debugmsg(s__s__d___reset_slot___d__00425fab,s_slot_cpp_00425fa2,0x9c,param_1);
   slot_check_index(param_1,s_slot_cpp_00425fc5,0x9d);
   i = slot_check_index(param_1,s_slot_cpp_00425fce,0x9e);
@@ -239,28 +233,24 @@ void __watcall reset_slot(int param_1)
   i = slot_check_index(param_1,s_slot_cpp_00425fe0,0xa0);
   slot_list[i].money = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425fe9,0xa1);
-  puVar4 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar6 * -8);
-  sVar2 = opties.resolution;
+  puVar3 = (undefined4 *)(i * 0x13c + 0x437262 + (uint)bVar5 * -8);
+  sVar1 = opties.resolution;
   slot_list[i].opties.view = opties.view;
-  slot_list[i].opties.resolution = sVar2;
-  puVar5 = puVar4 + (uint)bVar6 * -2 + 1;
-  puVar3 = (undefined4 *)((uint)bVar6 * -8 + 0x437228 + (uint)bVar6 * -8);
-  *puVar4 = *(undefined4 *)((int)&opties + (uint)bVar6 * -8 + 4);
-  puVar4 = puVar3 + (uint)bVar6 * -2 + 1;
-  *puVar5 = *puVar3;
-  puVar5[(uint)bVar6 * -2 + 1] = *puVar4;
-  (puVar5 + (uint)bVar6 * -2 + 1)[(uint)bVar6 * -2 + 1] = puVar4[(uint)bVar6 * -2 + 1];
+  slot_list[i].opties.resolution = sVar1;
+  puVar4 = puVar3 + (uint)bVar5 * -2 + 1;
+  puVar2 = (undefined4 *)((uint)bVar5 * -8 + 0x437228 + (uint)bVar5 * -8);
+  *puVar3 = *(undefined4 *)((int)&opties + (uint)bVar5 * -8 + 4);
+  puVar3 = puVar2 + (uint)bVar5 * -2 + 1;
+  *puVar4 = *puVar2;
+  puVar4[(uint)bVar5 * -2 + 1] = *puVar3;
+  (puVar4 + (uint)bVar5 * -2 + 1)[(uint)bVar5 * -2 + 1] = puVar3[(uint)bVar5 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425ff2,0xa2);
   bedien = &control;
   bedien_2 = &slot_list[i].control;
   for (j = 9; j != 0; j = j + -1) {
-    uVar1 = bedien->field_01;
-    sVar2 = bedien->field_02;
-    bedien_2->field_00 = bedien->field_00;
-    bedien_2->field_01 = uVar1;
-    bedien_2->field_02 = sVar2;
-    bedien = (bedien_t *)((int)bedien + ((uint)bVar6 * -2 + 1) * 4);
-    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar6 * -2 + 1) * 4);
+    bedien_2->control_type = bedien->control_type;
+    bedien = (bedien_t *)((int)bedien + ((uint)bVar5 * -2 + 1) * 4);
+    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar5 * -2 + 1) * 4);
   }
   i = 0;
   do {
@@ -332,19 +322,18 @@ void __watcall load_tmp_slotdbase(char *filename)
 void __watcall init_slotdbase(void)
 
 {
-  uchar uVar1;
-  short sVar2;
+  short sVar1;
   int i;
   int slot_index;
   int j;
-  undefined4 *puVar3;
+  undefined4 *puVar2;
   bedien_t *bedien;
+  undefined4 *puVar3;
   undefined4 *puVar4;
-  undefined4 *puVar5;
   bedien_t *bedien_2;
-  byte bVar6;
+  byte bVar5;
   
-  bVar6 = 0;
+  bVar5 = 0;
   debugmsg(s__s__d___init_slotdbase___004261cd,s_slot_cpp_004261c4,0xdb);
   i = file_exist(s_SLOT_A2R_004261e8);
   if (i == 0) {
@@ -361,29 +350,25 @@ void __watcall init_slotdbase(void)
       slot_index = slot_check_index(i,s_slot_cpp_00426216,0xe2);
       slot_list[slot_index].used = '\0';
       slot_index = slot_check_index(i,s_slot_cpp_0042621f,0xe3);
-      puVar4 = (undefined4 *)(slot_index * 0x13c + 0x437262 + (uint)bVar6 * -8);
-      sVar2 = opties.resolution;
+      puVar3 = (undefined4 *)(slot_index * 0x13c + 0x437262 + (uint)bVar5 * -8);
+      sVar1 = opties.resolution;
       slot_list[slot_index].opties.view = opties.view;
-      slot_list[slot_index].opties.resolution = sVar2;
-      puVar5 = puVar4 + (uint)bVar6 * -2 + 1;
-      puVar3 = (undefined4 *)((uint)bVar6 * -8 + 0x437228 + (uint)bVar6 * -8);
-      *puVar4 = *(undefined4 *)((int)&opties + (uint)bVar6 * -8 + 4);
-      puVar4 = puVar3 + (uint)bVar6 * -2 + 1;
-      *puVar5 = *puVar3;
-      puVar5[(uint)bVar6 * -2 + 1] = *puVar4;
-      (puVar5 + (uint)bVar6 * -2 + 1)[(uint)bVar6 * -2 + 1] = puVar4[(uint)bVar6 * -2 + 1];
+      slot_list[slot_index].opties.resolution = sVar1;
+      puVar4 = puVar3 + (uint)bVar5 * -2 + 1;
+      puVar2 = (undefined4 *)((uint)bVar5 * -8 + 0x437228 + (uint)bVar5 * -8);
+      *puVar3 = *(undefined4 *)((int)&opties + (uint)bVar5 * -8 + 4);
+      puVar3 = puVar2 + (uint)bVar5 * -2 + 1;
+      *puVar4 = *puVar2;
+      puVar4[(uint)bVar5 * -2 + 1] = *puVar3;
+      (puVar4 + (uint)bVar5 * -2 + 1)[(uint)bVar5 * -2 + 1] = puVar3[(uint)bVar5 * -2 + 1];
       slot_index = slot_check_index(i,s_slot_cpp_00426228,0xe4);
       i = i + 1;
       bedien = &control;
       bedien_2 = &slot_list[slot_index].control;
       for (j = 9; j != 0; j = j + -1) {
-        uVar1 = bedien->field_01;
-        sVar2 = bedien->field_02;
-        bedien_2->field_00 = bedien->field_00;
-        bedien_2->field_01 = uVar1;
-        bedien_2->field_02 = sVar2;
-        bedien = (bedien_t *)((int)bedien + ((uint)bVar6 * -2 + 1) * 4);
-        bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar6 * -2 + 1) * 4);
+        bedien_2->control_type = bedien->control_type;
+        bedien = (bedien_t *)((int)bedien + ((uint)bVar5 * -2 + 1) * 4);
+        bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar5 * -2 + 1) * 4);
       }
     } while (i < 10);
     save_slotdbase();
@@ -470,18 +455,16 @@ int __watcall get_last_saved_slot(void)
 void __watcall set_active_slot(int param_1)
 
 {
-  uchar uVar1;
-  short sVar2;
   int slot_index;
   int i;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  undefined4 *puVar1;
+  undefined4 *puVar2;
   bedien_t *bedien;
-  undefined4 *puVar5;
+  undefined4 *puVar3;
   bedien_t *bedien_2;
-  byte bVar6;
+  byte bVar4;
   
-  bVar6 = 0;
+  bVar4 = 0;
   debugmsg(s__s__d___set_active_slot___d__004262c3,s_slot_cpp_004262ba,0x110,param_1);
   slot_check_index(param_1,s_slot_cpp_004262e2,0x111);
   slot_index = slot_check_index(param_1,s_slot_cpp_004262eb,0x112);
@@ -489,27 +472,23 @@ void __watcall set_active_slot(int param_1)
     fatal_exit(s__s__d___set_active_slot____This_s_004262fd,s_slot_cpp_004262f4,0x113,param_1);
   }
   slot_index = slot_check_index(param_1,s_slot_cpp_00426355,0x115);
-  puVar3 = (undefined4 *)(slot_index * 0x13c + 0x437262 + (uint)bVar6 * -8);
+  puVar1 = (undefined4 *)(slot_index * 0x13c + 0x437262 + (uint)bVar4 * -8);
   opties.view = slot_list[slot_index].opties.view;
   opties.resolution = slot_list[slot_index].opties.resolution;
-  puVar5 = (undefined4 *)((uint)bVar6 * -8 + 0x437228 + (uint)bVar6 * -8);
-  puVar4 = puVar3 + (uint)bVar6 * -2 + 1;
-  *(undefined4 *)((int)&opties + (uint)bVar6 * -8 + 4) = *puVar3;
-  puVar3 = puVar5 + (uint)bVar6 * -2 + 1;
-  *puVar5 = *puVar4;
-  *puVar3 = puVar4[(uint)bVar6 * -2 + 1];
-  puVar3[(uint)bVar6 * -2 + 1] = (puVar4 + (uint)bVar6 * -2 + 1)[(uint)bVar6 * -2 + 1];
+  puVar3 = (undefined4 *)((uint)bVar4 * -8 + 0x437228 + (uint)bVar4 * -8);
+  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
+  *(undefined4 *)((int)&opties + (uint)bVar4 * -8 + 4) = *puVar1;
+  puVar1 = puVar3 + (uint)bVar4 * -2 + 1;
+  *puVar3 = *puVar2;
+  *puVar1 = puVar2[(uint)bVar4 * -2 + 1];
+  puVar1[(uint)bVar4 * -2 + 1] = (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   slot_index = slot_check_index(param_1,s_slot_cpp_0042635e,0x116);
   bedien = &slot_list[slot_index].control;
   bedien_2 = &control;
   for (i = 9; i != 0; i = i + -1) {
-    uVar1 = bedien->field_01;
-    sVar2 = bedien->field_02;
-    bedien_2->field_00 = bedien->field_00;
-    bedien_2->field_01 = uVar1;
-    bedien_2->field_02 = sVar2;
-    bedien = (bedien_t *)((int)bedien + ((uint)bVar6 * -2 + 1) * 4);
-    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar6 * -2 + 1) * 4);
+    bedien_2->control_type = bedien->control_type;
+    bedien = (bedien_t *)((int)bedien + ((uint)bVar4 * -2 + 1) * 4);
+    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar4 * -2 + 1) * 4);
   }
   active_slot = param_1;
   return;
@@ -556,15 +535,13 @@ void __watcall update_active_slot_optie(void)
 void __watcall update_active_slot_bediening(void)
 
 {
-  uchar uVar1;
-  short sVar2;
   int slot_index;
   int i;
-  bedien_t *bedien_2;
   bedien_t *bedien;
-  byte bVar3;
+  bedien_t *bedien_2;
+  byte bVar1;
   
-  bVar3 = 0;
+  bVar1 = 0;
   debugmsg(s__s__d____>_update_active_slot_be_00426420,s_slot_cpp_00426417,300);
   slot_check_index(active_slot,s_slot_cpp_0042644f,0x12d);
   slot_index = slot_check_index(active_slot,s_slot_cpp_00426458,0x12e);
@@ -572,16 +549,12 @@ void __watcall update_active_slot_bediening(void)
     fatal_exit(s__s__d___set_active_slot____This_s_0042646a,s_slot_cpp_00426461,0x12f,active_slot);
   }
   slot_index = slot_check_index(active_slot,s_slot_cpp_004264c2,0x131);
-  bedien_2 = &control;
-  bedien = &slot_list[slot_index].control;
+  bedien = &control;
+  bedien_2 = &slot_list[slot_index].control;
   for (i = 9; i != 0; i = i + -1) {
-    uVar1 = bedien_2->field_01;
-    sVar2 = bedien_2->field_02;
-    bedien->field_00 = bedien_2->field_00;
-    bedien->field_01 = uVar1;
-    bedien->field_02 = sVar2;
-    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar3 * -2 + 1) * 4);
-    bedien = (bedien_t *)((int)bedien + ((uint)bVar3 * -2 + 1) * 4);
+    bedien_2->control_type = bedien->control_type;
+    bedien = (bedien_t *)((int)bedien + ((uint)bVar1 * -2 + 1) * 4);
+    bedien_2 = (bedien_t *)((int)bedien_2 + ((uint)bVar1 * -2 + 1) * 4);
   }
   return;
 }

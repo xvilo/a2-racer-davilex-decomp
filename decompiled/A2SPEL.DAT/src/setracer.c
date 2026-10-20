@@ -30,9 +30,8 @@ void __watcall set_all_objects(void)
 
 {
   int iVar1;
-  undefined4 unaff_ECX;
-  float unaff_EDX;
-  int unaff_EBX;
+  int chunk_val;
+  int iVar2;
   
   if (*(int *)(&track_info + track_index * 0x10) == 0) {
     set_racer_start_position(0,(int)infio._59_4_ >> 0x10);
@@ -41,10 +40,10 @@ void __watcall set_all_objects(void)
     place_police_cars();
     scatter_all_traffic();
     place_random_pionnen();
-    place_static_object_on_road(0x17,2.10195e-44,1,1,0x3c);
+    place_static_object_on_road(0x17,0xf,1,1,0x3c);
     iVar1 = 0x16;
-    unaff_EDX = (float)(weg_chunk_count + -0x10);
-    unaff_EBX = 1;
+    chunk_val = weg_chunk_count + -0x10;
+    iVar2 = 1;
   }
   else {
     if (*(int *)(&track_info + track_index * 0x10) != 1) goto LAB_004112b4;
@@ -54,20 +53,19 @@ void __watcall set_all_objects(void)
     place_police_cars();
     scatter_all_traffic();
     place_random_pionnen();
-    place_static_object_on_road(0x16,2.24208e-44,2,1,0x3c);
-    unaff_EBX = 2;
+    place_static_object_on_road(0x16,0x10,2,1,0x3c);
+    iVar2 = 2;
     iVar1 = 0x17;
-    unaff_EDX = (float)(weg_chunk_count + -0xf);
+    chunk_val = weg_chunk_count + -0xf;
   }
-  unaff_ECX = 1;
-  place_static_object_on_road(iVar1,unaff_EDX,unaff_EBX,1,0x3c);
+  place_static_object_on_road(iVar1,chunk_val,iVar2,1,0x3c);
 LAB_004112b4:
-  load_static_object(0x26,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
-  load_static_object(0x27,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
-  load_static_object(0x28,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
-  load_static_object(0x29,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
-  load_static_object(0x2a,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
-  load_static_object(0x2b,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
+  load_static_object(0x26,0.0,0.0,0,0);
+  load_static_object(0x27,0.0,0.0,0,0);
+  load_static_object(0x28,0.0,0.0,0,0);
+  load_static_object(0x29,0.0,0.0,0,0);
+  load_static_object(0x2a,0.0,0.0,0,0);
+  load_static_object(0x2b,0.0,0.0,0,0);
   return;
 }
 
@@ -219,13 +217,12 @@ void __watcall start_camera_intro(void)
 
 {
   int atan_lookup_result;
-  undefined4 unaff_ECX;
   
   set_camera_position(1);
   objects3d[player_index].visible = '\x01';
   camera_height = 350.0;
   camera_distance = -31.0;
-  atan_lookup_result = atan_lookup(atan_table_id,0xc1f80000,0x43af0000,unaff_ECX,350.0);
+  atan_lookup_result = atan_lookup(atan_table_id,350.0);
   camera_pitch = (float)atan_lookup_result;
   camera_yaw = (float)player_heading;
   camera_x = -player_x;
@@ -279,7 +276,7 @@ void __watcall stop_player_car(void)
 
 {
   player_speed = 0.0;
-  opponent_data[(int)objects3d[player_index].opponent].speed = 0.0;
+  opponent_data[objects3d[player_index].opponent].speed = 0.0;
   controls_enabled = 0;
   DAT_00475a28 = 0;
   start_countdown(10);
@@ -294,7 +291,6 @@ int __watcall set_racer_start_position(int racer,int position)
 
 {
   int arg5;
-  int iVar1;
   opponent_t *player_object;
   uint ini_value_setting;
   int unaff_EBX;
@@ -322,7 +318,6 @@ int __watcall set_racer_start_position(int racer,int position)
   else {
     fatal_exit(s__s__d____Illegal_heading_for_rac_004461c7,s_setracer_cpp_004461ba,0x45,racer);
   }
-  iVar1 = weg_chunk_count;
   if (position % 2 == 1) {
     local_20 = 1.0;
   }
@@ -334,8 +329,7 @@ int __watcall set_racer_start_position(int racer,int position)
   if (racer == 0) {
     debugmsg(s__s__d____Starting_racer__d__Head_004461fc,s_setracer_cpp_004461ef,0x57,0,arg5,
              weg_section_idx,arg7,weg_chunk_count);
-    player_object =
-         (opponent_t *)load_player_object(arg5,weg_section_idx,arg7,iVar1,local_20 * local_24);
+    player_object = (opponent_t *)load_player_object(arg5,weg_section_idx,arg7,local_20 * local_24);
   }
   else {
     place_opponent(racer,arg5,weg_section_idx,arg7,local_20 * local_24);

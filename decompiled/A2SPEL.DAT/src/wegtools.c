@@ -24,10 +24,7 @@ undefined4 __watcall point_side_of_line(int *param_1,int param_2,int param_3)
 
 /* ==== 0041dd0c point_side_of_chunk_edge ==== */
 
-undefined4 __watcall
-point_side_of_chunk_edge
-          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
-          ,float param_6)
+undefined4 __watcall point_side_of_chunk_edge(undefined4 param_1,float param_2,float param_3)
 
 {
   int *chp;
@@ -39,9 +36,9 @@ point_side_of_chunk_edge
   CHP();
   CHP();
   CHP();
-  fVar1 = (float10)param_6;
+  fVar1 = (float10)param_3;
   CHP();
-  fVar2 = (float10)param_5;
+  fVar2 = (float10)param_2;
   chp = (int *)CHP();
   point_side_of_line_result = point_side_of_line(chp,(int)ROUND(fVar2),(int)ROUND(fVar1));
   return point_side_of_line_result;
@@ -50,35 +47,27 @@ point_side_of_chunk_edge
 
 /* ==== 0041ddb8 point_between_chunk_edges ==== */
 
-uint __watcall
-point_between_chunk_edges
-          (int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5,
-          float param_6)
+uint __watcall point_between_chunk_edges(int param_1,float param_2,float param_3)
 
 {
   int point_side_of_chunk_edge_result_2;
   int point_side_of_chunk_edge_result;
   
-  point_side_of_chunk_edge_result_2 =
-       point_side_of_chunk_edge(param_1,param_1,param_3,param_4,param_5,param_6);
-  point_side_of_chunk_edge_result =
-       point_side_of_chunk_edge
-                 (param_1 + 1,param_1,point_side_of_chunk_edge_result_2,param_4,param_5,param_6);
+  point_side_of_chunk_edge_result_2 = point_side_of_chunk_edge(param_1,param_2,param_3);
+  point_side_of_chunk_edge_result = point_side_of_chunk_edge(param_1 + 1,param_2,param_3);
   return (uint)(point_side_of_chunk_edge_result_2 != point_side_of_chunk_edge_result);
 }
 
 
 /* ==== 0041de40 update_chunk_for_position ==== */
 
-undefined4 __watcall update_chunk_for_position(int param_1)
+undefined4 __watcall update_chunk_for_position(int param_1,float param_2,float param_3)
 
 {
   uint point_between_chunk_edges_result;
   int iVar1;
   int i;
   int iVar2;
-  float in_stack_00000004;
-  float in_stack_00000008;
   
   if ((param_1 < 0) || (weg_chunk_capacity <= param_1)) {
     fatal_exit(s__s__d____chunk__d_out_of_array_b_0044c999,s_wegtools_cpp_0044c98c,0x4f,param_1,
@@ -90,9 +79,7 @@ undefined4 __watcall update_chunk_for_position(int param_1)
   while ((0 < param_1 || (i < weg_chunk_capacity))) {
     if (0 < param_1) {
       point_between_chunk_edges_result =
-           point_between_chunk_edges
-                     (*(int *)(iVar2 + weg_chunk_quads),i,param_1,iVar1,in_stack_00000004,
-                      in_stack_00000008);
+           point_between_chunk_edges(*(int *)(iVar2 + weg_chunk_quads),param_2,param_3);
       if (point_between_chunk_edges_result != 0) {
         return *(undefined4 *)(iVar2 + weg_chunk_quads);
       }
@@ -101,9 +88,7 @@ undefined4 __watcall update_chunk_for_position(int param_1)
     }
     if (i < weg_chunk_capacity) {
       point_between_chunk_edges_result =
-           point_between_chunk_edges
-                     (*(int *)(iVar1 + weg_chunk_quads),i,param_1,iVar1,in_stack_00000004,
-                      in_stack_00000008);
+           point_between_chunk_edges(*(int *)(iVar1 + weg_chunk_quads),param_2,param_3);
       if (point_between_chunk_edges_result != 0) {
         return *(undefined4 *)(iVar1 + weg_chunk_quads);
       }

@@ -3,16 +3,14 @@
 
 /* ==== 004227b6 modf ==== */
 
-void __watcall
-modf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,
-    undefined4 param_6,double *param_7)
+void __watcall modf(undefined4 param_1,undefined4 param_2,double *param_3)
 
 {
   float10 fVar1;
   
-  fVar1 = (float10)(double)CONCAT44(param_6,param_5);
+  fVar1 = (float10)(double)CONCAT44(param_2,param_1);
   CHP();
-  *param_7 = (double)fVar1;
+  *param_3 = (double)fVar1;
   return;
 }
 

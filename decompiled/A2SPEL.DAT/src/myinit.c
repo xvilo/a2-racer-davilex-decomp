@@ -37,10 +37,10 @@ void __watcall init_anims_and_standard_textures(void)
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 __watcall
-load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_4,float param_5)
+load_player_object(int param_1,int weg_section_idx,int param_3,float param_4)
 
 {
-  opponent_t *opponent_index;
+  int opponent_index;
   int *opponent_chunk;
   undefined4 object_bounds;
   int iVar1;
@@ -57,34 +57,34 @@ load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_
   build_object_execute_buffer(player_index);
   debugmsg(s_done_creating_execute_buffer_obj_0044192d);
   objects3d[player_index].field_36 = '\x01';
-  opponent_index = (opponent_t *)alloc_opponent_slot();
+  opponent_index = alloc_opponent_slot();
   objects3d[player_index].opponent = opponent_index;
-  opponent_data[(int)opponent_index].object = player_index;
-  opponent_data[(int)opponent_index].mass = 1000.0;
-  opponent_data[(int)opponent_index].active = 1;
-  opponent_data[(int)opponent_index].push_x = 0.0;
-  opponent_data[(int)opponent_index].push_z = 0.0;
-  opponent_data[(int)opponent_index].offset_x = 0.0;
-  opponent_data[(int)opponent_index].offset_z = 0.0;
+  opponent_data[opponent_index].object = player_index;
+  opponent_data[opponent_index].mass = 1000.0;
+  opponent_data[opponent_index].active = 1;
+  opponent_data[opponent_index].push_x = 0.0;
+  opponent_data[opponent_index].push_z = 0.0;
+  opponent_data[opponent_index].offset_x = 0.0;
+  opponent_data[opponent_index].offset_z = 0.0;
   objects3d[player_index].update_interval = 1;
-  opponent_data[(int)opponent_index].waypoint = weg_section_idx;
-  opponent_chunk = get_opponent_chunk(s_myinit_cpp_00441954,0x93,(int)opponent_index);
+  opponent_data[opponent_index].waypoint = weg_section_idx;
+  opponent_chunk = get_opponent_chunk(s_myinit_cpp_00441954,0x93,opponent_index);
   *opponent_chunk = weg_section_idx;
-  opponent_data[(int)opponent_index].direction = param_1;
-  opponent_data[(int)opponent_index].field_e0 = -1;
-  opponent_data[(int)opponent_index].field_e4 = 1;
-  if (opponent_data[(int)opponent_index].direction == 0) {
-    opponent_data[(int)opponent_index].lane = param_3;
-    opponent_data[(int)opponent_index].target_lane = param_3;
+  opponent_data[opponent_index].direction = param_1;
+  opponent_data[opponent_index].field_e0 = -1;
+  opponent_data[opponent_index].field_e4 = 1;
+  if (opponent_data[opponent_index].direction == 0) {
+    opponent_data[opponent_index].lane = param_3;
+    opponent_data[opponent_index].target_lane = param_3;
     iVar1 = weg_chunks + weg_section_idx * 0x38;
     local_1c = *(float *)(&lane_offsets + param_3 * 4);
     player_x = vertices3d[weg_sections[*(int *)(iVar1 + 8)].point].x;
     fVar2 = vertices3d[weg_sections[*(int *)(iVar1 + 8)].point].z;
   }
   else {
-    if (opponent_data[(int)opponent_index].direction != 1) goto LAB_00402196;
-    opponent_data[(int)opponent_index].lane = param_3;
-    opponent_data[(int)opponent_index].target_lane = param_3;
+    if (opponent_data[opponent_index].direction != 1) goto LAB_00402196;
+    opponent_data[opponent_index].lane = param_3;
+    opponent_data[opponent_index].target_lane = param_3;
     iVar1 = weg_chunks + weg_section_idx * 0x38;
     local_1c = *(float *)(&lane_offsets + param_3 * 4);
     player_x = vertices3d[weg_sections[*(int *)(iVar1 + 8)].point].x;
@@ -92,13 +92,13 @@ load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_
   }
   player_y = 0.0;
   player_x = (*(float *)(iVar1 + 0x1c) * local_1c + player_x) -
-             *(float *)(iVar1 + 0x24) * (param_5 + 40.0);
-  player_z = (param_5 + 40.0) * *(float *)(iVar1 + 0x1c) +
+             *(float *)(iVar1 + 0x24) * (param_4 + 40.0);
+  player_z = (param_4 + 40.0) * *(float *)(iVar1 + 0x1c) +
              *(float *)(iVar1 + 0x24) * local_1c + fVar2;
 LAB_00402196:
-  opponent_data[(int)opponent_index].x = player_x;
-  opponent_data[(int)opponent_index].y = player_y;
-  opponent_data[(int)opponent_index].z = player_z;
+  opponent_data[opponent_index].x = player_x;
+  opponent_data[opponent_index].y = player_y;
+  opponent_data[opponent_index].z = player_z;
   if (param_1 == 0) {
     player_heading = weg_sections[weg_section_idx].heading + 0x100;
   }
@@ -131,14 +131,14 @@ void __watcall exit_player(void)
 int __watcall update_player_object(int object)
 
 {
-  opponent_t *arg2;
+  int arg2;
   HRESULT HVar1;
   char *d3d_error_string_result;
   float afStack_98 [16];
   D3DMATRIX d3_dmatrix;
   
   arg2 = objects3d[object].opponent;
-  if (((int)arg2 < 0) || (opponent_count < (int)arg2)) {
+  if ((arg2 < 0) || (opponent_count < arg2)) {
     fatal_exit(s__s__d__Illegal_opponent_nr__d__m_004419c0,arg2,opponent_count);
   }
   HVar1 = (*d3d_device->lpVtbl->GetMatrix)(d3d_device,(DWORD)objects3d[object].matrix,&d3_dmatrix);
@@ -152,9 +152,9 @@ int __watcall update_player_object(int object)
   d3_dmatrix._33 = 1.0;
   d3_dmatrix._22 = 1.0;
   d3_dmatrix._11 = 1.0;
-  d3_dmatrix._41 = opponent_data[(int)arg2].x;
-  d3_dmatrix._42 = opponent_data[(int)arg2].y;
-  d3_dmatrix._43 = opponent_data[(int)arg2].z;
+  d3_dmatrix._41 = opponent_data[arg2].x;
+  d3_dmatrix._42 = opponent_data[arg2].y;
+  d3_dmatrix._43 = opponent_data[arg2].z;
   rotate_matrix_y(&d3_dmatrix._11,afStack_98,DAT_0045b26c + DAT_0045b274);
   rotate_matrix_x(&d3_dmatrix._11,afStack_98,DAT_0045b268);
   rotate_matrix_z(&d3_dmatrix._11,afStack_98,DAT_0045b270);

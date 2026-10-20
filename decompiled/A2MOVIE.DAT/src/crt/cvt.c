@@ -25,7 +25,7 @@ cvt(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
   
   *param_9 = 0;
   *param_8 = 0;
-  iVar2 = Nan_Inf(param_5,param_11,param_7,param_8,param_5,param_6,(undefined4 *)param_11);
+  iVar2 = Nan_Inf(param_5,param_6,(undefined4 *)param_11);
   if (iVar2 == 0) {
     local_30 = 0;
     sStack_2e = 0;
@@ -36,7 +36,7 @@ cvt(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
         _param_5 = -_param_5;
         *param_9 = 0xffffffff;
       }
-      frexp(param_6,param_5,param_7,param_8,param_5,param_6,param_8);
+      frexp(param_5,param_6,param_8);
       iVar2 = *param_8;
       if (iVar2 < 0) {
         iVar2 = -iVar2;
@@ -54,7 +54,7 @@ cvt(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
           param_7 = 0x10;
         }
         local_1c = '\0';
-        modf(param_5,iVar2,param_7,param_8,param_5,param_6,&local_28);
+        modf(param_5,param_6,&local_28);
         if (((float10)0 == in_ST1) && (iVar2 < param_7)) {
           local_1c = '\x01';
           param_7 = iVar2;

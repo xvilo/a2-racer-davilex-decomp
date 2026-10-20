@@ -173,8 +173,7 @@ int __watcall alloc_atan_table(void)
 
 /* ==== 00421fbd atan_lookup ==== */
 
-undefined4 __watcall
-atan_lookup(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5)
+undefined4 __watcall atan_lookup(int param_1,float param_2)
 
 {
   uint uVar1;
@@ -191,10 +190,10 @@ atan_lookup(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4
   if (uVar1 != 0) {
     if (uVar1 < 3) {
       if (*(float *)(&DAT_004765b4 + iVar3) == 1.0) {
-        fVar4 = (float10)param_5 - (float10)*(float *)(&DAT_004765b8 + iVar3);
+        fVar4 = (float10)param_2 - (float10)*(float *)(&DAT_004765b8 + iVar3);
       }
       else {
-        fVar4 = ((float10)param_5 - (float10)*(float *)(&DAT_004765b8 + iVar3)) /
+        fVar4 = ((float10)param_2 - (float10)*(float *)(&DAT_004765b8 + iVar3)) /
                 (float10)*(float *)(&DAT_004765b4 + iVar3);
       }
       CHP();
@@ -202,7 +201,7 @@ atan_lookup(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4
       goto LAB_004220c6;
     }
     if (uVar1 < 5) {
-      fVar4 = (float10)param_5 + (float10)0.5;
+      fVar4 = (float10)param_2 + (float10)0.5;
       iVar2 = *(int *)(&DAT_004765c0 + iVar3);
       CHP();
       if (iVar2 == 1) {
@@ -316,17 +315,14 @@ init_atan_table(uint param_1,int param_2,int param_3,int param_4,float param_5,f
 
 /* ==== 00422637 interpolate_weg_point ==== */
 
-int __watcall
-interpolate_weg_point
-          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
-          ,float param_6,float param_7,float param_8)
+int __watcall interpolate_weg_point(float param_1,float param_2,float param_3,float param_4)
 
 {
   float10 fVar1;
   undefined4 uStack_1c;
   
-  if (param_5 == param_7) {
-    if (param_6 <= param_8) {
+  if (param_1 == param_3) {
+    if (param_2 <= param_4) {
       uStack_1c = 0x3ff921fb;
     }
     else {
@@ -335,7 +331,7 @@ interpolate_weg_point
     fVar1 = (float10)(double)CONCAT44(uStack_1c,0x54411744);
   }
   else {
-    fVar1 = (float10)param_8 - (float10)param_6;
+    fVar1 = (float10)param_4 - (float10)param_2;
     atan2_checked();
   }
   fVar1 = ((float10)(float)fVar1 * (float10)1024.0) / (float10)6.283185307;

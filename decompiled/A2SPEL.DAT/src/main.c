@@ -57,37 +57,36 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
 
 {
   int iVar1;
-  uint ini_value_setting_3;
+  uint ini_value_setting_2;
   char *filename_val;
   char *filename_val_2;
   undefined4 uVar2;
   int iVar3;
   int player_at_finish_result;
   int extraout_EDX;
-  undefined4 extraout_EDX_00;
-  int extraout_EDX_01;
+  int extraout_EDX_00;
   int frame_val;
-  int extraout_EDX_02;
+  int extraout_EDX_01;
   uint uVar4;
   int iVar5;
+  uint ini_value_setting_3;
   uint ini_value_setting;
-  uint ini_value_setting_2;
   bool bVar6;
   
-  ini_value_setting = 1;
+  ini_value_setting_3 = 1;
   iVar1 = file_exist(s_a2_ini_0044100e);
   uVar4 = 0;
-  ini_value_setting_2 = 0;
+  ini_value_setting = 0;
   if (iVar1 != 0) {
     set_ini_filename(s_a2_ini_00441015);
     uVar4 = read_ini_value_setting(s_HELPDESK_00441022,s_DEBUG_0044101c);
-    ini_value_setting_2 = read_ini_value_setting(s_HELPDESK_00441032,s_SNDFRT_0044102b);
-    ini_value_setting = read_ini_value_setting(s_HELPDESK_00441042,s_WINMSG_0044103b);
+    ini_value_setting = read_ini_value_setting(s_HELPDESK_00441032,s_SNDFRT_0044102b);
+    ini_value_setting_3 = read_ini_value_setting(s_HELPDESK_00441042,s_WINMSG_0044103b);
     racer_range = read_ini_value_setting(s_TWEAK_00441056,s_RACERRANGE_0044104b);
-    ini_value_setting_3 = read_ini_value_setting(s_TWEAK_0044106b,s_RACERHIGHSPEED_0044105c);
-    racer_high_speed = (float)ini_value_setting_3;
-    ini_value_setting_3 = read_ini_value_setting(s_TWEAK_0044107f,s_RACERLOWSPEED_00441071);
-    racer_low_speed = (float)ini_value_setting_3;
+    ini_value_setting_2 = read_ini_value_setting(s_TWEAK_0044106b,s_RACERHIGHSPEED_0044105c);
+    racer_high_speed = (float)ini_value_setting_2;
+    ini_value_setting_2 = read_ini_value_setting(s_TWEAK_0044107f,s_RACERLOWSPEED_00441071);
+    racer_low_speed = (float)ini_value_setting_2;
     switch(track_index) {
     case 0:
       police_count = read_ini_value_setting(s_TWEAK_0044108d,s_POLICE0_00441085);
@@ -180,7 +179,7 @@ LAB_0040149d:
   mouse_off();
   debugmsg(s_handle_win_msg_004412c1);
   handle_win_msg();
-  if (ini_value_setting_2 == 0) {
+  if (ini_value_setting == 0) {
     debugmsg(s_Setting_Sound_lib__BEST_AS_POSSI_004412d1);
     uVar4 = xvga_init_sound(0x3c,9);
     if (11000 < uVar4) {
@@ -288,7 +287,7 @@ LAB_004014d6:
   init_controls();
   if (DAT_00458c2c != 0) {
     debugmsg(s_set_horizon_object_00441611);
-    load_static_object(0,extraout_EDX_00,iVar5,iVar1,0.0,0.0,0,0);
+    load_static_object(0,0.0,0.0,0,0);
   }
   debugmsg(s_init_pionnen_00441625);
   init_pionnen();
@@ -312,7 +311,7 @@ LAB_004014d6:
   race_state = 1;
   start_camera_intro();
   debugmsg(s_Done_init___starting_loop_004416b2);
-  frame_val = extraout_EDX_01;
+  frame_val = extraout_EDX_00;
   while (race_state != 8) {
     update_racers();
     render_3d_frame();
@@ -369,10 +368,10 @@ LAB_004014d6:
       race_finished_ok = 0;
       race_state = 8;
     }
-    if (ini_value_setting != 0) {
+    if (ini_value_setting_3 != 0) {
       debugmsg(s_do_msg_loop_004416cd);
       do_msg_loop();
-      frame_val = extraout_EDX_02;
+      frame_val = extraout_EDX_01;
     }
     iVar3 = keyispressed(0x76);
     if (iVar3 != 0) {

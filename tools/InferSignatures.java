@@ -69,15 +69,12 @@ public class InferSignatures extends GhidraScript {
 			}
 			if (targets.contains(f)) {
 				int n = regs.get(f), stack = stackPop(f) / 4;
-				if (stack > 0) {
-					n = 4;
-				}
 				List<ghidra.program.model.listing.Variable> ps = new ArrayList<>();
 				for (int i = 0; i < n + stack; i++) {
 					ps.add(new ParameterImpl("param_" + (i + 1), Undefined4DataType.dataType,
 						currentProgram, SourceType.DEFAULT));
 				}
-				f.updateFunction(WATCALL + n,
+				f.updateFunction(convention(n, stack),
 					new ReturnParameterImpl(Undefined4DataType.dataType, currentProgram), ps,
 					Function.FunctionUpdateType.DYNAMIC_STORAGE_ALL_PARAMS, true,
 					SourceType.ANALYSIS);
@@ -92,7 +89,8 @@ public class InferSignatures extends GhidraScript {
 					ps.add(new ParameterImpl(p.getName(), p.getDataType(), currentProgram,
 						p.getSource()));
 				}
-				f.updateFunction(WATCALL + regs.get(f), new ReturnParameterImpl(ret, currentProgram),
+				f.updateFunction(convention(regs.get(f), stackPop(f) / 4),
+					new ReturnParameterImpl(ret, currentProgram),
 					ps, Function.FunctionUpdateType.DYNAMIC_STORAGE_ALL_PARAMS, true,
 					f.getSignatureSource());
 			}
@@ -400,16 +398,58 @@ public class InferSignatures extends GhidraScript {
 		return i < 0 ? 0 : 1 << i;
 	}
 
+	/**
+	 * __watcallN for N register parameters; with stack parameters too, __watcall_sN when
+	 * fewer than four registers come first (arguments after a float go on the stack).
+	 */
+	private static String convention(int regs, int stack) {
+		return stack > 0 && regs < 4 ? WATCALL + "_s" + regs : WATCALL + regs;
+	}
+
 	private int stackPop(Function f) {
+		List<Address> tails = new ArrayList<>();
 		ghidra.program.model.listing.InstructionIterator ii =
 			currentProgram.getListing().getInstructions(f.getBody(), true);
 		while (ii.hasNext()) {
 			Instruction in = ii.next();
-			if (in.getMnemonicString().equalsIgnoreCase("RET") && in.getNumOperands() == 1) {
-				Object[] o = in.getOpObjects(0);
-				if (o.length == 1 && o[0] instanceof Scalar) {
-					return (int) ((Scalar) o[0]).getValue();
+			int pop = retPop(in);
+			if (pop >= 0) {
+				return pop;
+			}
+			// Watcom shares epilogues: a function may end by jumping into another's (Ghidra
+			// may type that JMP as a tail call, so look at the mnemonic).
+			if (in.getMnemonicString().equalsIgnoreCase("JMP")) {
+				for (Address a : in.getFlows()) {
+					if (!f.getBody().contains(a)) {
+						tails.add(a);
+					}
 				}
+			}
+		}
+		for (Address a : tails) {
+			Instruction in = getInstructionAt(a);
+			for (int i = 0; in != null && i < 16; i++, in = in.getNext()) {
+				int pop = retPop(in);
+				if (pop >= 0) {
+					return pop;
+				}
+				if (in.getFlowType().isJump() || in.getFlowType().isCall()) {
+					break;
+				}
+			}
+		}
+		return 0;
+	}
+
+	/** The bytes a RET pops (0 for a plain RET), or -1 for another instruction. */
+	private static int retPop(Instruction in) {
+		if (!in.getMnemonicString().equalsIgnoreCase("RET")) {
+			return -1;
+		}
+		if (in.getNumOperands() == 1) {
+			Object[] o = in.getOpObjects(0);
+			if (o.length == 1 && o[0] instanceof Scalar) {
+				return (int) ((Scalar) o[0]).getValue();
 			}
 		}
 		return 0;

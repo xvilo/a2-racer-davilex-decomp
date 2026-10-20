@@ -130,22 +130,18 @@ int __watcall tile_always_hidden(void)
 void __watcall build_map_execute_buffers(void)
 
 {
-  int iVar1;
-  DWORD DVar2;
-  float unaff_ECX;
-  int unaff_EDX;
+  int debug_weg_position_result;
+  DWORD DVar1;
   int extraout_EDX;
   int arg2;
+  int k;
   int j;
   int i;
-  int local_1c;
   
-  iVar1 = DAT_00476fe0;
   arg2 = 0;
-  local_1c = 0;
+  i = 0;
   if (DAT_00476fe0 != 0) {
     if (DAT_00476fe4 == 0) {
-      unaff_EDX = -1;
       DAT_00476fe8 = create_material(3,-1);
     }
     else {
@@ -154,35 +150,29 @@ void __watcall build_map_execute_buffers(void)
         fatal_exit(s__s__d____error_xvga_material_has_0044fa2e,s_mapexec_cpp_0044fa22,0xe7);
       }
       else {
-        unaff_EDX = grass_texture;
         set_material_texture(default_material,grass_texture);
       }
     }
-    for (i = 0; i < DAT_00476ffc; i = i + 1) {
-      for (j = 0; j < DAT_00476ff8; j = j + 1) {
-        iVar1 = debug_weg_position(tile_size * j,unaff_EDX,iVar1,unaff_ECX,
-                                   (float)(tile_size * j) * 30.0,(float)((int)tile_scale * i) * 30.0
-                                   ,DAT_004596d4);
-        unaff_EDX = DAT_00476ff4;
-        if (iVar1 == 0) {
-          iVar1 = local_1c + 1;
-          *(undefined4 *)(DAT_00476ff4 + (DAT_00476ff8 * i + j) * 8) = 0;
-          local_1c = iVar1;
+    for (j = 0; j < DAT_00476ffc; j = j + 1) {
+      for (k = 0; k < DAT_00476ff8; k = k + 1) {
+        debug_weg_position_result =
+             debug_weg_position(tile_size * k,(float)(tile_size * k) * 30.0,
+                                (float)((int)tile_scale * j) * 30.0,DAT_004596d4);
+        if (debug_weg_position_result == 0) {
+          i = i + 1;
+          *(undefined4 *)(DAT_00476ff4 + (DAT_00476ff8 * j + k) * 8) = 0;
         }
         else {
-          unaff_ECX = tile_scale;
-          DVar2 = build_tile_execute_buffer
-                            (j * tile_size,i * (int)tile_scale,tile_size,(int)tile_scale);
-          iVar1 = DAT_00476ff4;
-          *(DWORD *)(DAT_00476ff4 + 4 + (DAT_00476ff8 * i + j) * 8) = DVar2;
-          unaff_EDX = DAT_00476ff4;
+          DVar1 = build_tile_execute_buffer
+                            (k * tile_size,j * (int)tile_scale,tile_size,(int)tile_scale);
+          *(DWORD *)(DAT_00476ff4 + 4 + (DAT_00476ff8 * j + k) * 8) = DVar1;
           arg2 = arg2 + 1;
-          *(undefined4 *)(DAT_00476ff4 + (DAT_00476ff8 * i + j) * 8) = 1;
+          *(undefined4 *)(DAT_00476ff4 + (DAT_00476ff8 * j + k) * 8) = 1;
         }
       }
     }
     debugmsg(s_selected__d_0044fa66,arg2);
-    debugmsg(s_discarded__d_0044fa74,local_1c);
+    debugmsg(s_discarded__d_0044fa74,i);
     debugmsg(s_total__d_0044fa82,arg2 + extraout_EDX);
     debugmsg(s_mapsize__dx_d____d_0044fa90,DAT_00476ff8,DAT_00476ffc,DAT_00476ff8 * DAT_00476ffc);
     view_min_x = 0;
@@ -303,9 +293,7 @@ switchD_00426ca4_default:
 
 /* ==== 00426ea7 return_zero_float ==== */
 
-void __watcall
-return_zero_float(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5,undefined4 param_6)
+void __watcall return_zero_float(undefined4 param_1,undefined4 param_2)
 
 {
   return;
@@ -314,28 +302,24 @@ return_zero_float(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
 
 /* ==== 00426eac road_height_at ==== */
 
-float __watcall
-road_height_at(float weg_section_idx,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-              float param_5,float param_6)
+float __watcall road_height_at(int chunk,float x,float z)
 
 {
-  float fVar1;
+  float local_c;
   
-  if (weg_section_idx == -NAN) {
+  if (chunk == -1) {
     debugmsg(s_chunk_error_0044fd04);
-    fVar1 = weg_section_idx;
+    local_c = 0.0;
   }
   else {
-    fVar1 = -((weg_sections[(int)weg_section_idx].plane_c * param_6 +
-               weg_sections[(int)weg_section_idx].plane_a * param_5 +
-              weg_sections[(int)weg_section_idx].plane_d) /
-             weg_sections[(int)weg_section_idx].plane_b);
-    debugmsg(s___d__5_2f___5_2f__5_2f__0044fd11,weg_section_idx,SUB84((double)fVar1,0),
-             (int)((ulonglong)(double)fVar1 >> 0x20),SUB84((double)param_5,0),
-             (int)((ulonglong)(double)param_5 >> 0x20),SUB84((double)param_6,0),
-             (int)((ulonglong)(double)param_6 >> 0x20));
+    local_c = -((weg_sections[chunk].plane_c * z + weg_sections[chunk].plane_a * x +
+                weg_sections[chunk].plane_d) / weg_sections[chunk].plane_b);
+    debugmsg(s___d__5_2f___5_2f__5_2f__0044fd11,chunk,SUB84((double)local_c,0),
+             (int)((ulonglong)(double)local_c >> 0x20),SUB84((double)x,0),
+             (int)((ulonglong)(double)x >> 0x20),SUB84((double)z,0),
+             (int)((ulonglong)(double)z >> 0x20));
   }
-  return fVar1;
+  return SUB104((float10)local_c,0);
 }
 
 

@@ -13095,9 +13095,7 @@ undefined4 __watcall tell(undefined4 param_1)
 
 /* ==== 0040f500 raise_sigill_handler ==== */
 
-undefined4 __watcall
-raise_sigill_handler
-          (undefined4 param_1,int param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5)
+undefined4 __watcall raise_sigill_handler(undefined4 param_1,int param_2,undefined4 param_3)
 
 {
   raise(4);
@@ -15109,20 +15107,20 @@ set_edit_box_colors(edit_box_t *edit_box,ulong param_2,ulong param_3,ulong param
 {
   HBRUSH pHVar1;
   
-  if (edit_box->field_1c != (HGDIOBJ)0x0) {
-    DeleteObject(edit_box->field_1c);
+  if (edit_box->brush != (HGDIOBJ)0x0) {
+    DeleteObject(edit_box->brush);
   }
-  if (edit_box->field_28 != (HGDIOBJ)0x0) {
-    DeleteObject(edit_box->field_28);
+  if (edit_box->focus_brush != (HGDIOBJ)0x0) {
+    DeleteObject(edit_box->focus_brush);
   }
-  edit_box->field_14 = param_2;
-  edit_box->field_18 = param_3;
-  pHVar1 = CreateSolidBrush(edit_box->field_14);
-  edit_box->field_1c = pHVar1;
-  edit_box->field_20 = param_4;
-  edit_box->field_24 = param_5;
-  pHVar1 = CreateSolidBrush(edit_box->field_20);
-  edit_box->field_28 = pHVar1;
+  edit_box->background = param_2;
+  edit_box->foreground = param_3;
+  pHVar1 = CreateSolidBrush(edit_box->background);
+  edit_box->brush = pHVar1;
+  edit_box->focus_background = param_4;
+  edit_box->focus_foreground = param_5;
+  pHVar1 = CreateSolidBrush(edit_box->focus_background);
+  edit_box->focus_brush = pHVar1;
   return;
 }
 
@@ -16823,7 +16821,7 @@ void __watcall forcedecpt(char *param_1,int param_2)
 
 /* ==== 00412e70 cnvs2d ==== */
 
-byte * __watcall cnvs2d(byte *param_1,double *param_2,undefined4 param_3,uint param_4)
+byte * __watcall cnvs2d(byte *param_1,double *param_2,undefined4 param_3,undefined4 param_4)
 
 {
   byte *strtod_result;
@@ -18050,17 +18048,16 @@ FtoS(char *param_1,double *param_2,char *param_3,undefined4 param_4,int param_5,
 
 {
   double dVar1;
-  uint uVar2;
+  undefined4 uVar2;
   undefined4 uVar3;
-  undefined4 uVar4;
   int j;
-  char *pcVar5;
+  char *pcVar4;
   int do_e_format;
-  uint uVar6;
-  char *pcVar7;
+  uint uVar5;
+  char *pcVar6;
   float10 in_ST0;
+  float10 fVar7;
   float10 fVar8;
-  float10 fVar9;
   float10 in_ST1;
   char local_44 [20];
   undefined8 local_30;
@@ -18071,30 +18068,29 @@ FtoS(char *param_1,double *param_2,char *param_3,undefined4 param_4,int param_5,
   char *local_14;
   char *local_10;
   
-  pcVar7 = (char *)CONCAT22((short)((uint)param_4 >> 0x10),CONCAT11((char)param_4,(char)param_4));
+  pcVar6 = (char *)CONCAT22((short)((uint)param_4 >> 0x10),CONCAT11((char)param_4,(char)param_4));
   local_10 = param_1;
-  j = Nan_Inf(*(undefined4 *)param_2,param_2,param_3,pcVar7,*(undefined4 *)param_2,
-              *(uint *)((int)param_2 + 4),(undefined4 *)local_44);
+  j = Nan_Inf(*(int *)param_2,*(uint *)((int)param_2 + 4),(undefined4 *)local_44);
   if (j == 0) {
-    uVar6 = CONCAT31((int3)((uint)pcVar7 >> 8),(char)param_9);
+    uVar5 = CONCAT31((int3)((uint)pcVar6 >> 8),(char)param_9);
     if ((char)param_9 == 'G') {
       local_30 = ABS(*param_2);
       if ((((ulonglong)local_30 & 0x7fffffff00000000) != 0) || ((int)local_30 != 0)) {
-        fVar8 = (float10)local_30;
-        fVar9 = in_ST0;
+        fVar7 = (float10)local_30;
+        fVar8 = in_ST0;
         in_ST0 = in_ST1;
-        IF_DLOG10((int)local_30,param_2,(int)param_3,uVar6);
-        dVar1 = (double)fVar8;
+        IF_DLOG10((int)local_30,param_2,(int)param_3,uVar5);
+        dVar1 = (double)fVar7;
         local_30._4_4_ = (undefined4)((ulonglong)dVar1 >> 0x20);
-        uVar3 = local_30._4_4_;
+        uVar2 = local_30._4_4_;
         local_30._0_4_ = SUB84(dVar1,0);
-        uVar4 = (int)local_30;
+        uVar3 = (int)local_30;
         local_30 = dVar1;
-        floor(uVar3,param_2,param_3,uVar6,uVar4,uVar3);
+        floor(uVar2,param_2,param_3,uVar3,uVar2);
         CHP();
-        i = (int)ROUND(fVar9);
+        i = (int)ROUND(fVar8);
         if ((i < -4) || ((int)param_3 <= i)) {
-          uVar6 = CONCAT31((int3)(uVar6 >> 8),0x45);
+          uVar5 = CONCAT31((int3)(uVar5 >> 8),0x45);
           goto LAB_004144f7;
         }
         if (0.0 <= local_30) {
@@ -18105,11 +18101,11 @@ FtoS(char *param_1,double *param_2,char *param_3,undefined4 param_4,int param_5,
           param_3 = param_3 + -1;
         }
       }
-      uVar6 = CONCAT31((int3)(uVar6 >> 8),0x46);
+      uVar5 = CONCAT31((int3)(uVar5 >> 8),0x46);
       param_6 = 0;
     }
 LAB_004144f7:
-    if (((uVar6 & 0xff) == 0x45) && ((param_6 <= -(int)param_3 || ((int)(param_3 + 2) <= param_6))))
+    if (((uVar5 & 0xff) == 0x45) && ((param_6 <= -(int)param_3 || ((int)(param_3 + 2) <= param_6))))
     goto LAB_00414512;
     if ((char)param_9 == 'E') {
       if (param_6 < 1) {
@@ -18121,19 +18117,18 @@ LAB_004144f7:
         param_3 = param_3 + 1;
       }
     }
-    j = *(int *)param_2;
-    uVar2 = *(uint *)((int)param_2 + 4);
     local_28 = *param_2;
-    if (((((uVar2 & 0x7fffffff) != 0) || (j != 0)) && ((uVar6 & 0xff) != 0x45)) && (param_6 != 0)) {
-      Scale10V(j,param_2,uVar2,uVar6,j,uVar2,param_6);
+    if (((((*(uint *)((int)param_2 + 4) & 0x7fffffff) != 0) || (*(int *)param_2 != 0)) &&
+        ((uVar5 & 0xff) != 0x45)) && (param_6 != 0)) {
+      Scale10V(*(int *)param_2,*(uint *)((int)param_2 + 4),param_6);
       local_28 = (double)in_ST0;
     }
-    cvt(&local_20,local_28._4_4_,(int)local_28,uVar6,(int)local_28,local_28._4_4_,(int)param_3,
-        &local_20,&local_1c,uVar6 & 0xff,local_44);
-    pcVar7 = local_10;
+    cvt(&local_20,local_28._4_4_,(int)local_28,uVar5,(int)local_28,local_28._4_4_,(int)param_3,
+        &local_20,&local_1c,uVar5 & 0xff,local_44);
+    pcVar6 = local_10;
     local_14 = local_10;
     if (local_1c == 0) {
-      if ((char)(uVar6 >> 8) != '\0') {
+      if ((char)(uVar5 >> 8) != '\0') {
         *local_10 = '+';
         local_14 = local_10 + 1;
       }
@@ -18143,10 +18138,10 @@ LAB_004144f7:
       local_14 = local_10 + 1;
     }
     j = param_5 + 1;
-    if ((uVar6 & 0xff) == 0x45) {
-      pcVar7 = param_3 + -param_6;
-      if ((int)pcVar7 <= param_5) {
-        local_14 = DoFFormat(local_14,local_44,param_6,(int)pcVar7);
+    if ((uVar5 & 0xff) == 0x45) {
+      pcVar6 = param_3 + -param_6;
+      if ((int)pcVar6 <= param_5) {
+        local_14 = DoFFormat(local_14,local_44,param_6,(int)pcVar6);
         j = (int)local_14 - (int)local_10;
         if (((char)param_8 != '\0') && (j < param_5)) {
           *local_14 = (char)param_8;
@@ -18156,28 +18151,28 @@ LAB_004144f7:
         if ((((ulonglong)local_28 & 0x7fffffff00000000) != 0) || ((int)local_28 != 0)) {
           local_20 = local_20 - param_6;
         }
-        pcVar7 = (char *)(param_5 - j);
-        do_e_format = DoEFormat(local_14,local_20,param_7,(int)pcVar7);
+        pcVar6 = (char *)(param_5 - j);
+        do_e_format = DoEFormat(local_14,local_20,param_7,(int)pcVar6);
         j = j + do_e_format;
       }
     }
     else if ((int)(param_3 + (int)(local_14 + ((local_20 + 1) - (int)local_10))) <= param_5) {
-      pcVar5 = DoFFormat(local_14,local_44,local_20,(int)param_3);
-      j = (int)pcVar5 - (int)pcVar7;
-      pcVar7 = param_3;
+      pcVar4 = DoFFormat(local_14,local_44,local_20,(int)param_3);
+      j = (int)pcVar4 - (int)pcVar6;
+      pcVar6 = param_3;
     }
   }
   else {
-    pcVar5 = local_10;
+    pcVar4 = local_10;
     for (j = 0; local_44[j] != '\0'; j = j + 1) {
       if (j < param_5) {
-        *pcVar5 = local_44[j];
+        *pcVar4 = local_44[j];
       }
-      pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
     }
   }
   if (j <= param_5) {
-    AdjField((undefined4 *)local_10,j,param_5,pcVar7);
+    AdjField((undefined4 *)local_10,j,param_5,pcVar6);
     return;
   }
 LAB_00414512:
@@ -18188,7 +18183,7 @@ LAB_00414512:
 
 /* ==== 0041467c strtod ==== */
 
-byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,uint param_4)
+byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,undefined4 param_4)
 
 {
   byte bVar1;
@@ -18211,10 +18206,10 @@ byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,uin
   for (pbVar2 = param_1; (bVar7 = *pbVar2, bVar7 == 0x20 || ((8 < bVar7 && (bVar7 < 0xe))));
       pbVar2 = pbVar2 + 1) {
   }
-  uVar5 = param_4 & 0xffffff00;
+  uVar5 = 0;
   pbVar3 = pbVar2 + 1;
   if ((bVar7 != 0x2b) && (pbVar3 = pbVar2, bVar7 == 0x2d)) {
-    uVar5 = CONCAT31((int3)(param_4 >> 8),1);
+    uVar5 = 1;
     pbVar3 = pbVar2 + 1;
   }
   i = 0;
@@ -18224,15 +18219,15 @@ byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,uin
   while( true ) {
     while( true ) {
       bVar1 = *pbVar3;
-      uVar5 = CONCAT22((short)(uVar5 >> 0x10),CONCAT11((char)uVar5,(char)uVar5)) & 0xffff08ff;
+      uVar5 = CONCAT11((char)uVar5,(char)uVar5) & 0xffff08ff;
       pbVar2 = pbVar3 + 1;
       if (bVar1 != 0x2e) break;
-      if ((uVar5 >> 8 & 0xff) != 0) goto LAB_00414709;
+      if (uVar5 >> 8 != 0) goto LAB_00414709;
       uVar5 = uVar5 | 8;
       pbVar3 = pbVar2;
     }
     if ((bVar1 < 0x30) || (0x39 < bVar1)) break;
-    if ((uVar5 >> 8 & 0xff) != 0) {
+    if (uVar5 >> 8 != 0) {
       j = j + 1;
     }
     bVar7 = bVar7 | bVar1;
@@ -18292,7 +18287,7 @@ LAB_00414709:
         goto LAB_00414857;
       }
       if (k != 0) {
-        Scale10V(i,uStack_24,local_28,uVar5,local_28,uStack_24,k);
+        Scale10V(local_28,uStack_24,k);
       }
       pbVar2 = (byte *)(uint)((byte)uVar5 & 1);
       pbVar4 = pbVar2;
@@ -18501,9 +18496,7 @@ RegisterThreadData(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
 
 /* ==== 00414aa7 Nan_Inf ==== */
 
-undefined4 __watcall
-Nan_Inf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
-       uint param_6,undefined4 *param_7)
+undefined4 __watcall Nan_Inf(int param_1,uint param_2,undefined4 *param_3)
 
 {
   undefined4 *puVar1;
@@ -18511,16 +18504,16 @@ Nan_Inf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 para
   short local_c;
   ushort uStack_a;
   
-  local_c = (short)param_6;
-  uStack_a = (ushort)(param_6 >> 0x10);
+  local_c = (short)param_2;
+  uStack_a = (ushort)(param_2 >> 0x10);
   if ((uStack_a & 0x7ff0) == 0x7ff0) {
-    puVar1 = param_7;
-    if ((param_6 & 0x80000000) != 0) {
-      puVar1 = (undefined4 *)((int)param_7 + 1);
-      *(undefined1 *)param_7 = 0x2d;
+    puVar1 = param_3;
+    if ((param_2 & 0x80000000) != 0) {
+      puVar1 = (undefined4 *)((int)param_3 + 1);
+      *(undefined1 *)param_3 = 0x2d;
     }
     uVar2 = DAT_0041f4d0;
-    if ((local_c == 0 && param_5 == 0) && (param_6 & 0xf0000) == 0) {
+    if ((local_c == 0 && param_1 == 0) && (param_2 & 0xf0000) == 0) {
       uVar2 = DAT_0041f4cc;
     }
     *puVar1 = uVar2;
@@ -18574,10 +18567,10 @@ void __watcall IF_DLOG10(undefined4 param_1,undefined4 param_2,int param_3,undef
 
 void __watcall
 floor(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5
-     ,undefined4 param_6)
+     )
 
 {
-  undefined1 local_18 [8];
+  double local_18;
   undefined4 local_10;
   undefined4 uStack_c;
   undefined4 uStack_8;
@@ -18585,7 +18578,7 @@ floor(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_
   local_10 = param_2;
   uStack_c = param_3;
   uStack_8 = param_1;
-  modf(local_18,param_6,param_5,param_4,param_5,param_6,(double *)local_18);
+  modf(param_4,param_5,&local_18);
   return;
 }
 
@@ -18606,14 +18599,14 @@ Scale(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undef
      undefined4 param_6,int param_7,uint *param_8)
 
 {
-  int cmp_big_int;
   uint *puVar1;
+  int cmp_big_int;
   float10 in_ST0;
   
-  cmp_big_int = param_7;
   puVar1 = param_8;
+  cmp_big_int = param_7;
   if (param_1 != param_7) {
-    Scale10V(param_1,param_6,param_8,param_7,param_5,param_6,param_7 - param_1);
+    Scale10V(param_5,param_6,param_7 - param_1);
     _param_5 = (double)in_ST0;
   }
   Rnd2Int(&param_5);
@@ -18624,44 +18617,40 @@ Scale(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undef
 
 /* ==== 00414c44 Scale10V ==== */
 
-void __watcall
-Scale10V(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-        undefined4 param_5,undefined4 param_6,int param_7)
+void __watcall Scale10V(undefined4 param_1,undefined4 param_2,int param_3)
 
 {
   short *psVar1;
   int iVar2;
-  int iVar3;
   undefined8 local_1c;
   
   psVar1 = &BigPow10Table;
-  if (param_7 < 0) {
-    iVar2 = -param_7;
-    if (param_7 == -0x134 || iVar2 < 0x134) goto LAB_00414cf1;
+  if (param_3 < 0) {
+    iVar2 = -param_3;
+    if (param_3 == -0x134 || iVar2 < 0x134) goto LAB_00414cf1;
     if ((chipbug & 1) != 0) {
-      psVar1 = (short *)fdiv_m64(&BigPow10Table,iVar2,param_3,param_7,DAT_0041f74a,DAT_0041f74e);
+      psVar1 = (short *)fdiv_m64(DAT_0041f74a,DAT_0041f74e);
     }
   }
   else {
-    iVar2 = param_7;
-    if (param_7 < 0x135) goto LAB_00414cf1;
+    iVar2 = param_3;
+    if (param_3 < 0x135) goto LAB_00414cf1;
   }
   iVar2 = iVar2 + -0xd8;
 LAB_00414cf1:
   local_1c = 1.0;
   while( true ) {
-    iVar3 = (int)*psVar1;
-    if (iVar3 <= iVar2) {
+    if (*psVar1 <= iVar2) {
       local_1c = local_1c * *(double *)(psVar1 + 1);
-      iVar2 = iVar2 - iVar3;
+      iVar2 = iVar2 - *psVar1;
     }
     if (iVar2 == 0) break;
     if (*psVar1 != 1) {
       psVar1 = psVar1 + 5;
     }
   }
-  if ((param_7 < 0) && ((chipbug & 1) != 0)) {
-    fdiv_m64(psVar1,0,iVar3,param_7,(undefined4)local_1c,local_1c._4_4_);
+  if ((param_3 < 0) && ((chipbug & 1) != 0)) {
+    fdiv_m64((undefined4)local_1c,local_1c._4_4_);
   }
   return;
 }
@@ -18691,7 +18680,7 @@ cvt(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
   
   *param_9 = 0;
   *param_8 = 0;
-  iVar2 = Nan_Inf(param_5,param_11,param_7,param_8,param_5,param_6,(undefined4 *)param_11);
+  iVar2 = Nan_Inf(param_5,param_6,(undefined4 *)param_11);
   if (iVar2 == 0) {
     local_30 = 0;
     sStack_2e = 0;
@@ -18702,7 +18691,7 @@ cvt(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
         _param_5 = -_param_5;
         *param_9 = 0xffffffff;
       }
-      frexp(param_6,param_5,param_7,param_8,param_5,param_6,param_8);
+      frexp(param_5,param_6,param_8);
       iVar2 = *param_8;
       if (iVar2 < 0) {
         iVar2 = -iVar2;
@@ -18720,7 +18709,7 @@ cvt(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
           param_7 = 0x10;
         }
         local_1c = '\0';
-        modf(param_5,iVar2,param_7,param_8,param_5,param_6,&local_28);
+        modf(param_5,param_6,&local_28);
         if (((float10)0 == in_ST1) && (iVar2 < param_7)) {
           local_1c = '\x01';
           param_7 = iVar2;
@@ -18937,16 +18926,14 @@ log87_err(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,i
 
 /* ==== 00415250 modf ==== */
 
-void __watcall
-modf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,
-    undefined4 param_6,double *param_7)
+void __watcall modf(undefined4 param_1,undefined4 param_2,double *param_3)
 
 {
   float10 fVar1;
   
-  fVar1 = (float10)(double)CONCAT44(param_6,param_5);
+  fVar1 = (float10)(double)CONCAT44(param_2,param_1);
   CHP();
-  *param_7 = (double)fVar1;
+  *param_3 = (double)fVar1;
   return;
 }
 
@@ -19323,22 +19310,21 @@ void __watcall __fdivrp_sti_st(void)
 
 /* ==== 00415a68 fdiv_m64 ==== */
 
-undefined4 __watcall
-fdiv_m64(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-        undefined4 param_5,uint param_6)
+undefined4 __watcall fdiv_m64(undefined4 param_1,uint param_2)
 
 {
+  undefined4 in_EAX;
   ushort in_FPUStatusWord;
   
-  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
-    return param_1;
+  if ((param_2 & 0x7ff00000) == 0x7ff00000) {
+    return in_EAX;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
     __fdivp_sti_st();
-    return param_1;
+    return in_EAX;
   }
   __fdivp_sti_st();
-  return param_1;
+  return in_EAX;
 }
 
 
@@ -19350,60 +19336,56 @@ fdiv_m64(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 par
    Libraries: Visual Studio 1998 Debug, Visual Studio 1998 Release, Visual Studio 2003 Debug, Visual
    Studio 2003 Release */
 
-undefined4 __watcall
-__adj_fdivr_m32(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-               uint param_5)
+undefined4 __watcall __adj_fdivr_m32(uint param_1)
 
 {
+  undefined4 in_EAX;
   ushort in_FPUStatusWord;
   
-  if ((param_5 & 0x7f800000) == 0x7f800000) {
-    return param_1;
+  if ((param_1 & 0x7f800000) == 0x7f800000) {
+    return in_EAX;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
     __fdivrp_sti_st();
-    return param_1;
+    return in_EAX;
   }
   __fdivrp_sti_st();
-  return param_1;
+  return in_EAX;
 }
 
 
 /* ==== 00415b00 fdivr_checked ==== */
 
-undefined4 __watcall
-fdivr_checked(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-             undefined4 param_5,uint param_6)
+undefined4 __watcall fdivr_checked(undefined4 param_1,uint param_2)
 
 {
+  undefined4 in_EAX;
   ushort in_FPUStatusWord;
   
-  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
-    return param_1;
+  if ((param_2 & 0x7ff00000) == 0x7ff00000) {
+    return in_EAX;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
     __fdivrp_sti_st();
-    return param_1;
+    return in_EAX;
   }
   __fdivrp_sti_st();
-  return param_1;
+  return in_EAX;
 }
 
 
 /* ==== 00415b4c frexp ==== */
 
-void __watcall
-frexp(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
-     uint param_6,int *param_7)
+void __watcall frexp(int param_1,uint param_2,int *param_3)
 
 {
   int iVar1;
   
   iVar1 = 0;
-  if (((param_6 & 0x7fffffff) != 0) || (param_5 != 0)) {
-    iVar1 = ((int)(param_6 >> 0x10 & 0x7ff0) >> 4) + -0x3fe;
+  if (((param_2 & 0x7fffffff) != 0) || (param_1 != 0)) {
+    iVar1 = ((int)(param_2 >> 0x10 & 0x7ff0) >> 4) + -0x3fe;
   }
-  *param_7 = iVar1;
+  *param_3 = iVar1;
   return;
 }
 

@@ -129,18 +129,16 @@ undefined4 __watcall bin2string_inline_table_2(void)
 
 /* ==== 0043f244 frexp ==== */
 
-void __watcall
-frexp(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
-     uint param_6,int *param_7)
+void __watcall frexp(int param_1,uint param_2,int *param_3)
 
 {
   int iVar1;
   
   iVar1 = 0;
-  if (((param_6 & 0x7fffffff) != 0) || (param_5 != 0)) {
-    iVar1 = ((int)(param_6 >> 0x10 & 0x7ff0) >> 4) + -0x3fe;
+  if (((param_2 & 0x7fffffff) != 0) || (param_1 != 0)) {
+    iVar1 = ((int)(param_2 >> 0x10 & 0x7ff0) >> 4) + -0x3fe;
   }
-  *param_7 = iVar1;
+  *param_3 = iVar1;
   return;
 }
 

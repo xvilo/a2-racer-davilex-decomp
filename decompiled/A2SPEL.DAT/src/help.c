@@ -84,23 +84,23 @@ void __watcall draw_grid(int param_1)
   char *dd_error_string_result;
   int iVar2;
   int iVar3;
-  RECT rect;
   RECT rect_2;
+  RECT rect;
   
   if (helpgrid != (IDirectDrawSurface *)0x0) {
-    rect_2.left = 0;
-    rect_2.right = 8;
-    rect_2.top = 0;
-    rect_2.bottom = 8;
+    rect.left = 0;
+    rect.right = 8;
+    rect.top = 0;
+    rect.bottom = 8;
     if (param_1 == 0) {
       for (iVar3 = 0; iVar3 < xvga_screen_ysize; iVar3 = iVar3 + 8) {
-        rect.bottom = iVar3 + 8;
-        rect.top = iVar3;
+        rect_2.bottom = iVar3 + 8;
+        rect_2.top = iVar3;
         for (iVar2 = 0; iVar2 < xvga_screen_xsize; iVar2 = iVar2 + 8) {
-          rect.right = iVar2 + 8;
-          rect.left = iVar2;
+          rect_2.right = iVar2 + 8;
+          rect_2.left = iVar2;
           HVar1 = (*xvga_screen->lpVtbl->Blt)
-                            (xvga_screen,&rect,helpgrid,&rect_2,0x8000,(DDBLTFX *)0x0);
+                            (xvga_screen,&rect_2,helpgrid,&rect,0x8000,(DDBLTFX *)0x0);
           if (HVar1 != 0) {
             dd_error_string_result = dd_error_string(HVar1);
             fatal_exit(s__s__d____help_grid_blitting_erro_00451f51,s_help_cpp_00451f48,0x9a,
@@ -111,13 +111,13 @@ void __watcall draw_grid(int param_1)
     }
     else if ((uint)param_1 < 2) {
       for (iVar3 = 0; iVar3 < xvga_screen_ysize; iVar3 = iVar3 + 8) {
-        rect.bottom = iVar3 + 8;
-        rect.top = iVar3;
+        rect_2.bottom = iVar3 + 8;
+        rect_2.top = iVar3;
         for (iVar2 = 0; iVar2 < xvga_screen_xsize; iVar2 = iVar2 + 8) {
-          rect.right = iVar2 + 8;
-          rect.left = iVar2;
+          rect_2.right = iVar2 + 8;
+          rect_2.left = iVar2;
           HVar1 = (*xvga_back_screen->lpVtbl->Blt)
-                            (xvga_back_screen,&rect,helpgrid,&rect_2,0x8000,(DDBLTFX *)0x0);
+                            (xvga_back_screen,&rect_2,helpgrid,&rect,0x8000,(DDBLTFX *)0x0);
           if (HVar1 != 0) {
             dd_error_string_result = dd_error_string(HVar1);
             fatal_exit(s__s__d____help_grid_blitting_erro_00451f7d,s_help_cpp_00451f74,0xab,
@@ -128,13 +128,13 @@ void __watcall draw_grid(int param_1)
     }
     else if (param_1 == 2) {
       for (iVar3 = 0; iVar3 < xvga_screen_ysize; iVar3 = iVar3 + 8) {
-        rect.bottom = iVar3 + 8;
-        rect.top = iVar3;
+        rect_2.bottom = iVar3 + 8;
+        rect_2.top = iVar3;
         for (iVar2 = 0; iVar2 < xvga_screen_xsize; iVar2 = iVar2 + 8) {
-          rect.right = iVar2 + 8;
-          rect.left = iVar2;
+          rect_2.right = iVar2 + 8;
+          rect_2.left = iVar2;
           HVar1 = (*xvga_buffer_screen->lpVtbl->Blt)
-                            (xvga_buffer_screen,&rect,helpgrid,&rect_2,0x8000,(DDBLTFX *)0x0);
+                            (xvga_buffer_screen,&rect_2,helpgrid,&rect,0x8000,(DDBLTFX *)0x0);
           if (HVar1 != 0) {
             dd_error_string_result = dd_error_string(HVar1);
             fatal_exit(s__s__d____help_grid_blitting_erro_00451fa9,s_help_cpp_00451fa0,0xbc,

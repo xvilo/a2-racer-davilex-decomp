@@ -3,9 +3,7 @@
 
 /* ==== 0043e79a Nan_Inf ==== */
 
-undefined4 __watcall
-Nan_Inf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
-       uint param_6,undefined4 *param_7)
+undefined4 __watcall Nan_Inf(int param_1,uint param_2,undefined4 *param_3)
 
 {
   undefined4 *puVar1;
@@ -13,16 +11,16 @@ Nan_Inf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 para
   short local_c;
   ushort uStack_a;
   
-  local_c = (short)param_6;
-  uStack_a = (ushort)(param_6 >> 0x10);
+  local_c = (short)param_2;
+  uStack_a = (ushort)(param_2 >> 0x10);
   if ((uStack_a & 0x7ff0) == 0x7ff0) {
-    puVar1 = param_7;
-    if ((param_6 & 0x80000000) != 0) {
-      puVar1 = (undefined4 *)((int)param_7 + 1);
-      *(undefined1 *)param_7 = 0x2d;
+    puVar1 = param_3;
+    if ((param_2 & 0x80000000) != 0) {
+      puVar1 = (undefined4 *)((int)param_3 + 1);
+      *(undefined1 *)param_3 = 0x2d;
     }
     uVar2 = DAT_004574dc;
-    if ((local_c == 0 && param_5 == 0) && (param_6 & 0xf0000) == 0) {
+    if ((local_c == 0 && param_1 == 0) && (param_2 & 0xf0000) == 0) {
       uVar2 = DAT_004574d8;
     }
     *puVar1 = uVar2;

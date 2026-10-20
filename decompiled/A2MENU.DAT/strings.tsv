@@ -783,12 +783,16 @@ address	type	value
 00427f83	string	NUMPAD 7
 00427f8c	string	NUMPAD 8
 00427f95	string	NUMPAD 9
+00427f9e	string	Omhoog
+00427fa5	string	Omlaag
 00427fac	string	Rechts
+00427fb3	string	Links
 00427fb9	string	SPACE
 00427fbf	string	ENTER
 00427fc5	string	LINKS
 00427fcb	string	RECHTS
 00427fda	string	TOETER
+00427fe1	string	AKTIE
 00427fe7	string	MC_05.wav
 00427ff1	string	MC_06.wav
 00427ffb	string	MC_07.wav
@@ -2384,46 +2388,7 @@ address	type	value
 00431f9c	string	Partial loss of significance
 00431fb9	string	 in 
 00432198	string	en
-004321c0	string	David
-004321ec	string	Rogier
-00432270	string	Richard
-0043229c	string	Brian
-004322f4	string	Milan
 0043234c	string	Arnoud
-00432378	string	Peter
-004323a4	string	Rogier
-004323d0	string	Jeroen
-00432428	string	Richard
-00432480	string	Stefan
-004324ac	string	Harry
-00432504	string	Karin
-00432530	string	Johan
-0043255c	string	David
-00432588	string	Brian
-0043260c	string	Stefanie
-00432638	string	Ronald
-00432690	string	Jeroen
-004326e8	string	George
-0043276c	string	Patrick
-00432798	string	Richard
-004327c4	string	Brian
-004327f0	string	Evelyne
-0043281c	string	Milan
-00432874	string	Sander
-004328cc	string	Harry
-00432950	string	Richard
-0043297c	string	Brian
-00432a58	string	Jeroen
-00432b34	string	Frans
-00432b60	string	Bianca
-00432b8c	string	Ingrid
-00432bb8	string	Willem
-00432be4	string	Jeroen
-00432c10	string	David
-00432c3c	string	Rogier
-00432cc0	string	Richard
-00432cec	string	Brian
-00432d44	string	Milan
 00434608	char[4]	
 00435a34	char[300]	
 00435e10	uchar[72]	�

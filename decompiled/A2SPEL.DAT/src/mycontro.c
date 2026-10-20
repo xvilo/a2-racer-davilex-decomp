@@ -67,10 +67,7 @@ void __watcall load_and_play_motor_sample(int sample,int loop)
 
 /* ==== 004029ab select_rpm_step_for_speed ==== */
 
-void __watcall
-select_rpm_step_for_speed
-          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
-          )
+void __watcall select_rpm_step_for_speed(undefined4 param_1,float param_2)
 
 {
   int i;
@@ -79,7 +76,7 @@ select_rpm_step_for_speed
   rpm_step = 0;
   iVar1 = 0;
   for (i = 0; i < rpm_step_count; i = i + 1) {
-    if (*(float *)((int)&rpm_table + iVar1) <= param_5) {
+    if (*(float *)((int)&rpm_table + iVar1) <= param_2) {
       rpm_step = i;
     }
     iVar1 = iVar1 + 0xc;
@@ -93,8 +90,8 @@ select_rpm_step_for_speed
 /* ==== 00402a06 add_rpm_steps ==== */
 
 void __watcall
-add_rpm_steps(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-             undefined4 param_5,undefined4 param_6,float param_7,float param_8,float param_9)
+add_rpm_steps(undefined4 param_1,undefined4 param_2,undefined4 param_3,float param_4,float param_5,
+             float param_6)
 
 {
   int iVar1;
@@ -105,15 +102,15 @@ add_rpm_steps(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined
   float local_10;
   
   local_10 = 0.0;
-  local_18 = param_7;
+  local_18 = param_4;
   iVar2 = rpm_step_count * 0xc;
-  while (iVar1 = rpm_step_count, local_10 < param_9) {
+  while (iVar1 = rpm_step_count, local_10 < param_6) {
     fVar3 = (float10)local_18;
     chp = CHP();
     *(undefined4 *)(&DAT_0045b2c4 + iVar2) = param_1;
     rpm_step_count = iVar1 + 1;
     *(undefined4 *)((int)&rpm_table + iVar2) = chp;
-    local_18 = local_18 + (param_8 - param_7) / param_9;
+    local_18 = local_18 + (param_5 - param_4) / param_6;
     local_10 = local_10 + 1.0;
     *(int *)(&DAT_0045b2bc + iVar2) = (int)ROUND(fVar3);
     iVar2 = iVar2 + 0xc;
@@ -130,9 +127,8 @@ void __watcall init_controls(void)
   int iVar1;
   int iVar2;
   int i;
-  undefined4 uVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
   DAT_004577e0 = (int)infio.key_left;
   DAT_004577e4 = (int)infio.key_right;
@@ -154,53 +150,51 @@ LAB_00402b3a:
   set_joystick_keys(1,0,DAT_004577e0);
   set_joystick_keys(1,1,DAT_004577e4);
   set_joystick_keys(1,2,DAT_004577e8);
-  uVar3 = 3;
-  iVar5 = DAT_004577ec;
   set_joystick_keys(1,3,DAT_004577ec);
-  add_rpm_steps(0,uVar3,iVar5,0,0xc0200000,0,50.0,0.0,7.0);
+  add_rpm_steps(0,0xc0200000,0,50.0,0.0,7.0);
   idle_rpm_step = rpm_step_count;
   rpm_step = rpm_step_count;
-  add_rpm_steps(1,uVar3,iVar5,i,0,0x40200000,0.0,55.0,7.0);
-  add_rpm_steps(2,uVar3,iVar5,i,0x40200000,0x40800000,35.0,60.0,12.0);
-  add_rpm_steps(3,uVar3,iVar5,i,0x40800000,0x40c00000,40.0,63.0,15.0);
-  add_rpm_steps(4,uVar3,iVar5,i,0x40c00000,0x41000000,45.0,65.0,30.0);
+  add_rpm_steps(1,0,0x40200000,0.0,55.0,7.0);
+  add_rpm_steps(2,0x40200000,0x40800000,35.0,60.0,12.0);
+  add_rpm_steps(3,0x40800000,0x40c00000,40.0,63.0,15.0);
+  add_rpm_steps(4,0x40c00000,0x41000000,45.0,65.0,30.0);
+  iVar3 = 0;
+  add_rpm_steps(5,0x41000000,0x41700000,45.0,60.0,80.0);
   iVar4 = 0;
-  add_rpm_steps(5,0,iVar5,i,0x41000000,0x41700000,45.0,60.0,80.0);
-  iVar5 = 0;
   do {
-    iVar1 = iVar5 + 8;
-    *(int *)((int)&DAT_004729c8 + iVar5) = i + 0x2b11;
-    iVar2 = iVar4 + -2000;
+    iVar1 = iVar4 + 8;
+    *(int *)((int)&DAT_004729c8 + iVar4) = i + 0x2b11;
+    iVar2 = iVar3 + -2000;
     i = i + 1;
-    iVar4 = iVar4 + 0x2d;
-    *(int *)((int)&DAT_004729cc + iVar5) = iVar2;
-    iVar5 = iVar1;
+    iVar3 = iVar3 + 0x2d;
+    *(int *)((int)&DAT_004729cc + iVar4) = iVar2;
+    iVar4 = iVar1;
   } while (iVar1 != 0x118);
-  iVar5 = 0x118;
+  iVar4 = 0x118;
   do {
-    iVar2 = iVar5 + 8;
-    iVar4 = i + 0x2b11;
-    *(undefined4 *)((int)&DAT_004729cc + iVar5) = 0xfffffdfd;
+    iVar2 = iVar4 + 8;
+    iVar3 = i + 0x2b11;
+    *(undefined4 *)((int)&DAT_004729cc + iVar4) = 0xfffffdfd;
     i = i + 400;
-    *(int *)((int)&DAT_004729c8 + iVar5) = iVar4;
-    iVar5 = iVar2;
+    *(int *)((int)&DAT_004729c8 + iVar4) = iVar3;
+    iVar4 = iVar2;
   } while (iVar2 != 0x280);
-  iVar5 = -100;
+  iVar4 = -100;
   i = 0;
   do {
-    iVar4 = i + 8;
-    *(int *)((int)&DAT_00472cec + i) = iVar5;
+    iVar3 = i + 8;
+    *(int *)((int)&DAT_00472cec + i) = iVar4;
     *(undefined4 *)((int)&DAT_00472ce8 + i) = 0x157c;
-    iVar5 = iVar5 + -0x2a;
-    i = iVar4;
-  } while (iVar4 != 0x118);
+    iVar4 = iVar4 + -0x2a;
+    i = iVar3;
+  } while (iVar3 != 0x118);
   i = 0x118;
   do {
-    iVar5 = i + 8;
+    iVar4 = i + 8;
     *(undefined4 *)((int)&DAT_00472ce8 + i) = 0x157c;
     *(undefined4 *)((int)&DAT_00472cec + i) = 0xffffec78;
-    i = iVar5;
-  } while (iVar5 != 0x280);
+    i = iVar4;
+  } while (iVar4 != 0x280);
   return;
 }
 

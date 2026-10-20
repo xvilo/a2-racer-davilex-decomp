@@ -114,13 +114,13 @@ void __watcall mm_draw_info_text(int param_1,int param_2)
   slot_index = slot_check_index(active_slot,s_m_main_cpp_00427048,0x11d);
   pcVar2 = slot_tijd_string(slot_index);
   win_print_xy(1,iVar1,param_2 + 0xae,s___6s_00427053,pcVar2);
-  if (control._0_4_ == 0) {
+  if (control.control_type == 0) {
     pcVar2 = s_Toetsenbord_00427058;
   }
-  else if (control._0_4_ == 1) {
+  else if (control.control_type == 1) {
     pcVar2 = s_Joypad_1_00427064;
   }
-  else if (control._0_4_ == 2) {
+  else if (control.control_type == 2) {
     pcVar2 = s_Stuur_0042706d;
   }
   else {

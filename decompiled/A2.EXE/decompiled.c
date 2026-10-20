@@ -573,8 +573,8 @@ uint __watcall spawnve(undefined4 param_1,byte *param_2,int *param_3,int *param_
   byte local_14;
   
   bVar5 = 0;
-  alloca_stack_check_result =
-       (char *)alloca_stack_check(param_1,param_2,param_3,param_4,(undefined1 *)0xe0);
+  alloca_stack_check_result = (char *)alloca_stack_check(param_1,param_2,param_3,(undefined1 *)0xe0)
+  ;
   local_14 = 0;
   local_24 = param_3;
   if ((char *)0x1 < alloca_stack_check_result) {
@@ -1278,13 +1278,12 @@ undefined4 __watcall access(LPCSTR file_name,uint param_2)
 /* ==== 004020fd alloca_stack_check ==== */
 
 undefined4 __watcall
-alloca_stack_check(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                  undefined1 *param_5)
+alloca_stack_check(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined1 *param_4)
 
 {
   LOCK();
   UNLOCK();
-  check_stack_overflow(param_5,param_2,param_3);
+  check_stack_overflow(param_4,param_2,param_3);
   return param_1;
 }
 
@@ -1296,16 +1295,15 @@ void __watcall check_stack_overflow(undefined1 *param_1,undefined4 param_2,undef
 {
   bool bVar1;
   int iVar2;
-  int iVar3;
-  undefined4 extraout_ECX;
-  undefined8 uVar4;
+  uint *puVar3;
+  int iVar4;
   int in_stack_00000004;
   
   if (param_1 < &stack0xfffffffc) {
     iVar2 = (int)param_1 - (int)&stack0xfffffffc;
-    uVar4 = (*(code *)GetThreadPtr)();
-    if (*(uint *)uVar4 < (uint)-iVar2) {
-      probe_stack_pages(-iVar2,(int)((ulonglong)uVar4 >> 0x20),param_3,extraout_ECX,(int)param_1);
+    puVar3 = (uint *)(*(code *)GetThreadPtr)();
+    if (*puVar3 < (uint)-iVar2) {
+      probe_stack_pages((int)param_1);
       return;
     }
   }
@@ -1314,35 +1312,33 @@ void __watcall check_stack_overflow(undefined1 *param_1,undefined4 param_2,undef
   do {
     *(int *)(&stack0xfffffff8 + iVar2) = iVar2;
     iVar2 = iVar2 + -0x1000;
-    iVar3 = in_stack_00000004 + -0x1000;
+    iVar4 = in_stack_00000004 + -0x1000;
     bVar1 = 0xfff < in_stack_00000004;
-    in_stack_00000004 = iVar3;
-  } while (iVar3 != 0 && bVar1);
+    in_stack_00000004 = iVar4;
+  } while (iVar4 != 0 && bVar1);
   return;
 }
 
 
 /* ==== 0040213c probe_stack_pages ==== */
 
-undefined4 __watcall
-probe_stack_pages(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 int param_5)
+undefined4 __watcall probe_stack_pages(int param_1)
 
 {
   bool bVar1;
+  undefined4 in_EAX;
   int iVar2;
   int iVar3;
-  int aiStack_8 [2];
   
   iVar3 = -4;
   do {
-    *(int *)((int)aiStack_8 + iVar3) = iVar3;
+    *(int *)(&stack0xfffffff8 + iVar3) = iVar3;
     iVar3 = iVar3 + -0x1000;
-    iVar2 = param_5 + -0x1000;
-    bVar1 = 0xfff < param_5;
-    param_5 = iVar2;
+    iVar2 = param_1 + -0x1000;
+    bVar1 = 0xfff < param_1;
+    param_1 = iVar2;
   } while (iVar2 != 0 && bVar1);
-  return param_1;
+  return in_EAX;
 }
 
 
@@ -1911,9 +1907,7 @@ uint __watcall spawnl(void...)
 
 /* ==== 004028e9 raise_sigill_handler ==== */
 
-undefined4 __watcall
-raise_sigill_handler
-          (undefined4 param_1,int param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5)
+undefined4 __watcall raise_sigill_handler(undefined4 param_1,int param_2,undefined4 param_3)
 
 {
   raise(4);

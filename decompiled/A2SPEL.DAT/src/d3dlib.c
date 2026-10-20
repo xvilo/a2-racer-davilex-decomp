@@ -181,16 +181,15 @@ void __watcall release_d3d_device(void)
 
 undefined4 __watcall
 enum_d3d_devices_callback
-          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-          undefined4 *param_5,undefined4 param_6,undefined4 param_7,int param_8,undefined4 param_9,
-          undefined4 param_10)
+          (undefined4 *param_1,undefined4 param_2,undefined4 param_3,int param_4,undefined4 param_5,
+          undefined4 param_6)
 
 {
   char *pcVar1;
   
-  debugmsg(s_D3DDEVICE____s_GUID____d_0044bbb7,param_6,*param_5,param_5[1],param_5[2],param_5[3]);
-  debugmsg(s_D3DDEVICE_name____s_0044bbd1,param_7);
-  if (*(int *)(param_8 + 4) == 0) {
+  debugmsg(s_D3DDEVICE____s_GUID____d_0044bbb7,param_2,*param_1,param_1[1],param_1[2],param_1[3]);
+  debugmsg(s_D3DDEVICE_name____s_0044bbd1,param_3);
+  if (*(int *)(param_4 + 4) == 0) {
     pcVar1 = s_this_should_be_a_HEL_0044bbfc;
   }
   else {

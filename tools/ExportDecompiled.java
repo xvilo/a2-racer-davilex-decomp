@@ -72,8 +72,9 @@ public class ExportDecompiled extends GhidraScript {
 					r = decomp.decompileFunction(f, 120, monitor);
 				}
 				if (r != null && r.decompileCompleted() && r.getDecompiledFunction() != null) {
-					// __watcall0..4 only differ in which registers survive a call; print one name.
-					c.print(r.getDecompiledFunction().getC().replaceAll("\\b__watcall[0-4]\\b", "__watcall")
+					// __watcall0..4 and _s0..3 only differ in which registers carry arguments and
+					// survive a call; print one name.
+					c.print(r.getDecompiledFunction().getC().replaceAll("\\b__watcall(_s)?[0-4]\\b", "__watcall")
 						.replace("__watcall_varargs", "__cdecl"));
 					status = "ok";
 					ok++;

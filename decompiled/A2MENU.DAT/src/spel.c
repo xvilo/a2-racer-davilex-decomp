@@ -18,8 +18,7 @@ void __watcall reset_infio(void)
   infio.sound = opties.sound;
   infio.resolution = opties.resolution;
   infio.view = opties.view;
-  infio.control_type._0_1_ = control.field_00;
-  infio.control_type._1_1_ = control.field_01;
+  infio.control_type = (short)control.control_type;
   infio.display_mode = opties.display_mode;
   infio.horizon = opties.horizon;
   infio.dashboard = opties.dashboard;
@@ -107,7 +106,7 @@ void __watcall reset_infio(void)
   slot_index_2 = 0;
   do {
     iVar2 = slot_index_2 + 2;
-    puVar1 = (undefined2 *)(&control.field_0xc + slot_index);
+    puVar1 = (undefined2 *)((int)&control.key_left + slot_index);
     slot_index = slot_index + 4;
     *(undefined2 *)((int)&infio.key_left + slot_index_2) = *puVar1;
     slot_index_2 = iVar2;

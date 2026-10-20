@@ -8,14 +8,14 @@ Scale(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undef
      undefined4 param_6,int param_7,uint *param_8)
 
 {
-  int cmp_big_int;
   uint *puVar1;
+  int cmp_big_int;
   float10 in_ST0;
   
-  cmp_big_int = param_7;
   puVar1 = param_8;
+  cmp_big_int = param_7;
   if (param_1 != param_7) {
-    Scale10V(param_1,param_6,param_8,param_7,param_5,param_6,param_7 - param_1);
+    Scale10V(param_5,param_6,param_7 - param_1);
     _param_5 = (double)in_ST0;
   }
   Rnd2Int(&param_5);
@@ -26,44 +26,40 @@ Scale(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undef
 
 /* ==== 0043e918 Scale10V ==== */
 
-void __watcall
-Scale10V(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-        undefined4 param_5,undefined4 param_6,int param_7)
+void __watcall Scale10V(undefined4 param_1,undefined4 param_2,int param_3)
 
 {
   short *psVar1;
   int iVar2;
-  int iVar3;
   undefined8 local_1c;
   
   psVar1 = &BigPow10Table;
-  if (param_7 < 0) {
-    iVar2 = -param_7;
-    if (param_7 == -0x134 || iVar2 < 0x134) goto LAB_0043e9c5;
+  if (param_3 < 0) {
+    iVar2 = -param_3;
+    if (param_3 == -0x134 || iVar2 < 0x134) goto LAB_0043e9c5;
     if ((chipbug & 1) != 0) {
-      psVar1 = (short *)fdiv_m64(&BigPow10Table,iVar2,param_3,param_7,DAT_0045767a,DAT_0045767e);
+      psVar1 = (short *)fdiv_m64(DAT_0045767a,DAT_0045767e);
     }
   }
   else {
-    iVar2 = param_7;
-    if (param_7 < 0x135) goto LAB_0043e9c5;
+    iVar2 = param_3;
+    if (param_3 < 0x135) goto LAB_0043e9c5;
   }
   iVar2 = iVar2 + -0xd8;
 LAB_0043e9c5:
   local_1c = 1.0;
   while( true ) {
-    iVar3 = (int)*psVar1;
-    if (iVar3 <= iVar2) {
+    if (*psVar1 <= iVar2) {
       local_1c = local_1c * *(double *)(psVar1 + 1);
-      iVar2 = iVar2 - iVar3;
+      iVar2 = iVar2 - *psVar1;
     }
     if (iVar2 == 0) break;
     if (*psVar1 != 1) {
       psVar1 = psVar1 + 5;
     }
   }
-  if ((param_7 < 0) && ((chipbug & 1) != 0)) {
-    fdiv_m64(psVar1,0,iVar3,param_7,(undefined4)local_1c,local_1c._4_4_);
+  if ((param_3 < 0) && ((chipbug & 1) != 0)) {
+    fdiv_m64((undefined4)local_1c,local_1c._4_4_);
   }
   return;
 }

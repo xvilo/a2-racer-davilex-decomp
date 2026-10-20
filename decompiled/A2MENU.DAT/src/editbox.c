@@ -121,20 +121,20 @@ set_edit_box_colors(edit_box_t *edit_box,ulong param_2,ulong param_3,ulong param
 {
   HBRUSH pHVar1;
   
-  if (edit_box->field_1c != (HGDIOBJ)0x0) {
-    DeleteObject(edit_box->field_1c);
+  if (edit_box->brush != (HGDIOBJ)0x0) {
+    DeleteObject(edit_box->brush);
   }
-  if (edit_box->field_28 != (HGDIOBJ)0x0) {
-    DeleteObject(edit_box->field_28);
+  if (edit_box->focus_brush != (HGDIOBJ)0x0) {
+    DeleteObject(edit_box->focus_brush);
   }
-  edit_box->field_14 = param_2;
-  edit_box->field_18 = param_3;
-  pHVar1 = CreateSolidBrush(edit_box->field_14);
-  edit_box->field_1c = pHVar1;
-  edit_box->field_20 = param_4;
-  edit_box->field_24 = param_5;
-  pHVar1 = CreateSolidBrush(edit_box->field_20);
-  edit_box->field_28 = pHVar1;
+  edit_box->background = param_2;
+  edit_box->foreground = param_3;
+  pHVar1 = CreateSolidBrush(edit_box->background);
+  edit_box->brush = pHVar1;
+  edit_box->focus_background = param_4;
+  edit_box->focus_foreground = param_5;
+  pHVar1 = CreateSolidBrush(edit_box->focus_background);
+  edit_box->focus_brush = pHVar1;
   return;
 }
 

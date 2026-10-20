@@ -140,15 +140,14 @@ LAB_004102eb:
 
 int __watcall
 set_object_sound_volume
-          (int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,
-          undefined4 param_6,undefined4 param_7,float param_8)
+          (int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5)
 
 {
   int chp;
   float10 fVar1;
   
   if (engine_sound_enabled != 0) {
-    fVar1 = (float10)param_8;
+    fVar1 = (float10)param_5;
     chp = CHP();
     param_1 = set_sound_buffer_vol
                         ((&object_sound_handles)[chp * 2],
@@ -176,24 +175,18 @@ void __watcall stop_object_sound(int param_1)
 
 /* ==== 004103a5 update_object_sound ==== */
 
-void __watcall update_object_sound(int object_val)
+void __watcall
+update_object_sound(int object_val,float param_2,float param_3,float param_4,float param_5)
 
 {
-  int object_sound_slot;
   int slot_val;
-  undefined4 extraout_EDX;
-  float in_stack_00000004;
-  float in_stack_00000008;
-  float in_stack_0000000c;
-  float in_stack_00000010;
   
-  object_sound_slot = find_object_sound_slot(object_val);
-  slot_val = engine_sound_enabled;
+  slot_val = find_object_sound_slot(object_val);
   if (engine_sound_enabled != 0) {
-    if ((in_stack_00000010 < 0.0) || (500.0 < in_stack_00000010)) {
-      in_stack_00000010 = 0.0;
+    if ((param_5 < 0.0) || (500.0 < param_5)) {
+      param_5 = 0.0;
     }
-    if (object_sound_slot == -1) {
+    if (slot_val == -1) {
       slot_val = find_free_sound_slot();
       if (slot_val != -1) {
         start_object_sound(slot_val,object_val);
@@ -201,15 +194,13 @@ void __watcall update_object_sound(int object_val)
     }
     else {
       debugmsg(s_changing_pos_object__d___5_2f__5_00445866,object_val,
-               SUB84((double)(in_stack_00000004 - player_x),0),
-               (int)((ulonglong)(double)(in_stack_00000004 - player_x) >> 0x20),
-               SUB84((double)(in_stack_00000008 - player_y),0),
-               (int)((ulonglong)(double)(in_stack_00000008 - player_y) >> 0x20),
-               SUB84((double)(in_stack_0000000c - player_z),0),
-               (int)((ulonglong)(double)(in_stack_0000000c - player_z) >> 0x20));
-      set_object_sound_volume
-                (object_sound_slot,extraout_EDX,object_sound_slot,slot_val,in_stack_00000004,
-                 in_stack_00000008,in_stack_0000000c,in_stack_00000010);
+               SUB84((double)(param_2 - player_x),0),
+               (int)((ulonglong)(double)(param_2 - player_x) >> 0x20),
+               SUB84((double)(param_3 - player_y),0),
+               (int)((ulonglong)(double)(param_3 - player_y) >> 0x20),
+               SUB84((double)(param_4 - player_z),0),
+               (int)((ulonglong)(double)(param_4 - player_z) >> 0x20));
+      set_object_sound_volume(slot_val,param_2,param_3,param_4,param_5);
     }
   }
   return;

@@ -97,8 +97,8 @@ uint __watcall spawnve(undefined4 param_1,byte *param_2,int *param_3,int *param_
   byte local_14;
   
   bVar5 = 0;
-  alloca_stack_check_result =
-       (char *)alloca_stack_check(param_1,param_2,param_3,param_4,(undefined1 *)0xe0);
+  alloca_stack_check_result = (char *)alloca_stack_check(param_1,param_2,param_3,(undefined1 *)0xe0)
+  ;
   local_14 = 0;
   local_24 = param_3;
   if ((char *)0x1 < alloca_stack_check_result) {

@@ -3,7 +3,7 @@
 
 /* ==== 00404f10 mst_draw_selected_slot_info ==== */
 
-void __watcall mst_draw_selected_slot_info(int param_1)
+void __watcall mst_draw_selected_slot_info(int mst_slot_index)
 
 {
   int slot_index;
@@ -13,32 +13,31 @@ void __watcall mst_draw_selected_slot_info(int param_1)
   if ((slot_index < 0) || (max_mem_image_ptr < slot_index)) {
     fatal_exit(s__s__d___mst_draw_selected_slot_i_00427560,s_m_start_cpp_00427554,0x106,1,5);
   }
-  set_mem_image(1,slot_index,mst_slot_list[param_1 * 2].field_00,
-                mst_slot_list[param_1 * 2 + 1].field_00,2);
+  set_mem_image(1,slot_index,mst_slot_list[mst_slot_index].x,mst_slot_list[mst_slot_index].y,2);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xfafafa,0xfafafa);
-  slot_index = slot_check_index(param_1,s_m_start_cpp_004275ad,0x10f);
+  slot_index = slot_check_index(mst_slot_index,s_m_start_cpp_004275ad,0x10f);
   pcVar1 = slot_naam_string(slot_index);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 10,mst_slot_list[param_1 * 2 + 1].field_00,
-              0x80,s___16s_004275b9,pcVar1);
-  slot_index = slot_check_index(param_1,s_m_start_cpp_004275bf,0x114);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 10,mst_slot_list[mst_slot_index].y,0x80,
+              s___16s_004275b9,pcVar1);
+  slot_index = slot_check_index(mst_slot_index,s_m_start_cpp_004275bf,0x114);
   pcVar1 = slot_level_string(slot_index);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x94,mst_slot_list[param_1 * 2 + 1].field_00,
-              0xfa,s___16s_004275cb,pcVar1);
-  slot_index = slot_check_index(param_1,s_m_start_cpp_004275d1,0x119);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0xfe,mst_slot_list[param_1 * 2 + 1].field_00,
-              0xfa,s__9d_004275dd,slot_list[slot_index].money);
-  slot_index = slot_check_index(param_1,s_m_start_cpp_004275e1,0x11e);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 0x94,mst_slot_list[mst_slot_index].y,0xfa,
+              s___16s_004275cb,pcVar1);
+  slot_index = slot_check_index(mst_slot_index,s_m_start_cpp_004275d1,0x119);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 0xfe,mst_slot_list[mst_slot_index].y,0xfa,
+              s__9d_004275dd,slot_list[slot_index].money);
+  slot_index = slot_check_index(mst_slot_index,s_m_start_cpp_004275e1,0x11e);
   pcVar1 = slot_tijd_string(slot_index);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x189,mst_slot_list[param_1 * 2 + 1].field_00,
-              0x80,s___6s_004275ed,pcVar1);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 0x189,mst_slot_list[mst_slot_index].y,0x80,
+              s___6s_004275ed,pcVar1);
   return;
 }
 
 
 /* ==== 00405090 mst_draw_slot_info ==== */
 
-void __watcall mst_draw_slot_info(int param_1)
+void __watcall mst_draw_slot_info(int mst_slot_index)
 
 {
   int slot_index_3;
@@ -49,52 +48,53 @@ void __watcall mst_draw_slot_info(int param_1)
   char *extraout_EDX;
   
   slot_index_2 = (xvga_anims[5].frames)->image;
-  debugmsg(s__s__d___mst_draw_slot_info__d___i_004275fe,s_m_start_cpp_004275f2,0x129,param_1);
+  debugmsg(s__s__d___mst_draw_slot_info__d___i_004275fe,s_m_start_cpp_004275f2,0x129,mst_slot_index)
+  ;
   if ((slot_index_2 < 0) || (max_mem_image_ptr < slot_index_2)) {
     fatal_exit(s__s__d___mst_draw_slot_info______C_00427638,s_m_start_cpp_0042762c,299,0,5);
   }
-  slot_index_3 = slot_check_index(param_1,s_m_start_cpp_0042767c,0x12d);
-  slot_index_3 = slot_count_total_tijd(param_1,*(int *)&slot_list[slot_index_3].field_0x5c >> 0x10);
-  slot_index = slot_check_index(param_1,s_m_start_cpp_00427688,0x12d);
+  slot_index_3 = slot_check_index(mst_slot_index,s_m_start_cpp_0042767c,0x12d);
+  slot_index_3 = slot_count_total_tijd
+                           (mst_slot_index,*(int *)&slot_list[slot_index_3].field_0x5c >> 0x10);
+  slot_index = slot_check_index(mst_slot_index,s_m_start_cpp_00427688,0x12d);
   slot_index = *(int *)&slot_list[slot_index].field_0x5c >> 0x10;
-  slot_check_index_result = slot_check_index(param_1,s_m_start_cpp_00427694,0x12d);
-  debugmsg(s__d>__naam__s__level__d__tijd__d_004276a0,param_1,
+  slot_check_index_result = slot_check_index(mst_slot_index,s_m_start_cpp_00427694,0x12d);
+  debugmsg(s__d>__naam__s__level__d__tijd__d_004276a0,mst_slot_index,
            slot_check_index_result * 0x13c + 0x437296,slot_index,slot_index_3);
-  set_mem_image(1,slot_index_2,mst_slot_list[param_1 * 2].field_00,
-                mst_slot_list[param_1 * 2 + 1].field_00,2);
-  slot_index_2 = slot_check_index(param_1,s_m_start_cpp_004276c2,0x12f);
+  set_mem_image(1,slot_index_2,mst_slot_list[mst_slot_index].x,mst_slot_list[mst_slot_index].y,2);
+  slot_index_2 = slot_check_index(mst_slot_index,s_m_start_cpp_004276c2,0x12f);
   pcVar1 = slot_naam_string(slot_index_2);
   debugmsg(s_printing__s_004276ce,pcVar1);
   xvga_select_font(2);
   xvga_set_font_colors(2,0xafaff,0xafaff);
-  slot_index_2 = slot_check_index(param_1,s_m_start_cpp_004276dc,0x136);
+  slot_index_2 = slot_check_index(mst_slot_index,s_m_start_cpp_004276dc,0x136);
   pcVar1 = slot_naam_string(slot_index_2);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 10,mst_slot_list[param_1 * 2 + 1].field_00,
-              0x80,s___16s_004276e8,pcVar1);
-  slot_index_2 = slot_check_index(param_1,s_m_start_cpp_004276ee,0x13b);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 10,mst_slot_list[mst_slot_index].y,0x80,
+              s___16s_004276e8,pcVar1);
+  slot_index_2 = slot_check_index(mst_slot_index,s_m_start_cpp_004276ee,0x13b);
   pcVar1 = slot_level_string(slot_index_2);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x94,mst_slot_list[param_1 * 2 + 1].field_00,
-              0xfa,s___16s_004276fa,pcVar1);
-  slot_index_2 = slot_check_index(param_1,s_m_start_cpp_00427700,0x140);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0xfe,mst_slot_list[param_1 * 2 + 1].field_00,
-              0xfa,s__9d_0042770c,slot_list[slot_index_2].money);
-  slot_index_2 = slot_check_index(param_1,extraout_EDX,0x145);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 0x94,mst_slot_list[mst_slot_index].y,0xfa,
+              s___16s_004276fa,pcVar1);
+  slot_index_2 = slot_check_index(mst_slot_index,s_m_start_cpp_00427700,0x140);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 0xfe,mst_slot_list[mst_slot_index].y,0xfa,
+              s__9d_0042770c,slot_list[slot_index_2].money);
+  slot_index_2 = slot_check_index(mst_slot_index,extraout_EDX,0x145);
   pcVar1 = slot_tijd_string(slot_index_2);
-  win_bprintf(1,mst_slot_list[param_1 * 2].field_00 + 0x189,mst_slot_list[param_1 * 2 + 1].field_00,
-              0x80,s___6s_0042771c,pcVar1);
+  win_bprintf(1,mst_slot_list[mst_slot_index].x + 0x189,mst_slot_list[mst_slot_index].y,0x80,
+              s___6s_0042771c,pcVar1);
   return;
 }
 
 
 /* ==== 004052e8 mst_reselect_slot ==== */
 
-void __watcall mst_reselect_slot(int param_1,int param_2)
+void __watcall mst_reselect_slot(int mst_slot_index,int mst_slot_index_2)
 
 {
   debugmsg(s__s__d___mst_print_slot____initia_0042772d,s_m_start_cpp_00427721,0x14d);
   blt_scr_2_scr(0,1,0x42,0x8d,0x23b,0x17d,0);
-  mst_draw_slot_info(param_1);
-  mst_draw_selected_slot_info(param_2);
+  mst_draw_slot_info(mst_slot_index);
+  mst_draw_selected_slot_info(mst_slot_index_2);
   hide_mouse();
   blt_scr_2_scr(1,0,0x42,0x8d,0x23b,0x17d,0);
   show_mouse();
@@ -105,22 +105,22 @@ void __watcall mst_reselect_slot(int param_1,int param_2)
 
 /* ==== 0040537f mst_print_slot ==== */
 
-void __watcall mst_print_slot(int param_1)
+void __watcall mst_print_slot(int mst_slot_index_2)
 
 {
+  int mst_slot_index;
   int iVar1;
-  int iVar2;
   
   debugmsg(s__s__d___mst_print_slot____initia_00427797,s_m_start_cpp_0042778b,0x167);
   blt_scr_2_scr(2,1,0x42,0x8d,0x23b,0x17d,0);
   xvga_select_font(2);
-  iVar1 = 0;
+  mst_slot_index = 0;
   do {
-    iVar2 = iVar1 + 1;
-    mst_draw_slot_info(iVar1);
-    iVar1 = iVar2;
-  } while (iVar2 < 10);
-  mst_draw_selected_slot_info(param_1);
+    iVar1 = mst_slot_index + 1;
+    mst_draw_slot_info(mst_slot_index);
+    mst_slot_index = iVar1;
+  } while (iVar1 < 10);
+  mst_draw_selected_slot_info(mst_slot_index_2);
   hide_mouse();
   blt_scr_2_scr(1,0,0x42,0x8d,0x23b,0x17d,0);
   show_mouse();
@@ -163,7 +163,7 @@ void __watcall mst_handle_intro(int param_1)
 
 /* ==== 004054d9 mst_open_screen ==== */
 
-void __watcall mst_open_screen(int param_1)
+void __watcall mst_open_screen(int mst_slot_index_2)
 
 {
   int use_mst_menu_cfg_anims_result;
@@ -180,7 +180,7 @@ void __watcall mst_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   debugmsg(s__s__d___mst_open_screen____initi_0042789e,s_m_start_cpp_00427892,0x1a9);
-  mst_print_slot(param_1);
+  mst_print_slot(mst_slot_index_2);
   debugmsg(s__s__d___mst_open_screen____initi_004278d6,s_m_start_cpp_004278ca,0x1ab);
   activate_form(mst_form);
   return;
@@ -211,8 +211,8 @@ int __watcall menu_start(int param_1)
 {
   bool bVar1;
   bool bVar2;
+  int iVar3;
   int slot_index;
-  int slot_index_2;
   char *arg2;
   uint handle_form_result;
   char local_3c [32];
@@ -224,31 +224,31 @@ int __watcall menu_start(int param_1)
   debugmsg(s__>_START_MENU_<*_00427938);
   if (param_1 == 0) {
 LAB_00405647:
-    slot_index = 0;
+    iVar3 = 0;
   }
   else {
-    slot_index = get_last_saved_slot();
-    slot_index = slot_check_index(slot_index,s_m_start_cpp_0042794d,0x1cd);
-    if (slot_list[slot_index].used != '\0') goto LAB_00405647;
-    slot_index = 1;
+    iVar3 = get_last_saved_slot();
+    iVar3 = slot_check_index(iVar3,s_m_start_cpp_0042794d,0x1cd);
+    if (slot_list[iVar3].used != '\0') goto LAB_00405647;
+    iVar3 = 1;
   }
-  mst_handle_intro(slot_index);
-  slot_index = get_last_saved_slot();
-  mst_open_screen(slot_index);
+  mst_handle_intro(iVar3);
+  iVar3 = get_last_saved_slot();
+  mst_open_screen(iVar3);
   if (param_1 != 0) {
     snd_play(&local_1c,s_MNS_00_wav_00427959);
   }
-  slot_index_2 = get_last_saved_slot();
-  slot_index_2 = slot_check_index(slot_index_2,s_m_start_cpp_00427964,0x1d2);
-  if (slot_list[slot_index_2].used == '\0') {
+  slot_index = get_last_saved_slot();
+  slot_index = slot_check_index(slot_index,s_m_start_cpp_00427964,0x1d2);
+  if (slot_list[slot_index].used == '\0') {
     snd_wait(&local_1c);
     snd_play(&local_1c,s_MNS_01_wav_00427970);
-    slot_index_2 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_0042797b);
-    if (slot_index_2 != 0) {
+    slot_index = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_0042797b);
+    if (slot_index != 0) {
       snd_stop(&local_1c);
-      create_slot(slot_index,local_3c);
-      mst_print_slot(slot_index);
-      set_active_slot(slot_index);
+      create_slot(iVar3,local_3c);
+      mst_print_slot(iVar3);
+      set_active_slot(iVar3);
       goto LAB_00405089;
     }
     snd_stop(&local_1c);
@@ -269,22 +269,22 @@ LAB_00405647:
           snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10)) * -500 + -100);
           goto LAB_00405aac;
         }
-        slot_index_2 = slot_check_index(slot_index,s_m_start_cpp_00427a71,0x222);
-        if (slot_list[slot_index_2].used != '\0') {
+        slot_index = slot_check_index(iVar3,s_m_start_cpp_00427a71,0x222);
+        if (slot_list[slot_index].used != '\0') {
           snd_play(&local_1c,s_click1_wav_00427a7d);
           snd_wait(&local_1c);
           snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10) / 2) * -500 + -100);
           snd_play(&local_1c,s_MNS_02_wav_00427a88);
-          slot_index_2 = slot_check_index(slot_index,s_m_start_cpp_00427a93,0x227);
-          arg2 = slot_naam_string(slot_index_2);
-          slot_index_2 = req_vraag(s_Wil_je_deze_speler___s__verwijde_00427a9f,arg2);
-          if (slot_index_2 != 0) {
-            clear_slot(slot_index);
+          slot_index = slot_check_index(iVar3,s_m_start_cpp_00427a93,0x227);
+          arg2 = slot_naam_string(slot_index);
+          slot_index = req_vraag(s_Wil_je_deze_speler___s__verwijde_00427a9f,arg2);
+          if (slot_index != 0) {
+            clear_slot(iVar3);
           }
           snd_stop(&local_1c);
           snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10)) * -500 + -100);
-          slot_index = get_last_saved_slot();
-          mst_print_slot(slot_index);
+          iVar3 = get_last_saved_slot();
+          mst_print_slot(iVar3);
         }
 LAB_004058a7:
         activate_form(mst_form);
@@ -292,23 +292,23 @@ LAB_004058a7:
       }
 LAB_00405810:
       snd_play(&local_1c,s_click1_wav_004279fd);
-      slot_index_2 = slot_check_index(slot_index,s_m_start_cpp_00427a08,0x20e);
-      if (slot_list[slot_index_2].used == '\0') {
+      slot_index = slot_check_index(iVar3,s_m_start_cpp_00427a08,0x20e);
+      if (slot_list[slot_index].used == '\0') {
         snd_wait(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10) / 2) * -500 + -100);
         snd_play(&local_1c,s_MNS_01_wav_00427a14);
-        slot_index_2 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_00427a1f);
-        if (slot_index_2 == 0) {
+        slot_index = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_00427a1f);
+        if (slot_index == 0) {
           snd_stop(&local_1c);
           goto LAB_004058a7;
         }
         snd_stop(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10)) * -500 + -100);
-        create_slot(slot_index,local_3c);
-        mst_print_slot(slot_index);
+        create_slot(iVar3,local_3c);
+        mst_print_slot(iVar3);
       }
-      set_active_slot(slot_index);
-      debugmsg(s_MSTART_SET_ACTIVE_SLOT__d<*_d_00427a52,active_slot,slot_index);
+      set_active_slot(iVar3);
+      debugmsg(s_MSTART_SET_ACTIVE_SLOT__d<*_d_00427a52,active_slot,iVar3);
 LAB_0040575a:
       bVar1 = false;
 LAB_00405760:
@@ -323,14 +323,14 @@ LAB_00405747:
       }
       if (handle_form_result < 10000) {
         if (0xd < handle_form_result) goto LAB_00405aac;
-        slot_index_2 = handle_form_result - 4;
-        if (slot_index == slot_index_2) {
+        slot_index = handle_form_result - 4;
+        if (iVar3 == slot_index) {
           focus_control(0);
           goto LAB_00405810;
         }
         snd_play(&local_1c,s_click3_wav_004279f2);
-        mst_reselect_slot(slot_index,slot_index_2);
-        slot_index = slot_index_2;
+        mst_reselect_slot(iVar3,slot_index);
+        iVar3 = slot_index;
         goto LAB_00405760;
       }
       if (handle_form_result < 0x2711) {
@@ -339,19 +339,19 @@ LAB_00405747:
       }
       if (handle_form_result < 0x2712) {
         snd_play(&local_1c,s_click3_wav_004279e7);
-        slot_index_2 = (slot_index + 9) % 10;
-        mst_reselect_slot(slot_index,slot_index_2);
+        slot_index = (iVar3 + 9) % 10;
+        mst_reselect_slot(iVar3,slot_index);
         snd_wait(&local_1c);
         wait_cursor_up_pressed();
-        slot_index = slot_index_2;
+        iVar3 = slot_index;
       }
       else if (handle_form_result == 0x2712) {
         snd_play(&local_1c,s_click3_wav_004279dc);
-        slot_index_2 = (slot_index + 1) % 10;
-        mst_reselect_slot(slot_index,slot_index_2);
+        slot_index = (iVar3 + 1) % 10;
+        mst_reselect_slot(iVar3,slot_index);
         snd_wait(&local_1c);
         wait_cursor_down_pressed();
-        slot_index = slot_index_2;
+        iVar3 = slot_index;
       }
     }
 LAB_00405aac:

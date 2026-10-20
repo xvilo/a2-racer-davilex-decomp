@@ -127,7 +127,7 @@ void __watcall halt_player_car(void)
 
 {
   player_speed = 0.0;
-  opponent_data[(int)objects3d[player_index].opponent].speed = 0.0;
+  opponent_data[objects3d[player_index].opponent].speed = 0.0;
   return;
 }
 
@@ -180,21 +180,21 @@ undefined4 __watcall alloc_bonus_items(int param_1)
 
 /* ==== 00412737 place_bonus_item ==== */
 
-void __watcall place_bonus_item(undefined4 param_1,float weg_section_idx,int param_3)
+void __watcall place_bonus_item(undefined4 param_1,int weg_section_idx,int param_3)
 
 {
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
+  int iVar1;
+  float *pfVar2;
   int i;
-  float10 in_ST0;
+  float fVar3;
+  undefined6 extraout_var;
   int local_14;
+  float10 fVar4;
   
   if ((byte)param_1 == 0) {
     fatal_exit(s__s__d____Cannot_set_a_bonus_obje_0044642a,s_bonus_cpp_00446420,0x5e);
   }
-  if (((int)weg_section_idx < 0) || (weg_chunk_count < (int)weg_section_idx)) {
+  if ((weg_section_idx < 0) || (weg_chunk_count < weg_section_idx)) {
     fatal_exit(s__s__d____Chunk_value__d_out_of_b_00446468,s_bonus_cpp_0044645e,0x61,weg_section_idx
               );
   }
@@ -220,30 +220,30 @@ void __watcall place_bonus_item(undefined4 param_1,float weg_section_idx,int par
   fatal_exit(s__s__d____Illegal_bonus_object_ty_004464cb,s_bonus_cpp_004464c1,0x72);
 LAB_004127e4:
   i = 0;
-  for (iVar2 = 0; (iVar2 < bonus_allocated * 0x19 && (*(char *)(bonus_items + 0xc + iVar2) != '\0'))
-      ; iVar2 = iVar2 + 0x19) {
+  for (iVar1 = 0; (iVar1 < bonus_allocated * 0x19 && (*(char *)(bonus_items + 0xc + iVar1) != '\0'))
+      ; iVar1 = iVar1 + 0x19) {
     i = i + 1;
   }
   if (i == bonus_allocated) {
     fatal_exit(s__s__d____No_more_free_bonus_obje_004464fa,s_bonus_cpp_004464f0,0x7b);
   }
-  pfVar4 = (float *)(bonus_items + i * 0x19);
-  *(byte *)(pfVar4 + 3) = (byte)param_1;
-  *(float *)((int)pfVar4 + 0xd) = weg_section_idx;
-  *(int *)((int)pfVar4 + 0x11) = param_3;
-  fVar1 = *(float *)(&lane_offsets + param_3 * 4);
-  iVar2 = (int)weg_section_idx * 7;
-  *pfVar4 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar1 +
-            vertices3d[weg_sections[(int)weg_section_idx].point].x) -
-            *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * 40.0;
-  pfVar4[2] = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * 40.0 +
-              *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * fVar1 +
-              vertices3d[weg_sections[(int)weg_section_idx].point].z;
-  iVar3 = 0x100 - weg_sections[(int)weg_section_idx].heading;
-  road_height_at(weg_section_idx,pfVar4,i,iVar2,*pfVar4,pfVar4[2]);
+  pfVar2 = (float *)(bonus_items + i * 0x19);
+  *(byte *)(pfVar2 + 3) = (byte)param_1;
+  *(int *)((int)pfVar2 + 0xd) = weg_section_idx;
+  *(int *)((int)pfVar2 + 0x11) = param_3;
+  fVar3 = *(float *)(&lane_offsets + param_3 * 4);
+  *pfVar2 = (*(float *)(weg_chunks + 0x1c + weg_section_idx * 0x38) * fVar3 +
+            vertices3d[weg_sections[weg_section_idx].point].x) -
+            *(float *)(weg_chunks + 0x24 + weg_section_idx * 0x38) * 40.0;
+  pfVar2[2] = *(float *)(weg_chunks + 0x1c + weg_section_idx * 0x38) * 40.0 +
+              *(float *)(weg_chunks + 0x24 + weg_section_idx * 0x38) * fVar3 +
+              vertices3d[weg_sections[weg_section_idx].point].z;
+  iVar1 = 0x100 - weg_sections[weg_section_idx].heading;
+  fVar3 = road_height_at(weg_section_idx,*pfVar2,pfVar2[2]);
+  fVar4 = (float10)CONCAT64(extraout_var,fVar3);
   CHP();
-  iVar2 = load_bonus_object(local_14,pfVar4,i,iVar2,*pfVar4,pfVar4[2],(int)ROUND(in_ST0),iVar3);
-  *(int *)((int)pfVar4 + 0x15) = iVar2;
+  iVar1 = load_bonus_object(local_14,*pfVar2,pfVar2[2],(int)ROUND(fVar4),iVar1);
+  *(int *)((int)pfVar2 + 0x15) = iVar1;
   return;
 }
 
@@ -321,21 +321,21 @@ void __watcall free_bonus(void)
 void __watcall place_all_bonus_items(void)
 
 {
-  float fVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
   uint uVar4;
   uint random;
-  float weg_section_idx;
+  int weg_section_idx;
   int j;
   char cVar5;
   int i;
   int iVar6;
-  float local_1c;
+  int local_1c;
   
   iVar2 = weg_chunk_count / 0x1b;
   iVar3 = alloc_bonus_items(iVar2);
-  local_1c = 2.8026e-44;
+  local_1c = 0x14;
   if (iVar3 != 0) {
     fatal_exit(s__s__d____InitBonus_failed__00446592,s_bonus_cpp_00446588,0xe5);
   }
@@ -344,7 +344,7 @@ void __watcall place_all_bonus_items(void)
   for (i = 0; i < iVar2; i = i + 1) {
     uVar4 = rand();
     random = rand();
-    weg_section_idx = (float)(iVar6 - (int)uVar4 % 10);
+    weg_section_idx = iVar6 - (int)uVar4 % 10;
     j = (int)random % 4;
     if (j == 3) {
       j = 2;
@@ -358,14 +358,14 @@ void __watcall place_all_bonus_items(void)
     if (cVar5 == '\0') {
       cVar5 = '\x03';
     }
-    fVar1 = weg_section_idx;
+    iVar1 = weg_section_idx;
     if ((cVar5 != '\x02') &&
-       (uVar4 = (int)weg_section_idx - (int)local_1c >> 0x1f, fVar1 = local_1c,
-       0x46 < (int)(((int)weg_section_idx - (int)local_1c ^ uVar4) - uVar4))) {
+       (uVar4 = weg_section_idx - local_1c >> 0x1f, iVar1 = local_1c,
+       0x46 < (int)((weg_section_idx - local_1c ^ uVar4) - uVar4))) {
       cVar5 = '\x02';
-      fVar1 = weg_section_idx;
+      iVar1 = weg_section_idx;
     }
-    local_1c = fVar1;
+    local_1c = iVar1;
     place_bonus_item((int)cVar5,weg_section_idx,j);
     iVar6 = iVar6 + iVar3 / iVar2;
   }
@@ -407,9 +407,7 @@ uint __watcall draw_bonus_status(void)
 
 /* ==== 00412c65 load_bonus_object ==== */
 
-int __watcall
-load_bonus_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
-                 ,float param_6,int param_7,int param_8)
+int __watcall load_bonus_object(int param_1,float param_2,float param_3,int param_4,int param_5)
 
 {
   int object;
@@ -446,10 +444,10 @@ load_bonus_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 p
   debugmsg(s_setting_static_object_handle_00446719);
   objects3d[object].update = update_bonus_object;
   debugmsg(s_setting_static_object_position_00446737);
-  objects3d[object].x = param_5;
-  objects3d[object].y = (float)param_7;
-  objects3d[object].z = param_6;
-  objects3d[object].field_3f = param_8;
+  objects3d[object].x = param_2;
+  objects3d[object].y = (float)param_4;
+  objects3d[object].z = param_3;
+  objects3d[object].field_3f = param_5;
   objects3d[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00446757);
   build_object_execute_buffer(object);

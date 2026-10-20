@@ -44,9 +44,7 @@ int __watcall add_texture_format(undefined4 param_1)
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 __watcall
-enum_texture_format_callback
-          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-          undefined4 *param_5,undefined4 param_6)
+enum_texture_format_callback(undefined4 param_1,undefined4 *param_2,undefined4 param_3)
 
 {
   int add_texture_format_result;
@@ -65,7 +63,7 @@ enum_texture_format_callback
   bVar6 = 0;
   add_texture_format_result = add_texture_format(param_1);
   i = add_texture_format_result * 0x80;
-  puVar4 = param_5;
+  puVar4 = param_2;
   puVar5 = (undefined4 *)(texture_formats + i);
   for (j = 0x1b; j != 0; j = j + -1) {
     *puVar5 = *puVar4;
@@ -77,7 +75,7 @@ enum_texture_format_callback
     puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar6 * -2 + 1);
     puVar5 = (undefined4 *)((int)puVar5 + (uint)bVar6 * -2 + 1);
   }
-  bVar6 = *(byte *)(param_5 + 0x13);
+  bVar6 = *(byte *)(param_2 + 0x13);
   if ((bVar6 & 0x20) == 0) {
     if ((bVar6 & 8) == 0) {
       j = add_texture_format_result;
@@ -85,7 +83,7 @@ enum_texture_format_callback
         *(undefined4 *)(i + 0x6c + texture_formats) = 0;
         *(undefined4 *)(i + 0x70 + texture_formats) = 0x10;
         i = 0;
-        for (uVar1 = param_5[0x16]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
+        for (uVar1 = param_2[0x16]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
           i = i + 1;
         }
         j = 0;
@@ -93,7 +91,7 @@ enum_texture_format_callback
           j = j + 1;
         }
         k = 0;
-        for (uVar1 = param_5[0x17]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
+        for (uVar1 = param_2[0x17]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
           k = k + 1;
         }
         m = 0;
@@ -101,7 +99,7 @@ enum_texture_format_callback
           m = m + 1;
         }
         n = 0;
-        for (uVar1 = param_5[0x18]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
+        for (uVar1 = param_2[0x18]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
           n = n + 1;
         }
         iVar3 = 0;

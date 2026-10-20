@@ -35,19 +35,15 @@ void __watcall init_bedien(void)
   iVar1 = file_exist(s_BEDIEN_A2R_00425b17);
   if (iVar1 == 0) {
     debugmsg(s_Creating_controls_file__s_00425b2d,s_BEDIEN_A2R_00425b22);
-    control.field_04 = '\0';
-    control.field_05 = '\0';
-    control.field_06 = 0;
-    control.field_00 = '\0';
-    control.field_01 = '\0';
-    control.field_02 = 0;
-    control._8_4_ = 1;
-    control._16_4_ = 0x27;
-    control._24_4_ = 0x28;
-    control._12_4_ = 0x25;
-    control._32_4_ = 0xd;
-    control._20_4_ = 0x26;
-    control._28_4_ = 0x20;
+    control.field_04 = 0;
+    control.control_type = 0;
+    control.field_08 = 1;
+    control.key_right = 0x27;
+    control.key_brake = 0x28;
+    control.key_left = 0x25;
+    control.key_action2 = 0xd;
+    control.key_gas = 0x26;
+    control.key_action1 = 0x20;
     save_bedien();
   }
   else {

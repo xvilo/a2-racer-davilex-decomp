@@ -44,8 +44,7 @@ void __watcall release_car_textures(void)
 /* ==== 004077dc load_static_object ==== */
 
 undefined4 __watcall
-load_static_object(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                  float param_5,float param_6,undefined4 param_7,int param_8)
+load_static_object(uint param_1,float param_2,float param_3,undefined4 param_4,int param_5)
 
 {
   int object;
@@ -113,10 +112,10 @@ LAB_00407a10:
   objects3d[object].update_interval = 1;
 LAB_00407a2b:
   debugmsg(s_setting_static_object_position_00442d52);
-  objects3d[object].x = param_5;
+  objects3d[object].x = param_2;
   objects3d[object].y = 0.0;
-  objects3d[object].z = param_6;
-  objects3d[object].field_3f = param_8;
+  objects3d[object].z = param_3;
+  objects3d[object].field_3f = param_5;
   objects3d[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00442d72);
   build_object_execute_buffer(object);
@@ -128,21 +127,23 @@ LAB_00407a2b:
 /* ==== 00407ac4 place_static_object_on_road ==== */
 
 void __watcall
-place_static_object_on_road(int param_1,float weg_section_idx,int param_3,int param_4,int param_5)
+place_static_object_on_road(int param_1,int chunk_val,int param_3,int param_4,int param_5)
 
 {
-  float fVar1;
   int object;
-  int iVar2;
-  opponent_t *opponent_slot;
-  float extraout_EDX;
-  uint *puVar3;
-  object3d_t *object3d;
   int vertex3d_index;
-  float10 fVar4;
+  int opponent_slot;
+  float x;
+  uint *puVar1;
+  object3d_t *object3d;
+  float fVar2;
+  undefined6 extraout_var;
+  undefined6 extraout_var_00;
+  undefined6 extraout_var_01;
+  float10 fVar3;
   float local_50 [3];
   float local_44;
-  float local_3c;
+  float z_val;
   double local_38;
   double local_28;
   uint anim3d_index;
@@ -153,115 +154,112 @@ place_static_object_on_road(int param_1,float weg_section_idx,int param_3,int pa
   
   local_18 = param_4;
   object = get_new_object3d();
-  vertex3d_index_2 = weg_sections[*(int *)(weg_chunks + 8 + (int)weg_section_idx * 0x38)].point;
+  vertex3d_index_2 = weg_sections[*(int *)(weg_chunks + 8 + chunk_val * 0x38)].point;
   local_14 = object * 0x4b;
   objects3d[object].in_use = '\x01';
-  iVar2 = init_anim3d(1);
-  objects3d[object].anim = iVar2;
+  vertex3d_index = init_anim3d(1);
+  objects3d[object].anim = vertex3d_index;
   objects3d[object].frame = 0;
   objects3d[object].update_interval = 1;
   objects3d[object].field_36 = '\0';
   debugmsg(s_starting_static_object___d__00442db9,object);
-  iVar2 = param_1 * 0x10;
-  if (*(int *)(&static_object_mesh_ids + iVar2) == -1) {
+  vertex3d_index = param_1 * 0x10;
+  if (*(int *)(&static_object_mesh_ids + vertex3d_index) == -1) {
     debugmsg(s_static_object___d__mesh_not_yet_l_00442dd6,object);
     load_object_mesh(object,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
-    puVar3 = (uint *)((int)&objects3d->anim + local_14);
-    anim3d_index = *puVar3;
-    *(int *)(&static_object_mesh_ids + iVar2) = anims3d[anim3d_index].frames[puVar3[1]];
+    puVar1 = (uint *)((int)&objects3d->anim + local_14);
+    anim3d_index = *puVar1;
+    *(int *)(&static_object_mesh_ids + vertex3d_index) = anims3d[anim3d_index].frames[puVar1[1]];
   }
   else {
     debugmsg(s_static_object___d__allready_load_00442e0a,object);
-    puVar3 = (uint *)((int)&objects3d->anim + local_14);
-    anim3d_index = *puVar3;
-    anims3d[anim3d_index].frames[puVar3[1]] = *(int *)(&static_object_mesh_ids + iVar2);
+    puVar1 = (uint *)((int)&objects3d->anim + local_14);
+    anim3d_index = *puVar1;
+    anims3d[anim3d_index].frames[puVar1[1]] = *(int *)(&static_object_mesh_ids + vertex3d_index);
   }
   debugmsg(s_done_loading_static_object_00442e38);
   if ((&static_object_texture_ids)[param_1 * 4] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_s_00442e61,s_statobj_cpp_00442e55,0xc1,param_1);
   }
   debugmsg(s_setting_static_object_texture_00442e98);
-  iVar2 = object * 0x4b;
   objects3d[object].texture = (&static_object_texture_ids)[param_1 * 4];
   debugmsg(s_setting_static_object_matrix_00442eb7);
   set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00442ed5);
-  opponent_slot = (opponent_t *)alloc_opponent_slot();
+  opponent_slot = alloc_opponent_slot();
   vertex3d_index = vertex3d_index_2;
   objects3d[object].opponent = opponent_slot;
   objects3d[object].update = update_static_object;
   compute_object_bounds(object);
   local_44 = vertices3d[vertex3d_index].x;
-  local_3c = vertices3d[vertex3d_index].z;
-  vertex3d_index = weg_chunks + (int)weg_section_idx * 0x38;
+  z_val = vertices3d[vertex3d_index].z;
+  vertex3d_index = weg_chunks + chunk_val * 0x38;
   local_50[0] = *(float *)(vertex3d_index + 0x1c);
   local_50[1] = 0.0;
   local_50[2] = *(float *)(vertex3d_index + 0x24);
   normalize_vector(local_50);
   local_10 = (float)param_5;
-  fVar4 = (float10)debugmsg(s_setting_static_object_position_00442ef3);
+  debugmsg(s_setting_static_object_position_00442ef3);
   switch(param_3) {
   case 0:
-    objects3d[object].x = extraout_EDX;
-    road_height_at(weg_section_idx,extraout_EDX,iVar2,object,extraout_EDX,local_3c);
-    *(float *)((int)&objects3d->y + iVar2) = (float)fVar4;
-    *(float *)((int)&objects3d->z + iVar2) = local_3c;
+    objects3d[object].x = x;
+    fVar2 = road_height_at(chunk_val,x,z_val);
+    objects3d[object].y = (float)(float10)CONCAT64(extraout_var,fVar2);
+    objects3d[object].z = z_val;
     break;
   case 1:
     objects3d[object].x = local_44 - local_50[0] * local_10;
-    road_height_at(weg_section_idx,extraout_EDX,iVar2,object,local_44 - local_50[0] * local_10,
-                   local_3c - local_50[2] * local_10);
-    *(float *)((int)&objects3d->y + iVar2) = (float)fVar4;
-    fVar1 = local_3c - local_50[2] * local_10;
+    fVar2 = road_height_at(chunk_val,local_44 - local_50[0] * local_10,
+                           z_val - local_50[2] * local_10);
+    objects3d[object].y = (float)(float10)CONCAT64(extraout_var_00,fVar2);
+    fVar2 = z_val - local_50[2] * local_10;
     goto LAB_00407e40;
   case 2:
     objects3d[object].x = local_50[0] * local_10 + local_44;
-    road_height_at(weg_section_idx,extraout_EDX,iVar2,object,local_50[0] * local_10 + local_44,
-                   local_50[2] * local_10 + local_3c);
-    *(float *)((int)&objects3d->y + iVar2) = (float)fVar4;
-    fVar1 = local_50[2] * local_10 + local_3c;
+    fVar2 = road_height_at(chunk_val,local_50[0] * local_10 + local_44,
+                           local_50[2] * local_10 + z_val);
+    objects3d[object].y = (float)(float10)CONCAT64(extraout_var_01,fVar2);
+    fVar2 = local_50[2] * local_10 + z_val;
 LAB_00407e40:
-    *(float *)((int)&objects3d->z + iVar2) = fVar1;
+    objects3d[object].z = fVar2;
     break;
   case 3:
     objects3d[object].x =
          local_44 -
-         (opponent_data[(int)objects3d[object].opponent].radius + local_10 * 2.0) * local_50[0];
+         (opponent_data[objects3d[object].opponent].radius + local_10 * 2.0) * local_50[0];
     objects3d[object].y = 0.0;
     object3d = objects3d + object;
-    fVar1 = local_3c -
-            (local_10 * 2.0 + opponent_data[(int)object3d->opponent].radius) * local_50[2];
+    fVar2 = z_val - (local_10 * 2.0 + opponent_data[object3d->opponent].radius) * local_50[2];
     goto LAB_00407f01;
   case 4:
     objects3d[object].x =
-         (opponent_data[(int)objects3d[object].opponent].radius + local_10 * 2.0) * local_50[0] +
+         (opponent_data[objects3d[object].opponent].radius + local_10 * 2.0) * local_50[0] +
          local_44;
     objects3d[object].y = 0.0;
     object3d = objects3d + object;
-    fVar1 = (local_10 * 2.0 + opponent_data[(int)object3d->opponent].radius) * local_50[2] +
-            local_3c;
+    fVar2 = (local_10 * 2.0 + opponent_data[object3d->opponent].radius) * local_50[2] + z_val;
 LAB_00407f01:
-    object3d->z = fVar1;
+    object3d->z = fVar2;
   }
   if (local_18 == 0) {
     if ((param_3 != 3) && (param_3 != 1)) {
-      fVar1 = local_50[2];
+      fVar2 = local_50[2];
       if (local_50[0] == 0.0) {
         objects3d[object].field_3f = 0x200;
         goto LAB_00407d8d;
       }
 LAB_0040800c:
-      fVar4 = -(float10)fVar1;
+      fVar3 = -(float10)fVar2;
       atan2_checked();
       object3d = objects3d;
-      fVar4 = (fVar4 * (float10)1024.0) / (float10)6.283185307;
+      fVar3 = (fVar3 * (float10)1024.0) / (float10)6.283185307;
       CHP();
-      anim3d_index = (uint)ROUND(fVar4);
+      anim3d_index = (uint)ROUND(fVar3);
       object3d[object].field_3f = anim3d_index;
       goto LAB_00407d8d;
     }
     local_28 = (double)local_50[0];
-    fVar1 = local_50[2];
+    fVar2 = local_50[2];
     if ((((ulonglong)local_28 & 0x7fffffff00000000) == 0) && (local_28._0_4_ == 0)) {
       objects3d[object].field_3f = 0;
       goto LAB_00407d8d;
@@ -271,28 +269,28 @@ LAB_0040800c:
     if (local_18 != 1) goto LAB_00407d8d;
     if ((param_3 != 3) && (param_3 != 1)) {
       local_38 = (double)local_50[2];
-      fVar1 = local_50[0];
+      fVar2 = local_50[0];
       if ((((ulonglong)local_38 & 0x7fffffff00000000) == 0) && (local_38._0_4_ == 0)) {
         objects3d[object].field_3f = 0x100;
         goto LAB_00407d8d;
       }
       goto LAB_0040800c;
     }
-    fVar1 = local_50[0];
+    fVar2 = local_50[0];
     if (local_50[2] == 0.0) {
       objects3d[object].field_3f = 0x312;
       goto LAB_00407d8d;
     }
   }
-  fVar4 = (float10)fVar1;
+  fVar3 = (float10)fVar2;
   atan2_checked();
   object3d = objects3d;
-  fVar4 = (fVar4 * (float10)1024.0) / (float10)6.283185307;
+  fVar3 = (fVar3 * (float10)1024.0) / (float10)6.283185307;
   CHP();
-  anim3d_index = (uint)ROUND(fVar4);
+  anim3d_index = (uint)ROUND(fVar3);
   object3d[object].field_3f = anim3d_index;
 LAB_00407d8d:
-  opponent_data[(int)objects3d[object].opponent].active = 0;
+  opponent_data[objects3d[object].opponent].active = 0;
   objects3d[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00442f13);
   build_object_execute_buffer(object);
