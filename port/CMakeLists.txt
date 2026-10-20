@@ -66,12 +66,13 @@ add_executable(a2racer
 	src/race/weg.c
 )
 target_include_directories(a2racer PRIVATE src)
+# SDL2main (WinMain → main) has to come before SDL2 for MinGW's linker.
+if(TARGET SDL2::SDL2main)
+	target_link_libraries(a2racer PRIVATE SDL2::SDL2main)
+endif()
 target_link_libraries(a2racer PRIVATE SDL2::SDL2 SDL2_ttf::SDL2_ttf)
 if(NOT WIN32)
 	target_link_libraries(a2racer PRIVATE m)
-endif()
-if(TARGET SDL2::SDL2main)
-	target_link_libraries(a2racer PRIVATE SDL2::SDL2main)
 endif()
 if(MSVC)
 	target_compile_options(a2racer PRIVATE /W3)
