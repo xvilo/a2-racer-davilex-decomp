@@ -209,7 +209,7 @@ LAB_004035bf:
 LAB_00403603:
     DAT_00457750 = steering_position;
   }
-  opponent_data[racers[player_index].opponent].speed = player_speed;
+  opponent_data[(int)racers[player_index].opponent].speed = player_speed;
   if ((0.01 <= ABS(player_speed)) && (accelerator_input != 0)) {
     if ((uint)accelerator_input < 2) {
       fVar2 = (float10)player_speed;
@@ -948,11 +948,11 @@ int * __watcall get_opponent_chunk(undefined4 param_1,undefined4 param_2,int opp
   if ((opponent_index < 0) || (opponent_count < opponent_index)) {
     fatal_exit(s__s__d____illegal_opponent_index_n_00441d4d,param_1,param_2,opponent_index);
   }
-  if (opponent_data[opponent_index].chunk < 0) {
+  if ((int)opponent_data[opponent_index].chunk < 0) {
     fatal_exit(s__s__d____illegal_opponent_chunk_n_00441d75,param_1,param_2,opponent_index,
                opponent_data[opponent_index].chunk);
   }
-  return &opponent_data[opponent_index].chunk;
+  return (int *)&opponent_data[opponent_index].chunk;
 }
 
 
@@ -1020,7 +1020,7 @@ int __watcall create_opponent(int param_1,undefined4 param_2,int param_3)
 
 {
   int object;
-  int opponent_index;
+  opponent_t *opponent_index;
   int iVar1;
   uint uVar2;
   undefined4 debugmsg_result;
@@ -1030,8 +1030,8 @@ int __watcall create_opponent(int param_1,undefined4 param_2,int param_3)
   if (opponents_initialized == 0) {
     fatal_exit(s__s__d____opponents_not_initialis_0044207a,s_opponent_cpp_0044206d,0x100);
   }
-  opponent_index = alloc_opponent_slot();
-  opponent_data[opponent_index].car_type = param_1;
+  opponent_index = (opponent_t *)alloc_opponent_slot();
+  opponent_data[(int)opponent_index].car_type = param_1;
   iVar1 = init_anim3d(1);
   racers[object].anim = iVar1;
   iVar1 = param_1 * 0x20;
@@ -1046,47 +1046,47 @@ int __watcall create_opponent(int param_1,undefined4 param_2,int param_3)
     *(undefined4 *)(racers[object].frame * 4 + *(int *)(anims3d + racers[object].anim * 9 + 4)) =
          *(undefined4 *)(&DAT_00457988 + iVar1);
   }
-  opponent_data[opponent_index].object = object;
-  opponent_data[opponent_index].car_class = *(int *)(&DAT_00457990 + param_1 * 0x20);
+  opponent_data[(int)opponent_index].object = object;
+  opponent_data[(int)opponent_index].car_class = *(int *)(&DAT_00457990 + param_1 * 0x20);
   if (param_1 == 0xc) {
     set_ini_filename(s_a2_ini_004420b5);
     uVar2 = read_ini_value_setting(s_RACE_004420c8,s_POLICESPEED_004420bc);
-    opponent_data[opponent_index].max_speed = (float)(int)uVar2;
+    opponent_data[(int)opponent_index].max_speed = (float)(int)uVar2;
     debugmsg(s_policespeed___d___5_2f_004420cd,uVar2,
-             SUB84((double)opponent_data[opponent_index].max_speed,0),
-             (int)((ulonglong)(double)opponent_data[opponent_index].max_speed >> 0x20));
+             SUB84((double)opponent_data[(int)opponent_index].max_speed,0),
+             (int)((ulonglong)(double)opponent_data[(int)opponent_index].max_speed >> 0x20));
   }
   else {
-    opponent_data[opponent_index].max_speed = *(float *)(&DAT_0045798c + param_1 * 0x20);
+    opponent_data[(int)opponent_index].max_speed = *(float *)(&DAT_0045798c + param_1 * 0x20);
   }
-  opponent_data[opponent_index].active = 1;
-  opponent_data[opponent_index].field_48 = 0x3727c5ac;
-  opponent_data[opponent_index].heading = 0;
-  opponent_data[opponent_index].steer_angle = 0;
-  opponent_data[opponent_index].steer_rate = 0;
-  opponent_data[opponent_index].push_x = 0.0;
-  opponent_data[opponent_index].push_z = 0.0;
-  opponent_data[opponent_index].offset_x = 0.0;
-  opponent_data[opponent_index].offset_z = 0.0;
-  opponent_data[opponent_index].field_18 =
-       *(float *)((opponent_data[opponent_index].heading & 0x3ffU) * 4 + sin_table);
-  opponent_data[opponent_index].field_1c = 0;
-  opponent_data[opponent_index].field_20 =
-       *(float *)(cos_table + (opponent_data[opponent_index].heading & 0x3ffU) * 4);
-  if (opponent_data[opponent_index].field_e4 == 3) {
+  opponent_data[(int)opponent_index].active = 1;
+  opponent_data[(int)opponent_index].field_48 = 0x3727c5ac;
+  opponent_data[(int)opponent_index].heading = 0;
+  opponent_data[(int)opponent_index].steer_angle = 0;
+  opponent_data[(int)opponent_index].steer_rate = 0;
+  opponent_data[(int)opponent_index].push_x = 0.0;
+  opponent_data[(int)opponent_index].push_z = 0.0;
+  opponent_data[(int)opponent_index].offset_x = 0.0;
+  opponent_data[(int)opponent_index].offset_z = 0.0;
+  opponent_data[(int)opponent_index].field_18 =
+       *(float *)((opponent_data[(int)opponent_index].heading & 0x3ffU) * 4 + sin_table);
+  opponent_data[(int)opponent_index].field_1c = 0;
+  opponent_data[(int)opponent_index].field_20 =
+       *(float *)(cos_table + (opponent_data[(int)opponent_index].heading & 0x3ffU) * 4);
+  if (opponent_data[(int)opponent_index].field_e4 == 3) {
     uVar2 = rand();
-    opponent_data[opponent_index].acceleration = 0.2 - (float)((int)uVar2 % 5) / 10.0;
+    opponent_data[(int)opponent_index].acceleration = 0.2 - (float)((int)uVar2 % 5) / 10.0;
   }
   else {
-    opponent_data[opponent_index].acceleration = 0.2;
+    opponent_data[(int)opponent_index].acceleration = 0.2;
   }
-  opponent_data[opponent_index].mass = *(float *)(&DAT_00457994 + param_1 * 0x20);
+  opponent_data[(int)opponent_index].mass = *(float *)(&DAT_00457994 + param_1 * 0x20);
   if ((&car_type_texture_ids)[param_1 * 8] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_c_004420f2,s_opponent_cpp_004420e5,0x148,param_1);
   }
   racers[object].field_2c = (&car_type_texture_ids)[param_1 * 8];
   set_object3d_matrix(object,&identity_matrix);
-  *(undefined **)&racers[object].field_0x20 = &DAT_0040654b;
+  racers[object].field_20 = &DAT_0040654b;
   racers[object].field_36 = '\x01';
   racers[object].visible = '\x01';
   racers[object].opponent = opponent_index;
@@ -1096,9 +1096,9 @@ int __watcall create_opponent(int param_1,undefined4 param_2,int param_3)
   compute_object_bounds(object);
   debugmsg_result = debugmsg(s_Getting_driver____0044211e);
   iVar1 = get_new_driver(debugmsg_result);
-  opponent_data[opponent_index].field_e0 = iVar1;
+  opponent_data[(int)opponent_index].field_e0 = iVar1;
   debugmsg(s_Memorizing_driver_type____00442131);
-  opponent_data[opponent_index].field_e4 = param_3;
+  opponent_data[(int)opponent_index].field_e4 = param_3;
   debugmsg(s_Start_opponent_completed_0044214c);
   return object;
 }
@@ -1336,11 +1336,11 @@ void __watcall update_all_opponents(void)
 
 {
   int *opponent_chunk;
-  int lane_val;
   int iVar1;
+  uint lane_val;
+  int iVar2;
   int *opponent_chunk_2;
   int i;
-  uint uVar2;
   float fVar3;
   int opponent_index;
   int local_20;
@@ -1361,16 +1361,16 @@ void __watcall update_all_opponents(void)
     if (active_opponent_count <= j) {
       return;
     }
-    if (*(int *)((int)opponent_data->world_corners + i + -0x58) != 0x10) {
+    if (*(int *)((int)&opponent_data->car_type + i) != 0x10) {
       opponent_index = *(int *)(active_opponent_list + local_20);
       lane_val = opponent_data[opponent_index].lane;
       opponent_chunk = get_opponent_chunk(s_opponent_cpp_004422d3,0x27e,opponent_index);
       clear_map_occupant(*opponent_chunk,lane_val);
       evaluate_opponent(opponent_index,opponent_data[opponent_index].object);
       opponent_chunk = get_opponent_chunk(s_opponent_cpp_004422e0,0x285,opponent_index);
-      lane_val = update_chunk_for_position(*opponent_chunk);
+      iVar1 = update_chunk_for_position(*opponent_chunk);
       opponent_chunk = get_opponent_chunk(s_opponent_cpp_004422ed,0x288,opponent_index);
-      *opponent_chunk = lane_val;
+      *opponent_chunk = iVar1;
       next_opponent_waypoint(opponent_index,2);
       get_opponent_chunk(s_opponent_cpp_004422fa,0x28a,opponent_index);
       lane_val = get_racer_lane(opponent_index);
@@ -1379,46 +1379,46 @@ void __watcall update_all_opponents(void)
       opponent_chunk = get_opponent_chunk(s_opponent_cpp_00442307,0x28d,opponent_index);
       set_map_occupant(opponent_index,*opponent_chunk,lane_val);
       if ((0 < opponent_index) && (opponent_index < 6)) {
-        lane_val = get_racer_entry(0);
-        iVar1 = get_racer_entry(opponent_index);
-        if (iVar1 < lane_val) {
+        iVar1 = get_racer_entry(0);
+        iVar2 = get_racer_entry(opponent_index);
+        if (iVar2 < iVar1) {
           opponent_chunk = get_opponent_chunk(s_opponent_cpp_00442314,0x29b,opponent_index);
           opponent_chunk_2 = get_opponent_chunk(s_opponent_cpp_00442321,0x29b,0);
-          uVar2 = *opponent_chunk - *opponent_chunk_2 >> 0x1f;
-          if (racer_range < (int)((*opponent_chunk - *opponent_chunk_2 ^ uVar2) - uVar2)) {
-            lane_val = opponent_data[opponent_index].field_e0;
+          lane_val = *opponent_chunk - *opponent_chunk_2 >> 0x1f;
+          if (racer_range < (int)((*opponent_chunk - *opponent_chunk_2 ^ lane_val) - lane_val)) {
+            iVar1 = opponent_data[opponent_index].field_e0;
             fVar3 = racer_low_speed;
 LAB_004062f7:
-            *(float *)(driver_list + 8 + lane_val * 0x1c) = fVar3;
+            *(float *)(driver_list + 8 + iVar1 * 0x1c) = fVar3;
           }
         }
         else {
-          lane_val = get_racer_entry(opponent_index);
-          iVar1 = get_racer_entry(0);
-          if (iVar1 < lane_val) {
-            lane_val = opponent_data[opponent_index].field_e0;
+          iVar1 = get_racer_entry(opponent_index);
+          iVar2 = get_racer_entry(0);
+          if (iVar2 < iVar1) {
+            iVar1 = opponent_data[opponent_index].field_e0;
             fVar3 = racer_high_speed;
             goto LAB_004062f7;
           }
         }
-        lane_val = weg_chunk_count;
-        iVar1 = (opponent_index + -1) * 0xc;
+        iVar1 = weg_chunk_count;
+        iVar2 = (opponent_index + -1) * 0xc;
         if (opponent_data[opponent_index].direction == 1) {
           opponent_chunk = get_opponent_chunk(s_opponent_cpp_0044232e,0x2ab,opponent_index);
-          if (lane_val + -0xf <= *opponent_chunk) {
+          if (iVar1 + -0xf <= *opponent_chunk) {
             opponent_chunk = get_opponent_chunk(s_opponent_cpp_0044233b,0x2ad,opponent_index);
-            lane_val = *opponent_chunk - (lane_val + -0xf);
+            iVar1 = *opponent_chunk - (iVar1 + -0xf);
 LAB_00406352:
-            *(int *)(iVar1 + 8 + driver_lane_data) = 10 - lane_val;
+            *(int *)(iVar2 + 8 + driver_lane_data) = 10 - iVar1;
             set_racer_finish_time(opponent_index);
-            *(undefined4 *)(iVar1 + driver_lane_data) = 4;
+            *(undefined4 *)(iVar2 + driver_lane_data) = 4;
           }
         }
         else {
           opponent_chunk = get_opponent_chunk(s_opponent_cpp_00442348,0x2b8,opponent_index);
           if (*opponent_chunk < 0x10) {
             opponent_chunk = get_opponent_chunk(s_opponent_cpp_00442355,0x2ba,opponent_index);
-            lane_val = 0xf - *opponent_chunk;
+            iVar1 = 0xf - *opponent_chunk;
             goto LAB_00406352;
           }
         }
@@ -1442,7 +1442,7 @@ void __watcall mark_active_racers(void)
   
   iVar1 = 0;
   for (i = 0; i < opponent_count; i = i + 1) {
-    racer_object_index = *(int *)((int)opponent_data->local_corners + iVar1 + 0x54);
+    racer_object_index = *(int *)((int)&opponent_data->object + iVar1);
     if ((racers[racer_object_index].in_use != '\0') && (racer_object_index != player_index)) {
       racers[racer_object_index].needs_update = 1;
     }
@@ -1472,8 +1472,8 @@ undefined4 __watcall init_opponents(int param_1)
     debugmsg(s_initializing_opponents_ok_00442436);
     iVar1 = 0;
     for (i = extraout_EDX; i < opponent_count; i = i + 1) {
-      *(undefined4 *)((int)opponent_data->local_corners + iVar1 + 0x58) = 0xffffffff;
-      *(undefined4 *)((int)opponent_data->local_corners + iVar1 + 0x60) = 0;
+      *(undefined4 *)((int)&opponent_data->field_e0 + iVar1) = 0xffffffff;
+      *(undefined4 *)((int)&opponent_data->active + iVar1) = 0;
       iVar1 = iVar1 + 0x100;
     }
     opponents_initialized = 1;
@@ -1622,43 +1622,41 @@ int __watcall scatter_traffic(int param_1,int param_2)
     set_map_occupant(i,weg_section_idx,lane_val);
     opponent_chunk = get_opponent_chunk(s_opponent_cpp_00442629,0x3ca,i);
     *opponent_chunk = weg_section_idx;
-    *(int *)((int)opponent_data->local_corners + iVar3 + 0x4c) = weg_section_idx;
-    *(int *)((int)opponent_data->local_corners + iVar3 + 0x44) = lane_val;
-    *(int *)((int)opponent_data->local_corners + iVar3 + 0x40) = lane_val;
-    *(uint *)((int)opponent_data->local_corners + iVar3 + 0x50) = uVar2;
+    *(int *)((int)&opponent_data->waypoint + iVar3) = weg_section_idx;
+    *(int *)((int)&opponent_data->target_lane + iVar3) = lane_val;
+    *(int *)((int)&opponent_data->lane + iVar3) = lane_val;
+    *(uint *)((int)&opponent_data->direction + iVar3) = uVar2;
     lane_val = weg_section_idx * 0x38;
-    *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x54) =
+    *(undefined4 *)((int)&opponent_data->x + iVar3) =
          *(undefined4 *)
           (weg_sections[*(int *)(weg_chunks + 8 + lane_val)].point * 0x21 + weg_points);
-    *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x50) =
+    *(undefined4 *)((int)&opponent_data->y + iVar3) =
          *(undefined4 *)
           (weg_sections[*(int *)(weg_chunks + 8 + lane_val)].point * 0x21 + weg_points + 4);
-    *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x4c) =
+    *(undefined4 *)((int)&opponent_data->z + iVar3) =
          *(undefined4 *)
           (weg_sections[*(int *)(weg_chunks + 8 + lane_val)].point * 0x21 + weg_points + 8);
     fVar1 = (float)(int)ROUND(fVar4);
-    *(float *)((int)opponent_data->world_corners + iVar3 + -0x54) =
+    *(float *)((int)&opponent_data->x + iVar3) =
          *(float *)(weg_chunks + 0x1c + lane_val) * fVar1 +
-         *(float *)((int)opponent_data->world_corners + iVar3 + -0x54);
-    *(float *)((int)opponent_data->world_corners + iVar3 + -0x50) =
+         *(float *)((int)&opponent_data->x + iVar3);
+    *(float *)((int)&opponent_data->y + iVar3) =
          *(float *)(weg_chunks + 0x20 + lane_val) * fVar1 +
-         *(float *)((int)opponent_data->world_corners + iVar3 + -0x50);
-    *(float *)((int)opponent_data->world_corners + iVar3 + -0x4c) =
+         *(float *)((int)&opponent_data->y + iVar3);
+    *(float *)((int)&opponent_data->z + iVar3) =
          fVar1 * *(float *)(weg_chunks + 0x24 + lane_val) +
-         *(float *)((int)opponent_data->world_corners + iVar3 + -0x4c);
-    *(float *)((int)opponent_data->world_corners + iVar3 + -0x54) =
-         *(float *)((int)opponent_data->world_corners + iVar3 + -0x54) -
-         *(float *)(weg_chunks + 0x24 + lane_val);
-    *(float *)((int)opponent_data->world_corners + iVar3 + -0x4c) =
-         *(float *)(weg_chunks + 0x1c + lane_val) +
-         *(float *)((int)opponent_data->world_corners + iVar3 + -0x4c);
-    *(undefined4 *)((int)opponent_data->local_corners + iVar3 + 0x30) =
-         *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x54);
-    *(undefined4 *)((int)opponent_data->local_corners + iVar3 + 0x34) =
-         *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x50);
-    *(undefined4 *)((int)opponent_data->local_corners + iVar3 + 0x38) =
-         *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x4c);
-    *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x48) = 0;
+         *(float *)((int)&opponent_data->z + iVar3);
+    *(float *)((int)&opponent_data->x + iVar3) =
+         *(float *)((int)&opponent_data->x + iVar3) - *(float *)(weg_chunks + 0x24 + lane_val);
+    *(float *)((int)&opponent_data->z + iVar3) =
+         *(float *)(weg_chunks + 0x1c + lane_val) + *(float *)((int)&opponent_data->z + iVar3);
+    *(undefined4 *)((int)&opponent_data->target_x + iVar3) =
+         *(undefined4 *)((int)&opponent_data->x + iVar3);
+    *(undefined4 *)((int)&opponent_data->target_y + iVar3) =
+         *(undefined4 *)((int)&opponent_data->y + iVar3);
+    *(undefined4 *)((int)&opponent_data->target_z + iVar3) =
+         *(undefined4 *)((int)&opponent_data->z + iVar3);
+    *(undefined4 *)((int)&opponent_data->speed + iVar3) = 0;
     debugmsg(s_placing_opponent__d_ok_00442636,i);
     if (uVar2 == 0) {
       lane_val = weg_section_idx + 1;
@@ -1669,26 +1667,25 @@ int __watcall scatter_traffic(int param_1,int param_2)
     else {
       lane_val = weg_section_idx + -1;
     }
-    *(int *)((int)opponent_data->local_corners + iVar3 + 0x48) = lane_val;
+    *(int *)((int)&opponent_data->prev_waypoint + iVar3) = lane_val;
     debugmsg(s_Attempting_to_set_driver____0044264e);
-    lane_val = *(int *)((int)opponent_data->local_corners + iVar3 + 0x58);
+    lane_val = *(int *)((int)&opponent_data->field_e0 + iVar3);
     if (lane_val != -1) {
-      assign_driver_to_opponent
-                (lane_val,i,*(uint *)((int)opponent_data->local_corners + iVar3 + 0x5c));
+      assign_driver_to_opponent(lane_val,i,*(uint *)((int)&opponent_data->field_e4 + iVar3));
     }
     if (uVar2 == 0) {
-      *(int *)((int)opponent_data->world_corners + iVar3 + -0x34) =
-           weg_sections[weg_section_idx].heading + 0x100;
+      *(int *)((int)&opponent_data->heading + iVar3) = weg_sections[weg_section_idx].heading + 0x100
+      ;
     }
     if (uVar2 == 1) {
-      *(int *)((int)opponent_data->world_corners + iVar3 + -0x34) =
+      *(int *)((int)&opponent_data->heading + iVar3) =
            weg_sections[weg_section_idx].heading + -0x100;
     }
-    *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x40) = 0;
-    *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x3c) = 0;
-    *(undefined4 *)((int)opponent_data->world_corners + iVar3 + -0x38) = 0;
+    *(undefined4 *)((int)&opponent_data->field_18 + iVar3) = 0;
+    *(undefined4 *)((int)&opponent_data->field_1c + iVar3) = 0;
+    *(undefined4 *)((int)&opponent_data->field_20 + iVar3) = 0;
     i = i + 1;
-    *(undefined4 *)((int)opponent_data->local_corners + iVar3 + 0x74) = 0;
+    *(undefined4 *)((int)&opponent_data->heading_delta + iVar3) = 0;
     iVar3 = iVar3 + 0x100;
   }
   return i;
@@ -1729,7 +1726,7 @@ int __watcall find_free_opponent_slot(void)
       fatal_exit(s__s__d____no_more_free_opponent_004426a2,s_opponent_cpp_00442695,0x421);
       return 0;
     }
-    if (*(int *)((int)opponent_data->local_corners + iVar1 + 0x60) == 0) break;
+    if (*(int *)((int)&opponent_data->active + iVar1) == 0) break;
     iVar1 = iVar1 + 0x100;
     arg2 = arg2 + 1;
   }
@@ -1805,13 +1802,13 @@ void __watcall update_racers(void)
   float fVar1;
   int racer_b;
   int *opponent_chunk;
+  uint uVar2;
   int i;
   int racer_object_index;
   int *opponent_chunk_2;
   int opponent_index_2;
   opponent_t *opponent_index_00;
   undefined4 extraout_EDX;
-  uint uVar2;
   int j;
   int local_34;
   int local_30;
@@ -1820,7 +1817,7 @@ void __watcall update_racers(void)
   opponent_t *opponent;
   
   i = player_heading;
-  opponent_index = (opponent_t *)racers[player_index].opponent;
+  opponent_index = racers[player_index].opponent;
   opponent_index_00 = opponent_data + (int)opponent_index;
   clear_map_occupant(opponent_index_00->chunk,opponent_index_00->lane);
   debugmsg(s_Player_opponent____d__po_pointer_00442756,opponent_index,
@@ -1840,10 +1837,10 @@ void __watcall update_racers(void)
            opponent_data + (int)opponent_index,opponent_index_00);
   opponent_chunk = get_opponent_chunk(s_opponent_cpp_0044280c,extraout_EDX,(int)opponent_index);
   debugmsg(s_Car_chunk_value_read___d_into_op_00442819,player_chunk,*opponent_chunk);
+  uVar2 = get_racer_lane((int)opponent_index);
+  opponent_index_00->lane = uVar2;
   i = get_racer_lane((int)opponent_index);
-  opponent_index_00->lane = i;
-  racer_object_index = get_racer_lane((int)opponent_index);
-  debugmsg(s_Car_lane_value_read___d_into_opp_00442847,racer_object_index,i);
+  debugmsg(s_Car_lane_value_read___d_into_opp_00442847,i,uVar2);
   set_map_occupant(opponent_index,opponent_index_00->chunk,opponent_index_00->lane);
   if (player_index != opponent_data[(int)opponent_index].object) {
     fatal_exit(s_player_car____object_00442873);

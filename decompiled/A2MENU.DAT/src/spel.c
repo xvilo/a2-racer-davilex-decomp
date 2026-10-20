@@ -20,7 +20,7 @@ void __watcall reset_infio(void)
   infio.sound = DAT_00437222._2_2_;
   infio.resolution = (short)DAT_00437222;
   infio.view = _opties;
-  infio.control_type = _control;
+  infio.control_type = control._0_2_;
   infio.display_mode = DAT_00437226;
   infio.horizon = (short)DAT_00437228;
   infio.dashboard = DAT_00437228._2_2_;

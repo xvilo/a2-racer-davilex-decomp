@@ -2,7 +2,8 @@
 // Usage (via tools/decompile_all.sh):
 //   analyzeHeadless <proj> <name> -import <bin> -postScript ExportDecompiled.java <outdir> [names.tsv]
 // Writes <outdir>/decompiled.c, functions.tsv and strings.tsv. Rows of kind "local" in
-// names.tsv rename a decompiler variable first (address = function entry, dtype = old name).
+// names.tsv rename a decompiler variable first (address = function entry, dtype = old name
+// as printed in decompiled.c); a type in the params column also retypes it.
 //@category A2Racer
 
 import java.io.BufferedReader;
@@ -20,6 +21,8 @@ import ghidra.app.decompiler.DecompileOptions;
 import ghidra.app.decompiler.DecompileResults;
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.address.Address;
+import ghidra.program.model.data.DataType;
+import ghidra.program.model.data.PointerDataType;
 import ghidra.program.model.pcode.HighFunction;
 import ghidra.program.model.pcode.HighFunctionDBUtil;
 import ghidra.program.model.pcode.HighSymbol;
@@ -117,7 +120,7 @@ public class ExportDecompiled extends GhidraScript {
 				String[] c = line.split("\t", -1);
 				if (c.length > 6 && c[1].equals("local")) {
 					m.computeIfAbsent(toAddr(c[0]), k -> new ArrayList<>())
-							.add(new String[] { c[6], c[2] });
+							.add(new String[] { c[6], c[2], c[5] });
 				}
 			}
 		}
@@ -133,7 +136,8 @@ public class ExportDecompiled extends GhidraScript {
 				HighSymbol sym = it.next();
 				if (sym.getName().equals(w[0])) {
 					try {
-						HighFunctionDBUtil.updateDBVariable(sym, w[1], null, SourceType.USER_DEFINED);
+						DataType dt = w.length > 2 && !w[2].isEmpty() ? resolveType(w[2]) : null;
+						HighFunctionDBUtil.updateDBVariable(sym, w[1], dt, SourceType.USER_DEFINED);
 						n++;
 					}
 					catch (Exception e) {
@@ -145,5 +149,25 @@ public class ExportDecompiled extends GhidraScript {
 			}
 		}
 		return n;
+	}
+
+	/** "button_t*" and the like: a named type from the program plus pointer levels. */
+	private DataType resolveType(String t) {
+		int depth = 0;
+		while (t.endsWith("*")) {
+			depth++;
+			t = t.substring(0, t.length() - 1);
+		}
+		List<DataType> found = new ArrayList<>();
+		currentProgram.getDataTypeManager().findDataTypes(t, found);
+		if (found.isEmpty()) {
+			printerr("ExportDecompiled: unknown type " + t);
+			return null;
+		}
+		DataType dt = found.get(0);
+		for (int i = 0; i < depth; i++) {
+			dt = new PointerDataType(dt, currentProgram.getDataTypeManager());
+		}
+		return dt;
 	}
 }

@@ -3,10 +3,10 @@
 
 /* ==== 00411998 check_togglebutton_hotkey ==== */
 
-int __watcall check_togglebutton_hotkey(fform_t *fform,int param_2)
+int __watcall check_togglebutton_hotkey(form_t *form,int param_2)
 
 {
-  return (uint)((uint)*(byte *)(*(int *)(fform + 0xc) + 0xc) == param_2);
+  return (uint)((uint)*(byte *)((int)form->control + 0xc) == param_2);
 }
 
 
@@ -52,9 +52,9 @@ LAB_00411a29:
     fatal_exit(s__s__d_____get_togglebutton_toggl_0041ed5a,s_tgglbuts_cpp_0041ed4d,0x5b,param_1);
   }
   control_pointer_1 = get_control_pointer_1(param_1);
-  if (*(int *)(xvga_anims + *control_pointer_1 * 0xc) / 2 < param_2) {
-    fatal_exit(s__s__d_____set_togglebutton_toggl_0041edb3,s_tgglbuts_cpp_0041eda6,0x62,
-               *(int *)(xvga_anims + *control_pointer_1 * 0xc) / 2);
+  iVar1 = (&xvga_anims->field_00)[*control_pointer_1 * 3] / 2;
+  if (iVar1 < param_2) {
+    fatal_exit(s__s__d_____set_togglebutton_toggl_0041edb3,s_tgglbuts_cpp_0041eda6,0x62,iVar1);
   }
   *(int *)((int)control_pointer_1 + 0xd) = param_2;
   return;
@@ -63,20 +63,20 @@ LAB_00411a29:
 
 /* ==== 00411a8e destroy_togglebutton ==== */
 
-void __watcall destroy_togglebutton(fform_t *fform)
+void __watcall destroy_togglebutton(form_t *form)
 
 {
-  if (*(int *)(fform + 0x18) == 0) {
+  if (form->hwnd == (HWND)0x0) {
     fatal_exit(s__s__d_____destroy_togglebutton__n_0041ee0a,s_tgglbuts_cpp_0041edfd,0x6f);
   }
-  DestroyWindow(*(HWND *)(fform + 0x18));
+  DestroyWindow(form->hwnd);
   return;
 }
 
 
 /* ==== 00411aba create_togglebutton ==== */
 
-void __watcall create_togglebutton(fform_t *fform,int param_2)
+void __watcall create_togglebutton(form_t *form,int param_2)
 
 {
   int *piVar1;
@@ -85,34 +85,33 @@ void __watcall create_togglebutton(fform_t *fform,int param_2)
   HWND pHVar2;
   LPVOID lpParam;
   
-  piVar1 = *(int **)(fform + 0xc);
+  piVar1 = form->control;
   control_image_index = get_control_image_index(*piVar1,0);
   if (piVar1[1] == -1) {
-    piVar1[1] = *(int *)(xvga_mem_images + control_image_index * 0x20 + 8);
+    piVar1[1] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 8);
   }
   if (piVar1[2] == -1) {
-    piVar1[2] = *(int *)(xvga_mem_images + control_image_index * 0x20 + 0xc);
+    piVar1[2] = *(int *)(control_image_index * 0x20 + 0xc + (int)xvga_mem_images);
   }
-  check_control_position(param_2,*(int *)fform,*(int *)(fform + 4),piVar1[1],piVar1[2]);
+  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
-  pHVar2 = CreateWindowExA(0,s_BUTTON_0041eeba,(LPCSTR)0x0,0x5001000b,*(int *)fform,
-                           *(int *)(fform + 4),piVar1[1],piVar1[2],xvga_hwnd,(HMENU)param_2,
-                           hInstance,lpParam);
-  *(HWND *)(fform + 0x18) = pHVar2;
+  pHVar2 = CreateWindowExA(0,s_BUTTON_0041eeba,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
+                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+  form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
     fatal_exit(s_Unable_to_create_a_window_for_to_0041eec1,param_2);
   }
   set_togglebutton_togglestate(param_2,*(int *)((int)piVar1 + 0xd));
-  old_togglebutton_windowproc = SetWindowLongA(*(HWND *)(fform + 0x18),-4,0x411d2e);
-  set_control_state(param_2,*(int *)(fform + 0x10));
+  old_togglebutton_windowproc = SetWindowLongA(form->hwnd,-4,0x411d2e);
+  set_control_state(param_2,form->state);
   return;
 }
 
 
 /* ==== 00411b96 draw_help_togglebutton ==== */
 
-void __watcall draw_help_togglebutton(fform_t *fform)
+void __watcall draw_help_togglebutton(form_t *form)
 
 {
   int *piVar1;
@@ -123,8 +122,8 @@ void __watcall draw_help_togglebutton(fform_t *fform)
   int control_y;
   int iVar5;
   
-  piVar1 = *(int **)(fform + 0xc);
-  iVar4 = get_control_index(*(void **)(fform + 0x18));
+  piVar1 = form->control;
+  iVar4 = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,*(int *)((int)piVar1 + 0xd) * 2);
@@ -180,7 +179,7 @@ LAB_00411cd0:
     }
     if (uVar5 == 0x11) {
       set_control_state(iVar4,4);
-      uVar5 = *(int *)(xvga_anims + *control_pointer * 0xc) / 2 - 1;
+      uVar5 = (&xvga_anims->field_00)[*control_pointer * 3] / 2 - 1;
       if (i == uVar5) {
         i = i ^ uVar5;
       }

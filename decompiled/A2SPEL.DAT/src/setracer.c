@@ -171,7 +171,7 @@ void __watcall draw_big_digit_1(int digit,int frame)
   
   if (screen_resolution == 0) {
     unaff_EBX = 0x96;
-    frame = *(int *)(*(int *)(xvga_anims + 0xe0) + 4 + digit * 8);
+    frame = *(int *)(xvga_anims->field_e0 + 4 + digit * 8);
     unaff_ECX = 200;
     if (dashboard_on_screen != 0) {
       unaff_ECX = 0xa0;
@@ -179,7 +179,7 @@ void __watcall draw_big_digit_1(int digit,int frame)
   }
   else if (screen_resolution == 1) {
     unaff_ECX = 0x4b;
-    frame = *(int *)(*(int *)(xvga_anims + 0xd4) + 4 + digit * 8);
+    frame = *(int *)(xvga_anims->field_d4 + 4 + digit * 8);
     unaff_EBX = unaff_ECX;
   }
   set_mem_image(1,frame,unaff_EBX,unaff_ECX,2);
@@ -197,7 +197,7 @@ void __watcall draw_big_digit_2(int digit,int frame)
   
   if (screen_resolution == 0) {
     unaff_EBX = 0x140;
-    frame = *(int *)(*(int *)(xvga_anims + 0xec) + 4 + digit * 8);
+    frame = *(int *)(xvga_anims->field_ec + 4 + digit * 8);
     unaff_ECX = 200;
     if (dashboard_on_screen != 0) {
       unaff_ECX = 0xa0;
@@ -206,7 +206,7 @@ void __watcall draw_big_digit_2(int digit,int frame)
   else if (screen_resolution == 1) {
     unaff_EBX = 0xa0;
     unaff_ECX = 100;
-    frame = *(int *)(*(int *)(xvga_anims + 0xf8) + 4 + digit * 8);
+    frame = *(int *)(xvga_anims->field_f8 + 4 + digit * 8);
   }
   set_mem_image(1,frame,unaff_EBX,unaff_ECX,0);
   return;
@@ -279,7 +279,7 @@ void __watcall stop_player_car(void)
 
 {
   player_speed = 0.0;
-  opponent_data[racers[player_index].opponent].speed = 0.0;
+  opponent_data[(int)racers[player_index].opponent].speed = 0.0;
   controls_enabled = 0;
   DAT_00475a28 = 0;
   start_countdown(10);

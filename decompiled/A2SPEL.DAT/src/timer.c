@@ -6,20 +6,20 @@
 int __watcall xvga_init_timer(int param_1)
 
 {
-  int xvga_timer_index;
+  int iVar1;
   int i;
   
   xvga_timer_ptr = LocalAlloc(0x40,param_1 * 0xc);
   if (xvga_timer_ptr == (xvga_timer_t *)0x0) {
     fatal_exit(s__s__d____error_not_enough_memory_00452362,s_timer_cpp_00452358,0x18);
   }
-  xvga_timer_index = 0;
+  iVar1 = 0;
   xvga_max_timers = param_1;
   for (i = 0; i < xvga_max_timers; i = i + 1) {
-    *(undefined4 *)(xvga_timer_ptr + xvga_timer_index) = 0xffffffff;
-    *(undefined4 *)(xvga_timer_ptr + xvga_timer_index + 4) = 0xffffffff;
-    *(undefined4 *)(xvga_timer_ptr + xvga_timer_index + 8) = 0;
-    xvga_timer_index = xvga_timer_index + 0xc;
+    *(undefined4 *)(&xvga_timer_ptr->field_0x0 + iVar1) = 0xffffffff;
+    *(undefined4 *)(&xvga_timer_ptr->field_0x4 + iVar1) = 0xffffffff;
+    *(undefined4 *)(&xvga_timer_ptr[1].field_0x0 + iVar1) = 0;
+    iVar1 = iVar1 + 0xc;
   }
   xvga_timer_init_ok = 1;
   debugmsg(s_timer_init_ok____d_004523a5,1);
@@ -32,23 +32,22 @@ int __watcall xvga_init_timer(int param_1)
 int __watcall xvga_get_free_timer(void)
 
 {
-  xvga_timer_t *xvga_timer;
-  int xvga_timer_index;
+  int *piVar1;
+  int iVar2;
   int i;
   
   if (xvga_timer_init_ok == 0) {
     fatal_exit(s__s__d____trying_to_reference_uni_004523c3,s_timer_cpp_004523b9,0x2d);
   }
   i = 0;
-  xvga_timer_index = 0;
+  iVar2 = 0;
   while( true ) {
-    if (xvga_max_timers * 0xc <= xvga_timer_index) {
+    if (xvga_max_timers * 0xc <= iVar2) {
       return -1;
     }
-    xvga_timer = xvga_timer_ptr + xvga_timer_index;
-    if (((*(int *)xvga_timer == -1) && (*(int *)(xvga_timer + 4) == -1)) &&
-       (*(int *)(xvga_timer + 8) == 0)) break;
-    xvga_timer_index = xvga_timer_index + 0xc;
+    piVar1 = (int *)(&xvga_timer_ptr->field_0x0 + iVar2);
+    if (((*piVar1 == -1) && (piVar1[1] == -1)) && (piVar1[2] == 0)) break;
+    iVar2 = iVar2 + 0xc;
     i = i + 1;
   }
   return i;
@@ -62,7 +61,7 @@ int __watcall xvga_set_timer(void *param_1,int param_2,int param_3)
 {
   int arg2;
   UINT_PTR UVar1;
-  int xvga_timer_index;
+  int iVar2;
   
   if (xvga_timer_init_ok == 0) {
     fatal_exit(s__s__d____trying_to_reference_uni_0045240e,s_timer_cpp_00452404,0x41);
@@ -73,13 +72,13 @@ int __watcall xvga_set_timer(void *param_1,int param_2,int param_3)
               );
   }
   UVar1 = SetTimer(xvga_hwnd,param_3,param_2,(TIMERPROC)0x0);
-  xvga_timer_index = arg2 * 0xc;
-  *(UINT_PTR *)(xvga_timer_ptr + xvga_timer_index) = UVar1;
+  iVar2 = arg2 * 0xc;
+  *(UINT_PTR *)(iVar2 + (int)xvga_timer_ptr) = UVar1;
   if (UVar1 == 0) {
     return 10000;
   }
-  *(int *)(xvga_timer_ptr + xvga_timer_index + 4) = param_2;
-  *(void **)(xvga_timer_ptr + xvga_timer_index + 8) = param_1;
+  *(int *)(iVar2 + 4 + (int)xvga_timer_ptr) = param_2;
+  *(void **)(iVar2 + 8 + (int)xvga_timer_ptr) = param_1;
   debugmsg(s_timer_set____d_00452486,arg2);
   return 0;
 }
@@ -90,19 +89,19 @@ int __watcall xvga_set_timer(void *param_1,int param_2,int param_3)
 int __watcall xvga_unset_timer(int param_1)
 
 {
-  int xvga_timer_index;
+  int iVar1;
   int i;
   
   if (xvga_timer_init_ok != 0) {
-    xvga_timer_index = 0;
+    iVar1 = 0;
     for (i = 0; i < xvga_max_timers; i = i + 1) {
-      if (param_1 == *(int *)(xvga_timer_ptr + xvga_timer_index)) {
-        *(int *)(xvga_timer_ptr + xvga_timer_index) = -1;
-        *(undefined4 *)(xvga_timer_ptr + xvga_timer_index + 4) = 0xffffffff;
-        *(undefined4 *)(xvga_timer_ptr + xvga_timer_index + 8) = 0;
-        KillTimer(xvga_hwnd,*(UINT_PTR *)(xvga_timer_ptr + xvga_timer_index));
+      if (param_1 == *(int *)(&xvga_timer_ptr->field_0x0 + iVar1)) {
+        *(int *)(&xvga_timer_ptr->field_0x0 + iVar1) = -1;
+        *(undefined4 *)(&xvga_timer_ptr->field_0x4 + iVar1) = 0xffffffff;
+        *(undefined4 *)(&xvga_timer_ptr[1].field_0x0 + iVar1) = 0;
+        KillTimer(xvga_hwnd,*(UINT_PTR *)(&xvga_timer_ptr->field_0x0 + iVar1));
       }
-      xvga_timer_index = xvga_timer_index + 0xc;
+      iVar1 = iVar1 + 0xc;
     }
   }
   return 0;
@@ -114,19 +113,18 @@ int __watcall xvga_unset_timer(int param_1)
 int __watcall xvga_kill_timers(void)
 
 {
-  xvga_timer_t *xvga_timer;
+  int *piVar1;
   int i;
-  int xvga_timer_index;
+  int iVar2;
   
   if (xvga_timer_init_ok != 0) {
-    xvga_timer_index = 0;
+    iVar2 = 0;
     for (i = 0; i < xvga_max_timers; i = i + 1) {
-      xvga_timer = xvga_timer_ptr + xvga_timer_index;
-      if (((*(int *)xvga_timer != -1) && (*(int *)(xvga_timer + 4) != -1)) &&
-         (*(int *)(xvga_timer + 8) != 0)) {
-        xvga_unset_timer(*(int *)xvga_timer);
+      piVar1 = (int *)(&xvga_timer_ptr->field_0x0 + iVar2);
+      if (((*piVar1 != -1) && (piVar1[1] != -1)) && (piVar1[2] != 0)) {
+        xvga_unset_timer(*piVar1);
       }
-      xvga_timer_index = xvga_timer_index + 0xc;
+      iVar2 = iVar2 + 0xc;
     }
   }
   return 0;
@@ -138,23 +136,22 @@ int __watcall xvga_kill_timers(void)
 int __watcall xvga_handle_timers(int param_1)
 
 {
-  xvga_timer_t *xvga_timer;
+  int *piVar1;
   int extraout_ECX;
   int i;
   int extraout_EDX;
-  int xvga_timer_index;
+  int iVar2;
   
   if (xvga_timer_init_ok != 0) {
-    xvga_timer_index = 0;
+    iVar2 = 0;
     for (i = 0; i < xvga_max_timers; i = i + 1) {
-      xvga_timer = xvga_timer_ptr + xvga_timer_index;
-      if (((param_1 == *(int *)xvga_timer) && (*(int *)(xvga_timer + 4) != -1)) &&
-         (*(int *)(xvga_timer + 8) != 0)) {
-        (**(code **)(xvga_timer + 8))();
+      piVar1 = (int *)(&xvga_timer_ptr->field_0x0 + iVar2);
+      if (((param_1 == *piVar1) && (piVar1[1] != -1)) && (piVar1[2] != 0)) {
+        (*(code *)piVar1[2])();
         param_1 = extraout_ECX;
         i = extraout_EDX;
       }
-      xvga_timer_index = xvga_timer_index + 0xc;
+      iVar2 = iVar2 + 0xc;
     }
   }
   return 0;

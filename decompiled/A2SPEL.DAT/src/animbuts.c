@@ -3,29 +3,29 @@
 
 /* ==== 0043dc28 check_animbutton_hotkey ==== */
 
-int __watcall check_animbutton_hotkey(fform_t *fform,int param_2)
+int __watcall check_animbutton_hotkey(form_t *form,int param_2)
 
 {
-  return (uint)((uint)*(byte *)(*(int *)(fform + 0xc) + 0x1c) == param_2);
+  return (uint)((uint)*(byte *)((int)form->control + 0x1c) == param_2);
 }
 
 
 /* ==== 0043dc3e destroy_animbutton ==== */
 
-void __watcall destroy_animbutton(fform_t *fform)
+void __watcall destroy_animbutton(form_t *form)
 
 {
-  if (*(int *)(fform + 0x18) == 0) {
+  if (form->hwnd == (HWND)0x0) {
     fatal_exit(s__s__d_____destroy_animbutton__no_004572f5,s_animbuts_cpp_004572e8,0x3e);
   }
-  DestroyWindow(*(HWND *)(fform + 0x18));
+  DestroyWindow(form->hwnd);
   return;
 }
 
 
 /* ==== 0043dc6a create_animbutton ==== */
 
-void __watcall create_animbutton(fform_t *fform,int param_2)
+void __watcall create_animbutton(form_t *form,int param_2)
 
 {
   int *piVar1;
@@ -34,30 +34,29 @@ void __watcall create_animbutton(fform_t *fform,int param_2)
   HWND pHVar2;
   LPVOID lpParam;
   
-  piVar1 = *(int **)(fform + 0xc);
+  piVar1 = form->control;
   control_image_index = get_control_image_index(*piVar1,0);
   if (piVar1[4] == -1) {
-    piVar1[4] = *(int *)(xvga_mem_images + control_image_index * 0x20 + 8);
+    piVar1[4] = *(int *)(control_image_index * 0x20 + 8 + (int)xvga_mem_images);
   }
   if (piVar1[5] == -1) {
-    piVar1[5] = *(int *)(xvga_mem_images + control_image_index * 0x20 + 0xc);
+    piVar1[5] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  check_control_position(param_2,*(int *)fform,*(int *)(fform + 4),piVar1[4],piVar1[5]);
+  check_control_position(param_2,form->x,form->y,piVar1[4],piVar1[5]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
-  pHVar2 = CreateWindowExA(0,s_BUTTON_0045732c,(LPCSTR)0x0,0x5001000b,*(int *)fform,
-                           *(int *)(fform + 4),piVar1[4],piVar1[5],xvga_hwnd,(HMENU)param_2,
-                           hInstance,lpParam);
-  *(HWND *)(fform + 0x18) = pHVar2;
+  pHVar2 = CreateWindowExA(0,s_BUTTON_0045732c,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[4],
+                           piVar1[5],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+  form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
     fatal_exit(s_Unable_to_create_a_window_for_an_00457333,param_2);
   }
-  old_animbutton_windowproc = SetWindowLongA(*(HWND *)(fform + 0x18),-4,0x43e12f);
-  if (*(int *)(fform + 0x10) == 4) {
-    *(undefined4 *)(fform + 0x10) = 1;
+  old_animbutton_windowproc = SetWindowLongA(form->hwnd,-4,0x43e12f);
+  if (form->state == 4) {
+    form->state = 1;
   }
-  set_control_state(param_2,*(int *)(fform + 0x10));
-  *(undefined4 *)(fform + 0x14) = 0;
+  set_control_state(param_2,form->state);
+  form->field_14 = 0;
   return;
 }
 
@@ -78,7 +77,7 @@ void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int
   int iVar5;
   
   control_pointer_1 = get_control_pointer_1(param_2);
-  i = *(int *)(xvga_anims + param_1 * 0xc);
+  i = (&xvga_anims->field_00)[param_1 * 3];
   iVar1 = *(int *)((int)control_pointer_1 + 0x10) / 2;
   iVar2 = *(int *)((int)control_pointer_1 + 0x14) / 2;
   if (((param_4 == 0) || ((uint)param_4 < 2)) || (param_4 != 2)) {
@@ -107,7 +106,7 @@ void __watcall draw_animation_animbutton(int param_1,int param_2,int param_3,int
 
 /* ==== 0043de40 draw_help_animbutton ==== */
 
-void __watcall draw_help_animbutton(fform_t *fform)
+void __watcall draw_help_animbutton(form_t *form)
 
 {
   int *piVar1;
@@ -120,22 +119,22 @@ void __watcall draw_help_animbutton(fform_t *fform)
   uint control_state;
   int iVar7;
   
-  piVar1 = *(int **)(fform + 0xc);
-  iVar4 = get_control_index(*(void **)(fform + 0x18));
+  piVar1 = form->control;
+  iVar4 = get_control_index(form->hwnd);
   iVar2 = piVar1[4];
   iVar3 = piVar1[5];
-  iVar5 = get_control_image_index(*piVar1,*(int *)(xvga_anims + *piVar1 * 0xc) + -1);
+  iVar5 = get_control_image_index(*piVar1,(&xvga_anims->field_00)[*piVar1 * 3] + -1);
   iVar7 = 1;
   iVar6 = get_control_y(iVar4);
   control_x = get_control_x(iVar4);
   set_mem_image(0,iVar5,iVar2 / 2 + control_x,iVar3 / 2 + iVar6,iVar7);
   control_state = get_control_state(iVar4);
   if ((control_state == 0) || ((1 < control_state && (control_state != 4)))) {
-    iVar6 = *(int *)(xvga_anims + *piVar1 * 0xc);
+    iVar6 = (&xvga_anims->field_00)[*piVar1 * 3];
     iVar5 = *piVar1;
   }
   else {
-    iVar6 = *(int *)(xvga_anims + piVar1[3] * 0xc);
+    iVar6 = (&xvga_anims->field_00)[piVar1[3] * 3];
     iVar5 = piVar1[3];
   }
   iVar5 = get_control_image_index(iVar5,iVar6 + -1);
@@ -196,7 +195,7 @@ LAB_0043e11b:
     case 4:
       set_control_state(iVar2,0);
       iVar6 = *control_pointer;
-      iVar4 = *(int *)(xvga_anims + iVar6 * 0xc);
+      iVar4 = (&xvga_anims->field_00)[iVar6 * 3];
 LAB_0043e014:
       iVar6 = get_control_image_index(iVar6,iVar4 + -1);
       iVar8 = 1;
@@ -222,7 +221,7 @@ LAB_0043e014:
       iVar6 = get_control_state(iVar2);
       if (iVar6 == 4) {
         set_control_state(iVar2,1);
-        iVar4 = *(int *)(xvga_anims + control_pointer[3] * 0xc);
+        iVar4 = (&xvga_anims->field_00)[control_pointer[3] * 3];
         iVar6 = control_pointer[3];
         goto LAB_0043e014;
       }

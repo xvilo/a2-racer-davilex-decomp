@@ -3,29 +3,29 @@
 
 /* ==== 0043d900 check_areabutton_hotkey ==== */
 
-int __watcall check_areabutton_hotkey(fform_t *fform,int param_2)
+int __watcall check_areabutton_hotkey(form_t *form,int param_2)
 
 {
-  return (uint)((uint)*(byte *)(*(int *)(fform + 0xc) + 0x10) == param_2);
+  return (uint)((uint)*(byte *)((int)form->control + 0x10) == param_2);
 }
 
 
 /* ==== 0043d916 destroy_areabutton ==== */
 
-void __watcall destroy_areabutton(fform_t *fform)
+void __watcall destroy_areabutton(form_t *form)
 
 {
-  if (*(int *)(fform + 0x18) == 0) {
+  if (form->hwnd == (HWND)0x0) {
     fatal_exit(s__s__d_____destroy_areabutton__no_004571d1,s_areabuts_cpp_004571c4,0x2b);
   }
-  DestroyWindow(*(HWND *)(fform + 0x18));
+  DestroyWindow(form->hwnd);
   return;
 }
 
 
 /* ==== 0043d942 create_areabutton ==== */
 
-void __watcall create_areabutton(fform_t *fform,int param_2)
+void __watcall create_areabutton(form_t *form,int param_2)
 
 {
   int *piVar1;
@@ -36,7 +36,7 @@ void __watcall create_areabutton(fform_t *fform,int param_2)
   HWND pHVar4;
   LPVOID lpParam;
   
-  piVar1 = *(int **)(fform + 0xc);
+  piVar1 = form->control;
   iVar2 = *piVar1;
   iVar3 = piVar1[1];
   if (((piVar1[2] != -1) && (piVar1[3] != 0)) && ((*piVar1 == -1 || (piVar1[1] == -1)))) {
@@ -46,42 +46,39 @@ void __watcall create_areabutton(fform_t *fform,int param_2)
   if (piVar1[2] != -1) {
     control_image_index = get_control_image_index(piVar1[2],0);
     if (*piVar1 == -1) {
-      *piVar1 = *(int *)(xvga_mem_images + control_image_index * 0x20 + 8);
+      *piVar1 = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 8);
     }
     if (piVar1[1] == -1) {
-      piVar1[1] = *(int *)(xvga_mem_images + control_image_index * 0x20 + 0xc);
+      piVar1[1] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
     }
-    check_control_position(param_2,*(int *)fform,*(int *)(fform + 4),*piVar1,piVar1[1]);
-    set_mem_image(0,control_image_index,*(int *)fform + iVar2 / 2,*(int *)(fform + 4) + iVar3 / 2,1)
-    ;
+    check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
+    set_mem_image(0,control_image_index,form->x + iVar2 / 2,form->y + iVar3 / 2,1);
   }
-  check_control_position(param_2,*(int *)fform,*(int *)(fform + 4),*piVar1,piVar1[1]);
+  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
-  pHVar4 = CreateWindowExA(0,s_STATIC_00457264,(LPCSTR)0x0,0x50000000,*(int *)fform,
-                           *(int *)(fform + 4),*piVar1,piVar1[1],xvga_hwnd,(HMENU)param_2,hInstance,
-                           lpParam);
-  *(HWND *)(fform + 0x18) = pHVar4;
+  pHVar4 = CreateWindowExA(0,s_STATIC_00457264,(LPCSTR)0x0,0x50000000,form->x,form->y,*piVar1,
+                           piVar1[1],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+  form->hwnd = pHVar4;
   if (pHVar4 == (HWND)0x0) {
     fatal_exit(s_Unable_to_create_a_window_for_ar_0045726b,param_2);
   }
-  old_areabutton_windowproc = SetWindowLongA(*(HWND *)(fform + 0x18),-4,0x43db25);
-  set_control_state(param_2,*(int *)(fform + 0x10));
+  old_areabutton_windowproc = SetWindowLongA(form->hwnd,-4,0x43db25);
+  set_control_state(param_2,form->state);
   return;
 }
 
 
 /* ==== 0043daa6 draw_help_areabutton ==== */
 
-void __watcall draw_help_areabutton(fform_t *fform)
+void __watcall draw_help_areabutton(form_t *form)
 
 {
   int *control_pointer;
   
-  get_control_index(*(void **)(fform + 0x18));
-  control_pointer = get_control_pointer(*(void **)(fform + 0x18));
-  blt_scr_2_scr(2,0,*(int *)fform,*(int *)(fform + 4),*(int *)fform + *control_pointer,
-                *(int *)(fform + 4) + control_pointer[1],0);
+  get_control_index(form->hwnd);
+  control_pointer = get_control_pointer(form->hwnd);
+  blt_scr_2_scr(2,0,form->x,form->y,form->x + *control_pointer,form->y + control_pointer[1],0);
   return;
 }
 

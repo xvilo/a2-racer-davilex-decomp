@@ -86,30 +86,30 @@ load_static_object(uint param_1,undefined4 param_2,undefined4 param_3,undefined4
     if (param_1 < 0x26) {
       if (param_1 != 0) {
 LAB_00407a10:
-        *(undefined1 **)&racers[object].field_0x20 = &LAB_004080bd;
+        racers[object].field_20 = &LAB_004080bd;
         goto LAB_00407a2b;
       }
-      *(undefined1 **)&racers[object].field_0x20 = &LAB_00408370;
+      racers[object].field_20 = &LAB_00408370;
     }
     else if (param_1 < 0x27) {
-      *(undefined1 **)&racers[object].field_0x20 = &LAB_00408481;
+      racers[object].field_20 = &LAB_00408481;
     }
     else {
-      *(undefined1 **)&racers[object].field_0x20 = &LAB_00408607;
+      racers[object].field_20 = &LAB_00408607;
     }
   }
   else if (param_1 < 0x29) {
-    *(undefined1 **)&racers[object].field_0x20 = &LAB_00408754;
+    racers[object].field_20 = &LAB_00408754;
   }
   else if (param_1 < 0x2a) {
-    *(undefined1 **)&racers[object].field_0x20 = &LAB_004088a5;
+    racers[object].field_20 = &LAB_004088a5;
   }
   else if (param_1 < 0x2b) {
-    *(undefined1 **)&racers[object].field_0x20 = &LAB_004089ef;
+    racers[object].field_20 = &LAB_004089ef;
   }
   else {
     if (param_1 != 0x2b) goto LAB_00407a10;
-    *(undefined1 **)&racers[object].field_0x20 = &LAB_00408b40;
+    racers[object].field_20 = &LAB_00408b40;
   }
   racers[object].needs_update = 1;
 LAB_00407a2b:
@@ -135,10 +135,10 @@ place_static_object_on_road(int param_1,float weg_section_idx,int param_3,int pa
   float fVar1;
   int object;
   int iVar2;
-  int opponent_slot;
+  opponent_t *opponent_slot;
   float *pfVar3;
   float extraout_EDX;
-  int *piVar4;
+  uint *puVar4;
   racer_object_t *racer_object;
   int iVar5;
   float10 fVar6;
@@ -147,7 +147,7 @@ place_static_object_on_road(int param_1,float weg_section_idx,int param_3,int pa
   float local_3c;
   double local_38;
   double local_28;
-  int local_20;
+  uint local_20;
   int local_1c;
   int local_18;
   int local_14;
@@ -168,16 +168,16 @@ place_static_object_on_road(int param_1,float weg_section_idx,int param_3,int pa
   if (*(int *)(&static_object_mesh_ids + iVar2) == -1) {
     debugmsg(s_static_object___d__mesh_not_yet_l_00442dd6,object);
     load_object_mesh(object,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
-    piVar4 = (int *)((int)&racers->anim + local_14);
-    local_20 = *piVar4;
+    puVar4 = (uint *)((int)&racers->anim + local_14);
+    local_20 = *puVar4;
     *(undefined4 *)(&static_object_mesh_ids + iVar2) =
-         *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + piVar4[1] * 4);
+         *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + puVar4[1] * 4);
   }
   else {
     debugmsg(s_static_object___d__allready_load_00442e0a,object);
-    piVar4 = (int *)((int)&racers->anim + local_14);
-    local_20 = *piVar4;
-    *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + piVar4[1] * 4) =
+    puVar4 = (uint *)((int)&racers->anim + local_14);
+    local_20 = *puVar4;
+    *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + puVar4[1] * 4) =
          *(undefined4 *)(&static_object_mesh_ids + iVar2);
   }
   debugmsg(s_done_loading_static_object_00442e38);
@@ -190,10 +190,10 @@ place_static_object_on_road(int param_1,float weg_section_idx,int param_3,int pa
   debugmsg(s_setting_static_object_matrix_00442eb7);
   set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00442ed5);
-  opponent_slot = alloc_opponent_slot();
+  opponent_slot = (opponent_t *)alloc_opponent_slot();
   iVar5 = local_1c;
   racers[object].opponent = opponent_slot;
-  *(undefined1 **)&racers[object].field_0x20 = &LAB_004080bd;
+  racers[object].field_20 = &LAB_004080bd;
   compute_object_bounds(object);
   pfVar3 = (float *)(weg_points + iVar5 * 0x21);
   local_44 = *pfVar3;
@@ -230,19 +230,21 @@ LAB_00407e40:
     break;
   case 3:
     racers[object].field_08 =
-         local_44 - (opponent_data[racers[object].opponent].radius + local_10 * 2.0) * local_50[0];
+         local_44 -
+         (opponent_data[(int)racers[object].opponent].radius + local_10 * 2.0) * local_50[0];
     racers[object].field_0c = 0.0;
     racer_object = racers + object;
-    fVar1 = local_3c - (local_10 * 2.0 + opponent_data[racer_object->opponent].radius) * local_50[2]
-    ;
+    fVar1 = local_3c -
+            (local_10 * 2.0 + opponent_data[(int)racer_object->opponent].radius) * local_50[2];
     goto LAB_00407f01;
   case 4:
     racers[object].field_08 =
-         (opponent_data[racers[object].opponent].radius + local_10 * 2.0) * local_50[0] + local_44;
+         (opponent_data[(int)racers[object].opponent].radius + local_10 * 2.0) * local_50[0] +
+         local_44;
     racers[object].field_0c = 0.0;
     racer_object = racers + object;
-    fVar1 = (local_10 * 2.0 + opponent_data[racer_object->opponent].radius) * local_50[2] + local_3c
-    ;
+    fVar1 = (local_10 * 2.0 + opponent_data[(int)racer_object->opponent].radius) * local_50[2] +
+            local_3c;
 LAB_00407f01:
     racer_object->field_10 = fVar1;
   }
@@ -259,7 +261,7 @@ LAB_0040800c:
       racer_object = racers;
       fVar6 = (fVar6 * (float10)1024.0) / (float10)6.283185307;
       CHP();
-      local_20 = (int)ROUND(fVar6);
+      local_20 = (uint)ROUND(fVar6);
       racer_object[object].field_3f = local_20;
       goto LAB_00407d8d;
     }
@@ -292,10 +294,10 @@ LAB_0040800c:
   racer_object = racers;
   fVar6 = (fVar6 * (float10)1024.0) / (float10)6.283185307;
   CHP();
-  local_20 = (int)ROUND(fVar6);
+  local_20 = (uint)ROUND(fVar6);
   racer_object[object].field_3f = local_20;
 LAB_00407d8d:
-  opponent_data[racers[object].opponent].active = 0;
+  opponent_data[(int)racers[object].opponent].active = 0;
   racers[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00442f13);
   build_object_execute_buffer(object);

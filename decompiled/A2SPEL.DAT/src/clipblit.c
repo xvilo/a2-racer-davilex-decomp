@@ -336,7 +336,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   undefined4 arg12;
   RECT rect;
   int local_34;
-  int mem_image_index;
+  int local_30;
   int local_2c;
   int local_28;
   int local_24;
@@ -349,10 +349,10 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   if ((param_2 < 0) || (max_mem_image_ptr < param_2)) {
     fatal_exit(s__s__d____illegal_array_index__d_0045167c,s_clipblit_cpp_0045166f,0x180,param_2);
   }
-  if (*(int *)(xvga_mem_images + param_2 * 0x20 + 0x1c) == 0) {
+  if (*(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x1c) == 0) {
     fatal_exit(s__s__d____blt_with_unallocated_me_004516ab,s_clipblit_cpp_0045169e,0x183,param_2);
   }
-  if (*(int *)(xvga_mem_images + param_2 * 0x20 + 0x18) == 4) {
+  if (*(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x18) == 4) {
     if (param_1 == 0) {
       local_20 = get_surface_ptr(xvga_screen);
       local_28 = xvga_screen_pitch;
@@ -368,14 +368,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     else {
       fatal_exit(s__s__d____unidentified_focus_erro_004516e5,s_clipblit_cpp_004516d8,0x196,param_1);
     }
-    iVar2 = *(int *)(xvga_mem_images + param_2 * 0x20 + 8);
-    iVar4 = *(int *)(xvga_mem_images + param_2 * 0x20 + 0xc);
+    iVar2 = *(int *)((int)xvga_mem_images + param_2 * 0x20 + 8);
+    iVar4 = *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0xc);
     if ((param_5 & 2U) == 0) {
-      param_3 = param_3 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x10);
-      param_4 = param_4 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x14);
+      param_3 = param_3 - *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x10);
+      param_4 = param_4 - *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x14);
     }
-    mem_image_index = param_2 * 0x20;
-    iVar6 = *(int *)(xvga_mem_images + mem_image_index);
+    local_30 = param_2 * 0x20;
+    iVar6 = *(int *)((int)xvga_mem_images + local_30);
     if ((param_5 & 1U) == 0) {
       iVar1 = iVar2;
       iVar5 = 0;
@@ -439,13 +439,13 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     }
     return;
   }
-  local_14 = *(int *)(xvga_mem_images + param_2 * 0x20 + 8);
-  local_10 = *(int *)(xvga_mem_images + param_2 * 0x20 + 0xc);
+  local_14 = *(int *)((int)xvga_mem_images + param_2 * 0x20 + 8);
+  local_10 = *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0xc);
   local_18 = 0;
   local_1c = 0;
   if ((param_5 & 2U) == 0) {
-    param_3 = param_3 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x10);
-    param_4 = param_4 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x14);
+    param_3 = param_3 - *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x10);
+    param_4 = param_4 - *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x14);
   }
   if (clip_limit_set == 0) {
     fatal_exit(s__s__d____no_clipping_limit_set_00451781,s_clipblit_cpp_00451774,0x22a);
@@ -490,11 +490,11 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   local_2c = param_2 * 0x20;
   rect.top = param_3;
   rect.right = param_4;
-  iVar2 = (**(code **)(**(int **)(xvga_mem_images + local_2c + 4) + 0x60))();
+  iVar2 = (**(code **)(**(int **)((int)xvga_mem_images + local_2c + 4) + 0x60))();
   if (iVar2 != 0) {
     debugmsg(s__s__d____had_to_restore__d_004517af,s_clipblit_cpp_004517a2,0x265,param_2);
-    (**(code **)(**(int **)(xvga_mem_images + mem_image_index + 4) + 0x6c))
-              (*(int **)(xvga_mem_images + mem_image_index + 4));
+    (**(code **)(**(int **)(&xvga_mem_images->field_0x4 + local_30) + 0x6c))
+              (*(int **)(&xvga_mem_images->field_0x4 + local_30));
   }
   if (param_1 == 0) {
     HVar3 = (*xvga_screen->lpVtbl->IsLost)(xvga_screen);
@@ -509,14 +509,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     }
     iVar2 = param_2 * 0x20;
     HVar3 = (*xvga_screen->lpVtbl->Blt)
-                      (xvga_screen,&rect,*(IDirectDrawSurface **)(xvga_mem_images + iVar2 + 4),
+                      (xvga_screen,&rect,*(IDirectDrawSurface **)((int)xvga_mem_images + iVar2 + 4),
                        (RECT *)&stack0xffffffac,0x8000,(DDBLTFX *)0x0);
     if (HVar3 == 0) {
       return;
     }
     dd_error_string_result = dd_error_string(HVar3);
-    arg12 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
-    arg11 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
+    arg12 = *(undefined4 *)((int)xvga_mem_images + iVar2 + 0xc);
+    arg11 = *(undefined4 *)((int)xvga_mem_images + iVar2 + 8);
     arg3 = 0x272;
     arg2 = s_clipblit_cpp_00451840;
     pcVar7 = s__s__d____set_mem_image___d__to_s_0045184d;
@@ -534,14 +534,15 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     }
     iVar2 = param_2 * 0x20;
     HVar3 = (*xvga_back_screen->lpVtbl->Blt)
-                      (xvga_back_screen,&rect,*(IDirectDrawSurface **)(xvga_mem_images + iVar2 + 4),
+                      (xvga_back_screen,&rect,
+                       *(IDirectDrawSurface **)((int)xvga_mem_images + iVar2 + 4),
                        (RECT *)&stack0xffffffac,0x8000,(DDBLTFX *)0x0);
     if (HVar3 == 0) {
       return;
     }
     dd_error_string_result = dd_error_string(HVar3);
-    arg12 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
-    arg11 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
+    arg12 = *(undefined4 *)((int)xvga_mem_images + iVar2 + 0xc);
+    arg11 = *(undefined4 *)((int)xvga_mem_images + iVar2 + 8);
     arg3 = 0x280;
     arg2 = s_clipblit_cpp_0045192b;
     pcVar7 = s__s__d____set_mem_image___d__to_b_00451938;
@@ -563,14 +564,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     iVar2 = param_2 * 0x20;
     HVar3 = (*xvga_buffer_screen->lpVtbl->Blt)
                       (xvga_buffer_screen,&rect,
-                       *(IDirectDrawSurface **)(xvga_mem_images + iVar2 + 4),
+                       *(IDirectDrawSurface **)((int)xvga_mem_images + iVar2 + 4),
                        (RECT *)&stack0xffffffac,0x8000,(DDBLTFX *)0x0);
     if (HVar3 == 0) {
       return;
     }
     dd_error_string_result = dd_error_string(HVar3);
-    arg12 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
-    arg11 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
+    arg12 = *(undefined4 *)((int)xvga_mem_images + iVar2 + 0xc);
+    arg11 = *(undefined4 *)((int)xvga_mem_images + iVar2 + 8);
     arg3 = 0x28b;
     arg2 = s_clipblit_cpp_00451a1f;
     pcVar7 = s__s__d____set_mem_image___d__to_b_00451a2c;
@@ -597,16 +598,16 @@ blt_mem_image(char *param_1,int param_2,int param_3,int param_4,int param_5,int 
   if ((param_2 < 0) || (max_mem_image_ptr < param_2)) {
     fatal_exit(s__s__d____illegal_array_index__d_00451aa0,s_clipblit_cpp_00451a93,0x298,unaff_ESI);
   }
-  if (*(int *)(xvga_mem_images + param_2 * 0x20 + 0x1c) == 0) {
+  if (*(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x1c) == 0) {
     fatal_exit(s__s__d____blt_with_unallocated_me_00451acf,s_clipblit_cpp_00451ac2,0x29b,unaff_ESI);
   }
-  iVar2 = *(int *)(xvga_mem_images + param_2 * 0x20 + 8);
-  iVar4 = *(int *)(xvga_mem_images + param_2 * 0x20 + 0xc);
+  iVar2 = *(int *)((int)xvga_mem_images + param_2 * 0x20 + 8);
+  iVar4 = *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0xc);
   if ((param_6 & 2U) == 0) {
-    param_3 = param_3 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x10);
-    param_4 = param_4 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x14);
+    param_3 = param_3 - *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x10);
+    param_4 = param_4 - *(int *)((int)xvga_mem_images + param_2 * 0x20 + 0x14);
   }
-  iVar5 = *(int *)(xvga_mem_images + param_2 * 0x20);
+  iVar5 = *(int *)((int)xvga_mem_images + param_2 * 0x20);
   if ((param_6 & 1U) == 0) {
     iVar3 = 0;
     iVar1 = iVar2;

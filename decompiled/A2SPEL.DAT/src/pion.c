@@ -11,7 +11,6 @@ undefined4 __watcall collide_racer_with_road_edge(int opponent_index)
   bool bVar3;
   int iVar4;
   int iVar5;
-  int weg_section_idx;
   float afStack_98 [10];
   float afStack_70 [14];
   int local_38;
@@ -22,6 +21,7 @@ undefined4 __watcall collide_racer_with_road_edge(int opponent_index)
   int local_20;
   float local_1c;
   opponent_t *opponent;
+  uint weg_section_idx;
   
   opponent = opponent_data;
   weg_section_idx = opponent_data[opponent_index].chunk;
@@ -32,11 +32,11 @@ undefined4 __watcall collide_racer_with_road_edge(int opponent_index)
   do {
     local_38 = weg_sections[weg_section_idx].point * 0x21;
     *(float *)((int)afStack_70 + iVar5) =
-         *(float *)((int)opponent_data->world_corners + iVar5 + local_20) -
+         *(float *)(&opponent_data->field_0x58 + iVar5 + local_20) -
          *(float *)(weg_points + local_38);
     iVar4 = iVar5 + 0xc;
     *(float *)((int)afStack_70 + iVar5 + 8) =
-         *(float *)((int)opponent_data->world_corners + iVar5 + local_20 + 8) -
+         *(float *)(&opponent_data->field_0x60 + iVar5 + local_20) -
          *(float *)(weg_sections[weg_section_idx].point * 0x21 + weg_points + 8);
     iVar5 = iVar4;
   } while (iVar4 != 0x30);
@@ -48,30 +48,30 @@ undefined4 __watcall collide_racer_with_road_edge(int opponent_index)
              -fVar2 * opponent_data[opponent_index].offset_x;
   local_1c = local_2c;
   if (local_2c != 0.0) {
-    weg_section_idx = 0;
+    iVar5 = 0;
     do {
-      iVar5 = weg_section_idx + 0xc;
-      *(float *)((int)afStack_98 + weg_section_idx) =
-           ABS(-fVar2 * *(float *)((int)afStack_70 + weg_section_idx) +
-               fVar1 * *(float *)((int)afStack_70 + weg_section_idx + 8));
-      weg_section_idx = iVar5;
-    } while (iVar5 != 0x30);
+      iVar4 = iVar5 + 0xc;
+      *(float *)((int)afStack_98 + iVar5) =
+           ABS(-fVar2 * *(float *)((int)afStack_70 + iVar5) +
+               fVar1 * *(float *)((int)afStack_70 + iVar5 + 8));
+      iVar5 = iVar4;
+    } while (iVar4 != 0x30);
     if (opponent_data[opponent_index].direction == 1) {
       local_1c = -local_1c;
       local_2c = -local_2c;
     }
-    weg_section_idx = 0;
+    iVar5 = 0;
     do {
-      if (120.0 < *(float *)((int)afStack_98 + weg_section_idx) + local_1c) {
+      if (120.0 < *(float *)((int)afStack_98 + iVar5) + local_1c) {
         bVar3 = true;
-        local_1c = 120.0 - *(float *)((int)afStack_98 + weg_section_idx);
+        local_1c = 120.0 - *(float *)((int)afStack_98 + iVar5);
       }
-      if (*(float *)((int)afStack_98 + weg_section_idx) + local_1c < 5.0) {
+      if (*(float *)((int)afStack_98 + iVar5) + local_1c < 5.0) {
         bVar3 = true;
-        local_1c = 5.0 - *(float *)((int)afStack_98 + weg_section_idx);
+        local_1c = 5.0 - *(float *)((int)afStack_98 + iVar5);
       }
-      weg_section_idx = weg_section_idx + 0xc;
-    } while (weg_section_idx != 0x30);
+      iVar5 = iVar5 + 0xc;
+    } while (iVar5 != 0x30);
     if (bVar3) {
       opponent_data[opponent_index].offset_x =
            opponent_data[opponent_index].offset_x * (local_1c / local_2c);
@@ -107,7 +107,6 @@ void __watcall collide_player_with_track_ends(void)
   bool bVar3;
   int iVar4;
   int iVar5;
-  int weg_section_idx;
   float local_94 [12];
   float afStack_64 [15];
   uint local_28;
@@ -116,20 +115,21 @@ void __watcall collide_player_with_track_ends(void)
   float local_1c;
   float local_18;
   opponent_t *opponent;
+  uint weg_section_idx;
   
   opponent = opponent_data;
   weg_section_idx = opponent_data->chunk;
   bVar3 = false;
   local_28 = weg_sections[weg_section_idx].heading;
-  if ((weg_section_idx < 6) || (weg_chunk_count + -6 <= weg_section_idx)) {
+  if (((int)weg_section_idx < 6) || (weg_chunk_count + -6 <= (int)weg_section_idx)) {
     iVar5 = 0;
     do {
       *(float *)((int)local_94 + iVar5) =
-           *(float *)((int)opponent_data->world_corners + iVar5) -
+           *(float *)(&opponent_data->field_0x58 + iVar5) -
            *(float *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
       iVar4 = iVar5 + 0xc;
       *(float *)((int)local_94 + iVar5 + 8) =
-           *(float *)((int)opponent_data->world_corners + iVar5 + 8) -
+           *(float *)(&opponent_data->field_0x60 + iVar5) -
            *(float *)(weg_sections[weg_section_idx].point * 0x21 + weg_points + 8);
       iVar5 = iVar4;
     } while (iVar4 != 0x30);
@@ -140,33 +140,33 @@ void __watcall collide_player_with_track_ends(void)
     local_24 = fVar2 * opponent_data->offset_z + fVar1 * opponent_data->offset_x;
     local_18 = local_24;
     if (local_24 != 0.0) {
-      weg_section_idx = 0;
+      iVar5 = 0;
       do {
-        iVar5 = weg_section_idx + 0xc;
-        *(float *)((int)afStack_64 + weg_section_idx) =
-             ABS(fVar1 * *(float *)((int)local_94 + weg_section_idx) +
-                 fVar2 * *(float *)((int)local_94 + weg_section_idx + 8));
-        weg_section_idx = iVar5;
-      } while (iVar5 != 0x30);
+        iVar4 = iVar5 + 0xc;
+        *(float *)((int)afStack_64 + iVar5) =
+             ABS(fVar1 * *(float *)((int)local_94 + iVar5) +
+                 fVar2 * *(float *)((int)local_94 + iVar5 + 8));
+        iVar5 = iVar4;
+      } while (iVar4 != 0x30);
       if (opponent_data->direction == 1) {
-        weg_section_idx = 0;
+        iVar5 = 0;
         do {
-          if (*(float *)((int)afStack_64 + weg_section_idx) + local_18 < 1.0) {
+          if (*(float *)((int)afStack_64 + iVar5) + local_18 < 1.0) {
             bVar3 = true;
-            local_18 = 1.0 - *(float *)((int)afStack_64 + weg_section_idx);
+            local_18 = 1.0 - *(float *)((int)afStack_64 + iVar5);
           }
-          weg_section_idx = weg_section_idx + 0xc;
-        } while (weg_section_idx != 0x30);
+          iVar5 = iVar5 + 0xc;
+        } while (iVar5 != 0x30);
       }
       else {
-        weg_section_idx = 0;
+        iVar5 = 0;
         do {
-          if (59.0 < *(float *)((int)afStack_64 + weg_section_idx) + local_18) {
+          if (59.0 < *(float *)((int)afStack_64 + iVar5) + local_18) {
             bVar3 = true;
-            local_18 = 59.0 - *(float *)((int)afStack_64 + weg_section_idx);
+            local_18 = 59.0 - *(float *)((int)afStack_64 + iVar5);
           }
-          weg_section_idx = weg_section_idx + 0xc;
-        } while (weg_section_idx != 0x30);
+          iVar5 = iVar5 + 0xc;
+        } while (iVar5 != 0x30);
       }
       if (bVar3) {
         opponent_data->offset_x = opponent_data->offset_x * (local_18 / local_24);
@@ -346,7 +346,8 @@ void __watcall collide_with_pionnen(int opponent_index)
     fatal_exit(s__s__d____No_pion_objects_allocat_00446a50,s_pion_cpp_00446a47,0xdb);
   }
   opponent = opponent_data;
-  if ((opponent_data[opponent_index].chunk != -1) && (opponent_data[opponent_index].lane != -1)) {
+  if ((opponent_data[opponent_index].chunk != 0xffffffff) &&
+     (opponent_data[opponent_index].lane != 0xffffffff)) {
     local_1c = 0;
     for (i = 0; i < pion_count; i = i + 1) {
       puVar1 = (undefined4 *)(pionnen + local_1c);
@@ -359,17 +360,17 @@ void __watcall collide_with_pionnen(int opponent_index)
           j = puVar1[10];
           random = rand();
           racer_object[j].field_3f = racer_object[j].field_3f + (random & 0xf);
-          racers[puVar1[10]].field_3f = racers[puVar1[10]].field_3f % 0x400;
+          racers[puVar1[10]].field_3f = (int)racers[puVar1[10]].field_3f % 0x400;
           racer_object = racers;
           j = puVar1[10];
           random = rand();
           racer_object[j].field_3b = racer_object[j].field_3b + (random & 0xf);
-          racers[puVar1[10]].field_3b = racers[puVar1[10]].field_3b % 0x400;
+          racers[puVar1[10]].field_3b = (int)racers[puVar1[10]].field_3b % 0x400;
           racer_object = racers;
           j = puVar1[10];
           random = rand();
           racer_object[j].field_43 = racer_object[j].field_43 + (random & 0xf);
-          racers[puVar1[10]].field_43 = racers[puVar1[10]].field_43 % 0x400;
+          racers[puVar1[10]].field_43 = (int)racers[puVar1[10]].field_43 % 0x400;
         }
         if (racers[puVar1[10]].field_0c <= 0.0) {
           racers[puVar1[10]].needs_update = -1;
@@ -492,7 +493,7 @@ void __watcall update_pionnen(void)
   iVar2 = 0x100;
   collide_with_pionnen(0);
   for (opponent_index = 1; opponent_index < opponents_used; opponent_index = opponent_index + 1) {
-    iVar1 = *(int *)((int)opponent_data->local_corners + iVar2 + 0x5c);
+    iVar1 = *(int *)((int)&opponent_data->field_e4 + iVar2);
     if ((iVar1 == 3) || (iVar1 == 4)) {
       collide_with_pionnen(opponent_index);
     }
@@ -542,7 +543,7 @@ load_pion_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 pa
   debugmsg(s_setting_static_object_matrix_00446bd6);
   set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00446bf4);
-  *(undefined **)&racers[object].field_0x20 = &DAT_004140f4;
+  racers[object].field_20 = &DAT_004140f4;
   debugmsg(s_setting_static_object_position_00446c12);
   racers[object].field_08 = param_5;
   racers[object].field_0c = (float)param_7 + 0.1;

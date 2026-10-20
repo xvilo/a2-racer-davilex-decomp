@@ -34,10 +34,10 @@ void __watcall add_anim_base(anim_t *anim)
   i = 0;
   iVar3 = 0;
   do {
-    if (*(int *)anim <= i) {
+    if (anim->field_00 <= i) {
       return;
     }
-    iVar1 = *(int *)(iVar3 + 4 + *(int *)(anim + 8));
+    iVar1 = *(int *)(iVar3 + 4 + anim->field_08);
     for (iVar2 = 0; iVar2 < anim_base_ptr * 4; iVar2 = iVar2 + 4) {
       if (iVar1 == *(int *)((int)&anim_base + iVar2)) goto LAB_00416fa1;
     }
@@ -56,7 +56,7 @@ void __watcall add_array_to_anim_base(anim_t *anim,long *param_2)
 
 {
   for (; *param_2 != -1; param_2 = param_2 + 1) {
-    add_anim_base(anim + *param_2 * 0xc);
+    add_anim_base((anim_t *)(&anim->field_00 + *param_2 * 3));
   }
   return;
 }
@@ -68,21 +68,20 @@ void __watcall add_demi_array_to_anim_base(anim_t *anim,long *param_2)
 
 {
   int iVar1;
+  int iVar2;
   uint i;
   undefined4 unaff_ESI;
-  int anim_index;
   
-  for (; *param_2 != -1; param_2 = param_2 + 1) {
-    anim_index = *param_2 * 0xc;
-    iVar1 = 0;
-    for (i = 0; (int)i < *(int *)(anim + anim_index); i = i + 1) {
+  for (; iVar1 = *param_2, iVar1 != -1; param_2 = param_2 + 1) {
+    iVar2 = 0;
+    for (i = 0; (int)i < (&anim->field_00)[iVar1 * 3]; i = i + 1) {
       if ((i & 1) == 0) {
-        unaff_ESI = *(undefined4 *)(iVar1 + 4 + *(int *)(anim + anim_index + 8));
+        unaff_ESI = *(undefined4 *)(iVar2 + 4 + (&anim->field_00 + iVar1 * 3)[2]);
       }
-      *(undefined4 *)(iVar1 + 4 + *(int *)(anim + anim_index + 8)) = unaff_ESI;
-      iVar1 = iVar1 + 8;
+      *(undefined4 *)(iVar2 + 4 + (&anim->field_08)[iVar1 * 3]) = unaff_ESI;
+      iVar2 = iVar2 + 8;
     }
-    add_anim_base(anim + *param_2 * 0xc);
+    add_anim_base((anim_t *)(&anim->field_00 + *param_2 * 3));
   }
   return;
 }

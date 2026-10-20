@@ -73,7 +73,7 @@ void __watcall draw_speed_indicator(void)
       frame_val = 0x27;
     }
   }
-  frame_val = *(int *)(*(int *)(xvga_anims + unaff_ESI * 0xc + 8) + 4 + frame_val * 8);
+  frame_val = *(int *)((&xvga_anims->field_08)[unaff_ESI * 3] + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   set_mem_image(dashboard_surface,frame_val,unaff_EBX,unaff_ECX,2);
   return;
@@ -112,7 +112,7 @@ void __watcall draw_fuel_warning(void)
       frame_val = 0x13;
     }
   }
-  frame_val = *(int *)(*(int *)(xvga_anims + unaff_ESI * 0xc + 8) + 4 + frame_val * 8);
+  frame_val = *(int *)((&xvga_anims->field_08)[unaff_ESI * 3] + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   set_mem_image(dashboard_surface,frame_val,unaff_EBX,unaff_ECX,2);
   return;
@@ -157,8 +157,8 @@ void __watcall draw_race_position(void)
   if (5 < i) {
     i = 5;
   }
-  i = *(int *)(*(int *)(xvga_anims + unaff_EBP * 0xc + 8) + 4 + i * 8);
-  iVar1 = *(int *)(*(int *)(xvga_anims + local_1c * 0xc + 8) + 4);
+  i = *(int *)((&xvga_anims->field_08)[unaff_EBP * 3] + 4 + i * 8);
+  iVar1 = *(int *)((&xvga_anims->field_08)[local_1c * 3] + 4);
   check_dashboard_frame(i);
   set_mem_image(dashboard_surface,i,unaff_EBX,unaff_ECX,0);
   set_mem_image(dashboard_surface,iVar1,unaff_ESI,unaff_EDI,2);
@@ -220,7 +220,7 @@ void __watcall draw_time_left(void)
     iStack_2c = 0xf;
     iStack_3c = 0x10;
   }
-  frame_val = *(int *)(*(int *)(xvga_anims + iStack_2c * 0xc + 8) + 4);
+  frame_val = *(int *)((&xvga_anims->field_08)[iStack_2c * 3] + 4);
   check_dashboard_frame(frame_val);
   set_mem_image(dashboard_surface,frame_val,iStack_38,iStack_48,2);
   frame_val = iVar3 * 8;
@@ -228,36 +228,35 @@ void __watcall draw_time_left(void)
   iVar4 = iVar4 * 8;
   iVar8 = iVar5 * 8;
   iVar2 = (iVar2 + iVar5 * -10) * 8;
-  iVar5 = iStack_3c * 0xc;
   if (screen_resolution == 0) {
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + 4 + iVar8),unaff_EDI
-                  ,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + iVar2 + 4),
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + 4 + iVar8),
+                  unaff_EDI,unaff_ESI,0);
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + iVar2 + 4),
                   unaff_EDI + 0x14,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + iVar4 + 4),
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + iVar4 + 4),
                   unaff_EDI + 0x39,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + iVar7 + 4),
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + iVar7 + 4),
                   unaff_EDI + 0x4e,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + frame_val + 4),
-                  unaff_EDI + 0x71,unaff_ESI,0);
-    iVar5 = *(int *)(xvga_anims + iVar5 + 8);
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + frame_val + 4)
+                  ,unaff_EDI + 0x71,unaff_ESI,0);
+    iVar5 = (&xvga_anims->field_08)[iStack_3c * 3];
     iVar2 = unaff_EDI + 0x86;
   }
   else {
     if (screen_resolution != 1) {
       return;
     }
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + 4 + iVar8),unaff_EDI
-                  ,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + iVar2 + 4),
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + 4 + iVar8),
+                  unaff_EDI,unaff_ESI,0);
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + iVar2 + 4),
                   unaff_EDI + 10,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + iVar4 + 4),
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + iVar4 + 4),
                   unaff_EDI + 0x1a,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + iVar7 + 4),
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + iVar7 + 4),
                   unaff_EDI + 0x24,unaff_ESI,0);
-    set_mem_image(dashboard_surface,*(int *)(*(int *)(xvga_anims + iVar5 + 8) + frame_val + 4),
-                  unaff_EDI + 0x34,unaff_ESI,0);
-    iVar5 = *(int *)(xvga_anims + iVar5 + 8);
+    set_mem_image(dashboard_surface,*(int *)((&xvga_anims->field_08)[iStack_3c * 3] + frame_val + 4)
+                  ,unaff_EDI + 0x34,unaff_ESI,0);
+    iVar5 = (&xvga_anims->field_08)[iStack_3c * 3];
     iVar2 = unaff_EDI + 0x3e;
   }
   set_mem_image(dashboard_surface,*(int *)(iVar5 + (iVar6 + iVar3 * -10) * 8 + 4),iVar2,unaff_ESI,0)
@@ -293,8 +292,8 @@ void __watcall draw_money(void)
   iVar3 = (money / 1000) * 8;
   iVar4 = (iVar4 / 10) * 8;
   if (screen_resolution == 0) {
-    local_2c = *(int *)(*(int *)(xvga_anims + 0x164) + 4);
-    iVar1 = *(int *)(xvga_anims + 0xb0);
+    local_2c = *(int *)(xvga_anims->field_164 + 4);
+    iVar1 = xvga_anims->field_b0;
     local_28 = *(int *)(iVar3 + 4 + iVar1);
     unaff_EDI = 0x42;
     local_3c = *(int *)(iVar2 + 4 + iVar1);
@@ -306,8 +305,8 @@ void __watcall draw_money(void)
     unaff_EBP = 0x14;
   }
   else if (screen_resolution == 1) {
-    local_2c = *(int *)(*(int *)(xvga_anims + 0x170) + 4);
-    iVar1 = *(int *)(xvga_anims + 200);
+    local_2c = *(int *)(xvga_anims->field_170 + 4);
+    iVar1 = xvga_anims->field_c8;
     local_28 = *(int *)(iVar3 + 4 + iVar1);
     unaff_EDI = 0x25;
     local_3c = *(int *)(iVar2 + 4 + iVar1);
@@ -348,7 +347,7 @@ void __watcall draw_speedometer(void)
       frame_val = 0x27;
     }
   }
-  frame_val = *(int *)(*(int *)(xvga_anims + 0x14) + 4 + frame_val * 8);
+  frame_val = *(int *)(xvga_anims->field_14 + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   if (frame_val == DAT_00458c08) {
     if (dashboard_redraw_state == 2) {
@@ -386,7 +385,7 @@ void __watcall draw_rev_counter(void)
       frame_val = 0x13;
     }
   }
-  frame_val = *(int *)(*(int *)(xvga_anims + 0x20) + 4 + frame_val * 8);
+  frame_val = *(int *)(xvga_anims->field_20 + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   if (frame_val == DAT_00458c0c) {
     if (dashboard_redraw_state == 2) {
@@ -424,7 +423,7 @@ void __watcall draw_fuel_gauge(void)
       frame_val = 0x13;
     }
   }
-  frame_val = *(int *)(*(int *)(xvga_anims + 0x2c) + 4 + frame_val * 8);
+  frame_val = *(int *)(xvga_anims->field_2c + 4 + frame_val * 8);
   check_dashboard_frame(frame_val);
   if (frame_val == DAT_00458c14) {
     if (dashboard_redraw_state == 2) {
@@ -448,7 +447,7 @@ void __watcall draw_dashboard_panel(void)
 {
   int frame;
   
-  frame = *(int *)(*(int *)(xvga_anims + 8) + 4);
+  frame = *(int *)(xvga_anims->field_08 + 4);
   check_dashboard_frame(frame);
   set_mem_image(dashboard_surface,frame,0,0x10b,2);
   return;
@@ -464,7 +463,7 @@ void __watcall draw_steering_wheel(void)
 {
   int frame;
   
-  frame = *(int *)(*(int *)(xvga_anims + 0x38) + 4 + (steering_position / 2) * 8);
+  frame = *(int *)(xvga_anims->field_38 + 4 + (steering_position / 2) * 8);
   check_dashboard_frame(frame);
   if (frame != DAT_00458c10) {
     dashboard_redraw_state = 0;

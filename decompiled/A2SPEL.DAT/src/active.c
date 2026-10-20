@@ -74,7 +74,7 @@ void __watcall update_active_opponent_list(int param_1,int param_2)
       nearby_opponent_count = j;
       return;
     }
-    if (*(int *)((int)opponent_data->local_corners + iVar2 + 0x60) != 0) {
+    if (*(int *)((int)&opponent_data->active + iVar2) != 0) {
       opponent_chunk = get_opponent_chunk(s_active_cpp_00446893,0x67,opponent_index);
       uVar4 = *opponent_chunk - iVar1 >> 0x1f;
       iVar3 = (*opponent_chunk - iVar1 ^ uVar4) - uVar4;

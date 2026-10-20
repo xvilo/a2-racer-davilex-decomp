@@ -464,36 +464,36 @@ undefined4 __watcall drive_racer(int param_1)
   longlong lVar3;
   opponent_t *opponent;
   uint uVar4;
-  int i;
   int iVar5;
   undefined4 uVar6;
-  int j;
+  int i;
   uint uVar7;
-  int k;
+  int j;
   int extraout_EDX;
   int extraout_EDX_00;
   int extraout_EDX_01;
+  uint uVar8;
   int extraout_EDX_02;
   int opponent_index;
-  int *piVar8;
   int *piVar9;
-  float10 fVar10;
-  char *pcVar11;
+  int *piVar10;
+  float10 fVar11;
+  char *pcVar12;
   int local_d8 [11];
   int local_ac [11];
   int local_80 [6];
   int classify_lane_occupant_result [4];
   uint classify_lane_occupant_result_2;
   uint local_54;
-  int local_50;
-  int local_4c;
-  int local_48;
+  uint local_50;
+  uint local_4c;
+  uint local_48;
   int local_3c;
   int local_38;
-  int local_34;
-  int local_30;
+  uint local_34;
+  uint local_30;
   int local_2c;
-  int local_28;
+  uint local_28;
   int local_24;
   int local_20;
   opponent_t *opponent_2;
@@ -504,20 +504,20 @@ undefined4 __watcall drive_racer(int param_1)
   if (*(int *)(param_1 * 0x1c + 0xc + driver_list) == 0) {
     fatal_exit(s__s__d__Cannot_drive_unassigned_d_00444780,s_driver_cpp_00444775,0x20f,param_1);
   }
-  piVar8 = (int *)(driver_list + param_1 * 0x1c);
-  opponent = opponent_data + *piVar8;
-  piVar9 = (int *)(driver_path_data + piVar8[5] * 0x18);
+  piVar9 = (int *)(driver_list + param_1 * 0x1c);
+  opponent = opponent_data + *piVar9;
+  piVar10 = (int *)(driver_path_data + piVar9[5] * 0x18);
   local_28 = opponent->lane;
   opponent_2 = opponent;
-  debugmsg(s_Driving_car___03d_OppIndex____03_004447ab,param_1,*piVar8,local_28,opponent->chunk,
+  debugmsg(s_Driving_car___03d_OppIndex____03_004447ab,param_1,*piVar9,local_28,opponent->chunk,
            opponent->direction,(double)opponent->speed,(double)opponent->max_speed,
-           (double)(float)piVar8[2],piVar8[1],opponent->chunk);
+           (double)(float)piVar9[2],piVar9[1],opponent->chunk);
   uVar4 = opponent->chunk - opponent->waypoint;
   uVar7 = (int)uVar4 >> 0x1f;
   if (2 < (int)((uVar4 ^ uVar7) - uVar7)) {
     debugmsg(s_ILLEGAL_WAYPOINT_FOUND__0044484b);
   }
-  opponent_index = local_28;
+  uVar4 = local_28;
   if (opponent_2->direction == 1) {
     local_30 = 0;
     local_34 = 3;
@@ -528,63 +528,63 @@ undefined4 __watcall drive_racer(int param_1)
     local_30 = 10;
     local_34 = 7;
   }
-  iVar5 = local_2c;
-  i = local_28 + local_2c;
-  local_4c = i;
+  opponent_index = local_2c;
+  uVar7 = local_28 + local_2c;
+  local_4c = uVar7;
   debugmsg(s_Checking_state_of_police____00444864);
-  local_48 = opponent_index - iVar5;
+  local_48 = uVar4 - opponent_index;
   local_50 = local_28;
-  if (*piVar9 == 0) {
+  if (*piVar10 == 0) {
     debugmsg(s_Car_is_on_stake_out____00444881);
     opponent_index = 0;
     local_3c = 0;
     opponent_2->max_speed = 0.0;
     local_20 = 0;
-    i = scan_lanes_for_heading(opponent_2->chunk,6,opponent_2->direction,local_80);
+    uVar7 = scan_lanes_for_heading(opponent_2->chunk,6,opponent_2->direction,local_80);
     for (; iVar5 = local_3c, local_3c < 6; local_3c = local_3c + 1) {
       if (*(int *)((int)local_80 + opponent_index) != 0) {
-        piVar9[2] = 0;
-        i = (int)opponent_data->world_corners + local_20 + -0x58;
+        piVar10[2] = 0;
+        i = (int)&opponent_data->car_type + local_20;
         fVar1 = *(float *)(i + 0x10);
-        i = CONCAT22((short)((uint)i >> 0x10),
-                     (ushort)(fVar1 < 9.0) << 8 | (ushort)NAN(fVar1) << 10 |
-                     (ushort)(fVar1 == 9.0) << 0xe);
+        uVar7 = CONCAT22((short)((uint)i >> 0x10),
+                         (ushort)(fVar1 < 9.0) << 8 | (ushort)NAN(fVar1) << 10 |
+                         (ushort)(fVar1 == 9.0) << 0xe);
         if (fVar1 >= 9.0 && (fVar1 == 9.0) == 0) {
-          piVar9[2] = 1;
+          piVar10[2] = 1;
         }
-        if (piVar9[2] != 0) {
-          j = 0;
+        if (piVar10[2] != 0) {
           i = 0;
-          for (k = 0; k < DAT_00475154; k = k + 1) {
-            if (k == *(int *)(i + 4 + driver_path_data)) {
-              j = j + 1;
+          uVar7 = 0;
+          for (j = 0; j < DAT_00475154; j = j + 1) {
+            if (j == *(int *)(uVar7 + 4 + driver_path_data)) {
+              i = i + 1;
             }
-            i = i + 0x18;
+            uVar7 = uVar7 + 0x18;
           }
-          if (j < 2) {
+          if (i < 2) {
             if (local_3c == 0) {
               uVar4 = rand();
-              i = (int)uVar4 / 3;
+              uVar7 = (int)uVar4 / 3;
               if ((int)uVar4 % 3 != 0) {
 LAB_0040db8f:
-                *piVar9 = 1;
-                piVar9[1] = iVar5;
-                fVar10 = (float10)(float)piVar8[2];
+                *piVar10 = 1;
+                piVar10[1] = iVar5;
+                fVar11 = (float10)(float)piVar9[2];
                 CHP();
-                piVar9[4] = (int)ROUND(fVar10);
-                piVar9[5] = piVar8[1];
-                opponent_2->max_speed = (float)piVar8[2];
+                piVar10[4] = (int)ROUND(fVar11);
+                piVar10[5] = piVar9[1];
+                opponent_2->max_speed = (float)piVar9[2];
                 return opponent_2;
               }
             }
             else {
-              i = piVar8[5] / 2;
-              lVar3 = (longlong)piVar8[5] % 2;
+              uVar7 = piVar9[5] / 2;
+              lVar3 = (longlong)piVar9[5] % 2;
               if ((int)lVar3 == 0) {
                 uVar4 = rand();
-                j = CONCAT31((int3)((ulonglong)lVar3 >> 8),uVar4 == 0);
-                i = j / 3;
-                if ((j % 3 != 0) && (race_state == 0)) goto LAB_0040db8f;
+                i = CONCAT31((int3)((ulonglong)lVar3 >> 8),uVar4 == 0);
+                uVar7 = i / 3;
+                if ((i % 3 != 0) && (race_state == 0)) goto LAB_0040db8f;
               }
             }
           }
@@ -594,40 +594,40 @@ LAB_0040db8f:
       local_20 = local_20 + 0x100;
     }
   }
-  if (*piVar9 == 0) {
-    return i;
+  if (*piVar10 == 0) {
+    return uVar7;
   }
-  scan_lanes_ahead(local_ac,local_d8,*piVar8,opponent_2->chunk,9,3,opponent_2->direction);
+  scan_lanes_ahead(local_ac,local_d8,*piVar9,opponent_2->chunk,9,3,opponent_2->direction);
   opponent = opponent_data;
-  if (*piVar9 == 1) {
-    opponent_index = piVar9[1];
+  if (*piVar10 == 1) {
+    opponent_index = piVar10[1];
     if ((opponent_data[opponent_index].chunk == opponent_2->chunk) ||
        (i = local_2c * opponent_data[opponent_index].chunk, iVar5 = local_2c * opponent_2->chunk,
        i - iVar5 != 0 && iVar5 <= i)) {
-      piVar8[2] = (int)(float)piVar9[4];
-      piVar8[1] = opponent[opponent_index].lane;
+      piVar9[2] = (int)(float)piVar10[4];
+      piVar9[1] = opponent[opponent_index].lane;
     }
     else if (opponent_data[opponent_index].lane == opponent_2->lane) {
       fVar1 = opponent_data[opponent_index].speed + -1.0;
-      piVar8[2] = (int)fVar1;
+      piVar9[2] = (int)fVar1;
       if (fVar1 < 0.0) {
-        piVar8[2] = 0;
+        piVar9[2] = 0;
       }
-      piVar8[1] = opponent[opponent_index].lane;
+      piVar9[1] = opponent[opponent_index].lane;
       uVar4 = opponent_2->chunk - opponent[opponent_index].chunk;
       uVar7 = (int)uVar4 >> 0x1f;
       if ((int)((uVar4 ^ uVar7) - uVar7) < 2) {
-        if (piVar9[1] == 0) {
+        if (piVar10[1] == 0) {
           set_race_state(4);
         }
         else {
           *(int *)(*(int *)(driver_list + 0x14 + opponent[opponent_index].field_e0 * 0x1c) * 0xc +
-                   driver_lane_data + 4) = *piVar8;
+                   driver_lane_data + 4) = *piVar9;
           *(undefined4 *)
            (driver_lane_data + 8 +
            *(int *)(driver_list + 0x14 + opponent[opponent_index].field_e0 * 0x1c) * 0xc) = 100;
         }
-        opponent_index = piVar9[1];
+        opponent_index = piVar10[1];
         iVar5 = 0;
         for (i = 0; i < DAT_00475154; i = i + 1) {
           if (opponent_index == ((undefined4 *)(driver_path_data + iVar5))[1]) {
@@ -657,8 +657,8 @@ LAB_0040db8f:
         opponent_2->max_speed = 0.0;
         return uVar6;
       }
-      piVar8[2] = (int)opponent_data[opponent_index].speed;
-      piVar8[1] = opponent[opponent_index].lane;
+      piVar9[2] = (int)opponent_data[opponent_index].speed;
+      piVar9[1] = opponent[opponent_index].lane;
       if (opponent_2->max_speed < 0.0) {
         opponent_2->max_speed = 0.0;
       }
@@ -686,15 +686,15 @@ LAB_0040db8f:
                          ((int)opponent_2,(int)local_ac,(int)local_d8,local_48,
                           classify_lane_occupant_result + 2);
   }
-  if (*piVar9 == 2) {
+  if (*piVar10 == 2) {
     if (local_50 != local_30) {
       opponent_2->target_lane = local_30;
-      piVar9[3] = 0x15e;
+      piVar10[3] = 0x15e;
       return local_50;
     }
-    if (piVar9[3] != 0) {
+    if (piVar10[3] != 0) {
       opponent_2->max_speed = opponent_2->max_speed * 0.99;
-      piVar9[3] = piVar9[3] + -1;
+      piVar10[3] = piVar10[3] + -1;
       if (1 < classify_lane_occupant_result[3]) {
         return opponent_2;
       }
@@ -702,7 +702,7 @@ LAB_0040db8f:
       return opponent_2;
     }
     opponent_2->max_speed = 0.0;
-    *piVar9 = 0;
+    *piVar10 = 0;
     return opponent_2;
   }
   debugmsg(s_Using__EMPTY_LANE__tactic____00444899);
@@ -712,34 +712,34 @@ LAB_0040db8f:
         uVar4 = classify_lane_occupant_result_2 ^ classify_lane_occupant_result[3];
       }
       else {
-        uVar4 = piVar8[1] - local_50;
+        uVar4 = piVar9[1] - local_50;
         uVar7 = (int)uVar4 >> 0x1f;
         debugmsg(s_Both_lanes_of_equal_status_004448b7);
         if ((int)((uVar4 ^ uVar7) - uVar7) <= extraout_EDX_00) {
-          pcVar11 = s_Current_lane_is_closer_to_prefer_00444903;
+          pcVar12 = s_Current_lane_is_closer_to_prefer_00444903;
           goto override_prt_40e043_11e5dad1;
         }
-        pcVar11 = s_Other_lane_is_closer_to_preferre_004448d3;
+        pcVar12 = s_Other_lane_is_closer_to_preferre_004448d3;
 override_prt_40e007_11e5dad1:
-        debugmsg(pcVar11);
+        debugmsg(pcVar12);
         opponent_2->target_lane = local_4c;
         uVar4 = 1;
       }
     }
     else {
       if (classify_lane_occupant_result[3] < (int)classify_lane_occupant_result_2) {
-        pcVar11 = s_SWITCHING_to_other_lane____00444933;
+        pcVar12 = s_SWITCHING_to_other_lane____00444933;
         goto override_prt_40e007_11e5dad1;
       }
-      pcVar11 = s_STAYING_in_current_lane____0044494f;
+      pcVar12 = s_STAYING_in_current_lane____0044494f;
 override_prt_40e043_11e5dad1:
-      debugmsg(pcVar11);
+      debugmsg(pcVar12);
       uVar4 = 0;
     }
     if (1 < classify_lane_occupant_result[uVar4 + 3]) {
       debugmsg(s_Speeding_00444979);
 LAB_0040e089:
-      opponent_2->max_speed = (float)piVar8[2];
+      opponent_2->max_speed = (float)piVar9[2];
       goto LAB_0040e096;
     }
     debugmsg(s_Slowing_down_0044496b);
@@ -751,58 +751,58 @@ LAB_0040e089:
     if ((classify_lane_occupant_result[3] < (int)classify_lane_occupant_result_2) ||
        (classify_lane_occupant_result[3] < (int)local_54)) {
       debugmsg(s_One_of_the_other_lanes_is_best___004449cb);
-      opponent_index = local_48;
+      uVar4 = local_48;
       if (local_54 == classify_lane_occupant_result_2) {
         if ((int)local_54 < 2) {
           opponent_2->max_speed = *(float *)(classify_lane_occupant_result[0] + 0x10);
         }
         else {
-          uVar4 = piVar8[1] - local_4c;
-          uVar7 = (int)uVar4 >> 0x1f;
+          uVar7 = piVar9[1] - local_4c;
+          uVar8 = (int)uVar7 >> 0x1f;
           debugmsg(s_Both_others_are_equal____004449ee);
-          if ((int)((uVar4 ^ uVar7) - uVar7) <= extraout_EDX_02) {
+          if ((int)((uVar7 ^ uVar8) - uVar8) <= extraout_EDX_02) {
             debugmsg(s_SWITCHING_to_faster_lane____00444a08);
             goto LAB_0040e170;
           }
           debugmsg(s_SWITCHING_to_slower_lane____00444a25);
           local_24 = 2;
-          opponent_2->target_lane = opponent_index;
+          opponent_2->target_lane = uVar4;
         }
       }
       else {
         if ((int)classify_lane_occupant_result_2 < (int)local_54) {
           debugmsg(s_Slower_lane_is_best_SWITCHING_to_00444a42);
           local_24 = 2;
-          opponent_index = local_48;
+          uVar4 = local_48;
         }
         else {
           debugmsg(s_Faster_lane_is_best_SWITCHING_to_00444a73);
           local_24 = 1;
-          opponent_index = local_4c;
+          uVar4 = local_4c;
         }
 LAB_0040e17e:
-        opponent_2->target_lane = opponent_index;
+        opponent_2->target_lane = uVar4;
       }
     }
     else {
       debugmsg(s_Current_lane_is_one_of_the_best__00444aa4);
       if (classify_lane_occupant_result[3] == classify_lane_occupant_result_2) {
-        uVar4 = piVar8[1] - local_4c >> 0x1f;
-        uVar7 = piVar8[1] - local_50 >> 0x1f;
-        if ((int)((piVar8[1] - local_4c ^ uVar4) - uVar4) <
-            (int)((piVar8[1] - local_50 ^ uVar7) - uVar7)) {
+        uVar4 = (int)(piVar9[1] - local_4c) >> 0x1f;
+        uVar7 = (int)(piVar9[1] - local_50) >> 0x1f;
+        if ((int)((piVar9[1] - local_4c ^ uVar4) - uVar4) <
+            (int)((piVar9[1] - local_50 ^ uVar7) - uVar7)) {
 LAB_0040e170:
           local_24 = 1;
-          opponent_index = local_4c;
+          uVar4 = local_4c;
           goto LAB_0040e17e;
         }
         local_24 = 0;
       }
       else if (local_54 == classify_lane_occupant_result[3]) {
-        uVar4 = piVar8[1] - local_50 >> 0x1f;
-        uVar7 = piVar8[1] - local_48 >> 0x1f;
-        if ((int)((piVar8[1] - local_48 ^ uVar7) - uVar7) <
-            (int)((piVar8[1] - local_50 ^ uVar4) - uVar4)) {
+        uVar4 = (int)(piVar9[1] - local_50) >> 0x1f;
+        uVar7 = (int)(piVar9[1] - local_48) >> 0x1f;
+        if ((int)((piVar9[1] - local_48 ^ uVar7) - uVar7) <
+            (int)((piVar9[1] - local_50 ^ uVar4) - uVar4)) {
           local_24 = 2;
           opponent_2->target_lane = local_48;
         }
@@ -1191,11 +1191,10 @@ void __watcall drive_opponent(int param_1)
   uint uVar1;
   char *pcVar2;
   float fVar3;
-  int iVar4;
-  uint uVar5;
-  opponent_t *opponent;
+  uint uVar4;
   opponent_t *opponent_2;
-  int *piVar6;
+  opponent_t *opponent;
+  int *piVar5;
   float10 debugmsg_result;
   int local_a0 [11];
   int local_74 [11];
@@ -1207,7 +1206,7 @@ void __watcall drive_opponent(int param_1)
   opponent_t *opponent_4;
   float local_24;
   int local_20;
-  int local_1c;
+  uint local_1c;
   
   if (*(int *)(driver_list + 0x18 + param_1 * 0x1c) == 0) {
     fatal_exit(s__s__d__Cannot_drive_unused_drive_00445142,s_driver_cpp_00445137,0x609,param_1);
@@ -1215,9 +1214,9 @@ void __watcall drive_opponent(int param_1)
   if (*(int *)(driver_list + 0xc + param_1 * 0x1c) == 0) {
     fatal_exit(s__s__d__Cannot_drive_unassigned_d_00445174,s_driver_cpp_00445169,0x60d,param_1);
   }
-  piVar6 = (int *)(driver_list + param_1 * 0x1c);
-  opponent_2 = opponent_data + *piVar6;
-  switch(piVar6[4]) {
+  piVar5 = (int *)(driver_list + param_1 * 0x1c);
+  opponent = opponent_data + *piVar5;
+  switch(piVar5[4]) {
   case 0:
   case 1:
     break;
@@ -1230,67 +1229,67 @@ void __watcall drive_opponent(int param_1)
     drive_racer(param_1);
     break;
   default:
-    fatal_exit(s__s__d__Illegal_driver_type__d_fo_004451aa,s_driver_cpp_0044519f,0x625,piVar6[4],
-               param_1,*piVar6);
+    fatal_exit(s__s__d__Illegal_driver_type__d_fo_004451aa,s_driver_cpp_0044519f,0x625,piVar5[4],
+               param_1,*piVar5);
 switchD_0040ecf6_caseD_2:
-    local_1c = opponent_2->lane;
-    debugmsg(s_Driving_car___03d_OppIndex____03_004451e9,param_1,*piVar6,local_1c,opponent_2->chunk,
-             opponent_2->direction,(double)opponent_2->speed,(double)opponent_2->max_speed,
-             (double)(float)piVar6[2],piVar6[1]);
-    uVar1 = opponent_2->chunk - opponent_2->waypoint;
-    uVar5 = (int)uVar1 >> 0x1f;
-    if (2 < (int)((uVar1 ^ uVar5) - uVar5)) {
+    local_1c = opponent->lane;
+    debugmsg(s_Driving_car___03d_OppIndex____03_004451e9,param_1,*piVar5,local_1c,opponent->chunk,
+             opponent->direction,(double)opponent->speed,(double)opponent->max_speed,
+             (double)(float)piVar5[2],piVar5[1]);
+    uVar1 = opponent->chunk - opponent->waypoint;
+    uVar4 = (int)uVar1 >> 0x1f;
+    if (2 < (int)((uVar1 ^ uVar4) - uVar4)) {
       debugmsg(s_ILLEGAL_WAYPOINT_FOUND__0044528b);
     }
-    if (opponent_2->direction == 1) {
+    if (opponent->direction == 1) {
       local_20 = 1;
     }
-    if (opponent_2->direction == 0) {
+    if (opponent->direction == 0) {
       local_20 = -1;
     }
-    scan_lanes_ahead(local_a0,local_74,*piVar6,opponent_2->chunk,9,3,opponent_2->direction);
+    scan_lanes_ahead(local_a0,local_74,*piVar5,opponent->chunk,9,3,opponent->direction);
     debugmsg(s_Driving_logic_activated____004452a4);
-    if (piVar6[1] != local_1c) {
+    if (piVar5[1] != local_1c) {
       debugmsg_result = (float10)debugmsg(s_Driving_in_the_fast_lane_00445414);
       if (local_a0[local_1c] == -1) {
         debugmsg(s__>_Nothing_in_current_lane____0044542e);
-        iVar4 = local_1c - local_20;
-        if (local_74[iVar4] != -1) {
+        uVar1 = local_1c - local_20;
+        if (local_74[uVar1] != -1) {
 LAB_0040f339:
-          opponent_2->max_speed = (float)piVar6[2];
+          opponent->max_speed = (float)piVar5[2];
           return;
         }
-        if (local_a0[iVar4] != -1) {
+        if (local_a0[uVar1] != -1) {
           debugmsg_result = (float10)debugmsg(s___>_Slow_lane_not_emtpy__checkin_00445493);
-          opponent = opponent_data + local_a0[iVar4];
-          if ((float)piVar6[2] <= opponent->speed) {
-            racer_distance_margin(opponent,opponent_2);
+          opponent_2 = opponent_data + local_a0[uVar1];
+          if ((float)piVar5[2] <= opponent_2->speed) {
+            racer_distance_margin(opponent_2,opponent);
             local_24 = (float)debugmsg_result;
             debugmsg(s____Range_to_target____>>__f___>_c_004454e3,SUB84((double)debugmsg_result,0),
                      (int)((ulonglong)(double)debugmsg_result >> 0x20));
             if (57600.0 < local_24) {
               if (102400.0 <= local_24) {
                 pcVar2 = s_Normal_exit_covered_for_driver___0044555a;
-                opponent_2->max_speed = (float)piVar6[2];
-                opponent_2->target_lane = iVar4;
+                opponent->max_speed = (float)piVar5[2];
+                opponent->target_lane = uVar1;
               }
               else {
                 debugmsg(s___>_Good_range__switching_back_00445516);
-                fVar3 = opponent->speed;
-                opponent_2->target_lane = iVar4;
-                opponent_2->max_speed = fVar3;
-                if ((float)piVar6[2] < fVar3) {
-                  opponent_2->max_speed = (float)piVar6[2];
+                fVar3 = opponent_2->speed;
+                opponent->target_lane = uVar1;
+                opponent->max_speed = fVar3;
+                if ((float)piVar5[2] < fVar3) {
+                  opponent->max_speed = (float)piVar5[2];
                 }
-                if (opponent_2->max_speed < 0.0) {
-                  opponent_2->max_speed = 0.0;
+                if (opponent->max_speed < 0.0) {
+                  opponent->max_speed = 0.0;
                 }
                 pcVar2 = s_Normal_exit_covered_for_driver___00445537;
               }
               goto override_prt_40f175_281c20b5;
             }
-            opponent_2->max_speed = (float)piVar6[2];
-            if (opponent_2->max_speed <= (float)piVar6[2]) {
+            opponent->max_speed = (float)piVar5[2];
+            if (opponent->max_speed <= (float)piVar5[2]) {
               return;
             }
             goto LAB_0040f339;
@@ -1300,100 +1299,100 @@ LAB_0040f339:
         }
         debugmsg(s___>_Slow_lane_empty__SWITCHING__0044544e);
         pcVar2 = s_Normal_exit_covered_for_driver___00445470;
-        opponent_2->target_lane = iVar4;
+        opponent->target_lane = uVar1;
 LAB_0040eef9:
-        opponent_2->max_speed = (float)piVar6[2];
+        opponent->max_speed = (float)piVar5[2];
 override_prt_40f175_281c20b5:
         debugmsg(pcVar2,param_1);
         return;
       }
-      iVar4 = local_1c - local_20;
-      opponent = opponent_data + local_a0[local_1c];
-      racer_distance_margin(opponent,opponent_2);
+      uVar1 = local_1c - local_20;
+      opponent_2 = opponent_data + local_a0[local_1c];
+      racer_distance_margin(opponent_2,opponent);
       local_38 = (double)debugmsg_result;
       debugmsg_result =
            (float10)debugmsg(s__>_Fast_lane_occupied____Range_t_0044557d,local_38._0_4_,
                              (int)((ulonglong)local_38 >> 0x20));
       if (57600.0 < local_38) {
         if (102400.0 <= local_38) goto LAB_0040f339;
-        fVar3 = (float)piVar6[2];
+        fVar3 = (float)piVar5[2];
         local_40 = (double)fVar3;
-        if (opponent->speed < fVar3) goto LAB_0040ef3a;
-        if (local_74[iVar4] == -1) {
-          if (local_a0[iVar4] == -1) {
-            fVar3 = (float)piVar6[2];
+        if (opponent_2->speed < fVar3) goto LAB_0040ef3a;
+        if (local_74[uVar1] == -1) {
+          if (local_a0[uVar1] == -1) {
+            fVar3 = (float)piVar5[2];
             pcVar2 = s_Normal_exit_covered_for_driver___0044561b;
           }
           else {
-            opponent_4 = opponent_data + local_74[iVar4];
+            opponent_4 = opponent_data + local_74[uVar1];
             if (opponent_4->speed < fVar3) goto LAB_0040f339;
-            racer_distance_margin(opponent_4,opponent_2);
+            racer_distance_margin(opponent_4,opponent);
             local_48 = (double)debugmsg_result;
             debugmsg(s____Range_to_target____>>__f_0044563e,local_48._0_4_,
                      (int)((ulonglong)local_48 >> 0x20));
             if (local_48 <= 57600.0) goto LAB_0040f1db;
             if (local_48 < 102400.0) {
               fVar3 = opponent_4->speed;
-              opponent_2->target_lane = iVar4;
-              opponent_2->max_speed = fVar3;
-              if ((float)piVar6[2] < fVar3) {
-                opponent_2->max_speed = (float)piVar6[2];
+              opponent->target_lane = uVar1;
+              opponent->max_speed = fVar3;
+              if ((float)piVar5[2] < fVar3) {
+                opponent->max_speed = (float)piVar5[2];
               }
-              if (opponent_2->max_speed < 0.0) {
-                opponent_2->max_speed = 0.0;
+              if (opponent->max_speed < 0.0) {
+                opponent->max_speed = 0.0;
               }
               pcVar2 = s_Normal_exit_covered_for_driver___0044565c;
               goto override_prt_40f175_281c20b5;
             }
-            fVar3 = (float)piVar6[2];
+            fVar3 = (float)piVar5[2];
             pcVar2 = s_Normal_exit_covered_for_driver___0044567f;
           }
 LAB_0040f16c:
-          opponent_2->max_speed = fVar3;
-          opponent_2->target_lane = iVar4;
+          opponent->max_speed = fVar3;
+          opponent->target_lane = uVar1;
           goto override_prt_40f175_281c20b5;
         }
       }
-      else if (local_74[iVar4] == -1) {
-        if (local_a0[iVar4] == -1) {
-          fVar3 = (float)piVar6[2];
+      else if (local_74[uVar1] == -1) {
+        if (local_a0[uVar1] == -1) {
+          fVar3 = (float)piVar5[2];
           pcVar2 = s_Normal_exit_covered_for_driver___004455b2;
           goto LAB_0040f16c;
         }
-        opponent_3 = opponent_data + local_a0[iVar4];
-        if (opponent_2->speed < opponent_3->speed) {
-          opponent_2->max_speed = opponent_3->speed;
-          opponent_2->target_lane = iVar4;
-          if (opponent_2->max_speed < 0.0) {
-            opponent_2->max_speed = 0.0;
+        opponent_3 = opponent_data + local_a0[uVar1];
+        if (opponent->speed < opponent_3->speed) {
+          opponent->max_speed = opponent_3->speed;
+          opponent->target_lane = uVar1;
+          if (opponent->max_speed < 0.0) {
+            opponent->max_speed = 0.0;
           }
           pcVar2 = s_Normal_exit_covered_for_driver___004455d5;
           goto override_prt_40f175_281c20b5;
         }
-        racer_distance_margin(opponent,opponent_2);
+        racer_distance_margin(opponent_2,opponent);
         if ((float10)240.0 < debugmsg_result) {
-          opponent_2->max_speed = opponent_3->speed;
-          opponent_2->target_lane = iVar4;
-          if (opponent_2->max_speed < 0.0) {
-            opponent_2->max_speed = 0.0;
+          opponent->max_speed = opponent_3->speed;
+          opponent->target_lane = uVar1;
+          if (opponent->max_speed < 0.0) {
+            opponent->max_speed = 0.0;
           }
           pcVar2 = s_Normal_exit_covered_for_driver___004455f8;
           goto override_prt_40f175_281c20b5;
         }
       }
 LAB_0040f1db:
-      opponent_2->max_speed = opponent->speed;
-      fVar3 = opponent_2->max_speed;
+      opponent->max_speed = opponent_2->speed;
+      fVar3 = opponent->max_speed;
 LAB_0040f1e4:
-      if (fVar3 <= (float)piVar6[2]) goto LAB_0040f1f2;
-      fVar3 = (float)piVar6[2];
+      if (fVar3 <= (float)piVar5[2]) goto LAB_0040f1f2;
+      fVar3 = (float)piVar5[2];
 LAB_0040f1ef:
-      opponent_2->max_speed = fVar3;
+      opponent->max_speed = fVar3;
 LAB_0040f1f2:
-      if (0.0 <= opponent_2->max_speed) {
+      if (0.0 <= opponent->max_speed) {
         return;
       }
-      opponent_2->max_speed = 0.0;
+      opponent->max_speed = 0.0;
       return;
     }
     debugmsg_result = (float10)debugmsg(s__>_Driving_in_slow_lane_004452c0);
@@ -1401,38 +1400,38 @@ LAB_0040f1f2:
       pcVar2 = s__>_Nothing_in_sight__004452da;
     }
     else {
-      opponent = opponent_data + local_a0[local_1c];
-      racer_distance_margin(opponent,opponent_2);
+      opponent_2 = opponent_data + local_a0[local_1c];
+      racer_distance_margin(opponent_2,opponent);
       local_30 = (float)debugmsg_result;
       debugmsg(s__>_TARGET____d_______Range_to_ta_004452f1,local_a0[local_1c],
                SUB84((double)debugmsg_result,0),(int)((ulonglong)(double)debugmsg_result >> 0x20));
       if (local_30 <= 57600.0) {
         debugmsg_result = (float10)debugmsg(s___>_Too_close__00445322);
-        iVar4 = local_1c + local_20;
-        if (((float)piVar6[2] <= opponent->speed) || (opponent_2->speed < opponent->speed)) {
+        uVar1 = local_1c + local_20;
+        if (((float)piVar5[2] <= opponent_2->speed) || (opponent->speed < opponent_2->speed)) {
           pcVar2 = s___>_SLOWING_DOWN_0044539b;
 LAB_0040ef47:
           debugmsg(pcVar2);
-          fVar3 = opponent->speed;
-          opponent_2->max_speed = fVar3;
+          fVar3 = opponent_2->speed;
+          opponent->max_speed = fVar3;
           goto LAB_0040f1e4;
         }
-        if (local_74[iVar4] == -1) {
-          if (local_a0[iVar4] == -1) {
+        if (local_74[uVar1] == -1) {
+          if (local_a0[uVar1] == -1) {
             debugmsg(s___>_OVERTAKING_00445333);
             pcVar2 = s_Normal_exit_covered_for_driver___00445344;
           }
           else {
-            racer_distance_margin(opponent_data + local_a0[iVar4],opponent_2);
+            racer_distance_margin(opponent_data + local_a0[uVar1],opponent);
             if (debugmsg_result <= (float10)57600.0) goto LAB_0040ef3a;
             debugmsg(s___>_OVERTAKING_00445367);
             pcVar2 = s_Normal_exit_covered_for_driver___00445378;
           }
-          opponent_2->target_lane = iVar4;
+          opponent->target_lane = uVar1;
           goto LAB_0040eef9;
         }
 LAB_0040ef3a:
-        fVar3 = opponent->speed;
+        fVar3 = opponent_2->speed;
         goto LAB_0040f1ef;
       }
       if (102400.0 <= local_30) {
@@ -1440,7 +1439,7 @@ LAB_0040ef3a:
       }
       else {
         debugmsg(s___>_Normal_range_004453ae);
-        if ((float)piVar6[2] <= opponent->speed) {
+        if ((float)piVar5[2] <= opponent_2->speed) {
           pcVar2 = s___>_FOLLOWING_004453de;
           goto LAB_0040ef47;
         }
@@ -1449,7 +1448,7 @@ LAB_0040ef3a:
     }
 LAB_0040ee33:
     debugmsg(pcVar2);
-    opponent_2->max_speed = (float)piVar6[2];
+    opponent->max_speed = (float)piVar5[2];
   }
   return;
 }

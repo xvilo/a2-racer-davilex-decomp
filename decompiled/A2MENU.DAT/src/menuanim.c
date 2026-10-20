@@ -9,7 +9,7 @@ int __watcall init_anims(void)
   int iVar1;
   char *filename;
   
-  iVar1 = init_animations((anim_t *)&anims);
+  iVar1 = init_animations(&anims);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animations_00428e30);
   }
@@ -32,7 +32,7 @@ int __watcall init_anims_1(int param_1)
   int iVar1;
   char *filename;
   
-  iVar1 = init_animations((anim_t *)&anims);
+  iVar1 = init_animations(&anims);
   if (iVar1 != 0) {
     fatal_exit(s_not_enough_memory_for_animations_00428e80);
   }
@@ -62,7 +62,7 @@ int __watcall use_mm_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mm_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mm_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00428f07);
   filename = file_path(&buffer1,s_a2mrc_img_00428f11);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -84,7 +84,7 @@ int __watcall free_mm_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00428f28,s_menuanim_cpp_00428f1b,0x3b2);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mm_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mm_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -105,7 +105,7 @@ int __watcall use_mc_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mc_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mc_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00428f89);
   filename = file_path(&buffer1,s_a2mrc_img_00428f93);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -127,7 +127,7 @@ int __watcall free_mc_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00428faa,s_menuanim_cpp_00428f9d,0x3cb);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mc_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mc_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -148,7 +148,7 @@ int __watcall use_mo_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mo_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mo_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042900b);
   filename = file_path(&buffer1,s_a2mrc_img_00429015);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -170,7 +170,7 @@ int __watcall free_mo_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___0042902c,s_menuanim_cpp_0042901f,0x3e4);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mo_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mo_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -191,7 +191,7 @@ int __watcall use_ms_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)ms_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)ms_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042908d);
   filename = file_path(&buffer1,s_a2mrc_img_00429097);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -213,7 +213,7 @@ int __watcall free_ms_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004290ae,s_menuanim_cpp_004290a1,0x3fd);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)ms_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)ms_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -234,7 +234,7 @@ int __watcall use_reqwarn_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&reqwarn_cfg);
+  add_array_to_anim_base(&anims,(long *)&reqwarn_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042910f);
   filename = file_path(&buffer1,s_a2mrc_img_00429119);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -256,7 +256,7 @@ int __watcall free_reqwarn_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429130,s_menuanim_cpp_00429123,0x416);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&reqwarn_cfg);
+  add_array_to_anim_base(&anims,(long *)&reqwarn_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -277,7 +277,7 @@ int __watcall use_reqvraag_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)reqvraag_cfg);
+  add_array_to_anim_base(&anims,(long *)reqvraag_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429191);
   filename = file_path(&buffer1,s_a2mrc_img_0042919b);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -299,7 +299,7 @@ int __watcall free_reqvraag_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004291b2,s_menuanim_cpp_004291a5,0x42f);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)reqvraag_cfg);
+  add_array_to_anim_base(&anims,(long *)reqvraag_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -320,7 +320,7 @@ int __watcall use_reqinput_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)reqinput_cfg);
+  add_array_to_anim_base(&anims,(long *)reqinput_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429213);
   filename = file_path(&buffer1,s_a2mrc_img_0042921d);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -342,7 +342,7 @@ int __watcall free_reqinput_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429234,s_menuanim_cpp_00429227,0x448);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)reqinput_cfg);
+  add_array_to_anim_base(&anims,(long *)reqinput_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -363,7 +363,7 @@ int __watcall use_mst_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mst_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)&mst_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429295);
   filename = file_path(&buffer1,s_a2mrc_img_0042929f);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -385,7 +385,7 @@ int __watcall free_mst_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004292b6,s_menuanim_cpp_004292a9,0x461);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mst_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)&mst_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -406,7 +406,7 @@ int __watcall use_mds_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mds_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mds_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429317);
   filename = file_path(&buffer1,s_a2mrc_img_00429321);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -428,7 +428,7 @@ int __watcall free_mds_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___00429338,s_menuanim_cpp_0042932b,0x47a);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mds_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mds_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -449,7 +449,7 @@ int __watcall use_mdt_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mdt_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mdt_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_00429399);
   filename = file_path(&buffer1,s_a2mrc_img_004293a3);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -471,7 +471,7 @@ int __watcall free_mdt_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004293ba,s_menuanim_cpp_004293ad,0x493);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mdt_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mdt_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -492,7 +492,7 @@ int __watcall use_mdc_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mdc_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mdc_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042941b);
   filename = file_path(&buffer1,s_a2mrc_img_00429425);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -514,7 +514,7 @@ int __watcall free_mdc_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___0042943c,s_menuanim_cpp_0042942f,0x4ac);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)mdc_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)mdc_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }
@@ -535,7 +535,7 @@ int __watcall use_mns_menu_cfg_anims(void)
   }
   disable_mem_images(&anim_base);
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mns_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)&mns_menu_cfg);
   filename_2 = file_path(&buffer2,s_a2mrc_ind_0042949d);
   filename = file_path(&buffer1,s_a2mrc_img_004294a7);
   use_mem_images_result = use_mem_images(filename,filename_2,&anim_base);
@@ -557,7 +557,7 @@ int __watcall free_mns_menu_cfg_anims(void)
     fatal_exit(s__s__d____please_call_init_anims___004294be,s_menuanim_cpp_004294b1,0x4c5);
   }
   reset_anim_base();
-  add_array_to_anim_base((anim_t *)&anims,(long *)&mns_menu_cfg);
+  add_array_to_anim_base(&anims,(long *)&mns_menu_cfg);
   disable_mem_images(&anim_base);
   return 0;
 }

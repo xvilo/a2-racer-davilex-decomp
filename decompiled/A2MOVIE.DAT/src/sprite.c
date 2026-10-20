@@ -6,6 +6,8 @@
 int * __watcall get_mem_xsize(char *param_1,int param_2,int param_3)
 
 {
+  int arg4;
+  
   if ((param_3 < 0) || (max_mem_image_ptr <= param_3)) {
     fatal_exit(s__s__d____illegal_mem_image_array_0041b9d0,param_1,param_2,param_3,max_mem_image_ptr
               );
@@ -13,11 +15,11 @@ int * __watcall get_mem_xsize(char *param_1,int param_2,int param_3)
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_xsize_of_mem_image_w_0041ba0d,param_1,param_2);
   }
-  if (*(int *)(xvga_mem_images + param_3 * 0x20 + 8) < 1) {
-    fatal_exit(s__s__d____suspect_illegal_image_x_0041ba45,param_1,param_2,
-               *(int *)(xvga_mem_images + param_3 * 0x20 + 8));
+  arg4 = *(int *)((int)xvga_mem_images + param_3 * 0x20 + 8);
+  if (arg4 < 1) {
+    fatal_exit(s__s__d____suspect_illegal_image_x_0041ba45,param_1,param_2,arg4);
   }
-  return (int *)(xvga_mem_images + param_3 * 0x20 + 8);
+  return (int *)((int)xvga_mem_images + param_3 * 0x20 + 8);
 }
 
 
@@ -33,11 +35,11 @@ int * __watcall get_mem_ysize(char *param_1,int param_2,int param_3)
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_ysize_of_mem_image_w_0041baac,param_1,param_2);
   }
-  if (*(int *)(xvga_mem_images + param_3 * 0x20 + 0xc) < 1) {
+  if (*(int *)((int)xvga_mem_images + param_3 * 0x20 + 0xc) < 1) {
     fatal_exit(s__s__d____suspect_illegal_image_y_0041bae4,param_1,param_2,
-               *(undefined4 *)(xvga_mem_images + param_3 * 0x20 + 8));
+               *(undefined4 *)((int)xvga_mem_images + param_3 * 0x20 + 8));
   }
-  return (int *)(xvga_mem_images + param_3 * 0x20 + 0xc);
+  return (int *)((int)xvga_mem_images + param_3 * 0x20 + 0xc);
 }
 
 
@@ -53,7 +55,7 @@ int * __watcall get_mem_mx(char *param_1,int param_2,int param_3)
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_mx_of_mem_image_whi_0041bb48,param_1,param_2);
   }
-  return (int *)(xvga_mem_images + param_3 * 0x20 + 0x10);
+  return (int *)((int)xvga_mem_images + param_3 * 0x20 + 0x10);
 }
 
 
@@ -69,7 +71,7 @@ int * __watcall get_mem_my(char *param_1,int param_2,int param_3)
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_my_of_mem_image_whi_0041bbb7,param_1,param_2);
   }
-  return (int *)(xvga_mem_images + param_3 * 0x20 + 0x14);
+  return (int *)((int)xvga_mem_images + param_3 * 0x20 + 0x14);
 }
 
 
@@ -107,11 +109,11 @@ int __watcall alloc_sprites(int param_1)
     iVar1 = 0;
     max_sprite_ptr = param_1;
     for (i = 0; i < max_sprite_ptr; i = i + 1) {
-      *(undefined4 *)(xvga_sprites + iVar1 + 8) = 0;
-      *(undefined4 *)(xvga_sprites + iVar1 + 0xc) = 0;
-      *(undefined4 *)(xvga_sprites + iVar1 + 0x10) = 0;
-      *(int *)(xvga_sprites + iVar1 + 0x14) = i;
-      *(undefined4 *)(xvga_sprites + iVar1 + 4) = 0;
+      *(undefined4 *)(&xvga_sprites->field_0x8 + iVar1) = 0;
+      *(undefined4 *)(&xvga_sprites->field_0xc + iVar1) = 0;
+      *(undefined4 *)(&xvga_sprites->field_0x10 + iVar1) = 0;
+      *(int *)(&xvga_sprites[1].field_0x0 + iVar1) = i;
+      *(undefined4 *)(&xvga_sprites->field_0x4 + iVar1) = 0;
       iVar1 = iVar1 + 0x18;
     }
     iVar1 = 0;
@@ -132,7 +134,7 @@ void __watcall set_sprite_image(int param_1,int param_2)
   if ((param_2 < 0) || (max_mem_image_ptr <= param_2)) {
     fatal_exit(s__s__d____illegal_mem_image_index_0041bc25,s_sprite_cpp_0041bc1a,0x83,param_2);
   }
-  *(int *)(xvga_sprites + param_1 * 0x18 + 0x10) = param_2;
+  *(int *)((int)xvga_sprites + param_1 * 0x18 + 0x10) = param_2;
   return;
 }
 
@@ -147,7 +149,7 @@ int __watcall get_sprite_image(int param_1)
   if ((param_1 < 0) || (max_sprite_ptr <= param_1)) {
     fatal_exit(s__s__d____illegal_sprite_index__d_0041bc56,s_sprite_cpp_0041bc4b,0x8d,param_1);
   }
-  arg4 = *(int *)(xvga_sprites + param_1 * 0x18 + 0x10);
+  arg4 = *(int *)((int)xvga_sprites + param_1 * 0x18 + 0x10);
   if ((arg4 < 0) || (max_mem_image_ptr <= arg4)) {
     fatal_exit(s__s__d____illegal_mem_image_index_0041bc84,s_sprite_cpp_0041bc79,0x91,arg4);
   }
@@ -160,19 +162,19 @@ int __watcall get_sprite_image(int param_1)
 int __watcall alloc_mem_images(int param_1)
 
 {
-  int mem_image_index;
+  int iVar1;
   int i;
   
   if (0 < param_1) {
     max_mem_image_ptr = param_1;
     xvga_mem_images = LocalAlloc(0x40,param_1 << 5);
     if (xvga_mem_images != (mem_image_t *)0x0) {
-      mem_image_index = 0;
+      iVar1 = 0;
       for (i = 0; i < max_mem_image_ptr; i = i + 1) {
-        *(undefined4 *)(xvga_mem_images + mem_image_index) = 0;
-        *(undefined4 *)(xvga_mem_images + mem_image_index + 0x18) = 4;
-        *(undefined4 *)(xvga_mem_images + mem_image_index + 0x1c) = 0;
-        mem_image_index = mem_image_index + 0x20;
+        *(undefined4 *)(&xvga_mem_images->field_0x0 + iVar1) = 0;
+        *(undefined4 *)(&xvga_mem_images->field_0x18 + iVar1) = 4;
+        *(undefined4 *)(&xvga_mem_images[1].field_0x0 + iVar1) = 0;
+        iVar1 = iVar1 + 0x20;
       }
       alloc_mem_images_ok = 1;
       return 0;
@@ -187,7 +189,7 @@ int __watcall alloc_mem_images(int param_1)
 int __watcall alloc_mem_images_1(int param_1,int param_2)
 
 {
-  int mem_image_index;
+  int iVar1;
   int i;
   
   if (0 < param_1) {
@@ -197,12 +199,12 @@ int __watcall alloc_mem_images_1(int param_1,int param_2)
       if (((uint)param_2 < 2) || ((2 < (uint)param_2 && (param_2 != 4)))) {
         fatal_exit(s__s__d____alloc_mem_images___unko_0041bcb5,s_sprite_cpp_0041bcaa,0xd3,param_2);
       }
-      mem_image_index = 0;
+      iVar1 = 0;
       for (i = 0; i < max_mem_image_ptr; i = i + 1) {
-        *(undefined4 *)(xvga_mem_images + mem_image_index) = 0;
-        *(int *)(xvga_mem_images + mem_image_index + 0x18) = param_2;
-        *(undefined4 *)(xvga_mem_images + mem_image_index + 0x1c) = 0;
-        mem_image_index = mem_image_index + 0x20;
+        *(undefined4 *)(&xvga_mem_images->field_0x0 + iVar1) = 0;
+        *(int *)(&xvga_mem_images->field_0x18 + iVar1) = param_2;
+        *(undefined4 *)(&xvga_mem_images[1].field_0x0 + iVar1) = 0;
+        iVar1 = iVar1 + 0x20;
       }
       alloc_mem_images_ok = 1;
       return 0;
@@ -244,57 +246,60 @@ int __watcall alloc_mem_image(int param_1)
 
 {
   uint uVar1;
-  HLOCAL pvVar2;
-  IDirectDrawSurface *pIVar3;
-  long lVar4;
+  int *piVar2;
+  HLOCAL pvVar3;
+  IDirectDrawSurface *pIVar4;
+  long lVar5;
   char *arg4;
   SIZE_T uBytes;
-  int mem_image_index;
+  int iVar6;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0041bcf3,s_sprite_cpp_0041bce8,0x106,param_1);
   }
-  if (*(int *)(xvga_mem_images + param_1 * 0x20 + 8) < 1) {
+  iVar6 = *(int *)((int)xvga_mem_images + param_1 * 0x20 + 8);
+  if (iVar6 < 1) {
     fatal_exit(s__s__d____illegal_mem_xsize____d___0041bd31,s_sprite_cpp_0041bd26,0x10a,param_1,
-               *(int *)(xvga_mem_images + param_1 * 0x20 + 8));
+               iVar6);
   }
-  if (*(int *)(xvga_mem_images + param_1 * 0x20 + 0xc) < 1) {
+  iVar6 = *(int *)((int)xvga_mem_images + param_1 * 0x20 + 0xc);
+  if (iVar6 < 1) {
     fatal_exit(s__s__d____illegal_mem_ysize____d___0041bd65,s_sprite_cpp_0041bd5a,0x10d,param_1,
-               *(int *)(xvga_mem_images + param_1 * 0x20 + 0xc));
+               iVar6);
   }
-  mem_image_index = param_1 * 0x20;
-  uBytes = *(int *)(xvga_mem_images + mem_image_index + 8) *
-           *(int *)(xvga_mem_images + mem_image_index + 0xc);
-  uVar1 = *(uint *)(xvga_mem_images + mem_image_index + 0x18);
+  iVar6 = param_1 * 0x20;
+  uBytes = *(int *)((int)xvga_mem_images + iVar6 + 8) * *(int *)((int)xvga_mem_images + iVar6 + 0xc)
+  ;
+  uVar1 = *(uint *)((int)xvga_mem_images + iVar6 + 0x18);
   if (uVar1 < 2) {
 LAB_00407569:
     fatal_exit(s__s__d____illegal_alloc_type__d_f_0041be09,s_sprite_cpp_0041bdfe,0x12e,
-               *(undefined4 *)(xvga_mem_images + param_1 * 0x20 + 0x18),param_1);
+               *(undefined4 *)((int)xvga_mem_images + param_1 * 0x20 + 0x18),param_1);
 LAB_00407591:
-    mem_image_index = 0;
+    iVar6 = 0;
   }
   else {
     if (uVar1 < 3) {
-      pIVar3 = create_surface(*(int *)(xvga_mem_images + mem_image_index + 8),
-                              *(int *)(xvga_mem_images + mem_image_index + 0xc));
-      *(IDirectDrawSurface **)(xvga_mem_images + mem_image_index + 4) = pIVar3;
-      if (pIVar3 != (IDirectDrawSurface *)0x0) {
+      pIVar4 = create_surface(*(int *)((int)xvga_mem_images + iVar6 + 8),
+                              *(int *)((int)xvga_mem_images + iVar6 + 0xc));
+      *(IDirectDrawSurface **)(iVar6 + 4 + (int)xvga_mem_images) = pIVar4;
+      if (pIVar4 != (IDirectDrawSurface *)0x0) {
         if (pf_conversion_mode == 0) {
           mem_image_color_key.dwColorSpaceHighValue = 0xff;
         }
         else {
           mem_image_color_key.dwColorSpaceHighValue = translate_pixel(0xff,8);
         }
+        piVar2 = *(int **)((int)xvga_mem_images + param_1 * 0x20 + 4);
         mem_image_color_key.dwColorSpaceLowValue = mem_image_color_key.dwColorSpaceHighValue;
-        lVar4 = (**(code **)(**(int **)(xvga_mem_images + param_1 * 0x20 + 4) + 0x74))
-                          (*(int **)(xvga_mem_images + param_1 * 0x20 + 4),8,&mem_image_color_key);
-        if (lVar4 != 0) {
-          arg4 = dd_error_string(lVar4);
+        lVar5 = (**(code **)(*piVar2 + 0x74))(piVar2,8,&mem_image_color_key);
+        if (lVar5 != 0) {
+          arg4 = dd_error_string(lVar5);
           fatal_exit(s__s__d____failed_to_set_color_key_0041bdd7,s_sprite_cpp_0041bdcc,0x129,arg4);
         }
-        mem_image_index = param_1 << 5;
+        iVar6 = param_1 << 5;
 LAB_004074c3:
-        *(undefined4 *)(xvga_mem_images + mem_image_index + 0x1c) = 1;
+        *(undefined4 *)(&xvga_mem_images[1].field_0x0 + iVar6) = 1;
         goto LAB_00407591;
       }
     }
@@ -302,17 +307,17 @@ LAB_004074c3:
       if (uVar1 != 4) goto LAB_00407569;
       if ((int)uBytes < 1) {
         fatal_exit(s__s__d____error_illegal_mem_image_0041bd99,s_sprite_cpp_0041bd8e,0x117,uBytes,
-                   *(undefined4 *)(xvga_mem_images + mem_image_index + 8),
-                   *(undefined4 *)(xvga_mem_images + mem_image_index + 0xc));
+                   *(undefined4 *)((int)xvga_mem_images + iVar6 + 8),
+                   *(undefined4 *)((int)xvga_mem_images + iVar6 + 0xc));
       }
-      pvVar2 = LocalAlloc(0x40,uBytes);
-      mem_image_index = param_1 * 0x20;
-      *(HLOCAL *)(xvga_mem_images + mem_image_index) = pvVar2;
-      if (pvVar2 != (HLOCAL)0x0) goto LAB_004074c3;
+      pvVar3 = LocalAlloc(0x40,uBytes);
+      iVar6 = param_1 * 0x20;
+      *(HLOCAL *)(iVar6 + (int)xvga_mem_images) = pvVar3;
+      if (pvVar3 != (HLOCAL)0x0) goto LAB_004074c3;
     }
-    mem_image_index = 2000;
+    iVar6 = 2000;
   }
-  return mem_image_index;
+  return iVar6;
 }
 
 
@@ -322,34 +327,35 @@ int __watcall free_mem_image(int param_1)
 
 {
   uint uVar1;
-  int mem_image_index;
+  int *piVar2;
+  int iVar3;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0041be47,s_sprite_cpp_0041be3c,0x136,param_1);
   }
-  mem_image_index = param_1 * 0x20;
-  uVar1 = *(uint *)(xvga_mem_images + mem_image_index + 0x18);
+  iVar3 = param_1 * 0x20;
+  uVar1 = *(uint *)((int)xvga_mem_images + iVar3 + 0x18);
   if (1 < uVar1) {
     if (uVar1 < 3) {
-      if (*(int *)(xvga_mem_images + mem_image_index + 0x1c) == 0) {
+      if (*(int *)((int)xvga_mem_images + iVar3 + 0x1c) == 0) {
         return 0;
       }
-      *(undefined4 *)(xvga_mem_images + mem_image_index + 0x1c) = 0;
-      (**(code **)(**(int **)(xvga_mem_images + mem_image_index + 4) + 8))
-                (*(int **)(xvga_mem_images + mem_image_index + 4));
+      *(undefined4 *)((int)xvga_mem_images + iVar3 + 0x1c) = 0;
+      piVar2 = *(int **)(iVar3 + 4 + (int)xvga_mem_images);
+      (**(code **)(*piVar2 + 8))(piVar2);
       return 0;
     }
     if (uVar1 == 4) {
-      if (*(int *)(xvga_mem_images + mem_image_index + 0x1c) == 0) {
+      if (*(int *)((int)xvga_mem_images + iVar3 + 0x1c) == 0) {
         return 0;
       }
-      *(undefined4 *)(xvga_mem_images + mem_image_index + 0x1c) = 0;
-      nfree(*(undefined4 **)(xvga_mem_images + mem_image_index));
+      *(undefined4 *)((int)xvga_mem_images + iVar3 + 0x1c) = 0;
+      nfree(*(undefined4 **)(iVar3 + (int)xvga_mem_images));
       return 0;
     }
   }
   fatal_exit(s__s__d____illegal_alloc_type__d_f_0041be85,s_sprite_cpp_0041be7a,0x147,
-             *(undefined4 *)(xvga_mem_images + param_1 * 0x20 + 0x18),param_1);
+             *(undefined4 *)(param_1 * 0x20 + 0x18 + (int)xvga_mem_images),param_1);
   return 0;
 }
 
@@ -360,15 +366,15 @@ int __watcall lock_mem_image(int param_1)
 
 {
   uchar *surface_ptr;
-  int mem_image_index;
+  int iVar1;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0041bec3,s_sprite_cpp_0041beb8,0x153,param_1);
   }
-  mem_image_index = param_1 * 0x20;
-  if (*(int *)(xvga_mem_images + mem_image_index + 0x18) == 2) {
-    surface_ptr = get_surface_ptr(*(IDirectDrawSurface **)(xvga_mem_images + mem_image_index + 4));
-    *(uchar **)(xvga_mem_images + mem_image_index) = surface_ptr;
+  iVar1 = param_1 * 0x20;
+  if (*(int *)((int)xvga_mem_images + iVar1 + 0x18) == 2) {
+    surface_ptr = get_surface_ptr(*(IDirectDrawSurface **)((int)xvga_mem_images + iVar1 + 4));
+    *(uchar **)((int)xvga_mem_images + iVar1) = surface_ptr;
   }
   return 0;
 }
@@ -380,19 +386,19 @@ int __watcall lock_mem_image_1(int param_1,int *param_2)
 
 {
   uchar *surface_ptr_3;
-  int mem_image_index;
+  int iVar1;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0041bf01,s_sprite_cpp_0041bef6,0x160,param_1);
   }
-  mem_image_index = param_1 * 0x20;
-  if (*(int *)(xvga_mem_images + mem_image_index + 0x18) == 2) {
+  iVar1 = param_1 * 0x20;
+  if (*(int *)((int)xvga_mem_images + iVar1 + 0x18) == 2) {
     surface_ptr_3 =
-         get_surface_ptr_3(*(IDirectDrawSurface **)(xvga_mem_images + mem_image_index + 4),param_2);
-    *(uchar **)(xvga_mem_images + mem_image_index) = surface_ptr_3;
+         get_surface_ptr_3(*(IDirectDrawSurface **)((int)xvga_mem_images + iVar1 + 4),param_2);
+    *(uchar **)((int)xvga_mem_images + iVar1) = surface_ptr_3;
     return 0;
   }
-  *param_2 = *(int *)(xvga_mem_images + mem_image_index + 8);
+  *param_2 = *(int *)((int)xvga_mem_images + iVar1 + 8);
   return 0;
 }
 
@@ -402,14 +408,14 @@ int __watcall lock_mem_image_1(int param_1,int *param_2)
 int __watcall unlock_mem_image(int param_1)
 
 {
-  mem_image_t *mem_image;
+  undefined4 *puVar1;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0041bf3f,s_sprite_cpp_0041bf34,0x171,param_1);
   }
-  mem_image = xvga_mem_images + param_1 * 0x20;
-  if (*(int *)(mem_image + 0x18) == 2) {
-    reset_surface_ptr_1(*(IDirectDrawSurface **)(mem_image + 4),*(void **)mem_image);
+  puVar1 = (undefined4 *)((int)xvga_mem_images + param_1 * 0x20);
+  if (puVar1[6] == 2) {
+    reset_surface_ptr_1((IDirectDrawSurface *)puVar1[1],(void *)*puVar1);
   }
   return 0;
 }
@@ -467,20 +473,20 @@ LAB_00407a99:
           }
           local_34 = *local_38;
           k = local_34 * 0x20;
-          fread((char *)(xvga_mem_images + k + 8),1,2,file_2);
-          fread((char *)(xvga_mem_images + k + 0xc),1,2,file_2);
-          fread((char *)(xvga_mem_images + k + 0x10),1,2,file_2);
-          fread((char *)(xvga_mem_images + k + 0x14),1,2,file_2);
+          fread((char *)((int)xvga_mem_images + k + 8),1,2,file_2);
+          fread((char *)((int)xvga_mem_images + k + 0xc),1,2,file_2);
+          fread((char *)((int)xvga_mem_images + k + 0x10),1,2,file_2);
+          fread((char *)((int)xvga_mem_images + k + 0x14),1,2,file_2);
           mem_image_usage =
                mem_image_usage +
-               *(int *)(xvga_mem_images + k + 8) * *(int *)(xvga_mem_images + k + 0xc);
+               *(int *)((int)xvga_mem_images + k + 8) * *(int *)((int)xvga_mem_images + k + 0xc);
           alloc_mem_image(local_34);
           lock_mem_image_1(local_34,&local_48);
-          local_20 = *(char **)(xvga_mem_images + k);
+          local_20 = *(char **)((int)xvga_mem_images + k);
           if (pf_conversion_mode == 0) {
             debugmsg(s_pf_none_0041bfea);
-            for (m = 0; m < *(int *)(xvga_mem_images + k + 0xc); m = m + 1) {
-              fread(local_20,1,*(int *)(xvga_mem_images + k + 8),file_2);
+            for (m = 0; m < *(int *)((int)xvga_mem_images + k + 0xc); m = m + 1) {
+              fread(local_20,1,*(int *)((int)xvga_mem_images + k + 8),file_2);
               local_20 = local_20 + local_48;
             }
           }
@@ -488,9 +494,9 @@ LAB_00407a99:
             debugmsg(s_converting_to_16_bits_0041bfbc);
             local_44 = k;
             local_2c = k;
-            for (i = 0; i < *(int *)(xvga_mem_images + local_2c + 0xc); i = i + 1) {
+            for (i = 0; i < *(int *)(&xvga_mem_images->field_0xc + local_2c); i = i + 1) {
               pcVar1 = local_20;
-              for (k = 0; k < *(int *)(xvga_mem_images + local_44 + 8); k = k + 1) {
+              for (k = 0; k < *(int *)(&xvga_mem_images->field_0x8 + local_44); k = k + 1) {
                 fread((char *)local_18,1,1,file_2);
                 m = translate_pixel((uint)local_18[0],8);
                 *(short *)pcVar1 = (short)m;
@@ -503,9 +509,9 @@ LAB_00407a99:
             debugmsg(s_converting_to_24_bits_0041bfd3);
             local_30 = k;
             local_1c = k;
-            for (j = 0; j < *(int *)(xvga_mem_images + local_30 + 0xc); j = j + 1) {
+            for (j = 0; j < *(int *)(&xvga_mem_images->field_0xc + local_30); j = j + 1) {
               pcVar1 = local_20;
-              for (k = 0; k < *(int *)(xvga_mem_images + local_1c + 8); k = k + 1) {
+              for (k = 0; k < *(int *)(&xvga_mem_images->field_0x8 + local_1c); k = k + 1) {
                 fread((char *)local_14,1,1,file_2);
                 translate_pixel_1((uint)local_14[0],8,pcVar1);
                 pcVar1 = pcVar1 + 3;
@@ -567,19 +573,19 @@ int __watcall show_mem_images(void)
   uint random;
   int iVar1;
   int i;
-  int mem_image_index;
   int iVar2;
+  int iVar3;
   
   if (init_mem_images_ok != 0) {
     debugmsg(s_starting_to_show_images_2_0041bff3);
-    mem_image_index = 0;
+    iVar2 = 0;
     for (i = 0; i < max_mem_image_ptr; i = i + 1) {
-      if (*(int *)(xvga_mem_images + mem_image_index) != 0) {
-        iVar2 = 1;
+      if (*(int *)(&xvga_mem_images->field_0x0 + iVar2) != 0) {
+        iVar3 = 1;
         random = rand();
         iVar1 = (int)random % xvga_screen_ysize;
         random = rand();
-        set_mem_image(0,i,(int)random % xvga_screen_xsize,iVar1,iVar2);
+        set_mem_image(0,i,(int)random % xvga_screen_xsize,iVar1,iVar3);
         iVar1 = keyispressed(0xd);
         if (iVar1 != 0) {
           return 0;
@@ -593,7 +599,7 @@ int __watcall show_mem_images(void)
           return 0;
         }
       }
-      mem_image_index = mem_image_index + 0x20;
+      iVar2 = iVar2 + 0x20;
     }
     debugmsg(s_done_show_images_0041c00e);
   }
@@ -608,15 +614,15 @@ int __watcall init_mem_images(char *filename,int param_2)
 {
   int *file;
   int m;
-  int mem_image_index_2;
-  uint uVar1;
-  int iVar2;
-  char *pcVar3;
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
   int local_48;
   int i;
   int j;
   int k;
-  int mem_image_index;
+  int local_38;
   undefined4 uStack_34;
   short sStack_30;
   undefined4 local_2e;
@@ -635,79 +641,79 @@ int __watcall init_mem_images(char *filename,int param_2)
     fread((char *)((int)&local_22 + 2),1,2,file);
     max_mem_image_ptr = (local_22 >> 0x10) + 1;
     debugmsg(s__s_maxmemimages____d_0041c023,filename,max_mem_image_ptr);
-    uVar1 = (uint)((param_2 & 1U) == 1);
-    iVar2 = param_2 - uVar1;
-    m = alloc_mem_images_1(max_mem_image_ptr,iVar2);
+    uVar2 = (uint)((param_2 & 1U) == 1);
+    iVar3 = param_2 - uVar2;
+    m = alloc_mem_images_1(max_mem_image_ptr,iVar3);
     if (m == 0) {
-      if (uVar1 == 0) {
+      if (uVar2 == 0) {
         uStack_34 = (char *)CONCAT22(uStack_34._2_2_,(undefined2)uStack_34);
         if (alloc_mem_images_ok != 0) {
-          mem_image_index_2 = 0;
+          iVar1 = 0;
           for (m = 0; uStack_34 = (char *)CONCAT22(uStack_34._2_2_,(undefined2)uStack_34),
               m < max_mem_image_ptr; m = m + 1) {
-            *(undefined4 *)(xvga_mem_images + mem_image_index_2) = 0;
-            *(undefined4 *)(xvga_mem_images + mem_image_index_2 + 0x1c) = 0;
-            *(int *)(xvga_mem_images + mem_image_index_2 + 0x18) = iVar2;
-            mem_image_index_2 = mem_image_index_2 + 0x20;
+            *(undefined4 *)(&xvga_mem_images->field_0x0 + iVar1) = 0;
+            *(undefined4 *)(&xvga_mem_images[1].field_0x0 + iVar1) = 0;
+            *(int *)(&xvga_mem_images->field_0x18 + iVar1) = iVar3;
+            iVar1 = iVar1 + 0x20;
           }
         }
       }
       else {
         init_mem_images_ok = 1;
         debugmsg(s__s_allocating_images_0041c039,filename);
-        mem_image_index = 0;
+        local_38 = 0;
         for (k = 0; k < max_mem_image_ptr; k = k + 1) {
           debugmsg(s__s_allocating_image__d_0041c04f,filename,k);
           fread((char *)((int)&local_2e + 2),1,2,file);
           fread((char *)((int)&local_2a + 2),1,2,file);
           fread((char *)&sStack_30,1,2,file);
           fread((char *)((int)&local_26 + 2),1,2,file);
-          m = mem_image_index;
-          *(int *)(xvga_mem_images + mem_image_index + 8) = local_2e >> 0x10;
-          *(int *)(xvga_mem_images + mem_image_index + 0xc) = local_2a >> 0x10;
-          *(int *)(xvga_mem_images + mem_image_index + 0x10) = (int)sStack_30;
-          *(int *)(xvga_mem_images + mem_image_index + 0x14) = local_26 >> 0x10;
+          m = local_38;
+          *(int *)(&xvga_mem_images->field_0x8 + local_38) = local_2e >> 0x10;
+          *(int *)(&xvga_mem_images->field_0xc + local_38) = local_2a >> 0x10;
+          *(int *)(&xvga_mem_images->field_0x10 + local_38) = (int)sStack_30;
+          *(int *)(&xvga_mem_images->field_0x14 + local_38) = local_26 >> 0x10;
           alloc_mem_image(k);
           lock_mem_image_1(k,&local_48);
-          pcVar3 = *(char **)(xvga_mem_images + m);
+          pcVar4 = *(char **)(&xvga_mem_images->field_0x0 + m);
           if (pf_conversion_mode == 0) {
             for (m = 0; m < local_2a >> 0x10; m = m + 1) {
-              uStack_34 = pcVar3;
-              fread(pcVar3,1,local_2e >> 0x10,file);
-              pcVar3 = pcVar3 + local_48;
+              uStack_34 = pcVar4;
+              fread(pcVar4,1,local_2e >> 0x10,file);
+              pcVar4 = pcVar4 + local_48;
             }
           }
           else if ((uint)pf_conversion_mode < 2) {
             for (i = 0; i < local_2a >> 0x10; i = i + 1) {
-              uStack_34 = pcVar3;
+              uStack_34 = pcVar4;
               for (m = 0; m < local_2e >> 0x10; m = m + 1) {
                 fread((char *)local_18,1,1,file);
-                iVar2 = translate_pixel((uint)local_18[0],8);
-                *(short *)pcVar3 = (short)iVar2;
-                pcVar3 = pcVar3 + 2;
+                iVar3 = translate_pixel((uint)local_18[0],8);
+                *(short *)pcVar4 = (short)iVar3;
+                pcVar4 = pcVar4 + 2;
               }
-              pcVar3 = uStack_34 + local_48;
+              pcVar4 = uStack_34 + local_48;
             }
           }
           else if (pf_conversion_mode == 2) {
             for (j = 0; j < local_2a >> 0x10; j = j + 1) {
-              uStack_34 = pcVar3;
+              uStack_34 = pcVar4;
               for (m = 0; m < local_2e >> 0x10; m = m + 1) {
                 fread((char *)local_1c,1,1,file);
-                translate_pixel_1((uint)local_1c[0],8,pcVar3);
-                pcVar3 = pcVar3 + 3;
+                translate_pixel_1((uint)local_1c[0],8,pcVar4);
+                pcVar4 = pcVar4 + 3;
               }
-              pcVar3 = uStack_34 + local_48;
+              pcVar4 = uStack_34 + local_48;
             }
           }
-          uStack_34 = pcVar3;
+          uStack_34 = pcVar4;
           unlock_mem_image(k);
           if ((*(byte *)(file + 3) & 0x20) != 0) {
             init_mem_images_ok = 0;
             fclose((int)file);
             return 0x3e9;
           }
-          mem_image_index = mem_image_index + 0x20;
+          local_38 = local_38 + 0x20;
         }
         debugmsg(s__s_allocating_images_done_0041c067,filename);
       }

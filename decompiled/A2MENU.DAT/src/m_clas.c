@@ -156,7 +156,7 @@ void __watcall mdc_open_screen(void)
   handle_wipe(2,3,600);
   show_mouse();
   mdc_display_score();
-  activate_form((fform_t *)&mdc_form);
+  activate_form(&mdc_form);
   focus_control(0);
   debugmsg(s_mdc_open_screen_____ok_00428de8);
   return;

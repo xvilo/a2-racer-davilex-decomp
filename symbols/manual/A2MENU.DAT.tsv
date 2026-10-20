@@ -5,3 +5,6 @@ address	kind	name	cc	ret	params	dtype	mangled
 # Bin2String reaches this inline constant table with a call (to get its address); it is data, not code
 004228df	function	bin2string_inline_table					
 00422994	function	bin2string_inline_table_2					
+# --- local variables: address = function entry, dtype = name in decompiled.c, params = type
+0041ac3e	local	button			button_t*	pvVar1
+0041ad0a	local	button			button_t*	piVar1

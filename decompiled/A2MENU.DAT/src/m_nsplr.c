@@ -10,7 +10,7 @@ void __watcall mns_draw_selected_slot_info(int param_1)
   char *pcVar2;
   int iVar3;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + 8) + 0xc);
+  iVar1 = *(int *)(xvga_anims->field_08 + 0xc);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mns_draw_selected_slot_i_004286a4,s_m_nsplr_cpp_00428698,0x107,1,0);
   }
@@ -49,7 +49,7 @@ void __watcall mns_draw_slot_info(int param_1)
   char *pcVar4;
   int iVar5;
   
-  iVar3 = *(int *)(*(int *)(xvga_anims + 8) + 4);
+  iVar3 = *(int *)(xvga_anims->field_08 + 4);
   debugmsg(s__s__d___mns_draw_slot_info__d___i_00428742,s_m_nsplr_cpp_00428736,0x129,param_1);
   if ((iVar3 < 0) || (max_mem_image_ptr < iVar3)) {
     fatal_exit(s__s__d___mns_draw_slot_info______C_0042877c,s_m_nsplr_cpp_00428770,299,0,0);
@@ -143,7 +143,7 @@ void __watcall mns_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   mns_print_slot(param_1);
-  activate_form((fform_t *)mns_form);
+  activate_form((form_t *)mns_form);
   return;
 }
 
@@ -239,7 +239,7 @@ LAB_00408abd:
             snd_wait(&local_1c);
           }
 LAB_00408b79:
-          activate_form((fform_t *)mns_form);
+          activate_form((form_t *)mns_form);
           goto LAB_00408d72;
         }
 LAB_004089ed:
@@ -256,7 +256,7 @@ LAB_00408a06:
       wait_enter_pressed();
       snd_wait(&local_1c);
       snd_set_volume(&mm_tune_buffer,-8000);
-      play_help((help_t *)&mns_help,1);
+      play_help(&mns_help,1);
       snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
     }
     else if (handle_form_result < 10000) {

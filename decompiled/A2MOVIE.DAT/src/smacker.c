@@ -45,23 +45,23 @@ LAB_00405de7:
 void __watcall set_smack_palette(int param_1)
 
 {
-  int iVar1;
+  char *pcVar1;
   int iVar2;
   int iVar3;
-  int smack_tag_index;
+  int iVar4;
   
   if (param_1 == 0) {
-    iVar3 = 0;
-    iVar1 = 0;
+    iVar4 = 0;
+    iVar2 = 0;
     do {
-      (&xvga_lib_palette->peRed)[iVar1] = (char)smkfile[iVar3 + 0x6c] << 2;
-      (&xvga_lib_palette->peGreen)[iVar1] = (char)smkfile[iVar3 + 0x6d] << 2;
-      iVar2 = iVar1 + 4;
-      smack_tag_index = iVar3 + 0x6e;
-      iVar3 = iVar3 + 3;
-      (&xvga_lib_palette->peBlue)[iVar1] = (char)smkfile[smack_tag_index] << 2;
-      iVar1 = iVar2;
-    } while (iVar2 != 0x400);
+      (&xvga_lib_palette->peRed)[iVar2] = (&smkfile->field_0x6c)[iVar4] << 2;
+      (&xvga_lib_palette->peGreen)[iVar2] = (&smkfile->field_0x6d)[iVar4] << 2;
+      iVar3 = iVar2 + 4;
+      pcVar1 = &smkfile->field_0x6e + iVar4;
+      iVar4 = iVar4 + 3;
+      (&xvga_lib_palette->peBlue)[iVar2] = *pcVar1 << 2;
+      iVar2 = iVar3;
+    } while (iVar3 != 0x400);
     set_xvga_palette(xvga_lib_palette,0,0x100);
     return;
   }
@@ -77,7 +77,7 @@ void __watcall smacker_next_frame_and_wait(void)
 {
   int iVar1;
   
-  if (*(int *)(smkfile + 0xc) + -1 == *(int *)(smkfile + 0x370)) {
+  if (smkfile->field_0c + -1 == smkfile->field_370) {
     smacker_playing = 0;
   }
   else {
@@ -112,14 +112,14 @@ void __watcall do_play_smacker(LONG param_1,LONG param_2,LONG param_3,LONG param
   
   rect.left = 0;
   rect.top = 0;
-  rect.bottom = *(LONG *)(smkfile + 8);
-  rect.right = *(LONG *)(smkfile + 4);
+  rect.bottom = smkfile->field_08;
+  rect.right = smkfile->field_04;
   rect_2.left = param_1;
   rect_2.top = param_2;
   rect_2.right = param_3;
   rect_2.bottom = param_4;
   while (smacker_playing != 0) {
-    if (*(int *)(smkfile + 0x68) != 0) {
+    if (smkfile->field_68 != 0) {
       set_smack_palette(param_5);
     }
     surface_ptr = get_surface_ptr(xvga_buffer_screen);
@@ -183,8 +183,8 @@ void __watcall check_smacker_keys(void)
 /* ==== 00406225 play_smacker ==== */
 
 void __watcall
-play_smacker(undefined4 param_1,int param_2,int param_3,LONG param_4,int param_5,undefined4 param_6,
-            int param_7)
+play_smacker(undefined4 param_1,int param_2,int param_3,LONG param_4,LONG param_5,undefined4 param_6
+            ,int param_7)
 
 {
   if (init_smacker_ok == 0) {
@@ -196,10 +196,10 @@ play_smacker(undefined4 param_1,int param_2,int param_3,LONG param_4,int param_5
   }
   else {
     if (param_4 == -1) {
-      param_4 = *(LONG *)(smkfile + 4);
+      param_4 = smkfile->field_04;
     }
     if (param_5 == -1) {
-      param_5 = *(int *)(smkfile + 8);
+      param_5 = smkfile->field_08;
     }
     if (param_2 == -1) {
       param_2 = (xvga_screen_xsize - param_4) / 2;
@@ -217,8 +217,8 @@ play_smacker(undefined4 param_1,int param_2,int param_3,LONG param_4,int param_5
     }
     smacker_playing = 1;
     smacker_paused = 0;
-    if ((param_4 == *(int *)(smkfile + 4)) && (param_5 == *(int *)(smkfile + 8))) {
-      param_5 = *(int *)(smkfile + 8);
+    if ((param_4 == smkfile->field_04) && (param_5 == smkfile->field_08)) {
+      param_5 = smkfile->field_08;
     }
     do_play_smacker(param_2,param_3,param_4,param_5,param_7);
     debugmsg(s_closing_smacker_0041b78e);

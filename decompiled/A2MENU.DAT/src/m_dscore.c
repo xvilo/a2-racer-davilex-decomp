@@ -8,7 +8,7 @@ int __watcall mds_af_image(int param_1,int param_2,char *param_3,int param_4)
 {
   int iVar1;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
+  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mds_af_image_____Could_n_00428560,param_3,param_4,param_2,param_1);
   }
@@ -42,50 +42,48 @@ int __watcall mds_get_current_display(int param_1)
 
 /* ==== 00407f60 mds_print_score ==== */
 
-void __watcall mds_print_score(single_score_t *single_score_4,int param_2,int param_3,int param_4)
+void __watcall mds_print_score(single_score_t *single_score,int param_2,int param_3,int param_4)
 
 {
-  ulong uVar1;
-  ulong uVar2;
-  ulong uVar3;
-  int iVar4;
+  undefined1 *puVar1;
+  undefined1 *puVar2;
+  ulonglong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  ulong uVar6;
+  int iVar7;
   int arg5;
-  single_score_t *single_score;
-  single_score_t *single_score_2;
-  single_score_t *single_score_3;
   
   if (param_4 == 0) {
-    uVar1 = 0xafaff;
-    uVar2 = 0xa0fff;
+    uVar4 = 0xafaff;
+    uVar5 = 0xa0fff;
   }
   else {
-    uVar1 = 0;
-    uVar2 = 0;
+    uVar4 = 0;
+    uVar5 = 0;
   }
   xvga_select_font(2);
   arg5 = 0;
-  iVar4 = param_3 + 0x9b;
+  iVar7 = param_3 + 0x9b;
   do {
-    uVar3 = uVar1;
-    if (*(short *)(single_score_4 + 0x26) != 0) {
-      uVar3 = uVar2;
+    uVar6 = uVar4;
+    if (single_score->field_26 != 0) {
+      uVar6 = uVar5;
     }
-    xvga_set_font_colors(2,uVar3,uVar3);
+    xvga_set_font_colors(2,uVar6,uVar6);
     arg5 = arg5 + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar4,s__2d_0042859d,arg5);
-    win_bprintf(1,param_2 + 0x52,iVar4,0x84,s__s_004285a1,single_score_4);
-    win_bprintf(1,param_2 + 0x10c,iVar4,0x96,s__9d_004285a4,*(undefined4 *)(single_score_4 + 0x28));
-    single_score = single_score_4 + 0x20;
-    single_score_3 = single_score_4 + 0x20;
-    single_score_2 = single_score_4 + 0x20;
-    single_score_4 = single_score_4 + 0x2c;
-    win_print_xy(1,param_2 + 0x1e4,iVar4,s___2_2du__2_2dm__2_2ds_004285a8,
-                 *(int *)single_score_2 / 0xe10,
+    win_print_xy(1,param_2 + 0x2c,iVar7,s__2d_0042859d,arg5);
+    win_bprintf(1,param_2 + 0x52,iVar7,0x84,s__s_004285a1,single_score);
+    win_bprintf(1,param_2 + 0x10c,iVar7,0x96,s__9d_004285a4,single_score->field_28);
+    puVar1 = &single_score->field_0x20;
+    uVar3 = (longlong)*(int *)&single_score->field_0x20 / 0x3c;
+    puVar2 = &single_score->field_0x20;
+    single_score = single_score + 1;
+    win_print_xy(1,param_2 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_004285a8,*(int *)puVar2 / 0xe10,
                  (int)((longlong)
-                       ((ulonglong)(uint)((int)((longlong)*(int *)single_score_3 / 0x3c) >> 0x1f) <<
-                        0x20 | (longlong)*(int *)single_score_3 / 0x3c & 0xffffffffU) % 0x3c),
-                 *(int *)single_score % 0x3c);
-    iVar4 = iVar4 + 0x19;
+                       ((ulonglong)(uint)((int)uVar3 >> 0x1f) << 0x20 | uVar3 & 0xffffffff) % 0x3c),
+                 *(int *)puVar1 % 0x3c);
+    iVar7 = iVar7 + 0x19;
   } while (arg5 < 10);
   return;
 }
@@ -93,52 +91,49 @@ void __watcall mds_print_score(single_score_t *single_score_4,int param_2,int pa
 
 /* ==== 0040808e mds_print_hiscore ==== */
 
-void __watcall
-mds_print_hiscore(single_score_t *single_score_4,int param_2,int param_3,int param_4)
+void __watcall mds_print_hiscore(single_score_t *single_score,int param_2,int param_3,int param_4)
 
 {
-  ulong uVar1;
-  ulong uVar2;
-  ulong uVar3;
-  int iVar4;
+  undefined1 *puVar1;
+  undefined1 *puVar2;
+  ulonglong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  ulong uVar6;
+  int iVar7;
   int arg5;
-  single_score_t *single_score;
-  single_score_t *single_score_2;
-  single_score_t *single_score_3;
   
   if (param_4 == 0) {
-    uVar1 = 0xafaff;
-    uVar2 = 0xa0fff;
+    uVar4 = 0xafaff;
+    uVar5 = 0xa0fff;
   }
   else {
-    uVar1 = 0;
-    uVar2 = 0;
+    uVar4 = 0;
+    uVar5 = 0;
   }
   xvga_select_font(2);
   arg5 = 0;
-  iVar4 = param_3 + 0x9b;
+  iVar7 = param_3 + 0x9b;
   do {
-    uVar3 = uVar1;
-    if (*(short *)(single_score_4 + 0x26) != 0) {
-      uVar3 = uVar2;
+    uVar6 = uVar4;
+    if (single_score->field_26 != 0) {
+      uVar6 = uVar5;
     }
-    xvga_set_font_colors(2,uVar3,uVar3);
+    xvga_set_font_colors(2,uVar6,uVar6);
     arg5 = arg5 + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar4,s__2d_004285be,arg5);
-    win_bprintf(1,param_2 + 0x52,iVar4,0x84,s__s_004285c2,single_score_4);
-    win_print_xy(1,param_2 + 0xe0,iVar4,s__s_004285c5,
-                 (&level_naam)[*(int *)(single_score_4 + 0x22) >> 0x10]);
-    single_score = single_score_4 + 0x20;
-    single_score_3 = single_score_4 + 0x20;
-    single_score_2 = single_score_4 + 0x20;
-    single_score_4 = single_score_4 + 0x2c;
-    win_print_xy(1,param_2 + 0x1e4,iVar4,s___2_2du__2_2dm__2_2ds_004285c8,
-                 *(int *)single_score_2 / 0xe10,
+    win_print_xy(1,param_2 + 0x2c,iVar7,s__2d_004285be,arg5);
+    win_bprintf(1,param_2 + 0x52,iVar7,0x84,s__s_004285c2,single_score);
+    win_print_xy(1,param_2 + 0xe0,iVar7,s__s_004285c5,(&level_naam)[single_score->field_22 >> 0x10])
+    ;
+    puVar1 = &single_score->field_0x20;
+    uVar3 = (longlong)*(int *)&single_score->field_0x20 / 0x3c;
+    puVar2 = &single_score->field_0x20;
+    single_score = single_score + 1;
+    win_print_xy(1,param_2 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_004285c8,*(int *)puVar2 / 0xe10,
                  (int)((longlong)
-                       ((ulonglong)(uint)((int)((longlong)*(int *)single_score_3 / 0x3c) >> 0x1f) <<
-                        0x20 | (longlong)*(int *)single_score_3 / 0x3c & 0xffffffffU) % 0x3c),
-                 *(int *)single_score % 0x3c);
-    iVar4 = iVar4 + 0x19;
+                       ((ulonglong)(uint)((int)uVar3 >> 0x1f) << 0x20 | uVar3 & 0xffffffff) % 0x3c),
+                 *(int *)puVar1 % 0x3c);
+    iVar7 = iVar7 + 0x19;
   } while (arg5 < 10);
   return;
 }
@@ -199,7 +194,7 @@ void __watcall mds_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   mds_display_score(param_1);
-  activate_form((fform_t *)&mds_form);
+  activate_form(&mds_form);
   focus_control(0);
   debugmsg(s_mds_open_screen_____ok_0042864e);
   return;

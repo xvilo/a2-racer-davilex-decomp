@@ -232,7 +232,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 0040b145	function	get_control_pointer_1	__watcall	void*	int		W?get_control_pointer$n(i)pnv	pattern
 0040b188	function	call_help_function	__watcall	void	int		W?call_help_function$n(i)v	pattern
 0040b240	function	destroy_form	__watcall	void			W?destroy_form$n()v	pattern
-0040b2b6	function	activate_form	__watcall	void	fform_t*		W?activate_form$n(pn$__2e8n7fform_t$$)v	pattern
+0040b2b6	function	activate_form	__watcall	void	form_t*		W?activate_form$n(pn$__2e8n7fform_t$$)v	pattern
 0040b362	function	draw_form_animfocus_buttons	__watcall	int			W?draw_form_animfocus_buttons$n()i	pattern
 0040b3aa	function	check_form_key_pressed	__watcall	void	int		W?check_form_key_pressed$n(i)v	pattern
 0040b4fa	function	handle_form	__watcall	int			W?handle_form$n()i	pattern
@@ -434,45 +434,45 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 00410ee1	function	clear_edit_keys_allowed	__watcall	void			W?clear_edit_keys_allowed$n()v	call
 00410ee6	function	set_edit_keys_allowed	__watcall	void	char*		W?set_edit_keys_allowed$n(pna)v	pattern
 00410f3b	function	get_edit_box_text	__watcall	void	int|char*|int		W?get_edit_box_text$n(ipnai)v	pattern
-00410f84	function	set_edit_box_colors	__watcall	void	fedit_box_t*|ulong|ulong|ulong|ulong		W?set_edit_box_colors$n(pn$__2u792fedit_box_t$$ulululul)v	pattern
-00410fdd	function	draw_help_editbox	__watcall	void	fform_t*		W?draw_help_editbox$n(pn$__2e8n7fform_t$$)v	reference
-0041101b	function	destroy_edit_box	__watcall	void	fform_t*		W?destroy_edit_box$n(pn$__2e8n7fform_t$$)v	pattern
-0041106a	function	create_edit_box	__watcall	void	fform_t*|int		W?create_edit_box$n(pn$__2e8n7fform_t$$i)v	pattern
+00410f84	function	set_edit_box_colors	__watcall	void	edit_box_t*|ulong|ulong|ulong|ulong		W?set_edit_box_colors$n(pn$__2u792fedit_box_t$$ulululul)v	pattern
+00410fdd	function	draw_help_editbox	__watcall	void	form_t*		W?draw_help_editbox$n(pn$__2e8n7fform_t$$)v	reference
+0041101b	function	destroy_edit_box	__watcall	void	form_t*		W?destroy_edit_box$n(pn$__2e8n7fform_t$$)v	pattern
+0041106a	function	create_edit_box	__watcall	void	form_t*|int		W?create_edit_box$n(pn$__2e8n7fform_t$$i)v	pattern
 004112ea	function	set_windows_edit_box_colors	__watcall	long	void*|void*		W?set_windows_edit_box_colors$n(pnvpnv)l	pattern
 0041134f	function	EditWindowProc	__watcall	long	void*|uint|uint|long		W?EditWindowProc$n(pnvuiuil)l	pattern
-0041149c	function	check_button_hotkey	__watcall	int	fform_t*|int		W?check_button_hotkey$n(pn$__2e8n7fform_t$$i)i	reference
-004114b2	function	draw_focus_anim_button	__watcall	void	fform_t*		W?draw_focus_anim_button$n(pn$__2e8n7fform_t$$)v	pattern
-00411552	function	destroy_button	__watcall	void	fform_t*		W?destroy_button$n(pn$__2e8n7fform_t$$)v	pattern
-0041157e	function	create_button	__watcall	void	fform_t*|int		W?create_button$n(pn$__2e8n7fform_t$$i)v	pattern
-004116d7	function	draw_help_button	__watcall	void	fform_t*		W?draw_help_button$n(pn$__2e8n7fform_t$$)v	pattern
+0041149c	function	check_button_hotkey	__watcall	int	form_t*|int		W?check_button_hotkey$n(pn$__2e8n7fform_t$$i)i	reference
+004114b2	function	draw_focus_anim_button	__watcall	void	form_t*		W?draw_focus_anim_button$n(pn$__2e8n7fform_t$$)v	pattern
+00411552	function	destroy_button	__watcall	void	form_t*		W?destroy_button$n(pn$__2e8n7fform_t$$)v	pattern
+0041157e	function	create_button	__watcall	void	form_t*|int		W?create_button$n(pn$__2e8n7fform_t$$i)v	pattern
+004116d7	function	draw_help_button	__watcall	void	form_t*		W?draw_help_button$n(pn$__2e8n7fform_t$$)v	pattern
 00411763	function	draw_button	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_button$n(pn$tagDRAWITEMSTRUCT$$)v	pattern
 00411856	function	ButtonWindowProc	__watcall	long	void*|uint|uint|long		W?ButtonWindowProc$n(pnvuiuil)l	pattern
-00411998	function	check_togglebutton_hotkey	__watcall	int	fform_t*|int		W?check_togglebutton_hotkey$n(pn$__2e8n7fform_t$$i)i	reference
+00411998	function	check_togglebutton_hotkey	__watcall	int	form_t*|int		W?check_togglebutton_hotkey$n(pn$__2e8n7fform_t$$i)i	reference
 004119ae	function	get_togglebutton_togglestate	__watcall	int	int		W?get_togglebutton_togglestate$n(i)i	pattern
 00411a00	function	set_togglebutton_togglestate	__watcall	void	int|int		W?set_togglebutton_togglestate$n(ii)v	pattern
-00411a8e	function	destroy_togglebutton	__watcall	void	fform_t*		W?destroy_togglebutton$n(pn$__2e8n7fform_t$$)v	pattern
-00411aba	function	create_togglebutton	__watcall	void	fform_t*|int		W?create_togglebutton$n(pn$__2e8n7fform_t$$i)v	pattern
-00411b96	function	draw_help_togglebutton	__watcall	void	fform_t*		W?draw_help_togglebutton$n(pn$__2e8n7fform_t$$)v	pattern
+00411a8e	function	destroy_togglebutton	__watcall	void	form_t*		W?destroy_togglebutton$n(pn$__2e8n7fform_t$$)v	pattern
+00411aba	function	create_togglebutton	__watcall	void	form_t*|int		W?create_togglebutton$n(pn$__2e8n7fform_t$$i)v	pattern
+00411b96	function	draw_help_togglebutton	__watcall	void	form_t*		W?draw_help_togglebutton$n(pn$__2e8n7fform_t$$)v	pattern
 00411bfa	function	draw_togglebutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_togglebutton$n(pn$tagDRAWITEMSTRUCT$$)v	pattern
 00411d2e	function	ToggleButtonWindowProc	__watcall	long	void*|uint|uint|long		W?ToggleButtonWindowProc$n(pnvuiuil)l	pattern
-00411e6c	function	check_areabutton_hotkey	__watcall	int	fform_t*|int		W?check_areabutton_hotkey$n(pn$__2e8n7fform_t$$i)i	pattern
-00411e82	function	destroy_areabutton	__watcall	void	fform_t*		W?destroy_areabutton$n(pn$__2e8n7fform_t$$)v	pattern
-00411eae	function	create_areabutton	__watcall	void	fform_t*|int		W?create_areabutton$n(pn$__2e8n7fform_t$$i)v	pattern
-00412012	function	draw_help_areabutton	__watcall	void	fform_t*		W?draw_help_areabutton$n(pn$__2e8n7fform_t$$)v	reference
+00411e6c	function	check_areabutton_hotkey	__watcall	int	form_t*|int		W?check_areabutton_hotkey$n(pn$__2e8n7fform_t$$i)i	pattern
+00411e82	function	destroy_areabutton	__watcall	void	form_t*		W?destroy_areabutton$n(pn$__2e8n7fform_t$$)v	pattern
+00411eae	function	create_areabutton	__watcall	void	form_t*|int		W?create_areabutton$n(pn$__2e8n7fform_t$$i)v	pattern
+00412012	function	draw_help_areabutton	__watcall	void	form_t*		W?draw_help_areabutton$n(pn$__2e8n7fform_t$$)v	reference
 00412050	function	draw_areabutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_areabutton$n(pn$tagDRAWITEMSTRUCT$$)v	pattern
 00412091	function	AreaButtonWindowProc	__watcall	long	void*|uint|uint|long		W?AreaButtonWindowProc$n(pnvuiuil)l	pattern
-00412194	function	check_animbutton_hotkey	__watcall	int	fform_t*|int		W?check_animbutton_hotkey$n(pn$__2e8n7fform_t$$i)i	pattern
-004121aa	function	destroy_animbutton	__watcall	void	fform_t*		W?destroy_animbutton$n(pn$__2e8n7fform_t$$)v	reference
-004121d6	function	create_animbutton	__watcall	void	fform_t*|int		W?create_animbutton$n(pn$__2e8n7fform_t$$i)v	pattern
+00412194	function	check_animbutton_hotkey	__watcall	int	form_t*|int		W?check_animbutton_hotkey$n(pn$__2e8n7fform_t$$i)i	pattern
+004121aa	function	destroy_animbutton	__watcall	void	form_t*		W?destroy_animbutton$n(pn$__2e8n7fform_t$$)v	reference
+004121d6	function	create_animbutton	__watcall	void	form_t*|int		W?create_animbutton$n(pn$__2e8n7fform_t$$i)v	pattern
 004122c0	function	draw_animation_animbutton	__watcall	void	int|int|int|int		W?draw_animation_animbutton$n(iiii)v	pattern
-004123ac	function	draw_help_animbutton	__watcall	void	fform_t*		W?draw_help_animbutton$n(pn$__2e8n7fform_t$$)v	pattern
+004123ac	function	draw_help_animbutton	__watcall	void	form_t*		W?draw_help_animbutton$n(pn$__2e8n7fform_t$$)v	pattern
 004124b0	function	draw_animbutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_animbutton$n(pn$tagDRAWITEMSTRUCT$$)v	pattern
 0041269b	function	AnimButtonWindowProc	__watcall	long	void*|uint|uint|long		W?AnimButtonWindowProc$n(pnvuiuil)l	pattern
-00412800	function	check_radiobutton_hotkey	__watcall	int	fform_t*|int		W?check_radiobutton_hotkey$n(pn$__2e8n7fform_t$$i)i	reference
-00412816	function	destroy_radiobutton	__watcall	void	fform_t*		W?destroy_radiobutton$n(pn$__2e8n7fform_t$$)v	reference
-00412842	function	create_radiobutton	__watcall	void	fform_t*|int		W?create_radiobutton$n(pn$__2e8n7fform_t$$i)v	pattern
+00412800	function	check_radiobutton_hotkey	__watcall	int	form_t*|int		W?check_radiobutton_hotkey$n(pn$__2e8n7fform_t$$i)i	reference
+00412816	function	destroy_radiobutton	__watcall	void	form_t*		W?destroy_radiobutton$n(pn$__2e8n7fform_t$$)v	reference
+00412842	function	create_radiobutton	__watcall	void	form_t*|int		W?create_radiobutton$n(pn$__2e8n7fform_t$$i)v	pattern
 0041294c	function	unselect_radiobutton	__watcall	void	int		W?unselect_radiobutton$n(i)v	pattern
-004129ec	function	draw_help_radiobutton	__watcall	void	fform_t*		W?draw_help_radiobutton$n(pn$__2e8n7fform_t$$)v	pattern
+004129ec	function	draw_help_radiobutton	__watcall	void	form_t*		W?draw_help_radiobutton$n(pn$__2e8n7fform_t$$)v	pattern
 00412a49	function	draw_radiobutton	__watcall	void	tagDRAWITEMSTRUCT*		W?draw_radiobutton$n(pn$tagDRAWITEMSTRUCT$$)v	pattern
 00412b8f	function	RadioButtonWindowProc	__watcall	long	void*|uint|uint|long		W?RadioButtonWindowProc$n(pnvuiuil)l	pattern
 00412cca	function	flushall_1	__watcall		?		__flushall_	pattern
@@ -826,7 +826,7 @@ address	kind	name	cc	ret	params	dtype	mangled	evidence
 004215ec	data	init_animation_ok			?	int	W?init_animation_ok$ni	reference
 004215f0	data	form_anim_counter			?	int	W?form_anim_counter$ni	reference
 004215f4	data	nmb_of_controls			?	int	W?nmb_of_controls$ni	reference
-004215f8	data	activeform			?	fform_t*	W?activeform$npn$__2e8n7fform_t$$	reference
+004215f8	data	activeform			?	form_t*	W?activeform$npn$__2e8n7fform_t$$	reference
 004215fc	data	formdis			?	tagDRAWITEMSTRUCT	W?formdis$n$tagDRAWITEMSTRUCT$$	reference
 0042162c	data	res_fp			?	__iobuf*	W?res_fp$npn$__iobuf$$	reference
 00421630	data	data_fp			?	__iobuf*	W?data_fp$npn$__iobuf$$	reference

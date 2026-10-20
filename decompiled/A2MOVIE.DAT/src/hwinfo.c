@@ -18,7 +18,7 @@ int __watcall xvga_get_first_cdrom(void)
     if (max_xvga_drive_list * 8 <= iVar1) {
       return -1;
     }
-    if (*(int *)(xvga_drive_list + iVar1 + 4) == 3) break;
+    if (*(int *)(&xvga_drive_list[1].field_0x0 + iVar1) == 3) break;
     iVar1 = iVar1 + 8;
     i = i + 1;
   }
@@ -32,10 +32,10 @@ int __watcall xvga_init_drive_info(int param_1)
 
 {
   UINT UVar1;
-  int drive_info_index;
+  int iVar2;
   int j;
   int i;
-  char *pcVar2;
+  char *pcVar3;
   char local_7c [100];
   
   if (init_drive_list_ok == 0) {
@@ -45,48 +45,48 @@ int __watcall xvga_init_drive_info(int param_1)
     }
     i = 0x41;
     j = 0;
-    drive_info_index = 0;
+    iVar2 = 0;
     max_xvga_drive_list = param_1;
     while( true ) {
       if (param_1 <= j) break;
       sprintf(local_7c,s__c___0041cb4f,i);
-      *(int *)(xvga_drive_list + drive_info_index) = j;
+      *(int *)(&xvga_drive_list->field_0x0 + iVar2) = j;
       UVar1 = GetDriveTypeA(local_7c);
       switch(UVar1) {
       case 0:
-        *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 0;
-        pcVar2 = s__s___UNAVAILABLE_0041cb54;
+        *(undefined4 *)(&xvga_drive_list[1].field_0x0 + iVar2) = 0;
+        pcVar3 = s__s___UNAVAILABLE_0041cb54;
         break;
       case 1:
-        *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 0;
-        pcVar2 = s__s___UNAVAILABLE_0041cb66;
+        *(undefined4 *)(&xvga_drive_list[1].field_0x0 + iVar2) = 0;
+        pcVar3 = s__s___UNAVAILABLE_0041cb66;
         break;
       case 2:
-        *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 1;
-        pcVar2 = s__s___FLOPPY_0041cba6;
+        *(undefined4 *)(&xvga_drive_list[1].field_0x0 + iVar2) = 1;
+        pcVar3 = s__s___FLOPPY_0041cba6;
         break;
       case 3:
-        *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 2;
-        pcVar2 = s__s___HDD_0041cb92;
+        *(undefined4 *)(&xvga_drive_list[1].field_0x0 + iVar2) = 2;
+        pcVar3 = s__s___HDD_0041cb92;
         break;
       case 4:
-        *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 4;
-        pcVar2 = s__s___NETWORK_0041cb78;
+        *(undefined4 *)(&xvga_drive_list[1].field_0x0 + iVar2) = 4;
+        pcVar3 = s__s___NETWORK_0041cb78;
         break;
       case 5:
-        *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 3;
-        pcVar2 = s__s___CDROM_0041cb86;
+        *(undefined4 *)(&xvga_drive_list[1].field_0x0 + iVar2) = 3;
+        pcVar3 = s__s___CDROM_0041cb86;
         break;
       case 6:
-        *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 5;
-        pcVar2 = s__s___RAM_0041cb9c;
+        *(undefined4 *)(&xvga_drive_list[1].field_0x0 + iVar2) = 5;
+        pcVar3 = s__s___RAM_0041cb9c;
         break;
       default:
         goto switchD_004090aa_default;
       }
-      debugmsg(pcVar2,local_7c);
+      debugmsg(pcVar3,local_7c);
 switchD_004090aa_default:
-      drive_info_index = drive_info_index + 8;
+      iVar2 = iVar2 + 8;
       i = i + 1;
       j = j + 1;
     }
@@ -270,72 +270,72 @@ int __watcall get_new_dd_info(void)
 int enum_dd_device(_GUID *guid,char *param_2,char *param_3,void *param_4)
 
 {
+  char cVar1;
   int new_dd_info;
-  int iVar1;
-  char *found;
-  dd_info_t *dd_info_2;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  dd_info_t *dd_info_3;
-  byte bVar4;
-  dd_info_t dd_info;
+  int iVar2;
+  char *pcVar3;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  char *pcVar6;
+  undefined4 *puVar7;
+  undefined4 *puVar8;
+  byte bVar9;
   
-  bVar4 = 0;
+  bVar9 = 0;
   new_dd_info = get_new_dd_info();
   if (new_dd_info == -1) {
     new_dd_info = 0;
   }
   else {
     debugmsg(s__s___s_0041cda0,param_2,param_3);
-    dd_info_3 = dd_info_ptr + new_dd_info * 0xd8 + 0x10;
+    pcVar6 = &dd_info_ptr[new_dd_info * 0x24 + 2].field_04;
     do {
-      dd_info = (dd_info_t)*param_2;
-      *dd_info_3 = dd_info;
-      if (dd_info == (dd_info_t)0x0) break;
-      dd_info = *(dd_info_t *)(param_2 + 1);
+      cVar1 = *param_2;
+      *pcVar6 = cVar1;
+      if (cVar1 == '\0') break;
+      cVar1 = param_2[1];
       param_2 = param_2 + 2;
-      dd_info_3[1] = dd_info;
-      dd_info_3 = dd_info_3 + 2;
-    } while (dd_info != (dd_info_t)0x0);
-    dd_info_3 = dd_info_ptr + new_dd_info * 0xd8 + 0x74;
-    dd_info_2 = (dd_info_t *)param_3;
+      pcVar6[1] = cVar1;
+      pcVar6 = pcVar6 + 2;
+    } while (cVar1 != '\0');
+    pcVar6 = &dd_info_ptr[new_dd_info * 0x24 + 0x13].field_02;
+    pcVar3 = param_3;
     do {
-      dd_info = *dd_info_2;
-      *dd_info_3 = dd_info;
-      if (dd_info == (dd_info_t)0x0) break;
-      dd_info = dd_info_2[1];
-      dd_info_2 = dd_info_2 + 2;
-      dd_info_3[1] = dd_info;
-      dd_info_3 = dd_info_3 + 2;
-    } while (dd_info != (dd_info_t)0x0);
-    iVar1 = strnicmp((byte *)param_3,s_DD3Dfx_0041cda8,6);
-    if (iVar1 == 0) {
+      cVar1 = *pcVar3;
+      *pcVar6 = cVar1;
+      if (cVar1 == '\0') break;
+      cVar1 = pcVar3[1];
+      pcVar3 = pcVar3 + 2;
+      pcVar6[1] = cVar1;
+      pcVar6 = pcVar6 + 2;
+    } while (cVar1 != '\0');
+    iVar2 = strnicmp((byte *)param_3,s_DD3Dfx_0041cda8,6);
+    if (iVar2 == 0) {
       debugmsg(s_dd3ddfx_driver_found__d_0041cdaf,new_dd_info);
       d3dfx_dd_driver_index = new_dd_info;
     }
-    iVar1 = strnicmp((byte *)param_3,s_R3D_0041cdc8,3);
-    if (iVar1 == 0) {
+    iVar2 = strnicmp((byte *)param_3,s_R3D_0041cdc8,3);
+    if (iVar2 == 0) {
       debugmsg(s_Righteous_dd3ddfx_driver_found___0041cdcc,new_dd_info);
       d3dfx_dd_driver_index = new_dd_info;
     }
-    found = strrchr(param_3,0x2e);
-    if (found != (char *)0x0) {
-      iVar1 = stricmp((byte *)param_3,(byte *)s__VXD_0041cdef);
-      if (iVar1 == 0) {
+    pcVar6 = strrchr(param_3,0x2e);
+    if (pcVar6 != (char *)0x0) {
+      iVar2 = stricmp((byte *)param_3,(byte *)s__VXD_0041cdef);
+      if (iVar2 == 0) {
         debugmsg(s_secondary_driver_found__d_0041cdf4,new_dd_info);
         secondary_dd_driver_index = new_dd_info;
       }
     }
     if (guid != (_GUID *)0x0) {
-      dd_info_3 = dd_info_ptr + new_dd_info * 0xd8;
-      dd_info_2 = dd_info_3 + (uint)bVar4 * -8 + 4;
-      puVar2 = (undefined4 *)((int)guid + (uint)bVar4 * -8 + 4);
-      *(ulong *)dd_info_3 = guid->Data1;
-      puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
-      *(undefined4 *)dd_info_2 = *puVar2;
-      *(undefined4 *)(dd_info_2 + (uint)bVar4 * -8 + 4) = *puVar3;
-      *(undefined4 *)(dd_info_2 + (uint)bVar4 * -8 + 4 + (uint)bVar4 * -8 + 4) =
-           puVar3[(uint)bVar4 * -2 + 1];
+      puVar7 = (undefined4 *)((int)(dd_info_ptr + new_dd_info * 0x24) + (uint)bVar9 * -8 + 4);
+      puVar4 = (undefined4 *)((int)guid + (uint)bVar9 * -8 + 4);
+      *(ulong *)(dd_info_ptr + new_dd_info * 0x24) = guid->Data1;
+      puVar8 = puVar7 + (uint)bVar9 * -2 + 1;
+      puVar5 = puVar4 + (uint)bVar9 * -2 + 1;
+      *puVar7 = *puVar4;
+      *puVar8 = *puVar5;
+      puVar8[(uint)bVar9 * -2 + 1] = puVar5[(uint)bVar9 * -2 + 1];
     }
     new_dd_info = 1;
   }
@@ -398,7 +398,7 @@ LAB_0040961e:
   debugmsg(pcVar2,d3dfx_dd_driver_index);
   iVar1 = d3dfx_dd_driver_index;
 LAB_00409629:
-  return (_GUID *)(dd_info_ptr + iVar1 * 0xd8);
+  return (_GUID *)(dd_info_ptr + iVar1 * 0x24);
 }
 
 

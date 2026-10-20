@@ -152,7 +152,7 @@ void __watcall mdt_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   mdt_display_score(param_1);
-  activate_form((fform_t *)&mdt_form);
+  activate_form(&mdt_form);
   focus_control(0);
   debugmsg(s_mdt_open_screen_____ok_00428c22);
   return;

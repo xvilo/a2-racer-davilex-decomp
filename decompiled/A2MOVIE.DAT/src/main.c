@@ -81,8 +81,8 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   char *file_path_result;
   LONG LVar2;
   uint uVar3;
-  undefined4 uVar4;
-  int iVar5;
+  LONG LVar4;
+  undefined4 uVar5;
   
   set_ini_filename(s_movie_ini_00418004);
   uVar3 = 0;
@@ -137,17 +137,17 @@ LAB_00401137:
   }
   if (uVar3 == 0) {
     LVar2 = 0x140;
-    iVar1 = 200;
+    LVar4 = 200;
   }
   else {
     if (2 < uVar3) goto LAB_00401228;
     LVar2 = 0x280;
-    iVar1 = 0x1e0;
+    LVar4 = 0x1e0;
   }
-  iVar5 = 0;
-  uVar4 = 1;
+  iVar1 = 0;
+  uVar5 = 1;
   file_path_result = file_path(&DAT_00421010,lpCmdLine);
-  play_smacker(file_path_result,0,0,LVar2,iVar1,uVar4,iVar5);
+  play_smacker(file_path_result,0,0,LVar2,LVar4,uVar5,iVar1);
 LAB_00401228:
   xvga_exit_sound();
   exit_xvga_lib();

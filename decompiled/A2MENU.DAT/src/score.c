@@ -196,11 +196,11 @@ int __watcall add_new_hiscore(char *param_1,int param_2,int param_3,int param_4)
   int j;
   int *extraout_EDX;
   int i;
-  score_t *score;
   int *piVar1;
   undefined4 *puVar2;
   int *piVar3;
-  byte bVar4;
+  undefined4 *puVar4;
+  byte bVar5;
   int local_2a8 [8];
   int local_288;
   undefined2 local_284;
@@ -210,7 +210,7 @@ int __watcall add_new_hiscore(char *param_1,int param_2,int param_3,int param_4)
   int local_14;
   int local_10;
   
-  bVar4 = 0;
+  bVar5 = 0;
   debugmsg(s__s__d___add_new_hiscore____s___d_00426821,s_score_cpp_00426817,0x101,param_1,param_2,
            param_3);
   i = 0;
@@ -220,12 +220,12 @@ int __watcall add_new_hiscore(char *param_1,int param_2,int param_3,int param_4)
     check_score_idx = check_score_index(i,s_score_cpp_0042686c,0x104);
     *(undefined2 *)(&DAT_004321ba + check_score_idx * 0x2c) = 0;
     check_score_idx = check_score_index(i,s_score_cpp_00426876,0x105);
-    score = &score_list + check_score_idx * 0x2c;
-    puVar2 = (undefined4 *)((int)local_2a8 + local_10);
+    puVar2 = (undefined4 *)(&score_list + check_score_idx * 0x2c);
+    puVar4 = (undefined4 *)((int)local_2a8 + local_10);
     for (j = 0xb; j != 0; j = j + -1) {
-      *puVar2 = *(undefined4 *)score;
-      score = score + ((uint)bVar4 * -2 + 1) * 4;
-      puVar2 = puVar2 + (uint)bVar4 * -2 + 1;
+      *puVar4 = *puVar2;
+      puVar2 = puVar2 + (uint)bVar5 * -2 + 1;
+      puVar4 = puVar4 + (uint)bVar5 * -2 + 1;
     }
     local_10 = local_10 + 0x2c;
     i = i + 1;
@@ -235,8 +235,8 @@ int __watcall add_new_hiscore(char *param_1,int param_2,int param_3,int param_4)
   piVar3 = local_f0;
   for (i = 0xb; i != 0; i = i + -1) {
     *piVar3 = *piVar1;
-    piVar1 = piVar1 + (uint)bVar4 * -2 + 1;
-    piVar3 = piVar3 + (uint)bVar4 * -2 + 1;
+    piVar1 = piVar1 + (uint)bVar5 * -2 + 1;
+    piVar3 = piVar3 + (uint)bVar5 * -2 + 1;
   }
   strncpy((char *)local_2a8,param_1,0x20);
   local_284 = (undefined2)param_3;
@@ -253,11 +253,11 @@ int __watcall add_new_hiscore(char *param_1,int param_2,int param_3,int param_4)
     puVar2 = (undefined4 *)((int)local_2a8 + local_14);
     i = i + 1;
     local_14 = local_14 + 0x2c;
-    score = &score_list + check_score_idx * 0x2c;
+    puVar4 = (undefined4 *)(&score_list + check_score_idx * 0x2c);
     for (j = 0xb; j != 0; j = j + -1) {
-      *(undefined4 *)score = *puVar2;
-      puVar2 = puVar2 + (uint)bVar4 * -2 + 1;
-      score = score + ((uint)bVar4 * -2 + 1) * 4;
+      *puVar4 = *puVar2;
+      puVar2 = puVar2 + (uint)bVar5 * -2 + 1;
+      puVar4 = puVar4 + (uint)bVar5 * -2 + 1;
     }
   } while (i < 10);
   i = get_last_entered_hiscore();

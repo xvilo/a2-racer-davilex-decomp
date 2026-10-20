@@ -12,50 +12,59 @@ void __watcall resolve_collision(int racer_a,int racer_b)
   float fVar4;
   float fVar5;
   float fVar6;
-  int opponent_index;
+  int racers_collide_result;
   float local_18;
-  int opponent_index_2;
+  opponent_t *opponent_index;
+  opponent_t *opponent_index_2;
   
   opponent_index_2 = racers[racer_a].opponent;
   opponent_index = racers[racer_b].opponent;
-  fVar1 = opponent_data[opponent_index_2].offset_x;
-  fVar2 = opponent_data[opponent_index_2].offset_z;
-  fVar4 = opponent_data[opponent_index_2].mass + opponent_data[opponent_index].mass;
-  fVar3 = (opponent_data[opponent_index].mass * opponent_data[opponent_index].offset_x +
-          opponent_data[opponent_index_2].mass * fVar1) / fVar4;
-  fVar4 = (opponent_data[opponent_index].mass * opponent_data[opponent_index].offset_z +
-          opponent_data[opponent_index_2].mass * fVar2) / fVar4;
+  fVar1 = opponent_data[(int)opponent_index_2].offset_x;
+  fVar2 = opponent_data[(int)opponent_index_2].offset_z;
+  fVar4 = opponent_data[(int)opponent_index_2].mass + opponent_data[(int)opponent_index].mass;
+  fVar3 = (opponent_data[(int)opponent_index].mass * opponent_data[(int)opponent_index].offset_x +
+          opponent_data[(int)opponent_index_2].mass * fVar1) / fVar4;
+  fVar4 = (opponent_data[(int)opponent_index].mass * opponent_data[(int)opponent_index].offset_z +
+          opponent_data[(int)opponent_index_2].mass * fVar2) / fVar4;
   fVar6 = (fVar3 - fVar1) + fVar3;
   fVar5 = (fVar4 - fVar2) + fVar4;
-  fVar3 = (fVar3 - opponent_data[opponent_index].offset_x) + fVar3;
-  fVar4 = (fVar4 - opponent_data[opponent_index].offset_z) + fVar4;
-  opponent_data[opponent_index_2].push_x = fVar6 * 0.6 + opponent_data[opponent_index_2].push_x;
-  opponent_data[opponent_index_2].push_z = fVar5 * 0.6 + opponent_data[opponent_index_2].push_z;
-  if ((10.0 < ABS(opponent_data[opponent_index_2].push_x)) ||
-     (10.0 < ABS(opponent_data[opponent_index_2].push_z))) {
-    opponent_data[opponent_index_2].push_x = opponent_data[opponent_index_2].push_x - fVar6 * 0.6;
-    opponent_data[opponent_index_2].push_z = opponent_data[opponent_index_2].push_z - fVar5 * 0.6;
+  fVar3 = (fVar3 - opponent_data[(int)opponent_index].offset_x) + fVar3;
+  fVar4 = (fVar4 - opponent_data[(int)opponent_index].offset_z) + fVar4;
+  opponent_data[(int)opponent_index_2].push_x =
+       fVar6 * 0.6 + opponent_data[(int)opponent_index_2].push_x;
+  opponent_data[(int)opponent_index_2].push_z =
+       fVar5 * 0.6 + opponent_data[(int)opponent_index_2].push_z;
+  if ((10.0 < ABS(opponent_data[(int)opponent_index_2].push_x)) ||
+     (10.0 < ABS(opponent_data[(int)opponent_index_2].push_z))) {
+    opponent_data[(int)opponent_index_2].push_x =
+         opponent_data[(int)opponent_index_2].push_x - fVar6 * 0.6;
+    opponent_data[(int)opponent_index_2].push_z =
+         opponent_data[(int)opponent_index_2].push_z - fVar5 * 0.6;
   }
-  opponent_data[opponent_index].push_x = fVar3 * 0.6 + opponent_data[opponent_index].push_x;
-  opponent_data[opponent_index].push_z = fVar4 * 0.6 + opponent_data[opponent_index].push_z;
-  if ((10.0 < ABS(opponent_data[opponent_index].push_x)) ||
-     (10.0 < ABS(opponent_data[opponent_index].push_z))) {
-    opponent_data[opponent_index].push_x = opponent_data[opponent_index].push_x - fVar3 * 0.6;
-    opponent_data[opponent_index].push_z = opponent_data[opponent_index].push_z - fVar4 * 0.6;
+  opponent_data[(int)opponent_index].push_x =
+       fVar3 * 0.6 + opponent_data[(int)opponent_index].push_x;
+  opponent_data[(int)opponent_index].push_z =
+       fVar4 * 0.6 + opponent_data[(int)opponent_index].push_z;
+  if ((10.0 < ABS(opponent_data[(int)opponent_index].push_x)) ||
+     (10.0 < ABS(opponent_data[(int)opponent_index].push_z))) {
+    opponent_data[(int)opponent_index].push_x =
+         opponent_data[(int)opponent_index].push_x - fVar3 * 0.6;
+    opponent_data[(int)opponent_index].push_z =
+         opponent_data[(int)opponent_index].push_z - fVar4 * 0.6;
   }
-  opponent_index = racers_collide(racer_a,racer_b);
-  if (opponent_index != 0) {
+  racers_collide_result = racers_collide(racer_a,racer_b);
+  if (racers_collide_result != 0) {
     for (local_18 = 0.1; local_18 < 1.0; local_18 = local_18 + 0.1) {
-      opponent_data[opponent_index_2].offset_x = local_18 * fVar1;
-      opponent_data[opponent_index_2].offset_z = local_18 * fVar2;
-      opponent_index = racers_collide(racer_a,racer_b);
-      if (opponent_index != 0) break;
+      opponent_data[(int)opponent_index_2].offset_x = local_18 * fVar1;
+      opponent_data[(int)opponent_index_2].offset_z = local_18 * fVar2;
+      racers_collide_result = racers_collide(racer_a,racer_b);
+      if (racers_collide_result != 0) break;
     }
-    opponent_data[opponent_index_2].offset_x = (local_18 + -0.1) * fVar1;
-    opponent_data[opponent_index_2].offset_z = (local_18 + -0.1) * fVar2;
-    opponent_data[opponent_index_2].speed = opponent_data[opponent_index_2].speed * 0.7;
-    opponent_data[opponent_index_2].push_x = opponent_data[opponent_index_2].push_x * 0.8;
-    opponent_data[opponent_index_2].push_z = opponent_data[opponent_index_2].push_z * 0.8;
+    opponent_data[(int)opponent_index_2].offset_x = (local_18 + -0.1) * fVar1;
+    opponent_data[(int)opponent_index_2].offset_z = (local_18 + -0.1) * fVar2;
+    opponent_data[(int)opponent_index_2].speed = opponent_data[(int)opponent_index_2].speed * 0.7;
+    opponent_data[(int)opponent_index_2].push_x = opponent_data[(int)opponent_index_2].push_x * 0.8;
+    opponent_data[(int)opponent_index_2].push_z = opponent_data[(int)opponent_index_2].push_z * 0.8;
     play_crash_sound();
   }
   return;
@@ -67,7 +76,7 @@ void __watcall resolve_collision(int racer_a,int racer_b)
 undefined4 __watcall compute_object_bounds(int racer_object_index)
 
 {
-  int arg2;
+  opponent_t *arg2;
   int iVar1;
   int i;
   racer_object_t *racer_object;
@@ -91,7 +100,7 @@ undefined4 __watcall compute_object_bounds(int racer_object_index)
   arg2 = racer_object->opponent;
   local_28 = 10000.0;
   local_24 = 10000.0;
-  if ((arg2 < 0) || (opponent_count < arg2)) {
+  if (((int)arg2 < 0) || (opponent_count < (int)arg2)) {
     fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443be6,arg2,opponent_count);
   }
   iVar6 = 0;
@@ -129,22 +138,22 @@ undefined4 __watcall compute_object_bounds(int racer_object_index)
                 SUB84((double)local_1c,0),(int)((ulonglong)(double)local_1c >> 0x20));
   fVar8 = (float10)local_1c * (float10)local_1c + (float10)local_20 * (float10)local_20;
   sqrt_checked((int)debugmsg_result,(int)((ulonglong)debugmsg_result >> 0x20),uVar5,i);
-  opponent_data[arg2].local_corners[0] = local_28;
-  opponent_data[arg2].local_corners[1] = 0.0;
-  opponent_data[arg2].local_corners[2] = local_24;
-  opponent_data[arg2].local_corners[3] = local_20;
-  opponent_data[arg2].local_corners[4] = 0.0;
-  opponent_data[arg2].local_corners[5] = local_24;
-  opponent_data[arg2].local_corners[6] = local_20;
-  opponent_data[arg2].local_corners[7] = 0.0;
-  opponent_data[arg2].local_corners[8] = local_1c;
-  opponent_data[arg2].local_corners[9] = local_28;
-  opponent_data[arg2].local_corners[10] = 0.0;
-  opponent_data[arg2].local_corners[0xb] = local_1c;
-  opponent_data[arg2].radius = (float)fVar8;
+  opponent_data[(int)arg2].field_88 = local_28;
+  *(undefined4 *)&opponent_data[(int)arg2].field_0x8c = 0;
+  opponent_data[(int)arg2].field_90 = local_24;
+  opponent_data[(int)arg2].field_94 = local_20;
+  *(undefined4 *)&opponent_data[(int)arg2].field_0x98 = 0;
+  opponent_data[(int)arg2].field_9c = local_24;
+  opponent_data[(int)arg2].field_a0 = local_20;
+  *(undefined4 *)&opponent_data[(int)arg2].field_0xa4 = 0;
+  opponent_data[(int)arg2].field_a8 = local_1c;
+  opponent_data[(int)arg2].field_ac = local_28;
+  *(undefined4 *)&opponent_data[(int)arg2].field_0xb0 = 0;
+  opponent_data[(int)arg2].field_b4 = local_1c;
+  opponent_data[(int)arg2].radius = (float)fVar8;
   debugmsg(s_radius_for_object__d_____f__00443c40,racer_object_index,
-           SUB84((double)opponent_data[arg2].radius,0),
-           (int)((ulonglong)(double)opponent_data[arg2].radius >> 0x20));
+           SUB84((double)opponent_data[(int)arg2].radius,0),
+           (int)((ulonglong)(double)opponent_data[(int)arg2].radius >> 0x20));
   return 0;
 }
 
@@ -157,11 +166,11 @@ int __watcall racers_collide(int racer_a,int racer_b)
   float fVar1;
   float fVar2;
   undefined4 uVar3;
-  int arg2;
+  opponent_t *arg2;
+  opponent_t *arg2_00;
   float fVar4;
   int iVar5;
-  int iVar6;
-  float *pfVar7;
+  float *pfVar6;
   int unaff_EBX;
   int i;
   float local_e0 [6];
@@ -183,57 +192,59 @@ int __watcall racers_collide(int racer_a,int racer_b)
   int local_1c;
   int local_18;
   
-  i = racers[racer_a].opponent;
-  arg2 = racers[racer_b].opponent;
+  arg2 = racers[racer_a].opponent;
+  arg2_00 = racers[racer_b].opponent;
   local_18 = 0;
-  if ((i < 0) || (opponent_count < i)) {
-    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d41,i,opponent_count);
+  if (((int)arg2 < 0) || (opponent_count < (int)arg2)) {
+    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d41,arg2,opponent_count);
   }
-  if ((arg2 < 0) || (opponent_count < arg2)) {
-    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d69,arg2,opponent_count);
+  if (((int)arg2_00 < 0) || (opponent_count < (int)arg2_00)) {
+    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d69,arg2_00,opponent_count);
   }
-  pfVar7 = local_e0;
-  fVar1 = opponent_data[arg2].x - (opponent_data[i].x + opponent_data[i].offset_x);
-  fVar4 = opponent_data[arg2].z - (opponent_data[i].z + opponent_data[i].offset_z);
-  fVar2 = opponent_data[i].radius + opponent_data[arg2].radius;
+  pfVar6 = local_e0;
+  fVar1 = opponent_data[(int)arg2_00].x -
+          (opponent_data[(int)arg2].x + opponent_data[(int)arg2].offset_x);
+  fVar4 = opponent_data[(int)arg2_00].z -
+          (opponent_data[(int)arg2].z + opponent_data[(int)arg2].offset_z);
+  fVar2 = opponent_data[(int)arg2].radius + opponent_data[(int)arg2_00].radius;
   local_1c = local_18;
   if (fVar4 * fVar4 + fVar1 * fVar1 <= fVar2 * fVar2) {
     local_1c = 1;
-    iVar5 = 0;
+    i = 0;
     do {
-      fVar1 = *(float *)((int)opponent_data[i].world_corners + iVar5);
-      fVar2 = opponent_data[i].offset_x;
-      *(undefined4 *)((int)local_a4 + iVar5 + 4) = 0;
-      *(float *)((int)local_a4 + iVar5) = fVar1 + fVar2;
-      *(float *)((int)local_a4 + iVar5 + 8) =
-           *(float *)((int)opponent_data[i].world_corners + iVar5 + 8) + opponent_data[i].offset_z;
-      uVar3 = *(undefined4 *)((int)opponent_data[arg2].world_corners + iVar5);
-      *(undefined4 *)((int)local_e0 + iVar5 + 4) = 0;
-      *(undefined4 *)((int)local_e0 + iVar5) = uVar3;
-      iVar6 = iVar5 + 0xc;
-      *(undefined4 *)((int)local_e0 + iVar5 + 8) =
-           *(undefined4 *)((int)opponent_data[arg2].world_corners + iVar5 + 8);
-      iVar5 = iVar6;
-    } while (iVar6 != 0x30);
-    local_74 = opponent_data[i].x + opponent_data[i].offset_x;
-    local_6c = opponent_data[i].z + opponent_data[i].offset_z;
-    local_b0 = opponent_data[arg2].x;
-    local_a8 = opponent_data[arg2].z;
+      fVar1 = *(float *)(&opponent_data[(int)arg2].field_0x58 + i);
+      fVar2 = opponent_data[(int)arg2].offset_x;
+      *(undefined4 *)((int)local_a4 + i + 4) = 0;
+      *(float *)((int)local_a4 + i) = fVar1 + fVar2;
+      *(float *)((int)local_a4 + i + 8) =
+           *(float *)(&opponent_data[(int)arg2].field_0x60 + i) + opponent_data[(int)arg2].offset_z;
+      uVar3 = *(undefined4 *)(&opponent_data[(int)arg2_00].field_0x58 + i);
+      *(undefined4 *)((int)local_e0 + i + 4) = 0;
+      *(undefined4 *)((int)local_e0 + i) = uVar3;
+      iVar5 = i + 0xc;
+      *(undefined4 *)((int)local_e0 + i + 8) =
+           *(undefined4 *)(&opponent_data[(int)arg2_00].field_0x60 + i);
+      i = iVar5;
+    } while (iVar5 != 0x30);
+    local_74 = opponent_data[(int)arg2].x + opponent_data[(int)arg2].offset_x;
+    local_6c = opponent_data[(int)arg2].z + opponent_data[(int)arg2].offset_z;
+    local_b0 = opponent_data[(int)arg2_00].x;
+    local_a8 = opponent_data[(int)arg2_00].z;
     vector_subtract(local_38,local_a4 + 3,local_a4);
     vector_subtract(local_5c,local_8c,local_a4 + 3);
     vector_subtract(local_44,local_80,local_8c);
     vector_subtract(local_68,local_a4,local_80);
     for (i = 0; i < 5; i = i + 1) {
-      vector_subtract(local_50,pfVar7,local_a4);
+      vector_subtract(local_50,pfVar6,local_a4);
       cross_product_y(&local_20,local_38,local_50);
       if (0.0 <= local_20) {
-        vector_subtract(local_50,pfVar7,local_8c);
+        vector_subtract(local_50,pfVar6,local_8c);
         cross_product_y(&local_20,local_44,local_50);
         if (0.0 <= local_20) {
-          vector_subtract(local_50,pfVar7,local_a4 + 3);
+          vector_subtract(local_50,pfVar6,local_a4 + 3);
           cross_product_y(&local_20,local_5c,local_50);
           if (0.0 <= local_20) {
-            vector_subtract(local_50,pfVar7,local_80);
+            vector_subtract(local_50,pfVar6,local_80);
             cross_product_y(&local_20,local_68,local_50);
             if (0.0 <= local_20) {
               local_1c = 2;
@@ -245,25 +256,25 @@ int __watcall racers_collide(int racer_a,int racer_b)
           }
         }
       }
-      pfVar7 = pfVar7 + 3;
+      pfVar6 = pfVar6 + 3;
     }
     if (local_1c != 2) {
       vector_subtract(local_38,local_e0 + 3,local_e0);
       vector_subtract(local_5c,local_c8,local_e0 + 3);
-      pfVar7 = local_a4;
+      pfVar6 = local_a4;
       vector_subtract(local_44,local_bc,local_c8);
       vector_subtract(local_68,local_e0,local_bc);
       for (i = 0; i < 5; i = i + 1) {
-        vector_subtract(local_50,pfVar7,local_e0);
+        vector_subtract(local_50,pfVar6,local_e0);
         cross_product_y(&local_20,local_38,local_50);
         if (0.0 <= local_20) {
-          vector_subtract(local_50,pfVar7,local_c8);
+          vector_subtract(local_50,pfVar6,local_c8);
           cross_product_y(&local_20,local_44,local_50);
           if (0.0 <= local_20) {
-            vector_subtract(local_50,pfVar7,local_e0 + 3);
+            vector_subtract(local_50,pfVar6,local_e0 + 3);
             cross_product_y(&local_20,local_5c,local_50);
             if (0.0 <= local_20) {
-              vector_subtract(local_50,pfVar7,local_bc);
+              vector_subtract(local_50,pfVar6,local_bc);
               cross_product_y(&local_20,local_68,local_50);
               if (0.0 <= local_20) {
                 local_1c = 2;
@@ -275,7 +286,7 @@ int __watcall racers_collide(int racer_a,int racer_b)
             }
           }
         }
-        pfVar7 = pfVar7 + 3;
+        pfVar6 = pfVar6 + 3;
       }
     }
   }
@@ -305,30 +316,30 @@ void __watcall update_racer_corners(int opponent_index)
   uVar3 = opponent_data[opponent_index].heading & 0x3ff;
   fVar1 = *(float *)(cos_table + uVar3 * 4);
   fVar2 = *(float *)(sin_table + uVar3 * 4);
-  opponent_data[opponent_index].world_corners[0] =
-       (opponent_data[opponent_index].local_corners[0] * fVar2 -
-       opponent_data[opponent_index].local_corners[2] * fVar1) + opponent_data[opponent_index].x;
-  opponent_data[opponent_index].world_corners[2] =
-       opponent_data[opponent_index].local_corners[2] * fVar2 +
-       opponent_data[opponent_index].local_corners[0] * fVar1 + opponent_data[opponent_index].z;
-  opponent_data[opponent_index].world_corners[3] =
-       (opponent_data[opponent_index].local_corners[3] * fVar2 -
-       opponent_data[opponent_index].local_corners[5] * fVar1) + opponent_data[opponent_index].x;
-  opponent_data[opponent_index].world_corners[5] =
-       opponent_data[opponent_index].local_corners[5] * fVar2 +
-       opponent_data[opponent_index].local_corners[3] * fVar1 + opponent_data[opponent_index].z;
-  opponent_data[opponent_index].world_corners[6] =
-       (opponent_data[opponent_index].local_corners[6] * fVar2 -
-       opponent_data[opponent_index].local_corners[8] * fVar1) + opponent_data[opponent_index].x;
-  opponent_data[opponent_index].world_corners[8] =
-       opponent_data[opponent_index].local_corners[8] * fVar2 +
-       opponent_data[opponent_index].local_corners[6] * fVar1 + opponent_data[opponent_index].z;
-  opponent_data[opponent_index].world_corners[9] =
-       (opponent_data[opponent_index].local_corners[9] * fVar2 -
-       opponent_data[opponent_index].local_corners[0xb] * fVar1) + opponent_data[opponent_index].x;
-  opponent_data[opponent_index].world_corners[0xb] =
-       opponent_data[opponent_index].local_corners[0xb] * fVar2 +
-       opponent_data[opponent_index].local_corners[9] * fVar1 + opponent_data[opponent_index].z;
+  *(float *)&opponent_data[opponent_index].field_0x58 =
+       (opponent_data[opponent_index].field_88 * fVar2 -
+       opponent_data[opponent_index].field_90 * fVar1) + opponent_data[opponent_index].x;
+  *(float *)&opponent_data[opponent_index].field_0x60 =
+       opponent_data[opponent_index].field_90 * fVar2 +
+       opponent_data[opponent_index].field_88 * fVar1 + opponent_data[opponent_index].z;
+  *(float *)&opponent_data[opponent_index].field_0x64 =
+       (opponent_data[opponent_index].field_94 * fVar2 -
+       opponent_data[opponent_index].field_9c * fVar1) + opponent_data[opponent_index].x;
+  *(float *)&opponent_data[opponent_index].field_0x6c =
+       opponent_data[opponent_index].field_9c * fVar2 +
+       opponent_data[opponent_index].field_94 * fVar1 + opponent_data[opponent_index].z;
+  *(float *)&opponent_data[opponent_index].field_0x70 =
+       (opponent_data[opponent_index].field_a0 * fVar2 -
+       opponent_data[opponent_index].field_a8 * fVar1) + opponent_data[opponent_index].x;
+  *(float *)&opponent_data[opponent_index].field_0x78 =
+       opponent_data[opponent_index].field_a8 * fVar2 +
+       opponent_data[opponent_index].field_a0 * fVar1 + opponent_data[opponent_index].z;
+  *(float *)&opponent_data[opponent_index].field_0x7c =
+       (opponent_data[opponent_index].field_ac * fVar2 -
+       opponent_data[opponent_index].field_b4 * fVar1) + opponent_data[opponent_index].x;
+  opponent_data[opponent_index].field_84 =
+       opponent_data[opponent_index].field_b4 * fVar2 +
+       opponent_data[opponent_index].field_ac * fVar1 + opponent_data[opponent_index].z;
   return;
 }
 
@@ -647,7 +658,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     if (screen_resolution == 0) {
       param_3 = 0x140;
       param_4 = 0xf0;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x188) + 4);
+      frame_val = *(int *)(xvga_anims->field_188 + 4);
       if (dashboard_on_screen != 0) {
         param_4 = 0x8c;
       }
@@ -655,7 +666,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0xa0;
       param_4 = 100;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x17c) + 4);
+      frame_val = *(int *)(xvga_anims->field_17c + 4);
     }
     set_mem_image(1,frame_val,param_3,param_4,0);
     countdown_expired_result = countdown_expired();
@@ -668,7 +679,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     if (screen_resolution == 0) {
       param_3 = 0xa0;
       param_4 = 100;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x128) + 4);
+      frame_val = *(int *)(xvga_anims->field_128 + 4);
       if (dashboard_on_screen != 0) {
         param_4 = 0x3c;
       }
@@ -676,7 +687,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0x4b;
       param_4 = 0x1e;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x11c) + 4);
+      frame_val = *(int *)(xvga_anims->field_11c + 4);
     }
     set_mem_image(1,frame_val,param_3,param_4,2);
     countdown_expired_result = countdown_expired();
@@ -690,7 +701,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     if (screen_resolution == 0) {
       param_3 = 0x140;
       param_4 = 0xf0;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x1a0) + 4);
+      frame_val = *(int *)(xvga_anims->field_1a0 + 4);
       if (dashboard_on_screen != 0) {
         param_4 = 0x8c;
       }
@@ -698,7 +709,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0xa0;
       param_4 = 100;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x194) + 4);
+      frame_val = *(int *)(xvga_anims->field_194 + 4);
     }
     set_mem_image(1,frame_val,param_3,param_4,0);
     countdown_expired_result = countdown_expired();
@@ -713,7 +724,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     if (screen_resolution == 0) {
       param_3 = 0xa0;
       param_4 = 0x8c;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x140) + 4);
+      frame_val = *(int *)(xvga_anims->field_140 + 4);
       if (dashboard_on_screen != 0) {
         param_4 = 100;
       }
@@ -721,7 +732,7 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     else if (screen_resolution == 1) {
       param_3 = 0x50;
       param_4 = 0x32;
-      frame_val = *(int *)(*(int *)(xvga_anims + 0x134) + 4);
+      frame_val = *(int *)(xvga_anims->field_134 + 4);
     }
     set_mem_image(1,frame_val,param_3,param_4,2);
     effect_val = keyispressed(0x50);
@@ -743,8 +754,8 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
   iVar4 = ((current_fine % 1000) / 100) * 8;
   iVar5 = effect_val * 8;
   if (screen_resolution == 0) {
-    local_2c = *(int *)(*(int *)(xvga_anims + 0x110) + 4);
-    iVar1 = *(int *)(xvga_anims + 0x158);
+    local_2c = *(int *)(xvga_anims->field_110 + 4);
+    iVar1 = xvga_anims->field_158;
     local_28 = *(int *)(iVar5 + 4 + iVar1);
     local_34 = *(int *)(iVar4 + 4 + iVar1);
     local_24 = *(int *)(iVar2 + 4 + iVar1);
@@ -760,8 +771,8 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
     }
   }
   else if (screen_resolution == 1) {
-    local_2c = *(int *)(*(int *)(xvga_anims + 0x104) + 4);
-    iVar1 = *(int *)(xvga_anims + 0x14c);
+    local_2c = *(int *)(xvga_anims->field_104 + 4);
+    iVar1 = xvga_anims->field_14c;
     local_3c = 0x4b;
     local_28 = *(int *)(iVar5 + 4 + iVar1);
     local_34 = *(int *)(iVar4 + 4 + iVar1);

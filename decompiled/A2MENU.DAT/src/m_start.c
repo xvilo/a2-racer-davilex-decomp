@@ -10,7 +10,7 @@ void __watcall mst_draw_selected_slot_info(int param_1)
   char *pcVar2;
   int iVar3;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + 0x44) + 0xc);
+  iVar1 = *(int *)(xvga_anims->field_44 + 0xc);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mst_draw_selected_slot_i_00427560,s_m_start_cpp_00427554,0x106,1,5);
   }
@@ -50,7 +50,7 @@ void __watcall mst_draw_slot_info(int param_1)
   char *extraout_EDX;
   int iVar5;
   
-  iVar3 = *(int *)(*(int *)(xvga_anims + 0x44) + 4);
+  iVar3 = *(int *)(xvga_anims->field_44 + 4);
   debugmsg(s__s__d___mst_draw_slot_info__d___i_004275fe,s_m_start_cpp_004275f2,0x129,param_1);
   if ((iVar3 < 0) || (max_mem_image_ptr < iVar3)) {
     fatal_exit(s__s__d___mst_draw_slot_info______C_00427638,s_m_start_cpp_0042762c,299,0,5);
@@ -184,7 +184,7 @@ void __watcall mst_open_screen(int param_1)
   debugmsg(s__s__d___mst_open_screen____initi_0042789e,s_m_start_cpp_00427892,0x1a9);
   mst_print_slot(param_1);
   debugmsg(s__s__d___mst_open_screen____initi_004278d6,s_m_start_cpp_004278ca,0x1ab);
-  activate_form((fform_t *)mst_form);
+  activate_form((form_t *)mst_form);
   return;
 }
 
@@ -258,7 +258,7 @@ LAB_00405647:
     snd_stop(&local_1c);
   }
   debugmsg(s__s__d___activate_form_004279ba,s_m_start_cpp_004279ae,0x1e0);
-  activate_form((fform_t *)mst_form);
+  activate_form((form_t *)mst_form);
   while (bVar1) {
     handle_form_result = handle_form();
     if (handle_form_result < 3) {
@@ -269,7 +269,7 @@ LAB_00405647:
           wait_enter_pressed();
           snd_wait(&local_1c);
           snd_set_volume(&mm_tune_buffer,-8000);
-          play_help((help_t *)&mst_help,1);
+          play_help(&mst_help,1);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
           goto LAB_00405aac;
         }
@@ -291,7 +291,7 @@ LAB_00405647:
           mst_print_slot(iVar3);
         }
 LAB_004058a7:
-        activate_form((fform_t *)mst_form);
+        activate_form((form_t *)mst_form);
         goto LAB_00405aac;
       }
 LAB_00405810:

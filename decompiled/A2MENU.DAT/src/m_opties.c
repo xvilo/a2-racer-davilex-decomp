@@ -8,7 +8,7 @@ int __watcall mo_af_image(int param_1,int param_2,char *param_3,int param_4)
 {
   int iVar1;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
+  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mo_af_image_____Could_no_00428010,param_3,param_4,param_2,param_1);
   }
@@ -21,19 +21,19 @@ int __watcall mo_af_image(int param_1,int param_2,char *param_3,int param_4)
 void __watcall mc_active_form(void)
 
 {
-  fform_t *fform;
+  form_t *form;
   
   destroy_form();
   if (DAT_00437226 == 0) {
-    fform = (fform_t *)&mo_form_3D;
+    form = (form_t *)&mo_form_3D;
   }
   else if ((DAT_00437226 < 2) || (DAT_00437226 != 2)) {
-    fform = (fform_t *)&mo_form_320;
+    form = (form_t *)&mo_form_320;
   }
   else {
-    fform = (fform_t *)&mo_form_640;
+    form = (form_t *)&mo_form_640;
   }
-  activate_form(fform);
+  activate_form(form);
   focus_control(0);
   return;
 }

@@ -8,21 +8,19 @@ int __watcall init_animations(anim_t *anim)
 {
   anim_t *anim_2;
   int i;
-  int anim_index;
   
   max_anim_ptr = 0;
-  for (anim_2 = anim; (*(int *)(anim_2 + 4) != -1 && (*(int *)anim_2 != -1)); anim_2 = anim_2 + 0xc)
-  {
+  for (anim_2 = anim; (anim_2->field_04 != -1 && (anim_2->field_00 != -1));
+      anim_2 = (anim_t *)&anim_2->field_0xc) {
     max_anim_ptr = max_anim_ptr + 1;
   }
   i = alloc_animations(max_anim_ptr);
   if (i == 0) {
     for (i = 0; i < max_anim_ptr; i = i + 1) {
-      anim_index = i * 0xc;
-      *(undefined4 *)(xvga_anims + anim_index) = *(undefined4 *)anim;
-      *(undefined4 *)(xvga_anims + anim_index + 4) = *(undefined4 *)(anim + 4);
-      *(undefined4 *)(xvga_anims + anim_index + 8) = *(undefined4 *)(anim + 8);
-      anim = anim + 0xc;
+      (&xvga_anims->field_00)[i * 3] = anim->field_00;
+      (&xvga_anims->field_04)[i * 3] = anim->field_04;
+      (&xvga_anims->field_08)[i * 3] = anim->field_08;
+      anim = (anim_t *)&anim->field_0xc;
     }
     i = 0;
     init_animation_ok = 1;
@@ -39,17 +37,17 @@ int __watcall init_animations(anim_t *anim)
 int __watcall alloc_animations(int param_1)
 
 {
-  int anim_index;
+  int iVar1;
   
   max_anim_ptr = param_1;
   xvga_anims = LocalAlloc(0x40,param_1 * 0xc);
   if (xvga_anims == (anim_t *)0x0) {
     return 2000;
   }
-  for (anim_index = 0; anim_index < param_1 * 0xc; anim_index = anim_index + 0xc) {
-    *(undefined4 *)(xvga_anims + anim_index + 8) = 0;
-    *(undefined4 *)(xvga_anims + anim_index + 4) = 0;
-    *(undefined4 *)(xvga_anims + anim_index) = 0;
+  for (iVar1 = 0; iVar1 < param_1 * 0xc; iVar1 = iVar1 + 0xc) {
+    *(undefined4 *)((int)&xvga_anims->field_08 + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->field_04 + iVar1) = 0;
+    *(undefined4 *)((int)&xvga_anims->field_00 + iVar1) = 0;
   }
   return 0;
 }

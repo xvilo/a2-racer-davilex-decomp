@@ -40,7 +40,7 @@ undefined4 __watcall
 load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_4,float param_5)
 
 {
-  int opponent_index;
+  opponent_t *opponent_index;
   int *opponent_chunk;
   undefined4 object_bounds;
   int iVar1;
@@ -52,39 +52,39 @@ load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_
   debugmsg(s_player_objectnr____d_004418f6,player_index);
   racers[player_index].field_2c = DAT_00457be4;
   set_object3d_matrix(player_index,&D3DMATRIX_004576d0);
-  *(undefined1 **)&racers[player_index].field_0x20 = &LAB_00402468;
+  racers[player_index].field_20 = &LAB_00402468;
   debugmsg(s_create_execute_buffer_object___0044190d);
   build_object_execute_buffer(player_index);
   debugmsg(s_done_creating_execute_buffer_obj_0044192d);
   racers[player_index].field_36 = '\x01';
-  opponent_index = alloc_opponent_slot();
+  opponent_index = (opponent_t *)alloc_opponent_slot();
   racers[player_index].opponent = opponent_index;
-  opponent_data[opponent_index].object = player_index;
-  opponent_data[opponent_index].mass = 1000.0;
-  opponent_data[opponent_index].active = 1;
-  opponent_data[opponent_index].push_x = 0.0;
-  opponent_data[opponent_index].push_z = 0.0;
-  opponent_data[opponent_index].offset_x = 0.0;
-  opponent_data[opponent_index].offset_z = 0.0;
+  opponent_data[(int)opponent_index].object = player_index;
+  opponent_data[(int)opponent_index].mass = 1000.0;
+  opponent_data[(int)opponent_index].active = 1;
+  opponent_data[(int)opponent_index].push_x = 0.0;
+  opponent_data[(int)opponent_index].push_z = 0.0;
+  opponent_data[(int)opponent_index].offset_x = 0.0;
+  opponent_data[(int)opponent_index].offset_z = 0.0;
   racers[player_index].needs_update = 1;
-  opponent_data[opponent_index].waypoint = weg_section_idx;
-  opponent_chunk = get_opponent_chunk(s_myinit_cpp_00441954,0x93,opponent_index);
+  opponent_data[(int)opponent_index].waypoint = weg_section_idx;
+  opponent_chunk = get_opponent_chunk(s_myinit_cpp_00441954,0x93,(int)opponent_index);
   *opponent_chunk = weg_section_idx;
-  opponent_data[opponent_index].direction = param_1;
-  opponent_data[opponent_index].field_e0 = -1;
-  opponent_data[opponent_index].field_e4 = 1;
-  if (opponent_data[opponent_index].direction == 0) {
-    opponent_data[opponent_index].lane = param_3;
-    opponent_data[opponent_index].target_lane = param_3;
+  opponent_data[(int)opponent_index].direction = param_1;
+  opponent_data[(int)opponent_index].field_e0 = -1;
+  opponent_data[(int)opponent_index].field_e4 = 1;
+  if (opponent_data[(int)opponent_index].direction == 0) {
+    opponent_data[(int)opponent_index].lane = param_3;
+    opponent_data[(int)opponent_index].target_lane = param_3;
     iVar1 = weg_chunks + weg_section_idx * 0x38;
     local_1c = *(float *)(&lane_offsets + param_3 * 4);
     player_x = *(float *)(weg_sections[*(int *)(iVar1 + 8)].point * 0x21 + weg_points);
     fVar2 = *(float *)(weg_sections[*(int *)(iVar1 + 8)].point * 0x21 + weg_points + 8);
   }
   else {
-    if (opponent_data[opponent_index].direction != 1) goto LAB_00402196;
-    opponent_data[opponent_index].lane = param_3;
-    opponent_data[opponent_index].target_lane = param_3;
+    if (opponent_data[(int)opponent_index].direction != 1) goto LAB_00402196;
+    opponent_data[(int)opponent_index].lane = param_3;
+    opponent_data[(int)opponent_index].target_lane = param_3;
     iVar1 = weg_chunks + weg_section_idx * 0x38;
     local_1c = *(float *)(&lane_offsets + param_3 * 4);
     player_x = *(float *)(weg_points + weg_sections[*(int *)(iVar1 + 8)].point * 0x21);
@@ -96,9 +96,9 @@ load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_
   player_z = (param_5 + 40.0) * *(float *)(iVar1 + 0x1c) +
              *(float *)(iVar1 + 0x24) * local_1c + fVar2;
 LAB_00402196:
-  opponent_data[opponent_index].x = player_x;
-  opponent_data[opponent_index].y = player_y;
-  opponent_data[opponent_index].z = player_z;
+  opponent_data[(int)opponent_index].x = player_x;
+  opponent_data[(int)opponent_index].y = player_y;
+  opponent_data[(int)opponent_index].z = player_z;
   if (param_1 == 0) {
     player_heading = weg_sections[weg_section_idx].heading + 0x100;
   }

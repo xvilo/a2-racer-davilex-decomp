@@ -3,29 +3,29 @@
 
 /* ==== 0043e294 check_radiobutton_hotkey ==== */
 
-int __watcall check_radiobutton_hotkey(fform_t *fform,int param_2)
+int __watcall check_radiobutton_hotkey(form_t *form,int param_2)
 
 {
-  return (uint)((uint)*(byte *)(*(int *)(fform + 0xc) + 0xc) == param_2);
+  return (uint)((uint)*(byte *)((int)form->control + 0xc) == param_2);
 }
 
 
 /* ==== 0043e2aa destroy_radiobutton ==== */
 
-void __watcall destroy_radiobutton(fform_t *fform)
+void __watcall destroy_radiobutton(form_t *form)
 
 {
-  if (*(int *)(fform + 0x18) == 0) {
+  if (form->hwnd == (HWND)0x0) {
     fatal_exit(s__s__d_____destroy_radiobutton__n_004573bd,s_radiobut_cpp_004573b0,0x3e);
   }
-  DestroyWindow(*(HWND *)(fform + 0x18));
+  DestroyWindow(form->hwnd);
   return;
 }
 
 
 /* ==== 0043e2d6 create_radiobutton ==== */
 
-void __watcall create_radiobutton(fform_t *fform,int param_2)
+void __watcall create_radiobutton(form_t *form,int param_2)
 
 {
   int *piVar1;
@@ -34,31 +34,30 @@ void __watcall create_radiobutton(fform_t *fform,int param_2)
   HWND pHVar2;
   LPVOID lpParam;
   
-  piVar1 = *(int **)(fform + 0xc);
+  piVar1 = form->control;
   control_image_index = get_control_image_index(*piVar1,0);
   if (piVar1[1] == -1) {
-    piVar1[1] = *(int *)(xvga_mem_images + control_image_index * 0x20 + 8);
+    piVar1[1] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 8);
   }
   if (piVar1[2] == -1) {
-    piVar1[2] = *(int *)(xvga_mem_images + control_image_index * 0x20 + 0xc);
+    piVar1[2] = *(int *)((int)xvga_mem_images + control_image_index * 0x20 + 0xc);
   }
-  if (*(int *)(xvga_anims + *piVar1 * 0xc) < 5) {
+  if ((&xvga_anims->field_00)[*piVar1 * 3] < 5) {
     fatal_exit(s__s__d_____create_radiobutton__no_00457402,s_radiobut_cpp_004573f5,0x58,
-               *(int *)(xvga_anims + *piVar1 * 0xc));
+               (&xvga_anims->field_00)[*piVar1 * 3]);
   }
-  check_control_position(param_2,*(int *)fform,*(int *)(fform + 4),piVar1[1],piVar1[2]);
+  check_control_position(param_2,form->x,form->y,piVar1[1],piVar1[2]);
   lpParam = (LPVOID)0x0;
   hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
-  pHVar2 = CreateWindowExA(0,s_BUTTON_00457453,(LPCSTR)0x0,0x5001000b,*(int *)fform,
-                           *(int *)(fform + 4),piVar1[1],piVar1[2],xvga_hwnd,(HMENU)param_2,
-                           hInstance,lpParam);
-  *(HWND *)(fform + 0x18) = pHVar2;
+  pHVar2 = CreateWindowExA(0,s_BUTTON_00457453,(LPCSTR)0x0,0x5001000b,form->x,form->y,piVar1[1],
+                           piVar1[2],xvga_hwnd,(HMENU)param_2,hInstance,lpParam);
+  form->hwnd = pHVar2;
   if (pHVar2 == (HWND)0x0) {
     fatal_exit(s_Unable_to_create_a_window_for_ra_0045745a,param_2);
   }
-  old_radiobutton_windowproc = SetWindowLongA(*(HWND *)(fform + 0x18),-4,0x43e623);
-  set_control_state(param_2,*(int *)(fform + 0x10));
-  *(undefined4 *)((int)piVar1 + 0xd) = *(undefined4 *)(fform + 0x10);
+  old_radiobutton_windowproc = SetWindowLongA(form->hwnd,-4,0x43e623);
+  set_control_state(param_2,form->state);
+  *(int *)((int)piVar1 + 0xd) = form->state;
   return;
 }
 
@@ -99,7 +98,7 @@ LAB_0043e430:
 
 /* ==== 0043e480 draw_help_radiobutton ==== */
 
-void __watcall draw_help_radiobutton(fform_t *fform)
+void __watcall draw_help_radiobutton(form_t *form)
 
 {
   int *piVar1;
@@ -110,8 +109,8 @@ void __watcall draw_help_radiobutton(fform_t *fform)
   int control_y;
   int iVar5;
   
-  piVar1 = *(int **)(fform + 0xc);
-  iVar4 = get_control_index(*(void **)(fform + 0x18));
+  piVar1 = form->control;
+  iVar4 = get_control_index(form->hwnd);
   iVar2 = piVar1[1];
   iVar3 = piVar1[2];
   control_image_index = get_control_image_index(*piVar1,0);

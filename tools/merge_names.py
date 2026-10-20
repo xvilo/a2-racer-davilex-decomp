@@ -7,7 +7,8 @@ Missing input files are skipped. Columns follow tools/watcom_names.py; an overri
 may leave cc/ret/params/dtype empty to keep the recovered values (use params "-" for
 an explicit empty parameter list), or fill them in. An
 override row with kind 'local' instead names a local variable or parameter:
-  address=<function entry>  name=<new name>  dtype=<old name>  (cc/ret/params unused)
+  address=<function entry>  name=<new name>  dtype=<old name>  params=<new type, optional>
+(the old name as printed in decompiled.c; cc/ret unused)
 """
 import os
 import sys

@@ -8,7 +8,7 @@ int __watcall mc_af_image(int param_1,int param_2,char *param_3,int param_4)
 {
   int iVar1;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
+  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mm_af_image_____Could_no_00427af4,param_3,param_4,param_2,param_1);
   }
@@ -450,7 +450,7 @@ void __watcall display_keys(void)
   else {
     arg4 = 0;
   }
-  iVar1 = *(int *)(*(int *)(xvga_anims + 0x26c) + 4 + arg4 * 8);
+  iVar1 = *(int *)(xvga_anims->field_26c + 4 + arg4 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____illegal_keyboard_frame_i_00427c38,s_m_bedien_cpp_00427c2b,0x29f,arg4,0x33)
     ;
@@ -471,7 +471,7 @@ void __watcall display_joystick(void)
 {
   int iVar1;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + 0x26c) + 0xc);
+  iVar1 = *(int *)(xvga_anims->field_26c + 0xc);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____illegal_joystick_frame___00427c7a,s_m_bedien_cpp_00427c6d,0x2b5,1,0x33);
   }
@@ -490,7 +490,7 @@ void __watcall display_stuur(void)
 {
   int iVar1;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + 0x26c) + 0x14);
+  iVar1 = *(int *)(xvga_anims->field_26c + 0x14);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____illegal_wheel_frame__d_i_00427cbc,s_m_bedien_cpp_00427caf,0x2c7,2,0x33);
   }
@@ -510,9 +510,9 @@ void __watcall mc_display_controls(void)
 
 {
   if (available_joy == 0) {
-    _control = available_joy;
+    control = (bedien_t)available_joy;
   }
-  if (_control == 0) {
+  if (control == (bedien_t)0x0) {
     display_keys();
     if (available_joy == 0) {
       _DAT_0043347c = 0;
@@ -523,14 +523,14 @@ void __watcall mc_display_controls(void)
     _DAT_00433498 = _DAT_0043347c;
     return;
   }
-  if (_control < 2) {
+  if ((uint)control < 2) {
     display_joystick();
     _DAT_0043355c = 3;
     _DAT_00433578 = 3;
     _DAT_00433540 = 3;
     return;
   }
-  if (_control != 2) {
+  if (control != (bedien_t)0x2) {
     return;
   }
   display_stuur();
@@ -577,13 +577,11 @@ void __watcall mc_animate_buttons(void)
 
 /* ==== 00406491 mc_open_screen ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall mc_open_screen(void)
 
 {
   int use_mc_menu_cfg_anims_result;
-  fform_t *fform;
+  form_t *form;
   
   load_pcx_file_1(2,s_bedien_pcx_00427d08,0x1f);
   use_mc_menu_cfg_anims_result = use_mc_menu_cfg_anims();
@@ -598,13 +596,13 @@ int __watcall mc_open_screen(void)
   load_ckey();
   mc_display_controls();
   mc_animate_buttons();
-  if (_control == 0) {
-    fform = (fform_t *)&mc_form;
+  if (control == (bedien_t)0x0) {
+    form = &mc_form;
   }
   else {
-    fform = (fform_t *)&mc_form_joy;
+    form = (form_t *)&mc_form_joy;
   }
-  activate_form(fform);
+  activate_form(form);
   focus_control(0);
   return 1;
 }
@@ -635,7 +633,7 @@ int __watcall menu_bedien(void)
   bool bVar1;
   bool bVar2;
   int iVar3;
-  fform_t *fform;
+  form_t *form;
   help_t *help;
   uint handle_form_result;
   int local_1c;
@@ -693,11 +691,11 @@ LAB_00406669:
         snd_play(&local_1c,s_click2_wav_00427e09);
         wait_form_key_released();
         wait_enter_pressed();
-        if (_control != 0) {
-          _control = 0;
+        if (control != (bedien_t)0x0) {
+          control = (bedien_t)0x0;
           destroy_form();
           display_keys();
-          fform = (fform_t *)&mc_form;
+          form = &mc_form;
           goto LAB_004066d1;
         }
       }
@@ -710,14 +708,14 @@ LAB_004066df:
         snd_play(&local_1c,s_click2_wav_00427e14);
         wait_form_key_released();
         wait_enter_pressed();
-        if (_control != 1) {
-          _control = 1;
+        if (control != (bedien_t)0x1) {
+          control = (bedien_t)0x1;
           destroy_form();
           display_joystick();
 LAB_004066cc:
-          fform = (fform_t *)&mc_form_joy;
+          form = (form_t *)&mc_form_joy;
 LAB_004066d1:
-          activate_form(fform);
+          activate_form(form);
           iVar3 = 0;
 LAB_004066d8:
           focus_control(iVar3);
@@ -755,8 +753,8 @@ LAB_004066d8:
           snd_play(&local_1c,s_click2_wav_00427e1f);
           wait_form_key_released();
           wait_enter_pressed();
-          if (_control != 2) {
-            _control = 2;
+          if (control != (bedien_t)0x2) {
+            control = (bedien_t)0x2;
             destroy_form();
             display_stuur();
             goto LAB_004066cc;
@@ -764,7 +762,7 @@ LAB_004066d8:
           goto LAB_004066df;
         }
       }
-      else if ((handle_form_result == 6) && (_control == 0)) {
+      else if ((handle_form_result == 6) && (control == (bedien_t)0x0)) {
         snd_play(&local_1c,s_click1_wav_00427e2a);
         wait_form_key_released();
         wait_enter_pressed();
@@ -773,7 +771,7 @@ LAB_004066d8:
         config_keys();
         display_keys();
         mc_display_controls();
-        activate_form((fform_t *)&mc_form);
+        activate_form(&mc_form);
         iVar3 = 6;
         goto LAB_004066d8;
       }

@@ -6,8 +6,7 @@
 void __watcall exit_player(void)
 
 {
-  (**(code **)(**(int **)&racers[player_index].field_0x30 + 8))
-            (*(int **)&racers[player_index].field_0x30);
+  (*(racers[player_index].field_30)->lpVtbl->Release)(racers[player_index].field_30);
   return;
 }
 

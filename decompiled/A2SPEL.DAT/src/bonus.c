@@ -127,7 +127,7 @@ void __watcall halt_player_car(void)
 
 {
   player_speed = 0.0;
-  opponent_data[racers[player_index].opponent].speed = 0.0;
+  opponent_data[(int)racers[player_index].opponent].speed = 0.0;
   return;
 }
 
@@ -275,7 +275,8 @@ uint __watcall describe_bonus(uint opponent_index)
   if (bonus_allocated == 0) {
     uVar2 = fatal_exit(s__s__d____No_bonus_objects_alloca_00446532,s_bonus_cpp_00446528,0x9f);
   }
-  if ((opponent_data[opponent_index].chunk != -1) && (opponent_data[opponent_index].lane != -1)) {
+  if ((opponent_data[opponent_index].chunk != 0xffffffff) &&
+     (opponent_data[opponent_index].lane != 0xffffffff)) {
     uVar2 = bonus_allocated;
     for (i = 0; i < bonus_allocated * 0x19; i = i + 0x19) {
       puVar4 = (undefined4 *)(bonus_items + i);
@@ -444,7 +445,7 @@ load_bonus_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 p
   debugmsg(s_setting_static_object_matrix_004466fb);
   set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00446719);
-  *(undefined **)&racers[object].field_0x20 = &DAT_00412e6a;
+  racers[object].field_20 = &DAT_00412e6a;
   debugmsg(s_setting_static_object_position_00446737);
   racers[object].field_08 = param_5;
   racers[object].field_0c = (float)param_7;

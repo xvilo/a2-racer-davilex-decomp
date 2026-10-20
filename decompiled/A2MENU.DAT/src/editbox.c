@@ -115,63 +115,62 @@ void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
 /* ==== 00417fdc set_edit_box_colors ==== */
 
 void __watcall
-set_edit_box_colors(fedit_box_t *fedit_box,ulong param_2,ulong param_3,ulong param_4,ulong param_5)
+set_edit_box_colors(edit_box_t *edit_box,ulong param_2,ulong param_3,ulong param_4,ulong param_5)
 
 {
   HBRUSH pHVar1;
   
-  if (*(HGDIOBJ *)(fedit_box + 0x1c) != (HGDIOBJ)0x0) {
-    DeleteObject(*(HGDIOBJ *)(fedit_box + 0x1c));
+  if (edit_box->field_1c != (HGDIOBJ)0x0) {
+    DeleteObject(edit_box->field_1c);
   }
-  if (*(HGDIOBJ *)(fedit_box + 0x28) != (HGDIOBJ)0x0) {
-    DeleteObject(*(HGDIOBJ *)(fedit_box + 0x28));
+  if (edit_box->field_28 != (HGDIOBJ)0x0) {
+    DeleteObject(edit_box->field_28);
   }
-  *(ulong *)(fedit_box + 0x14) = param_2;
-  *(ulong *)(fedit_box + 0x18) = param_3;
-  pHVar1 = CreateSolidBrush(*(COLORREF *)(fedit_box + 0x14));
-  *(HBRUSH *)(fedit_box + 0x1c) = pHVar1;
-  *(ulong *)(fedit_box + 0x20) = param_4;
-  *(ulong *)(fedit_box + 0x24) = param_5;
-  pHVar1 = CreateSolidBrush(*(COLORREF *)(fedit_box + 0x20));
-  *(HBRUSH *)(fedit_box + 0x28) = pHVar1;
+  edit_box->field_14 = param_2;
+  edit_box->field_18 = param_3;
+  pHVar1 = CreateSolidBrush(edit_box->field_14);
+  edit_box->field_1c = pHVar1;
+  edit_box->field_20 = param_4;
+  edit_box->field_24 = param_5;
+  pHVar1 = CreateSolidBrush(edit_box->field_20);
+  edit_box->field_28 = pHVar1;
   return;
 }
 
 
 /* ==== 00418035 draw_help_editbox ==== */
 
-void __watcall draw_help_editbox(fform_t *fform)
+void __watcall draw_help_editbox(form_t *form)
 
 {
   int *control_pointer;
   
-  get_control_index(*(void **)(fform + 0x18));
-  control_pointer = get_control_pointer(*(void **)(fform + 0x18));
-  blt_scr_2_scr(2,0,*(int *)fform,*(int *)(fform + 4),*(int *)fform + *control_pointer,
-                *(int *)(fform + 4) + control_pointer[1],0);
+  get_control_index(form->hwnd);
+  control_pointer = get_control_pointer(form->hwnd);
+  blt_scr_2_scr(2,0,form->x,form->y,form->x + *control_pointer,form->y + control_pointer[1],0);
   return;
 }
 
 
 /* ==== 00418073 destroy_edit_box ==== */
 
-void __watcall destroy_edit_box(fform_t *fform)
+void __watcall destroy_edit_box(form_t *form)
 
 {
   if (init_edit_box_ok == '\0') {
     fatal_exit(s__s__d_____destroy_edit_box__edit_0042fc3b,s_editbox_cpp_0042fc2f,0x84);
   }
-  if (*(int *)(fform + 0x18) == 0) {
+  if (form->hwnd == (HWND)0x0) {
     fatal_exit(s__s__d_____destroy_edit_box__no_v_0042fc94,s_editbox_cpp_0042fc88,0x89);
   }
-  DestroyWindow(*(HWND *)(fform + 0x18));
+  DestroyWindow(form->hwnd);
   return;
 }
 
 
 /* ==== 004180c2 create_edit_box ==== */
 
-void __watcall create_edit_box(fform_t *fform,int param_2)
+void __watcall create_edit_box(form_t *form,int param_2)
 
 {
   int *piVar1;
@@ -187,7 +186,7 @@ void __watcall create_edit_box(fform_t *fform,int param_2)
   int nWidth;
   LPVOID lpParam;
   
-  piVar1 = *(int **)(fform + 0xc);
+  piVar1 = form->control;
   if (init_edit_box_ok == '\0') {
     fatal_exit(s__s__d_____edit_windows_box__edit_0042fcd5,s_editbox_cpp_0042fcc9,0x98);
   }
@@ -203,65 +202,65 @@ void __watcall create_edit_box(fform_t *fform,int param_2)
     fatal_exit(s__s__d_____edit_windows_box__heig_0042fde6,s_editbox_cpp_0042fdda,0xa7,piVar1[1],
                iVar2);
   }
-  check_control_position(param_2,*(int *)fform,*(int *)(fform + 4),*piVar1,piVar1[1]);
+  check_control_position(param_2,form->x,form->y,*piVar1,piVar1[1]);
   if (piVar1[3] == 1) {
-    if (*(int *)(fform + 8) == 0) {
+    if (form->type == 0) {
       lpParam = (LPVOID)0x0;
       hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
       iVar2 = piVar1[1];
       nWidth = *piVar1;
-      Y = *(int *)(fform + 4);
-      X = *(int *)fform;
+      Y = form->y;
+      X = form->x;
       dwStyle = 0x50010000;
       lpClassName = s_EDIT_0042fe3a;
     }
     else {
-      if (*(int *)(fform + 8) != 3) goto LAB_0041819b;
+      if (form->type != 3) goto LAB_0041819b;
       lpParam = (LPVOID)0x0;
       hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
       iVar2 = piVar1[1];
       nWidth = *piVar1;
-      Y = *(int *)(fform + 4);
-      X = *(int *)fform;
+      Y = form->y;
+      X = form->x;
       dwStyle = 0x50012000;
       lpClassName = s_EDIT_0042fe3f;
     }
   }
-  else if (*(int *)(fform + 8) == 0) {
+  else if (form->type == 0) {
     lpParam = (LPVOID)0x0;
     hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
     iVar2 = piVar1[1];
     nWidth = *piVar1;
-    Y = *(int *)(fform + 4);
-    X = *(int *)fform;
+    Y = form->y;
+    X = form->x;
     dwStyle = 0x50010004;
     lpClassName = s_EDIT_0042fe44;
   }
   else {
-    if (*(int *)(fform + 8) != 3) goto LAB_0041819b;
+    if (form->type != 3) goto LAB_0041819b;
     lpParam = (LPVOID)0x0;
     hInstance = (HINSTANCE)GetWindowLongA(xvga_hwnd,-6);
     iVar2 = piVar1[1];
     nWidth = *piVar1;
-    Y = *(int *)(fform + 4);
-    X = *(int *)fform;
+    Y = form->y;
+    X = form->x;
     dwStyle = 0x50012004;
     lpClassName = s_EDIT_0042fe49;
   }
   pHVar4 = CreateWindowExA(0,lpClassName,(LPCSTR)0x0,dwStyle,X,Y,nWidth,iVar2,xvga_hwnd,
                            (HMENU)param_2,hInstance,lpParam);
-  *(HWND *)(fform + 0x18) = pHVar4;
+  form->hwnd = pHVar4;
 LAB_0041819b:
-  if (*(int *)(fform + 0x18) == 0) {
+  if (form->hwnd == (HWND)0x0) {
     fatal_exit(s_Unable_to_create_a_window_for_ed_0042fe4e,param_2);
   }
-  old_edit_windowproc = SetWindowLongA(*(HWND *)(fform + 0x18),-4,0x4183a7);
+  old_edit_windowproc = SetWindowLongA(form->hwnd,-4,0x4183a7);
   wParam = xvga_get_active_font();
   if (wParam != (void *)0x0) {
-    SendMessageA(*(HWND *)(fform + 0x18),0x30,(WPARAM)wParam,1);
+    SendMessageA(form->hwnd,0x30,(WPARAM)wParam,1);
   }
   if (piVar1[4] != 0) {
-    SendMessageA(*(HWND *)(fform + 0x18),0xc,0,piVar1[4]);
+    SendMessageA(form->hwnd,0xc,0,piVar1[4]);
   }
   piVar1[5] = 0;
   piVar1[6] = 0xffffff;
@@ -271,7 +270,7 @@ LAB_0041819b:
   piVar1[9] = 0xffffff;
   pHVar3 = CreateSolidBrush(piVar1[8]);
   piVar1[10] = (int)pHVar3;
-  set_control_state(param_2,*(int *)(fform + 0x10));
+  set_control_state(param_2,form->state);
   return;
 }
 

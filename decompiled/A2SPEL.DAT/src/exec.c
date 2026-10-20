@@ -437,7 +437,7 @@ void __watcall render_3d_frame(void)
   for (arg4 = 0; arg4 < object_count; arg4 = arg4 + 1) {
     if (((&racers->in_use)[iVar2] != '\0') && ((&racers->visible)[iVar2] != '\0')) {
       HVar1 = (*d3d_device->lpVtbl->Execute)
-                        (d3d_device,*(IDirect3DExecuteBuffer **)(&racers->field_0x30 + iVar2),
+                        (d3d_device,*(IDirect3DExecuteBuffer **)((int)&racers->field_30 + iVar2),
                          d3d_viewport,1);
       if (HVar1 != 0) {
         d3d_error_string_result = d3d_error_string(HVar1);
@@ -681,7 +681,7 @@ void __watcall build_object_execute_buffer(int racer_object_index)
     fatal_exit(s__s__d____D3DError_Set_ExecData___0044c92c,s_exec_cpp_0044c923,0x261,
                d3d_error_string_result);
   }
-  *(IDirect3DExecuteBuffer **)&racers[racer_object_index].field_0x30 = direct3_d_execute_buffer;
+  racers[racer_object_index].field_30 = direct3_d_execute_buffer;
   return;
 }
 

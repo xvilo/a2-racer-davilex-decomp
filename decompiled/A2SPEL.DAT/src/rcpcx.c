@@ -60,20 +60,22 @@ int __watcall read_pcx_8_to_24_line(pf_24_t *pf_24,__iobuf *file,int param_3)
     if ((char)uVar1 == -0x40) {
       uVar1 = fgetc(file);
       local_14 = translate_pixel(uVar1 & 0xff,8);
-      pf_24_2 = pf_24 + i * 3;
+      pf_24_2 = pf_24 + i;
       for (j = 0; j < (int)(uint)(bVar2 & 0x3f); j = j + 1) {
         i = i + 1;
-        *(undefined2 *)pf_24_2 = (undefined2)local_14;
-        pf_24_2[(uint)bVar3 * -4 + 2] = *(pf_24_t *)((int)&local_14 + (uint)bVar3 * -4 + 2);
-        pf_24_2 = pf_24_2 + 3;
+        pf_24_2->field_00 = (undefined2)local_14;
+        *(undefined1 *)((int)pf_24_2 + (uint)bVar3 * -4 + 2) =
+             *(undefined1 *)((int)&local_14 + (uint)bVar3 * -4 + 2);
+        pf_24_2 = pf_24_2 + 1;
       }
     }
     else {
       local_14 = translate_pixel((uint)bVar2,8);
-      j = i * 3;
+      pf_24_2 = pf_24 + i;
       i = i + 1;
-      *(undefined2 *)(pf_24 + j) = (undefined2)local_14;
-      (pf_24 + j)[(uint)bVar3 * -4 + 2] = *(pf_24_t *)((int)&local_14 + (uint)bVar3 * -4 + 2);
+      pf_24_2->field_00 = (undefined2)local_14;
+      *(undefined1 *)((int)pf_24_2 + (uint)bVar3 * -4 + 2) =
+           *(undefined1 *)((int)&local_14 + (uint)bVar3 * -4 + 2);
     }
   } while (i < param_3);
   return i;
@@ -129,14 +131,14 @@ void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
     pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (k = 0; k < param_3; k = k + 1) {
       read_pcx_line((uchar *)pf_24,file,param_2);
-      pf_24 = pf_24 + xvga_buffer_screen_pitch;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + xvga_buffer_screen_pitch);
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
     pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (i = 0; i < param_3; i = i + 1) {
       read_pcx_8_to_16_line((short *)pf_24,file,param_2);
-      pf_24 = pf_24 + xvga_buffer_screen_pitch;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + xvga_buffer_screen_pitch);
     }
   }
   else {
@@ -146,7 +148,7 @@ void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
     pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (j = 0; j < param_3; j = j + 1) {
       read_pcx_8_to_24_line(pf_24,file,param_2);
-      pf_24 = pf_24 + xvga_buffer_screen_pitch;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + xvga_buffer_screen_pitch);
     }
   }
   reset_surface_ptr_1(xvga_buffer_screen,pf_24);
@@ -165,7 +167,7 @@ void __watcall unpack_pcx_file_screen_1(int param_1,__iobuf *file,int param_3,in
   int i;
   int j;
   int k;
-  int pf_24_index;
+  int local_10;
   
   if (xvga_screen_ysize <= param_4) {
     param_4 = xvga_screen_ysize;
@@ -174,21 +176,21 @@ void __watcall unpack_pcx_file_screen_1(int param_1,__iobuf *file,int param_3,in
   if (((param_1 != 0) && (i = xvga_back_screen_pitch, 1 < (uint)param_1)) &&
      (i = xvga_buffer_screen_pitch, param_1 != 2)) {
     fatal_exit(s__s__d____unidentified_focus_erro_00448fb6,s_rcpcx_cpp_00448fac,0xa1,param_1);
-    i = pf_24_index;
+    i = local_10;
   }
-  pf_24_index = i;
+  local_10 = i;
   if (pf_conversion_mode == 0) {
     pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (i = 0; i < param_4; i = i + 1) {
       read_pcx_line((uchar *)pf_24,file,param_3);
-      pf_24 = pf_24 + pf_24_index;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_10);
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
     pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (j = 0; j < param_4; j = j + 1) {
       read_pcx_8_to_16_line((short *)pf_24,file,param_3);
-      pf_24 = pf_24 + pf_24_index;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_10);
     }
   }
   else {
@@ -198,7 +200,7 @@ void __watcall unpack_pcx_file_screen_1(int param_1,__iobuf *file,int param_3,in
     pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (k = 0; k < param_4; k = k + 1) {
       read_pcx_8_to_24_line(pf_24,file,param_3);
-      pf_24 = pf_24 + pf_24_index;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_10);
     }
   }
   reset_surface_ptr(param_1,pf_24);
@@ -216,33 +218,33 @@ unpack_pcx_file_surface
 
 {
   pf_24_t *pf_24;
-  int pf_24_index;
+  int local_1c;
   int i;
   int j;
   int k;
   
   if (pf_conversion_mode == 0) {
-    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
+    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
     for (k = 0; k < param_4; k = k + 1) {
       read_pcx_line((uchar *)pf_24,file,param_3);
-      pf_24 = pf_24 + pf_24_index;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_1c);
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
-    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
+    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
     for (j = 0; j < param_4; j = j + 1) {
       read_pcx_8_to_16_line((short *)pf_24,file,param_3);
-      pf_24 = pf_24 + pf_24_index;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_1c);
     }
   }
   else {
     if (pf_conversion_mode != 2) {
       return;
     }
-    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
+    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
     for (i = 0; i < param_4; i = i + 1) {
       read_pcx_8_to_24_line(pf_24,file,param_3);
-      pf_24 = pf_24 + pf_24_index;
+      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_1c);
     }
   }
   reset_surface_ptr_1(direct_draw_surface,pf_24);
@@ -269,7 +271,7 @@ int __watcall load_pcx_file_palette(char *filename_val,int param_2)
   else {
     xvga_src_fseek(file,-0x300,2);
     fread((char *)local_314,0x300,1,(int *)file);
-    if (((byte)file[0xc] & 0x20) != 0) {
+    if ((file->field_0c & 0x20) != 0) {
       fatal_exit(s__s__d____error_reading_00448fea,s_rcpcx_cpp_00448fe0,0xfe);
     }
     iVar3 = 0;
@@ -351,7 +353,7 @@ int __watcall load_pcx_file(char *filename_val,int param_2)
     if ((param_2 & 2U) != 0) {
       xvga_src_fseek(file,-0x300,2);
       fread((char *)local_3b4,0x300,1,(int *)file);
-      if (((byte)file[0xc] & 0x20) != 0) {
+      if ((file->field_0c & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_0044900d,s_rcpcx_cpp_00449003,0x138);
       }
       iVar2 = 0;
@@ -368,7 +370,7 @@ int __watcall load_pcx_file(char *filename_val,int param_2)
     }
     xvga_src_fseek(file,0,0);
     fread(&local_b4,0x80,1,(int *)file);
-    if (((byte)file[0xc] & 0x20) == 0) {
+    if ((file->field_0c & 0x20) == 0) {
       if ((((param_2 & 1U) != 0) && (local_b4 == '\n')) && (local_b3 == '\x05')) {
         unaff_EBP = ((local_ac >> 0x10) - (local_b0 >> 0x10)) + 1;
         if (xvga_screen_ysize < unaff_EBP) {
@@ -441,7 +443,7 @@ int __watcall load_pcx_file_1(int param_1,char *filename_val,int param_3)
     if ((local_14 & 2) != 0) {
       xvga_src_fseek(file,-0x300,2);
       fread((char *)local_394,0x300,1,(int *)file);
-      if (((byte)file[0xc] & 0x20) != 0) {
+      if ((file->field_0c & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_00449059,s_rcpcx_cpp_0044904f,0x187);
       }
       iVar3 = 0;
@@ -458,7 +460,7 @@ int __watcall load_pcx_file_1(int param_1,char *filename_val,int param_3)
     }
     xvga_src_fseek(file,0,0);
     fread(&local_94,0x80,1,(int *)file);
-    if (((byte)file[0xc] & 0x20) == 0) {
+    if ((file->field_0c & 0x20) == 0) {
       if ((((local_14 & 1) != 0) && (local_94 == '\n')) && (local_93 == '\x05')) {
         iVar2 = ((int)sStack_8a - (int)sStack_8e) + 1;
         if (xvga_screen_ysize < iVar2) {
@@ -508,7 +510,7 @@ IDirectDrawSurface * __watcall load_pcx_file_surface(char *filename_val,int *par
     if (pf_conversion_mode != 0) {
       xvga_src_fseek(file,-0x300,2);
       fread((char *)local_394,0x300,1,(int *)file);
-      if (((byte)file[0xc] & 0x20) != 0) {
+      if ((file->field_0c & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_0044908e,s_rcpcx_cpp_00449084,0x1c3);
       }
       iVar2 = 0;
@@ -526,7 +528,7 @@ IDirectDrawSurface * __watcall load_pcx_file_surface(char *filename_val,int *par
     xvga_src_fseek(file,0,0);
     fread(&local_94,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__004490b1,s_rcpcx_cpp_004490a7,0x1ce);
-    if (((byte)file[0xc] & 0x20) == 0) {
+    if ((file->field_0c & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__004490d4,s_rcpcx_cpp_004490ca,0x1d4);
       if ((local_94 == '\n') && (local_93 == '\x05')) {
         *param_2 = ((int)sStack_8c - (int)sStack_90) + 1;
@@ -578,7 +580,7 @@ load_pcx_file_surface_1
     if (pf_conversion_mode != 0) {
       xvga_src_fseek(file,-0x300,2);
       fread((char *)local_394,0x300,1,(int *)file);
-      if (((byte)file[0xc] & 0x20) != 0) {
+      if ((file->field_0c & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_0044914b,s_rcpcx_cpp_00449141,0x1f9);
       }
       iVar2 = 0;
@@ -596,7 +598,7 @@ load_pcx_file_surface_1
     xvga_src_fseek(file,0,0);
     fread(&local_94,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__0044916e,s_rcpcx_cpp_00449164,0x206);
-    if (((byte)file[0xc] & 0x20) == 0) {
+    if ((file->field_0c & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__00449191,s_rcpcx_cpp_00449187,0x20c);
       if ((local_94 == '\n') && (local_93 == '\x05')) {
         *param_2 = ((int)sStack_8c - (int)sStack_90) + 1;
@@ -647,7 +649,7 @@ load_pcx_file_surface_2(char *filename_val,int *param_2,int *param_3,int param_4
     if (pf_conversion_mode != 0) {
       xvga_src_fseek(file,-0x300,2);
       fread((char *)local_394,0x300,1,(int *)file);
-      if (((byte)file[0xc] & 0x20) != 0) {
+      if ((file->field_0c & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_00449208,s_rcpcx_cpp_004491fe,0x231);
       }
       iVar2 = 0;
@@ -665,7 +667,7 @@ load_pcx_file_surface_2(char *filename_val,int *param_2,int *param_3,int param_4
     xvga_src_fseek(file,0,0);
     fread(&local_94,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__0044922b,s_rcpcx_cpp_00449221,0x23d);
-    if (((byte)file[0xc] & 0x20) == 0) {
+    if ((file->field_0c & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__0044924e,s_rcpcx_cpp_00449244,0x243);
       if ((local_94 == '\n') && (local_93 == '\x05')) {
         *param_2 = ((int)sStack_8c - (int)sStack_90) + 1;
@@ -723,7 +725,7 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
     if (pf_conversion_mode != 0) {
       xvga_src_fseek(file,-0x300,2);
       fread((char *)local_3bc,0x300,1,(int *)file);
-      if (((byte)file[0xc] & 0x20) != 0) {
+      if ((file->field_0c & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_004492c5,s_rcpcx_cpp_004492bb,0x26b);
       }
       iVar2 = 0;
@@ -741,7 +743,7 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
     xvga_src_fseek(file,0,0);
     fread(&local_bc,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__004492e8,s_rcpcx_cpp_004492de,0x276);
-    if (((byte)file[0xc] & 0x20) == 0) {
+    if ((file->field_0c & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__0044930b,s_rcpcx_cpp_00449301,0x27c);
       get_surface_info(direct_draw_surface_3,&local_1c,&local_18);
       if ((local_bc == '\n') && (local_bb == '\x05')) {
@@ -819,7 +821,7 @@ load_pcx_file_surface_4
     src_fopen = file;
     fread(&local_c0,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__004493c4,s_rcpcx_cpp_004493ba,0x2b2);
-    if (((byte)file[0xc] & 0x20) == 0) {
+    if ((file->field_0c & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__004493e7,s_rcpcx_cpp_004493dd,0x2b8);
       get_surface_info(direct_draw_surface_2,&local_20,&local_1c);
       if ((local_c0 == '\n') && (local_bf == '\x05')) {

@@ -117,13 +117,13 @@ void __watcall mm_draw_info_text(int param_1,int param_2)
   slot_check_index_result = slot_check_index(active_slot,s_m_main_cpp_00427048,0x11d);
   pcVar2 = slot_tijd_string(slot_check_index_result);
   win_print_xy(1,iVar1,param_2 + 0xae,s___6s_00427053,pcVar2);
-  if (_control == 0) {
+  if (control == (bedien_t)0x0) {
     pcVar2 = s_Toetsenbord_00427058;
   }
-  else if (_control == 1) {
+  else if (control == (bedien_t)0x1) {
     pcVar2 = s_Joypad_1_00427064;
   }
-  else if (_control == 2) {
+  else if (control == (bedien_t)0x2) {
     pcVar2 = s_Stuur_0042706d;
   }
   else {
@@ -177,7 +177,7 @@ int __watcall mm_af_image(int param_1,int param_2,char *param_3,int param_4)
 {
   int iVar1;
   
-  iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
+  iVar1 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mm_af_image_____Could_no_004270df,param_3,param_4,param_2,param_1);
   }
@@ -251,8 +251,8 @@ void __watcall mm_animate_map(int param_1)
   }
   debugmsg(s_LEVEL_SHOWN____d_004271a6,param_1);
   af_image = mm_af_image(0x26,extraout_EDX,s_m_main_cpp_004271bb,0x1a9);
-  iVar1 = *(int *)(xvga_mem_images + af_image * 0x20 + 8);
-  iVar2 = *(int *)(xvga_mem_images + af_image * 0x20 + 0xc);
+  iVar1 = *(int *)((int)xvga_mem_images + af_image * 0x20 + 8);
+  iVar2 = *(int *)((int)xvga_mem_images + af_image * 0x20 + 0xc);
   set_mem_image(1,af_image,0x15d,0xf5,2);
   blt_scr_2_scr(1,0,0x15d,0xf5,iVar1 + 0x15d,iVar2 + 0xf5,0);
   show_mouse();
@@ -296,7 +296,7 @@ int __watcall mm_open_screen(int param_1)
   iVar1 = slot_check_index(active_slot,s_m_main_cpp_0042724f,0x1ce);
   mm_animate_map(*(int *)(&DAT_004372b8 + iVar1 * 0x13c) >> 0x10);
   debugmsg(s_activate_form_0042725a);
-  activate_form((fform_t *)&mm_form);
+  activate_form(&mm_form);
   debugmsg(s_end_open_00427269);
   return 1;
 }
@@ -462,7 +462,7 @@ LAB_00404c73:
       wait_enter_pressed();
       snd_wait(&local_1c);
       snd_set_volume(&mm_tune_buffer,-8000);
-      play_help((help_t *)&mm_help,1);
+      play_help(&mm_help,1);
 LAB_00404c1b:
       snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
       goto LAB_00404c7a;
@@ -494,7 +494,7 @@ LAB_00404baf:
         }
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
         snd_stop(&local_1c);
-        activate_form((fform_t *)&mm_form);
+        activate_form(&mm_form);
       }
       else if (handle_form_result == 7) {
         snd_play(&local_1c,s_click1_wav_00427481);
@@ -506,7 +506,7 @@ LAB_00404baf:
         iVar2 = req_vraag(s_Weet_je_zeker_dat_je_de_huidige_r_00427496);
         if (iVar2 == 0) {
           snd_stop(&local_1c);
-          activate_form((fform_t *)&mm_form);
+          activate_form(&mm_form);
           goto LAB_00404c1b;
         }
         snd_stop(&local_1c);

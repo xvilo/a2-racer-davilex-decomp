@@ -12,7 +12,7 @@ void __watcall reqw_open(char *param_1)
   if (iVar1 != 0) {
     fatal_exit(s__s__d___reqw_open______Could_not_004294f4,s_reqwarn_cpp_004294e8,0x67);
   }
-  iVar1 = *(int *)(*(int *)(xvga_anims + 0xd4) + 4);
+  iVar1 = *(int *)(xvga_anims->field_d4 + 4);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___reqw_open______Could_not_00429536,s_reqwarn_cpp_0042952a,0x6b,0,0x11);
   }
@@ -24,7 +24,7 @@ void __watcall reqw_open(char *param_1)
   xvga_set_font_colors(1,0,0x1efaff);
   win_printwrapped(0,0x105,0x7a,0xcd,param_1);
   show_mouse();
-  activate_form((fform_t *)&reqw_form);
+  activate_form(&reqw_form);
   focus_control(0);
   return;
 }

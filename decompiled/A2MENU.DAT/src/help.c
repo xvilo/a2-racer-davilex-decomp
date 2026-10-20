@@ -169,7 +169,7 @@ void __watcall play_help(help_t *help,int param_2)
     fatal_exit(s__s__d_____play_help__empty_form_o_0042d72d,s_help_cpp_0042d724,0xdb);
   }
   do {
-    if ((*(int *)help == -1) || (bVar1)) {
+    if ((help->control_id == -1) || (bVar1)) {
       stop_sound_buffer(unaff_ESI);
       blt_scr_2_scr(param_2,0,0,0,xvga_screen_xsize,xvga_screen_ysize,0);
       SetFocus(hWnd);
@@ -177,11 +177,12 @@ void __watcall play_help(help_t *help,int param_2)
       return;
     }
     draw_grid(0);
-    if ((*(int *)help < 0) || (numberofcontrols_inform < *(int *)help)) {
-      fatal_exit(s__s__d_____play_help__illegal_for_0042d76d,s_help_cpp_0042d764,0xe4,*(int *)help);
+    if ((help->control_id < 0) || (numberofcontrols_inform < help->control_id)) {
+      fatal_exit(s__s__d_____play_help__illegal_for_0042d76d,s_help_cpp_0042d764,0xe4,
+                 help->control_id);
     }
-    unaff_ESI = play_sound_buffer_1(*(char **)(help + 4),0);
-    call_help_function(*(int *)help);
+    unaff_ESI = play_sound_buffer_1(help->text,0);
+    call_help_function(help->control_id);
     do {
       iVar2 = sound_buffer_busy(unaff_ESI);
       if (iVar2 == 0) goto LAB_00411136;
@@ -189,7 +190,7 @@ void __watcall play_help(help_t *help,int param_2)
     } while (iVar2 == 0);
     bVar1 = true;
 LAB_00411136:
-    help = help + 8;
+    help = help + 1;
   } while( true );
 }
 

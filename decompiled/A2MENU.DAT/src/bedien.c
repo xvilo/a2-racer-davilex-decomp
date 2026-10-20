@@ -38,7 +38,7 @@ void __watcall init_bedien(void)
   if (iVar1 == 0) {
     debugmsg(s_Creating_controls_file__s_00425b2d,s_BEDIEN_A2R_00425b22);
     DAT_0043723c = 0;
-    _control = 0;
+    control = (bedien_t)0x0;
     _DAT_00437240 = 1;
     DAT_00437248 = 0x27;
     _DAT_00437250 = 0x28;

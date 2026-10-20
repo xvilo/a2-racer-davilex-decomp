@@ -96,7 +96,7 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
     fread(local_bc,local_3c,4,(int *)p_Var2);
     fread(local_134,local_3c,4,(int *)p_Var2);
     *(float *)(weg_points + local_1c + 4) = (float)local_40;
-    if (((byte)p_Var2[0xc] & 0x20) != 0) {
+    if ((p_Var2->field_0c & 0x20) != 0) {
       fatal_exit(s__s__d____error_reading_weg_data_f_0044caa6,s_weg_cpp_0044ca9e,0xb8,filename_val);
     }
     iVar3 = build_weg_sections(new_vertices_2,new_vertices,local_3c,2);
@@ -583,7 +583,7 @@ int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4
   *(float *)(weg_points + 0xc + iVar3) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
   *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0x10 * 0x21;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_10 * 0x21;
   puVar7 = (undefined4 *)(weg_sections[weg_section_idx].field_08 * 0x21 + weg_points);
   puVar9 = (undefined4 *)(weg_points + iVar3);
   for (i = 8; i != 0; i = i + -1) {
@@ -676,7 +676,7 @@ int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4
   *(float *)(weg_points + 0xc + iVar3) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
   *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0x24 * 0x21;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_24 * 0x21;
   puVar7 = (undefined4 *)(weg_sections[weg_section_idx].point * 0x21 + weg_points);
   puVar9 = (undefined4 *)(weg_points + iVar3);
   for (i = 8; i != 0; i = i + -1) {
@@ -694,7 +694,7 @@ int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4
   *(float *)(weg_points + 0xc + iVar3) = local_60;
   *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
   *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0x28 * 0x21;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_28 * 0x21;
   puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
   puVar9 = (undefined4 *)(weg_points + iVar3);
   for (i = 8; i != 0; i = i + -1) {
@@ -1316,10 +1316,9 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   iStack_b4 = 0;
   iStack_84 = DStack_134.dwSize * 4;
   do {
-    k = *(int *)(&weg_sections
-                  [*(int *)(weg_chunks + 8 +
-                           *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].field_0x24 +
-                iStack_b4 * 4) * 0x21;
+    k = (&weg_sections
+          [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].
+          field_24)[iStack_b4] * 0x21;
     *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
     *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
     puVar4 = (undefined4 *)(k + weg_points);
@@ -1348,9 +1347,9 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   iStack_80 = iStack_a4 * 4;
   j = 0xc;
   do {
-    k = *(int *)(&weg_sections
-                  [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)].
-                  field_0x24 + iStack_50) * 0x21;
+    k = *(int *)((int)&weg_sections
+                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
+                       .field_24 + iStack_50) * 0x21;
     *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
     *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
     puVar4 = (undefined4 *)(k + weg_points);

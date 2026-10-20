@@ -144,7 +144,9 @@ def main(src, dst):
     rows = [l.rstrip('\n').split('\t') for l in open(src)][1:]
     known = set()
     for r in rows:
-        for w in re.findall(r'[A-Za-z]+', re.sub(r'\$[^$]*\$', ' ', r[4])):
+        # Words of the symbol names themselves (the part before '$'), not of the
+        # mangled types, which carry the hash-prefixed names being cleaned.
+        for w in re.findall(r'[A-Za-z]+', r[4].split('$')[0].lstrip('W?')):
             known.add(w)
     used = {}
     out = []

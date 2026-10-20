@@ -36,10 +36,11 @@ void __watcall create_slot(int param_1,char *param_2)
   int slot_check_level_result;
   int i;
   char *extraout_EDX;
-  bedien_t *bedien;
   undefined4 *puVar1;
+  bedien_t *bedien;
   undefined4 *puVar2;
   undefined4 *puVar3;
+  bedien_t *bedien_2;
   byte bVar4;
   uint local_1c;
   
@@ -69,22 +70,22 @@ void __watcall create_slot(int param_1,char *param_2)
   i = slot_check_index(param_1,s_slot_cpp_00425d1a,0x5d);
   *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425d23,0x5e);
-  puVar1 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
+  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
   *(undefined4 *)(&DAT_0043725e + i * 0x13c) = _opties;
-  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
-  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-  *puVar2 = *puVar3;
-  puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
-  (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
+  puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+  *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+  *puVar3 = *puVar1;
+  puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
+  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+       (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425d2c,0x5f);
   bedien = &control;
-  puVar3 = (undefined4 *)(&DAT_00437272 + i * 0x13c);
+  bedien_2 = (bedien_t *)(&DAT_00437272 + i * 0x13c);
   for (j = 9; j != 0; j = j + -1) {
-    *puVar3 = *(undefined4 *)bedien;
-    bedien = bedien + ((uint)bVar4 * -2 + 1) * 4;
-    puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
+    *bedien_2 = *bedien;
+    bedien = bedien + (uint)bVar4 * -2 + 1;
+    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
   }
   i = 0;
   do {
@@ -215,10 +216,11 @@ void __watcall reset_slot(int param_1)
   int i;
   int slot_check_level_result;
   int j;
-  bedien_t *bedien;
   undefined4 *puVar1;
+  bedien_t *bedien;
   undefined4 *puVar2;
   undefined4 *puVar3;
+  bedien_t *bedien_2;
   byte bVar4;
   
   bVar4 = 0;
@@ -231,22 +233,22 @@ void __watcall reset_slot(int param_1)
   i = slot_check_index(param_1,s_slot_cpp_00425fe0,0xa0);
   *(undefined4 *)(&DAT_004372d4 + i * 0x13c) = 1000;
   i = slot_check_index(param_1,s_slot_cpp_00425fe9,0xa1);
-  puVar1 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
+  puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + i * 0x13c);
   *(undefined4 *)(&DAT_0043725e + i * 0x13c) = _opties;
-  puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
-  puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-  *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-  *puVar2 = *puVar3;
-  puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
-  (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-       (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+  puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
+  puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+  *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+  *puVar3 = *puVar1;
+  puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
+  (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+       (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   i = slot_check_index(param_1,s_slot_cpp_00425ff2,0xa2);
   bedien = &control;
-  puVar3 = (undefined4 *)(&DAT_00437272 + i * 0x13c);
+  bedien_2 = (bedien_t *)(&DAT_00437272 + i * 0x13c);
   for (j = 9; j != 0; j = j + -1) {
-    *puVar3 = *(undefined4 *)bedien;
-    bedien = bedien + ((uint)bVar4 * -2 + 1) * 4;
-    puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
+    *bedien_2 = *bedien;
+    bedien = bedien + (uint)bVar4 * -2 + 1;
+    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
   }
   i = 0;
   do {
@@ -323,10 +325,11 @@ void __watcall init_slotdbase(void)
   int i;
   int slot_check_index_result;
   int j;
-  bedien_t *bedien;
   undefined4 *puVar1;
+  bedien_t *bedien_2;
   undefined4 *puVar2;
   undefined4 *puVar3;
+  bedien_t *bedien;
   byte bVar4;
   
   bVar4 = 0;
@@ -346,23 +349,23 @@ void __watcall init_slotdbase(void)
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426216,0xe2);
       (&slot_list)[slot_check_index_result * 0x13c] = 0;
       slot_check_index_result = slot_check_index(i,s_slot_cpp_0042621f,0xe3);
-      puVar1 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
+      puVar2 = (undefined4 *)(&DAT_00437262 + (uint)bVar4 * -8 + slot_check_index_result * 0x13c);
       *(undefined4 *)(&DAT_0043725e + slot_check_index_result * 0x13c) = _opties;
-      puVar2 = puVar1 + (uint)bVar4 * -2 + 1;
-      puVar3 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
-      *puVar1 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
-      *puVar2 = *puVar3;
-      puVar2[(uint)bVar4 * -2 + 1] = puVar3[(uint)bVar4 * -2 + 1];
-      (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
-           (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
+      puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
+      puVar1 = &DAT_00437228 + (uint)bVar4 * -2 + (uint)bVar4 * -2;
+      *puVar2 = *(undefined4 *)((int)&DAT_00437222 + (uint)bVar4 * -8 + 2);
+      *puVar3 = *puVar1;
+      puVar3[(uint)bVar4 * -2 + 1] = puVar1[(uint)bVar4 * -2 + 1];
+      (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
+           (puVar1 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
       slot_check_index_result = slot_check_index(i,s_slot_cpp_00426228,0xe4);
       i = i + 1;
-      bedien = &control;
-      puVar3 = (undefined4 *)(&DAT_00437272 + slot_check_index_result * 0x13c);
+      bedien_2 = &control;
+      bedien = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
       for (j = 9; j != 0; j = j + -1) {
-        *puVar3 = *(undefined4 *)bedien;
-        bedien = bedien + ((uint)bVar4 * -2 + 1) * 4;
-        puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
+        *bedien = *bedien_2;
+        bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
+        bedien = bedien + (uint)bVar4 * -2 + 1;
       }
     } while (i < 10);
     save_slotdbase();
@@ -455,8 +458,9 @@ void __watcall set_active_slot(int param_1)
   int i;
   undefined4 *puVar1;
   undefined4 *puVar2;
-  undefined4 *puVar3;
   bedien_t *bedien;
+  undefined4 *puVar3;
+  bedien_t *bedien_2;
   byte bVar4;
   
   bVar4 = 0;
@@ -477,12 +481,12 @@ void __watcall set_active_slot(int param_1)
   (puVar3 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1] =
        (puVar2 + (uint)bVar4 * -2 + 1)[(uint)bVar4 * -2 + 1];
   slot_check_index_result = slot_check_index(param_1,s_slot_cpp_0042635e,0x116);
-  puVar1 = (undefined4 *)(&DAT_00437272 + slot_check_index_result * 0x13c);
-  bedien = &control;
+  bedien = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
+  bedien_2 = &control;
   for (i = 9; i != 0; i = i + -1) {
-    *(undefined4 *)bedien = *puVar1;
-    puVar1 = puVar1 + (uint)bVar4 * -2 + 1;
-    bedien = bedien + ((uint)bVar4 * -2 + 1) * 4;
+    *bedien_2 = *bedien;
+    bedien = bedien + (uint)bVar4 * -2 + 1;
+    bedien_2 = bedien_2 + (uint)bVar4 * -2 + 1;
   }
   active_slot = param_1;
   return;
@@ -531,10 +535,10 @@ void __watcall update_active_slot_bediening(void)
   int slot_check_index_result;
   int i;
   bedien_t *bedien;
-  undefined4 *puVar1;
-  byte bVar2;
+  bedien_t *bedien_2;
+  byte bVar1;
   
-  bVar2 = 0;
+  bVar1 = 0;
   debugmsg(s__s__d____>_update_active_slot_be_00426420,s_slot_cpp_00426417,300);
   slot_check_index(active_slot,s_slot_cpp_0042644f,0x12d);
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_00426458,0x12e);
@@ -543,11 +547,11 @@ void __watcall update_active_slot_bediening(void)
   }
   slot_check_index_result = slot_check_index(active_slot,s_slot_cpp_004264c2,0x131);
   bedien = &control;
-  puVar1 = (undefined4 *)(&DAT_00437272 + slot_check_index_result * 0x13c);
+  bedien_2 = (bedien_t *)(&DAT_00437272 + slot_check_index_result * 0x13c);
   for (i = 9; i != 0; i = i + -1) {
-    *puVar1 = *(undefined4 *)bedien;
-    bedien = bedien + ((uint)bVar2 * -2 + 1) * 4;
-    puVar1 = puVar1 + (uint)bVar2 * -2 + 1;
+    *bedien_2 = *bedien;
+    bedien = bedien + (uint)bVar1 * -2 + 1;
+    bedien_2 = bedien_2 + (uint)bVar1 * -2 + 1;
   }
   return;
 }

@@ -117,3 +117,21 @@ weg_section_t	44	float	plane_a	road plane: height = -(a*x + c*z + d) / b
 weg_section_t	48	float	plane_b	
 weg_section_t	4c	float	plane_c	
 weg_section_t	50	float	plane_d	
+# form_t: one control on a menu form (forms.cpp); tables like mm_form end with x = -1.
+form_t	00	int	x	
+form_t	04	int	y	
+form_t	08	int	type	control kind: 1 button, ...
+form_t	0c	void*	control	the kind's own record (button_t, areabutton_t, ...)
+form_t	10	int	state	initial/current control state (4 becomes 1 on create)
+form_t	14	int	field_14	
+form_t	18	HWND	hwnd	child window created for the control
+# button_t: packed 21-byte button record (buttons.cpp), pointed to by form_t.control.
+button_t	00	int	image	anim index of the button graphics
+button_t	04	int	width	-1: taken from the image
+button_t	08	int	height	-1: taken from the image
+button_t	0c	char	hotkey	
+button_t	0d	int	focus_anim	anim played while focused, -1 for none
+button_t	11	int	focus_frame	
+# help_t: help text for a control id (help.cpp); tables end with id -1.
+help_t	00	int	control_id	
+help_t	04	char*	text	

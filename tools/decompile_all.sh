@@ -17,7 +17,7 @@ REA="npx -y rea-agents@6.7.0"
 modules=("$@")
 [ ${#modules[@]} -eq 0 ] && modules=(A2MENU.DAT A2.EXE A2SPEL.DAT A2MOVIE.DAT)
 
-mkdir -p "$ROOT/build/snapshots" "$ROOT/build/ghidra" "$ROOT/build/logs" "$ROOT/build/names" \
+mkdir -p "$ROOT/build/structs" "$ROOT/build/snapshots" "$ROOT/build/ghidra" "$ROOT/build/logs" "$ROOT/build/names" \
 	"$ROOT/symbols/manual"
 
 # Symbols: A2MENU.DAT still carries Watcom debug info; the other modules get
@@ -59,10 +59,11 @@ for m in "${modules[@]}"; do
 		-postScript ApplyWatcom.java post "$names" "$coverage" \
 		-postScript InferSignatures.java \
 		-postScript TypeFromCalls.java \
+		-postScript InferStructs.java "$ROOT/build/structs/$m.tsv" \
 		-postScript AutoNameVariables.java \
 		-postScript ExportDecompiled.java "$out" "$names" \
 		> "$ROOT/build/logs/$m.ghidra.log" 2>&1
-	grep -h -E 'ApplyWatcom.java>|InferSignatures:|TypeFromCalls:|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
+	grep -h -E 'ApplyWatcom.java>|InferSignatures:|TypeFromCalls:|InferStructs:|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
 	if grep -q 'SCRIPT ERROR' "$ROOT/build/logs/$m.ghidra.log"; then
 		grep -B2 'SCRIPT ERROR' "$ROOT/build/logs/$m.ghidra.log" >&2
 		exit 1
@@ -71,3 +72,11 @@ for m in "${modules[@]}"; do
 	python3 -I "$ROOT/tools/split_sources.py" "$out" "$ROOT/build/watcom/A2MENU.DAT/globals.tsv" \
 		"$ROOT/symbols/A2MENU.DAT.modules.tsv" "$names"
 done
+
+# Inferred structure layouts, merged across all modules (A2MENU.DAT first).
+inferred=()
+for m in A2MENU.DAT A2SPEL.DAT A2MOVIE.DAT A2.EXE; do
+	if [ -f "$ROOT/build/structs/$m.tsv" ]; then inferred+=("$ROOT/build/structs/$m.tsv"); fi
+done
+python3 -I "$ROOT/tools/merge_structs.py" "$ROOT/symbols/structs.tsv" "$ROOT/symbols/structs_auto.tsv" \
+	"${inferred[@]}"

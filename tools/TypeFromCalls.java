@@ -26,8 +26,6 @@ public class TypeFromCalls extends GhidraScript {
 
 	private DecompInterface decomp;
 	private int locals, globals;
-	static final boolean DEBUG = System.getenv("TFC_DEBUG") != null;
-	private int debugCount;
 
 	@Override
 	protected void run() throws Exception {
@@ -196,10 +194,6 @@ public class TypeFromCalls extends GhidraScript {
 	private void consider(HighFunction hf, Varnode arg, DataType target,
 			Map<HighSymbol, DataType> plan, Map<Address, DataType> globalPlan) {
 		PcodeOp def = arg.getDef();
-		if (DEBUG && debugCount++ < 40) {
-			println("DBG " + hf.getFunction().getName() + " target=" + target.getName() + " arg=" + arg +
-				" def=" + (def == null ? "null" : def.toString()));
-		}
 		while (def != null && (def.getOpcode() == PcodeOp.COPY || def.getOpcode() == PcodeOp.CAST)) {
 			arg = def.getInput(0);
 			def = arg.getDef();

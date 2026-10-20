@@ -38,7 +38,7 @@ undefined4 __watcall alloc_objects3d(int param_1)
       *(undefined4 *)((int)&racers->field_14 + iVar2) = 0;
       *(undefined4 *)((int)&racers->field_18 + iVar2) = 0;
       *(undefined4 *)((int)&racers->field_1c + iVar2) = 0;
-      *(undefined4 *)(&racers->field_0x20 + iVar2) = 0;
+      *(undefined4 *)((int)&racers->field_20 + iVar2) = 0;
       *(undefined4 *)((int)&racers->opponent + iVar2) = 0;
       (&racers->in_use)[iVar2] = '\0';
       (&racers->field_36)[iVar2] = '\0';
@@ -191,8 +191,8 @@ void __watcall execute_object_buffers(void)
     if (((((&racers->in_use)[iVar3] != '\0') && (0 < *(int *)((int)&racers->needs_update + iVar3)))
         && (iVar1 = DAT_00476784 + 1,
            iVar2 = DAT_00476784 % *(int *)((int)&racers->needs_update + iVar3), DAT_00476784 = iVar1
-           , iVar2 == 0)) && (*(int *)(&racers->field_0x20 + iVar3) != 0)) {
-      iVar1 = (**(code **)(&racers->field_0x20 + iVar3))();
+           , iVar2 == 0)) && (*(int *)((int)&racers->field_20 + iVar3) != 0)) {
+      iVar1 = (**(code **)((int)&racers->field_20 + iVar3))();
       i = arg4;
       if (iVar1 != 0) {
         fatal_exit(s__s__d____Error_Execute_objectfun_0044e4aa,s_object3d_cpp_0044e49d,0x116,arg4);

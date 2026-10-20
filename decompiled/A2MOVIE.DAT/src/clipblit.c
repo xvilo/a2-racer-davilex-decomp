@@ -336,7 +336,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   RECT rect_2;
   RECT rect;
   int local_34;
-  int mem_image_index;
+  int local_30;
   int local_2c;
   int local_28;
   int local_24;
@@ -349,12 +349,12 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   if ((param_2 < 0) || (max_mem_image_ptr < param_2)) {
     fatal_exit(s__s__d____illegal_array_index__d_0041d238,s_clipblit_cpp_0041d22b,0x180,param_2);
   }
-  mem_image_index = param_2 * 0x20;
-  if (*(int *)(xvga_mem_images + mem_image_index + 0x1c) == 0) {
+  local_30 = param_2 * 0x20;
+  if (*(int *)((int)xvga_mem_images + local_30 + 0x1c) == 0) {
     fatal_exit(s__s__d____blt_with_unallocated_me_0041d267,s_clipblit_cpp_0041d25a,0x183,param_2);
   }
   local_2c = param_2 * 0x20;
-  if (*(int *)(xvga_mem_images + local_2c + 0x18) == 4) {
+  if (*(int *)((int)xvga_mem_images + local_2c + 0x18) == 4) {
     if (param_1 == 0) {
       unaff_EBP = get_surface_ptr(xvga_screen);
       local_28 = xvga_screen_pitch;
@@ -371,14 +371,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       fatal_exit(s__s__d____unidentified_focus_erro_0041d2a1,s_clipblit_cpp_0041d294,0x196,param_1);
     }
     local_34 = param_2 * 0x20;
-    local_14 = *(int *)(xvga_mem_images + local_34 + 8);
-    iVar4 = *(int *)(xvga_mem_images + local_34 + 0xc);
+    local_14 = *(int *)((int)xvga_mem_images + local_34 + 8);
+    iVar4 = *(int *)((int)xvga_mem_images + local_34 + 0xc);
     if ((param_5 & 2U) == 0) {
-      param_3 = param_3 - *(int *)(xvga_mem_images + local_34 + 0x10);
-      param_4 = param_4 - *(int *)(xvga_mem_images + local_34 + 0x14);
+      param_3 = param_3 - *(int *)((int)xvga_mem_images + local_34 + 0x10);
+      param_4 = param_4 - *(int *)((int)xvga_mem_images + local_34 + 0x14);
     }
-    mem_image_index = param_2 * 0x20;
-    iVar3 = *(int *)(xvga_mem_images + mem_image_index);
+    local_30 = param_2 * 0x20;
+    iVar3 = *(int *)((int)xvga_mem_images + local_30);
     if ((param_5 & 1U) == 0) {
       iVar1 = 0;
     }
@@ -421,11 +421,11 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       }
       iVar1 = local_24;
       if (clip_bx < local_14 + param_3) {
-        mem_image_index = clip_bx - param_3;
-        iVar1 = local_14 - mem_image_index;
+        local_30 = clip_bx - param_3;
+        iVar1 = local_14 - local_30;
         local_24 = iVar1;
-        local_14 = mem_image_index;
-        if (mem_image_index < 1) {
+        local_14 = local_30;
+        if (local_30 < 1) {
           return;
         }
       }
@@ -441,13 +441,13 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     }
     return;
   }
-  local_10 = *(int *)(xvga_mem_images + local_2c + 0xc);
+  local_10 = *(int *)((int)xvga_mem_images + local_2c + 0xc);
   local_1c = 0;
   local_18 = 0;
-  iVar4 = *(int *)(xvga_mem_images + local_2c + 8);
+  iVar4 = *(int *)((int)xvga_mem_images + local_2c + 8);
   if ((param_5 & 2U) == 0) {
-    param_3 = param_3 - *(int *)(xvga_mem_images + local_2c + 0x10);
-    param_4 = param_4 - *(int *)(xvga_mem_images + local_2c + 0x14);
+    param_3 = param_3 - *(int *)((int)xvga_mem_images + local_2c + 0x10);
+    param_4 = param_4 - *(int *)((int)xvga_mem_images + local_2c + 0x14);
   }
   if (clip_limit_set == 0) {
     fatal_exit(s__s__d____no_clipping_limit_set_0041d33d,s_clipblit_cpp_0041d330,0x22b);
@@ -497,14 +497,15 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   rect.top = param_4;
   if (param_1 == 0) {
     HVar2 = (*xvga_screen->lpVtbl->Blt)
-                      (xvga_screen,&rect,*(IDirectDrawSurface **)(xvga_mem_images + local_20 + 4),
-                       &rect_2,0x8000,(DDBLTFX *)0x0);
+                      (xvga_screen,&rect,
+                       *(IDirectDrawSurface **)((int)xvga_mem_images + local_20 + 4),&rect_2,0x8000,
+                       (DDBLTFX *)0x0);
     if (HVar2 == 0) {
       return;
     }
     arg12 = dd_error_string(HVar2);
-    arg11 = *(undefined4 *)(xvga_mem_images + local_20 + 0xc);
-    arg10 = *(undefined4 *)(xvga_mem_images + local_20 + 8);
+    arg11 = *(undefined4 *)(&xvga_mem_images->field_0xc + local_20);
+    arg10 = *(undefined4 *)(&xvga_mem_images->field_0x8 + local_20);
     arg3 = 0x268;
     arg2 = s_clipblit_cpp_0041d35e;
     pcVar5 = s__s__d____set_mem_image_blitting_e_0041d36b;
@@ -512,14 +513,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   else if ((uint)param_1 < 2) {
     HVar2 = (*xvga_back_screen->lpVtbl->Blt)
                       (xvga_back_screen,&rect,
-                       *(IDirectDrawSurface **)(xvga_mem_images + local_20 + 4),&rect_2,0x8000,
+                       *(IDirectDrawSurface **)((int)xvga_mem_images + local_20 + 4),&rect_2,0x8000,
                        (DDBLTFX *)0x0);
     if (HVar2 == 0) {
       return;
     }
     arg12 = dd_error_string(HVar2);
-    arg11 = *(undefined4 *)(xvga_mem_images + local_20 + 0xc);
-    arg10 = *(undefined4 *)(xvga_mem_images + local_20 + 8);
+    arg11 = *(undefined4 *)(&xvga_mem_images->field_0xc + local_20);
+    arg10 = *(undefined4 *)(&xvga_mem_images->field_0x8 + local_20);
     arg3 = 0x270;
     arg2 = s_clipblit_cpp_0041d3bc;
     pcVar5 = s__s__d____set_mem_image_blitting_e_0041d3c9;
@@ -530,14 +531,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     }
     HVar2 = (*xvga_buffer_screen->lpVtbl->Blt)
                       (xvga_buffer_screen,&rect,
-                       *(IDirectDrawSurface **)(xvga_mem_images + local_20 + 4),&rect_2,0x8000,
+                       *(IDirectDrawSurface **)((int)xvga_mem_images + local_20 + 4),&rect_2,0x8000,
                        (DDBLTFX *)0x0);
     if (HVar2 == 0) {
       return;
     }
     arg12 = dd_error_string(HVar2);
-    arg11 = *(undefined4 *)(xvga_mem_images + local_20 + 0xc);
-    arg10 = *(undefined4 *)(xvga_mem_images + local_20 + 8);
+    arg11 = *(undefined4 *)(&xvga_mem_images->field_0xc + local_20);
+    arg10 = *(undefined4 *)(&xvga_mem_images->field_0x8 + local_20);
     arg3 = 0x275;
     arg2 = s_clipblit_cpp_0041d41a;
     pcVar5 = s__s__d____set_mem_image_blitting_e_0041d427;

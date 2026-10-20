@@ -15,6 +15,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -261,14 +263,67 @@ public class ApplyWatcom extends GhidraScript {
 			parser.getTypes().size() + " types parsed from " + h.getName());
 	}
 
+	/**
+	 * Define structures from symbols/structs.tsv and, beneath them, the layouts inferred by
+	 * InferStructs.java (structs_auto.tsv next to it): an inferred field is dropped where it
+	 * overlaps a hand-written one. A "__size" row sets a minimum structure size.
+	 */
 	private void defineStructs(File tsv) throws Exception {
-		if (!tsv.exists()) {
-			return;
-		}
 		if (winArchive == null) {
 			openWindowsArchive();
 		}
-		Map<String, List<String[]>> fields = new java.util.LinkedHashMap<>();
+		Map<String, List<String[]>> manual = readStructRows(tsv);
+		Map<String, List<String[]>> auto = readStructRows(new File(tsv.getParentFile(), "structs_auto.tsv"));
+		Set<String> names = new LinkedHashSet<>(manual.keySet());
+		names.addAll(auto.keySet());
+		DataTypeManager dtm = currentProgram.getDataTypeManager();
+		for (String name : names) {
+			int size = 0;
+			List<Object[]> parsed = new ArrayList<>();
+			for (String[] c : manual.getOrDefault(name, List.of())) {
+				int off = Integer.parseInt(c[1], 16);
+				if (c[3].equals("__size")) {
+					size = Math.max(size, off);
+					continue;
+				}
+				DataType dt = resolveArray(c[2]);
+				parsed.add(new Object[] { off, dt, c[3], c.length > 4 ? c[4] : null });
+				size = Math.max(size, off + dt.getLength());
+			}
+			int handWritten = parsed.size();
+			for (String[] c : auto.getOrDefault(name, List.of())) {
+				int off = Integer.parseInt(c[1], 16);
+				if (c[3].equals("__size")) {
+					size = Math.max(size, off);
+					continue;
+				}
+				DataType dt = resolveArray(c[2]);
+				boolean clash = false;
+				for (Object[] f : parsed) {
+					int o = (Integer) f[0], l = ((DataType) f[1]).getLength();
+					clash |= o < off + dt.getLength() && off < o + l;
+				}
+				if (!clash) {
+					parsed.add(new Object[] { off, dt, c[3], c.length > 4 ? c[4] : null });
+					size = Math.max(size, off + dt.getLength());
+				}
+			}
+			StructureDataType st = new StructureDataType(new CategoryPath("/A2Racer"), name, size, dtm);
+			for (Object[] f : parsed) {
+				DataType dt = (DataType) f[1];
+				st.replaceAtOffset((Integer) f[0], dt, dt.getLength(), (String) f[2], (String) f[3]);
+			}
+			dtm.addDataType(st, DataTypeConflictHandler.REPLACE_HANDLER);
+			println("ApplyWatcom: struct " + name + " (" + size + " bytes, " + handWritten +
+				" named and " + (parsed.size() - handWritten) + " inferred fields)");
+		}
+	}
+
+	private Map<String, List<String[]>> readStructRows(File tsv) throws Exception {
+		Map<String, List<String[]>> rows = new LinkedHashMap<>();
+		if (!tsv.exists()) {
+			return rows;
+		}
 		try (BufferedReader r = new BufferedReader(new FileReader(tsv))) {
 			String line;
 			while ((line = r.readLine()) != null) {
@@ -276,27 +331,10 @@ public class ApplyWatcom extends GhidraScript {
 					continue;
 				}
 				String[] c = line.split("\t", -1);
-				fields.computeIfAbsent(c[0], k -> new ArrayList<>()).add(c);
+				rows.computeIfAbsent(c[0], k -> new ArrayList<>()).add(c);
 			}
 		}
-		DataTypeManager dtm = currentProgram.getDataTypeManager();
-		for (Map.Entry<String, List<String[]>> e : fields.entrySet()) {
-			int size = 0;
-			List<Object[]> parsed = new ArrayList<>();
-			for (String[] c : e.getValue()) {
-				int off = Integer.parseInt(c[1], 16);
-				DataType dt = resolveArray(c[2]);
-				parsed.add(new Object[] { off, dt, c[3], c.length > 4 ? c[4] : null });
-				size = Math.max(size, off + dt.getLength());
-			}
-			StructureDataType st = new StructureDataType(new CategoryPath("/A2Racer"), e.getKey(), size, dtm);
-			for (Object[] f : parsed) {
-				DataType dt = (DataType) f[1];
-				st.replaceAtOffset((Integer) f[0], dt, dt.getLength(), (String) f[2], (String) f[3]);
-			}
-			dtm.addDataType(st, DataTypeConflictHandler.REPLACE_HANDLER);
-			println("ApplyWatcom: struct " + e.getKey() + " (" + size + " bytes, " + parsed.size() + " fields)");
-		}
+		return rows;
 	}
 
 	private DataType resolveArray(String t) {
@@ -374,6 +412,10 @@ public class ApplyWatcom extends GhidraScript {
 			case "long double": return LongDoubleDataType.dataType;
 			case "bool": return BooleanDataType.dataType;
 			case "wchar_t": return WideCharDataType.dataType;
+			case "undefined1": return Undefined1DataType.dataType;
+			case "undefined2": return Undefined2DataType.dataType;
+			case "undefined4": return Undefined4DataType.dataType;
+			case "undefined8": return Undefined8DataType.dataType;
 		}
 		DataTypeManager dtm = currentProgram.getDataTypeManager();
 		List<DataType> found = new ArrayList<>();

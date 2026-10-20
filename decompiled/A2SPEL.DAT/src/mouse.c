@@ -168,16 +168,16 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
     fatal_exit(s__s__d_____set_mouse_anim__illega_00448bc3,s_mouse_cpp_00448bb9,0xe2,param_1,
                max_anim_ptr);
   }
-  if ((param_2 < 0) || (*(int *)(xvga_anims + param_1 * 0xc) <= param_2)) {
+  if ((param_2 < 0) || ((&xvga_anims->field_00)[param_1 * 3] <= param_2)) {
     fatal_exit(s__s__d_____set_mouse_anim__illega_00448c27,s_mouse_cpp_00448c1d,0xe6,param_2,
-               *(undefined4 *)(xvga_anims + param_1 * 0xc),param_1);
+               (&xvga_anims->field_00)[param_1 * 3],param_1);
   }
-  arg4 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
+  arg4 = *(int *)((&xvga_anims->field_08)[param_1 * 3] + 4 + param_2 * 8);
   if ((arg4 < 0) || (max_mem_image_ptr <= arg4)) {
     fatal_exit(s__s__d_____set_mouse_anim__image___00448c8a,s_mouse_cpp_00448c80,0xeb,arg4,
                max_mem_image_ptr);
   }
-  if (*(int *)(xvga_mem_images + arg4 * 0x20) == 0) {
+  if (*(int *)(arg4 * 0x20 + (int)xvga_mem_images) == 0) {
     fatal_exit(s__s__d_____set_mouse_anim__mouse_i_00448cd7,s_mouse_cpp_00448ccd,0xee,arg4);
   }
   mouse_anim = param_1;
@@ -282,6 +282,9 @@ void __watcall get_mouse_hotspot(int *param_1,int *param_2)
 void __watcall draw_mouse(void)
 
 {
+  int iVar1;
+  int iVar2;
+  
   if (mouse_init_ok == 0) {
     fatal_exit(s__s__d_____draw_mouse__Mouse_is_n_00448ef1,s_mouse_cpp_00448ee7,0x157);
   }
@@ -289,12 +292,10 @@ void __watcall draw_mouse(void)
     fatal_exit(s__s__d_____draw_mouse__You_can_t_c_00448f2b,s_mouse_cpp_00448f21,0x15c);
   }
   if ((mouse_old_xpos != mouse_xpos) || (mouse_old_ypos != mouse_ypos)) {
-    blt_scr_2_scr(2,0,mouse_old_xpos - *(int *)(xvga_mem_images + mouse_image * 0x20 + 0x10),
-                  mouse_old_ypos - *(int *)(xvga_mem_images + mouse_image * 0x20 + 0x14),
-                  *(int *)(xvga_mem_images + mouse_image * 0x20 + 8) +
-                  (mouse_old_xpos - *(int *)(xvga_mem_images + mouse_image * 0x20 + 0x10)),
-                  *(int *)(xvga_mem_images + mouse_image * 0x20 + 0xc) +
-                  (mouse_old_ypos - *(int *)(xvga_mem_images + mouse_image * 0x20 + 0x14)),0);
+    iVar1 = mouse_old_ypos - *(int *)((int)xvga_mem_images + mouse_image * 0x20 + 0x14);
+    iVar2 = mouse_old_xpos - *(int *)((int)xvga_mem_images + mouse_image * 0x20 + 0x10);
+    blt_scr_2_scr(2,0,iVar2,iVar1,*(int *)((int)xvga_mem_images + mouse_image * 0x20 + 8) + iVar2,
+                  *(int *)((int)xvga_mem_images + mouse_image * 0x20 + 0xc) + iVar1,0);
     mouse_image = mouse_image + 1;
     if (max_mem_image_ptr <= mouse_image) {
       mouse_image = 0;
