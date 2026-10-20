@@ -1,6 +1,6 @@
 # A2 Racer port
 
-A clean C rewrite of A2 Racer on SDL2 and OpenGL that runs on Windows, Linux and macOS. The decompiled modules in `../decompiled/` are the reference; file and function names follow the original sources (`forms.cpp` becomes `menu/forms.c`, `menu_main` stays `menu_main`).
+A clean Rust rewrite of A2 Racer on SDL2 and OpenGL that runs on Windows, Linux and macOS. The decompiled modules in `../decompiled/` are the reference; file and function names follow the original sources (`forms.cpp` becomes `menu/forms.rs`, `menu_main` stays `menu_main`).
 
 The game's own data is not included. Point the port at the original CD, or at a copy of its files.
 
@@ -30,19 +30,18 @@ The game's own data is not included. Point the port at the original CD, or at a 
 
 ## Download
 
-Ready-made builds of the latest commit are on the [latest release](https://github.com/xvilo/a2-racer-davilex-decomp/releases/tag/latest): Windows (x86-64, with its DLLs), macOS (one universal executable for Apple Silicon and Intel, SDL built in) and Linux (x86-64, SDL built in; runs on glibc 2.35 and later, e.g. Ubuntu 22.04+). Unpack and run `a2racer --data /path/to/A2RACER.BIN` (the CD image, `.bin` or `.iso`), or point `--data` at a folder with the CD's files. The macOS build isn't notarised, so macOS stops a downloaded copy: run `xattr -dr com.apple.quarantine /path/to/a2racer` once after unpacking.
+Ready-made builds of the latest commit are on the [latest release](https://github.com/xvilo/a2-racer-davilex-decomp/releases/tag/latest): Windows (x86-64, SDL built in), macOS (one universal executable for Apple Silicon and Intel, SDL built in) and Linux (x86-64, SDL built in; runs on glibc 2.35 and later, e.g. Ubuntu 22.04+). Unpack and run `a2racer --data /path/to/A2RACER.BIN` (the CD image, `.bin` or `.iso`), or point `--data` at a folder with the CD's files. The macOS build isn't notarised, so macOS stops a downloaded copy: run `xattr -dr com.apple.quarantine /path/to/a2racer` once after unpacking.
 
 ## Build
 
-You need CMake ≥ 3.16, a C99 compiler, SDL2 and SDL2_ttf. The race needs an OpenGL 2.1 driver at run time; the port loads the GL functions through SDL, so nothing links against OpenGL.
+You need Rust (stable, via [rustup](https://rustup.rs)). The race needs an OpenGL 2.1 driver at run time; the port loads the GL functions through SDL, so nothing links against OpenGL. Text is drawn with [fontdue](https://crates.io/crates/fontdue), so SDL2_ttf isn't needed.
 
 ```bash
-# Debian/Ubuntu: sudo apt install cmake libsdl2-dev libsdl2-ttf-dev
-# macOS:         brew install cmake sdl2 sdl2_ttf
-# Windows:       vcpkg install sdl2 sdl2-ttf, then pass -DCMAKE_TOOLCHAIN_FILE=…/vcpkg.cmake
-cmake -S port -B port/build
-cmake --build port/build
-port/build/a2racer --data /path/to/A2Racer-CD
+# With SDL2 installed (Debian/Ubuntu: sudo apt install libsdl2-dev; macOS: brew install sdl2):
+cargo build --release --manifest-path port/Cargo.toml
+# Or build SDL2 from source and link it in (needs CMake and a C compiler; what the releases use):
+cargo build --release --features static --manifest-path port/Cargo.toml
+port/target/release/a2racer --data /path/to/A2Racer-CD
 ```
 
 | Option | Does |
@@ -55,20 +54,20 @@ port/build/a2racer --data /path/to/A2Racer-CD
 | `--race N` | Starts stage N (1–6) straight away with the saved player's settings, without the menu |
 | `--race-view N` | A free fly-through along stage N's road (a test of the 3D code) |
 | `--fake-race N` | Skips the race: "drives" each one at position N (1–6) with made-up times, to test the screens after a race |
-| `--script file` | Scripted input for testing: keys, text, clicks and screenshots on a timeline (see `src/platform/sys_sdl.c` and `tests/menu_smoke.txt`) |
+| `--script file` | Scripted input for testing: keys, text, clicks and screenshots on a timeline (see `src/platform/sys.rs` and `tests/menu_smoke.txt`) |
 
 ## Layout
 
 | Path | Contents |
 |---|---|
-| `src/main.c` | Entry point; takes the launcher's place (A2.EXE) |
-| `src/platform/` | SDL2: window, presenting the 8-bit screen, input, time |
-| `src/res/` | Archive, PCX and Smacker loaders |
-| `src/gfx/` | The 640×480 8-bit screens with their palette, and a PNG writer |
-| `src/xvga/` | The parts of Davilex's xvga library: save files, fonts, sound buffers |
+| `src/main.rs` | Entry point; takes the launcher's place (A2.EXE) |
+| `src/platform/` | SDL2: window, presenting the 8-bit screen, OpenGL, input, time |
+| `src/res/` | Archive, PCX, disc image and Smacker loaders |
+| `src/gfx/` | The 640×480 8-bit screens with their palette, wipes, and a PNG writer |
+| `src/xvga/` | The parts of Davilex's xvga library: save files, INI files, fonts, sound buffers, joysticks |
 | `src/movie/` | The movie player (A2MOVIE.DAT) |
-| `src/menu/` | Forms and menus. `menu_data.[ch]` is generated from `A2MENU.DAT` by `tools/menu_tables.py` |
-| `src/race/` | The race (A2SPEL.DAT): `race.c` (main.cpp, objio.cpp, setracer.cpp), `weg.c` (the road), `opponent.c`/`driver.c` (cars and their drivers), `player.c` (mycontro.cpp), `camera.c`, `statobj.c` (scenery), `bonus.c`, `pion.c`, `hud.c` (dashboard and radar), `sndfx.c`, and the 3D layer: `math3d.c`, `object3d.c`, `render.c`, `texture.c` |
+| `src/menu/` | Forms and menus. `menu_data.rs` is generated from `A2MENU.DAT` by `tools/menu_tables.py` |
+| `src/race/` | The race (A2SPEL.DAT), its state in one `Race` struct: `race.rs` (main.cpp, objio.cpp, setracer.cpp), `weg.rs` (the road), `opponent.rs`/`driver.rs` (cars and their drivers), `player.rs` (mycontro.cpp), `camera.rs`, `statobj.rs` (scenery), `bonus.rs`, `pion.rs`, `hud.rs` (dashboard and radar), `sndfx.rs`, and the 3D layer: `math3d.rs`, `object3d.rs`, `render.rs`, `texture.rs` |
 
 ## Fidelity notes
 

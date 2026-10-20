@@ -7,8 +7,15 @@ mod gfx;
 mod menu;
 mod movie;
 mod platform;
+mod race;
 mod res;
 mod xvga;
+
+// SDL built in (the `static` feature) reads the registry for audio device names and
+// mouse settings; sdl2-sys doesn't link the library that has those functions.
+#[cfg(all(windows, feature = "static"))]
+#[link(name = "advapi32")]
+extern "system" {}
 
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
@@ -112,8 +119,7 @@ fn win_handle_menu(m: &mut Menu, g: &mut Game, first: bool) -> i32 {
 /// INFIO.INI instead, the player at `position` and the rivals in the other places.
 fn run_race(g: &mut Game, position: i32) {
     if !(1..=6).contains(&position) {
-        // TODO: the race is being ported from C to Rust (port/src/race/*.c).
-        eprintln!("the race is not ported to Rust yet; use --fake-race <position>");
+        race::race::race_main(g);
         return;
     }
     g.infio.init_infio();
@@ -231,9 +237,22 @@ fn run() -> i32 {
     load_menu_fonts();
 
     let mut result = 0;
-    if args.race_view.is_some() || args.race.is_some() {
-        eprintln!("the race is not ported to Rust yet");
-        result = 1;
+    if let Some(stage) = args.race_view {
+        result = race::race_view::race_view(&g, stage.max(0) as usize);
+    } else if let Some(stage) = args.race {
+        // A2_RACE_REPEAT (testing): several races in one run, as the launcher's loop does.
+        let repeat: i32 = std::env::var("A2_RACE_REPEAT").ok().and_then(|v| v.parse().ok()).unwrap_or(1);
+        for _ in 0..repeat {
+            if sys_quit_requested() {
+                break;
+            }
+            win_open_menu(&mut m, &mut g);
+            m.reset_infio(&mut g);
+            g.infio.stage = stage as i16;
+            g.infio.save_infio();
+            result = race::race::race_main(&mut g);
+            println!("race: finished {}, position {}, time {} s", g.infio.race_finished, g.infio.position, g.infio.time);
+        }
     } else if let Some(path) = &args.screenshot {
         win_open_menu(&mut m, &mut g);
         m.mm_open_screen(&g);

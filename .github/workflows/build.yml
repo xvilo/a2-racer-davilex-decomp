@@ -9,6 +9,11 @@ on:
 # compiled from source and linked in, so the executables need nothing beyond the
 # system (on Linux SDL opens X11/Wayland, the sound server and OpenGL at run time).
 
+env:
+  # SDL 2.0's CMakeLists asks for CMake < 3.5, which CMake 4 (macOS and Windows runners)
+  # refuses without this.
+  CMAKE_POLICY_VERSION_MINIMUM: "3.5"
+
 jobs:
   linux:
     runs-on: ubuntu-22.04

@@ -21,7 +21,7 @@ use sdl2::joystick::Joystick;
 use sdl2::keyboard::{Keycode, Mod, Scancode};
 use sdl2::mouse::{MouseButton, MouseState};
 use sdl2::video::{GLContext, GLProfile, Window};
-use sdl2::{EventPump, Sdl, VideoSubsystem};
+use sdl2::{EventPump, EventSubsystem, JoystickSubsystem, Sdl, VideoSubsystem};
 
 use crate::gfx::png::png_write_rgb;
 use crate::platform::gl::*;
@@ -85,6 +85,9 @@ struct Platform {
     window: Window,
     _gl_context: GLContext,
     events: EventPump,
+    /// Kept for the whole run: dropping the last handle of an SDL subsystem shuts it down.
+    event_subsystem: EventSubsystem,
+    joystick_subsystem: Option<JoystickSubsystem>,
     joysticks: [Option<Joystick>; 2],
     screen_texture: GLuint,
     rgba: Vec<u8>,
@@ -100,6 +103,9 @@ thread_local! {
     /// SDL without a window, for headless runs.
     static HEADLESS_SDL: RefCell<Option<Sdl>> = const { RefCell::new(None) };
 }
+
+/// Milliseconds are counted from here (SDL_GetTicks counts from SDL_Init).
+static START: std::sync::OnceLock<std::time::Instant> = std::sync::OnceLock::new();
 
 /// A quit request stays set: menus nested several deep must all see it.
 static QUIT_REQUESTED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
@@ -118,6 +124,7 @@ pub fn sdl() -> Option<Sdl> {
 }
 
 pub fn sys_init(title: &str, opt: &SysOptions) -> Result<(), String> {
+    START.get_or_init(std::time::Instant::now);
     let sdl = sdl2::init()?;
     if opt.hidden {
         HEADLESS_SDL.with(|h| *h.borrow_mut() = Some(sdl));
@@ -153,6 +160,8 @@ pub fn sys_init(title: &str, opt: &SysOptions) -> Result<(), String> {
     video.text_input().stop(); // only while an edit box is open
     let lines = opt.script.as_ref().map(|path| load_script(path)).unwrap_or_default();
     let events = sdl.event_pump()?;
+    let event_subsystem = sdl.event()?;
+    let joystick_subsystem = sdl.joystick().ok();
     PLATFORM.with(|p| {
         *p.borrow_mut() = Some(Platform {
             sdl,
@@ -160,6 +169,8 @@ pub fn sys_init(title: &str, opt: &SysOptions) -> Result<(), String> {
             window,
             _gl_context: gl_context,
             events,
+            event_subsystem,
+            joystick_subsystem,
             joysticks: [None, None],
             screen_texture,
             rgba: vec![0; SCREEN_W * SCREEN_H * 4],
@@ -219,14 +230,15 @@ fn key_by_name(n: &str) -> Option<Keycode> {
 
 impl Platform {
     fn ticks(&self) -> u32 {
-        self.sdl.timer().map(|t| t.ticks()).unwrap_or(0)
+        sys_ticks()
     }
 
     fn push_key(&mut self, k: Keycode) {
         let sc = Scancode::from_keycode(k);
         self.script.fake_key = sc;
         self.script.fake_key_until = self.ticks() + 100;
-        if let Ok(ev) = self.sdl.event() {
+        {
+            let ev = &self.event_subsystem;
             let mk = |down: bool| {
                 let (timestamp, window_id, keymod, repeat) = (0, 0, Mod::NOMOD, false);
                 if down {
@@ -248,7 +260,7 @@ impl Platform {
             self.script.pos += 1;
             self.script.fake_alt = false;
             let (word, arg) = cmd.split_once(' ').unwrap_or((cmd.as_str(), ""));
-            let ev = self.sdl.event().ok();
+            let ev = Some(&self.event_subsystem);
             match word {
                 "wait" => self.script.resume = self.ticks() + arg.trim().parse::<u32>().unwrap_or(0),
                 "hold" => {
@@ -549,7 +561,7 @@ pub fn sys_quit_requested() -> bool {
 }
 
 pub fn sys_ticks() -> u32 {
-    sdl().and_then(|s| s.timer().ok()).map(|t| t.ticks()).unwrap_or(0)
+    START.get_or_init(std::time::Instant::now).elapsed().as_millis() as u32
 }
 
 pub fn sys_sleep(ms: u32) {
@@ -616,7 +628,7 @@ pub fn sys_joystick_position(n: usize) -> Option<(u32, u32, u32)> {
         if n > 1 {
             return None;
         }
-        let sub = p.sdl.joystick().ok()?;
+        let sub = p.joystick_subsystem.as_ref()?;
         sub.update();
         if p.joysticks[n].as_ref().is_some_and(|j| !j.attached()) {
             p.joysticks[n] = None;
