@@ -42,17 +42,26 @@ jobs:
       # universal executable instead.
       - name: SDL2 and SDL2_ttf, static and universal
         run: |
-          curl -sSfL -o sdl.tar.gz https://github.com/libsdl-org/SDL/releases/download/release-$SDL2_VERSION/SDL2-$SDL2_VERSION.tar.gz
-          curl -sSfL -o ttf.tar.gz https://github.com/libsdl-org/SDL_ttf/releases/download/release-$SDL2_TTF_VERSION/SDL2_ttf-$SDL2_TTF_VERSION.tar.gz
+          # Each step's output goes to a log; on failure its end becomes annotations, which
+          # can be read without logging in.
+          run() {
+            log=$1; shift
+            if ! "$@" > "$log" 2>&1; then
+              tail -40 "$log" | sed 's/^/::error::/'
+              exit 1
+            fi
+          }
+          run dl1.log curl -sSfL -o sdl.tar.gz https://github.com/libsdl-org/SDL/releases/download/release-$SDL2_VERSION/SDL2-$SDL2_VERSION.tar.gz
+          run dl2.log curl -sSfL -o ttf.tar.gz https://github.com/libsdl-org/SDL_ttf/releases/download/release-$SDL2_TTF_VERSION/SDL2_ttf-$SDL2_TTF_VERSION.tar.gz
           tar xzf sdl.tar.gz
           tar xzf ttf.tar.gz
           common=(-DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_INSTALL_PREFIX=$PWD/deps -DCMAKE_PREFIX_PATH=$PWD/deps)
-          cmake -S SDL2-$SDL2_VERSION -B sdl-build "${common[@]}" -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
-          cmake --build sdl-build -j 4
-          cmake --install sdl-build
-          cmake -S SDL2_ttf-$SDL2_TTF_VERSION -B ttf-build "${common[@]}" -DBUILD_SHARED_LIBS=OFF -DSDL2TTF_VENDORED=ON -DSDL2TTF_HARFBUZZ=OFF -DSDL2TTF_SAMPLES=OFF
-          cmake --build ttf-build -j 4
-          cmake --install ttf-build
+          run sdl-cfg.log cmake -S SDL2-$SDL2_VERSION -B sdl-build "${common[@]}" -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
+          run sdl-build.log cmake --build sdl-build -j 4
+          run sdl-install.log cmake --install sdl-build
+          run ttf-cfg.log cmake -S SDL2_ttf-$SDL2_TTF_VERSION -B ttf-build "${common[@]}" -DBUILD_SHARED_LIBS=OFF -DSDL2TTF_VENDORED=ON -DSDL2TTF_HARFBUZZ=OFF -DSDL2TTF_SAMPLES=OFF
+          run ttf-build.log cmake --build ttf-build -j 4
+          run ttf-install.log cmake --install ttf-build
       - name: Build
         run: |
           cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_PREFIX_PATH=$PWD/deps
