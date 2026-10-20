@@ -23,6 +23,11 @@ void race_files_close(void)
 	named_archive_close(&rcs);
 }
 
+const named_archive *race_archive(void)
+{
+	return &rcs;
+}
+
 const uint8_t *race_file(const char *name, size_t *size)
 {
 	return named_archive_find(&rcs, name, size);

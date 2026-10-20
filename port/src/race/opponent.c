@@ -134,7 +134,7 @@ int collide_racer_with_road_edge(int opponent)
 	o->offset_z = (allowed / move) * o->offset_z;
 	o->speed *= 0.845f;
 	if (4.0f < o->speed)
-		play_bump3_sound();
+		play_bump3_sound(o->x, o->y, o->z);
 	return 1;
 }
 
@@ -171,7 +171,7 @@ void collide_player_with_track_ends(void)
 	o->offset_z = (allowed / move) * o->offset_z;
 	o->speed *= 0.845f;
 	if (4.0f < o->speed)
-		play_bump3_sound();
+		play_bump3_sound(o->x, o->y, o->z);
 }
 
 int get_racer_lane(int opponent)
@@ -389,7 +389,12 @@ static void evaluate_opponent(int op)
 	opponent_t *o = &opponent_data[op];
 	if (!o->active)
 		return;
-	/* TODO: the car's engine sound, nearer than 500 (update_object_sound). */
+	/* The car's engine, heard nearer than 500. */
+	float distance = fabsf(o->z - player_z) + fabsf(o->y - player_y) + fabsf(o->x - player_x);
+	if (500.0f <= distance)
+		stop_object_sound(o->object);
+	else
+		update_object_sound(o->object, o->x, o->y, o->z, distance);
 	move_opponent_toward_target(op);
 	o->steer_angle += o->steer_rate;
 	o->steer_angle = (int)(o->steer_angle * 0.95f);
@@ -601,7 +606,7 @@ static void resolve_collision(int object_a, int object_b)
 		a->speed *= 0.7f;
 		a->push_x *= 0.8f;
 		a->push_z *= 0.8f;
-		play_crash_sound();
+		play_crash_sound(a->x, a->y, a->z, a->speed);
 	}
 }
 

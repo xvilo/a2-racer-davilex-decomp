@@ -21,6 +21,17 @@ void xvga_exit_sound(void);
 /* Loads `filename` from the archive if needed and plays it; returns the buffer index
  * or -1. */
 int play_sound_buffer_1(const char *filename, int flags);
+/* The same with a volume set before it starts. */
+int play_sound_buffer_2(const char *filename, int volume, int flags);
+/* A buffer for the file, not started; flags 4 keeps it loaded. */
+int load_sound_buffer(const char *filename, int flags);
+/* Starts a loaded buffer from the beginning. */
+int play_sound_buffer(int index, int flags);
+/* The playback rate in Hz (100..100000), DirectSound's SetFrequency. */
+int set_sound_buffer_freq(int index, int freq);
+/* Drops every buffer and sample and takes the sounds from another archive (the race
+ * has its own process and sounds in the original). */
+void xvga_set_sound_files(const named_archive *files, int max_buffers);
 int sound_buffer_busy(int index);
 int stop_sound_buffer(int index);
 void stop_all_sound_buffers(void);

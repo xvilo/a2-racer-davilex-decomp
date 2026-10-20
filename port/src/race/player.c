@@ -110,6 +110,7 @@ void init_controls(void)
 	add_rpm_steps(3, 4.0f, 6.0f, 40.0f, 63.0f, 15.0f);
 	add_rpm_steps(4, 6.0f, 8.0f, 45.0f, 65.0f, 30.0f);
 	add_rpm_steps(5, 8.0f, 15.0f, 45.0f, 60.0f, 80.0f);
+	init_engine_sound_tables();
 	steering_position = steer_index = 14;
 	accelerator_input = 0;
 	wrong_way_warned = engine_started = 0;

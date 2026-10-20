@@ -15,13 +15,15 @@ typedef struct {
 	char name[40];
 	Uint8 *data;
 	Uint32 len;
+	int rate;        /* the WAV's own rate, for set_sound_buffer_freq */
 } sample_t;
 
 /* snd_buf_t in the original: name, DirectSound buffers, in-use flag, usage count. */
 typedef struct {
 	char name[40];
 	int sample;      /* index into samples, -1 when the buffer is free */
-	Uint32 pos;
+	double pos;      /* in frames */
+	int freq;        /* playback rate in Hz, 0 for the WAV's own */
 	int playing;
 	int looping;
 	int volume;      /* hundredths of a dB */
@@ -49,20 +51,29 @@ static void mix(void *user, Uint8 *stream, int len)
 		const sample_t *s = &samples[buf->sample];
 		/* DirectSound volume: attenuation in hundredths of a decibel. */
 		float gain = buf->volume <= -10000 ? 0.0f : powf(10.0f, buf->volume / 2000.0f);
+		/* The data is at the device's rate; a set frequency plays it faster or slower. */
+		double step = buf->freq > 0 && s->rate > 0 ? (double)buf->freq / s->rate : 1.0;
+		Uint32 count = s->len / 4;
+		const Sint16 *in = (const Sint16 *)s->data;
 		for (int i = 0; i < frames; i++) {
-			if (buf->pos + 4 > s->len) {
-				if (!buf->looping) {
+			if (buf->pos >= count) {
+				if (!buf->looping || count == 0) {
 					buf->playing = 0;
 					break;
 				}
-				buf->pos = 0;
+				buf->pos -= count;
+				if (buf->pos >= count)
+					buf->pos = 0;
 			}
-			const Sint16 *in = (const Sint16 *)(s->data + buf->pos);
+			Uint32 a = (Uint32)buf->pos;
+			Uint32 b = a + 1 < count ? a + 1 : buf->looping ? 0 : a;
+			float t = (float)(buf->pos - a);
 			for (int c = 0; c < 2; c++) {
-				int v = out[i * 2 + c] + (int)(in[c] * gain);
+				float x = in[a * 2 + c] + (in[b * 2 + c] - in[a * 2 + c]) * t;
+				int v = out[i * 2 + c] + (int)(x * gain);
 				out[i * 2 + c] = (Sint16)(v > 32767 ? 32767 : v < -32768 ? -32768 : v);
 			}
-			buf->pos += 4;
+			buf->pos += step;
 		}
 	}
 }
@@ -141,6 +152,7 @@ static int load_sample(const char *filename)
 	snprintf(s->name, sizeof s->name, "%s", filename);
 	s->data = cvt.buf;
 	s->len = cvt.needed ? (Uint32)cvt.len_cvt : len;
+	s->rate = wav.freq;
 	return sample_count++;
 }
 
@@ -178,11 +190,10 @@ static int delete_sound_buffer(int keep)
 	return best;
 }
 
-int play_sound_buffer_1(const char *filename, int flags)
+/* Finds or makes a buffer for the file (duplicating one still playing) and starts it;
+ * the device stays locked. */
+static int start_buffer(const char *filename, int flags, int volume, int play)
 {
-	if (!init_sound_ok)
-		return -1;
-	SDL_LockAudioDevice(device);
 	int b = search_sound_buffer(filename, 0, 0);
 	if (b >= 0 && buffers[b].playing) {
 		/* Still playing: use another idle copy of the same sound, or duplicate it. */
@@ -194,21 +205,100 @@ int play_sound_buffer_1(const char *filename, int flags)
 		if (b < 0)
 			b = delete_sound_buffer(-1);
 		int s = b < 0 ? -1 : load_sample(filename);
-		if (s < 0) {
-			SDL_UnlockAudioDevice(device);
+		if (s < 0)
 			return -1;
-		}
 		snprintf(buffers[b].name, sizeof buffers[b].name, "%s", filename);
 		buffers[b].sample = s;
 		buffers[b].use_count = 0;
 		buffers[b].volume = 0;
+		buffers[b].freq = 0;
 	}
 	buffers[b].use_count = flags & 4 ? 1000000 : buffers[b].use_count + 1;
+	if (volume != 1)
+		buffers[b].volume = volume;
 	buffers[b].pos = 0;
 	buffers[b].looping = flags & SOUND_LOOPING;
-	buffers[b].playing = 1;
+	buffers[b].playing = play;
+	return b;
+}
+
+int play_sound_buffer_1(const char *filename, int flags)
+{
+	if (!init_sound_ok)
+		return -1;
+	SDL_LockAudioDevice(device);
+	int b = start_buffer(filename, flags, 1, 1);
 	SDL_UnlockAudioDevice(device);
 	return b;
+}
+
+int play_sound_buffer_2(const char *filename, int volume, int flags)
+{
+	if (!init_sound_ok)
+		return -1;
+	if (volume < -10000)
+		volume = -10000;
+	if (volume > 0)
+		volume = 0;
+	SDL_LockAudioDevice(device);
+	int b = start_buffer(filename, flags, volume, 1);
+	SDL_UnlockAudioDevice(device);
+	return b;
+}
+
+int load_sound_buffer(const char *filename, int flags)
+{
+	if (!init_sound_ok)
+		return -1;
+	SDL_LockAudioDevice(device);
+	int b = start_buffer(filename, flags, 1, 0);
+	SDL_UnlockAudioDevice(device);
+	return b;
+}
+
+int play_sound_buffer(int index, int flags)
+{
+	if (!init_sound_ok || index < 0 || index >= max_sound_buffers)
+		return 0;
+	SDL_LockAudioDevice(device);
+	if (buffers[index].sample >= 0) {
+		buffers[index].pos = 0;
+		buffers[index].looping = flags & SOUND_LOOPING;
+		buffers[index].playing = 1;
+	}
+	SDL_UnlockAudioDevice(device);
+	return 0;
+}
+
+int set_sound_buffer_freq(int index, int freq)
+{
+	if (!init_sound_ok || index < 0 || index >= max_sound_buffers)
+		return 0;
+	if (freq < 100 || 100000 < freq) {
+		fprintf(stderr, "set_sound_buffer_freq: attempt at setting buffer %d to %d Hz\n", index, freq);
+		return 0;
+	}
+	buffers[index].freq = freq;
+	return 0;
+}
+
+void xvga_set_sound_files(const named_archive *files, int max_buffers)
+{
+	if (!init_sound_ok) {
+		archive = files;
+		return;
+	}
+	SDL_LockAudioDevice(device);
+	for (int i = 0; i < MAX_BUFFERS; i++) {
+		buffers[i].sample = -1;
+		buffers[i].playing = 0;
+	}
+	for (int i = 0; i < sample_count; i++)
+		SDL_free(samples[i].data);
+	sample_count = 0;
+	archive = files;
+	max_sound_buffers = max_buffers < MAX_BUFFERS ? max_buffers : MAX_BUFFERS;
+	SDL_UnlockAudioDevice(device);
 }
 
 int sound_buffer_busy(int index)
@@ -302,10 +392,12 @@ int play_pcm(const int16_t *pcm, size_t frames, int rate, int channels, int volu
 	snprintf(samples[si].name, sizeof samples[si].name, "<pcm>");
 	samples[si].data = cvt.buf;
 	samples[si].len = cvt.needed ? (Uint32)cvt.len_cvt : (Uint32)len;
+	samples[si].rate = rate;
 	snprintf(buffers[b].name, sizeof buffers[b].name, "<pcm>");
 	buffers[b].sample = si;
 	buffers[b].pos = 0;
 	buffers[b].looping = 0;
+	buffers[b].freq = 0;
 	buffers[b].volume = volume;
 	buffers[b].use_count = 1000000;
 	buffers[b].playing = 1;

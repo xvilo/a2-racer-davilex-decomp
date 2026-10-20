@@ -177,7 +177,7 @@ void collide_with_pionnen(int opponent)
 			o->vz = op->field_20 * op->speed;
 			o->vy = (fabsf(o->vz) + fabsf(o->vx)) / 3.0f;
 			if (p->hit == 0)
-				play_bump_sound();
+				play_bump_sound(o->x, o->y, o->z);
 			p->hit = 1;
 			break;
 		}

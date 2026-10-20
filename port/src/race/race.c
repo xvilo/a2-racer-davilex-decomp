@@ -25,6 +25,7 @@
 #include "race/texture.h"
 #include "race/weg.h"
 #include "xvga/inifile.h"
+#include "xvga/sound.h"
 
 /* The original ran a frame per screen refresh as fast as the machine allowed; the
  * port runs its frames at a fixed rate. */
@@ -394,6 +395,16 @@ static void init_race_settings(void)
 	if (infio.display_mode == 1)
 		dashboard_on_screen = 0;
 	horizon_on = infio.horizon == 1;
+	volume_offset = (5 - infio.effects_volume) * 300;
+	volume_attenuation = (4 - infio.effects_volume) * 500;
+	music_attenuation = (4 - infio.music_volume) * 500;
+	/* OPTION/GELUID: 0 all, 1 effects only, 2 none, 3 music only. */
+	switch (infio.sound) {
+	case 0: music_enabled = 1; engine_sound_enabled = 1; break;
+	case 1: music_enabled = 0; engine_sound_enabled = 1; break;
+	case 2: music_enabled = 0; engine_sound_enabled = 0; break;
+	case 3: music_enabled = 1; engine_sound_enabled = 0; break;
+	}
 }
 
 int set_race_state(int state)
@@ -550,6 +561,7 @@ static int run(game_t *g)
 	alloc_textures(0x50);
 	change_viewport_size(0, 0, 640, dashboard_on_screen ? 300 : 480);
 	set_background("back.pcx");
+	load_samples();
 	if (init_hud(g))
 		return 1;
 	if (texture_filtering)
@@ -579,6 +591,7 @@ static int run(game_t *g)
 	set_all_objects();
 	if (detail_level == 1)
 		init_static_objects(track_index);
+	start_music(track_info[track_index].music);
 	place_all_bonus_items();
 	race_state = RACE_INTRO;
 	intro_started = countdown_started = finish_started = 0;
@@ -644,6 +657,8 @@ static int run(game_t *g)
 			next = sys_ticks();
 	}
 
+	exit_samples();
+
 	/* The result for the menu. */
 	if (!race_finished_ok) {
 		infio.time = 0;
@@ -687,6 +702,7 @@ int race_main(game_t *g)
 	if (race_files_open(g->data_dir))
 		return 1;
 	int r = run(g);
+	xvga_set_sound_files(&g->menu_files, 0x28);
 	free_race();
 	exit_opponents();
 	free_weg_data();

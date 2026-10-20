@@ -6,7 +6,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "res/archive.h"
+
 int race_files_open(const char *data_dir);
+/* RCS itself (the race's sounds). */
+const named_archive *race_archive(void);
 void race_files_close(void);
 /* A file from RCS by name, or NULL. */
 const uint8_t *race_file(const char *name, size_t *size);
