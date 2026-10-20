@@ -15,7 +15,7 @@ void __watcall load_car_textures(void)
     puVar1 = (undefined4 *)((int)&PTR_s_k_porche_pcx_00457980 + flags);
     flags = flags + 0x20;
     texture = load_texture((char *)*puVar1,flags);
-    *(int *)(&car_types + flags) = texture;
+    *(int *)((int)&identity_matrix._43 + flags) = texture;
   } while (flags != 0x2e0);
   return;
 }

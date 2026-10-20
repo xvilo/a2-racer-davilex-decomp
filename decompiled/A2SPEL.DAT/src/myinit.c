@@ -12,12 +12,13 @@ void __watcall init_anims_and_standard_textures(void)
   
   iVar2 = civilian_count + police_count;
   iVar1 = read_track_object_count(track_index);
-  iVar1 = alloc_objects3d(iVar1 + iVar2 + 0x9c);
-  if (iVar1 != 0) {
+  iVar1 = iVar1 + iVar2 + 0x9c;
+  iVar2 = alloc_objects3d(iVar1);
+  if (iVar2 != 0) {
     fatal_exit(s__s__d____Memory_error_initing_an_0044183f,s_myinit_cpp_00441834,0x55);
   }
   debugmsg(s_starting_alloc_of_anims_00441864);
-  iVar1 = alloc_3d_arrays();
+  iVar1 = alloc_3d_arrays(iVar1,iVar1,47000,47000);
   if (iVar1 != 0) {
     fatal_exit(s__s__d____Memory_error_initing_an_00441889,s_myinit_cpp_0044187e,0x5c);
   }
@@ -50,7 +51,7 @@ load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_
   player_index = load_object_file(PTR_s_bmw_d3d_00457bd8);
   debugmsg(s_player_objectnr____d_004418f6,player_index);
   racers[player_index].field_2c = DAT_00457be4;
-  set_object3d_matrix(player_index,&DAT_004576d0);
+  set_object3d_matrix(player_index,&D3DMATRIX_004576d0);
   *(undefined1 **)&racers[player_index].field_0x20 = &LAB_00402468;
   debugmsg(s_create_execute_buffer_object___0044190d);
   build_object_execute_buffer(player_index);

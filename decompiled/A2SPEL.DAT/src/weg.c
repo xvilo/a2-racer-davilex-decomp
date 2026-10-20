@@ -33,11 +33,11 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
 {
   uint uVar1;
   __iobuf *p_Var2;
-  int j;
-  int build_weg_execute_buffers_result;
   int iVar3;
-  int iVar4;
+  DWORD DVar4;
+  int iVar5;
   int i;
+  DWORD DVar6;
   char local_134 [120];
   char local_bc [120];
   int local_44;
@@ -67,24 +67,24 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
   }
   alloc_weg_vertices(local_44,param_2);
   new_vertices_2 = get_new_vertices();
-  iVar4 = new_vertices_2 * 0x21;
-  *(undefined1 *)(weg_points + 0x20 + iVar4) = 1;
+  iVar5 = new_vertices_2 * 0x21;
+  *(undefined1 *)(weg_points + 0x20 + iVar5) = 1;
   new_vertices = get_new_vertices();
   local_34 = new_vertices * 0x21;
   *(undefined1 *)(weg_points + local_34 + 0x20) = 1;
-  *(undefined4 *)(weg_points + 4 + iVar4) = 0;
+  *(undefined4 *)(weg_points + 4 + iVar5) = 0;
   *(undefined4 *)(weg_points + local_34 + 4) = 0;
   debugmsg(s_loading___s____d_chunks_0044ca85,filename_val,local_44);
-  fread((char *)(weg_points + iVar4),1,4,(int *)p_Var2);
-  fread((char *)(weg_points + iVar4 + 8),1,4,(int *)p_Var2);
+  fread((char *)(weg_points + iVar5),1,4,(int *)p_Var2);
+  fread((char *)(weg_points + iVar5 + 8),1,4,(int *)p_Var2);
   fread(local_38,1,4,(int *)p_Var2);
   fread((char *)&local_40,1,4,(int *)p_Var2);
   fread((char *)&local_3c,1,4,(int *)p_Var2);
   fread(local_bc,local_3c,4,(int *)p_Var2);
-  local_20 = iVar4;
+  local_20 = iVar5;
   fread(local_134,local_3c,4,(int *)p_Var2);
-  *(float *)(weg_points + 4 + iVar4) = (float)local_40;
-  iVar4 = 0;
+  *(float *)(weg_points + 4 + iVar5) = (float)local_40;
+  iVar5 = 0;
   local_18 = local_34;
   local_1c = local_34;
   for (i = 0; i < local_44 + -1; i = i + 1) {
@@ -99,11 +99,11 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
     if (((byte)p_Var2[0xc] & 0x20) != 0) {
       fatal_exit(s__s__d____error_reading_weg_data_f_0044caa6,s_weg_cpp_0044ca9e,0xb8,filename_val);
     }
-    j = build_weg_sections(new_vertices_2,new_vertices,local_3c,2);
-    *(int *)(weg_chunk_quads + iVar4) = j;
+    iVar3 = build_weg_sections(new_vertices_2,new_vertices,local_3c,2);
+    *(int *)(weg_chunk_quads + iVar5) = iVar3;
     *(undefined4 *)(weg_points + local_20) = *(undefined4 *)(local_18 + weg_points);
     *(undefined4 *)(weg_points + local_20 + 4) = *(undefined4 *)(local_18 + weg_points + 4);
-    iVar4 = iVar4 + 4;
+    iVar5 = iVar5 + 4;
     *(undefined4 *)(weg_points + local_20 + 8) = *(undefined4 *)(local_18 + weg_points + 8);
   }
   xvga_src_fclose(p_Var2);
@@ -118,9 +118,9 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
     fatal_exit(s__s__d____could_not_open_weg_data_0044cb18,s_weg_cpp_0044cb10,0xcd,filename_val);
   }
   fread((char *)&local_44,1,4,(int *)p_Var2);
-  iVar4 = new_vertices_2 * 0x21;
-  fread((char *)(weg_points + iVar4),1,4,(int *)p_Var2);
-  fread((char *)(weg_points + iVar4 + 8),1,4,(int *)p_Var2);
+  iVar5 = new_vertices_2 * 0x21;
+  fread((char *)(weg_points + iVar5),1,4,(int *)p_Var2);
+  fread((char *)(weg_points + iVar5 + 8),1,4,(int *)p_Var2);
   fread(local_38,1,4,(int *)p_Var2);
   fread((char *)&local_40,1,4,(int *)p_Var2);
   fread((char *)&local_3c,1,4,(int *)p_Var2);
@@ -128,8 +128,8 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
   fread(local_134,local_3c,4,(int *)p_Var2);
   debugmsg(s_creating_the_weg_execute_buffers_0044cb44);
   i = 0;
-  local_24 = iVar4;
-  for (j = 0; j < local_44 + -1; j = j + 1) {
+  local_24 = iVar5;
+  for (DVar6 = 0; (int)DVar6 < local_44 + -1; DVar6 = DVar6 + 1) {
     fread((char *)(weg_points + local_24),1,4,(int *)p_Var2);
     fread((char *)(weg_points + local_24 + 8),1,4,(int *)p_Var2);
     fread(local_38,1,4,(int *)p_Var2);
@@ -138,19 +138,18 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
     fread(local_bc,local_3c,4,(int *)p_Var2);
     fread(local_134,local_3c,4,(int *)p_Var2);
     uVar1 = ini_value_setting;
-    compute_weg_normals(j,j + 1,local_3c);
+    compute_weg_normals(DVar6,DVar6 + 1,local_3c);
     if (uVar1 == 0) {
-      build_weg_execute_buffers_result =
-           build_weg_execute_buffers(j,(int)local_3c / 2,local_bc,local_134);
+      DVar4 = build_weg_execute_buffers(DVar6,(int)local_3c / 2,(DWORD)local_bc,(int)local_134);
       iVar3 = *(int *)(weg_chunk_quads + i) * 0x38;
-      iVar4 = weg_chunks;
+      iVar5 = weg_chunks;
     }
     else {
-      build_weg_execute_buffers_result = build_weg_execute_buffers(j,local_3c,local_bc,local_134);
-      iVar4 = *(int *)(weg_chunk_quads + i) * 0x38;
+      DVar4 = build_weg_execute_buffers(DVar6,local_3c,(DWORD)local_bc,(int)local_134);
+      iVar5 = *(int *)(weg_chunk_quads + i) * 0x38;
       iVar3 = weg_chunks;
     }
-    *(int *)(iVar4 + 0x34 + iVar3) = build_weg_execute_buffers_result;
+    *(DWORD *)(iVar5 + 0x34 + iVar3) = DVar4;
     i = i + 4;
   }
   debugmsg(s_Finished_creating_the_weg_execut_0044cb66);
@@ -894,7 +893,7 @@ debug_weg_position(undefined4 param_1,undefined4 param_2,undefined4 param_3,unde
 void __watcall execute_weg_buffer(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   int i;
   int iVar2;
@@ -904,10 +903,11 @@ void __watcall execute_weg_buffer(void)
   iVar2 = DAT_00476594 * 0x38;
   for (i = DAT_00476594; i < DAT_00476598; i = i + 1) {
     if (*(int *)(iVar3 + weg_chunk_vertex_lists) != 0) {
-      lVar1 = (**(code **)(*d3d_device + 0x20))
-                        (d3d_device,*(undefined4 *)(weg_chunks + 0x34 + iVar2),d3d_object,1);
-      if (lVar1 != 0) {
-        arg4 = d3d_error_string(lVar1);
+      HVar1 = (*d3d_device->lpVtbl->Execute)
+                        (d3d_device,*(IDirect3DExecuteBuffer **)(weg_chunks + 0x34 + iVar2),
+                         d3d_viewport,1);
+      if (HVar1 != 0) {
+        arg4 = d3d_error_string(HVar1);
         fatal_exit(s__s__d____D3DError_Execute_ExecBu_0044d066,s_weg_cpp_0044d05e,0x3dd,arg4);
       }
     }
@@ -932,47 +932,41 @@ undefined4 __watcall get_road_height(undefined4 param_1)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-int __watcall
-build_weg_execute_buffers(undefined4 param_1,int param_2,undefined4 param_3,undefined4 param_4)
+DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_3,int param_4)
 
 {
-  long lVar1;
+  IDirect3DExecuteBufferVtbl *pIVar1;
+  HRESULT HVar2;
   char *d3d_error_string_result;
-  int *piVar2;
-  int j;
-  int *piVar3;
-  int *piVar4;
-  int iVar5;
-  short sVar6;
-  short sVar7;
-  int i;
-  int *piVar8;
-  byte bVar9;
-  int *piVar10;
-  int **arg4;
-  int iStack_118;
-  int iStack_114;
-  int iStack_110;
-  int iStack_100;
-  int iStack_fc;
-  int local_f0 [2];
-  int *piStack_e8;
-  int *piStack_e4;
-  int *local_e0;
-  int *local_dc;
-  int *piStack_d8;
-  int local_d4;
-  undefined4 uStack_d0;
-  int local_cc;
-  float fStack_c8;
+  IDirect3DExecuteBuffer *pIVar3;
   int k;
-  int **ppiStack_c0;
-  int local_bc;
+  undefined4 *puVar4;
+  int j;
+  int i;
+  short sVar5;
+  short sVar6;
+  DWORD arg4;
+  IDirect3DExecuteBuffer *pIVar7;
+  byte bVar8;
+  D3DEXECUTEDATA DStack_134;
+  undefined4 uStack_100;
+  undefined4 uStack_fc;
+  undefined4 uStack_f8;
+  undefined4 local_f0;
+  undefined4 local_ec;
+  undefined4 uStack_e8;
+  undefined4 uStack_e4;
+  D3DEXECUTEBUFFERDESC d3_dexecutebufferdesc;
+  IDirect3DExecuteBuffer *direct3_d_execute_buffer;
+  IDirect3DExecuteBuffer *pIStack_c8;
+  IDirect3DExecuteBuffer *pIStack_c4;
+  IDirect3DExecuteBuffer *pIStack_c0;
+  IDirect3DExecuteBufferVtbl *direct3_d_execute_buffer_vtbl;
   int local_b8;
   int iStack_b4;
-  int iStack_b0;
-  int iStack_ac;
-  int iStack_a8;
+  float fStack_b0;
+  int m;
+  DWORD DStack_a8;
   int iStack_a4;
   int iStack_a0;
   int iStack_9c;
@@ -989,807 +983,823 @@ build_weg_execute_buffers(undefined4 param_1,int param_2,undefined4 param_3,unde
   int iStack_70;
   int iStack_6c;
   int iStack_68;
-  int *piStack_64;
+  int iStack_64;
   int iStack_60;
   int iStack_5c;
-  int *piStack_58;
+  int iStack_58;
   int iStack_54;
   int iStack_50;
-  float fStack_4c;
-  float fStack_48;
-  float fStack_44;
-  int n;
-  int m;
-  undefined4 uStack_38;
-  undefined4 uStack_34;
-  undefined4 uStack_30;
-  undefined4 uStack_2c;
+  int *piStack_4c;
+  int iStack_48;
+  int iStack_44;
+  int *piStack_40;
+  int iStack_3c;
+  int iStack_38;
+  float fStack_34;
+  float fStack_30;
+  float fStack_2c;
   int iStack_28;
+  int n;
+  undefined4 uStack_20;
+  undefined4 uStack_1c;
+  undefined4 uStack_18;
+  undefined4 uStack_14;
+  int iStack_10;
   
-  bVar9 = 0;
-  local_f0[1] = 0xffffffff;
-  local_f0[0] = -1;
+  bVar8 = 0;
+  local_ec = 0xffffffff;
+  local_f0 = 0xffffffff;
+  DStack_134.dwSize = param_1;
   if (param_2 < 2) {
     fatal_exit(s__s__d____weg_illegal_side_length_0044d09a,s_weg_cpp_0044d092,0x406,param_2);
   }
-  local_bc = param_2 * 8 + 0x10;
+  direct3_d_execute_buffer_vtbl = (IDirect3DExecuteBufferVtbl *)(param_2 * 8 + 0x10);
   local_b8 = param_2 * 4 + 0x10;
-  if (max_vertex_count < local_bc) {
-    fatal_exit(s__s__d____Too_many_vertices___d__i_0044d0d7,s_weg_cpp_0044d0cf,0x40d,local_bc);
+  if (max_vertex_count < (int)direct3_d_execute_buffer_vtbl) {
+    fatal_exit(s__s__d____Too_many_vertices___d__i_0044d0d7,s_weg_cpp_0044d0cf,0x40d,
+               direct3_d_execute_buffer_vtbl);
   }
-  i = local_bc * 0x20 + 0xa8 + local_b8 * 8;
-  if (max_buffer_size < i) {
-    fatal_exit(s__s__d____Execbuffer_too_large____0044d107,s_weg_cpp_0044d0ff,0x41a,i);
+  arg4 = (int)direct3_d_execute_buffer_vtbl * 0x20 + 0xa8 + local_b8 * 8;
+  if (max_buffer_size < (int)arg4) {
+    fatal_exit(s__s__d____Execbuffer_too_large____0044d107,s_weg_cpp_0044d0ff,0x41a,arg4);
   }
-  memset(&local_e0,0,0x14);
-  local_dc = (int *)0x1;
-  arg4 = &local_e0;
-  local_e0 = (int *)0x14;
-  piVar10 = d3d_device;
-  local_d4 = i;
-  lVar1 = (**(code **)(*d3d_device + 0x18))();
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  memset(&d3_dexecutebufferdesc.dwSize,0,0x14);
+  d3_dexecutebufferdesc.dwFlags = 1;
+  d3_dexecutebufferdesc.dwSize = 0x14;
+  d3_dexecutebufferdesc.dwBufferSize = arg4;
+  HVar2 = (*d3d_device->lpVtbl->CreateExecuteBuffer)
+                    (d3d_device,&d3_dexecutebufferdesc,&direct3_d_execute_buffer,(void *)0x0);
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d___D3DError_Create_Execbuff_0044d13b,s_weg_cpp_0044d133,0x423,
                d3d_error_string_result);
   }
-  piVar2 = local_f0;
-  piVar4 = local_dc;
-  lVar1 = (**(code **)(*local_dc + 0x10))();
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  HVar2 = (*direct3_d_execute_buffer->lpVtbl->Lock)(direct3_d_execute_buffer,&d3_dexecutebufferdesc)
+  ;
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d___D3DError_Lock_Execbuffer_0044d16d,s_weg_cpp_0044d165,0x427,
                d3d_error_string_result);
   }
-  iVar5 = 0;
-  local_dc = piStack_e8;
-  local_e0 = piStack_e8;
-  memset(piStack_e8,0,i);
-  fStack_c8 = 0.0;
-  _DAT_0047655c = local_e0;
-  iStack_80 = ((int)arg4 + 2) * 4;
-  for (iStack_84 = (int)arg4 << 2; iStack_84 < iStack_80; iStack_84 = iStack_84 + 4) {
-    iVar5 = iVar5 + 2;
-    iStack_28 = iStack_84;
-    i = 0;
-    fStack_44 = 0.0;
-    do {
-      j = *(int *)((int)&weg_sections
-                         [*(int *)(*(int *)(weg_chunk_quads + iStack_84) * 0x38 + 8 + weg_chunks)].
-                         point + i) * 0x21;
-      *(float *)(j + 0x18 + weg_points) = fStack_44;
-      *(float *)(j + 0x1c + weg_points) = fStack_c8;
-      piVar3 = (int *)(j + weg_points);
-      iStack_118 = *piVar3;
-      iStack_114 = piVar3[1];
-      iStack_110 = piVar3[2];
-      fStack_44 = fStack_44 + 1.0;
-      iStack_100 = piVar3[6];
-      iStack_fc = piVar3[7];
-      piVar3 = &iStack_118;
-      piVar8 = local_e0;
-      for (j = 8; j != 0; j = j + -1) {
-        *piVar8 = *piVar3;
-        piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-        piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
-      }
-      for (j = 0; j != 0; j = j + -1) {
-        *(char *)piVar8 = (char)*piVar3;
-        piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-        piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
-      }
-      i = i + 4;
-      local_e0 = local_e0 + 8;
-    } while (i != 8);
-    fStack_c8 = fStack_c8 + 1.0;
-  }
-  fStack_4c = 0.0;
-  iStack_78 = ((int)arg4 + 2) * 4;
-  for (iStack_7c = (int)arg4 << 2; iStack_7c < iStack_78; iStack_7c = iStack_7c + 4) {
-    iVar5 = iVar5 + 2;
-    local_b8 = iStack_7c;
-    i = 0;
-    fStack_48 = 0.0;
-    do {
-      j = *(int *)((int)&weg_sections
-                         [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_7c) * 0x38)].
-                         point + i) * 0x21;
-      *(float *)(j + 0x18 + weg_points) = fStack_48;
-      *(float *)(j + 0x1c + weg_points) = fStack_4c;
-      piVar3 = (int *)(j + weg_points);
-      iStack_118 = *piVar3;
-      iStack_114 = piVar3[1];
-      iStack_110 = piVar3[2];
-      fStack_48 = fStack_48 + 1.0;
-      iStack_100 = piVar3[6];
-      iStack_fc = piVar3[7];
-      piVar3 = &iStack_118;
-      piVar8 = local_e0;
-      for (j = 8; j != 0; j = j + -1) {
-        *piVar8 = *piVar3;
-        piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-        piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
-      }
-      for (j = 0; j != 0; j = j + -1) {
-        *(char *)piVar8 = (char)*piVar3;
-        piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-        piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
-      }
-      i = i + 8;
-      local_e0 = local_e0 + 8;
-    } while (i != 0x10);
-    fStack_4c = fStack_4c + 1.0;
-  }
-  ppiStack_c0 = arg4;
-  local_bc = (int)arg4 + 1;
   i = 0;
-  uStack_2c = 0;
-  k = 0;
-  iStack_b4 = (int)arg4 * 4;
-  do {
-    j = (&weg_sections[*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38)].
-          field_0c)[k] * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    i = i + 4;
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
-    }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
-    }
-    k = k + 1;
-    local_e0 = local_e0 + 8;
-  } while (k < 2);
-  iStack_b0 = local_bc * 4;
-  iStack_74 = 0;
-  i = 0xc;
-  do {
-    j = *(int *)((int)&weg_sections
-                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
-                       field_0c + iStack_74) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    i = i + -4;
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
-    }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
-    }
-    iStack_74 = iStack_74 + 4;
-    local_e0 = local_e0 + 8;
-  } while (iStack_74 != 8);
-  i = 0;
-  uStack_30 = 0;
+  pIStack_c4 = d3_dexecutebufferdesc.lpData;
+  pIStack_c8 = d3_dexecutebufferdesc.lpData;
+  memset(d3_dexecutebufferdesc.lpData,0,arg4);
+  fStack_b0 = 0.0;
+  _DAT_0047655c = pIStack_c8;
+  iStack_68 = (DStack_134.dwSize + 2) * 4;
+  for (iStack_6c = DStack_134.dwSize << 2; iStack_6c < iStack_68; iStack_6c = iStack_6c + 4) {
+    i = i + 2;
+    iStack_10 = iStack_6c;
+    j = 0;
+    fStack_2c = 0.0;
+    do {
+      k = *(int *)((int)&weg_sections
+                         [*(int *)(*(int *)(weg_chunk_quads + iStack_6c) * 0x38 + 8 + weg_chunks)].
+                         point + j) * 0x21;
+      *(float *)(k + 0x18 + weg_points) = fStack_2c;
+      *(float *)(k + 0x1c + weg_points) = fStack_b0;
+      puVar4 = (undefined4 *)(k + weg_points);
+      uStack_100 = *puVar4;
+      uStack_fc = puVar4[1];
+      uStack_f8 = puVar4[2];
+      fStack_2c = fStack_2c + 1.0;
+      uStack_e8 = puVar4[6];
+      uStack_e4 = puVar4[7];
+      puVar4 = &uStack_100;
+      pIVar3 = pIStack_c8;
+      for (k = 8; k != 0; k = k + -1) {
+        pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+        puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+        pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
+      }
+      for (k = 0; k != 0; k = k + -1) {
+        *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+        puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+        pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
+      }
+      j = j + 4;
+      pIStack_c8 = pIStack_c8 + 8;
+    } while (j != 8);
+    fStack_b0 = fStack_b0 + 1.0;
+  }
+  fStack_34 = 0.0;
+  iStack_60 = (DStack_134.dwSize + 2) * 4;
+  for (iStack_64 = DStack_134.dwSize << 2; iStack_64 < iStack_60; iStack_64 = iStack_64 + 4) {
+    i = i + 2;
+    iStack_a0 = iStack_64;
+    j = 0;
+    fStack_30 = 0.0;
+    do {
+      k = *(int *)((int)&weg_sections
+                         [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_64) * 0x38)].
+                         point + j) * 0x21;
+      *(float *)(k + 0x18 + weg_points) = fStack_30;
+      *(float *)(k + 0x1c + weg_points) = fStack_34;
+      puVar4 = (undefined4 *)(k + weg_points);
+      uStack_100 = *puVar4;
+      uStack_fc = puVar4[1];
+      uStack_f8 = puVar4[2];
+      fStack_30 = fStack_30 + 1.0;
+      uStack_e8 = puVar4[6];
+      uStack_e4 = puVar4[7];
+      puVar4 = &uStack_100;
+      pIVar3 = pIStack_c8;
+      for (k = 8; k != 0; k = k + -1) {
+        pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+        puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+        pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
+      }
+      for (k = 0; k != 0; k = k + -1) {
+        *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+        puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+        pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
+      }
+      j = j + 8;
+      pIStack_c8 = pIStack_c8 + 8;
+    } while (j != 0x10);
+    fStack_34 = fStack_34 + 1.0;
+  }
+  DStack_a8 = DStack_134.dwSize;
+  iStack_a4 = DStack_134.dwSize + 1;
+  j = 0;
+  uStack_14 = 0;
   m = 0;
-  iStack_ac = (int)arg4 * 4;
+  iStack_9c = DStack_134.dwSize * 4;
   do {
-    j = (&weg_sections[*(int *)(*(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38 + 8 + weg_chunks)].
-          field_14)[m] * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+    k = (&weg_sections
+          [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].
+          field_0c)[m] * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    j = j + 4;
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
-    i = i + 4;
     m = m + 1;
-    local_e0 = local_e0 + 8;
+    pIStack_c8 = pIStack_c8 + 8;
   } while (m < 2);
-  iStack_a8 = local_bc * 4;
-  iStack_70 = 0;
-  i = 0xc;
+  iStack_98 = iStack_a4 * 4;
+  iStack_5c = 0;
+  j = 0xc;
   do {
-    j = *(int *)((int)&weg_sections
-                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
-                       field_14 + iStack_70) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    i = i + -4;
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+    k = *(int *)((int)&weg_sections
+                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
+                       .field_0c + iStack_5c) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    j = j + -4;
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
-    iStack_70 = iStack_70 + 4;
-    local_e0 = local_e0 + 8;
-  } while (iStack_70 != 8);
-  uStack_34 = 0;
+    iStack_5c = iStack_5c + 4;
+    pIStack_c8 = pIStack_c8 + 8;
+  } while (iStack_5c != 8);
+  j = 0;
+  uStack_18 = 0;
   n = 0;
-  i = 0;
-  iStack_a4 = (int)arg4 * 4;
+  iStack_94 = DStack_134.dwSize * 4;
   do {
-    j = (&weg_sections[*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38)].
-          field_1c)[n] * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    i = i + 4;
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+    k = (&weg_sections
+          [*(int *)(*(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38 + 8 + weg_chunks)].
+          field_14)[n] * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
+    j = j + 4;
     n = n + 1;
-    local_e0 = local_e0 + 8;
+    pIStack_c8 = pIStack_c8 + 8;
   } while (n < 2);
-  iStack_6c = 0;
-  iStack_a0 = local_bc * 4;
-  i = 0xc;
+  iStack_90 = iStack_a4 * 4;
+  iStack_58 = 0;
+  j = 0xc;
   do {
-    j = *(int *)((int)&weg_sections
-                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
-                       field_1c + iStack_6c) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    i = i + -4;
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+    k = *(int *)((int)&weg_sections
+                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
+                       .field_14 + iStack_58) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    j = j + -4;
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
-    iStack_6c = iStack_6c + 4;
-    local_e0 = local_e0 + 8;
-  } while (iStack_6c != 8);
-  i = 0;
-  uStack_38 = 0;
-  local_cc = 0;
-  iStack_9c = (int)arg4 * 4;
+    iStack_58 = iStack_58 + 4;
+    pIStack_c8 = pIStack_c8 + 8;
+  } while (iStack_58 != 8);
+  uStack_1c = 0;
+  iStack_28 = 0;
+  j = 0;
+  iStack_8c = DStack_134.dwSize * 4;
   do {
-    j = *(int *)(&weg_sections
-                  [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38)].
-                  field_0x24 + local_cc * 4) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+    k = (&weg_sections
+          [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].
+          field_1c)[iStack_28] * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    j = j + 4;
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
+    iStack_28 = iStack_28 + 1;
+    pIStack_c8 = pIStack_c8 + 8;
+  } while (iStack_28 < 2);
+  iStack_54 = 0;
+  iStack_88 = iStack_a4 * 4;
+  j = 0xc;
+  do {
+    k = *(int *)((int)&weg_sections
+                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
+                       .field_1c + iStack_54) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    j = j + -4;
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
+    }
+    iStack_54 = iStack_54 + 4;
+    pIStack_c8 = pIStack_c8 + 8;
+  } while (iStack_54 != 8);
+  j = 0;
+  uStack_20 = 0;
+  iStack_b4 = 0;
+  iStack_84 = DStack_134.dwSize * 4;
+  do {
+    k = *(int *)(&weg_sections
+                  [*(int *)(weg_chunks + 8 +
+                           *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].field_0x24 +
+                iStack_b4 * 4) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
+    }
+    j = j + 4;
+    iStack_b4 = iStack_b4 + 1;
+    pIStack_c8 = pIStack_c8 + 8;
+  } while (iStack_b4 < 2);
+  iStack_50 = 0;
+  iStack_80 = iStack_a4 * 4;
+  j = 0xc;
+  do {
+    k = *(int *)(&weg_sections
+                  [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)].
+                  field_0x24 + iStack_50) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
+    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    j = j + -4;
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar3 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
+    }
+    iStack_50 = iStack_50 + 4;
+    pIStack_c8 = pIStack_c8 + 8;
+  } while (iStack_50 != 8);
+  iStack_74 = iStack_a4 * 4;
+  iStack_7c = DStack_134.dwSize << 2;
+  piStack_4c = (int *)param_3;
+  iStack_48 = 0;
+  iStack_44 = (param_2 + -1) * 4;
+  while (iStack_48 < iStack_44) {
+    j = *piStack_4c;
+    if ((int)direct3_d_execute_buffer_vtbl < i + 4) {
+      fatal_exit(s__s__d____execute_vertex_overflow_0044d19d,s_weg_cpp_0044d195,0x4f3,i,
+                 direct3_d_execute_buffer_vtbl);
+    }
+    pIVar3 = pIStack_c8;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_7c) * 0x38 + 8 + weg_chunks)].
+                      buffer_1 + iStack_48 + 4) * 0x21;
+    *(undefined4 *)(weg_points + 0x18 + k) = (&tile_u_coords)[j * 8];
+    *(undefined4 *)(weg_points + 0x1c + k) = (&tile_v_coords)[j * 8];
+    puVar4 = (undefined4 *)(weg_points + k);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar7 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
+    }
+    pIStack_c8 = pIStack_c8 + 8;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_7c) * 0x38)].
+                      buffer_1 + iStack_48) * 0x21;
     i = i + 4;
-    local_cc = local_cc + 1;
-    local_e0 = local_e0 + 8;
-  } while (local_cc < 2);
-  iStack_68 = 0;
-  iStack_98 = local_bc * 4;
-  i = 0xc;
-  do {
-    j = *(int *)(&weg_sections
-                  [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
-                  field_0x24 + iStack_68) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
-    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    i = i + -4;
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
+    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767dc)[j * 8];
+    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767ec)[j * 8];
+    puVar4 = (undefined4 *)(weg_points + k);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    for (k = 8; k != 0; k = k + -1) {
+      pIStack_c8->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIStack_c8 = pIStack_c8 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIStack_c8->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIStack_c8 = (IDirect3DExecuteBuffer *)((int)pIStack_c8 + (uint)bVar8 * -2 + 1);
+    }
+    pIStack_c8 = pIVar3 + 0x10;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_74) * 0x38 + 8 + weg_chunks)].
+                      buffer_1 + iStack_48 + 4) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = (&DAT_004767e4)[j * 8];
+    *(undefined4 *)(k + 0x1c + weg_points) = (&DAT_004767f4)[j * 8];
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar7 = pIVar3 + 0x10;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
+    }
+    pIStack_c8 = pIVar3 + 0x18;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_74) * 0x38 + 8 + weg_chunks)].
+                      buffer_1 + iStack_48) * 0x21;
+    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767e0)[j * 8];
+    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767f0)[j * 8];
+    puVar4 = (undefined4 *)(weg_points + k);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    iStack_48 = iStack_48 + 4;
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar7 = pIVar3 + 0x18;
     for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
-    iStack_68 = iStack_68 + 4;
-    local_e0 = local_e0 + 8;
-  } while (iStack_68 != 8);
-  iStack_8c = local_bc * 4;
-  iStack_94 = (int)arg4 << 2;
-  piStack_64 = piVar2;
-  iStack_60 = 0;
-  iStack_5c = ((int)piVar10 + -1) * 4;
-  while (iStack_60 < iStack_5c) {
-    i = *piStack_64;
-    if (local_d4 < iVar5 + 4) {
-      fatal_exit(s__s__d____execute_vertex_overflow_0044d19d,s_weg_cpp_0044d195,0x4f3,iVar5,local_d4
-                );
-    }
-    piVar2 = local_e0;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_94) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_60 + 4) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + j) = (&tile_u_coords)[i * 8];
-    *(undefined4 *)(weg_points + 0x1c + j) = (&tile_v_coords)[i * 8];
-    piVar3 = (int *)(weg_points + j);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = local_e0;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
-    }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
-    }
-    local_e0 = local_e0 + 8;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_94) * 0x38)].
-                      buffer_1 + iStack_60) * 0x21;
-    iVar5 = iVar5 + 4;
-    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767dc)[i * 8];
-    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767ec)[i * 8];
-    piVar3 = (int *)(weg_points + j);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    for (j = 8; j != 0; j = j + -1) {
-      *local_e0 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      local_e0 = local_e0 + (uint)bVar9 * -2 + 1;
-    }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)local_e0 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      local_e0 = (int *)((int)local_e0 + (uint)bVar9 * -2 + 1);
-    }
-    local_e0 = piVar2 + 0x10;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_60 + 4) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = (&DAT_004767e4)[i * 8];
-    *(undefined4 *)(j + 0x1c + weg_points) = (&DAT_004767f4)[i * 8];
-    piVar3 = (int *)(j + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = piVar2 + 0x10;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
-    }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
-    }
-    local_e0 = piVar2 + 0x18;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_60) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767e0)[i * 8];
-    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767f0)[i * 8];
-    piVar3 = (int *)(weg_points + j);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_60 = iStack_60 + 4;
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar8 = piVar2 + 0x18;
-    for (i = 8; i != 0; i = i + -1) {
-      *piVar8 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
-    }
-    for (i = 0; i != 0; i = i + -1) {
-      *(char *)piVar8 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
-    }
-    local_e0 = piVar2 + 0x20;
-    piStack_64 = piStack_64 + 1;
+    pIStack_c8 = pIVar3 + 0x20;
+    piStack_4c = piStack_4c + 1;
   }
-  iStack_88 = local_bc << 2;
-  iStack_90 = (int)ppiStack_c0 << 2;
-  piStack_58 = piVar4;
-  iStack_50 = ((int)piVar10 + -1) * 4;
-  for (iStack_54 = 0; iStack_54 < iStack_50; iStack_54 = iStack_54 + 4) {
-    i = *piStack_58;
-    if (local_d4 < iVar5 + 4) {
-      fatal_exit(s__s__d____execute_vertex_overflow_0044d1db,s_weg_cpp_0044d1d3,0x532,iVar5,local_d4
-                );
+  iStack_70 = iStack_a4 << 2;
+  iStack_78 = DStack_a8 << 2;
+  piStack_40 = (int *)param_4;
+  iStack_38 = (param_2 + -1) * 4;
+  for (iStack_3c = 0; iStack_3c < iStack_38; iStack_3c = iStack_3c + 4) {
+    j = *piStack_40;
+    if ((int)direct3_d_execute_buffer_vtbl < i + 4) {
+      fatal_exit(s__s__d____execute_vertex_overflow_0044d1db,s_weg_cpp_0044d1d3,0x532,i,
+                 direct3_d_execute_buffer_vtbl);
     }
-    piVar2 = local_e0;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_90) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_54) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = (&tile_u_coords)[i * 8];
-    *(undefined4 *)(j + 0x1c + weg_points) = (&tile_v_coords)[i * 8];
-    piVar4 = (int *)(j + weg_points);
-    iStack_118 = *piVar4;
-    iStack_114 = piVar4[1];
-    iStack_110 = piVar4[2];
-    iStack_100 = piVar4[6];
-    iStack_fc = piVar4[7];
-    piVar4 = &iStack_118;
-    piVar3 = local_e0;
+    pIVar3 = pIStack_c8;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_78) * 0x38 + 8 + weg_chunks)].
+                      buffer_2 + iStack_3c) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = (&tile_u_coords)[j * 8];
+    *(undefined4 *)(k + 0x1c + weg_points) = (&tile_v_coords)[j * 8];
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar7 = pIStack_c8;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
+    }
+    pIStack_c8 = pIStack_c8 + 8;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_78) * 0x38)].
+                      buffer_2 + iStack_3c + 4) * 0x21;
+    i = i + 4;
+    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767dc)[j * 8];
+    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767ec)[j * 8];
+    puVar4 = (undefined4 *)(weg_points + k);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    for (k = 8; k != 0; k = k + -1) {
+      pIStack_c8->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIStack_c8 = pIStack_c8 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIStack_c8->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIStack_c8 = (IDirect3DExecuteBuffer *)((int)pIStack_c8 + (uint)bVar8 * -2 + 1);
+    }
+    pIStack_c8 = pIVar3 + 0x10;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_70) * 0x38 + 8 + weg_chunks)].
+                      buffer_2 + iStack_3c) * 0x21;
+    *(undefined4 *)(k + 0x18 + weg_points) = (&DAT_004767e4)[j * 8];
+    *(undefined4 *)(k + 0x1c + weg_points) = (&DAT_004767f4)[j * 8];
+    puVar4 = (undefined4 *)(k + weg_points);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar7 = pIVar3 + 0x10;
+    for (k = 8; k != 0; k = k + -1) {
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
+    }
+    for (k = 0; k != 0; k = k + -1) {
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
+    }
+    pIStack_c8 = pIVar3 + 0x18;
+    k = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_70) * 0x38 + 8 + weg_chunks)].
+                      buffer_2 + iStack_3c + 4) * 0x21;
+    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767e0)[j * 8];
+    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767f0)[j * 8];
+    puVar4 = (undefined4 *)(weg_points + k);
+    uStack_100 = *puVar4;
+    uStack_fc = puVar4[1];
+    uStack_f8 = puVar4[2];
+    uStack_e8 = puVar4[6];
+    uStack_e4 = puVar4[7];
+    puVar4 = &uStack_100;
+    pIVar7 = pIVar3 + 0x18;
     for (j = 8; j != 0; j = j + -1) {
-      *piVar3 = *piVar4;
-      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
+      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar3 = (char)*piVar4;
-      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
+      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
-    local_e0 = local_e0 + 8;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_90) * 0x38)].
-                      buffer_2 + iStack_54 + 4) * 0x21;
-    iVar5 = iVar5 + 4;
-    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767dc)[i * 8];
-    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767ec)[i * 8];
-    piVar4 = (int *)(weg_points + j);
-    iStack_118 = *piVar4;
-    iStack_114 = piVar4[1];
-    iStack_110 = piVar4[2];
-    iStack_100 = piVar4[6];
-    iStack_fc = piVar4[7];
-    piVar4 = &iStack_118;
-    for (j = 8; j != 0; j = j + -1) {
-      *local_e0 = *piVar4;
-      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
-      local_e0 = local_e0 + (uint)bVar9 * -2 + 1;
-    }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)local_e0 = (char)*piVar4;
-      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
-      local_e0 = (int *)((int)local_e0 + (uint)bVar9 * -2 + 1);
-    }
-    local_e0 = piVar2 + 0x10;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_54) * 0x21;
-    *(undefined4 *)(j + 0x18 + weg_points) = (&DAT_004767e4)[i * 8];
-    *(undefined4 *)(j + 0x1c + weg_points) = (&DAT_004767f4)[i * 8];
-    piVar4 = (int *)(j + weg_points);
-    iStack_118 = *piVar4;
-    iStack_114 = piVar4[1];
-    iStack_110 = piVar4[2];
-    iStack_100 = piVar4[6];
-    iStack_fc = piVar4[7];
-    piVar4 = &iStack_118;
-    piVar3 = piVar2 + 0x10;
-    for (j = 8; j != 0; j = j + -1) {
-      *piVar3 = *piVar4;
-      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-    }
-    for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar3 = (char)*piVar4;
-      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-    }
-    local_e0 = piVar2 + 0x18;
-    j = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_54 + 4) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767e0)[i * 8];
-    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767f0)[i * 8];
-    piVar4 = (int *)(weg_points + j);
-    iStack_118 = *piVar4;
-    iStack_114 = piVar4[1];
-    iStack_110 = piVar4[2];
-    iStack_100 = piVar4[6];
-    iStack_fc = piVar4[7];
-    piVar4 = &iStack_118;
-    piVar3 = piVar2 + 0x18;
-    for (i = 8; i != 0; i = i + -1) {
-      *piVar3 = *piVar4;
-      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
-      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
-    }
-    for (i = 0; i != 0; i = i + -1) {
-      *(char *)piVar3 = (char)*piVar4;
-      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
-      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
-    }
-    local_e0 = piVar2 + 0x20;
-    piStack_58 = piStack_58 + 1;
+    pIStack_c8 = pIVar3 + 0x20;
+    piStack_40 = piStack_40 + 1;
   }
-  *(undefined1 *)local_e0 = 5;
-  *(undefined1 *)((int)local_e0 + 1) = 0xc;
-  piStack_d8 = local_e0;
-  *(undefined2 *)((int)local_e0 + 2) = 2;
-  i = DAT_004764bc;
-  local_e0[2] = DAT_004764bc;
-  local_e0[3] = i;
-  local_e0[1] = DAT_004764b8;
-  local_e0[5] = DAT_004764cc;
-  local_e0[6] = DAT_004764c8;
-  local_e0[4] = DAT_004764c4;
-  *(undefined1 *)(local_e0 + 7) = 7;
-  *(undefined1 *)((int)local_e0 + 0x1d) = 8;
-  *(undefined2 *)((int)local_e0 + 0x1e) = 1;
-  *(undefined1 *)(local_e0 + 8) = 1;
-  local_e0[9] = *(int *)(materials + 4 + default_material * 0xc);
-  *(undefined1 *)(local_e0 + 10) = 0xe;
-  *(undefined1 *)((int)local_e0 + 0x29) = 0x18;
-  *(undefined2 *)((int)local_e0 + 0x2a) = 1;
-  local_e0[0xb] = 3;
-  local_e0[0xc] = 0x1fff000;
-  local_e0[0xd] = 0x800;
-  local_e0[0xe] = 0x800;
-  local_e0[0xf] = 0;
-  local_e0[0x10] = 0;
-  *(undefined1 *)(local_e0 + 0x11) = 9;
-  *(undefined1 *)((int)local_e0 + 0x45) = 0x10;
-  *(undefined2 *)((int)local_e0 + 0x46) = 1;
-  local_e0[0x12] = 1;
-  *(undefined2 *)(local_e0 + 0x13) = 0;
-  *(undefined2 *)((int)local_e0 + 0x4e) = 0;
-  local_e0[0x15] = 0;
-  local_e0[0x14] = local_d4;
-  *(undefined1 *)(local_e0 + 0x16) = 8;
-  *(undefined1 *)((int)local_e0 + 0x59) = 8;
-  *(undefined2 *)((int)local_e0 + 0x5a) = 1;
-  *(undefined1 *)(local_e0 + 0x17) = 1;
-  local_e0[0x18] = *(int *)(texture_table + road_texture * 0xc);
-  piVar2 = local_e0 + 0x19;
-  if (((uint)piVar2 & 7) == 0) {
-    *(undefined1 *)piVar2 = 3;
-    *(undefined1 *)((int)local_e0 + 0x65) = 8;
-    *(undefined2 *)((int)local_e0 + 0x66) = 0;
-    piVar2 = local_e0 + 0x1a;
+  *(undefined1 *)&pIStack_c8->lpVtbl = 5;
+  *(undefined1 *)((int)&pIStack_c8->lpVtbl + 1) = 0xc;
+  pIStack_c0 = pIStack_c8;
+  *(undefined2 *)((int)&pIStack_c8->lpVtbl + 2) = 2;
+  pIVar1 = DAT_004764bc;
+  pIStack_c8[2].lpVtbl = DAT_004764bc;
+  pIStack_c8[3].lpVtbl = pIVar1;
+  pIStack_c8[1].lpVtbl = DAT_004764b8;
+  pIStack_c8[5].lpVtbl = DAT_004764cc;
+  pIStack_c8[6].lpVtbl = DAT_004764c8;
+  pIStack_c8[4].lpVtbl = DAT_004764c4;
+  *(undefined1 *)&pIStack_c8[7].lpVtbl = 7;
+  *(undefined1 *)((int)&pIStack_c8[7].lpVtbl + 1) = 8;
+  *(undefined2 *)((int)&pIStack_c8[7].lpVtbl + 2) = 1;
+  *(undefined1 *)&pIStack_c8[8].lpVtbl = 1;
+  pIStack_c8[9].lpVtbl = *(IDirect3DExecuteBufferVtbl **)(materials + 4 + default_material * 0xc);
+  *(undefined1 *)&pIStack_c8[10].lpVtbl = 0xe;
+  *(undefined1 *)((int)&pIStack_c8[10].lpVtbl + 1) = 0x18;
+  *(undefined2 *)((int)&pIStack_c8[10].lpVtbl + 2) = 1;
+  pIStack_c8[0xb].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x3;
+  pIStack_c8[0xc].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x1fff000;
+  pIStack_c8[0xd].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x800;
+  pIStack_c8[0xe].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x800;
+  pIStack_c8[0xf].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x0;
+  pIStack_c8[0x10].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x0;
+  *(undefined1 *)&pIStack_c8[0x11].lpVtbl = 9;
+  *(undefined1 *)((int)&pIStack_c8[0x11].lpVtbl + 1) = 0x10;
+  *(undefined2 *)((int)&pIStack_c8[0x11].lpVtbl + 2) = 1;
+  pIStack_c8[0x12].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x1;
+  *(undefined2 *)&pIStack_c8[0x13].lpVtbl = 0;
+  *(undefined2 *)((int)&pIStack_c8[0x13].lpVtbl + 2) = 0;
+  pIStack_c8[0x15].lpVtbl = (IDirect3DExecuteBufferVtbl *)0x0;
+  pIStack_c8[0x14].lpVtbl = direct3_d_execute_buffer_vtbl;
+  *(undefined1 *)&pIStack_c8[0x16].lpVtbl = 8;
+  *(undefined1 *)((int)&pIStack_c8[0x16].lpVtbl + 1) = 8;
+  *(undefined2 *)((int)&pIStack_c8[0x16].lpVtbl + 2) = 1;
+  *(undefined1 *)&pIStack_c8[0x17].lpVtbl = 1;
+  pIStack_c8[0x18].lpVtbl = *(IDirect3DExecuteBufferVtbl **)(texture_table + road_texture * 0xc);
+  pIVar3 = pIStack_c8 + 0x19;
+  if (((uint)pIVar3 & 7) == 0) {
+    *(undefined1 *)&pIVar3->lpVtbl = 3;
+    *(undefined1 *)((int)&pIStack_c8[0x19].lpVtbl + 1) = 8;
+    *(undefined2 *)((int)&pIStack_c8[0x19].lpVtbl + 2) = 0;
+    pIVar3 = pIStack_c8 + 0x1a;
   }
-  local_e0 = piVar2;
-  *(undefined1 *)local_e0 = 3;
-  *(undefined1 *)((int)local_e0 + 1) = 8;
-  *(undefined2 *)((int)local_e0 + 2) = 4;
-  *(undefined2 *)(local_e0 + 1) = 0;
-  *(undefined2 *)((int)local_e0 + 6) = 2;
-  *(undefined2 *)(local_e0 + 2) = 3;
-  *(undefined2 *)((int)local_e0 + 10) = 0x700;
-  *(undefined2 *)(local_e0 + 3) = 0;
-  *(undefined2 *)((int)local_e0 + 0xe) = 3;
-  *(undefined2 *)(local_e0 + 4) = 1;
-  *(undefined2 *)((int)local_e0 + 0x12) = 0x700;
-  *(undefined2 *)(local_e0 + 5) = 4;
-  *(undefined2 *)((int)local_e0 + 0x1a) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x16) = 7;
-  *(undefined2 *)(local_e0 + 6) = 6;
-  *(undefined2 *)(local_e0 + 7) = 4;
-  *(undefined2 *)((int)local_e0 + 0x22) = 0x700;
-  *(undefined2 *)(local_e0 + 8) = 7;
-  *(undefined2 *)((int)local_e0 + 0x1e) = 5;
-  *(undefined1 *)(local_e0 + 9) = 8;
-  *(undefined1 *)((int)local_e0 + 0x25) = 8;
-  *(undefined2 *)((int)local_e0 + 0x26) = 1;
-  *(undefined1 *)(local_e0 + 10) = 1;
-  piVar2 = local_e0 + 0xc;
-  local_e0[0xb] = *(int *)(texture_table + grass_texture * 0xc);
-  if (((uint)piVar2 & 7) == 0) {
-    *(undefined1 *)piVar2 = 3;
-    *(undefined1 *)((int)local_e0 + 0x31) = 8;
-    *(undefined2 *)((int)local_e0 + 0x32) = 0;
-    piVar2 = local_e0 + 0xd;
+  pIStack_c8 = pIVar3;
+  *(undefined1 *)&pIStack_c8->lpVtbl = 3;
+  *(undefined1 *)((int)&pIStack_c8->lpVtbl + 1) = 8;
+  *(undefined2 *)((int)&pIStack_c8->lpVtbl + 2) = 4;
+  *(undefined2 *)&pIStack_c8[1].lpVtbl = 0;
+  *(undefined2 *)((int)&pIStack_c8[1].lpVtbl + 2) = 2;
+  *(undefined2 *)&pIStack_c8[2].lpVtbl = 3;
+  *(undefined2 *)((int)&pIStack_c8[2].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[3].lpVtbl = 0;
+  *(undefined2 *)((int)&pIStack_c8[3].lpVtbl + 2) = 3;
+  *(undefined2 *)&pIStack_c8[4].lpVtbl = 1;
+  *(undefined2 *)((int)&pIStack_c8[4].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[5].lpVtbl = 4;
+  *(undefined2 *)((int)&pIStack_c8[6].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[5].lpVtbl + 2) = 7;
+  *(undefined2 *)&pIStack_c8[6].lpVtbl = 6;
+  *(undefined2 *)&pIStack_c8[7].lpVtbl = 4;
+  *(undefined2 *)((int)&pIStack_c8[8].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[8].lpVtbl = 7;
+  *(undefined2 *)((int)&pIStack_c8[7].lpVtbl + 2) = 5;
+  *(undefined1 *)&pIStack_c8[9].lpVtbl = 8;
+  *(undefined1 *)((int)&pIStack_c8[9].lpVtbl + 1) = 8;
+  *(undefined2 *)((int)&pIStack_c8[9].lpVtbl + 2) = 1;
+  *(undefined1 *)&pIStack_c8[10].lpVtbl = 1;
+  pIVar3 = pIStack_c8 + 0xc;
+  pIStack_c8[0xb].lpVtbl = *(IDirect3DExecuteBufferVtbl **)(texture_table + grass_texture * 0xc);
+  if (((uint)pIVar3 & 7) == 0) {
+    *(undefined1 *)&pIVar3->lpVtbl = 3;
+    *(undefined1 *)((int)&pIStack_c8[0xc].lpVtbl + 1) = 8;
+    *(undefined2 *)((int)&pIStack_c8[0xc].lpVtbl + 2) = 0;
+    pIVar3 = pIStack_c8 + 0xd;
   }
-  local_e0 = piVar2;
-  *(undefined1 *)local_e0 = 3;
-  *(undefined1 *)((int)local_e0 + 1) = 8;
-  *(short *)((int)local_e0 + 2) = (short)uStack_d0 + -4;
-  *(undefined2 *)((int)local_e0 + 10) = 0x700;
-  *(undefined2 *)(local_e0 + 1) = 8;
-  *(undefined2 *)((int)local_e0 + 6) = 10;
-  *(undefined2 *)(local_e0 + 2) = 0xb;
-  *(undefined2 *)(local_e0 + 3) = 8;
-  *(undefined2 *)((int)local_e0 + 0x12) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0xe) = 0xb;
-  *(undefined2 *)(local_e0 + 4) = 9;
-  *(undefined2 *)(local_e0 + 5) = 0xb;
-  *(undefined2 *)((int)local_e0 + 0x1a) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x16) = 10;
-  *(undefined2 *)(local_e0 + 6) = 8;
-  *(undefined2 *)(local_e0 + 7) = 9;
-  *(undefined2 *)((int)local_e0 + 0x22) = 0x700;
-  *(undefined2 *)(local_e0 + 8) = 8;
-  *(undefined2 *)((int)local_e0 + 0x1e) = 0xb;
-  *(undefined2 *)((int)local_e0 + 0x2a) = 0x700;
-  *(undefined2 *)(local_e0 + 9) = 0xc;
-  *(undefined2 *)((int)local_e0 + 0x26) = 0xe;
-  *(undefined2 *)(local_e0 + 10) = 0xf;
-  *(undefined2 *)(local_e0 + 0xb) = 0xc;
-  *(undefined2 *)((int)local_e0 + 0x32) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x2e) = 0xf;
-  *(undefined2 *)(local_e0 + 0xc) = 0xd;
-  *(undefined2 *)(local_e0 + 0xd) = 0xf;
-  *(undefined2 *)((int)local_e0 + 0x3a) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x36) = 0xe;
-  *(undefined2 *)(local_e0 + 0xe) = 0xc;
-  *(undefined2 *)(local_e0 + 0xf) = 0xd;
-  *(undefined2 *)(local_e0 + 0x10) = 0xc;
-  *(undefined2 *)((int)local_e0 + 0x42) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x3e) = 0xf;
-  *(undefined2 *)(local_e0 + 0x11) = 0x10;
-  *(undefined2 *)((int)local_e0 + 0x46) = 0x12;
-  *(undefined2 *)((int)local_e0 + 0x4a) = 0x700;
-  *(undefined2 *)(local_e0 + 0x12) = 0x13;
-  *(undefined2 *)(local_e0 + 0x13) = 0x10;
-  *(undefined2 *)((int)local_e0 + 0x52) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x4e) = 0x13;
-  *(undefined2 *)(local_e0 + 0x14) = 0x11;
-  *(undefined2 *)(local_e0 + 0x15) = 0x13;
-  *(undefined2 *)((int)local_e0 + 0x5a) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x56) = 0x12;
-  *(undefined2 *)(local_e0 + 0x16) = 0x10;
-  *(undefined2 *)(local_e0 + 0x17) = 0x11;
-  *(undefined2 *)((int)local_e0 + 0x62) = 0x700;
-  *(undefined2 *)(local_e0 + 0x18) = 0x10;
-  *(undefined2 *)((int)local_e0 + 0x5e) = 0x13;
-  *(undefined2 *)((int)local_e0 + 0x6a) = 0x700;
-  *(undefined2 *)(local_e0 + 0x19) = 0x14;
-  *(undefined2 *)((int)local_e0 + 0x66) = 0x16;
-  *(undefined2 *)(local_e0 + 0x1a) = 0x17;
-  *(undefined2 *)(local_e0 + 0x1b) = 0x14;
-  *(undefined2 *)((int)local_e0 + 0x72) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x6e) = 0x17;
-  *(undefined2 *)(local_e0 + 0x1c) = 0x15;
-  *(undefined2 *)(local_e0 + 0x1d) = 0x17;
-  *(undefined2 *)((int)local_e0 + 0x7a) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x76) = 0x16;
-  *(undefined2 *)(local_e0 + 0x1e) = 0x14;
-  *(undefined2 *)((int)local_e0 + 0x82) = 0x700;
-  *(undefined2 *)((int)local_e0 + 0x7e) = 0x17;
-  *(undefined2 *)(local_e0 + 0x20) = 0x14;
+  pIStack_c8 = pIVar3;
+  *(undefined1 *)&pIStack_c8->lpVtbl = 3;
+  *(undefined1 *)((int)&pIStack_c8->lpVtbl + 1) = 8;
+  *(short *)((int)&pIStack_c8->lpVtbl + 2) = (short)local_b8 + -4;
+  *(undefined2 *)((int)&pIStack_c8[2].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[1].lpVtbl = 8;
+  *(undefined2 *)((int)&pIStack_c8[1].lpVtbl + 2) = 10;
+  *(undefined2 *)&pIStack_c8[2].lpVtbl = 0xb;
+  *(undefined2 *)&pIStack_c8[3].lpVtbl = 8;
+  *(undefined2 *)((int)&pIStack_c8[4].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[3].lpVtbl + 2) = 0xb;
+  *(undefined2 *)&pIStack_c8[4].lpVtbl = 9;
+  *(undefined2 *)&pIStack_c8[5].lpVtbl = 0xb;
+  *(undefined2 *)((int)&pIStack_c8[6].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[5].lpVtbl + 2) = 10;
+  *(undefined2 *)&pIStack_c8[6].lpVtbl = 8;
+  *(undefined2 *)&pIStack_c8[7].lpVtbl = 9;
+  *(undefined2 *)((int)&pIStack_c8[8].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[8].lpVtbl = 8;
+  *(undefined2 *)((int)&pIStack_c8[7].lpVtbl + 2) = 0xb;
+  *(undefined2 *)((int)&pIStack_c8[10].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[9].lpVtbl = 0xc;
+  *(undefined2 *)((int)&pIStack_c8[9].lpVtbl + 2) = 0xe;
+  *(undefined2 *)&pIStack_c8[10].lpVtbl = 0xf;
+  *(undefined2 *)&pIStack_c8[0xb].lpVtbl = 0xc;
+  *(undefined2 *)((int)&pIStack_c8[0xc].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0xb].lpVtbl + 2) = 0xf;
+  *(undefined2 *)&pIStack_c8[0xc].lpVtbl = 0xd;
+  *(undefined2 *)&pIStack_c8[0xd].lpVtbl = 0xf;
+  *(undefined2 *)((int)&pIStack_c8[0xe].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0xd].lpVtbl + 2) = 0xe;
+  *(undefined2 *)&pIStack_c8[0xe].lpVtbl = 0xc;
+  *(undefined2 *)&pIStack_c8[0xf].lpVtbl = 0xd;
+  *(undefined2 *)&pIStack_c8[0x10].lpVtbl = 0xc;
+  *(undefined2 *)((int)&pIStack_c8[0x10].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0xf].lpVtbl + 2) = 0xf;
+  *(undefined2 *)&pIStack_c8[0x11].lpVtbl = 0x10;
+  *(undefined2 *)((int)&pIStack_c8[0x11].lpVtbl + 2) = 0x12;
+  *(undefined2 *)((int)&pIStack_c8[0x12].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[0x12].lpVtbl = 0x13;
+  *(undefined2 *)&pIStack_c8[0x13].lpVtbl = 0x10;
+  *(undefined2 *)((int)&pIStack_c8[0x14].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0x13].lpVtbl + 2) = 0x13;
+  *(undefined2 *)&pIStack_c8[0x14].lpVtbl = 0x11;
+  *(undefined2 *)&pIStack_c8[0x15].lpVtbl = 0x13;
+  *(undefined2 *)((int)&pIStack_c8[0x16].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0x15].lpVtbl + 2) = 0x12;
+  *(undefined2 *)&pIStack_c8[0x16].lpVtbl = 0x10;
+  *(undefined2 *)&pIStack_c8[0x17].lpVtbl = 0x11;
+  *(undefined2 *)((int)&pIStack_c8[0x18].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[0x18].lpVtbl = 0x10;
+  *(undefined2 *)((int)&pIStack_c8[0x17].lpVtbl + 2) = 0x13;
+  *(undefined2 *)((int)&pIStack_c8[0x1a].lpVtbl + 2) = 0x700;
+  *(undefined2 *)&pIStack_c8[0x19].lpVtbl = 0x14;
+  *(undefined2 *)((int)&pIStack_c8[0x19].lpVtbl + 2) = 0x16;
+  *(undefined2 *)&pIStack_c8[0x1a].lpVtbl = 0x17;
+  *(undefined2 *)&pIStack_c8[0x1b].lpVtbl = 0x14;
+  *(undefined2 *)((int)&pIStack_c8[0x1c].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0x1b].lpVtbl + 2) = 0x17;
+  *(undefined2 *)&pIStack_c8[0x1c].lpVtbl = 0x15;
+  *(undefined2 *)&pIStack_c8[0x1d].lpVtbl = 0x17;
+  *(undefined2 *)((int)&pIStack_c8[0x1e].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0x1d].lpVtbl + 2) = 0x16;
+  *(undefined2 *)&pIStack_c8[0x1e].lpVtbl = 0x14;
+  *(undefined2 *)((int)&pIStack_c8[0x20].lpVtbl + 2) = 0x700;
+  *(undefined2 *)((int)&pIStack_c8[0x1f].lpVtbl + 2) = 0x17;
+  *(undefined2 *)&pIStack_c8[0x20].lpVtbl = 0x14;
   j = 0x18;
-  *(undefined2 *)(local_e0 + 0x1f) = 0x15;
-  iVar5 = (int)piVar10 + -1;
-  sVar7 = 0x1b;
-  piVar2 = local_e0 + 0x21;
-  local_e0 = local_e0 + 1;
-  for (i = 0; i < iVar5; i = i + 1) {
-    if (local_d4 < j) {
-      fatal_exit(s__s__d____error_creating_weg_eb___0044d219,s_weg_cpp_0044d211,0x623,arg4,j,
-                 local_d4);
+  *(undefined2 *)&pIStack_c8[0x1f].lpVtbl = 0x15;
+  sVar6 = 0x1b;
+  pIVar3 = pIStack_c8 + 0x21;
+  pIStack_c8 = pIStack_c8 + 1;
+  for (i = 0; i < param_2 + -1; i = i + 1) {
+    if ((int)direct3_d_execute_buffer_vtbl < j) {
+      fatal_exit(s__s__d____error_creating_weg_eb___0044d219,s_weg_cpp_0044d211,0x623,
+                 DStack_134.dwSize,j,direct3_d_execute_buffer_vtbl);
+    }
+    sVar5 = (short)j;
+    *(short *)&pIVar3->lpVtbl = sVar5;
+    *(undefined2 *)((int)&pIVar3[1].lpVtbl + 2) = 0x700;
+    *(short *)&pIVar3[1].lpVtbl = sVar6;
+    *(short *)((int)&pIVar3->lpVtbl + 2) = sVar5 + 2;
+    *(undefined2 *)((int)&pIVar3[3].lpVtbl + 2) = 0x700;
+    *(short *)&pIVar3[2].lpVtbl = sVar5;
+    *(short *)((int)&pIVar3[2].lpVtbl + 2) = sVar6;
+    sVar6 = sVar6 + 4;
+    j = j + 4;
+    *(short *)&pIVar3[3].lpVtbl = sVar5 + 1;
+    pIVar3 = pIVar3 + 4;
+  }
+  k = j + 3;
+  for (i = 0; i < param_2 + -1; i = i + 1) {
+    if ((int)direct3_d_execute_buffer_vtbl < j) {
+      fatal_exit(s__s__d____error_creating_weg_eb___0044d276,s_weg_cpp_0044d26e,0x637,
+                 DStack_134.dwSize,j,direct3_d_execute_buffer_vtbl);
     }
     sVar6 = (short)j;
-    *(short *)piVar2 = sVar6;
-    *(undefined2 *)((int)piVar2 + 6) = 0x700;
-    *(short *)(piVar2 + 1) = sVar7;
-    *(short *)((int)piVar2 + 2) = sVar6 + 2;
-    *(undefined2 *)((int)piVar2 + 0xe) = 0x700;
-    *(short *)(piVar2 + 2) = sVar6;
-    *(short *)((int)piVar2 + 10) = sVar7;
-    sVar7 = sVar7 + 4;
+    *(short *)&pIVar3->lpVtbl = sVar6;
+    *(undefined2 *)((int)&pIVar3[1].lpVtbl + 2) = 0x700;
+    *(short *)&pIVar3[1].lpVtbl = (short)k;
+    *(short *)((int)&pIVar3->lpVtbl + 2) = sVar6 + 2;
+    *(undefined2 *)((int)&pIVar3[3].lpVtbl + 2) = 0x700;
+    *(short *)&pIVar3[2].lpVtbl = sVar6;
+    *(short *)((int)&pIVar3[2].lpVtbl + 2) = (short)k;
+    k = k + 4;
     j = j + 4;
-    *(short *)(piVar2 + 3) = sVar6 + 1;
-    piVar2 = piVar2 + 4;
+    *(short *)&pIVar3[3].lpVtbl = sVar6 + 1;
+    pIVar3 = pIVar3 + 4;
   }
-  iVar5 = j + 3;
-  for (i = 0; i < (int)piVar10 + -1; i = i + 1) {
-    if (local_d4 < j) {
-      fatal_exit(s__s__d____error_creating_weg_eb___0044d276,s_weg_cpp_0044d26e,0x637,arg4,j,
-                 local_d4);
-    }
-    sVar7 = (short)j;
-    *(short *)piVar2 = sVar7;
-    *(undefined2 *)((int)piVar2 + 6) = 0x700;
-    *(short *)(piVar2 + 1) = (short)iVar5;
-    *(short *)((int)piVar2 + 2) = sVar7 + 2;
-    *(undefined2 *)((int)piVar2 + 0xe) = 0x700;
-    *(short *)(piVar2 + 2) = sVar7;
-    *(short *)((int)piVar2 + 10) = (short)iVar5;
-    iVar5 = iVar5 + 4;
-    j = j + 4;
-    *(short *)(piVar2 + 3) = sVar7 + 1;
-    piVar2 = piVar2 + 4;
-  }
-  *(undefined1 *)piVar2 = 0xb;
-  *(undefined1 *)((int)piVar2 + 1) = 0;
-  *(undefined2 *)((int)piVar2 + 2) = 0;
-  (**(code **)(*piStack_e4 + 0x14))(piStack_e4);
-  memset((undefined4 *)&stack0xfffffeb4,0,0x30);
-  lVar1 = (**(code **)(*piStack_e8 + 0x18))(piStack_e8,&stack0xfffffeb4);
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  *(undefined1 *)&pIVar3->lpVtbl = 0xb;
+  *(undefined1 *)((int)&pIVar3->lpVtbl + 1) = 0;
+  *(undefined2 *)((int)&pIVar3->lpVtbl + 2) = 0;
+  i = 4 - (int)pIStack_c0;
+  (*direct3_d_execute_buffer->lpVtbl->Unlock)(direct3_d_execute_buffer);
+  pIVar7 = pIStack_c8;
+  memset(&DStack_134.dwSize,0,0x30);
+  DStack_134.dwVertexCount = (DWORD)pIStack_c0;
+  DStack_134.dwInstructionOffset = (int)pIStack_c4 - (int)pIVar7;
+  DStack_134.dwSize = 0x30;
+  DStack_134.dwInstructionLength = (int)pIVar3 + i;
+  HVar2 = (*(*(IDirect3DExecuteBufferVtbl **)d3_dexecutebufferdesc.lpData)->SetExecuteData)
+                    (d3_dexecutebufferdesc.lpData,&DStack_134);
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d____D3DError_Set_ExecData___0044d2d3,s_weg_cpp_0044d2cb,0x658,
                d3d_error_string_result);
   }
-  return local_f0[0];
+  return (DWORD)d3_dexecutebufferdesc.lpData;
 }
 
 

@@ -100,17 +100,14 @@ void __watcall do_play_smacker(int param_1,int param_2,int param_3)
 
 {
   uchar *surface_ptr;
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
+  RECT rect;
   
-  local_20 = 0;
-  local_1c = 0;
-  local_14 = *(undefined4 *)(smkfile + 8);
-  local_18 = *(undefined4 *)(smkfile + 4);
+  rect.left = 0;
+  rect.top = 0;
+  rect.bottom = *(LONG *)(smkfile + 8);
+  rect.right = *(LONG *)(smkfile + 4);
   while (smacker_playing != 0) {
     if (*(int *)(smkfile + 0x68) != 0) {
       set_smack_palette(param_3);
@@ -119,10 +116,9 @@ void __watcall do_play_smacker(int param_1,int param_2,int param_3)
     _SmackToBuffer_28(smkfile,0,0,xvga_screen_xsize,xvga_screen_ysize,surface_ptr,0);
     _SmackDoFrame_4(smkfile);
     reset_surface_ptr_1(xvga_buffer_screen,surface_ptr);
-    lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                      (xvga_screen,param_1,param_2,xvga_buffer_screen,&local_20,0);
-    if (lVar1 != 0) {
-      arg4 = dd_error_string(lVar1);
+    HVar1 = (*xvga_screen->lpVtbl->BltFast)(xvga_screen,param_1,param_2,xvga_buffer_screen,&rect,0);
+    if (HVar1 != 0) {
+      arg4 = dd_error_string(HVar1);
       fatal_exit(s__s__d____blitting_error___s___00430de4,s_smacker_cpp_00430dd8,0x99,arg4);
     }
     play_check_smacker();
@@ -137,25 +133,19 @@ void __watcall do_play_scale_smacker(int param_1,int param_2,int param_3,int par
 
 {
   uchar *surface_ptr;
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined4 local_24;
-  undefined4 local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
+  RECT rect;
+  RECT rect_2;
   
-  local_2c = 0;
-  local_28 = 0;
-  local_20 = *(undefined4 *)(smkfile + 8);
-  local_24 = *(undefined4 *)(smkfile + 4);
-  local_1c = param_1;
-  local_18 = param_2;
-  local_14 = param_3;
-  local_10 = param_4;
+  rect.left = 0;
+  rect.top = 0;
+  rect.bottom = *(LONG *)(smkfile + 8);
+  rect.right = *(LONG *)(smkfile + 4);
+  rect_2.left = param_1;
+  rect_2.top = param_2;
+  rect_2.right = param_3;
+  rect_2.bottom = param_4;
   while (smacker_playing != 0) {
     if (*(int *)(smkfile + 0x68) != 0) {
       set_smack_palette(param_5);
@@ -164,10 +154,10 @@ void __watcall do_play_scale_smacker(int param_1,int param_2,int param_3,int par
     _SmackToBuffer_28(smkfile,0,0,xvga_screen_xsize,xvga_screen_ysize,surface_ptr,0);
     _SmackDoFrame_4(smkfile);
     reset_surface_ptr_1(xvga_buffer_screen,surface_ptr);
-    lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
-                      (xvga_back_screen,&local_1c,xvga_buffer_screen,&local_2c,0,0);
-    if (lVar1 != 0) {
-      arg4 = dd_error_string(lVar1);
+    HVar1 = (*xvga_back_screen->lpVtbl->Blt)
+                      (xvga_back_screen,&rect_2,xvga_buffer_screen,&rect,0,(DDBLTFX *)0x0);
+    if (HVar1 != 0) {
+      arg4 = dd_error_string(HVar1);
       fatal_exit(s__s__d____blitting_error___s___00430e0f,s_smacker_cpp_00430e03,0xc3,arg4);
     }
     play_check_smacker();

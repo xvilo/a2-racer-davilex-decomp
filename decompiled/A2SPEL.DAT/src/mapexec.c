@@ -132,7 +132,7 @@ void __watcall build_map_execute_buffers(void)
 
 {
   int iVar1;
-  undefined4 build_tile_execute_buffer_result;
+  DWORD DVar2;
   float unaff_ECX;
   int unaff_EDX;
   int extraout_EDX;
@@ -172,12 +172,10 @@ void __watcall build_map_execute_buffers(void)
         }
         else {
           unaff_ECX = tile_scale;
-          build_tile_execute_buffer_result =
-               build_tile_execute_buffer
-                         (j * tile_size,i * (int)tile_scale,tile_size,(int)tile_scale);
+          DVar2 = build_tile_execute_buffer
+                            (j * tile_size,i * (int)tile_scale,tile_size,(int)tile_scale);
           iVar1 = DAT_00476ff4;
-          *(undefined4 *)(DAT_00476ff4 + 4 + (DAT_00476ff8 * i + j) * 8) =
-               build_tile_execute_buffer_result;
+          *(DWORD *)(DAT_00476ff4 + 4 + (DAT_00476ff8 * i + j) * 8) = DVar2;
           unaff_EDX = DAT_00476ff4;
           arg2 = arg2 + 1;
           *(undefined4 *)(DAT_00476ff4 + (DAT_00476ff8 * i + j) * 8) = 1;
@@ -344,189 +342,196 @@ road_height_at(float weg_section_idx,undefined4 param_2,undefined4 param_3,undef
 
 /* ==== 00426f39 build_tile_execute_buffer ==== */
 
-undefined4 __watcall
-build_tile_execute_buffer(int param_1,undefined4 param_2,int param_3,int param_4)
+DWORD __watcall build_tile_execute_buffer(int param_1,int param_2,int param_3,int param_4)
 
 {
-  long lVar1;
+  IDirect3DExecuteBufferVtbl *pIVar1;
+  HRESULT HVar2;
   char *d3d_error_string_result;
   int m;
-  int *piVar2;
+  short *psVar3;
   int n;
-  short sVar3;
+  short sVar4;
+  int iVar5;
   int k;
-  int iVar4;
-  int *piVar5;
-  byte bVar6;
-  undefined4 uStack_64;
-  int *piStack_5c;
-  int *piStack_58;
+  DWORD arg4;
+  undefined4 *puVar6;
+  byte bVar7;
+  D3DEXECUTEDATA DStack_84;
+  D3DEXECUTEBUFFERDESC d3_dexecutebufferdesc;
+  IDirect3DExecuteBuffer *direct3_d_execute_buffer;
   int j;
-  int *local_50;
-  undefined2 uStack_4c;
-  int *local_48;
-  int iStack_44;
-  int local_40;
-  int iStack_3c;
-  int iStack_38;
+  undefined4 *puStack_38;
   int local_34;
-  int iStack_30;
-  int i;
-  int *piStack_28;
-  undefined4 local_24;
+  undefined4 *puStack_30;
+  DWORD local_2c;
+  int iStack_28;
+  int local_24;
+  int iStack_20;
   int local_1c;
+  int iStack_18;
+  int i;
+  short *psStack_10;
   
-  bVar6 = 0;
-  i = param_3 * param_4 * 4;
+  bVar7 = 0;
+  local_2c = param_3 * param_4 * 4;
   local_34 = param_3 * param_4 * 2;
   local_24 = param_2;
   local_1c = param_3;
-  if (max_vertex_count < i) {
-    fatal_exit(s__s__d____Too_many_vertices___d____0044fd36,s_mapexec_cpp_0044fd2a,0x2d1,i,
+  if (max_vertex_count < (int)local_2c) {
+    fatal_exit(s__s__d____Too_many_vertices___d____0044fd36,s_mapexec_cpp_0044fd2a,0x2d1,local_2c,
                max_vertex_count);
   }
-  iVar4 = i * 0x20 + 0x88 + local_34 * 8;
-  if (max_buffer_size < iVar4) {
-    fatal_exit(s__s__d____Execbuffer_too_large____0044fd72,s_mapexec_cpp_0044fd66,0x2de,iVar4);
+  arg4 = local_2c * 0x20 + 0x88 + local_34 * 8;
+  if (max_buffer_size < (int)arg4) {
+    fatal_exit(s__s__d____Execbuffer_too_large____0044fd72,s_mapexec_cpp_0044fd66,0x2de,arg4);
   }
-  memset(&j,0,0x14);
-  local_50 = (int *)0x1;
-  j = 0x14;
-  local_48 = (int *)iVar4;
-  lVar1 = (**(code **)(*d3d_device + 0x18))();
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  memset(&d3_dexecutebufferdesc.dwSize,0,0x14);
+  d3_dexecutebufferdesc.dwFlags = 1;
+  d3_dexecutebufferdesc.dwSize = 0x14;
+  d3_dexecutebufferdesc.dwBufferSize = arg4;
+  HVar2 = (*d3d_device->lpVtbl->CreateExecuteBuffer)
+                    (d3d_device,&d3_dexecutebufferdesc,&direct3_d_execute_buffer,(void *)0x0);
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d___D3DError_Create_Execbuff_0044fdaa,s_mapexec_cpp_0044fd9e,0x2e7,
                d3d_error_string_result);
   }
-  lVar1 = (**(code **)(*local_50 + 0x10))();
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  HVar2 = (*direct3_d_execute_buffer->lpVtbl->Lock)(direct3_d_execute_buffer,&d3_dexecutebufferdesc)
+  ;
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d___D3DError_Lock_Execbuffer_0044fde0,s_mapexec_cpp_0044fdd4,0x2eb,
                d3d_error_string_result);
   }
-  piStack_28 = piStack_5c;
-  memset(piStack_5c,0,iVar4);
-  iStack_30 = iStack_3c + param_4;
-  local_40 = local_34 + param_1;
-  for (j = param_1; j < local_40; j = j + 1) {
-    for (i = iStack_3c; i < iStack_30; i = i + 1) {
+  puStack_38 = d3_dexecutebufferdesc.lpData;
+  psStack_10 = d3_dexecutebufferdesc.lpData;
+  memset(d3_dexecutebufferdesc.lpData,0,arg4);
+  iStack_18 = local_24 + param_4;
+  iStack_28 = local_1c + param_1;
+  for (j = param_1; j < iStack_28; j = j + 1) {
+    for (i = local_24; i < iStack_18; i = i + 1) {
       k = 0;
-      iVar4 = *(int *)((i * DAT_004596e0 + j) * 0x1c + 0x18 + DAT_00476fec) << 5;
+      iVar5 = *(int *)((i * DAT_004596e0 + j) * 0x1c + 0x18 + DAT_00476fec) << 5;
       do {
         m = *(int *)((i * DAT_004596e0 + j) * 0x1c + DAT_00476fec + 4 + k * 4) * 0x21;
-        *(undefined4 *)(weg_points + 0x18 + m) = *(undefined4 *)((int)&tile_u_coords + iVar4);
-        *(undefined4 *)(weg_points + 0x1c + m) = *(undefined4 *)((int)&tile_v_coords + iVar4);
-        iVar4 = iVar4 + 4;
-        piVar2 = (int *)(weg_points + m);
-        piVar5 = piStack_28;
+        *(undefined4 *)(weg_points + 0x18 + m) = *(undefined4 *)((int)&tile_u_coords + iVar5);
+        *(undefined4 *)(weg_points + 0x1c + m) = *(undefined4 *)((int)&tile_v_coords + iVar5);
+        iVar5 = iVar5 + 4;
+        puVar6 = (undefined4 *)(weg_points + m);
+        psVar3 = psStack_10;
         for (n = 8; n != 0; n = n + -1) {
-          *piVar5 = *piVar2;
-          piVar2 = piVar2 + (uint)bVar6 * -2 + 1;
-          piVar5 = piVar5 + (uint)bVar6 * -2 + 1;
+          *(undefined4 *)psVar3 = *puVar6;
+          puVar6 = puVar6 + (uint)bVar7 * -2 + 1;
+          psVar3 = (short *)((int)psVar3 + ((uint)bVar7 * -2 + 1) * 4);
         }
         for (m = 0; m != 0; m = m + -1) {
-          *(char *)piVar5 = (char)*piVar2;
-          piVar2 = (int *)((int)piVar2 + (uint)bVar6 * -2 + 1);
-          piVar5 = (int *)((int)piVar5 + (uint)bVar6 * -2 + 1);
+          *(undefined1 *)psVar3 = *(undefined1 *)puVar6;
+          puVar6 = (undefined4 *)((int)puVar6 + (uint)bVar7 * -2 + 1);
+          psVar3 = (short *)((int)psVar3 + (uint)bVar7 * -2 + 1);
         }
-        piStack_28 = piStack_28 + 8;
+        psStack_10 = (short *)((int)psStack_10 + 0x20);
         k = k + 1;
       } while (k < 4);
     }
   }
-  *(undefined1 *)piStack_28 = 5;
-  *(undefined1 *)((int)piStack_28 + 1) = 0xc;
-  local_48 = piStack_28;
-  *(undefined2 *)((int)piStack_28 + 2) = 2;
-  iVar4 = DAT_004764bc;
-  piStack_28[2] = DAT_004764bc;
-  piStack_28[3] = iVar4;
-  piStack_28[1] = DAT_004764b8;
-  piStack_28[5] = DAT_004764cc;
-  piStack_28[6] = DAT_004764c8;
-  piStack_28[4] = DAT_004764c4;
-  *(undefined1 *)((int)piStack_28 + 0x1d) = 8;
-  *(undefined2 *)((int)piStack_28 + 0x1e) = 1;
-  *(undefined1 *)(piStack_28 + 7) = 7;
-  *(undefined1 *)(piStack_28 + 8) = 1;
-  piStack_28[9] = *(int *)(DAT_00476fe8 * 0xc + 4 + materials);
-  *(undefined1 *)(piStack_28 + 10) = 0xe;
-  *(undefined1 *)((int)piStack_28 + 0x29) = 0x18;
-  *(undefined2 *)((int)piStack_28 + 0x2a) = 1;
-  piStack_28[0xb] = 3;
-  piStack_28[0xc] = 0x1fff000;
-  piStack_28[0xd] = 0x800;
-  piStack_28[0xe] = 0x800;
-  piStack_28[0xf] = 0;
-  piStack_28[0x10] = 0;
-  *(undefined1 *)(piStack_28 + 0x11) = 9;
-  *(undefined1 *)((int)piStack_28 + 0x45) = 0x10;
-  *(undefined2 *)((int)piStack_28 + 0x46) = 1;
-  piStack_28[0x12] = 0;
-  *(undefined2 *)(piStack_28 + 0x13) = 0;
-  *(undefined2 *)((int)piStack_28 + 0x4e) = 0;
-  piStack_28[0x15] = 0;
-  piStack_28[0x14] = iStack_44;
-  piVar2 = piStack_28 + 0x19;
+  *(undefined1 *)psStack_10 = 5;
+  *(undefined1 *)((int)psStack_10 + 1) = 0xc;
+  puStack_30 = (undefined4 *)psStack_10;
+  *(undefined2 *)((int)psStack_10 + 2) = 2;
+  pIVar1 = DAT_004764bc;
+  *(IDirect3DExecuteBufferVtbl **)((int)psStack_10 + 8) = DAT_004764bc;
+  *(IDirect3DExecuteBufferVtbl **)((int)psStack_10 + 0xc) = pIVar1;
+  *(IDirect3DExecuteBufferVtbl **)((int)psStack_10 + 4) = DAT_004764b8;
+  *(IDirect3DExecuteBufferVtbl **)((int)psStack_10 + 0x14) = DAT_004764cc;
+  *(IDirect3DExecuteBufferVtbl **)((int)psStack_10 + 0x18) = DAT_004764c8;
+  *(IDirect3DExecuteBufferVtbl **)((int)psStack_10 + 0x10) = DAT_004764c4;
+  *(undefined1 *)((int)psStack_10 + 0x1d) = 8;
+  *(undefined2 *)((int)psStack_10 + 0x1e) = 1;
+  *(undefined1 *)((int)psStack_10 + 0x1c) = 7;
+  *(undefined1 *)((int)psStack_10 + 0x20) = 1;
+  *(undefined4 *)((int)psStack_10 + 0x24) = *(undefined4 *)(DAT_00476fe8 * 0xc + 4 + materials);
+  *(undefined1 *)((int)psStack_10 + 0x28) = 0xe;
+  *(undefined1 *)((int)psStack_10 + 0x29) = 0x18;
+  *(undefined2 *)((int)psStack_10 + 0x2a) = 1;
+  *(undefined4 *)((int)psStack_10 + 0x2c) = 3;
+  *(undefined4 *)((int)psStack_10 + 0x30) = 0x1fff000;
+  *(undefined4 *)((int)psStack_10 + 0x34) = 0x800;
+  *(undefined4 *)((int)psStack_10 + 0x38) = 0x800;
+  *(undefined4 *)((int)psStack_10 + 0x3c) = 0;
+  *(undefined4 *)((int)psStack_10 + 0x40) = 0;
+  *(undefined1 *)((int)psStack_10 + 0x44) = 9;
+  *(undefined1 *)((int)psStack_10 + 0x45) = 0x10;
+  *(undefined2 *)((int)psStack_10 + 0x46) = 1;
+  *(undefined4 *)((int)psStack_10 + 0x48) = 0;
+  *(undefined2 *)((int)psStack_10 + 0x4c) = 0;
+  *(undefined2 *)((int)psStack_10 + 0x4e) = 0;
+  *(undefined4 *)((int)psStack_10 + 0x54) = 0;
+  *(DWORD *)((int)psStack_10 + 0x50) = local_2c;
+  psVar3 = (short *)((int)psStack_10 + 100);
   if (DAT_00476fe4 == 0) {
-    *(undefined1 *)(piStack_28 + 0x16) = 8;
-    *(undefined1 *)((int)piStack_28 + 0x59) = 8;
-    *(undefined2 *)((int)piStack_28 + 0x5a) = 1;
-    *(undefined1 *)(piStack_28 + 0x17) = 1;
-    piStack_28[0x18] = 0;
+    *(undefined1 *)((int)psStack_10 + 0x58) = 8;
+    *(undefined1 *)((int)psStack_10 + 0x59) = 8;
+    *(undefined2 *)((int)psStack_10 + 0x5a) = 1;
+    *(undefined1 *)((int)psStack_10 + 0x5c) = 1;
+    *(undefined4 *)((int)psStack_10 + 0x60) = 0;
   }
   else {
-    *(undefined1 *)(piStack_28 + 0x16) = 8;
-    *(undefined1 *)((int)piStack_28 + 0x59) = 8;
-    *(undefined2 *)((int)piStack_28 + 0x5a) = 1;
-    *(undefined1 *)(piStack_28 + 0x17) = 1;
-    piStack_28[0x18] = *(int *)(texture_table + grass_texture * 0xc);
+    *(undefined1 *)((int)psStack_10 + 0x58) = 8;
+    *(undefined1 *)((int)psStack_10 + 0x59) = 8;
+    *(undefined2 *)((int)psStack_10 + 0x5a) = 1;
+    *(undefined1 *)((int)psStack_10 + 0x5c) = 1;
+    *(undefined4 *)((int)psStack_10 + 0x60) = *(undefined4 *)(texture_table + grass_texture * 0xc);
   }
-  if (((uint)piVar2 & 7) == 0) {
-    *(undefined1 *)piVar2 = 3;
-    *(undefined1 *)((int)piStack_28 + 0x65) = 8;
-    *(undefined2 *)((int)piStack_28 + 0x66) = 0;
-    piVar2 = piStack_28 + 0x1a;
+  if (((uint)psVar3 & 7) == 0) {
+    *(undefined1 *)psVar3 = 3;
+    *(undefined1 *)((int)psStack_10 + 0x65) = 8;
+    *(undefined2 *)((int)psStack_10 + 0x66) = 0;
+    psVar3 = (short *)((int)psStack_10 + 0x68);
   }
-  piStack_28 = piVar2;
-  *(undefined1 *)piStack_28 = 3;
+  psStack_10 = psVar3;
+  *(undefined1 *)psStack_10 = 3;
   j = 0;
-  *(undefined1 *)((int)piStack_28 + 1) = 8;
-  *(undefined2 *)((int)piStack_28 + 2) = uStack_4c;
-  iStack_38 = local_34 * 4;
-  iVar4 = 0;
-  piVar2 = piStack_28 + 1;
-  for (; j < local_34; j = j + 1) {
-    k = iVar4;
+  *(undefined1 *)((int)psStack_10 + 1) = 8;
+  *(short *)((int)psStack_10 + 2) = (short)local_34;
+  iStack_20 = local_1c * 4;
+  iVar5 = 0;
+  psVar3 = (short *)((int)psStack_10 + 4);
+  for (; j < local_1c; j = j + 1) {
+    k = iVar5;
     for (i = 0; i < param_4; i = i + 1) {
-      sVar3 = (short)k;
-      *(short *)(piVar2 + 1) = sVar3;
-      *(short *)((int)piVar2 + 2) = sVar3 + 1;
-      *(short *)piVar2 = (short)piVar2[1] + 2;
-      *(undefined2 *)((int)piVar2 + 6) = 0x700;
-      *(short *)(piVar2 + 3) = sVar3;
-      *(short *)((int)piVar2 + 10) = sVar3 + 2;
-      *(undefined2 *)((int)piVar2 + 0xe) = 0x700;
-      *(short *)(piVar2 + 2) = (short)piVar2[3] + 3;
-      k = k + iStack_38;
-      piVar2 = piVar2 + 4;
+      sVar4 = (short)k;
+      psVar3[2] = sVar4;
+      psVar3[1] = sVar4 + 1;
+      *psVar3 = psVar3[2] + 2;
+      psVar3[3] = 0x700;
+      psVar3[6] = sVar4;
+      psVar3[5] = sVar4 + 2;
+      psVar3[7] = 0x700;
+      psVar3[4] = psVar3[6] + 3;
+      k = k + iStack_20;
+      psVar3 = psVar3 + 8;
     }
-    iVar4 = iVar4 + 4;
+    iVar5 = iVar5 + 4;
   }
-  *(undefined1 *)piVar2 = 0xb;
-  *(undefined1 *)((int)piVar2 + 1) = 0;
-  *(undefined2 *)((int)piVar2 + 2) = 0;
-  piStack_28 = piStack_28 + 1;
-  (**(code **)(*piStack_58 + 0x14))();
-  memset((undefined4 *)&stack0xffffff60,0,0x30);
-  lVar1 = (**(code **)(*piStack_5c + 0x18))(piStack_5c,&stack0xffffff60);
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  *(undefined1 *)psVar3 = 0xb;
+  *(undefined1 *)((int)psVar3 + 1) = 0;
+  psVar3[1] = 0;
+  psStack_10 = (short *)((int)psStack_10 + 4);
+  (*direct3_d_execute_buffer->lpVtbl->Unlock)(direct3_d_execute_buffer);
+  puVar6 = puStack_38;
+  memset(&DStack_84.dwSize,0,0x30);
+  DStack_84.dwVertexCount = local_2c;
+  DStack_84.dwSize = 0x30;
+  DStack_84.dwInstructionOffset = (int)puStack_30 - (int)puVar6;
+  DStack_84.dwInstructionLength = (int)psVar3 + (4 - (int)puStack_30);
+  HVar2 = (*direct3_d_execute_buffer->lpVtbl->SetExecuteData)(direct3_d_execute_buffer,&DStack_84);
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d____D3DError_Set_ExecData___0044fe14,s_mapexec_cpp_0044fe08,0x34b,
                d3d_error_string_result);
   }
-  return uStack_64;
+  return (DWORD)direct3_d_execute_buffer;
 }
 
 

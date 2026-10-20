@@ -5,13 +5,11 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall start_music(void)
+void __watcall start_music(int param_1)
 
 {
-  int in_EAX;
-  
   if (music_enabled != 0) {
-    _DAT_004751f4 = play_sound_buffer_1(s_motor2_wav_00458db4 + in_EAX * 0xf,1);
+    _DAT_004751f4 = play_sound_buffer_1(s_motor2_wav_00458db4 + param_1 * 0xf,1);
     set_sound_buffer_vol(_DAT_004751f4,-100 - _DAT_00458c34);
   }
   return;

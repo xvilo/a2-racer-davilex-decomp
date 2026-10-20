@@ -43,11 +43,9 @@ int __watcall create_standard_light(void)
 {
   int *piVar1;
   int new_light;
-  long lVar2;
+  HRESULT HVar2;
   char *d3d_error_string_result;
-  int *piStack_6c;
-  int iStack_68;
-  undefined4 uStack_64;
+  long lVar3;
   undefined4 local_60;
   undefined1 local_5c;
   undefined4 local_58;
@@ -61,7 +59,6 @@ int __watcall create_standard_light(void)
   undefined4 local_24;
   undefined4 local_20;
   
-  uStack_64 = 0x425b8a;
   memset(&local_60,0,0x4c);
   local_4c = 0x3f800000;
   local_3c = 0;
@@ -75,33 +72,30 @@ int __watcall create_standard_light(void)
   local_54 = 0x3f7d70a4;
   local_50 = 0x3f7d70a4;
   local_38 = 0xbf19999a;
-  uStack_64 = 0x425bd1;
   new_light = get_new_light();
-  uStack_64 = 0;
-  iStack_68 = DAT_004767b8 + new_light * 8;
-  piStack_6c = direct3d;
-  lVar2 = (**(code **)(*direct3d + 0x14))();
-  if (lVar2 == 0) {
+  HVar2 = (*direct3d->lpVtbl->CreateLight)
+                    (direct3d,(IDirect3DLight **)(DAT_004767b8 + new_light * 8),(void *)0x0);
+  if (HVar2 == 0) {
     debugmsg(s_D3D___Light_created_ok_0044f845);
     piVar1 = *(int **)(new_light * 8 + DAT_004767b8);
-    lVar2 = (**(code **)(*piVar1 + 0x10))(piVar1,&piStack_6c);
-    if (lVar2 != 0) {
-      d3d_error_string_result = d3d_error_string(lVar2);
+    lVar3 = (**(code **)(*piVar1 + 0x10))(piVar1,&local_60);
+    if (lVar3 != 0) {
+      d3d_error_string_result = d3d_error_string(lVar3);
       fatal_exit(s__s__d____D3DError_Setting_Light___0044f867,s_light_cpp_0044f85d,0x58,
                  d3d_error_string_result);
     }
     debugmsg(s_D3D___Light_set_ok_0044f88e);
-    lVar2 = (**(code **)(*d3d_object + 0x34))
-                      (d3d_object,*(undefined4 *)(DAT_004767b8 + new_light * 8));
-    if (lVar2 != 0) {
-      d3d_error_string_result = d3d_error_string(lVar2);
+    HVar2 = (*d3d_viewport->lpVtbl->AddLight)
+                      (d3d_viewport,*(IDirect3DLight **)(DAT_004767b8 + new_light * 8));
+    if (HVar2 != 0) {
+      d3d_error_string_result = d3d_error_string(HVar2);
       fatal_exit(s__s__d____D3DError_Add_Light____s_0044f8ac,s_light_cpp_0044f8a2,0x5e,
                  d3d_error_string_result);
     }
     debugmsg(s_D3D___Light_added_ok_0044f8cf);
   }
   else {
-    d3d_error_string_result = d3d_error_string(lVar2);
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d____D3DError_Creating_Light_0044f81d,s_light_cpp_0044f813,0x51,
                d3d_error_string_result);
     new_light = 0;

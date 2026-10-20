@@ -327,10 +327,9 @@ void __watcall place_pion_right(float weg_section_idx,float param_2)
 
 /* ==== 00413a5c collide_with_pionnen ==== */
 
-void __watcall collide_with_pionnen(void)
+void __watcall collide_with_pionnen(int opponent_index)
 
 {
-  int in_EAX;
   uint random;
   int j;
   undefined4 *puVar1;
@@ -347,7 +346,7 @@ void __watcall collide_with_pionnen(void)
     fatal_exit(s__s__d____No_pion_objects_allocat_00446a50,s_pion_cpp_00446a47,0xdb);
   }
   opponent = opponent_data;
-  if ((opponent_data[in_EAX].chunk != -1) && (opponent_data[in_EAX].lane != -1)) {
+  if ((opponent_data[opponent_index].chunk != -1) && (opponent_data[opponent_index].lane != -1)) {
     local_1c = 0;
     for (i = 0; i < pion_count; i = i + 1) {
       puVar1 = (undefined4 *)(pionnen + local_1c);
@@ -386,11 +385,12 @@ void __watcall collide_with_pionnen(void)
           puVar1[6] = 0;
           puVar1[7] = 0;
         }
-        if ((puVar1[8] == opponent[in_EAX].chunk) && (puVar1[9] == opponent[in_EAX].lane)) {
-          racers[puVar1[10]].field_14 = opponent_data[in_EAX].field_18 * opponent_data[in_EAX].speed
-          ;
-          racers[puVar1[10]].field_1c = opponent_data[in_EAX].field_20 * opponent_data[in_EAX].speed
-          ;
+        if ((puVar1[8] == opponent[opponent_index].chunk) &&
+           (puVar1[9] == opponent[opponent_index].lane)) {
+          racers[puVar1[10]].field_14 =
+               opponent_data[opponent_index].field_18 * opponent_data[opponent_index].speed;
+          racers[puVar1[10]].field_1c =
+               opponent_data[opponent_index].field_20 * opponent_data[opponent_index].speed;
           j = puVar1[10];
           racers[j].field_18 = (ABS(racers[j].field_1c) + ABS(racers[j].field_14)) / 3.0;
           if (puVar1[7] == 0) {
@@ -486,15 +486,15 @@ void __watcall update_pionnen(void)
 
 {
   int iVar1;
-  int i;
+  int opponent_index;
   int iVar2;
   
   iVar2 = 0x100;
-  collide_with_pionnen();
-  for (i = 1; i < opponents_used; i = i + 1) {
+  collide_with_pionnen(0);
+  for (opponent_index = 1; opponent_index < opponents_used; opponent_index = opponent_index + 1) {
     iVar1 = *(int *)((int)opponent_data->local_corners + iVar2 + 0x5c);
     if ((iVar1 == 3) || (iVar1 == 4)) {
-      collide_with_pionnen();
+      collide_with_pionnen(opponent_index);
     }
     iVar2 = iVar2 + 0x100;
   }

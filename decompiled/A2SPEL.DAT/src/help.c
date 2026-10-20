@@ -7,7 +7,7 @@ void __watcall exit_help(void)
 
 {
   if (helpgrid != (IDirectDrawSurface *)0x0) {
-    (**(code **)(*(int *)helpgrid + 8))(helpgrid);
+    (*helpgrid->lpVtbl->Release)(helpgrid);
     helpgrid = (IDirectDrawSurface *)0x0;
   }
   return;
@@ -20,39 +20,37 @@ void __watcall init_help(void)
 
 {
   int iVar1;
-  long lVar2;
+  HRESULT HVar2;
   char *arg4;
   uchar *puVar3;
   int translate_pixel_result;
   uchar *puVar4;
   int j;
   uchar *puVar5;
-  undefined1 *puStack_30;
+  DDCOLORKEY ddcolorkey;
+  int iStack_24;
   int i;
-  int local_28;
+  int iStack_1c;
   
-  puStack_30 = (undefined1 *)0x42db56;
   helpgrid = create_surface(8,8);
   if (pf_conversion_mode == 0) {
-    local_28 = 0xff;
-    i = 0xff;
+    ddcolorkey.dwColorSpaceHighValue = 0xff;
+    ddcolorkey.dwColorSpaceLowValue = 0xff;
   }
   else if (pf_conversion_mode == 1) {
-    puStack_30 = (undefined1 *)0x42dbc7;
-    i = translate_pixel(0xff,8);
-    local_28 = i;
+    ddcolorkey.dwColorSpaceLowValue = translate_pixel(0xff,8);
+    ddcolorkey.dwColorSpaceHighValue = ddcolorkey.dwColorSpaceLowValue;
   }
-  puStack_30 = (undefined1 *)&i;
-  lVar2 = (**(code **)(*(int *)helpgrid + 0x74))(helpgrid,8);
-  if (lVar2 != 0) {
-    arg4 = dd_error_string(lVar2);
+  HVar2 = (*helpgrid->lpVtbl->SetColorKey)(helpgrid,8,&ddcolorkey);
+  if (HVar2 != 0) {
+    arg4 = dd_error_string(HVar2);
     fatal_exit(s__s__d____failed_to_set_color_key_00451f21,s_help_cpp_00451f18,0x5a,arg4);
   }
-  puVar3 = get_surface_ptr_3(helpgrid,(int *)&puStack_30);
+  puVar3 = get_surface_ptr_3(helpgrid,&iStack_24);
   i = 0;
-  local_28 = 8;
+  iStack_1c = 8;
   do {
-    iVar1 = local_28;
+    iVar1 = iStack_1c;
     j = i << 3;
     puVar4 = puVar3;
     puVar5 = puVar3;
@@ -68,9 +66,9 @@ void __watcall init_help(void)
       }
       j = j + 1;
     } while (j != iVar1);
-    local_28 = local_28 + 8;
+    iStack_1c = iStack_1c + 8;
     i = i + 1;
-    puVar3 = puVar3 + (int)puStack_30;
+    puVar3 = puVar3 + iStack_24;
   } while (i < 8);
   reset_surface_ptr_1(helpgrid,puVar3);
   return;
@@ -82,35 +80,29 @@ void __watcall init_help(void)
 void __watcall draw_grid(int param_1)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *dd_error_string_result;
   int iVar2;
   int iVar3;
-  int local_38;
-  int local_34;
-  int local_30;
-  int local_2c;
-  undefined4 local_28;
-  undefined4 local_24;
-  undefined4 local_20;
-  undefined4 local_1c;
+  RECT rect;
+  RECT rect_2;
   
   if (helpgrid != (IDirectDrawSurface *)0x0) {
-    local_28 = 0;
-    local_20 = 8;
-    local_24 = 0;
-    local_1c = 8;
+    rect_2.left = 0;
+    rect_2.right = 8;
+    rect_2.top = 0;
+    rect_2.bottom = 8;
     if (param_1 == 0) {
       for (iVar3 = 0; iVar3 < xvga_screen_ysize; iVar3 = iVar3 + 8) {
-        local_2c = iVar3 + 8;
-        local_34 = iVar3;
+        rect.bottom = iVar3 + 8;
+        rect.top = iVar3;
         for (iVar2 = 0; iVar2 < xvga_screen_xsize; iVar2 = iVar2 + 8) {
-          local_30 = iVar2 + 8;
-          local_38 = iVar2;
-          lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
-                            (xvga_screen,&local_38,helpgrid,&local_28,0x8000,0);
-          if (lVar1 != 0) {
-            dd_error_string_result = dd_error_string(lVar1);
+          rect.right = iVar2 + 8;
+          rect.left = iVar2;
+          HVar1 = (*xvga_screen->lpVtbl->Blt)
+                            (xvga_screen,&rect,helpgrid,&rect_2,0x8000,(DDBLTFX *)0x0);
+          if (HVar1 != 0) {
+            dd_error_string_result = dd_error_string(HVar1);
             fatal_exit(s__s__d____help_grid_blitting_erro_00451f51,s_help_cpp_00451f48,0x9a,
                        dd_error_string_result);
           }
@@ -119,15 +111,15 @@ void __watcall draw_grid(int param_1)
     }
     else if ((uint)param_1 < 2) {
       for (iVar3 = 0; iVar3 < xvga_screen_ysize; iVar3 = iVar3 + 8) {
-        local_2c = iVar3 + 8;
-        local_34 = iVar3;
+        rect.bottom = iVar3 + 8;
+        rect.top = iVar3;
         for (iVar2 = 0; iVar2 < xvga_screen_xsize; iVar2 = iVar2 + 8) {
-          local_30 = iVar2 + 8;
-          local_38 = iVar2;
-          lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
-                            (xvga_back_screen,&local_38,helpgrid,&local_28,0x8000,0);
-          if (lVar1 != 0) {
-            dd_error_string_result = dd_error_string(lVar1);
+          rect.right = iVar2 + 8;
+          rect.left = iVar2;
+          HVar1 = (*xvga_back_screen->lpVtbl->Blt)
+                            (xvga_back_screen,&rect,helpgrid,&rect_2,0x8000,(DDBLTFX *)0x0);
+          if (HVar1 != 0) {
+            dd_error_string_result = dd_error_string(HVar1);
             fatal_exit(s__s__d____help_grid_blitting_erro_00451f7d,s_help_cpp_00451f74,0xab,
                        dd_error_string_result);
           }
@@ -136,15 +128,15 @@ void __watcall draw_grid(int param_1)
     }
     else if (param_1 == 2) {
       for (iVar3 = 0; iVar3 < xvga_screen_ysize; iVar3 = iVar3 + 8) {
-        local_2c = iVar3 + 8;
-        local_34 = iVar3;
+        rect.bottom = iVar3 + 8;
+        rect.top = iVar3;
         for (iVar2 = 0; iVar2 < xvga_screen_xsize; iVar2 = iVar2 + 8) {
-          local_30 = iVar2 + 8;
-          local_38 = iVar2;
-          lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x14))
-                            (xvga_buffer_screen,&local_38,helpgrid,&local_28,0x8000,0);
-          if (lVar1 != 0) {
-            dd_error_string_result = dd_error_string(lVar1);
+          rect.right = iVar2 + 8;
+          rect.left = iVar2;
+          HVar1 = (*xvga_buffer_screen->lpVtbl->Blt)
+                            (xvga_buffer_screen,&rect,helpgrid,&rect_2,0x8000,(DDBLTFX *)0x0);
+          if (HVar1 != 0) {
+            dd_error_string_result = dd_error_string(HVar1);
             fatal_exit(s__s__d____help_grid_blitting_erro_00451fa9,s_help_cpp_00451fa0,0xbc,
                        dd_error_string_result);
           }

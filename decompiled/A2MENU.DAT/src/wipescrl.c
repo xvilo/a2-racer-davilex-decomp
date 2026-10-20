@@ -7,19 +7,16 @@ void __watcall
 wipe_scroll_in_left(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   int iVar2;
   int iVar3;
   char *pcVar4;
   char *arg2;
   undefined4 arg3;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
+  RECT rect;
   int local_14;
-  int local_10;
+  DWORD local_10;
   
   local_10 = param_2;
   if (called_true_handle_wipe == 0) {
@@ -35,16 +32,16 @@ wipe_scroll_in_left(int param_1,int param_2,int param_3,int param_4,int param_5,
       show_mouse();
       return;
     }
-    local_18 = local_14;
-    local_1c = iVar3 + iVar2;
-    local_24 = iVar3;
-    local_20 = param_3;
+    rect.bottom = local_14;
+    rect.right = iVar3 + iVar2;
+    rect.left = iVar3;
+    rect.top = param_3;
     if (param_1 != 0) {
       if ((uint)param_1 < 2) {
-        lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                          (xvga_screen,local_10,param_3,xvga_back_screen,&local_24,0);
-        if (lVar1 != 0) {
-          arg4 = dd_error_string(lVar1);
+        HVar1 = (*xvga_screen->lpVtbl->BltFast)
+                          (xvga_screen,local_10,param_3,xvga_back_screen,&rect,0);
+        if (HVar1 != 0) {
+          arg4 = dd_error_string(HVar1);
           arg3 = 0x34;
           arg2 = s_wipescrl_cpp_004318b7;
           pcVar4 = s__s__d____blitting_error___s___004318c4;
@@ -53,10 +50,10 @@ override_prt_41e132_f69790bb:
         }
       }
       else if (param_1 == 2) {
-        lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                          (xvga_screen,local_10,param_3,xvga_buffer_screen,&local_24,0);
-        if (lVar1 != 0) {
-          arg4 = dd_error_string(lVar1);
+        HVar1 = (*xvga_screen->lpVtbl->BltFast)
+                          (xvga_screen,local_10,param_3,xvga_buffer_screen,&rect,0);
+        if (HVar1 != 0) {
+          arg4 = dd_error_string(HVar1);
           arg3 = 0x2e;
           arg2 = s_wipescrl_cpp_0043188b;
           pcVar4 = s__s__d____blitting_error___s___00431898;
@@ -79,60 +76,56 @@ void __watcall
 wipe_scroll_in_right(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
-  int iVar2;
-  char *pcVar3;
+  DWORD dwX;
+  char *pcVar2;
   char *arg2;
   undefined4 arg3;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
+  RECT rect;
+  DWORD local_14;
   int local_10;
   
   if (called_true_handle_wipe == 0) {
     fatal_exit(s__wipe_scroll_in_right__illegal_c_004318e3);
   }
   hide_mouse();
-  iVar2 = param_4 + param_2;
+  dwX = param_4 + param_2;
   local_10 = param_5 + param_3;
-  local_14 = iVar2;
+  local_14 = dwX;
   do {
-    iVar2 = iVar2 + -8;
-    if (iVar2 < 0) {
+    dwX = dwX - 8;
+    if ((int)dwX < 0) {
       show_mouse();
       return;
     }
-    local_18 = local_10;
-    local_1c = param_2 + (local_14 - iVar2);
-    local_24 = param_2;
-    local_20 = param_3;
-    debugmsg(s_coordinaten___d___d___d___d_0043191b,param_2,param_3,local_10,
-             (local_14 - iVar2) + iVar2);
+    rect.bottom = local_10;
+    rect.right = param_2 + (local_14 - dwX);
+    rect.left = param_2;
+    rect.top = param_3;
+    debugmsg(s_coordinaten___d___d___d___d_0043191b,param_2,param_3,local_10,(local_14 - dwX) + dwX)
+    ;
     if (param_1 != 0) {
       if ((uint)param_1 < 2) {
-        lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                          (xvga_screen,iVar2,param_3,xvga_back_screen,&local_24,0);
-        if (lVar1 != 0) {
-          arg4 = dd_error_string(lVar1);
+        HVar1 = (*xvga_screen->lpVtbl->BltFast)(xvga_screen,dwX,param_3,xvga_back_screen,&rect,0);
+        if (HVar1 != 0) {
+          arg4 = dd_error_string(HVar1);
           arg3 = 0x61;
           arg2 = s_wipescrl_cpp_00431964;
-          pcVar3 = s__s__d____blitting_error___s___00431971;
+          pcVar2 = s__s__d____blitting_error___s___00431971;
           goto override_prt_41e235_f69790bb;
         }
       }
       else if ((param_1 == 2) &&
-              (lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                                 (xvga_screen,iVar2,param_3,xvga_buffer_screen,&local_24,0),
-              lVar1 != 0)) {
-        arg4 = dd_error_string(lVar1);
+              (HVar1 = (*xvga_screen->lpVtbl->BltFast)
+                                 (xvga_screen,dwX,param_3,xvga_buffer_screen,&rect,0), HVar1 != 0))
+      {
+        arg4 = dd_error_string(HVar1);
         arg3 = 0x5b;
         arg2 = s_wipescrl_cpp_00431938;
-        pcVar3 = s__s__d____blitting_error___s___00431945;
+        pcVar2 = s__s__d____blitting_error___s___00431945;
 override_prt_41e235_f69790bb:
-        fatal_exit(pcVar3,arg2,arg3,arg4);
+        fatal_exit(pcVar2,arg2,arg3,arg4);
       }
     }
     if (param_6 == 0) {
@@ -148,17 +141,14 @@ void __watcall
 wipe_scroll_in_top(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   int iVar2;
   int iVar3;
   char *pcVar4;
   char *arg2;
   undefined4 arg3;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
+  RECT rect;
   int local_14;
   int local_10;
   
@@ -175,16 +165,15 @@ wipe_scroll_in_top(int param_1,int param_2,int param_3,int param_4,int param_5,i
       show_mouse();
       return;
     }
-    local_24 = local_10;
-    local_18 = iVar2 + iVar3;
-    local_1c = local_14;
-    local_20 = iVar2;
+    rect.left = local_10;
+    rect.bottom = iVar2 + iVar3;
+    rect.right = local_14;
+    rect.top = iVar2;
     if (param_1 != 0) {
       if ((uint)param_1 < 2) {
-        lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                          (xvga_screen,0,0,xvga_back_screen,&local_24,0);
-        if (lVar1 != 0) {
-          arg4 = dd_error_string(lVar1);
+        HVar1 = (*xvga_screen->lpVtbl->BltFast)(xvga_screen,0,0,xvga_back_screen,&rect,0);
+        if (HVar1 != 0) {
+          arg4 = dd_error_string(HVar1);
           arg3 = 0x8d;
           arg2 = s_wipescrl_cpp_004319f2;
           pcVar4 = s__s__d____blitting_error___s___004319ff;
@@ -193,10 +182,9 @@ override_prt_41e358_f69790bb:
         }
       }
       else if (param_1 == 2) {
-        lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                          (xvga_screen,0,0,xvga_buffer_screen,&local_24,0);
-        if (lVar1 != 0) {
-          arg4 = dd_error_string(lVar1);
+        HVar1 = (*xvga_screen->lpVtbl->BltFast)(xvga_screen,0,0,xvga_buffer_screen,&rect,0);
+        if (HVar1 != 0) {
+          arg4 = dd_error_string(HVar1);
           arg3 = 0x87;
           arg2 = s_wipescrl_cpp_004319c6;
           pcVar4 = s__s__d____blitting_error___s___004319d3;
@@ -219,58 +207,54 @@ void __watcall
 wipe_scroll_in_bottom(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
 
 {
-  int iVar1;
-  long lVar2;
+  DWORD dwY;
+  HRESULT HVar1;
   char *arg4;
-  char *pcVar3;
+  char *pcVar2;
   char *arg2;
   undefined4 arg3;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
+  RECT rect;
+  DWORD local_14;
   int local_10;
   
   if (called_true_handle_wipe == 0) {
     fatal_exit(s__wipe_scroll_in_bottom__illegal_c_00431a1e);
   }
   hide_mouse();
-  iVar1 = param_5 + param_3;
+  dwY = param_5 + param_3;
   local_10 = param_2 + param_4;
-  local_14 = iVar1;
+  local_14 = dwY;
   do {
-    iVar1 = iVar1 + -8;
-    if (iVar1 < 0) {
+    dwY = dwY - 8;
+    if ((int)dwY < 0) {
       show_mouse();
       return;
     }
-    local_18 = (local_14 - iVar1) + param_3;
-    local_1c = local_10;
-    local_24 = param_2;
-    local_20 = param_3;
+    rect.bottom = (local_14 - dwY) + param_3;
+    rect.right = local_10;
+    rect.left = param_2;
+    rect.top = param_3;
     if (param_1 != 0) {
       if ((uint)param_1 < 2) {
-        lVar2 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                          (xvga_screen,param_2,iVar1,xvga_back_screen,&local_24,0);
-        if (lVar2 != 0) {
-          arg4 = dd_error_string(lVar2);
+        HVar1 = (*xvga_screen->lpVtbl->BltFast)(xvga_screen,param_2,dwY,xvga_back_screen,&rect,0);
+        if (HVar1 != 0) {
+          arg4 = dd_error_string(HVar1);
           arg3 = 0xba;
           arg2 = s_wipescrl_cpp_00431a83;
-          pcVar3 = s__s__d____blitting_error___s___00431a90;
+          pcVar2 = s__s__d____blitting_error___s___00431a90;
           goto override_prt_41e458_f69790bb;
         }
       }
       else if ((param_1 == 2) &&
-              (lVar2 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                                 (xvga_screen,param_2,iVar1,xvga_buffer_screen,&local_24,0),
-              lVar2 != 0)) {
-        arg4 = dd_error_string(lVar2);
+              (HVar1 = (*xvga_screen->lpVtbl->BltFast)
+                                 (xvga_screen,param_2,dwY,xvga_buffer_screen,&rect,0), HVar1 != 0))
+      {
+        arg4 = dd_error_string(HVar1);
         arg3 = 0xb4;
         arg2 = s_wipescrl_cpp_00431a57;
-        pcVar3 = s__s__d____blitting_error___s___00431a64;
+        pcVar2 = s__s__d____blitting_error___s___00431a64;
 override_prt_41e458_f69790bb:
-        fatal_exit(pcVar3,arg2,arg3,arg4);
+        fatal_exit(pcVar2,arg2,arg3,arg4);
       }
     }
     if (param_6 == 0) {

@@ -79,13 +79,13 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   uint ini_value_setting;
   int iVar1;
   char *file_path_result;
-  uint uVar2;
-  int iVar3;
+  LONG LVar2;
+  uint uVar3;
   undefined4 uVar4;
   int iVar5;
   
   set_ini_filename(s_movie_ini_00418004);
-  uVar2 = 0;
+  uVar3 = 0;
   ini_value_setting = read_ini_value_setting(s_HELPDESK_00418014,s_DEBUG_0041800e);
   set_debugmsg_state(0,(uint)(ini_value_setting != 0));
   iVar1 = contains_nocase(lpCmdLine,s__HIRES_0041801d);
@@ -100,19 +100,19 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   if (ini_value_setting == 0) {
     set_xvga_vars(1,0x40,1);
     ini_value_setting = 0;
-    uVar2 = 0;
+    uVar3 = 0;
 LAB_00401137:
     set_xvga_vars(0,ini_value_setting,0);
   }
   else {
     if (ini_value_setting < 2) {
       ini_value_setting = 3;
-      uVar2 = 1;
+      uVar3 = 1;
       goto LAB_00401137;
     }
     if (ini_value_setting == 2) {
       ini_value_setting = 3;
-      uVar2 = 2;
+      uVar3 = 2;
       goto LAB_00401137;
     }
   }
@@ -135,19 +135,19 @@ LAB_00401137:
   if ((iVar1 != 0) && (iVar1 = xvga_init_sound(0x14,0xc), iVar1 != 0)) {
     init_smacker((void *)0x0);
   }
-  if (uVar2 == 0) {
-    iVar1 = 0x140;
-    iVar3 = 200;
+  if (uVar3 == 0) {
+    LVar2 = 0x140;
+    iVar1 = 200;
   }
   else {
-    if (2 < uVar2) goto LAB_00401228;
-    iVar1 = 0x280;
-    iVar3 = 0x1e0;
+    if (2 < uVar3) goto LAB_00401228;
+    LVar2 = 0x280;
+    iVar1 = 0x1e0;
   }
   iVar5 = 0;
   uVar4 = 1;
   file_path_result = file_path(&DAT_00421010,lpCmdLine);
-  play_smacker(file_path_result,0,0,iVar1,iVar3,uVar4,iVar5);
+  play_smacker(file_path_result,0,0,LVar2,iVar1,uVar4,iVar5);
 LAB_00401228:
   xvga_exit_sound();
   exit_xvga_lib();

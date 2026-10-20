@@ -6,7 +6,7 @@
 void __watcall release_d3d(void)
 
 {
-  (**(code **)(*d3d_object + 8))(d3d_object);
+  (*d3d_viewport->lpVtbl->Release)(d3d_viewport);
   DAT_004764e0 = 0;
   return;
 }
@@ -100,12 +100,12 @@ char * __watcall d3d_error_string(long param_1)
 void __watcall query_d3d_interface(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   
-  lVar1 = (*(code *)**(undefined4 **)xvga_dd_object)(xvga_dd_object,&DAT_00430081,&direct3d);
-  if (lVar1 != 0) {
-    arg4 = d3d_error_string(lVar1);
+  HVar1 = (*xvga_dd_object->lpVtbl->QueryInterface)(xvga_dd_object,&GUID_00430081,&direct3d);
+  if (HVar1 != 0) {
+    arg4 = d3d_error_string(HVar1);
     fatal_exit(s__s__d____D3DError____s_0044ba5d,s_d3dlib_cpp_0044ba52,0x81,arg4);
   }
   return;
@@ -117,7 +117,7 @@ void __watcall query_d3d_interface(void)
 void __watcall create_d3d_device(uint param_1)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   char *pcVar2;
   char *arg2;
@@ -127,22 +127,22 @@ void __watcall create_d3d_device(uint param_1)
     fatal_exit(s__s__d____error_device_driver_gui_0044ba81,s_d3dlib_cpp_0044ba76,0x94);
   }
   if (param_1 == 0) {
-    lVar1 = (*(code *)**(undefined4 **)xvga_screen)(xvga_screen,&DAT_00476508,&d3d_device);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_screen->lpVtbl->QueryInterface)(xvga_screen,&GUID_00476508,&d3d_device);
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = d3d_error_string(lVar1);
+    arg4 = d3d_error_string(HVar1);
     arg3 = 0x9c;
     arg2 = s_d3dlib_cpp_0044bab7;
     pcVar2 = s__s__d____D3DError_Query_Device_I_0044bac2;
   }
   else if (param_1 < 2) {
-    lVar1 = (*(code *)**(undefined4 **)xvga_back_screen)(xvga_back_screen,&DAT_00476508,&d3d_device)
+    HVar1 = (*xvga_back_screen->lpVtbl->QueryInterface)(xvga_back_screen,&GUID_00476508,&d3d_device)
     ;
-    if (lVar1 == 0) {
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = d3d_error_string(lVar1);
+    arg4 = d3d_error_string(HVar1);
     arg3 = 0xa3;
     arg2 = s_d3dlib_cpp_0044baf8;
     pcVar2 = s__s__d____D3DError_Query_Device_I_0044bb03;
@@ -152,12 +152,12 @@ void __watcall create_d3d_device(uint param_1)
       fatal_exit(s__s__d____Illegal_focus_for_3d_de_0044bb90,s_d3dlib_cpp_0044bb85,0xaf);
       return;
     }
-    lVar1 = (*(code *)**(undefined4 **)xvga_buffer_screen)
-                      (xvga_buffer_screen,&DAT_00476508,&d3d_device);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_buffer_screen->lpVtbl->QueryInterface)
+                      (xvga_buffer_screen,&GUID_00476508,&d3d_device);
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = d3d_error_string(lVar1);
+    arg4 = d3d_error_string(HVar1);
     arg3 = 0xaa;
     arg2 = s_d3dlib_cpp_0044bb3d;
     pcVar2 = s__s__d____D3DError_Query_Device_I_0044bb48;
@@ -172,58 +172,56 @@ void __watcall create_d3d_device(uint param_1)
 void __watcall release_d3d_device(void)
 
 {
-  (**(code **)(*d3d_device + 8))(d3d_device);
+  (*d3d_device->lpVtbl->Release)(d3d_device);
   return;
 }
 
 
 /* ==== 0041c5e5 find_d3d_device ==== */
 
-void __watcall find_d3d_device(void)
+void __watcall find_d3d_device(int param_1)
 
 {
-  int in_EAX;
-  long lVar1;
+  HRESULT HVar1;
   char *d3d_error_string_result;
-  byte bVar2;
-  undefined4 auStackY_19d0 [1521];
-  undefined1 *puVar3;
-  int *piVar4;
-  undefined4 uStack_80;
-  undefined4 uStack_7c;
-  undefined1 uStack_74;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  byte bVar4;
+  undefined4 auStackY_19b8 [1521];
+  undefined1 uStack_1e4;
+  D3DFINDDEVICERESULT DStack_1e0;
+  D3DFINDDEVICESEARCH DStack_74;
   
-  bVar2 = 0;
-  if ((in_EAX != 1) && (in_EAX != 2)) {
-    fatal_exit(s__s__d____find_3d_device_illegal_c_0044bc1d,s_d3dlib_cpp_0044bc12,0xdd,in_EAX);
+  bVar4 = 0;
+  if ((param_1 != 1) && (param_1 != 2)) {
+    fatal_exit(s__s__d____find_3d_device_illegal_c_0044bc1d,s_d3dlib_cpp_0044bc12,0xdd,param_1);
   }
-  piVar4 = direct3d;
-  lVar1 = (**(code **)(*direct3d + 0x10))();
-  uStack_74 = SUB41(piVar4,0);
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  HVar1 = (*direct3d->lpVtbl->EnumDevices)(direct3d,&LAB_0041c580,(void *)0x0);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d____D3DError_EnumDevice_____0044bc62,s_d3dlib_cpp_0044bc57,0xe2,
                d3d_error_string_result);
   }
-  memset(&uStack_80,0,0x5c);
-  uStack_80 = 0x5c;
-  uStack_7c = 1;
-  memset((undefined4 *)&stack0xfffffe14,0,0x16c);
-  puVar3 = &stack0xfffffe14;
-  lVar1 = (**(code **)(*direct3d + 0x20))(direct3d,&uStack_80);
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  memset(&DStack_74.dwSize,0,0x5c);
+  uStack_1e4 = (undefined1)param_1;
+  DStack_74.dwSize = 0x5c;
+  DStack_74.dcmColorModel._0_1_ = uStack_1e4;
+  DStack_74.dwFlags = 1;
+  memset(&DStack_1e0.dwSize,0,0x16c);
+  DStack_1e0.dwSize = 0x16c;
+  HVar1 = (*direct3d->lpVtbl->FindDevice)(direct3d,&DStack_74,&DStack_1e0);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d____D3DError_FindDevice_____0044bc91,s_d3dlib_cpp_0044bc86,0xf0,
                d3d_error_string_result);
   }
-  DAT_00476508 = puVar3;
-  (&DAT_0047650c)[(uint)bVar2 * -2] = *(undefined4 *)(&stack0xfffffe10 + (uint)bVar2 * -8);
-  (&DAT_00476510)[(uint)bVar2 * -2 + (uint)bVar2 * -2] =
-       *(undefined4 *)(&stack0xfffffe14 + (uint)bVar2 * -8 + (uint)bVar2 * -8);
-  (&DAT_00476510 + (uint)bVar2 * -2 + (uint)bVar2 * -2)[(uint)bVar2 * -2 + 1] =
-       *(undefined4 *)
-        ((int)(&stack0xfffffe14 + (uint)bVar2 * -8 + (uint)bVar2 * -8) + ((uint)bVar2 * -2 + 1) * 4)
-  ;
+  GUID_00476508.Data1 = DStack_1e0.guid.Data1;
+  puVar3 = (undefined4 *)((uint)bVar4 * -8 + 0x476510 + (uint)bVar4 * -8);
+  puVar2 = (undefined4 *)((int)&DStack_1e0 + (uint)bVar4 * -8 + (uint)bVar4 * -8 + 0xc);
+  *(undefined4 *)((int)&GUID_00476508 + (uint)bVar4 * -8 + 4) =
+       *(undefined4 *)((int)&DStack_1e0 + (uint)bVar4 * -8 + 8);
+  *puVar3 = *puVar2;
+  puVar3[(uint)bVar4 * -2 + 1] = puVar2[(uint)bVar4 * -2 + 1];
   DAT_00476518 = 1;
   debugmsg(s_D3D___Query_Device_Interface_suc_0044bcb5);
   return;
@@ -240,7 +238,13 @@ void __watcall init_3d_lib(uint param_1,int param_2,int param_3,int param_4,int 
   
   init_math3d();
   query_d3d_interface();
-  find_d3d_device();
+  if (xvga_screen_bpp < 9) {
+    iVar1 = 1;
+  }
+  else {
+    iVar1 = 2;
+  }
+  find_d3d_device(iVar1);
   debugmsg(s_init_z_buffer_0044bcdd);
   iVar1 = create_zbuffer(param_1,0x10,xvga_screen_xsize,xvga_screen_ysize);
   if (iVar1 == 0) {
@@ -268,56 +272,51 @@ void __watcall init_3d_lib(uint param_1,int param_2,int param_3,int param_4,int 
 
 /* ==== 0041c818 create_zbuffer ==== */
 
-undefined4 __watcall
-create_zbuffer(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+undefined4 __watcall create_zbuffer(uint param_1,DWORD param_2,DWORD param_3,DWORD param_4)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *d3d_error_string_result;
   char *pcVar2;
   char *arg2;
   undefined4 arg3;
-  undefined4 local_78;
-  undefined4 local_74;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_60;
-  undefined4 local_10;
+  DDSURFACEDESC ddsurfacedesc;
   
-  memset(&local_78,0,0x6c);
-  local_78 = 0x6c;
-  local_74 = 0x47;
-  local_10 = 0x20000;
+  memset(&ddsurfacedesc.dwSize,0,0x6c);
+  ddsurfacedesc.dwSize = 0x6c;
+  ddsurfacedesc.dwFlags = 0x47;
+  ddsurfacedesc.ddsCaps.dwCaps = 0x20000;
   if (param_1 == 2) {
-    local_10 = 0x20800;
+    ddsurfacedesc.ddsCaps.dwCaps = 0x20800;
   }
-  local_70 = param_4;
-  local_6c = param_3;
-  local_60 = param_2;
-  lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x18))(xvga_dd_object,&local_78,&zbuffer_surface,0);
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  ddsurfacedesc.dwHeight = param_4;
+  ddsurfacedesc.dwWidth = param_3;
+  ddsurfacedesc.dwZBufferBitDepth = param_2;
+  HVar1 = (*xvga_dd_object->lpVtbl->CreateSurface)
+                    (xvga_dd_object,&ddsurfacedesc,&zbuffer_surface,(void *)0x0);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d____D3DError_Z_buffer_creat_0044bd8b,s_d3dlib_cpp_0044bd80,0x143,
                d3d_error_string_result);
   }
   if (param_1 == 0) {
-    lVar1 = (**(code **)(*(int *)xvga_screen + 0xc))(xvga_screen,zbuffer_surface);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_screen->lpVtbl->AddAttachedSurface)(xvga_screen,zbuffer_surface);
+    if (HVar1 == 0) {
       zbuffer_created = 1;
       return 1;
     }
-    d3d_error_string_result = d3d_error_string(lVar1);
+    d3d_error_string_result = d3d_error_string(HVar1);
     arg3 = 0x14e;
     arg2 = s_d3dlib_cpp_0044bdb6;
     pcVar2 = s__s__d____D3DError_Z_buffer_attac_0044bdc1;
   }
   else if (param_1 < 2) {
-    lVar1 = (**(code **)(*(int *)xvga_back_screen + 0xc))(xvga_back_screen,zbuffer_surface);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_back_screen->lpVtbl->AddAttachedSurface)(xvga_back_screen,zbuffer_surface);
+    if (HVar1 == 0) {
       zbuffer_created = 1;
       return 1;
     }
-    d3d_error_string_result = d3d_error_string(lVar1);
+    d3d_error_string_result = d3d_error_string(HVar1);
     arg3 = 0x155;
     arg2 = s_d3dlib_cpp_0044bdf7;
     pcVar2 = s__s__d____D3DError_Z_buffer_attac_0044be02;
@@ -328,12 +327,12 @@ create_zbuffer(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 par
       zbuffer_created = 1;
       return 1;
     }
-    lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0xc))(xvga_buffer_screen,zbuffer_surface);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_buffer_screen->lpVtbl->AddAttachedSurface)(xvga_buffer_screen,zbuffer_surface);
+    if (HVar1 == 0) {
       zbuffer_created = 1;
       return 1;
     }
-    d3d_error_string_result = d3d_error_string(lVar1);
+    d3d_error_string_result = d3d_error_string(HVar1);
     arg3 = 0x15c;
     arg2 = s_d3dlib_cpp_0044be3c;
     pcVar2 = s__s__d____D3DError_Z_buffer_attac_0044be47;
@@ -349,25 +348,22 @@ create_zbuffer(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 par
 void __watcall clear_zbuffer(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
-  undefined4 uVar2;
-  undefined4 local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
+  DWORD dwFlags;
+  D3DRECT d3_drect;
   
-  uVar2 = 1;
+  dwFlags = 1;
   if (zbuffer_created != 0) {
-    uVar2 = 3;
+    dwFlags = 3;
   }
-  local_1c = DAT_004764d0;
-  local_18 = viewport_x;
-  local_14 = viewport_width + viewport_x;
-  local_10 = viewport_height + viewport_x;
-  lVar1 = (**(code **)(*d3d_object + 0x30))(d3d_object,1,&local_1c,uVar2);
-  if (lVar1 != 0) {
-    arg4 = d3d_error_string(lVar1);
+  d3_drect.x1 = DAT_004764d0;
+  d3_drect.y1 = viewport_x;
+  d3_drect.x2 = viewport_width + viewport_x;
+  d3_drect.y2 = viewport_height + viewport_x;
+  HVar1 = (*d3d_viewport->lpVtbl->Clear)(d3d_viewport,1,&d3_drect,dwFlags);
+  if (HVar1 != 0) {
+    arg4 = d3d_error_string(HVar1);
     fatal_exit(s__s__d___D3DError_Clearing_z_buff_0044bebf,s_d3dlib_cpp_0044beb4,0x17e,arg4);
   }
   return;
@@ -380,7 +376,7 @@ void __watcall release_zbuffer(void)
 
 {
   if (zbuffer_created != 0) {
-    (**(code **)(*zbuffer_surface + 8))(zbuffer_surface);
+    (*zbuffer_surface->lpVtbl->Release)(zbuffer_surface);
     zbuffer_created = 0;
   }
   return;
@@ -392,8 +388,6 @@ void __watcall release_zbuffer(void)
 void __watcall exit_d3dlib(void)
 
 {
-  undefined4 extraout_EDX;
-  
   debugmsg(s_releasing_viewport_0044bee9);
   release_d3d();
   debugmsg(s_releasing_zbuffer_0044befd);
@@ -401,7 +395,7 @@ void __watcall exit_d3dlib(void)
   debugmsg(s_releasing_d3d_device_0044bf10);
   release_d3d_device();
   debugmsg(s_releasing_d3dlib_done_0044bf26);
-  (**(code **)(*(int *)xvga_dd_object + 8))(xvga_dd_object,extraout_EDX);
+  (*xvga_dd_object->lpVtbl->Release)(xvga_dd_object);
   return;
 }
 
@@ -411,51 +405,41 @@ void __watcall exit_d3dlib(void)
 void __watcall log_device_caps(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
-  undefined4 *puVar2;
-  undefined4 local_170 [3];
-  undefined4 uStack_164;
-  undefined4 uStack_d8;
-  undefined4 uStack_d4;
-  byte bStack_cc;
-  byte bStack_cb;
-  undefined4 local_c4 [3];
-  undefined4 uStack_b8;
-  int iStack_2c;
-  int iStack_28;
+  D3DDEVICEDESC d3_ddevicedesc;
+  D3DDEVICEDESC d3_ddevicedesc_2;
   
-  puVar2 = local_170;
-  local_170[0] = 0xac;
-  local_c4[0] = 0xac;
-  lVar1 = (**(code **)(*d3d_device + 0x10))(d3d_device,local_170,local_c4);
-  if (lVar1 != 0) {
-    arg4 = d3d_error_string(lVar1);
+  d3_ddevicedesc.dwSize = 0xac;
+  d3_ddevicedesc_2.dwSize = 0xac;
+  HVar1 = (*d3d_device->lpVtbl->GetCaps)(d3d_device,&d3_ddevicedesc,&d3_ddevicedesc_2);
+  if (HVar1 != 0) {
+    arg4 = d3d_error_string(HVar1);
     fatal_exit(s__s__d___D3DError_getting_device_c_0044bfc8,s_d3dlib_cpp_0044bfbd,0x1bf,arg4);
   }
   debugmsg(s_HARDWARE_CAPABILITIES_0044bff4);
-  if (((uint)puVar2 & 0x10) != 0) {
-    debugmsg(s_hwcaps_bClipping____d_0044c00b,uStack_164);
+  if (((byte)d3_ddevicedesc.dwFlags & 0x10) != 0) {
+    debugmsg(s_hwcaps_bClipping____d_0044c00b,d3_ddevicedesc.bClipping);
   }
-  if (((uint)puVar2 & 0x200) != 0) {
-    debugmsg(s_hwcaps_dwMaxBufferSize____d_0044c022,uStack_d8);
+  if ((d3_ddevicedesc.dwFlags._1_1_ & 2) != 0) {
+    debugmsg(s_hwcaps_dwMaxBufferSize____d_0044c022,d3_ddevicedesc.dwMaxBufferSize);
   }
-  if (((uint)puVar2 & 0x400) != 0) {
-    debugmsg(s_hwcaps_dwMaxVertexCount____d_0044c03f,uStack_d4);
+  if ((d3_ddevicedesc.dwFlags._1_1_ & 4) != 0) {
+    debugmsg(s_hwcaps_dwMaxVertexCount____d_0044c03f,d3_ddevicedesc.dwMaxVertexCount);
   }
   debugmsg(s_SOFTWARE_CAPABILITIES_0044c05d);
-  if ((bStack_cc & 0x10) != 0) {
-    debugmsg(s_helcaps_bClipping____d_0044c074,uStack_b8);
+  if (((byte)d3_ddevicedesc_2.dwFlags & 0x10) != 0) {
+    debugmsg(s_helcaps_bClipping____d_0044c074,d3_ddevicedesc_2.bClipping);
   }
-  if ((bStack_cb & 2) != 0) {
-    if (iStack_2c != 0) {
-      max_buffer_size = iStack_2c;
+  if ((d3_ddevicedesc_2.dwFlags._1_1_ & 2) != 0) {
+    if (d3_ddevicedesc_2.dwMaxBufferSize != 0) {
+      max_buffer_size = d3_ddevicedesc_2.dwMaxBufferSize;
     }
     debugmsg(s_helcaps_dwMaxBufferSize____d_0044c08c,max_buffer_size);
   }
-  if ((bStack_cb & 4) != 0) {
-    if (iStack_28 != 0) {
-      max_vertex_count = iStack_28;
+  if ((d3_ddevicedesc_2.dwFlags._1_1_ & 4) != 0) {
+    if (d3_ddevicedesc_2.dwMaxVertexCount != 0) {
+      max_vertex_count = d3_ddevicedesc_2.dwMaxVertexCount;
     }
     debugmsg(s_helcaps_dwMaxVertexCount____d_0044c0aa,max_vertex_count);
   }

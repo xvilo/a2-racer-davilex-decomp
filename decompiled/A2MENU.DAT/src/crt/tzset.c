@@ -76,6 +76,7 @@ undefined1 * __watcall tryOSTimeZone(void)
 
 /* ==== 0041f1bb tzset ==== */
 
+/* WARNING: Variable defined which should be unmapped: time_zone_information */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall tzset(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
@@ -84,40 +85,34 @@ void __watcall tzset(undefined4 param_1,undefined4 param_2,undefined4 param_3,un
   DWORD DVar1;
   undefined1 *puVar2;
   byte *pbVar3;
-  short *psVar4;
+  WCHAR *pWVar4;
   char cVar5;
-  int iStack_bc;
-  short asStack_b8 [40];
-  int iStack_68;
-  short asStack_64 [34];
-  undefined4 uStack_20;
-  int iStack_1c;
-  int in_stack_ffffffec;
+  _TIME_ZONE_INFORMATION time_zone_information;
   
   pbVar3 = (byte *)getenv(s_TZ_00431c20);
   if (pbVar3 != (byte *)0x0) {
     _daylight = 0;
-    uStack_20._0_2_ = 0xf1ed;
-    uStack_20._2_2_ = 0x41;
+    time_zone_information.DaylightDate.wDayOfWeek = 0xf1ed;
+    time_zone_information.DaylightDate.wDay = 0x41;
     pbVar3 = parse_offset(pbVar3,&stzone,&timezone);
     if (*pbVar3 == 0) {
       dtzone = 0;
     }
     else {
       _daylight = 1;
-      iStack_1c = timezone + -0xe10;
-      uStack_20._0_2_ = 0xf47b;
-      uStack_20._2_2_ = 0x41;
-      pbVar3 = parse_offset(pbVar3,&dtzone,&iStack_1c);
-      dst_adjust = timezone - iStack_1c;
+      time_zone_information.DaylightDate._8_4_ = timezone + -0xe10;
+      time_zone_information.DaylightDate.wDayOfWeek = 0xf47b;
+      time_zone_information.DaylightDate.wDay = 0x41;
+      pbVar3 = parse_offset(pbVar3,&dtzone,(int *)&time_zone_information.DaylightDate.wHour);
+      dst_adjust = timezone - time_zone_information.DaylightDate._8_4_;
       if (*pbVar3 == 0x2c) {
-        uStack_20._0_2_ = 0xf4a2;
-        uStack_20._2_2_ = 0x41;
+        time_zone_information.DaylightDate.wDayOfWeek = 0xf4a2;
+        time_zone_information.DaylightDate.wDay = 0x41;
         pbVar3 = parse_rule(pbVar3 + 1,(int *)&start_dst);
       }
       if (*pbVar3 == 0x2c) {
-        uStack_20._0_2_ = 0xf4ba;
-        uStack_20._2_2_ = 0x41;
+        time_zone_information.DaylightDate.wDayOfWeek = 0xf4ba;
+        time_zone_information.DaylightDate.wDay = 0x41;
         parse_rule(pbVar3 + 1,&end_dst);
         DAT_0043640c = DAT_0043640c - dst_adjust / 0xe10;
         DAT_00436408 = DAT_00436408 -
@@ -131,7 +126,7 @@ void __watcall tzset(undefined4 param_1,undefined4 param_2,undefined4 param_3,un
   }
   if (((tzFlag & 1) == 0) || ((tzFlag & 2) == 0)) {
     tzFlag = tzFlag | 2;
-    DVar1 = GetTimeZoneInformation((LPTIME_ZONE_INFORMATION)&iStack_bc);
+    DVar1 = GetTimeZoneInformation(&time_zone_information);
     if (DVar1 != 0) {
       if (DVar1 < 2) {
         _daylight = 0;
@@ -141,27 +136,27 @@ void __watcall tzset(undefined4 param_1,undefined4 param_2,undefined4 param_3,un
           return;
         }
         _daylight = 1;
-        dst_adjust = in_stack_ffffffec * -0x3c;
+        dst_adjust = time_zone_information.DaylightBias * -0x3c;
       }
       cVar5 = ' ';
-      timezone = (iStack_68 + iStack_bc) * 0x3c;
+      timezone = (time_zone_information.StandardBias + time_zone_information.Bias) * 0x3c;
       puVar2 = &stzone;
-      for (psVar4 = asStack_b8; *psVar4 != 0; psVar4 = psVar4 + 1) {
+      for (pWVar4 = time_zone_information.StandardName; *pWVar4 != L'\0'; pWVar4 = pWVar4 + 1) {
         if (cVar5 == ' ') {
-          *puVar2 = (char)*psVar4;
+          *puVar2 = (char)*pWVar4;
           puVar2 = puVar2 + 1;
         }
-        cVar5 = (char)*psVar4;
+        cVar5 = (char)*pWVar4;
       }
       cVar5 = ' ';
       *puVar2 = 0;
       puVar2 = &dtzone;
-      for (psVar4 = asStack_64; *psVar4 != 0; psVar4 = psVar4 + 1) {
+      for (pWVar4 = time_zone_information.DaylightName; *pWVar4 != L'\0'; pWVar4 = pWVar4 + 1) {
         if (cVar5 == ' ') {
-          *puVar2 = (char)*psVar4;
+          *puVar2 = (char)*pWVar4;
           puVar2 = puVar2 + 1;
         }
-        cVar5 = (char)*psVar4;
+        cVar5 = (char)*pWVar4;
       }
       *puVar2 = 0;
     }

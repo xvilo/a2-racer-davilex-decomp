@@ -41,8 +41,9 @@ For each module the script runs `rea analyze` (Ghidra provider, with a snapshot 
 
 | Script | Does |
 |---|---|
-| `ApplyWatcom.java` | Applies names, signatures and structures from `symbols/`. It also adds Watcom's register calling conventions, names shared tails, and defines short strings and float constants |
+| `ApplyWatcom.java` | Applies names, signatures and structures from `symbols/`, and parses `symbols/directx.h`, the DirectX 3/5 interfaces and structures the game uses. It also adds Watcom's register calling conventions, names shared tails, and defines short strings and float constants |
 | `InferSignatures.java` | For functions with no known signature, finds the register parameters (EAX, EDX, EBX, ECX) from the machine code, then the return type from the call sites. Each function gets `__watcall0`…`__watcall4` by its register-parameter count, since Watcom preserves every argument register a function doesn't take. Each variadic call gets its real argument count |
+| `TypeFromCalls.java` | Gives each COM call (through the vtables in `symbols/directx.h`) a call-site signature so the decompiler knows the callee pops its arguments. It also types locals and globals whose address is passed to a struct-pointer parameter |
 | `AutoNameVariables.java` | Names variables from argument roles, call results, loop counters and types |
 | `ExportDecompiled.java` | Writes `decompiled.c`, `functions.tsv` (with each prototype) and `strings.tsv` |
 

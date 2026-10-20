@@ -39,30 +39,27 @@ find_free_camera_tail
 
 /* ==== 00427c2a set_camera ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall set_camera(int param_1)
 
 {
-  undefined4 uVar1;
-  long lVar2;
+  DWORD DVar1;
+  HRESULT HVar2;
   char *d3d_error_string_result;
   int fatal_exit_result;
+  undefined4 unaff_ECX;
   undefined4 extraout_ECX;
-  undefined4 unaff_EBP;
-  undefined8 uVar3;
-  undefined4 in_stack_00000004;
-  undefined4 in_stack_00000008;
-  undefined4 in_stack_0000000c;
+  undefined4 unaff_EDX;
+  undefined4 extraout_EDX;
+  undefined4 unaff_EBX;
+  undefined4 unaff_EDI;
+  undefined4 unaff_retaddr;
+  float in_stack_00000004;
+  float in_stack_00000008;
+  float in_stack_0000000c;
   uint in_stack_00000010;
   uint in_stack_00000014;
   uint in_stack_00000018;
-  float afStack_54 [11];
-  undefined4 in_stack_ffffffd8;
-  undefined4 in_stack_ffffffdc;
-  undefined4 in_stack_ffffffe0;
-  undefined4 in_stack_ffffffe4;
-  undefined4 in_stack_ffffffe8;
+  float afStack_54 [16];
   
   if (DAT_004770d8 == 0) {
     fatal_exit(s__s__d___camera_array_has_not_bee_0045023b,s_camera_cpp_00450230,0x13c);
@@ -73,49 +70,49 @@ void __watcall set_camera(int param_1)
   if (*(int *)(cameras + 0x58 + param_1 * 0x5c) == 0) {
     fatal_exit(s__s__d___error_illegal_camera__d_004502a7,s_camera_cpp_0045029c,0x144,param_1);
   }
-  *(undefined4 *)(cameras + param_1 * 0x5c) = in_stack_00000004;
-  *(undefined4 *)(cameras + 4 + param_1 * 0x5c) = in_stack_00000008;
-  *(undefined4 *)(cameras + 8 + param_1 * 0x5c) = in_stack_0000000c;
+  *(float *)(cameras + param_1 * 0x5c) = in_stack_00000004;
+  *(float *)(cameras + 4 + param_1 * 0x5c) = in_stack_00000008;
+  *(float *)(cameras + 8 + param_1 * 0x5c) = in_stack_0000000c;
   *(float *)(cameras + 0x18 + param_1 * 0x5c) =
        (float)(int)in_stack_00000010 * 2.0 * 3.141596 * 0.0009765625;
   *(float *)(cameras + 0x1c + param_1 * 0x5c) =
        (float)(int)in_stack_00000014 * 2.0 * 3.141596 * 0.0009765625;
   *(float *)(cameras + 0x20 + param_1 * 0x5c) =
        (float)(int)in_stack_00000018 * 2.0 * 3.141596 * 0.0009765625;
-  memset((undefined4 *)&view_matrix,0,0x40);
-  _DAT_00477090 = 0x3f800000;
-  _DAT_0047707c = 0x3f800000;
-  _DAT_00477068 = 0x3f800000;
-  _view_matrix = 0x3f800000;
-  rotate_matrix_x((float *)&view_matrix,afStack_54,in_stack_00000010);
-  rotate_matrix_z((float *)&view_matrix,afStack_54,in_stack_00000018);
-  rotate_matrix_y((float *)&view_matrix,afStack_54,in_stack_00000014);
-  memset((undefined4 *)&DAT_00477094,0,0x40);
-  _DAT_004770d0 = 0x3f800000;
-  _DAT_004770bc = 0x3f800000;
-  _DAT_004770c4 = in_stack_00000004;
-  _DAT_004770a8 = 0x3f800000;
-  _DAT_004770c8 = in_stack_00000008;
-  _DAT_004770cc = in_stack_0000000c;
-  _DAT_00477094 = 0x3f800000;
-  lVar2 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c8,&view_matrix);
-  if (lVar2 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar2);
+  memset(&view_matrix._11,0,0x40);
+  view_matrix._44 = 1.0;
+  view_matrix._33 = 1.0;
+  view_matrix._22 = 1.0;
+  view_matrix._11 = 1.0;
+  rotate_matrix_x(&view_matrix._11,afStack_54,in_stack_00000010);
+  rotate_matrix_z(&view_matrix._11,afStack_54,in_stack_00000018);
+  rotate_matrix_y(&view_matrix._11,afStack_54,in_stack_00000014);
+  memset(&D3DMATRIX_00477094._11,0,0x40);
+  D3DMATRIX_00477094._44 = 1.0;
+  D3DMATRIX_00477094._33 = 1.0;
+  D3DMATRIX_00477094._41 = in_stack_00000004;
+  D3DMATRIX_00477094._22 = 1.0;
+  D3DMATRIX_00477094._42 = in_stack_00000008;
+  D3DMATRIX_00477094._43 = in_stack_0000000c;
+  D3DMATRIX_00477094._11 = 1.0;
+  HVar2 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764c8,&view_matrix);
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit(s__s__d____D3DError_moving_camera___004502d4,s_camera_cpp_004502c9,0x17a,
                d3d_error_string_result);
   }
-  uVar1 = DAT_004764cc;
-  uVar3 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764cc,&DAT_00477094);
+  DVar1 = DAT_004764cc;
+  HVar2 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764cc,&D3DMATRIX_00477094);
   fatal_exit_result = 0;
-  if ((long)uVar3 != 0) {
-    d3d_error_string_result = d3d_error_string((long)uVar3);
+  if (HVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar2);
     fatal_exit_result =
          fatal_exit(s__s__d____D3DError_moving_camera___00450306,s_camera_cpp_004502fb,0x17e,
                     d3d_error_string_result);
   }
   find_free_camera_tail
-            (fatal_exit_result,(int)((ulonglong)uVar3 >> 0x20),uVar1,extraout_ECX,in_stack_ffffffd8,
-             in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4,in_stack_ffffffe8,unaff_EBP);
+            (fatal_exit_result,extraout_EDX,DVar1,extraout_ECX,unaff_EDI,unaff_EDX,unaff_ECX,
+             unaff_EBX,unaff_retaddr,in_stack_00000004);
   return;
 }
 

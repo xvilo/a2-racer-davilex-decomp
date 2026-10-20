@@ -7,7 +7,7 @@ void __watcall exit_help(void)
 
 {
   if (helpgrid != (IDirectDrawSurface *)0x0) {
-    (**(code **)(*(int *)helpgrid + 8))(helpgrid);
+    (*helpgrid->lpVtbl->Release)(helpgrid);
   }
   return;
 }

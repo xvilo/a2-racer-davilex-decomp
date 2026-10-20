@@ -408,18 +408,19 @@ LAB_00419cfd:
 long mode_available_callback_func(_DDSURFACEDESC *ddsurfacedesc,void *param_2)
 
 {
-  int arg4;
-  int iVar1;
+  DWORD arg2;
+  DWORD arg4;
+  int search_screen_mode_index_result;
   int extraout_EDX;
   
-  iVar1 = *(int *)(ddsurfacedesc + 0xc);
-  arg4 = *(int *)(ddsurfacedesc + 0x54);
-  debugmsg(s_mode__d__d__d_00430c99,iVar1,*(undefined4 *)(ddsurfacedesc + 8),arg4);
-  iVar1 = search_screen_mode_index(iVar1,extraout_EDX,arg4);
-  if (iVar1 == -1) {
+  arg2 = ddsurfacedesc->dwWidth;
+  arg4 = (ddsurfacedesc->ddpfPixelFormat).dwRGBBitCount;
+  debugmsg(s_mode__d__d__d_00430c99,arg2,ddsurfacedesc->dwHeight,arg4);
+  search_screen_mode_index_result = search_screen_mode_index(arg2,extraout_EDX,arg4);
+  if (search_screen_mode_index_result == -1) {
     return 1;
   }
-  (&DAT_00435b8c)[iVar1 * 5] = 1;
+  (&DAT_00435b8c)[search_screen_mode_index_result * 5] = 1;
   return 1;
 }
 
@@ -429,14 +430,15 @@ long mode_available_callback_func(_DDSURFACEDESC *ddsurfacedesc,void *param_2)
 int __watcall xvga_get_screen_mode_info(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   
   debugmsg(s_getting_screen_mode_info_00430ca8);
-  lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x20))
-                    (xvga_dd_object,0,0,0,mode_available_callback_func);
-  if (lVar1 != 0) {
-    arg4 = dd_error_string(lVar1);
+  HVar1 = (*xvga_dd_object->lpVtbl->EnumDisplayModes)
+                    (xvga_dd_object,0,(DDSURFACEDESC *)0x0,(void *)0x0,mode_available_callback_func)
+  ;
+  if (HVar1 != 0) {
+    arg4 = dd_error_string(HVar1);
     fatal_exit(s__s__d____could_not_get_mode_info_00430ccd,s_hwinfo_cpp_00430cc2,0x17b,arg4);
   }
   debugmsg(s_done_getting_screen_mode_info_00430cfc);

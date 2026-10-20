@@ -163,13 +163,14 @@ enum_texture_format_callback
 void __watcall enum_texture_formats(undefined4 param_1)
 
 {
-  int iVar1;
+  HRESULT HVar1;
   
   debugmsg(s_init_enumerating_texture_formats_0044e8a5);
   alloc_texture_formats(10);
   debugmsg(s_starting_enumerating_texture_for_0044e8c7);
-  iVar1 = (**(code **)(*d3d_device + 0x38))(d3d_device,enum_texture_format_callback,0);
-  if (iVar1 != 0) {
+  HVar1 = (*d3d_device->lpVtbl->EnumTextureFormats)
+                    (d3d_device,enum_texture_format_callback,(void *)0x0);
+  if (HVar1 != 0) {
     fatal_exit(s__s__d____enumeration_failure_0044e8f9,s_texture_cpp_0044e8ed,0xa7);
   }
   return;
@@ -229,49 +230,48 @@ int __watcall load_texture(char *filename,int flags)
 {
   int *piVar1;
   int new_texture;
-  IDirectDrawSurface *pIVar2;
-  long lVar3;
-  char *pcVar4;
-  IDirectDrawSurface *pIVar5;
-  int iVar6;
-  int *piVar7;
-  undefined1 *puVar8;
-  int iStack_2c;
-  int iStack_28;
-  uint local_24;
+  IDirectDrawSurface *This;
+  HRESULT HVar2;
+  char *pcVar3;
+  IDirectDrawSurface *pIVar4;
+  long lVar5;
+  IDirect3DDevice *This_00;
+  undefined1 *puVar6;
+  void *local_24;
   int local_20;
-  int local_1c [2];
+  int local_1c;
+  uint local_18;
   
   new_texture = get_new_texture(filename);
-  local_1c[1] = 0x4001000;
+  local_18 = 0x4001000;
   if (xvga_screen_bpp < 9) {
     debugmsg(s_pixel_format_<__8_while_loading_p_0044e9d5);
-    pIVar2 = load_pcx_file_surface(filename,&local_20,local_1c);
+    This = load_pcx_file_surface(filename,&local_20,&local_1c);
   }
   else {
     debugmsg(s_pixel_format_>_8_while_loading_p_0044e9b1);
-    pIVar2 = load_pcx_file_surface_1
-                       (filename,&local_20,local_1c,0x1800,
-                        (_DDPIXELFORMAT *)(DAT_004596d0 * 0x80 + texture_formats + 0x48));
+    This = load_pcx_file_surface_1
+                     (filename,&local_20,&local_1c,0x1800,
+                      (_DDPIXELFORMAT *)(DAT_004596d0 * 0x80 + texture_formats + 0x48));
   }
-  lVar3 = (*(code *)**(undefined4 **)pIVar2)();
-  if (lVar3 != 0) {
-    pcVar4 = d3d_error_string(lVar3);
-    fatal_exit(s__s__d____D3DError____s_0044ea06,s_texture_cpp_0044e9fa,0x101,pcVar4);
+  HVar2 = (*This->lpVtbl->QueryInterface)(This,&GUID_00430091,&local_24);
+  if (HVar2 != 0) {
+    pcVar3 = d3d_error_string(HVar2);
+    fatal_exit(s__s__d____D3DError____s_0044ea06,s_texture_cpp_0044e9fa,0x101,pcVar3);
   }
   if (xvga_screen_bpp < 9) {
     if (DAT_004596c4 == -1) {
       fatal_exit(s__s__d____Invalid_8_bit_pixel_for_0044ea93,s_texture_cpp_0044ea87,0x112);
     }
     debugmsg(s_pixel_format_<__8_while_creating_0044eaba);
-    local_24 = local_24 | 0x800;
-    pIVar5 = create_surface_4(iStack_2c,iStack_28,local_24,
+    local_18 = local_18 | 0x800;
+    pIVar4 = create_surface_4(local_20,local_1c,local_18,
                               (_DDPIXELFORMAT *)(DAT_004596c4 * 0x80 + texture_formats + 0x48));
-    *(IDirectDrawSurface **)(texture_table + 4 + new_texture * 0xc) = pIVar5;
-    lVar3 = (**(code **)(**(int **)(texture_table + 4 + new_texture * 0xc) + 0x7c))();
-    if (lVar3 != 0) {
-      pcVar4 = d3d_error_string(lVar3);
-      fatal_exit(s__s__d____D3DError_setting_textur_0044eaf8,s_texture_cpp_0044eaec,0x11a,pcVar4);
+    *(IDirectDrawSurface **)(texture_table + 4 + new_texture * 0xc) = pIVar4;
+    lVar5 = (**(code **)(**(int **)(texture_table + 4 + new_texture * 0xc) + 0x7c))();
+    if (lVar5 != 0) {
+      pcVar3 = d3d_error_string(lVar5);
+      fatal_exit(s__s__d____D3DError_setting_textur_0044eaf8,s_texture_cpp_0044eaec,0x11a,pcVar3);
     }
     debugmsg(s_setting_color_key_0044eb29);
   }
@@ -280,47 +280,45 @@ int __watcall load_texture(char *filename,int flags)
       fatal_exit(s__s__d____Invalid_rgb_pixel_forma_0044ea2b,s_texture_cpp_0044ea1f,0x109);
     }
     debugmsg(s_pixel_format_>_8_while_creating_t_0044ea50);
-    pIVar5 = create_surface_4(iStack_2c,iStack_28,local_24,
+    pIVar4 = create_surface_4(local_20,local_1c,local_18,
                               (_DDPIXELFORMAT *)(DAT_004596d0 * 0x80 + texture_formats + 0x48));
-    *(IDirectDrawSurface **)(new_texture * 0xc + 4 + texture_table) = pIVar5;
+    *(IDirectDrawSurface **)(new_texture * 0xc + 4 + texture_table) = pIVar4;
     debugmsg(s_done_0044ea81);
   }
   debugmsg(s_query_for_the_interface_0044eb3c);
-  lVar3 = (**(code **)**(undefined4 **)(new_texture * 0xc + texture_table + 4))();
-  if (lVar3 != 0) {
-    pcVar4 = d3d_error_string(lVar3);
-    fatal_exit(s__s__d____D3DError____s_0044eb61,s_texture_cpp_0044eb55,0x125,pcVar4);
+  puVar6 = &stack0xffffffc8;
+  lVar5 = (**(code **)**(undefined4 **)(new_texture * 0xc + texture_table + 4))();
+  if (lVar5 != 0) {
+    pcVar3 = d3d_error_string(lVar5);
+    fatal_exit(s__s__d____D3DError____s_0044eb61,s_texture_cpp_0044eb55,0x125,pcVar3);
   }
-  puVar8 = &stack0xffffffb0;
-  lVar3 = (**(code **)(**(int **)(texture_table + 4 + new_texture * 0xc) + 0x74))();
-  if (lVar3 != 0) {
-    pcVar4 = dd_error_string(lVar3);
-    fatal_exit(s__s__d____failed_to_set_color_key_0044eb86,s_texture_cpp_0044eb7a,0x128,pcVar4);
+  lVar5 = (**(code **)(**(int **)(texture_table + 4 + new_texture * 0xc) + 0x74))();
+  if (lVar5 != 0) {
+    pcVar3 = dd_error_string(lVar5);
+    fatal_exit(s__s__d____failed_to_set_color_key_0044eb86,s_texture_cpp_0044eb7a,0x128,pcVar3);
   }
-  lVar3 = (**(code **)(*(int *)pIVar2 + 0x74))(pIVar2,8,&stack0xffffffb0);
-  if (lVar3 != 0) {
-    pcVar4 = dd_error_string(lVar3);
-    fatal_exit(s__s__d____failed_to_set_color_key_0044ebb9,s_texture_cpp_0044ebad,299,pcVar4);
+  HVar2 = (*This->lpVtbl->SetColorKey)(This,8,(DDCOLORKEY *)&stack0xffffffbc);
+  if (HVar2 != 0) {
+    pcVar3 = dd_error_string(HVar2);
+    fatal_exit(s__s__d____failed_to_set_color_key_0044ebb9,s_texture_cpp_0044ebad,299,pcVar3);
   }
   debugmsg(s_Load_the_texture_0044ebe0);
   piVar1 = *(int **)(texture_table + 8 + new_texture * 0xc);
-  lVar3 = (**(code **)(*piVar1 + 0x18))(piVar1,puVar8);
-  if (lVar3 != 0) {
-    pcVar4 = d3d_error_string(lVar3);
-    fatal_exit(s__s__d____D3DError_get_texturehan_0044ebfe,s_texture_cpp_0044ebf2,0x131,pcVar4);
+  lVar5 = (**(code **)(*piVar1 + 0x18))(piVar1,puVar6);
+  if (lVar5 != 0) {
+    pcVar3 = d3d_error_string(lVar5);
+    fatal_exit(s__s__d____D3DError_get_texturehan_0044ebfe,s_texture_cpp_0044ebf2,0x131,pcVar3);
   }
   debugmsg(s_get_handle_the_texture_0044ec29);
-  iVar6 = texture_table + new_texture * 0xc;
-  piVar1 = *(int **)(iVar6 + 8);
-  piVar7 = d3d_device;
-  lVar3 = (**(code **)(*piVar1 + 0x10))(piVar1,d3d_device,iVar6);
-  if (lVar3 != 0) {
-    pcVar4 = d3d_error_string(lVar3);
-    fatal_exit(s__s__d____D3DError_get_texturehan_0044ec4d,s_texture_cpp_0044ec41,0x137,pcVar4);
+  This_00 = (IDirect3DDevice *)(texture_table + new_texture * 0xc);
+  lVar5 = (**(code **)((This_00[2].lpVtbl)->QueryInterface + 0x10))(This_00[2].lpVtbl,d3d_device);
+  if (lVar5 != 0) {
+    pcVar3 = d3d_error_string(lVar5);
+    fatal_exit(s__s__d____D3DError_get_texturehan_0044ec4d,s_texture_cpp_0044ec41,0x137,pcVar3);
   }
   debugmsg(s_Release_the_temps_0044ec78);
-  (**(code **)(*(int *)pIVar2 + 8))(pIVar2);
-  (**(code **)(*piVar7 + 8))(piVar7);
+  (*This->lpVtbl->Release)(This);
+  (*This_00->lpVtbl->Release)(This_00);
   debugmsg(s_Release_the_temps_done_0044ec8b);
   return new_texture;
 }

@@ -55,13 +55,14 @@ for m in "${modules[@]}"; do
 	# The .DAT modules are PE files; force the PE loader since the extension hides it.
 	"$GHIDRA_INSTALL_DIR/support/analyzeHeadless" "$ROOT/build/ghidra" "$m" \
 		-import "$bin" -loader PeLoader -scriptPath "$ROOT/tools" \
-		-preScript ApplyWatcom.java pre "$names" "$ROOT/symbols/structs.tsv" \
+		-preScript ApplyWatcom.java pre "$names" "$ROOT/symbols/structs.tsv" "$ROOT/symbols/directx.h" \
 		-postScript ApplyWatcom.java post "$names" "$coverage" \
 		-postScript InferSignatures.java \
+		-postScript TypeFromCalls.java \
 		-postScript AutoNameVariables.java \
 		-postScript ExportDecompiled.java "$out" "$names" \
 		> "$ROOT/build/logs/$m.ghidra.log" 2>&1
-	grep -h -E 'ApplyWatcom.java>|InferSignatures:|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
+	grep -h -E 'ApplyWatcom.java>|InferSignatures:|TypeFromCalls:|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
 	if grep -q 'SCRIPT ERROR' "$ROOT/build/logs/$m.ghidra.log"; then
 		grep -B2 'SCRIPT ERROR' "$ROOT/build/logs/$m.ghidra.log" >&2
 		exit 1

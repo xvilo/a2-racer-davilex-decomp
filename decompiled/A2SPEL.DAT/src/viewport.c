@@ -36,15 +36,14 @@ void __watcall change_viewport_size(int param_1,int param_2,int param_3,int para
 
 /* ==== 0041bd52 set_background ==== */
 
-void __watcall set_background(void)
+void __watcall set_background(undefined4 param_1)
 
 {
-  undefined4 in_EAX;
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   char *filename;
   
-  debugmsg(s_setbkg__adding_texture_<_s>_0044b531,in_EAX);
+  debugmsg(s_setbkg__adding_texture_<_s>_0044b531,param_1);
   background_texture = load_texture(filename,(int)filename);
   if (background_material == -1) {
     debugmsg(s_setbkg__making_material_texture___0044b54e,background_texture);
@@ -57,10 +56,10 @@ void __watcall set_background(void)
   }
   if (DAT_004764e0 != 0) {
     debugmsg(s_setbkg__setting_bkg_material_in_v_0044b5ad);
-    lVar1 = (**(code **)(*d3d_object + 0x20))
-                      (d3d_object,*(undefined4 *)(background_material * 0xc + 4 + materials));
-    if (lVar1 != 0) {
-      arg4 = d3d_error_string(lVar1);
+    HVar1 = (*d3d_viewport->lpVtbl->SetBackground)
+                      (d3d_viewport,*(DWORD *)(background_material * 0xc + 4 + materials));
+    if (HVar1 != 0) {
+      arg4 = d3d_error_string(HVar1);
       fatal_exit(s__s__d____Could_not_set_backgroun_0044b5e4,s_viewport_cpp_0044b5d7,0x92,arg4);
     }
   }
@@ -73,31 +72,30 @@ void __watcall set_background(void)
 void __watcall init_viewport(void)
 
 {
-  int iVar1;
+  HRESULT HVar1;
   undefined4 viewport;
-  long lVar2;
   char *arg4;
   
   if ((DAT_004764e0 == 0) &&
      ((DAT_004764e8 != 0 ||
-      ((((((iVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,&DAT_004764c0), iVar1 == 0 &&
-           (iVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c0,&DAT_00459598),
-           iVar1 == 0)) &&
-          (iVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,&DAT_004764c4), iVar1 == 0)) &&
-         (((iVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c4,&DAT_00459618),
-           iVar1 == 0 &&
-           (iVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,&DAT_004764cc), iVar1 == 0)) &&
-          ((iVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764cc,&DAT_00459618),
-           iVar1 == 0 &&
-           ((iVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,&DAT_004764c8), iVar1 == 0 &&
-            (iVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c8,&DAT_00459618),
-            iVar1 == 0)))))))) &&
-        (iVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,&DAT_004764b8), iVar1 == 0)) &&
-       (((iVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764b8,&DAT_00459618),
-         iVar1 == 0 &&
-         (iVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,&DAT_004764bc), iVar1 == 0)) &&
-        (iVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764bc,&DAT_00459618),
-        iVar1 == 0)))))))) {
+      ((((((HVar1 = (*d3d_device->lpVtbl->CreateMatrix)(d3d_device,&DAT_004764c0), HVar1 == 0 &&
+           (HVar1 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764c0,&D3DMATRIX_00459598),
+           HVar1 == 0)) &&
+          (HVar1 = (*d3d_device->lpVtbl->CreateMatrix)(d3d_device,&DAT_004764c4), HVar1 == 0)) &&
+         (((HVar1 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764c4,&D3DMATRIX_00459618),
+           HVar1 == 0 &&
+           (HVar1 = (*d3d_device->lpVtbl->CreateMatrix)(d3d_device,&DAT_004764cc), HVar1 == 0)) &&
+          ((HVar1 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764cc,&D3DMATRIX_00459618),
+           HVar1 == 0 &&
+           ((HVar1 = (*d3d_device->lpVtbl->CreateMatrix)(d3d_device,&DAT_004764c8), HVar1 == 0 &&
+            (HVar1 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764c8,&D3DMATRIX_00459618),
+            HVar1 == 0)))))))) &&
+        (HVar1 = (*d3d_device->lpVtbl->CreateMatrix)(d3d_device,&DAT_004764b8), HVar1 == 0)) &&
+       (((HVar1 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764b8,&D3DMATRIX_00459618),
+         HVar1 == 0 &&
+         (HVar1 = (*d3d_device->lpVtbl->CreateMatrix)(d3d_device,&DAT_004764bc), HVar1 == 0)) &&
+        (HVar1 = (*d3d_device->lpVtbl->SetMatrix)(d3d_device,DAT_004764bc,&D3DMATRIX_00459618),
+        HVar1 == 0)))))))) {
     if (DAT_004764e4 == 0) {
       change_viewport_size(0,0,xvga_screen_xsize,xvga_screen_ysize);
     }
@@ -106,10 +104,10 @@ void __watcall init_viewport(void)
     apply_render_states(viewport);
     create_frame_execute_buffer();
     if (((background_material != -1) && (background_texture != -1)) &&
-       (lVar2 = (**(code **)(*d3d_object + 0x20))
-                          (d3d_object,*(undefined4 *)(materials + 4 + background_material * 0xc)),
-       lVar2 != 0)) {
-      arg4 = d3d_error_string(lVar2);
+       (HVar1 = (*d3d_viewport->lpVtbl->SetBackground)
+                          (d3d_viewport,*(DWORD *)(materials + 4 + background_material * 0xc)),
+       HVar1 != 0)) {
+      arg4 = d3d_error_string(HVar1);
       fatal_exit(s__s__d____Could_not_set_backgroun_0044b69f,s_viewport_cpp_0044b692,0xde,arg4);
     }
     DAT_004764e0 = 1;
@@ -123,25 +121,41 @@ void __watcall init_viewport(void)
 undefined4 __watcall create_viewport(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *d3d_error_string_result;
+  D3DVIEWPORT DStack_4c;
+  int iStack_20;
+  undefined4 uStack_1c;
   
-  lVar1 = (**(code **)(*direct3d + 0x1c))();
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  HVar1 = (*direct3d->lpVtbl->CreateViewport)(direct3d,&d3d_viewport,(void *)0x0);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d____D3DError_Creating_viewp_0044b6dd,s_viewport_cpp_0044b6d0,0xef,
                d3d_error_string_result);
   }
-  lVar1 = (**(code **)(*d3d_device + 0x24))();
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  HVar1 = (*d3d_device->lpVtbl->AddViewport)(d3d_device,d3d_viewport);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d___D3DError_Creating_viewpo_0044b715,s_viewport_cpp_0044b708,0xf4,
                d3d_error_string_result);
   }
-  memset((undefined4 *)&stack0xffffffa0,0,0x2c);
-  lVar1 = (**(code **)(*d3d_object + 0x14))(d3d_object,&stack0xffffffa0);
-  if (lVar1 != 0) {
-    d3d_error_string_result = d3d_error_string(lVar1);
+  memset(&DStack_4c.dwSize,0,0x2c);
+  DStack_4c.dwX = DAT_004764d0;
+  DStack_4c.dwY = viewport_x;
+  DStack_4c.dwWidth = viewport_width;
+  DStack_4c.dwHeight = viewport_height;
+  DStack_4c.dvScaleX = (float)(uint)viewport_height;
+  DStack_4c.dvMaxX = (float)(uint)viewport_width / (DStack_4c.dvScaleX * 2.0);
+  uStack_1c = 0;
+  iStack_20 = viewport_height;
+  DStack_4c.dvMaxY = (float)(uint)viewport_height / (DStack_4c.dvScaleX * 2.0);
+  DStack_4c.dwSize = 0x2c;
+  DStack_4c.dvMinZ = -1.0;
+  DStack_4c.dvMaxZ = 1.0;
+  DStack_4c.dvScaleY = DStack_4c.dvScaleX;
+  HVar1 = (*d3d_viewport->lpVtbl->SetViewport)(d3d_viewport,&DStack_4c);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d___D3DError_Creating_viewpo_0044b74c,s_viewport_cpp_0044b73f,0x10d,
                d3d_error_string_result);
   }

@@ -240,8 +240,6 @@ int __watcall free_mem_images(void)
 
 /* ==== 0041177d alloc_mem_image ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall alloc_mem_image(int param_1)
 
 {
@@ -282,12 +280,12 @@ LAB_0041194d:
       *(IDirectDrawSurface **)(xvga_mem_images + mem_image_index + 4) = pIVar3;
       if (pIVar3 != (IDirectDrawSurface *)0x0) {
         if (pf_conversion_mode == 0) {
-          DAT_00435e94 = 0xff;
+          mem_image_color_key.dwColorSpaceHighValue = 0xff;
         }
         else {
-          DAT_00435e94 = translate_pixel(0xff,8);
+          mem_image_color_key.dwColorSpaceHighValue = translate_pixel(0xff,8);
         }
-        _mem_image_color_key = DAT_00435e94;
+        mem_image_color_key.dwColorSpaceLowValue = mem_image_color_key.dwColorSpaceHighValue;
         lVar4 = (**(code **)(**(int **)(xvga_mem_images + param_1 * 0x20 + 4) + 0x74))
                           (*(int **)(xvga_mem_images + param_1 * 0x20 + 4),8,&mem_image_color_key);
         if (lVar4 != 0) {

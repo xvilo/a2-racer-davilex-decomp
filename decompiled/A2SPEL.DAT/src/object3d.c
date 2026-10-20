@@ -15,7 +15,7 @@ void __watcall object3d_nop(void)
 undefined4 __watcall alloc_objects3d(int param_1)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   int iVar2;
   int i;
@@ -51,9 +51,10 @@ undefined4 __watcall alloc_objects3d(int param_1)
       *(undefined4 *)((int)&racers->field_3b + iVar2) =
            *(undefined4 *)((int)&racer_object->field_3f + iVar2);
       *(undefined4 *)((int)&racers->needs_update + iVar2) = 0xffffffff;
-      lVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,(int)&racers->field_24 + iVar2);
-      if (lVar1 != 0) {
-        arg4 = d3d_error_string(lVar1);
+      HVar1 = (*d3d_device->lpVtbl->CreateMatrix)
+                        (d3d_device,(DWORD *)((int)&racers->field_24 + iVar2));
+      if (HVar1 != 0) {
+        arg4 = d3d_error_string(HVar1);
         fatal_exit(s__s__d____D3DError_Creating_matri_0044dd75,s_object3d_cpp_0044dd68,0x47,arg4);
       }
       iVar2 = iVar2 + 0x4b;
@@ -116,10 +117,10 @@ undefined4 __watcall get_new_object3d(undefined4 param_1)
 
 /* ==== 00423d2c set_object3d_matrix ==== */
 
-void __watcall set_object3d_matrix(int racer_object_index,undefined4 param_2)
+void __watcall set_object3d_matrix(int racer_object_index,D3DMATRIX *d3_dmatrix)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   
   if (objects3d_initialized == 0) {
@@ -129,9 +130,10 @@ void __watcall set_object3d_matrix(int racer_object_index,undefined4 param_2)
     fatal_exit(s__s__d____error_illegal_object_in_0044e1a2,s_object3d_cpp_0044e195,0xb5,
                racer_object_index,object_count);
   }
-  lVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,racers[racer_object_index].field_24,param_2);
-  if (lVar1 != 0) {
-    arg4 = d3d_error_string(lVar1);
+  HVar1 = (*d3d_device->lpVtbl->SetMatrix)
+                    (d3d_device,racers[racer_object_index].field_24,d3_dmatrix);
+  if (HVar1 != 0) {
+    arg4 = d3d_error_string(HVar1);
     fatal_exit(s__s__d____D3DError_Setting_matrix_0044e1e0,s_object3d_cpp_0044e1d3,0xb8,arg4);
   }
   return;

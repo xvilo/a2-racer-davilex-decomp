@@ -6,27 +6,22 @@
 int __watcall get_string_width(char *param_1,int param_2)
 
 {
-  int iVar1;
-  IDirectDrawSurface *pIVar2;
+  HRESULT HVar1;
   tagSIZE size;
-  HDC pHStack_20;
-  undefined1 local_18 [4];
+  HDC local_18;
   
-  size.cy = (LONG)local_18;
-  size.cx = (LONG)xvga_screen;
-  iVar1 = (**(code **)(*(int *)xvga_screen + 0x44))();
-  if (iVar1 == 0) {
+  HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_18);
+  if (HVar1 == 0) {
     if (xvga_font_set != 0) {
-      SelectObject(pHStack_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SelectObject(local_18,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
     }
-    GetTextExtentPoint32A(pHStack_20,param_1,param_2,&size);
-    pIVar2 = xvga_screen;
-    (**(code **)(*(int *)xvga_screen + 0x68))(xvga_screen,pHStack_20);
+    GetTextExtentPoint32A(local_18,param_1,param_2,&size);
+    (*xvga_screen->lpVtbl->ReleaseDC)(xvga_screen,local_18);
   }
   else {
-    pIVar2 = (IDirectDrawSurface *)0xffffffff;
+    size.cx = -1;
   }
-  return (int)pIVar2;
+  return size.cx;
 }
 
 
@@ -35,25 +30,22 @@ int __watcall get_string_width(char *param_1,int param_2)
 int __watcall get_string_height(char *param_1,int param_2)
 
 {
-  int iVar1;
+  HRESULT HVar1;
   tagSIZE size;
-  HDC pHStack_20;
-  undefined1 local_18 [4];
+  HDC local_18;
   
-  size.cy = (LONG)local_18;
-  size.cx = (LONG)xvga_screen;
-  iVar1 = (**(code **)(*(int *)xvga_screen + 0x44))();
-  if (iVar1 == 0) {
+  HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_18);
+  if (HVar1 == 0) {
     if (xvga_font_set != 0) {
-      SelectObject(pHStack_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SelectObject(local_18,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
     }
-    GetTextExtentPoint32A(pHStack_20,param_1,param_2,&size);
-    (**(code **)(*(int *)xvga_screen + 0x68))(xvga_screen);
+    GetTextExtentPoint32A(local_18,param_1,param_2,&size);
+    (*xvga_screen->lpVtbl->ReleaseDC)(xvga_screen,local_18);
   }
   else {
-    pHStack_20 = (HDC)0xffffffff;
+    size.cy = -1;
   }
-  return (int)pHStack_20;
+  return size.cy;
 }
 
 
@@ -64,82 +56,83 @@ int __watcall get_string_height(char *param_1,int param_2)
 int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
 
 {
-  IDirectDrawSurface *pIVar1;
+  IDirectDrawSurface *This;
+  HRESULT HVar1;
   int iVar2;
   UINT UVar3;
   INT *pIVar4;
-  undefined1 auStack_1f8 [392];
-  tagRECT tStack_70;
-  tagRECT tStack_60;
-  tagRECT tStack_50;
+  CHAR aCStack_1f8 [400];
+  tagRECT tStack_68;
+  tagRECT tStack_58;
+  tagRECT tStack_48;
   tagSIZE size_4;
   tagSIZE size_3;
   tagSIZE size_2;
-  HDC pHStack_24;
-  undefined1 *local_20 [2];
+  undefined1 *local_20;
+  HDC local_1c;
   tagSIZE *size;
   
-  local_20[0] = &stack0x00000014;
-  vsprintf((int)auStack_1f8,(byte *)param_4,(int *)local_20);
-  local_20[0] = (undefined1 *)0x0;
+  local_20 = &stack0x00000014;
+  vsprintf((int)aCStack_1f8,(byte *)param_4,(int *)&local_20);
+  local_20 = (undefined1 *)0x0;
   if (param_1 == 0) {
     if (xvga_screen_defined == 0) {
       return 0x2711;
     }
-    iVar2 = (**(code **)(*(int *)xvga_screen + 0x44))();
-    if (iVar2 != 0) {
+    HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_1c);
+    if (HVar1 != 0) {
       return 0;
     }
     if (xvga_font_set == 0) {
-      SetBkColor(pHStack_24,0xff0000);
-      SetTextColor(pHStack_24,0xffff);
-      iVar2 = lstrlenA(&stack0xfffffe00);
-      TextOutA(pHStack_24,param_2,param_3,&stack0xfffffe00,iVar2);
-      pIVar1 = xvga_screen;
+      SetBkColor(local_1c,0xff0000);
+      SetTextColor(local_1c,0xffff);
+      iVar2 = lstrlenA(aCStack_1f8);
+      TextOutA(local_1c,param_2,param_3,aCStack_1f8,iVar2);
+      This = xvga_screen;
     }
     else {
-      SelectObject(pHStack_24,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
-      SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
-      SetBkMode(pHStack_24,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
+      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SetTextColor(local_1c,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
+      SetBkColor(local_1c,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
+      SetBkMode(local_1c,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
       size = &size_4;
-      iVar2 = lstrlenA(&stack0xfffffe00);
-      GetTextExtentPoint32A(pHStack_24,&stack0xfffffe00,iVar2,size);
-      SetRect(&tStack_50,param_2,param_3,size_4.cx + param_2,size_4.cy + param_3);
+      iVar2 = lstrlenA(aCStack_1f8);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
+      SetRect(&tStack_48,param_2,param_3,size_4.cx + param_2,size_4.cy + param_3);
       pIVar4 = (INT *)0x0;
-      UVar3 = lstrlenA(&stack0xfffffe00);
-      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_50,&stack0xfffffe00,UVar3,pIVar4);
-      pIVar1 = xvga_screen;
+      UVar3 = lstrlenA(aCStack_1f8);
+      ExtTextOutA(local_1c,param_2,param_3,0,&tStack_48,aCStack_1f8,UVar3,pIVar4);
+      This = xvga_screen;
     }
   }
   else if ((uint)param_1 < 2) {
     if (xvga_back_screen_defined == 0) {
       return 0x2711;
     }
-    iVar2 = (**(code **)(*(int *)xvga_back_screen + 0x44))();
-    if (iVar2 != 0) {
+    HVar1 = (*xvga_back_screen->lpVtbl->GetDC)(xvga_back_screen,&local_1c);
+    if (HVar1 != 0) {
       return 0;
     }
     if (xvga_font_set == 0) {
-      SetBkColor(pHStack_24,0xff0000);
-      SetTextColor(pHStack_24,0xffff);
-      iVar2 = lstrlenA(&stack0xfffffe00);
-      TextOutA(pHStack_24,param_2,param_3,&stack0xfffffe00,iVar2);
-      pIVar1 = xvga_back_screen;
+      SetBkColor(local_1c,0xff0000);
+      SetTextColor(local_1c,0xffff);
+      iVar2 = lstrlenA(aCStack_1f8);
+      TextOutA(local_1c,param_2,param_3,aCStack_1f8,iVar2);
+      This = xvga_back_screen;
     }
     else {
-      SelectObject(pHStack_24,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
-      SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
-      SetBkMode(pHStack_24,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
+      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SetTextColor(local_1c,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
+      SetBkColor(local_1c,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
+      SetBkMode(local_1c,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
       size = &size_2;
-      iVar2 = lstrlenA(&stack0xfffffe00);
-      GetTextExtentPoint32A(pHStack_24,&stack0xfffffe00,iVar2,size);
-      SetRect(&tStack_60,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+      iVar2 = lstrlenA(aCStack_1f8);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
+      SetRect(&tStack_58,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
       pIVar4 = (INT *)0x0;
-      UVar3 = lstrlenA(&stack0xfffffe00);
-      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_60,&stack0xfffffe00,UVar3,pIVar4);
-      pIVar1 = xvga_back_screen;
+      UVar3 = lstrlenA(aCStack_1f8);
+      ExtTextOutA(local_1c,param_2,param_3,0,&tStack_58,aCStack_1f8,UVar3,pIVar4);
+      This = xvga_back_screen;
     }
   }
   else {
@@ -150,33 +143,33 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
     if (xvga_buffer_screen_defined == 0) {
       return 0x2711;
     }
-    iVar2 = (**(code **)(*(int *)xvga_buffer_screen + 0x44))();
-    if (iVar2 != 0) {
+    HVar1 = (*xvga_buffer_screen->lpVtbl->GetDC)(xvga_buffer_screen,&local_1c);
+    if (HVar1 != 0) {
       return 0;
     }
     if (xvga_font_set == 0) {
-      SetBkColor(pHStack_24,0xff0000);
-      SetTextColor(pHStack_24,0xffff);
-      iVar2 = lstrlenA(&stack0xfffffe00);
-      TextOutA(pHStack_24,param_2,param_3,&stack0xfffffe00,iVar2);
-      pIVar1 = xvga_buffer_screen;
+      SetBkColor(local_1c,0xff0000);
+      SetTextColor(local_1c,0xffff);
+      iVar2 = lstrlenA(aCStack_1f8);
+      TextOutA(local_1c,param_2,param_3,aCStack_1f8,iVar2);
+      This = xvga_buffer_screen;
     }
     else {
-      SelectObject(pHStack_24,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-      SetTextColor(pHStack_24,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
-      SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
-      SetBkMode(pHStack_24,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
+      SelectObject(local_1c,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+      SetTextColor(local_1c,*(COLORREF *)(&DAT_00435ea8 + xvga_font_index * 0x10));
+      SetBkColor(local_1c,*(COLORREF *)(&DAT_00435ea4 + xvga_font_index * 0x10));
+      SetBkMode(local_1c,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
       size = &size_3;
-      iVar2 = lstrlenA(&stack0xfffffe00);
-      GetTextExtentPoint32A(pHStack_24,&stack0xfffffe00,iVar2,size);
-      SetRect(&tStack_70,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
+      iVar2 = lstrlenA(aCStack_1f8);
+      GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size);
+      SetRect(&tStack_68,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
       pIVar4 = (INT *)0x0;
-      UVar3 = lstrlenA(&stack0xfffffe00);
-      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_70,&stack0xfffffe00,UVar3,pIVar4);
-      pIVar1 = xvga_buffer_screen;
+      UVar3 = lstrlenA(aCStack_1f8);
+      ExtTextOutA(local_1c,param_2,param_3,0,&tStack_68,aCStack_1f8,UVar3,pIVar4);
+      This = xvga_buffer_screen;
     }
   }
-  (**(code **)(*(int *)pIVar1 + 0x68))(pIVar1,pHStack_24);
+  (*This->lpVtbl->ReleaseDC)(This,local_1c);
   return 0;
 }
 
@@ -189,48 +182,49 @@ int __cdecl
 win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,char *param_6,...)
 
 {
-  IDirectDrawSurface *pIVar1;
+  IDirectDrawSurface *This;
+  HRESULT HVar1;
   int iVar2;
   UINT UVar3;
   INT *pIVar4;
-  undefined1 auStack_1e8 [392];
-  tagRECT tStack_60;
-  tagRECT tStack_50;
-  tagRECT tStack_40;
+  CHAR aCStack_1e8 [400];
+  tagRECT tStack_58;
+  tagRECT tStack_48;
+  tagRECT tStack_38;
   tagSIZE size_2;
-  HDC pHStack_28;
+  HDC local_20;
   undefined1 *local_1c;
   tagSIZE *size;
   
   local_1c = &stack0x0000001c;
-  vsprintf((int)auStack_1e8,(byte *)param_6,(int *)&local_1c);
+  vsprintf((int)aCStack_1e8,(byte *)param_6,(int *)&local_1c);
   local_1c = (undefined1 *)0x0;
   if (param_1 == 0) {
     if (xvga_screen_defined == 0) {
       return 0x2711;
     }
-    iVar2 = (**(code **)(*(int *)xvga_screen + 0x44))();
-    if (iVar2 == 0) {
+    HVar1 = (*xvga_screen->lpVtbl->GetDC)(xvga_screen,&local_20);
+    if (HVar1 == 0) {
       if (xvga_font_set == 0) {
-        SetBkColor(pHStack_28,param_4);
-        SetTextColor(pHStack_28,param_3);
-        iVar2 = lstrlenA(&stack0xfffffe10);
-        TextOutA(pHStack_28,param_2,param_3,&stack0xfffffe10,iVar2);
+        SetBkColor(local_20,param_4);
+        SetTextColor(local_20,param_5);
+        iVar2 = lstrlenA(aCStack_1e8);
+        TextOutA(local_20,param_2,param_3,aCStack_1e8,iVar2);
       }
       else {
-        SelectObject(pHStack_28,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-        SetTextColor(pHStack_28,param_3);
-        SetBkColor(pHStack_28,param_4);
-        SetBkMode(pHStack_28,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
+        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SetTextColor(local_20,param_5);
+        SetBkColor(local_20,param_4);
+        SetBkMode(local_20,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
         size = &size_2;
-        iVar2 = lstrlenA(&stack0xfffffe10);
-        GetTextExtentPoint32A(pHStack_28,&stack0xfffffe10,iVar2,size);
-        SetRect(&tStack_50,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        iVar2 = lstrlenA(aCStack_1e8);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
+        SetRect(&tStack_48,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
         pIVar4 = (INT *)0x0;
-        UVar3 = lstrlenA(&stack0xfffffe10);
-        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_50,&stack0xfffffe10,UVar3,pIVar4);
+        UVar3 = lstrlenA(aCStack_1e8);
+        ExtTextOutA(local_20,param_2,param_3,0,&tStack_48,aCStack_1e8,UVar3,pIVar4);
       }
-      (**(code **)(*(int *)xvga_screen + 0x68))(xvga_screen,pHStack_28);
+      (*xvga_screen->lpVtbl->ReleaseDC)(xvga_screen,local_20);
     }
   }
   else {
@@ -238,30 +232,30 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
       if (xvga_back_screen_defined == 0) {
         return 0x2711;
       }
-      iVar2 = (**(code **)(*(int *)xvga_back_screen + 0x44))();
-      if (iVar2 != 0) {
+      HVar1 = (*xvga_back_screen->lpVtbl->GetDC)(xvga_back_screen,&local_20);
+      if (HVar1 != 0) {
         return 0;
       }
       if (xvga_font_set == 0) {
-        SetBkColor(pHStack_28,param_4);
-        SetTextColor(pHStack_28,param_3);
-        iVar2 = lstrlenA(&stack0xfffffe10);
-        TextOutA(pHStack_28,param_2,param_3,&stack0xfffffe10,iVar2);
-        pIVar1 = xvga_back_screen;
+        SetBkColor(local_20,param_4);
+        SetTextColor(local_20,param_5);
+        iVar2 = lstrlenA(aCStack_1e8);
+        TextOutA(local_20,param_2,param_3,aCStack_1e8,iVar2);
+        This = xvga_back_screen;
       }
       else {
-        SelectObject(pHStack_28,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-        SetTextColor(pHStack_28,param_3);
-        SetBkColor(pHStack_28,param_4);
-        SetBkMode(pHStack_28,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
+        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SetTextColor(local_20,param_5);
+        SetBkColor(local_20,param_4);
+        SetBkMode(local_20,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
         size = &size_2;
-        iVar2 = lstrlenA(&stack0xfffffe10);
-        GetTextExtentPoint32A(pHStack_28,&stack0xfffffe10,iVar2,size);
-        SetRect(&tStack_40,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        iVar2 = lstrlenA(aCStack_1e8);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
+        SetRect(&tStack_38,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
         pIVar4 = (INT *)0x0;
-        UVar3 = lstrlenA(&stack0xfffffe10);
-        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_40,&stack0xfffffe10,UVar3,pIVar4);
-        pIVar1 = xvga_back_screen;
+        UVar3 = lstrlenA(aCStack_1e8);
+        ExtTextOutA(local_20,param_2,param_3,0,&tStack_38,aCStack_1e8,UVar3,pIVar4);
+        This = xvga_back_screen;
       }
     }
     else {
@@ -272,33 +266,33 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
       if (xvga_buffer_screen_defined == 0) {
         return 0x2711;
       }
-      iVar2 = (**(code **)(*(int *)xvga_buffer_screen + 0x44))();
-      if (iVar2 != 0) {
+      HVar1 = (*xvga_buffer_screen->lpVtbl->GetDC)(xvga_buffer_screen,&local_20);
+      if (HVar1 != 0) {
         return 0;
       }
       if (xvga_font_set == 0) {
-        SetBkColor(pHStack_28,param_4);
-        SetTextColor(pHStack_28,param_3);
-        iVar2 = lstrlenA(&stack0xfffffe10);
-        TextOutA(pHStack_28,param_2,param_3,&stack0xfffffe10,iVar2);
-        pIVar1 = xvga_buffer_screen;
+        SetBkColor(local_20,param_4);
+        SetTextColor(local_20,param_5);
+        iVar2 = lstrlenA(aCStack_1e8);
+        TextOutA(local_20,param_2,param_3,aCStack_1e8,iVar2);
+        This = xvga_buffer_screen;
       }
       else {
-        SelectObject(pHStack_28,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
-        SetTextColor(pHStack_28,param_3);
-        SetBkColor(pHStack_28,param_4);
-        SetBkMode(pHStack_28,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
+        SelectObject(local_20,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
+        SetTextColor(local_20,param_5);
+        SetBkColor(local_20,param_4);
+        SetBkMode(local_20,*(int *)(&DAT_00435ea0 + xvga_font_index * 0x10));
         size = &size_2;
-        iVar2 = lstrlenA(&stack0xfffffe10);
-        GetTextExtentPoint32A(pHStack_28,&stack0xfffffe10,iVar2,size);
-        SetRect(&tStack_60,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
+        iVar2 = lstrlenA(aCStack_1e8);
+        GetTextExtentPoint32A(local_20,aCStack_1e8,iVar2,size);
+        SetRect(&tStack_58,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
         pIVar4 = (INT *)0x0;
-        UVar3 = lstrlenA(&stack0xfffffe10);
-        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_60,&stack0xfffffe10,UVar3,pIVar4);
-        pIVar1 = xvga_buffer_screen;
+        UVar3 = lstrlenA(aCStack_1e8);
+        ExtTextOutA(local_20,param_2,param_3,0,&tStack_58,aCStack_1e8,UVar3,pIVar4);
+        This = xvga_buffer_screen;
       }
     }
-    (**(code **)(*(int *)pIVar1 + 0x68))(pIVar1,pHStack_28);
+    (*This->lpVtbl->ReleaseDC)(This,local_20);
   }
   return 0;
 }

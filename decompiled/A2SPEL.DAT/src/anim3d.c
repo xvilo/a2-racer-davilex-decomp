@@ -3,38 +3,35 @@
 
 /* ==== 0042407c alloc_3d_arrays ==== */
 
-int __watcall alloc_3d_arrays(void)
+undefined4 __watcall alloc_3d_arrays(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int in_EAX;
-  int iVar1;
+  undefined4 uVar1;
   int i;
-  int unaff_ECX;
-  int unaff_EDX;
-  int unaff_EBX;
+  int iVar2;
   
   if (DAT_00476790 == 0) {
-    anims3d = LocalAlloc(0x40,in_EAX * 9);
+    anims3d = LocalAlloc(0x40,param_1 * 9);
     if (anims3d != (HLOCAL)0x0) {
-      iVar1 = 0;
-      DAT_0047678c = in_EAX;
+      iVar2 = 0;
+      DAT_0047678c = param_1;
       for (i = 0; i < DAT_0047678c; i = i + 1) {
-        *(undefined1 *)(iVar1 + 8 + (int)anims3d) = 0;
-        iVar1 = iVar1 + 9;
+        *(undefined1 *)(iVar2 + 8 + (int)anims3d) = 0;
+        iVar2 = iVar2 + 9;
       }
-      iVar1 = alloc_frames3d(unaff_EDX);
-      if (((iVar1 == 0) && (iVar1 = alloc_vertices(unaff_EBX), iVar1 == 0)) &&
-         (iVar1 = alloc_triangles(unaff_ECX), iVar1 == 0)) {
+      iVar2 = alloc_frames3d(param_2);
+      if (((iVar2 == 0) && (iVar2 = alloc_vertices(param_3), iVar2 == 0)) &&
+         (iVar2 = alloc_triangles(param_4), iVar2 == 0)) {
         DAT_00476790 = 1;
         return 0;
       }
     }
-    iVar1 = 2000;
+    uVar1 = 2000;
   }
   else {
-    iVar1 = 0;
+    uVar1 = 0;
   }
-  return iVar1;
+  return uVar1;
 }
 
 
@@ -163,11 +160,14 @@ void __watcall free_anim3d(int param_1)
 {
   int *piVar1;
   HLOCAL pvVar2;
+  int iVar3;
   int i;
   
   if (*(char *)(anims3d + 8 + param_1 * 9) != '\0') {
+    iVar3 = 0;
     for (i = 0; piVar1 = (int *)(anims3d + param_1 * 9), i < *piVar1; i = i + 1) {
-      free_frame3d();
+      free_frame3d(*(int *)(iVar3 + piVar1[1]));
+      iVar3 = iVar3 + 4;
     }
     pvVar2 = LocalFree((HLOCAL)piVar1[1]);
     if (pvVar2 != (HLOCAL)0x0) {

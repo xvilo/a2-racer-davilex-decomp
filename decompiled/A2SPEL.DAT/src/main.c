@@ -158,7 +158,7 @@ LAB_00401123:
   xvga_init_fileio(filename_val_2,filename_val);
   if (texture_conversion_mode != 0) {
     debugmsg(s_set_conversion_mode_00441243);
-    set_conversion_mode();
+    set_conversion_mode(1);
   }
   if (screen_resolution == 0) {
     debugmsg(s_load_hi_wait_screen_00441258);
@@ -249,7 +249,7 @@ LAB_004014d6:
   debugmsg(s_Initializing_3D_lib_00441418);
   init_3d_lib(*(uint *)(&DAT_00458c78 + video_mode_index * 0x20),10,10,0x50,10);
   debugmsg(s_Done_initializing_3D_lib_0044142d);
-  set_background();
+  set_background(s_back_pcx_00441447);
   debugmsg(s_Initializing_anims_and_standard_t_00441450);
   init_anims_and_standard_textures();
   if (texture_conversion_mode != 0) {
@@ -279,7 +279,7 @@ LAB_004014d6:
   debugmsg(s_Initializing_dashboard_004415bd);
   init_dashboard(1);
   debugmsg(s_Initializing_radar_004415d5);
-  init_radar();
+  init_radar(1);
   iVar1 = 1;
   debugmsg(s_Init_atan_table_004415e9);
   iVar5 = 1000;
@@ -304,7 +304,7 @@ LAB_004014d6:
     load_pcx_file_1(0,s_surscrn_pcx_00441673,0x1f);
   }
   debugmsg(s_Starting_music_0044167f);
-  start_music();
+  start_music(*(int *)(&DAT_00458d50 + track_index * 0x10));
   debugmsg(s_Dump_all_bonus_stuff_0044168f);
   place_all_bonus_items();
   debugmsg(s_init_timing_004416a5);
@@ -321,9 +321,8 @@ LAB_004014d6:
       frame_val = 0;
       iVar5 = 0;
       iVar1 = *(int *)(&DAT_00458c7c + iVar3);
-      blt_viewport(*(uint *)(&DAT_00458c78 + iVar3),0,0,iVar1,*(undefined4 *)(&DAT_00458c80 + iVar3)
-                   ,0,0,*(undefined4 *)(&DAT_00458c84 + iVar3),
-                   *(undefined4 *)(&DAT_00458c88 + iVar3));
+      blt_viewport(*(uint *)(&DAT_00458c78 + iVar3),0,0,iVar1,*(LONG *)(&DAT_00458c80 + iVar3),0,0,
+                   *(LONG *)(&DAT_00458c84 + iVar3),*(LONG *)(&DAT_00458c88 + iVar3));
     }
     draw_radar();
     draw_dashboard();
@@ -464,43 +463,36 @@ LAB_004014d6:
 /* ==== 00401df5 blt_viewport ==== */
 
 void __watcall
-blt_viewport(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-            undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,
-            undefined4 param_9)
+blt_viewport(uint param_1,LONG param_2,LONG param_3,LONG param_4,LONG param_5,LONG param_6,
+            LONG param_7,LONG param_8,LONG param_9)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   char *pcVar2;
   char *arg2;
   undefined4 arg3;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
-  undefined4 local_10;
-  undefined4 local_c;
-  undefined4 local_8;
-  undefined4 local_4;
+  RECT rect;
+  RECT rect_2;
   
-  local_4 = param_5;
-  local_20 = param_6;
-  local_1c = param_7;
-  local_18 = param_8;
-  local_14 = param_9;
+  rect_2.bottom = param_5;
+  rect.left = param_6;
+  rect.top = param_7;
+  rect.right = param_8;
+  rect.bottom = param_9;
   if (param_1 == 0) {
     return;
   }
-  local_10 = param_2;
-  local_c = param_3;
-  local_8 = param_4;
+  rect_2.left = param_2;
+  rect_2.top = param_3;
+  rect_2.right = param_4;
   if (param_1 < 2) {
-    lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
-                      (xvga_screen,&local_20,xvga_back_screen,&local_10,0,0);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_screen->lpVtbl->Blt)(xvga_screen,&rect,xvga_back_screen,&rect_2,0,(DDBLTFX *)0x0)
+    ;
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = dd_error_string(lVar1);
+    arg4 = dd_error_string(HVar1);
     arg3 = 0x2e3;
     arg2 = s_main_cpp_0044180a;
     pcVar2 = s__s__d____blitting_error___s___00441813;
@@ -509,12 +501,12 @@ blt_viewport(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 param
     if (param_1 != 2) {
       return;
     }
-    lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
-                      (xvga_back_screen,&local_20,xvga_buffer_screen,&local_10,0,0);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_back_screen->lpVtbl->Blt)
+                      (xvga_back_screen,&rect,xvga_buffer_screen,&rect_2,0,(DDBLTFX *)0x0);
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = dd_error_string(lVar1);
+    arg4 = dd_error_string(HVar1);
     arg3 = 0x2de;
     arg2 = s_main_cpp_004417e2;
     pcVar2 = s__s__d____blitting_error___s___004417eb;

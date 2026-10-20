@@ -15,7 +15,7 @@ int __watcall xvga_palette_ignore(void)
 int __watcall init_xvga_palette(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   
   if (palette_init_ok == 0) {
@@ -24,10 +24,10 @@ int __watcall init_xvga_palette(void)
       fatal_exit(s__s__d____error_not_enough_memory_004302b0,s_pal_cpp_004302a8,0x25);
     }
     if (xvga_screen_bpp < 9) {
-      lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x14))
-                        (xvga_dd_object,0x44,xvga_lib_palette,&xvga_dd_palette,0);
-      if (lVar1 != 0) {
-        arg4 = dd_error_string(lVar1);
+      HVar1 = (*xvga_dd_object->lpVtbl->CreatePalette)
+                        (xvga_dd_object,0x44,xvga_lib_palette,&xvga_dd_palette,(void *)0x0);
+      if (HVar1 != 0) {
+        arg4 = dd_error_string(HVar1);
         fatal_exit(s__s__d____could_not_create_a_pale_00430329,s_pal_cpp_00430321,0x31,arg4);
       }
       palette_init_ok = 1;
@@ -50,7 +50,7 @@ void __watcall exit_xvga_palette(void)
 
 {
   if (palette_init_ok != 0) {
-    (**(code **)(*(int *)xvga_dd_palette + 8))(xvga_dd_palette);
+    (*xvga_dd_palette->lpVtbl->Release)(xvga_dd_palette);
     palette_init_ok = 0;
   }
   return;
@@ -62,7 +62,7 @@ void __watcall exit_xvga_palette(void)
 void __watcall attach_xvga_palette(int param_1)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   char *pcVar2;
   char *arg2;
@@ -75,21 +75,21 @@ void __watcall attach_xvga_palette(int param_1)
     fatal_exit(s__s__d____palette_was_not_initial_0043035c,s_pal_cpp_00430354,0x57);
   }
   if (param_1 == 0) {
-    lVar1 = (**(code **)(*(int *)xvga_screen + 0x7c))(xvga_screen,xvga_dd_palette);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_screen->lpVtbl->SetPalette)(xvga_screen,xvga_dd_palette);
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = dd_error_string(lVar1);
+    arg4 = dd_error_string(HVar1);
     arg3 = 0x5e;
     arg2 = s_pal_cpp_00430383;
     pcVar2 = s__s__d____could_not_set_the_palet_0043038b;
   }
   else if ((uint)param_1 < 2) {
-    lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x7c))(xvga_back_screen,xvga_dd_palette);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_back_screen->lpVtbl->SetPalette)(xvga_back_screen,xvga_dd_palette);
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = dd_error_string(lVar1);
+    arg4 = dd_error_string(HVar1);
     arg3 = 100;
     arg2 = s_pal_cpp_004303b5;
     pcVar2 = s__s__d____could_not_set_the_palet_004303bd;
@@ -99,11 +99,11 @@ void __watcall attach_xvga_palette(int param_1)
       fatal_exit(s__s__d____unknown_focus_defined_00430421,s_pal_cpp_00430419,0x6e);
       return;
     }
-    lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x7c))(xvga_buffer_screen,xvga_dd_palette);
-    if (lVar1 == 0) {
+    HVar1 = (*xvga_buffer_screen->lpVtbl->SetPalette)(xvga_buffer_screen,xvga_dd_palette);
+    if (HVar1 == 0) {
       return;
     }
-    arg4 = dd_error_string(lVar1);
+    arg4 = dd_error_string(HVar1);
     arg3 = 0x6a;
     arg2 = s_pal_cpp_004303e7;
     pcVar2 = s__s__d____could_not_set_the_palet_004303ef;
@@ -118,7 +118,7 @@ void __watcall attach_xvga_palette(int param_1)
 int __watcall set_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int param_3)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   
   if (palette_ignore == 0) {
@@ -132,10 +132,9 @@ int __watcall set_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int par
       fatal_exit(s__s__d____trying_to_reference_an_i_004304ac,s_pal_cpp_004304a4,0x83,
                  param_2 + param_3);
     }
-    lVar1 = (**(code **)(*(int *)xvga_dd_palette + 0x18))
-                      (xvga_dd_palette,0,param_2,param_3,paletteentry);
-    if (lVar1 != 0) {
-      arg4 = dd_error_string(lVar1);
+    HVar1 = (*xvga_dd_palette->lpVtbl->SetEntries)(xvga_dd_palette,0,param_2,param_3,paletteentry);
+    if (HVar1 != 0) {
+      arg4 = dd_error_string(HVar1);
       fatal_exit(s__s__d____could_set_entries___s__004304f1,s_pal_cpp_004304e9,0x87,arg4);
     }
   }
@@ -148,7 +147,7 @@ int __watcall set_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int par
 int __watcall get_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int param_3)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   
   if (palette_ignore == 0) {
@@ -162,10 +161,9 @@ int __watcall get_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int par
       fatal_exit(s__s__d____trying_to_reference_an_i_0043057d,s_pal_cpp_00430575,0x9e,
                  param_2 + param_3);
     }
-    lVar1 = (**(code **)(*(int *)xvga_dd_palette + 0x10))
-                      (xvga_dd_palette,0,param_2,param_3,paletteentry);
-    if (lVar1 != 0) {
-      arg4 = dd_error_string(lVar1);
+    HVar1 = (*xvga_dd_palette->lpVtbl->GetEntries)(xvga_dd_palette,0,param_2,param_3,paletteentry);
+    if (HVar1 != 0) {
+      arg4 = dd_error_string(HVar1);
       fatal_exit(s__s__d____could_set_entries___s__004305c2,s_pal_cpp_004305ba,0xa2,arg4);
     }
   }

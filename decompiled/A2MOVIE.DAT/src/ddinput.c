@@ -6,12 +6,13 @@
 int __watcall xvga_init_input(void *param_1,int param_2)
 
 {
-  long lVar1;
+  long direct_input_create;
   char *dd_error_string_result;
+  HRESULT HVar1;
   
-  lVar1 = DirectInputCreateA(param_1,0x300,&xvga_di_object,0);
-  if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
+  direct_input_create = DirectInputCreateA(param_1,0x300,&xvga_di_object,0);
+  if (direct_input_create != 0) {
+    dd_error_string_result = dd_error_string(direct_input_create);
     fatal_exit(s__s__d____failed_to_create_direct_0041c090,s_ddinput_cpp_0041c084,0x20,
                dd_error_string_result);
   }
@@ -19,28 +20,29 @@ int __watcall xvga_init_input(void *param_1,int param_2)
     fatal_exit(s__s__d____not_yet_implemented_0041c0d1,s_ddinput_cpp_0041c0c5,0x24);
   }
   if ((param_2 & 2U) != 0) {
-    lVar1 = (**(code **)(*(int *)xvga_di_object + 0xc))
-                      (xvga_di_object,&GUID_SysKeyboard,&xvga_di_keyboard,0);
-    if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
+    HVar1 = (*xvga_di_object->lpVtbl->CreateDevice)
+                      (xvga_di_object,&GUID_SysKeyboard,&xvga_di_keyboard,(void *)0x0);
+    if (HVar1 != 0) {
+      dd_error_string_result = dd_error_string(HVar1);
       fatal_exit(s__s__d____failed_to_create_keyboa_0041c0fc,s_ddinput_cpp_0041c0f0,0x29,
                  dd_error_string_result);
     }
-    lVar1 = (**(code **)(*(int *)xvga_di_keyboard + 0x2c))(xvga_di_keyboard,&c_dfDIKeyboard);
-    if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
+    HVar1 = (*xvga_di_keyboard->lpVtbl->SetDataFormat)
+                      (xvga_di_keyboard,(DIDATAFORMAT *)&c_dfDIKeyboard);
+    if (HVar1 != 0) {
+      dd_error_string_result = dd_error_string(HVar1);
       fatal_exit(s__s__d____failed_to_set_data_form_0041c139,s_ddinput_cpp_0041c12d,0x2c,
                  dd_error_string_result);
     }
-    lVar1 = (**(code **)(*(int *)xvga_di_keyboard + 0x34))(xvga_di_keyboard,xvga_hwnd,6);
-    if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
+    HVar1 = (*xvga_di_keyboard->lpVtbl->SetCooperativeLevel)(xvga_di_keyboard,xvga_hwnd,6);
+    if (HVar1 != 0) {
+      dd_error_string_result = dd_error_string(HVar1);
       fatal_exit(s__s__d____failed_to_set_coop_leve_0041c187,s_ddinput_cpp_0041c17b,0x2f,
                  dd_error_string_result);
     }
-    lVar1 = (**(code **)(*(int *)xvga_di_keyboard + 0x1c))(xvga_di_keyboard);
-    if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
+    HVar1 = (*xvga_di_keyboard->lpVtbl->Acquire)(xvga_di_keyboard);
+    if (HVar1 != 0) {
+      dd_error_string_result = dd_error_string(HVar1);
       fatal_exit(s__s__d____failed_to_Acquire_the_k_0041c1d4,s_ddinput_cpp_0041c1c8,0x32,
                  dd_error_string_result);
     }
@@ -56,24 +58,24 @@ int __watcall xvga_init_input(void *param_1,int param_2)
 void __watcall xvga_input_setup(int param_1)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *dd_error_string_result;
   
   if (xvga_init_input_ok == 0) {
     fatal_exit(s__s__d____error_input_devices_hav_0041c216,s_ddinput_cpp_0041c20a,0x40);
   }
   if ((param_1 & 2U) != 0) {
-    lVar1 = (**(code **)(*(int *)xvga_di_keyboard + 0x40))(xvga_di_keyboard,xvga_hwnd,0);
-    if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
+    HVar1 = (*xvga_di_keyboard->lpVtbl->RunControlPanel)(xvga_di_keyboard,xvga_hwnd,0);
+    if (HVar1 != 0) {
+      dd_error_string_result = dd_error_string(HVar1);
       fatal_exit(s__s__d____error_running_keyboard_c_0041c25b,s_ddinput_cpp_0041c24f,0x45,
                  dd_error_string_result);
     }
   }
   if ((param_1 & 1U) != 0) {
-    lVar1 = (**(code **)(*(int *)xvga_di_mouse + 0x40))(xvga_di_mouse,xvga_hwnd,0);
-    if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
+    HVar1 = (*xvga_di_mouse->lpVtbl->RunControlPanel)(xvga_di_mouse,xvga_hwnd,0);
+    if (HVar1 != 0) {
+      dd_error_string_result = dd_error_string(HVar1);
       fatal_exit(s__s__d____error_running_mouse_con_0041c29c,s_ddinput_cpp_0041c290,0x4b,
                  dd_error_string_result);
     }
@@ -87,16 +89,15 @@ void __watcall xvga_input_setup(int param_1)
 int __watcall get_key_state(int param_1)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   
   if (xvga_init_keyboard_ok == 0) {
     fatal_exit(s__s__d____error_keyboard_device_w_0041c2da,s_ddinput_cpp_0041c2ce,0x56);
   }
-  lVar1 = (**(code **)(*(int *)xvga_di_keyboard + 0x24))
-                    (xvga_di_keyboard,0x100,&xvga_keyboard_state);
-  if (lVar1 != 0) {
-    arg4 = dd_error_string(lVar1);
+  HVar1 = (*xvga_di_keyboard->lpVtbl->GetDeviceState)(xvga_di_keyboard,0x100,&xvga_keyboard_state);
+  if (HVar1 != 0) {
+    arg4 = dd_error_string(HVar1);
     fatal_exit(s__s__d____error_getting_keyboard_d_0041c31a,s_ddinput_cpp_0041c30e,0x5a,arg4);
   }
   return (uint)(byte)(&xvga_keyboard_state)[param_1];
@@ -111,15 +112,15 @@ void __watcall xvga_exit_input(void)
   if (xvga_init_input_ok != 0) {
     if (xvga_init_keyboard_ok != 0) {
       xvga_init_keyboard_ok = 0;
-      (**(code **)(*(int *)xvga_di_keyboard + 0x20))(xvga_di_keyboard);
-      (**(code **)(*(int *)xvga_di_keyboard + 8))(xvga_di_keyboard);
+      (*xvga_di_keyboard->lpVtbl->Unacquire)(xvga_di_keyboard);
+      (*xvga_di_keyboard->lpVtbl->Release)(xvga_di_keyboard);
     }
     if (xvga_init_mouse_ok != 0) {
       xvga_init_mouse_ok = 0;
-      (**(code **)(*(int *)xvga_di_mouse + 0x20))(xvga_di_mouse);
-      (**(code **)(*(int *)xvga_di_mouse + 8))(xvga_di_mouse);
+      (*xvga_di_mouse->lpVtbl->Unacquire)(xvga_di_mouse);
+      (*xvga_di_mouse->lpVtbl->Release)(xvga_di_mouse);
     }
-    (**(code **)(*(int *)xvga_di_object + 8))(xvga_di_object);
+    (*xvga_di_object->lpVtbl->Release)(xvga_di_object);
     xvga_init_input_ok = 0;
   }
   return;

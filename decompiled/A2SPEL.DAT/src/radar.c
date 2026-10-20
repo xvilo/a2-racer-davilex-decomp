@@ -16,22 +16,19 @@ void __watcall release_radar(void)
 
 /* ==== 0040f3ad init_radar ==== */
 
-/* WARNING: Removing unreachable block (ram,0x0040f42c) */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall init_radar(void)
+void __watcall init_radar(uint param_1)
 
 {
   uint uVar1;
-  uint in_EAX;
-  long lVar2;
+  HRESULT HVar2;
   char *dd_error_string_result;
-  int translate_pixel_result;
   int translate_pixel_result_2;
+  int translate_pixel_result;
   bool bVar3;
-  undefined4 local_40 [6];
-  int iStack_28;
-  int iStack_24;
+  DDPIXELFORMAT ddpixelformat;
+  DDCOLORKEY DStack_20;
   
   if (screen_resolution == 0) {
     if (dashboard_on_screen == 0) {
@@ -63,15 +60,18 @@ void __watcall init_radar(void)
     radar_scale = 0;
   }
   radar_surface = create_surface(radar_width,radar_height);
-  memset(local_40,0,0x20);
-  local_40[0] = 0x20;
-  lVar2 = (**(code **)(*(int *)xvga_screen + 0x54))(xvga_screen);
-  if (lVar2 != 0) {
-    dd_error_string_result = dd_error_string(lVar2);
+  memset(&ddpixelformat.dwSize,0,0x20);
+  ddpixelformat.dwSize = 0x20;
+  HVar2 = (*xvga_screen->lpVtbl->GetPixelFormat)(xvga_screen,&ddpixelformat);
+  if (HVar2 != 0) {
+    dd_error_string_result = dd_error_string(HVar2);
     fatal_exit(s__s__d____unable_to_get_pixelform_004456da,s_radar_cpp_004456d0,0x79,
                dd_error_string_result);
   }
-  if (((uint)local_40 & 0x40) != 0) {
+  if (((byte)ddpixelformat.dwFlags & 0x20) != 0) {
+    debugmsg(s_Radar_is_8_bits_formaat__00445704);
+  }
+  if (((byte)ddpixelformat.dwFlags & 0x40) != 0) {
     debugmsg(s_Radar_is_RGB_formaat__0044571f);
   }
   if (7 < (uint)xvga_screen_bpp) {
@@ -91,18 +91,18 @@ void __watcall init_radar(void)
       }
     }
     else if (xvga_screen_bpp == 0x10) {
-      translate_pixel_result = translate_pixel(0x14,8);
       translate_pixel_result_2 = translate_pixel(0x14,8);
-      radar_dot_color = translate_pixel_result_2 + translate_pixel_result * 0x10000;
-      translate_pixel_result = translate_pixel(10,8);
+      translate_pixel_result = translate_pixel(0x14,8);
+      radar_dot_color = translate_pixel_result + translate_pixel_result_2 * 0x10000;
       translate_pixel_result_2 = translate_pixel(10,8);
-      DAT_004751b4 = translate_pixel_result_2 + translate_pixel_result * 0x10000;
       translate_pixel_result = translate_pixel(10,8);
-      translate_pixel_result_2 = translate_pixel(0x58,8);
-      DAT_004751bc = translate_pixel_result_2 + translate_pixel_result * 0x10000;
-      translate_pixel_result = translate_pixel(10,8);
-      translate_pixel_result_2 = translate_pixel(0x3c,8);
-      DAT_004751c0 = translate_pixel_result_2 + translate_pixel_result * 0x10000;
+      DAT_004751b4 = translate_pixel_result + translate_pixel_result_2 * 0x10000;
+      translate_pixel_result_2 = translate_pixel(10,8);
+      translate_pixel_result = translate_pixel(0x58,8);
+      DAT_004751bc = translate_pixel_result + translate_pixel_result_2 * 0x10000;
+      translate_pixel_result_2 = translate_pixel(10,8);
+      translate_pixel_result = translate_pixel(0x3c,8);
+      DAT_004751c0 = translate_pixel_result + translate_pixel_result_2 * 0x10000;
       _DAT_004751b8 = translate_pixel(0xff,8);
       if (dashboard_on_screen == 0) {
         DAT_00475194 = _DAT_004751b8 << 0x10;
@@ -115,45 +115,45 @@ void __watcall init_radar(void)
     }
   }
   if (pf_conversion_mode == 0) {
-    iStack_24 = 0xff;
-    iStack_28 = 0xff;
+    DStack_20.dwColorSpaceHighValue = 0xff;
+    DStack_20.dwColorSpaceLowValue = 0xff;
   }
   else if (pf_conversion_mode == 1) {
-    iStack_28 = translate_pixel(0xff,8);
-    iStack_24 = iStack_28;
+    DStack_20.dwColorSpaceLowValue = translate_pixel(0xff,8);
+    DStack_20.dwColorSpaceHighValue = DStack_20.dwColorSpaceLowValue;
   }
-  lVar2 = (**(code **)(*(int *)radar_surface + 0x74))(radar_surface,8,&iStack_28);
-  if (lVar2 != 0) {
-    dd_error_string_result = dd_error_string(lVar2);
+  HVar2 = (*radar_surface->lpVtbl->SetColorKey)(radar_surface,8,&DStack_20);
+  if (HVar2 != 0) {
+    dd_error_string_result = dd_error_string(HVar2);
     fatal_exit(s__s__d____failed_to_set_color_key_00445741,s_radar_cpp_00445737,0xb9,
                dd_error_string_result);
   }
-  if (in_EAX == 0) {
+  if (param_1 == 0) {
     bVar3 = true;
   }
   else {
-    if (in_EAX < 2) {
+    if (param_1 < 2) {
       radar_enabled = 1;
       uVar1 = radar_enabled;
       goto LAB_0040f4e0;
     }
-    bVar3 = in_EAX == 2;
+    bVar3 = param_1 == 2;
   }
-  uVar1 = in_EAX;
+  uVar1 = param_1;
   if (!bVar3) {
     fatal_exit(s__init_radar__invalid_focus_00445768);
     uVar1 = radar_enabled;
   }
 LAB_0040f4e0:
   radar_enabled = uVar1;
-  _DAT_0047517c = radar_width;
-  _DAT_00475180 = radar_height;
-  _DAT_00475188 = DAT_0047515c;
-  _DAT_00475190 = DAT_0047515c + radar_height;
-  _DAT_00475174 = 0;
-  _DAT_00475184 = DAT_00475158;
-  _DAT_00475178 = 0;
-  _DAT_0047518c = DAT_00475158 + radar_width;
+  RECT_00475174.right = radar_width;
+  RECT_00475174.bottom = radar_height;
+  RECT_00475184.top = DAT_0047515c;
+  RECT_00475184.bottom = DAT_0047515c + radar_height;
+  RECT_00475174.left = 0;
+  RECT_00475184.left = DAT_00475158;
+  RECT_00475174.top = 0;
+  RECT_00475184.right = DAT_00475158 + radar_width;
   return;
 }
 
@@ -163,7 +163,7 @@ LAB_0040f4e0:
 void __watcall draw_radar(void)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *arg4;
   char *pcVar2;
   char *arg2;
@@ -181,10 +181,11 @@ void __watcall draw_radar(void)
     }
   }
   if (radar_enabled == 0) {
-    lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
-                      (xvga_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
-    if (lVar1 != 0) {
-      arg4 = dd_error_string(lVar1);
+    HVar1 = (*xvga_screen->lpVtbl->Blt)
+                      (xvga_screen,&RECT_00475184,radar_surface,&RECT_00475174,0x8000,(DDBLTFX *)0x0
+                      );
+    if (HVar1 != 0) {
+      arg4 = dd_error_string(HVar1);
       arg3 = 0xf5;
       arg2 = s_radar_cpp_00445783;
       pcVar2 = s__s__d____draw_radar_blitting_err_0044578d;
@@ -192,10 +193,11 @@ void __watcall draw_radar(void)
     }
   }
   else if ((uint)radar_enabled < 2) {
-    lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
-                      (xvga_back_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
-    if (lVar1 != 0) {
-      arg4 = dd_error_string(lVar1);
+    HVar1 = (*xvga_back_screen->lpVtbl->Blt)
+                      (xvga_back_screen,&RECT_00475184,radar_surface,&RECT_00475174,0x8000,
+                       (DDBLTFX *)0x0);
+    if (HVar1 != 0) {
+      arg4 = dd_error_string(HVar1);
       arg3 = 0xfb;
       arg2 = s_radar_cpp_004457b1;
       pcVar2 = s__s__d____draw_radar_blitting_err_004457bb;
@@ -206,10 +208,11 @@ void __watcall draw_radar(void)
     if (radar_enabled != 2) {
       return;
     }
-    lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x14))
-                      (xvga_buffer_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
-    if (lVar1 != 0) {
-      arg4 = dd_error_string(lVar1);
+    HVar1 = (*xvga_buffer_screen->lpVtbl->Blt)
+                      (xvga_buffer_screen,&RECT_00475184,radar_surface,&RECT_00475174,0x8000,
+                       (DDBLTFX *)0x0);
+    if (HVar1 != 0) {
+      arg4 = dd_error_string(HVar1);
       arg3 = 0x101;
       arg2 = s_radar_cpp_004457df;
       pcVar2 = s__s__d____draw_radar_blitting_err_004457e9;

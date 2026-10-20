@@ -36,24 +36,27 @@ undefined4 __watcall InitRtns(undefined4 param_1)
 void __watcall FiniRtns(undefined4 param_1,undefined4 param_2)
 
 {
-  byte bVar1;
-  char *pcVar2;
-  char *pcVar3;
+  code *pcVar1;
+  byte bVar2;
+  GUID *pGVar3;
+  GUID *pGVar4;
   
   while( true ) {
-    pcVar2 = &IID_IDirectSound3DBuffer;
-    bVar1 = (byte)param_1;
-    for (pcVar3 = &DAT_00459f0e; pcVar3 < &IID_IDirectSound3DBuffer; pcVar3 = pcVar3 + 6) {
-      if ((*pcVar3 != '\x02') && (bVar1 <= (byte)pcVar3[1])) {
-        bVar1 = pcVar3[1];
-        pcVar2 = pcVar3;
+    pGVar3 = &IID_IDirectSound3DBuffer;
+    bVar2 = (byte)param_1;
+    for (pGVar4 = (GUID *)&DAT_00459f0e; pGVar4 < &IID_IDirectSound3DBuffer;
+        pGVar4 = (GUID *)&pGVar4->Data3) {
+      if (((char)pGVar4->Data1 != '\x02') && (bVar2 <= *(byte *)((int)&pGVar4->Data1 + 1))) {
+        bVar2 = *(byte *)((int)&pGVar4->Data1 + 1);
+        pGVar3 = pGVar4;
       }
     }
-    if (pcVar2 == &IID_IDirectSound3DBuffer) break;
-    if ((bVar1 <= (byte)param_2) && (*(code **)(pcVar2 + 2) != (code *)0x0)) {
-      (**(code **)(pcVar2 + 2))();
+    if (pGVar3 == &IID_IDirectSound3DBuffer) break;
+    if ((bVar2 <= (byte)param_2) &&
+       (pcVar1 = *(code **)((int)&pGVar3->Data1 + 2), pcVar1 != (code *)0x0)) {
+      (*pcVar1)();
     }
-    *pcVar2 = '\x02';
+    *(undefined1 *)&pGVar3->Data1 = 2;
   }
   return;
 }

@@ -48,14 +48,11 @@ void __watcall
 blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,int param_7)
 
 {
-  long lVar1;
+  HRESULT HVar1;
   char *pcVar2;
   char *arg2;
   undefined4 arg3;
-  int local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
+  RECT rect;
   
   if ((((-1 < param_5) && (param_3 <= xvga_screen_xsize)) && (-1 < param_6)) &&
      ((param_4 <= xvga_screen_ysize && (param_1 != param_2)))) {
@@ -72,29 +69,29 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
       param_5 = xvga_screen_xsize;
     }
     if ((param_3 < param_5) && (param_4 < param_6)) {
-      local_1c = param_3;
-      local_18 = param_4;
-      local_14 = param_5;
-      local_10 = param_6;
+      rect.left = param_3;
+      rect.top = param_4;
+      rect.right = param_5;
+      rect.bottom = param_6;
       if (param_2 == 0) {
         if (param_1 == 1) {
-          lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                            (xvga_screen,param_3,param_4,xvga_back_screen,&local_1c,0);
-          if (lVar1 == 0) {
+          HVar1 = (*xvga_screen->lpVtbl->BltFast)
+                            (xvga_screen,param_3,param_4,xvga_back_screen,&rect,0);
+          if (HVar1 == 0) {
             return;
           }
-          param_1 = (int)dd_error_string(lVar1);
+          param_1 = (int)dd_error_string(HVar1);
           arg3 = 0x59;
           arg2 = s_clipblit_cpp_0041d022;
           pcVar2 = s__s__d____blitting_error___s___0041d02f;
         }
         else {
-          lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                            (xvga_screen,param_3,param_4,xvga_buffer_screen,&local_1c,0);
-          if (lVar1 == 0) {
+          HVar1 = (*xvga_screen->lpVtbl->BltFast)
+                            (xvga_screen,param_3,param_4,xvga_buffer_screen,&rect,0);
+          if (HVar1 == 0) {
             return;
           }
-          param_1 = (int)dd_error_string(lVar1);
+          param_1 = (int)dd_error_string(HVar1);
           arg3 = 0x5d;
           arg2 = s_clipblit_cpp_0041d04e;
           pcVar2 = s__s__d____blitting_error___s___0041d05b;
@@ -102,23 +99,23 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
       }
       else if ((uint)param_2 < 2) {
         if (param_1 == 0) {
-          lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x1c))
-                            (xvga_back_screen,param_3,param_4,xvga_screen,&local_1c,0);
-          if (lVar1 == 0) {
+          HVar1 = (*xvga_back_screen->lpVtbl->BltFast)
+                            (xvga_back_screen,param_3,param_4,xvga_screen,&rect,0);
+          if (HVar1 == 0) {
             return;
           }
-          param_1 = (int)dd_error_string(lVar1);
+          param_1 = (int)dd_error_string(HVar1);
           arg3 = 0x65;
           arg2 = s_clipblit_cpp_0041d07a;
           pcVar2 = s__s__d____blitting_error___s___0041d087;
         }
         else {
-          lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x1c))
-                            (xvga_back_screen,param_3,param_4,xvga_buffer_screen,&local_1c,0);
-          if (lVar1 == 0) {
+          HVar1 = (*xvga_back_screen->lpVtbl->BltFast)
+                            (xvga_back_screen,param_3,param_4,xvga_buffer_screen,&rect,0);
+          if (HVar1 == 0) {
             return;
           }
-          param_1 = (int)dd_error_string(lVar1);
+          param_1 = (int)dd_error_string(HVar1);
           arg3 = 0x69;
           arg2 = s_clipblit_cpp_0041d0a6;
           pcVar2 = s__s__d____blitting_error___s___0041d0b3;
@@ -126,23 +123,23 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
       }
       else if (param_2 == 2) {
         if (param_1 == 0) {
-          lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x1c))
-                            (xvga_buffer_screen,param_3,param_4,xvga_screen,&local_1c,0);
-          if (lVar1 == 0) {
+          HVar1 = (*xvga_buffer_screen->lpVtbl->BltFast)
+                            (xvga_buffer_screen,param_3,param_4,xvga_screen,&rect,0);
+          if (HVar1 == 0) {
             return;
           }
-          param_1 = (int)dd_error_string(lVar1);
+          param_1 = (int)dd_error_string(HVar1);
           arg3 = 0x70;
           arg2 = s_clipblit_cpp_0041d0d2;
           pcVar2 = s__s__d____blitting_error___s___0041d0df;
         }
         else {
-          lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x1c))
-                            (xvga_buffer_screen,param_3,param_4,xvga_back_screen,&local_1c,0);
-          if (lVar1 == 0) {
+          HVar1 = (*xvga_buffer_screen->lpVtbl->BltFast)
+                            (xvga_buffer_screen,param_3,param_4,xvga_back_screen,&rect,0);
+          if (HVar1 == 0) {
             return;
           }
-          param_1 = (int)dd_error_string(lVar1);
+          param_1 = (int)dd_error_string(HVar1);
           arg3 = 0x74;
           arg2 = s_clipblit_cpp_0041d0fe;
           pcVar2 = s__s__d____blitting_error___s___0041d10b;
@@ -326,7 +323,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
 {
   int iVar1;
   IDirectDrawSurface *direct_draw_surface;
-  long lVar2;
+  HRESULT HVar2;
   char *arg12;
   int iVar3;
   uchar *unaff_EBP;
@@ -336,14 +333,8 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   undefined4 arg3;
   undefined4 arg10;
   undefined4 arg11;
-  int local_54;
-  int local_50;
-  int local_4c;
-  int local_48;
-  int local_44;
-  int local_40;
-  int local_3c;
-  int local_38;
+  RECT rect_2;
+  RECT rect;
   int local_34;
   int mem_image_index;
   int local_2c;
@@ -495,39 +486,40 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   if ((clip_bx < param_3 + iVar4) && (iVar4 = clip_bx - param_3, iVar4 < 1)) {
     return;
   }
-  local_3c = param_3 + iVar4;
-  local_38 = local_10 + param_4;
-  local_54 = local_1c;
-  local_4c = local_1c + iVar4;
+  rect.right = param_3 + iVar4;
+  rect.bottom = local_10 + param_4;
+  rect_2.left = local_1c;
+  rect_2.right = local_1c + iVar4;
   local_20 = param_2 * 0x20;
-  local_50 = local_18;
-  local_48 = local_18 + local_10;
-  local_44 = param_3;
-  local_40 = param_4;
+  rect_2.top = local_18;
+  rect_2.bottom = local_18 + local_10;
+  rect.left = param_3;
+  rect.top = param_4;
   if (param_1 == 0) {
-    lVar2 = (**(code **)(*(int *)xvga_screen + 0x14))
-                      (xvga_screen,&local_44,*(undefined4 *)(xvga_mem_images + local_20 + 4),
-                       &local_54,0x8000,0);
-    if (lVar2 == 0) {
+    HVar2 = (*xvga_screen->lpVtbl->Blt)
+                      (xvga_screen,&rect,*(IDirectDrawSurface **)(xvga_mem_images + local_20 + 4),
+                       &rect_2,0x8000,(DDBLTFX *)0x0);
+    if (HVar2 == 0) {
       return;
     }
-    arg12 = dd_error_string(lVar2);
-    arg11 = *(undefined4 *)(xvga_mem_images + local_38 + 0xc);
-    arg10 = *(undefined4 *)(xvga_mem_images + local_38 + 8);
+    arg12 = dd_error_string(HVar2);
+    arg11 = *(undefined4 *)(xvga_mem_images + local_20 + 0xc);
+    arg10 = *(undefined4 *)(xvga_mem_images + local_20 + 8);
     arg3 = 0x268;
     arg2 = s_clipblit_cpp_0041d35e;
     pcVar5 = s__s__d____set_mem_image_blitting_e_0041d36b;
   }
   else if ((uint)param_1 < 2) {
-    lVar2 = (**(code **)(*(int *)xvga_back_screen + 0x14))
-                      (xvga_back_screen,&local_44,*(undefined4 *)(xvga_mem_images + local_20 + 4),
-                       &local_54,0x8000,0);
-    if (lVar2 == 0) {
+    HVar2 = (*xvga_back_screen->lpVtbl->Blt)
+                      (xvga_back_screen,&rect,
+                       *(IDirectDrawSurface **)(xvga_mem_images + local_20 + 4),&rect_2,0x8000,
+                       (DDBLTFX *)0x0);
+    if (HVar2 == 0) {
       return;
     }
-    arg12 = dd_error_string(lVar2);
-    arg11 = *(undefined4 *)(xvga_mem_images + local_38 + 0xc);
-    arg10 = *(undefined4 *)(xvga_mem_images + local_38 + 8);
+    arg12 = dd_error_string(HVar2);
+    arg11 = *(undefined4 *)(xvga_mem_images + local_20 + 0xc);
+    arg10 = *(undefined4 *)(xvga_mem_images + local_20 + 8);
     arg3 = 0x270;
     arg2 = s_clipblit_cpp_0041d3bc;
     pcVar5 = s__s__d____set_mem_image_blitting_e_0041d3c9;
@@ -536,21 +528,21 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     if (param_1 != 2) {
       return;
     }
-    lVar2 = (**(code **)(*(int *)xvga_buffer_screen + 0x14))
-                      (xvga_buffer_screen,&local_44,*(undefined4 *)(xvga_mem_images + local_20 + 4),
-                       &local_54,0x8000,0);
-    if (lVar2 == 0) {
+    HVar2 = (*xvga_buffer_screen->lpVtbl->Blt)
+                      (xvga_buffer_screen,&rect,
+                       *(IDirectDrawSurface **)(xvga_mem_images + local_20 + 4),&rect_2,0x8000,
+                       (DDBLTFX *)0x0);
+    if (HVar2 == 0) {
       return;
     }
-    arg12 = dd_error_string(lVar2);
-    arg11 = *(undefined4 *)(xvga_mem_images + local_38 + 0xc);
-    arg10 = *(undefined4 *)(xvga_mem_images + local_38 + 8);
+    arg12 = dd_error_string(HVar2);
+    arg11 = *(undefined4 *)(xvga_mem_images + local_20 + 0xc);
+    arg10 = *(undefined4 *)(xvga_mem_images + local_20 + 8);
     arg3 = 0x275;
     arg2 = s_clipblit_cpp_0041d41a;
     pcVar5 = s__s__d____set_mem_image_blitting_e_0041d427;
   }
-  fatal_exit(pcVar5,arg2,arg3,param_3,param_4,iVar4,local_28,local_34,mem_image_index,arg10,arg11,
-             arg12);
+  fatal_exit(pcVar5,arg2,arg3,param_3,param_4,iVar4,local_10,local_1c,local_18,arg10,arg11,arg12);
   return;
 }
 

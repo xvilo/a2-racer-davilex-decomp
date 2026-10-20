@@ -116,6 +116,9 @@ public class ApplyWatcom extends GhidraScript {
 			// marked debugmsg non-returning and cut code after 164 call sites). Library exits
 			// are still covered by the "Non-Returning Functions - Known" analyzer.
 			setAnalysisOption(currentProgram, "Non-Returning Functions - Discovered", "false");
+			if (args.length > 3) {
+				parseHeader(new File(args[3]));
+			}
 			if (args.length > 2) {
 				defineStructs(new File(args[2]));
 			}
@@ -219,11 +222,52 @@ public class ApplyWatcom extends GhidraScript {
 	}
 
 	/** Builds the packed structures listed in structs.tsv (struct, offset, type, name, comment). */
+	/** Parse a plain C header (symbols/directx.h) into the program's data types. */
+	private void parseHeader(File h) throws Exception {
+		if (winArchive == null) {
+			openWindowsArchive();
+		}
+		ghidra.app.util.cparser.C.CParser parser = new ghidra.app.util.cparser.C.CParser(
+			currentProgram.getDataTypeManager(), true,
+			winArchive == null ? null : new DataTypeManager[] { winArchive });
+		try (java.io.InputStream in = new java.io.FileInputStream(h)) {
+			parser.parse(in);
+		}
+		// The parser drops "__stdcall" from function-pointer members; COM methods are all
+		// __stdcall (the callee pops its arguments), and the stack depth after every COM
+		// call depends on it. Name the anonymous signatures after their slot as well.
+		DataTypeManager dtm = currentProgram.getDataTypeManager();
+		for (DataType comp : parser.getComposites().values()) {
+			DataType mine = dtm.getDataType(comp.getDataTypePath());
+			if (!(mine instanceof Structure) || !mine.getName().endsWith("Vtbl")) {
+				continue;
+			}
+			for (DataTypeComponent c : ((Structure) mine).getDefinedComponents()) {
+				if (c.getDataType() instanceof Pointer &&
+					((Pointer) c.getDataType()).getDataType() instanceof FunctionDefinition) {
+					FunctionDefinition fd =
+						(FunctionDefinition) ((Pointer) c.getDataType()).getDataType();
+					fd.setCallingConvention("__stdcall");
+					try {
+						fd.setName(mine.getName().replace("Vtbl", "") + "_" + c.getFieldName());
+					}
+					catch (Exception e) {
+						// keep the generated name
+					}
+				}
+			}
+		}
+		println("ApplyWatcom: " + parser.getComposites().size() + " structures and " +
+			parser.getTypes().size() + " types parsed from " + h.getName());
+	}
+
 	private void defineStructs(File tsv) throws Exception {
 		if (!tsv.exists()) {
 			return;
 		}
-		openWindowsArchive();
+		if (winArchive == null) {
+			openWindowsArchive();
+		}
 		Map<String, List<String[]>> fields = new java.util.LinkedHashMap<>();
 		try (BufferedReader r = new BufferedReader(new FileReader(tsv))) {
 			String line;

@@ -329,7 +329,7 @@ int __watcall load_pcx_file(char *filename_val,int param_2)
   int iVar1;
   __iobuf *file;
   int iVar2;
-  long lVar3;
+  HRESULT HVar3;
   char *arg4;
   int iVar4;
   int iVar5;
@@ -340,14 +340,8 @@ int __watcall load_pcx_file(char *filename_val,int param_2)
   int local_b0;
   int local_ac;
   int local_74;
-  undefined4 local_34;
-  undefined4 local_30;
-  int local_2c;
-  int local_28;
-  undefined4 local_24;
-  undefined4 local_20;
-  int local_1c;
-  int local_18;
+  RECT rect;
+  RECT rect_2;
   
   file = xvga_src_fopen(filename_val);
   if (file == (__iobuf *)0x0) {
@@ -390,18 +384,18 @@ int __watcall load_pcx_file(char *filename_val,int param_2)
           do_screen_update();
         }
         else {
-          local_34 = 0;
-          local_30 = 0;
-          local_2c = local_74 >> 0x10;
-          local_24 = 0;
-          local_20 = 0;
-          local_18 = xvga_screen_ysize;
-          local_1c = xvga_screen_xsize;
-          local_28 = unaff_EBP;
-          lVar3 = (**(code **)(*(int *)xvga_screen + 0x14))
-                            (xvga_screen,&local_24,xvga_buffer_screen,&local_34,0,0);
-          if (lVar3 != 0) {
-            arg4 = dd_error_string(lVar3);
+          rect.left = 0;
+          rect.top = 0;
+          rect.right = local_74 >> 0x10;
+          rect_2.left = 0;
+          rect_2.top = 0;
+          rect_2.bottom = xvga_screen_ysize;
+          rect_2.right = xvga_screen_xsize;
+          rect.bottom = unaff_EBP;
+          HVar3 = (*xvga_screen->lpVtbl->Blt)
+                            (xvga_screen,&rect_2,xvga_buffer_screen,&rect,0,(DDBLTFX *)0x0);
+          if (HVar3 != 0) {
+            arg4 = dd_error_string(HVar3);
             fatal_exit(s__s__d____blitting_error___s___00449030,s_rcpcx_cpp_00449026,0x166,arg4);
           }
         }
@@ -703,7 +697,7 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
   __iobuf *file;
   int iVar2;
   IDirectDrawSurface *direct_draw_surface;
-  long lVar3;
+  HRESULT HVar3;
   char *arg4;
   int iVar4;
   int iVar5;
@@ -715,14 +709,8 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
   short sStack_b4;
   short sStack_b2;
   int local_7c;
-  undefined4 local_3c;
-  undefined4 local_38;
-  int local_34;
-  int local_30;
-  int *local_2c;
-  undefined4 local_28;
-  int local_24;
-  int local_20;
+  RECT rect;
+  RECT rect_2;
   int local_1c;
   int local_18;
   IDirectDrawSurface *direct_draw_surface_2;
@@ -757,28 +745,29 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
       debugmsg(s__s__d____no_error_header_read__0044930b,s_rcpcx_cpp_00449301,0x27c);
       get_surface_info(direct_draw_surface_3,&local_1c,&local_18);
       if ((local_bc == '\n') && (local_bb == '\x05')) {
-        local_24 = ((int)sStack_b4 - (int)sStack_b8) + 1;
-        local_28 = 0;
-        local_2c = (int *)0x0;
-        local_38 = 0;
+        rect_2.right = ((int)sStack_b4 - (int)sStack_b8) + 1;
+        rect_2.top = 0;
+        rect_2.left = 0;
+        rect.top = 0;
         iVar4 = ((int)sStack_b2 - (int)local_b6) + 1;
-        local_3c = 0;
-        local_30 = local_18;
-        local_34 = local_1c;
-        local_20 = iVar4;
-        direct_draw_surface = create_surface(local_24,iVar4);
+        rect.left = 0;
+        rect.bottom = local_18;
+        rect.right = local_1c;
+        rect_2.bottom = iVar4;
+        direct_draw_surface = create_surface(rect_2.right,iVar4);
         direct_draw_surface_2 = direct_draw_surface;
         debugmsg(s_creation_succesfull_0044932d);
         unpack_pcx_file_surface(direct_draw_surface,file,local_7c >> 0x10,iVar4);
         debugmsg(s_blitting_to_destination_00449342);
-        lVar3 = (**(code **)(*(int *)direct_draw_surface_3 + 0x14))
-                          (direct_draw_surface_3,&local_3c,direct_draw_surface,&local_2c,0,0);
-        if (lVar3 != 0) {
-          arg4 = dd_error_string(lVar3);
+        HVar3 = (*direct_draw_surface_3->lpVtbl->Blt)
+                          (direct_draw_surface_3,&rect,direct_draw_surface,&rect_2,0,(DDBLTFX *)0x0)
+        ;
+        if (HVar3 != 0) {
+          arg4 = dd_error_string(HVar3);
           fatal_exit(s__s__d____blitting_error___s__00449365,s_rcpcx_cpp_0044935b,0x294,arg4);
         }
         debugmsg(s_Release_buffer_surface_00449384);
-        (**(code **)(*local_2c + 8))(local_2c);
+        (*direct_draw_surface_2->lpVtbl->Release)(direct_draw_surface_2);
       }
       debugmsg(s__s__d____closing_004493a6,s_rcpcx_cpp_0044939c,0x29a);
       iVar4 = 0;
@@ -797,14 +786,14 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
 
 int __watcall
 load_pcx_file_surface_4
-          (char *filename_val,IDirectDrawSurface *direct_draw_surface_3,int param_3,int param_4,
+          (char *filename_val,IDirectDrawSurface *direct_draw_surface_2,int param_3,int param_4,
           int param_5)
 
 {
   __iobuf *file;
   int iVar1;
   IDirectDrawSurface *direct_draw_surface;
-  long lVar2;
+  HRESULT HVar2;
   char *arg4;
   char local_c0;
   char local_bf;
@@ -813,19 +802,13 @@ load_pcx_file_surface_4
   short sStack_b8;
   short sStack_b6;
   int local_80;
-  undefined4 local_40;
-  undefined4 local_3c;
-  int local_38;
-  int local_34;
-  int local_30;
-  int local_2c;
-  int *local_28;
-  int local_24;
+  RECT rect;
+  RECT rect_2;
   int local_20;
   int local_1c;
   int local_18;
   __iobuf *src_fopen;
-  IDirectDrawSurface *direct_draw_surface_2;
+  IDirectDrawSurface *direct_draw_surface_3;
   
   local_18 = param_4;
   file = xvga_src_fopen(filename_val);
@@ -838,30 +821,31 @@ load_pcx_file_surface_4
     debugmsg(s__s__d____header_read__004493c4,s_rcpcx_cpp_004493ba,0x2b2);
     if (((byte)file[0xc] & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__004493e7,s_rcpcx_cpp_004493dd,0x2b8);
-      get_surface_info(direct_draw_surface_3,&local_20,&local_1c);
+      get_surface_info(direct_draw_surface_2,&local_20,&local_1c);
       if ((local_c0 == '\n') && (local_bf == '\x05')) {
         iVar1 = ((int)sStack_b6 - (int)local_ba) + 1;
-        local_38 = ((int)sStack_b8 - (int)sStack_bc) + 1;
-        local_3c = 0;
-        local_40 = 0;
-        local_28 = (int *)(param_3 + local_38);
-        local_2c = local_18;
-        local_24 = local_18 + iVar1;
-        local_34 = iVar1;
-        local_30 = param_3;
-        direct_draw_surface = create_surface(local_38,iVar1);
-        direct_draw_surface_2 = direct_draw_surface;
+        rect.right = ((int)sStack_b8 - (int)sStack_bc) + 1;
+        rect.top = 0;
+        rect.left = 0;
+        rect_2.right = param_3 + rect.right;
+        rect_2.top = local_18;
+        rect_2.bottom = local_18 + iVar1;
+        rect.bottom = iVar1;
+        rect_2.left = param_3;
+        direct_draw_surface = create_surface(rect.right,iVar1);
+        direct_draw_surface_3 = direct_draw_surface;
         debugmsg(s_creation_succesfull_00449409);
         unpack_pcx_file_surface(direct_draw_surface,file,local_80 >> 0x10,iVar1);
         debugmsg(s_blitting_to_destination_0044941e);
-        lVar2 = (**(code **)(*(int *)direct_draw_surface_3 + 0x14))
-                          (direct_draw_surface_3,&local_30,direct_draw_surface,&local_40,0,0);
-        if (lVar2 != 0) {
-          arg4 = dd_error_string(lVar2);
+        HVar2 = (*direct_draw_surface_2->lpVtbl->Blt)
+                          (direct_draw_surface_2,&rect_2,direct_draw_surface,&rect,0,(DDBLTFX *)0x0)
+        ;
+        if (HVar2 != 0) {
+          arg4 = dd_error_string(HVar2);
           fatal_exit(s__s__d____blitting_error___s__00449441,s_rcpcx_cpp_00449437,0x2d0,arg4);
         }
         debugmsg(s_Release_buffer_surface_00449460);
-        (**(code **)(*local_28 + 8))(local_28);
+        (*direct_draw_surface_3->lpVtbl->Release)(direct_draw_surface_3);
       }
       debugmsg(s__s__d____closing_00449482,s_rcpcx_cpp_00449478,0x2d6);
       file = src_fopen;

@@ -140,40 +140,39 @@ int __watcall init_frame3d(void)
 
 /* ==== 0042c151 free_frame3d ==== */
 
-void __watcall free_frame3d(void)
+void __watcall free_frame3d(int param_1)
 
 {
-  int in_EAX;
   int *piVar1;
   HLOCAL pvVar2;
   int iVar3;
   int i;
   int iVar4;
   
-  if (*(char *)(frames3d + 0x10 + in_EAX * 0x11) != '\0') {
+  if (*(char *)(frames3d + 0x10 + param_1 * 0x11) != '\0') {
     iVar4 = 0;
-    for (i = 0; piVar1 = (int *)(frames3d + in_EAX * 0x11), i < *piVar1; i = i + 1) {
+    for (i = 0; piVar1 = (int *)(frames3d + param_1 * 0x11), i < *piVar1; i = i + 1) {
       piVar1 = (int *)(iVar4 + piVar1[1]);
       iVar4 = iVar4 + 4;
       *(undefined1 *)(weg_points + 0x20 + *piVar1 * 0x21) = 0;
     }
     pvVar2 = LocalFree((HLOCAL)piVar1[1]);
     if (pvVar2 != (HLOCAL)0x0) {
-      fatal_exit(s__s__d____error_vertices_in_freei_00451c7c,in_EAX,s_frame3d_cpp_00451c70,0xac);
+      fatal_exit(s__s__d____error_vertices_in_freei_00451c7c,param_1,s_frame3d_cpp_00451c70,0xac);
     }
     iVar4 = 0;
-    debugmsg(s_frame__d_freed_vertex_array_00451cab);
-    for (i = 0; iVar3 = frames3d + in_EAX * 0x11, i < *(int *)(iVar3 + 8); i = i + 1) {
+    debugmsg(s_frame__d_freed_vertex_array_00451cab,param_1);
+    for (i = 0; iVar3 = frames3d + param_1 * 0x11, i < *(int *)(iVar3 + 8); i = i + 1) {
       piVar1 = (int *)(iVar4 + *(int *)(iVar3 + 0xc));
       iVar4 = iVar4 + 4;
       *(undefined1 *)(triangles3d + 8 + *piVar1 * 9) = 0;
     }
     pvVar2 = LocalFree(*(HLOCAL *)(iVar3 + 0xc));
     if (pvVar2 != (HLOCAL)0x0) {
-      fatal_exit(s__s__d____error_triangles_in_free_00451cd6,in_EAX,s_frame3d_cpp_00451cca,0xb8);
+      fatal_exit(s__s__d____error_triangles_in_free_00451cd6,param_1,s_frame3d_cpp_00451cca,0xb8);
     }
-    debugmsg(s_frame__d_freed_triangle_array_00451d06);
-    i = in_EAX * 0x11;
+    debugmsg(s_frame__d_freed_triangle_array_00451d06,param_1);
+    i = param_1 * 0x11;
     *(undefined4 *)(frames3d + i) = 0;
     *(undefined4 *)(frames3d + 8 + i) = 0;
     *(undefined1 *)(frames3d + 0x10 + i) = 0;
