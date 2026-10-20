@@ -1,0 +1,17 @@
+[package]
+name = "a2racer"
+version = "0.1.0"
+edition = "2021"
+description = "A2 Racer (Davilex, 1997) ported to Rust on SDL2 and OpenGL"
+publish = false
+
+[features]
+# Release builds: SDL2 compiled from source and linked in (no SDL2 needed at run time).
+static = ["sdl2/bundled", "sdl2/static-link"]
+
+[dependencies]
+sdl2 = "0.37"
+fontdue = "0.9"
+
+[profile.release]
+debug = 1
