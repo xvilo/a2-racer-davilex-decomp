@@ -49,6 +49,10 @@ For each module the script runs `rea analyze` (Ghidra provider, with a snapshot 
 
 `tools/split_sources.py` then splits the C export into the original source files.
 
+## Port
+
+`port/` is a clean C rewrite on SDL2 for Windows, Linux and macOS, built from the decompiled reference. The main menu already runs; see [port/README.md](port/README.md).
+
 ## Game data
 
 `tools/a2extract.py <disc> <out>` unpacks the resource archives and converts images to PNG (standard library only). Keep its output out of the repo, since it is the game's own data.
