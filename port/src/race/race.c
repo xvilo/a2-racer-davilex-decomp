@@ -9,11 +9,13 @@
 #include "menu/infio.h"
 #include "platform/gl.h"
 #include "platform/sys.h"
+#include "race/bonus.h"
 #include "race/camera.h"
 #include "race/driver.h"
 #include "race/hud.h"
 #include "race/object3d.h"
 #include "race/opponent.h"
+#include "race/pion.h"
 #include "race/player.h"
 #include "race/race_files.h"
 #include "race/race_main.h"
@@ -315,7 +317,7 @@ static void set_all_objects(void)
 		place_rival_racers(weg_chunk_count - 0xf);
 		place_police_cars();
 		scatter_traffic(police_count + 6, 0x1e);
-		/* TODO: place_random_pionnen */
+		place_random_pionnen();
 		place_static_object_on_road(0x17, 0xf, 1, 1, 0x3c);
 		place_static_object_on_road(0x16, weg_chunk_count - 0x10, 1, 1, 0x3c);
 	}
@@ -325,7 +327,7 @@ static void set_all_objects(void)
 		place_rival_racers(0xf);
 		place_police_cars();
 		scatter_traffic(police_count + 6, 0x1e);
-		/* TODO: place_random_pionnen */
+		place_random_pionnen();
 		place_static_object_on_road(0x16, 0x10, 2, 1, 0x3c);
 		place_static_object_on_road(0x17, weg_chunk_count - 0xf, 2, 1, 0x3c);
 	}
@@ -573,9 +575,11 @@ static int run(game_t *g)
 	init_controls();
 	if (horizon_on)
 		load_static_object(0, 0.0f, 0.0f, 0);
+	init_pionnen();
 	set_all_objects();
 	if (detail_level == 1)
 		init_static_objects(track_index);
+	place_all_bonus_items();
 	race_state = RACE_INTRO;
 	intro_started = countdown_started = finish_started = 0;
 	start_camera_intro();
@@ -599,6 +603,8 @@ static int run(game_t *g)
 			restart_time_clock();
 		update_time_left();
 		draw_dashboard();
+		draw_bonus_status();
+		update_pionnen();
 		update_race();
 		hud_end();
 		sys_gl_swap();
@@ -666,6 +672,8 @@ static int run(game_t *g)
 
 static void free_race(void)
 {
+	free_bonus();
+	free_pionnen();
 	exit_drivers();
 	exit_opponent_map();
 }

@@ -44,6 +44,7 @@ typedef char opponent_size_check[sizeof(opponent_t) == 0x100 ? 1 : -1];
 
 extern opponent_t *opponent_data;
 extern int opponent_count;
+extern int opponents_used; /* slots handed out so far */
 
 int init_opponents(int count);
 void exit_opponents(void);
@@ -58,6 +59,8 @@ void collide_player_with_track_ends(void);
 /* The lane (0..10) a car is in, or -1 off the road. */
 int get_racer_lane(int opponent);
 extern int police_max_speed, racer_speed;
+/* lane_offsets: the lanes' distances from the centre (positive: to the right). */
+extern const float lane_offsets[11];
 
 /* A car of a type (index into car_types) for a kind of driver; returns its object. */
 int create_opponent(int car_type, int kind);

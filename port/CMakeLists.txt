@@ -47,7 +47,9 @@ add_executable(a2racer
 	src/menu/txttool.c
 	src/race/camera.c
 	src/race/driver.c
+	src/race/bonus.c
 	src/race/hud.c
+	src/race/pion.c
 	src/race/mapexec.c
 	src/race/math3d.c
 	src/race/object3d.c

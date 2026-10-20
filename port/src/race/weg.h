@@ -41,6 +41,7 @@ extern weg_section_t *weg_sections;
 extern weg_chunk_t *weg_chunks;
 extern int *weg_chunk_quads; /* chunk index per track point */
 extern int weg_chunk_count;
+extern int weg_section_count; /* chunks allocated */
 extern int road_texture, grass_texture;
 
 /* Loads a track; `max_side` limits the ground strips (20 in the original). */

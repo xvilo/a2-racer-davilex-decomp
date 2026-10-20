@@ -6,6 +6,9 @@
 #define STATIC_OBJECT_TYPES 48
 
 void load_static_object_textures(void);
+/* A new object of the type, its model and texture loaded (shared by every object of
+ * the type), with an identity matrix; bonus.cpp and pion.cpp repeat this code. */
+int new_static_object(int type);
 /* A free-standing object of a type at (x, z), facing `heading` (the sky: type 0). */
 int load_static_object(int type, float x, float z, int heading);
 /* An object beside the road: at chunk, centred (position 0), on the road's left or

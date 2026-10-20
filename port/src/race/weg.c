@@ -15,7 +15,7 @@ int weg_chunk_count;
 int road_texture = -1, grass_texture = -1;
 
 static int weg_section_capacity, weg_lane_chunks;
-static int weg_section_count; /* chunks allocated */
+int weg_section_count; /* chunks allocated */
 static int visible_first, visible_last;
 
 /* 8 x 8 tiles of 1/8 in the grass texture (init_tiles): each tile's four corners. */

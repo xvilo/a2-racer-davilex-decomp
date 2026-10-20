@@ -15,7 +15,7 @@
 
 opponent_t *opponent_data;
 int opponent_count;
-static int opponents_used;
+int opponents_used;
 int police_max_speed = 17, racer_speed = 16;
 
 /* The cars near the player that move this frame, and those near enough to collide. */
@@ -194,7 +194,7 @@ int get_racer_lane(int opponent)
 
 /* --- creating and placing (opponent.cpp) ----------------------------------------- */
 
-static const float lane_offsets[11] = {
+const float lane_offsets[11] = {
 	108.0f, 85.0f, 60.0f, 30.0f, 0.0f, 0.0f, 0.0f, -30.0f, -60.0f, -85.0f, -108.0f,
 };
 

@@ -58,7 +58,7 @@ void load_static_object_textures(void)
 }
 
 /* The type's model, loaded once and shared by every object of the type. */
-static int new_static_object(int type)
+int new_static_object(int type)
 {
 	int object = get_new_object3d();
 	object3d_t *o = &objects3d[object];

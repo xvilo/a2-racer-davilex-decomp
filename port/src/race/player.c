@@ -42,10 +42,6 @@ car_type_t car_types[CAR_TYPE_COUNT] = {
 	{ "viper.d3d", "r_viper.pcx", "r_viper.pcx", -1, -1, 10.0f, 0, 1500.0f },
 };
 
-/* lane_offsets: the lanes' distances from the centre (positive: to the right). */
-static const float lane_offsets[11] = {
-	108.0f, 85.0f, 60.0f, 30.0f, 0.0f, 0.0f, 0.0f, -30.0f, -60.0f, -85.0f, -108.0f,
-};
 
 /* Heading change per frame by steering position (0 full left .. 28 full right), and the
  * divisor by speed: faster cars turn less. */
