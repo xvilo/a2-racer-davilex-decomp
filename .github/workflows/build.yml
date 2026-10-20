@@ -109,10 +109,9 @@ jobs:
           path: a2racer-windows-x86_64.zip
 
   # Every push to main replaces the "latest" pre-release with these builds, so they can
-  # be downloaded without a GitHub account. Off while the port moves from C to Rust:
-  # the last release (from the C port) stays up until the Rust port runs the whole game.
+  # be downloaded without a GitHub account.
   release:
-    if: false
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [linux, macos, windows]
     runs-on: ubuntu-24.04
     permissions:
