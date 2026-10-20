@@ -207,3 +207,13 @@ edit_box_t	1c	void*	brush
 edit_box_t	20	uint	focus_background	COLORREF
 edit_box_t	24	uint	focus_foreground	COLORREF
 edit_box_t	28	void*	focus_brush	
+# mc_keyset_t: a key that can be assigned, with its name (m_bedien.cpp key_list).
+mc_keyset_t	00	int	vk	Windows virtual-key code
+mc_keyset_t	04	char*	name	
+# mc_config_key_t: one key setting on the controls screen (m_bedien.cpp config_key).
+mc_config_key_t	00	int	x	
+mc_config_key_t	04	int	y	
+mc_config_key_t	08	int	x2	
+mc_config_key_t	0c	int	y2	
+mc_config_key_t	10	char*	label	
+mc_config_key_t	14	int	key	

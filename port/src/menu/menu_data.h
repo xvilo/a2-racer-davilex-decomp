@@ -18,6 +18,8 @@ extern form_t mc_form[8];
 extern form_t mc_form_joy[7];
 extern help_t mc_help[6];
 extern help_t mc_help2[4];
+extern mc_keyset_t key_list[43];
+extern mc_config_key_t config_key[6];
 extern button_t mo_buttons[3];
 extern areabutton_t mo_areabuttons[18];
 extern form_t mo_form_3D[21];

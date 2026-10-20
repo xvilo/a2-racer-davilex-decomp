@@ -272,8 +272,11 @@ static SDL_Scancode vk_to_scancode(int vk)
 		return (SDL_Scancode)(SDL_SCANCODE_A + vk - 'A');
 	if (vk >= '1' && vk <= '9')
 		return (SDL_Scancode)(SDL_SCANCODE_1 + vk - '1');
+	if (vk >= 0x61 && vk <= 0x69)
+		return (SDL_Scancode)(SDL_SCANCODE_KP_1 + vk - 0x61);
 	switch (vk) {
 	case '0': return SDL_SCANCODE_0;
+	case 0x60: return SDL_SCANCODE_KP_0;
 	case 0x08: return SDL_SCANCODE_BACKSPACE;
 	case 0x09: return SDL_SCANCODE_TAB;
 	case 0x0d: return SDL_SCANCODE_RETURN;

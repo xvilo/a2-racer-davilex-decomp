@@ -1,4 +1,4 @@
-/* reqvraag.cpp and reqinput.cpp. */
+/* reqvraag.cpp, reqwarn.cpp and reqinput.cpp. */
 #include "menu/requesters.h"
 
 #include <stdarg.h>
@@ -79,6 +79,32 @@ int req_vraag(const char *fmt, ...)
 	}
 	req_close();
 	return !no;
+}
+
+int req_warning(const char *fmt, ...)
+{
+	char text[256];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(text, sizeof text, fmt, ap);
+	va_end(ap);
+	req_open(0x11, text);
+	activate_form(reqw_form);
+	focus_control(0);
+	sys_input in = { 0 };
+	for (;;) {
+		sys_poll(&in);
+		int r = handle_form(&in);
+		if (r == FORM_ESCAPE)
+			focus_control(0);
+		if (r == 0 || r == FORM_ESCAPE || r == FORM_QUIT)
+			break;
+		xvga_show();
+		sys_sleep(10);
+	}
+	wait_form_key_released();
+	req_close();
+	return 1;
 }
 
 int req_input(char *buf, int size, const char *fmt, ...)

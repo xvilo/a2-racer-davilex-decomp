@@ -48,10 +48,6 @@ grid_t	00	int	field_00
 grid_t	3c	-	__size	
 joystickstate_t	00	int	field_00	
 joystickstate_t	c0	-	__size	
-mc_config_key_t	00	int	field_00	
-mc_config_key_t	4	-	__size	
-mc_keyset_t	00	int	field_00	
-mc_keyset_t	1e8	-	__size	
 mdc_stand_t	00	int*	field_00	
 mdc_stand_t	8	-	__size	
 mem_image_t	1c	-	__size	

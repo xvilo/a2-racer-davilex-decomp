@@ -65,6 +65,19 @@ typedef struct {
 } mst_slot_t;
 typedef mst_slot_t mns_slot_t;
 
+/* A key that can be assigned, with its name (key_list). */
+typedef struct {
+	int vk; /* Windows virtual-key code */
+	const char *name;
+} mc_keyset_t;
+
+/* One key setting on the controls screen (config_key). */
+typedef struct {
+	int x, y, x2, y2;
+	const char *label;
+	int key;
+} mc_config_key_t;
+
 /* Help text for a control; a table ends with control_id -1. */
 typedef struct {
 	int control_id;

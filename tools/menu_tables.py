@@ -22,6 +22,8 @@ LAYOUTS = {
     'help_t': (8, '<iI', ('control_id', 'text')),
     'areabutton_t': (17, '<iiiib', ('width', 'height', 'image', 'field_0c', 'hotkey')),
     'mst_slot_t': (8, '<ii', ('x', 'y')),
+    'mc_keyset_t': (8, '<iI', ('vk', 'name')),
+    'mc_config_key_t': (24, '<iiiiIi', ('x', 'y', 'x2', 'y2', 'label', 'key')),
     'edit_box_t': (44, '<iiiiIIIIIII', ('width', 'height', 'max_chars', 'lines', 'text',
                                        'background', 'foreground', 'brush', 'focus_background',
                                        'focus_foreground', 'focus_brush')),
@@ -122,7 +124,7 @@ def main(binary, symbols, out):
                 if f in ('frames', 'control'):
                     r = ref(v)
                     parts.append(r if r else f'NULL /* {v:#x} */')
-                elif f == 'text':
+                elif f in ('text', 'name', 'label'):
                     parts.append(c_string(read, v) if v else 'NULL')
                 elif f in ('brush', 'focus_brush'):
                     continue
