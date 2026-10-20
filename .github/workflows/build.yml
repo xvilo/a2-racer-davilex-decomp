@@ -2,12 +2,28 @@ name: build
 
 on:
   push:
+    branches: ['**']
+    # A version tag builds the port and attaches the builds to the tag's release.
+    tags: ['v*']
   pull_request:
+  # A release made on GitHub (with a new tag, or a draft published later).
+  release:
+    types: [published]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Build this tag and attach the builds to its release (empty for an ordinary build)
+        required: false
+        default: ''
 
 # The port is Rust (port/Cargo.toml). Release builds use the `static` feature: SDL2 is
 # compiled from source and linked in, so the executables need nothing beyond the
 # system (on Linux SDL opens X11/Wayland, the sound server and OpenGL at run time).
+
+# Runs for the same tag (its push, its release, one started by hand) wait for each other.
+concurrency:
+  group: build-${{ inputs.tag || github.ref }}
+  cancel-in-progress: false
 
 env:
   # SDL 2.0's CMakeLists asks for CMake < 3.5, which CMake 4 (macOS and Windows runners)
@@ -19,6 +35,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - name: Dependencies (SDL's video, sound and input back ends)
         run: |
           sudo apt-get update
@@ -55,6 +73,8 @@ jobs:
       MACOSX_DEPLOYMENT_TARGET: "11.0"
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - name: Toolchains
         run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
       - name: Build (Apple Silicon and Intel)
@@ -87,6 +107,8 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - name: Build
         working-directory: port
         shell: bash
@@ -109,24 +131,64 @@ jobs:
           path: a2racer-windows-x86_64.zip
 
   # Every push to main replaces the "latest" pre-release with these builds, so they can
-  # be downloaded without a GitHub account.
+  # be downloaded without a GitHub account. A version tag (pushed, made with a release,
+  # or given to a run started by hand) gets its builds attached to its own release.
   release:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: >-
+      github.event_name != 'pull_request' &&
+      (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || inputs.tag != '')
     needs: [linux, macos, windows]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TAG: ${{ inputs.tag || (startsWith(github.ref, 'refs/tags/v') && github.ref_name) || '' }}
     steps:
       - uses: actions/download-artifact@v4
         with:
           path: dist
           merge-multiple: true
+      - name: Attach the builds to the tag's release
+        if: env.TAG != ''
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" dist/* --clobber
+          else
+            gh release create "$TAG" dist/* --verify-tag --title "$TAG" --generate-notes
+          fi
       - name: Publish the latest build
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
+        if: env.TAG == ''
         run: |
           gh release delete latest --yes --cleanup-tag || true
           gh release create latest dist/* --target "$GITHUB_SHA" --prerelease \
             --title "Latest build" \
             --notes "Automatic build of the port from ${GITHUB_SHA::7}. The game's data is not included: run it with --data pointing at the original A2 Racer CD image (.bin/.iso) or a copy of its files. See README.md in each archive."
+      # Version tags from before this job attached builds: the builds from the run that
+      # built the tag's commit on main (older tags may be the C port, which this workflow
+      # no longer builds), or, without one, a build of the tag started now.
+      - name: Attach builds to earlier version tags without them
+        if: env.TAG == ''
+        run: |
+          for tag in $(gh api "repos/$GH_REPO/tags" --paginate --jq '.[].name' | grep '^v' || true); do
+            assets=$(gh release view "$tag" --json assets --jq '.assets | length' 2> /dev/null || echo none)
+            [ "$assets" = 0 ] || [ "$assets" = none ] || continue
+            sha=$(gh api "repos/$GH_REPO/commits/$tag" --jq .sha)
+            run=$(gh run list --workflow build.yml --commit "$sha" --status success --limit 20 \
+              --json databaseId,event --jq '[.[] | select(.event == "push")][0].databaseId // empty')
+            rm -rf "backfill/$tag"
+            if [ -z "$run" ] || ! gh run download "$run" -D "backfill/$tag"; then
+              echo "$tag: no builds of $sha to reuse, starting a build of the tag"
+              gh workflow run build.yml --ref main -f tag="$tag"
+              continue
+            fi
+            files=$(find "backfill/$tag" -type f \( -name '*.zip' -o -name '*.tar.gz' \))
+            echo "$tag: attaching" $files "from run $run"
+            if [ "$assets" = none ]; then
+              gh release create "$tag" $files --verify-tag --title "$tag" --generate-notes
+            else
+              gh release upload "$tag" $files --clobber
+            fi
+          done
