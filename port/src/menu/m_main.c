@@ -10,6 +10,7 @@
 #include "menu/help.h"
 #include "menu/menu_data.h"
 #include "menu/menu_util.h"
+#include "menu/m_opties.h"
 #include "menu/mysound.h"
 #include "menu/optie.h"
 #include "menu/requesters.h"
@@ -234,8 +235,17 @@ int menu_main(game_t *g)
 			snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume));
 			activate_form(mm_form);
 			break;
+		case MM_OPTIONS: {
+			snd_play(&click, "click1.wav");
+			mm_close_screen(0);
+			snd_wait(&click);
+			int stage = slot_list[slot_check_index(active_slot)].stage;
+			menu_opties(game, &mm_tune_buffer, mm_tune[stage]);
+			update_active_slot_optie();
+			mm_open_screen_1(0);
+			break;
+		}
 		case MM_CONTROLS:
-		case MM_OPTIONS:
 		case MM_HISCORE:
 			snd_play(&click, "click1.wav");
 			fprintf(stderr, "menu_main: control %d is not ported yet\n", r);

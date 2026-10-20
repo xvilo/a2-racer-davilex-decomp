@@ -25,6 +25,7 @@ add_executable(a2racer
 	src/menu/forms.c
 	src/menu/help.c
 	src/menu/m_main.c
+	src/menu/m_opties.c
 	src/menu/m_start.c
 	src/menu/menu_util.c
 	src/menu/requesters.c
