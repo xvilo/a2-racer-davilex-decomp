@@ -37,6 +37,7 @@ enum { MI_CLIP = 1, MI_TOPLEFT = 2 };
 
 /* The menu sprites (A2MRC) used as mem images, numbered from 1. */
 void set_mem_images(const sprite_archive *images);
+const sprite_archive *get_mem_images(void);
 const sprite *get_mem_image(int index);
 void set_mem_image(int which, int image, int x, int y, int flags);
 /* Copies the rectangle (x1,y1)-(x2,y2) of screen src to the same place in dst. */

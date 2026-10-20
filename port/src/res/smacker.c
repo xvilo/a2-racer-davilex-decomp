@@ -419,11 +419,11 @@ static size_t decode_audio_chunk(const uint8_t *p, size_t len, int bits16, int s
 			pred[i] = (int)get_bits(&b, 8);
 		size_t i = 0;
 		for (; i <= (size_t)stereo && n < room; i++)
-			out[n++] = (int16_t)((pred[i] - 128) << 8);
+			out[n++] = (int16_t)((pred[i] - 128) * 256);
 		for (; i < samples && n < room; i++) {
 			int ch = (int)(i & (size_t)stereo);
 			pred[ch] = (pred[ch] + (int8_t)tree_decode(&t[ch], &b)) & 0xff;
-			out[n++] = (int16_t)((pred[ch] - 128) << 8);
+			out[n++] = (int16_t)((pred[ch] - 128) * 256);
 		}
 	}
 	for (int i = 0; i < 4; i++)

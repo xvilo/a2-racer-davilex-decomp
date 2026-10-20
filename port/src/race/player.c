@@ -75,11 +75,17 @@ static int steer_index = 14;      /* DAT_00457750: the position the car steers w
 static int accelerator_input;     /* 0 none yet, 1 forward, 2 reverse */
 static int wrong_way_warned;
 static int engine_started;
+static float autopilot_lane;      /* the autopilot test aid (A2_AUTOPILOT) */
+static int autopilot_blocked;
 
 void load_car_textures(void)
 {
-	for (int i = 0; i < CAR_TYPE_COUNT; i++)
+	/* Each race was a fresh process in the original; the port's cached model frames
+	 * belong to the previous race's 3D pools and must be loaded again. */
+	for (int i = 0; i < CAR_TYPE_COUNT; i++) {
 		car_types[i].texture_id = load_texture(car_types[i].texture, 0);
+		car_types[i].mesh_id = -1;
+	}
 }
 
 /* add_rpm_steps: `count` steps for a gear, speed and rpm rising evenly. */
@@ -124,6 +130,9 @@ void init_controls(void)
 	steering_position = steer_index = 14;
 	accelerator_input = 0;
 	wrong_way_warned = engine_started = 0;
+	steering_return_rate = 1.0f;
+	autopilot_lane = 0.0f;
+	autopilot_blocked = 0;
 }
 
 void select_rpm_step_for_speed(float speed)
@@ -217,8 +226,8 @@ static void update_accelerator(int input)
  * below police-alerting speed, so scripts can drive a whole stage. */
 #define RACE_AUTOPILOT_PATIENCE 30
 static int autopilot = -1;
-static float autopilot_lane;
 static float autopilot_speed;
+static int autopilot_refuel;
 
 static int autopilot_steer(void)
 {
@@ -227,6 +236,7 @@ static int autopilot_steer(void)
 		autopilot = mode != NULL;
 		/* "fast": full throttle, police or not. */
 		autopilot_speed = mode && !strcmp(mode, "fast") ? 16.0f : 9.0f;
+		autopilot_refuel = !mode || strcmp(mode, "nofuel") != 0;
 	}
 	if (!autopilot)
 		return 0;
@@ -235,22 +245,23 @@ static int autopilot_steer(void)
 	float lateral = (player_x - c->x) * ch->side[0] + (player_z - c->z) * ch->side[2];
 	if (autopilot_lane == 0.0f)
 		autopilot_lane = lateral;
-	/* The autopilot can't steer for the fuel pickups: it keeps the tank full. */
-	fuel = 300;
+	/* The autopilot can't steer for the fuel pickups: it keeps the tank full, except in
+	 * "nofuel" mode (to test running out). */
+	if (autopilot_refuel)
+		fuel = 300;
 	/* Stuck behind slower traffic for a second: the next lane on the same side. */
-	static int blocked;
 	if (race_running && player_speed < 6.0f)
-		blocked++;
+		autopilot_blocked++;
 	else
-		blocked = 0;
-	if (blocked > RACE_AUTOPILOT_PATIENCE) {
+		autopilot_blocked = 0;
+	if (autopilot_blocked > RACE_AUTOPILOT_PATIENCE) {
 		static const float lanes[3] = { 30.0f, 60.0f, 85.0f };
 		float side = autopilot_lane < 0.0f ? -1.0f : 1.0f;
 		int i = 0;
 		while (i < 3 && lanes[i] < fabsf(autopilot_lane) - 1.0f)
 			i++;
 		autopilot_lane = side * lanes[(i + 1) % 3];
-		blocked = 0;
+		autopilot_blocked = 0;
 	}
 	/* Aim 160 ahead on the road at the lane's offset. */
 	int ahead = player_chunk + (track_info[track_index].direction == 1 ? 2 : -2);

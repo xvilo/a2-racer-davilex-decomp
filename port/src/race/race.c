@@ -554,8 +554,18 @@ static void read_tweaks(void)
 		civilian_count = 0x96;
 }
 
+/* The race's own state back to how a fresh A2SPEL.DAT process starts. */
+static void reset_race_state(void)
+{
+	countdown_seconds = countdown_last_tick = countdown_step = 0;
+	intro_started = countdown_started = finish_started = finish_frame = 0;
+	fine_count = current_fine = 0;
+	radar_on = 1;
+}
+
 static int run(game_t *g)
 {
+	reset_race_state();
 	read_tweaks();
 	init_race_settings();
 	init_math3d();
@@ -565,8 +575,7 @@ static int run(game_t *g)
 	load_samples();
 	if (init_hud(g))
 		return 1;
-	if (texture_filtering)
-		set_texture_filter(1);
+	set_texture_filter(texture_filtering);
 	/* init_anims_and_standard_textures */
 	int objects = 0x9c + police_count + civilian_count + 400;
 	if (alloc_objects3d(objects) || alloc_3d_arrays(objects, objects, 200000, 100000)) {
@@ -681,7 +690,6 @@ static int run(game_t *g)
 	}
 	infio.race_finished = (uint8_t)(race_finished_ok != 0);
 	save_infio();
-	exit_hud();
 	(void)g;
 	return 0;
 }
@@ -703,6 +711,7 @@ int race_main(game_t *g)
 	if (race_files_open(g->data_dir))
 		return 1;
 	int r = run(g);
+	exit_hud();
 	xvga_set_sound_files(&g->menu_files, 0x28);
 	free_race();
 	exit_opponents();

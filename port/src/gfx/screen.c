@@ -63,6 +63,11 @@ void set_mem_images(const sprite_archive *images)
 	mem_images = images;
 }
 
+const sprite_archive *get_mem_images(void)
+{
+	return mem_images;
+}
+
 /* Mem image numbers start at 1: image n is sprite n - 1 of the archive (a button's
  * pressed frame and the first stage's map only line up that way). */
 const sprite *get_mem_image(int index)

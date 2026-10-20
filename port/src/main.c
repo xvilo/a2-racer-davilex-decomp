@@ -215,13 +215,17 @@ int main(int argc, char **argv)
 		result = race_view(&g, view_stage);
 	}
 	else if (race_stage >= 0) {
-		win_open_menu();
-		reset_infio();
-		infio.stage = (int16_t)race_stage;
-		save_infio();
-		result = race_main(&g);
-		printf("race: finished %d, position %d, time %d s\n", infio.race_finished,
-			infio.position, infio.time);
+		/* A2_RACE_REPEAT (testing): several races in one run, as the launcher's loop does. */
+		const char *repeat = getenv("A2_RACE_REPEAT");
+		for (int k = repeat ? atoi(repeat) : 1; k > 0 && !sys_quit_requested(); k--) {
+			win_open_menu();
+			reset_infio();
+			infio.stage = (int16_t)race_stage;
+			save_infio();
+			result = race_main(&g);
+			printf("race: finished %d, position %d, time %d s\n", infio.race_finished,
+				infio.position, infio.time);
+		}
 	}
 	else if (g.screenshot) {
 		win_open_menu();

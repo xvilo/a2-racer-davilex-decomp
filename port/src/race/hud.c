@@ -63,16 +63,21 @@ static const struct {
 };
 
 static sprite_archive gamespr;
+/* The menu's sprites, back in place after the race (a separate program in the original). */
+static const sprite_archive *menu_images;
+static int hud_open;
 static uint8_t dashboard_picture[SCREEN_W * SCREEN_H]; /* surscrn.pcx */
 static uint8_t race_palette[768];
 
 int init_hud(game_t *g)
 {
+	menu_images = get_mem_images();
 	if (sprite_archive_open(&gamespr, g->data_dir, "GAMESPR")) {
 		fprintf(stderr, "cannot read GAMESPR\n");
 		return -1;
 	}
 	set_mem_images(&gamespr);
+	hud_open = 1;
 	/* The race's palette comes with the dashboard picture. */
 	size_t size;
 	const uint8_t *data = race_file("surscrn.pcx", &size);
@@ -90,7 +95,10 @@ int init_hud(game_t *g)
 
 void exit_hud(void)
 {
-	set_mem_images(NULL);
+	if (!hud_open)
+		return;
+	hud_open = 0;
+	set_mem_images(menu_images);
 	sprite_archive_close(&gamespr);
 }
 

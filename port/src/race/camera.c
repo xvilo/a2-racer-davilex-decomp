@@ -30,6 +30,12 @@ static int atan_table[1000];
 
 void init_cameras(void)
 {
+	camera_x = camera_y = camera_z = 0.0f;
+	camera_yaw = camera_pitch = 0.0f;
+	camera_tilt = camera_roll = 0.0f;
+	camera_lag_xz = camera_lag_y = 0.0f;
+	watched_opponent = look_offset = 0;
+	car_pitch = car_yaw = car_roll = 0;
 	for (int j = 0; j < 1000; j++) {
 		double a = atan2((float)(0 + 1 * j), -61.0);
 		atan_table[j] = (int)(-(((1.570798 - a) * 256.0) / 1.570798 + 256.0) + 0.5);

@@ -36,7 +36,8 @@ static void chunk(FILE *f, const char *tag, const uint8_t *body, uint32_t n)
 	put32(head, n);
 	memcpy(head + 4, tag, 4);
 	fwrite(head, 1, 8, f);
-	fwrite(body, 1, n, f);
+	if (n)
+		fwrite(body, 1, n, f);
 	uint32_t crc = crc32_update(crc32_update(0, (const uint8_t *)tag, 4), body, n);
 	put32(head, crc);
 	fwrite(head, 1, 4, f);

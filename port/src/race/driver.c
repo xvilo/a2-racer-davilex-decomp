@@ -408,6 +408,12 @@ static void drive_civilian(driver_t *d)
 	int front[MAP_LANES], back[MAP_LANES];
 	int lane = o->lane, step = o->direction == 1 ? 1 : -1;
 	scan_lanes_ahead(front, back, d->opponent, o->chunk, 9, 3, o->direction);
+	/* Off the road (lane -1) the original read outside its lane arrays; the port keeps
+	 * the car at its speed until it is back in a lane. */
+	if (lane < 0 || lane >= MAP_LANES) {
+		o->max_speed = d->speed;
+		return;
+	}
 	if (d->lane != lane) {
 		/* Out of its lane (overtaking): back when there is room. */
 		int other = lane - step;
