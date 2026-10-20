@@ -32,6 +32,8 @@ public class ApplyWatcom extends GhidraScript {
 
 	static final String WATCALL = "__watcall";
 	static final String CC_TAG = "CC=";
+	// Marks a signature taken from symbols; InferSignatures.java leaves those alone.
+	static final String SIG_TAG = "SIGNATURE";
 	static final boolean DEBUG = Boolean.getBoolean("a2.debug");  // tag prefix recording the convention from symbols
 
 	static final String WATCALL_XML =
@@ -55,6 +57,47 @@ public class ApplyWatcom extends GhidraScript {
 		"  </unaffected>\n" +
 		"</prototype>\n";
 
+	/**
+	 * __watcallN: Watcom's register convention for a function with N register parameters.
+	 * A Watcom function preserves every register except EAX (the result) and the argument
+	 * registers it takes, so the argument registers past N are unaffected by a call.
+	 * InferSignatures.java picks N per function.
+	 */
+	static String watcallXml(int n) {
+		String[] regs = { "EAX", "EDX", "EBX", "ECX" };
+		StringBuilder unaffected = new StringBuilder(
+			"    <register name=\"ESP\"/><register name=\"EBP\"/><register name=\"ESI\"/>" +
+				"<register name=\"EDI\"/>");
+		for (int i = Math.max(n, 1); i < 4; i++) {
+			unaffected.append("<register name=\"").append(regs[i]).append("\"/>");
+		}
+		return WATCALL_XML.replace("name=\"__watcall\"", "name=\"__watcall" + n + "\"")
+			.replaceAll("(?s)<unaffected>.*</unaffected>",
+				"<unaffected>\n" + unaffected + "\n  </unaffected>");
+	}
+
+	/**
+	 * Watcom variadic functions take every argument on the stack (the caller pops them)
+	 * but, unlike Microsoft's __cdecl, preserve every register except EAX.
+	 */
+	static final String VARARGS = "__watcall_varargs";
+	static final String VARARGS_XML =
+		"<prototype name=\"" + VARARGS + "\" extrapop=\"4\" stackshift=\"4\">\n" +
+		"  <input>\n" +
+		"    <pentry minsize=\"1\" maxsize=\"500\" align=\"4\"><addr offset=\"4\" space=\"stack\"/></pentry>\n" +
+		"  </input>\n" +
+		"  <output>\n" +
+		"    <pentry minsize=\"4\" maxsize=\"10\" metatype=\"float\"><register name=\"ST0\"/></pentry>\n" +
+		"    <pentry minsize=\"1\" maxsize=\"4\"><register name=\"EAX\"/></pentry>\n" +
+		"    <pentry minsize=\"5\" maxsize=\"8\"><addr space=\"join\" piece1=\"EDX\" piece2=\"EAX\"/></pentry>\n" +
+		"  </output>\n" +
+		"  <unaffected>\n" +
+		"    <register name=\"ESP\"/><register name=\"EBP\"/><register name=\"ESI\"/>\n" +
+		"    <register name=\"EDI\"/><register name=\"EBX\"/><register name=\"ECX\"/>\n" +
+		"    <register name=\"EDX\"/>\n" +
+		"  </unaffected>\n" +
+		"</prototype>\n";
+
 	private DataTypeManager winArchive;
 
 	@Override
@@ -62,7 +105,12 @@ public class ApplyWatcom extends GhidraScript {
 		String[] args = getScriptArgs();
 		String mode = args.length > 0 ? args[0] : "post";
 		if (mode.equals("pre")) {
-			new SpecExtension(currentProgram).addReplaceCompilerSpecExtension(WATCALL_XML, monitor);
+			SpecExtension spec = new SpecExtension(currentProgram);
+			spec.addReplaceCompilerSpecExtension(WATCALL_XML, monitor);
+			for (int n = 0; n <= 4; n++) {
+				spec.addReplaceCompilerSpecExtension(watcallXml(n), monitor);
+			}
+			spec.addReplaceCompilerSpecExtension(VARARGS_XML, monitor);
 			// This heuristic marks a function non-returning when calls to it sit right before
 			// another function's start. With every symbol created up front that misfires (it
 			// marked debugmsg non-returning and cut code after 164 call sites). Library exits
@@ -128,6 +176,7 @@ public class ApplyWatcom extends GhidraScript {
 						funcs++;
 						if (!ret.isEmpty() && !params.equals("?")) {
 							setSignature(f, cc, ret, params);
+							f.addTag(SIG_TAG);
 							typed++;
 						}
 						else if (!cc.isEmpty()) {
@@ -533,7 +582,7 @@ public class ApplyWatcom extends GhidraScript {
 				// function whose RET pops exactly 4 bytes per parameter is really __stdcall
 				// (window procedures and other callbacks).
 				int n = f.getParameterCount();
-				String want = f.hasVarArgs() ? "__cdecl" : intended;
+				String want = f.hasVarArgs() ? VARARGS : intended;
 				if (want.equals(WATCALL) && n > 0 && n <= 4 && pop == 4 * n) {
 					want = "__stdcall";
 				}

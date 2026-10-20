@@ -3,27 +3,33 @@
 
 /* ==== 00420c0d InitFiles ==== */
 
-void __watcall InitFiles(undefined4 param_1,size_t unaff_EDX)
+undefined4 * __watcall InitFiles(void)
 
 {
+  undefined4 in_EAX;
+  undefined4 *puVar1;
   undefined4 *buffer;
-  undefined *puVar1;
+  undefined *puVar2;
   
-  DAT_00436021 = DAT_00436021 & 0xf8 | 4;
-  for (puVar1 = &iob; *(int *)(puVar1 + 0xc) != 0; puVar1 = puVar1 + 0x1a) {
-    buffer = malloc(8);
+  puVar1 = (undefined4 *)
+           (CONCAT22((short)((uint)in_EAX >> 0x10),CONCAT11(DAT_00436021,(char)in_EAX)) & 0xfffff8ff
+           );
+  DAT_00436021 = (byte)((uint)puVar1 >> 8) | 4;
+  for (puVar2 = &iob; *(int *)(puVar2 + 0xc) != 0; puVar2 = puVar2 + 0x1a) {
+    buffer = (undefined4 *)malloc(8);
     if (buffer == (undefined4 *)0x0) {
-      buffer = malloc(8);
+      buffer = (undefined4 *)malloc(8);
       if (buffer == (undefined4 *)0x0) {
-        fatal_runtime_error(s_Not_enough_memory_to_allocate_fi_00431e00);
+        fatal_runtime_error(s_Not_enough_memory_to_allocate_fi_00431e00,1);
       }
     }
-    buffer[1] = puVar1;
+    puVar1 = OpenStreams;
+    buffer[1] = puVar2;
     *buffer = OpenStreams;
     OpenStreams = buffer;
   }
-  ClosedStreams = *(int *)(puVar1 + 0xc);
-  return;
+  ClosedStreams = *(int *)(puVar2 + 0xc);
+  return puVar1;
 }
 
 

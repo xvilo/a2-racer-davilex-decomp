@@ -6,10 +6,8 @@
 void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
 
 {
+  int iVar1;
   char *env_value;
-  int first_cdrom;
-  int extraout_EDX;
-  longlong access_1_result;
   char local_108 [260];
   
   if (param_1 == (char *)0x0) {
@@ -20,22 +18,21 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     cd_directory = param_1;
     sprintf(local_108,s_x__s__s_0042caf8,param_1,param_2);
   }
-  env_value = getenv(s_NOCD_0042cb08);
-  if (env_value == (char *)0x0) {
-    first_cdrom = xvga_get_first_cdrom();
-    if (first_cdrom == -1) {
+  iVar1 = getenv(s_NOCD_0042cb08);
+  if (iVar1 == 0) {
+    iVar1 = xvga_get_first_cdrom();
+    if (iVar1 == -1) {
       fatal_exit(s_fatal_error___no_program_cdrom_w_0042cb12);
-      first_cdrom = extraout_EDX;
     }
-    cd_drive = (char)first_cdrom;
+    cd_drive = (char)iVar1;
     local_108[0] = cd_drive;
-    access_1_result = access_1(local_108,0);
-    if ((int)access_1_result != 0) {
+    iVar1 = access_1(local_108,0);
+    if (iVar1 != 0) {
       fatal_exit(s_program_installation_check_faile_0042cb3c);
     }
   }
   else {
-    env_value = getenv(s_NOCD_0042cb0d);
+    env_value = (char *)getenv(s_NOCD_0042cb0d);
     cd_drive = *env_value;
   }
   return;
@@ -47,7 +44,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
 char * __watcall file_path(char *filename,char *param_2)
 
 {
-  FILE *_File;
+  int file;
   byte abStack_310 [256];
   byte local_210 [256];
   byte local_110 [256];
@@ -56,13 +53,13 @@ char * __watcall file_path(char *filename,char *param_2)
   splitpath((byte *)param_2,local_10,local_210,abStack_310,local_110);
   makepath((byte *)filename,&DAT_0042cb60,&DAT_0042cb5f,abStack_310,local_110);
   debugmsg(s_path__s_0042cb61,filename);
-  _File = fopen(filename,s_r_0042cb6a);
-  if (_File == (FILE *)0x0) {
+  file = fopen(filename,(byte *)s_r_0042cb6a);
+  if (file == 0) {
     makepath((byte *)filename,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_0042cb6c,filename);
   }
   else {
-    fclose(_File);
+    fclose(file);
   }
   return filename;
 }

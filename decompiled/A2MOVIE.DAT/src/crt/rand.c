@@ -15,7 +15,7 @@ int __watcall initrandnext(void)
 
 /* ==== 00408f5a rand ==== */
 
-int __watcall rand(void)
+uint __watcall rand(void)
 
 {
   uint *initrandnext_result;
@@ -34,14 +34,14 @@ int __watcall rand(void)
 
 /* ==== 00408f7e srand ==== */
 
-void __watcall srand(uint _Seed)
+void __watcall srand(undefined4 param_1)
 
 {
-  uint *initrandnext_result;
+  undefined4 *initrandnext_result;
   
-  initrandnext_result = (uint *)initrandnext();
-  if (initrandnext_result != (uint *)0x0) {
-    *initrandnext_result = _Seed;
+  initrandnext_result = (undefined4 *)initrandnext();
+  if (initrandnext_result != (undefined4 *)0x0) {
+    *initrandnext_result = param_1;
   }
   return;
 }

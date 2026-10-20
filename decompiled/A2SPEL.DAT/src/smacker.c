@@ -7,9 +7,9 @@ int __watcall init_smacker(void *param_1)
 
 {
   char cVar1;
-  char *format;
   char *pcVar2;
-  undefined4 uVar3;
+  char *arg2;
+  undefined4 arg3;
   
   if (init_smacker_ok != 0) {
     return 0;
@@ -17,18 +17,18 @@ int __watcall init_smacker(void *param_1)
   if (param_1 == (void *)0x0) {
     cVar1 = _SmackSoundUseDirectSound_4(0);
     if (cVar1 != '\0') goto LAB_0042f4ff;
-    uVar3 = 0x40;
-    pcVar2 = s_smacker_cpp_004529a4;
-    format = s__s__d____failed_to_set_directsou_004529b0;
+    arg3 = 0x40;
+    arg2 = s_smacker_cpp_004529a4;
+    pcVar2 = s__s__d____failed_to_set_directsou_004529b0;
   }
   else {
     cVar1 = _SmackSoundUseDirectSound_4(param_1);
     if (cVar1 != '\0') goto LAB_0042f4ff;
-    uVar3 = 0x3b;
-    pcVar2 = s_smacker_cpp_00452968;
-    format = s__s__d____failed_to_set_directsou_00452974;
+    arg3 = 0x3b;
+    arg2 = s_smacker_cpp_00452968;
+    pcVar2 = s__s__d____failed_to_set_directsou_00452974;
   }
-  fatal_exit(format,pcVar2,uVar3);
+  fatal_exit(pcVar2,arg2,arg3);
 LAB_0042f4ff:
   clear_smacker_keys();
   set_smacker_key(1,0x1b);
@@ -101,7 +101,7 @@ void __watcall do_play_smacker(int param_1,int param_2,int param_3)
 {
   uchar *surface_ptr;
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   undefined4 local_20;
   undefined4 local_1c;
   undefined4 local_18;
@@ -122,9 +122,8 @@ void __watcall do_play_smacker(int param_1,int param_2,int param_3)
     lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
                       (xvga_screen,param_1,param_2,xvga_buffer_screen,&local_20,0);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      fatal_exit(s__s__d____blitting_error___s___004529ec,s_smacker_cpp_004529e0,0x99,
-                 dd_error_string_result);
+      arg4 = dd_error_string(lVar1);
+      fatal_exit(s__s__d____blitting_error___s___004529ec,s_smacker_cpp_004529e0,0x99,arg4);
     }
     play_check_smacker();
   }
@@ -139,18 +138,24 @@ void __watcall do_play_scale_smacker(int param_1,int param_2,int param_3,int par
 {
   uchar *surface_ptr;
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   undefined4 local_2c;
   undefined4 local_28;
   undefined4 local_24;
   undefined4 local_20;
   int local_1c;
+  int local_18;
+  int local_14;
+  int local_10;
   
   local_2c = 0;
   local_28 = 0;
   local_20 = *(undefined4 *)(smkfile + 8);
   local_24 = *(undefined4 *)(smkfile + 4);
   local_1c = param_1;
+  local_18 = param_2;
+  local_14 = param_3;
+  local_10 = param_4;
   while (smacker_playing != 0) {
     if (*(int *)(smkfile + 0x68) != 0) {
       set_smack_palette(param_5);
@@ -162,9 +167,8 @@ void __watcall do_play_scale_smacker(int param_1,int param_2,int param_3,int par
     lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
                       (xvga_back_screen,&local_1c,xvga_buffer_screen,&local_2c,0,0);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      fatal_exit(s__s__d____blitting_error___s___00452a17,s_smacker_cpp_00452a0b,0xc3,
-                 dd_error_string_result);
+      arg4 = dd_error_string(lVar1);
+      fatal_exit(s__s__d____blitting_error___s___00452a17,s_smacker_cpp_00452a0b,0xc3,arg4);
     }
     play_check_smacker();
     xvga_flip_page();
@@ -308,14 +312,14 @@ void __watcall set_smacker_key(int param_1,int param_2)
 
 {
   int free_smacker_key;
-  char *format;
   char *pcVar1;
-  undefined4 uVar2;
+  char *arg2;
+  undefined4 arg3;
   
   if ((param_1 == 0) || (2 < (uint)param_1)) {
-    uVar2 = 0x15a;
-    pcVar1 = s_smacker_cpp_00452bad;
-    format = s__s__d_____set_smacker_key__Unkno_00452bb9;
+    arg3 = 0x15a;
+    arg2 = s_smacker_cpp_00452bad;
+    pcVar1 = s__s__d_____set_smacker_key__Unkno_00452bb9;
   }
   else {
     free_smacker_key = get_free_smacker_key();
@@ -325,11 +329,11 @@ void __watcall set_smacker_key(int param_1,int param_2)
       return;
     }
     param_1 = 0x14;
-    uVar2 = 0x156;
-    pcVar1 = s_smacker_cpp_00452b64;
-    format = s__s__d_____set_smacker_key__No_fr_00452b70;
+    arg3 = 0x156;
+    arg2 = s_smacker_cpp_00452b64;
+    pcVar1 = s__s__d_____set_smacker_key__No_fr_00452b70;
   }
-  fatal_exit(format,pcVar1,uVar2,param_1);
+  fatal_exit(pcVar1,arg2,arg3,param_1);
   return;
 }
 

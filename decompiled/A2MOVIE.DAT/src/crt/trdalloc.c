@@ -7,17 +7,15 @@ void __watcall FiniThreadProcessing(void)
 
 {
   undefined4 *puVar1;
-  undefined4 *extraout_EDX;
   undefined4 *puVar2;
   
   puVar2 = thread_data_list;
   while (puVar2 != (undefined4 *)0x0) {
     puVar1 = (undefined4 *)*puVar2;
     if (puVar2[3] != 0) {
-      nfree(puVar2[2]);
-      puVar2 = extraout_EDX;
+      nfree((undefined4 *)puVar2[2]);
     }
-    nfree((uint)puVar2);
+    nfree(puVar2);
     puVar2 = puVar1;
   }
   return;

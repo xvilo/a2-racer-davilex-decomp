@@ -36,7 +36,7 @@ void __watcall set_ini_filename(char *param_1)
   }
   fatal_exit(s__set_ini_filename___s__d____file_00429cd0,s_inifile_cpp_00429cc4,0x2c);
 LAB_0040bc04:
-  getcwd(&ini_filename,0x118);
+  getcwd((undefined4 *)&ini_filename,0x118);
   j = 0xffffffff;
   pcVar4 = &ini_filename;
   do {
@@ -101,13 +101,8 @@ LAB_0040bc04:
 void __watcall write_ini_string_setting(char *param_1,char *param_2,char *param_3)
 
 {
-  LPCSTR extraout_ECX;
-  LPCSTR extraout_EDX;
-  
   if (ini_file_init_ok == 0) {
     fatal_exit(s__write_ini_string_setting___s__d_00429d19,s_inifile_cpp_00429d0d,0x41);
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   WritePrivateProfileStringA(param_1,param_2,param_3,&ini_filename);
   return;
@@ -119,12 +114,10 @@ void __watcall write_ini_string_setting(char *param_1,char *param_2,char *param_
 void __watcall write_ini_value_setting(char *param_1,char *param_2,int param_3)
 
 {
-  uint extraout_ECX;
   char local_30 [36];
   
   if (ini_file_init_ok == 0) {
     fatal_exit(s__write_ini_value_setting___s__d__00429d71,s_inifile_cpp_00429d65,0x4f);
-    param_3 = extraout_ECX;
   }
   itoa_1(param_3,local_30,10);
   WritePrivateProfileStringA(param_1,param_2,local_30,&ini_filename);
@@ -138,11 +131,9 @@ uint __watcall read_ini_value_setting(char *param_1,char *param_2)
 
 {
   UINT UVar1;
-  LPCSTR extraout_EDX;
   
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_value_setting___s__d____00429dc8,s_inifile_cpp_00429dbc,0x5c);
-    param_2 = extraout_EDX;
   }
   UVar1 = GetPrivateProfileIntA(param_1,param_2,0,&ini_filename);
   return UVar1;
@@ -154,13 +145,8 @@ uint __watcall read_ini_value_setting(char *param_1,char *param_2)
 void __watcall read_ini_string_setting(char *param_1,char *param_2,char *param_3,int param_4)
 
 {
-  DWORD extraout_ECX;
-  LPCSTR extraout_EDX;
-  
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_string_setting___s__d__00429e1e,s_inifile_cpp_00429e12,0x67);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   GetPrivateProfileStringA(param_1,param_2,&DAT_00429e69,param_3,param_4,&ini_filename);
   return;

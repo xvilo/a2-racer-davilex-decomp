@@ -6,16 +6,16 @@
 void __watcall load_car_textures(void)
 
 {
+  undefined4 *puVar1;
   int texture;
-  int iVar1;
   int flags;
   
-  iVar1 = 0;
+  flags = 0;
   do {
-    flags = iVar1 + 0x20;
-    texture = load_texture(*(char **)((int)&PTR_s_k_porche_pcx_00457980 + iVar1),flags);
-    *(int *)((int)&car_type_texture_ids + iVar1) = texture;
-    iVar1 = flags;
+    puVar1 = (undefined4 *)((int)&PTR_s_k_porche_pcx_00457980 + flags);
+    flags = flags + 0x20;
+    texture = load_texture((char *)*puVar1,flags);
+    *(int *)(&car_types + flags) = texture;
   } while (flags != 0x2e0);
   return;
 }
@@ -23,7 +23,7 @@ void __watcall load_car_textures(void)
 
 /* ==== 00407799 release_car_textures ==== */
 
-void __watcall release_car_textures(undefined4 param_1,undefined4 param_2)
+void __watcall release_car_textures(void)
 
 {
   int *piVar1;
@@ -32,7 +32,7 @@ void __watcall release_car_textures(undefined4 param_1,undefined4 param_2)
   iVar2 = 0;
   do {
     piVar1 = *(int **)(*(int *)((int)&car_type_texture_ids + iVar2) * 0xc + 4 + texture_table);
-    (**(code **)(*piVar1 + 8))(piVar1,param_2);
+    (**(code **)(*piVar1 + 8))(piVar1);
     piVar1 = *(int **)(texture_table + 8 + *(int *)((int)&car_type_texture_ids + iVar2) * 0xc);
     iVar2 = iVar2 + 0x20;
     (**(code **)(*piVar1 + 8))(piVar1);
@@ -43,26 +43,19 @@ void __watcall release_car_textures(undefined4 param_1,undefined4 param_2)
 
 /* ==== 004077dc load_static_object ==== */
 
-void __watcall
-load_static_object(int param_1,undefined4 param_2,float param_3,float param_4,float param_5,
-                  int param_6)
+undefined4 __watcall
+load_static_object(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                  float param_5,float param_6,undefined4 param_7,int param_8)
 
 {
   int object;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  undefined4 extraout_ECX_01;
-  int extraout_ECX_02;
-  uint extraout_ECX_03;
   int iVar1;
-  undefined8 uVar2;
-  int in_stack_00000010;
+  undefined4 debugmsg_result;
   
-  uVar2 = get_new_object3d(param_1,param_2);
-  object = (int)uVar2;
+  object = get_new_object3d(param_1);
   racers[object].in_use = '\x01';
-  uVar2 = init_anim3d(1,(int)((ulonglong)uVar2 >> 0x20));
-  racers[object].anim = (int)uVar2;
+  iVar1 = init_anim3d(1);
+  racers[object].anim = iVar1;
   racers[object].frame = 0;
   racers[object].needs_update = 1;
   racers[object].field_36 = '\0';
@@ -74,51 +67,48 @@ load_static_object(int param_1,undefined4 param_2,float param_3,float param_4,fl
     *(undefined4 *)(&static_object_mesh_ids + iVar1) =
          *(undefined4 *)(*(int *)(anims3d + racers[object].anim * 9 + 4) + racers[object].frame * 4)
     ;
-    iVar1 = extraout_ECX;
   }
   else {
     debugmsg(s_static_object___d__allready_load_00442c69,object);
     *(undefined4 *)(racers[object].frame * 4 + *(int *)(anims3d + racers[object].anim * 9 + 4)) =
          *(undefined4 *)(&static_object_mesh_ids + iVar1);
-    iVar1 = extraout_ECX_00;
   }
   debugmsg(s_done_loading_static_object_00442c97);
-  if ((&static_object_texture_ids)[iVar1 * 4] == -1) {
-    fatal_exit(s__s__d____texture_not_loaded_for_s_00442cc0,s_statobj_cpp_00442cb4,0x59,
-               extraout_ECX_01);
+  if ((&static_object_texture_ids)[param_1 * 4] == -1) {
+    fatal_exit(s__s__d____texture_not_loaded_for_s_00442cc0,s_statobj_cpp_00442cb4,0x59,param_1);
   }
   debugmsg(s_setting_static_object_texture_00442cf7);
-  racers[object].field_2c = (&static_object_texture_ids)[extraout_ECX_02 * 4];
+  racers[object].field_2c = (&static_object_texture_ids)[param_1 * 4];
   debugmsg(s_setting_static_object_matrix_00442d16);
   set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00442d34);
-  if (extraout_ECX_03 < 0x28) {
-    if (extraout_ECX_03 < 0x26) {
-      if (extraout_ECX_03 != 0) {
+  if (param_1 < 0x28) {
+    if (param_1 < 0x26) {
+      if (param_1 != 0) {
 LAB_00407a10:
         *(undefined1 **)&racers[object].field_0x20 = &LAB_004080bd;
         goto LAB_00407a2b;
       }
       *(undefined1 **)&racers[object].field_0x20 = &LAB_00408370;
     }
-    else if (extraout_ECX_03 < 0x27) {
+    else if (param_1 < 0x27) {
       *(undefined1 **)&racers[object].field_0x20 = &LAB_00408481;
     }
     else {
       *(undefined1 **)&racers[object].field_0x20 = &LAB_00408607;
     }
   }
-  else if (extraout_ECX_03 < 0x29) {
+  else if (param_1 < 0x29) {
     *(undefined1 **)&racers[object].field_0x20 = &LAB_00408754;
   }
-  else if (extraout_ECX_03 < 0x2a) {
+  else if (param_1 < 0x2a) {
     *(undefined1 **)&racers[object].field_0x20 = &LAB_004088a5;
   }
-  else if (extraout_ECX_03 < 0x2b) {
+  else if (param_1 < 0x2b) {
     *(undefined1 **)&racers[object].field_0x20 = &LAB_004089ef;
   }
   else {
-    if (extraout_ECX_03 != 0x2b) goto LAB_00407a10;
+    if (param_1 != 0x2b) goto LAB_00407a10;
     *(undefined1 **)&racers[object].field_0x20 = &LAB_00408b40;
   }
   racers[object].needs_update = 1;
@@ -126,205 +116,189 @@ LAB_00407a2b:
   debugmsg(s_setting_static_object_position_00442d52);
   racers[object].field_08 = param_5;
   racers[object].field_0c = 0.0;
-  racers[object].field_10 = (float)param_6;
-  racers[object].field_3f = in_stack_00000010;
+  racers[object].field_10 = param_6;
+  racers[object].field_3f = param_8;
   racers[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00442d72);
-  build_object_execute_buffer();
-  debugmsg(s_done_creating_execute_buffer_obj_00442d92);
-  return;
+  build_object_execute_buffer(object);
+  debugmsg_result = debugmsg(s_done_creating_execute_buffer_obj_00442d92);
+  return debugmsg_result;
 }
 
 
 /* ==== 00407ac4 place_static_object_on_road ==== */
 
-void __watcall place_static_object_on_road(int param_1,int param_2,int param_3)
+void __watcall
+place_static_object_on_road(int param_1,float weg_section_idx,int param_3,int param_4,int param_5)
 
 {
-  double dVar1;
-  float fVar2;
-  int racer_object_index_2;
-  undefined4 extraout_EAX;
+  float fVar1;
+  int object;
+  int iVar2;
+  int opponent_slot;
   float *pfVar3;
-  undefined4 uVar4;
-  int unaff_ECX;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  undefined4 racer_object_index;
-  undefined4 racer_object_index_00;
-  int extraout_ECX_02;
-  undefined4 extraout_EDX;
-  float extraout_EDX_00;
-  int extraout_EDX_01;
+  float extraout_EDX;
+  int *piVar4;
+  racer_object_t *racer_object;
   int iVar5;
   float10 fVar6;
-  undefined8 uVar7;
-  longlong object_bounds;
-  int in_stack_00000004;
   float local_50 [3];
   float local_44;
   float local_3c;
   double local_38;
-  undefined8 local_28;
+  double local_28;
   int local_20;
-  uint local_1c;
-  racer_object_t *racer_object;
+  int local_1c;
+  int local_18;
+  int local_14;
+  float local_10;
   
-  uVar7 = get_new_object3d(param_1,param_2);
-  racer_object_index_2 = (int)uVar7;
-  local_1c = weg_sections[*(int *)(weg_chunks + 8 + (int)((ulonglong)uVar7 >> 0x20) * 0x38)].point;
-  racers[racer_object_index_2].in_use = '\x01';
-  uVar7 = init_anim3d(1,racer_object_index_2 * 0x4b);
-  racers[racer_object_index_2].anim = (int)uVar7;
-  racers[racer_object_index_2].frame = 0;
-  racers[racer_object_index_2].needs_update = 1;
-  racers[racer_object_index_2].field_36 = '\0';
-  debugmsg(s_starting_static_object___d__00442db9,racer_object_index_2);
-  iVar5 = param_1 * 0x10;
-  if (*(int *)(&static_object_mesh_ids + iVar5) == -1) {
-    debugmsg(s_static_object___d__mesh_not_yet_l_00442dd6,racer_object_index_2);
-    load_object_mesh(racer_object_index_2,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
-    local_20 = racers[racer_object_index_2].anim;
-    *(undefined4 *)(&static_object_mesh_ids + iVar5) =
-         *(undefined4 *)
-          (*(int *)(local_20 * 9 + anims3d + 4) + racers[racer_object_index_2].frame * 4);
+  local_18 = param_4;
+  object = get_new_object3d(param_1);
+  local_1c = weg_sections[*(int *)(weg_chunks + 8 + (int)weg_section_idx * 0x38)].point;
+  local_14 = object * 0x4b;
+  racers[object].in_use = '\x01';
+  iVar2 = init_anim3d(1);
+  racers[object].anim = iVar2;
+  racers[object].frame = 0;
+  racers[object].needs_update = 1;
+  racers[object].field_36 = '\0';
+  debugmsg(s_starting_static_object___d__00442db9,object);
+  iVar2 = param_1 * 0x10;
+  if (*(int *)(&static_object_mesh_ids + iVar2) == -1) {
+    debugmsg(s_static_object___d__mesh_not_yet_l_00442dd6,object);
+    load_object_mesh(object,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
+    piVar4 = (int *)((int)&racers->anim + local_14);
+    local_20 = *piVar4;
+    *(undefined4 *)(&static_object_mesh_ids + iVar2) =
+         *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + piVar4[1] * 4);
   }
   else {
-    debugmsg(s_static_object___d__allready_load_00442e0a,racer_object_index_2);
-    local_20 = racers[racer_object_index_2].anim;
-    *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + racers[racer_object_index_2].frame * 4) =
-         *(undefined4 *)(&static_object_mesh_ids + iVar5);
+    debugmsg(s_static_object___d__allready_load_00442e0a,object);
+    piVar4 = (int *)((int)&racers->anim + local_14);
+    local_20 = *piVar4;
+    *(undefined4 *)(*(int *)(local_20 * 9 + anims3d + 4) + piVar4[1] * 4) =
+         *(undefined4 *)(&static_object_mesh_ids + iVar2);
   }
   debugmsg(s_done_loading_static_object_00442e38);
-  racer_object_index_2 = extraout_ECX;
   if ((&static_object_texture_ids)[param_1 * 4] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_s_00442e61,s_statobj_cpp_00442e55,0xc1,param_1);
-    racer_object_index_2 = extraout_ECX_00;
   }
   debugmsg(s_setting_static_object_texture_00442e98);
-  racer_object_index_2 = (racer_object_index_2 * 4 + extraout_ECX_01) * 0xf;
-  *(undefined4 *)((int)&racers->field_2c + racer_object_index_2) =
-       (&static_object_texture_ids)[param_1 * 4];
+  iVar2 = object * 0x4b;
+  racers[object].field_2c = (&static_object_texture_ids)[param_1 * 4];
   debugmsg(s_setting_static_object_matrix_00442eb7);
-  set_object3d_matrix(racer_object_index,&identity_matrix);
+  set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00442ed5);
-  uVar7 = alloc_opponent_slot(extraout_EAX,extraout_EDX);
-  *(int *)((int)&racers->opponent + racer_object_index_2) = (int)uVar7;
-  *(undefined1 **)(&racers->field_0x20 + racer_object_index_2) = &LAB_004080bd;
-  object_bounds = compute_object_bounds(racer_object_index_00,local_1c);
-  pfVar3 = (float *)(weg_points + (int)((ulonglong)object_bounds >> 0x20) * 0x21);
+  opponent_slot = alloc_opponent_slot();
+  iVar5 = local_1c;
+  racers[object].opponent = opponent_slot;
+  *(undefined1 **)&racers[object].field_0x20 = &LAB_004080bd;
+  compute_object_bounds(object);
+  pfVar3 = (float *)(weg_points + iVar5 * 0x21);
   local_44 = *pfVar3;
   local_3c = pfVar3[2];
-  iVar5 = weg_chunks + param_2 * 0x38;
+  iVar5 = weg_chunks + (int)weg_section_idx * 0x38;
   local_50[0] = *(float *)(iVar5 + 0x1c);
   local_50[1] = 0.0;
   local_50[2] = *(float *)(iVar5 + 0x24);
   normalize_vector(local_50);
-  fVar2 = (float)in_stack_00000004;
-  debugmsg(s_setting_static_object_position_00442ef3);
+  local_10 = (float)param_5;
+  fVar6 = (float10)debugmsg(s_setting_static_object_position_00442ef3);
   switch(param_3) {
   case 0:
-    *(float *)((int)&racers->field_08 + racer_object_index_2) = extraout_EDX_00;
-    fVar6 = road_height_at(extraout_EDX_00,local_3c);
-    *(float *)((int)&racers->field_0c + racer_object_index_2) = (float)fVar6;
-    *(float *)((int)&racers->field_10 + racer_object_index_2) = local_3c;
+    racers[object].field_08 = extraout_EDX;
+    road_height_at(weg_section_idx,extraout_EDX,iVar2,object,extraout_EDX,local_3c);
+    *(float *)((int)&racers->field_0c + iVar2) = (float)fVar6;
+    *(float *)((int)&racers->field_10 + iVar2) = local_3c;
     break;
   case 1:
-    *(float *)((int)&racers->field_08 + racer_object_index_2) = local_44 - local_50[0] * fVar2;
-    fVar6 = road_height_at(local_44 - local_50[0] * fVar2,local_3c - local_50[2] * fVar2);
-    *(float *)((int)&racers->field_0c + racer_object_index_2) = (float)fVar6;
-    fVar2 = local_3c - local_50[2] * fVar2;
+    racers[object].field_08 = local_44 - local_50[0] * local_10;
+    road_height_at(weg_section_idx,extraout_EDX,iVar2,object,local_44 - local_50[0] * local_10,
+                   local_3c - local_50[2] * local_10);
+    *(float *)((int)&racers->field_0c + iVar2) = (float)fVar6;
+    fVar1 = local_3c - local_50[2] * local_10;
     goto LAB_00407e40;
   case 2:
-    *(float *)((int)&racers->field_08 + racer_object_index_2) = local_50[0] * fVar2 + local_44;
-    fVar6 = road_height_at(local_50[0] * fVar2 + local_44,local_50[2] * fVar2 + local_3c);
-    *(float *)((int)&racers->field_0c + racer_object_index_2) = (float)fVar6;
-    fVar2 = local_50[2] * fVar2 + local_3c;
+    racers[object].field_08 = local_50[0] * local_10 + local_44;
+    road_height_at(weg_section_idx,extraout_EDX,iVar2,object,local_50[0] * local_10 + local_44,
+                   local_50[2] * local_10 + local_3c);
+    *(float *)((int)&racers->field_0c + iVar2) = (float)fVar6;
+    fVar1 = local_50[2] * local_10 + local_3c;
 LAB_00407e40:
-    *(float *)((int)&racers->field_10 + racer_object_index_2) = fVar2;
+    *(float *)((int)&racers->field_10 + iVar2) = fVar1;
     break;
   case 3:
-    *(float *)((int)&racers->field_08 + racer_object_index_2) =
-         local_44 -
-         (opponent_data[*(int *)((int)&racers->opponent + racer_object_index_2)].radius +
-         fVar2 * 2.0) * local_50[0];
-    *(undefined4 *)((int)&racers->field_0c + racer_object_index_2) = 0;
-    racer_object_index_2 = (int)&racers->anim + racer_object_index_2;
-    fVar2 = local_3c -
-            (fVar2 * 2.0 + opponent_data[*(int *)(racer_object_index_2 + 0x37)].radius) *
-            local_50[2];
+    racers[object].field_08 =
+         local_44 - (opponent_data[racers[object].opponent].radius + local_10 * 2.0) * local_50[0];
+    racers[object].field_0c = 0.0;
+    racer_object = racers + object;
+    fVar1 = local_3c - (local_10 * 2.0 + opponent_data[racer_object->opponent].radius) * local_50[2]
+    ;
     goto LAB_00407f01;
   case 4:
-    *(float *)((int)&racers->field_08 + racer_object_index_2) =
-         (opponent_data[*(int *)((int)&racers->opponent + racer_object_index_2)].radius +
-         fVar2 * 2.0) * local_50[0] + local_44;
-    *(undefined4 *)((int)&racers->field_0c + racer_object_index_2) = 0;
-    racer_object_index_2 = (int)&racers->anim + racer_object_index_2;
-    fVar2 = (fVar2 * 2.0 + opponent_data[*(int *)(racer_object_index_2 + 0x37)].radius) *
-            local_50[2] + local_3c;
+    racers[object].field_08 =
+         (opponent_data[racers[object].opponent].radius + local_10 * 2.0) * local_50[0] + local_44;
+    racers[object].field_0c = 0.0;
+    racer_object = racers + object;
+    fVar1 = (local_10 * 2.0 + opponent_data[racer_object->opponent].radius) * local_50[2] + local_3c
+    ;
 LAB_00407f01:
-    *(float *)(racer_object_index_2 + 0x10) = fVar2;
+    racer_object->field_10 = fVar1;
   }
-  racer_object_index_2 = extraout_ECX_02 * 0x4b;
-  if (unaff_ECX == 0) {
+  if (local_18 == 0) {
     if ((param_3 != 3) && (param_3 != 1)) {
-      racer_object_index_2 =
-           CONCAT22((short)((uint)racer_object_index_2 >> 0x10),
-                    (ushort)(0.0 < local_50[0]) << 8 | (ushort)NAN(local_50[0]) << 10 |
-                    (ushort)(local_50[0] == 0.0) << 0xe);
-      if ((local_50[0] == 0.0) != 0) {
-        racers[extraout_ECX_02].field_3f = 0x200;
+      fVar1 = local_50[2];
+      if (local_50[0] == 0.0) {
+        racers[object].field_3f = 0x200;
         goto LAB_00407d8d;
       }
 LAB_0040800c:
-      atan2_checked(racer_object_index_2,unaff_ECX);
+      fVar6 = -(float10)fVar1;
+      atan2_checked();
       racer_object = racers;
-      fVar6 = CHP();
+      fVar6 = (fVar6 * (float10)1024.0) / (float10)6.283185307;
+      CHP();
       local_20 = (int)ROUND(fVar6);
-      racer_object[extraout_ECX_02].field_3f = local_20;
+      racer_object[object].field_3f = local_20;
       goto LAB_00407d8d;
     }
-    dVar1 = (double)local_50[0];
-    local_28._4_4_ = (undefined4)((ulonglong)dVar1 >> 0x20);
-    local_28._0_4_ = SUB84(dVar1,0);
-    uVar4 = local_28._4_4_;
-    if ((((ulonglong)dVar1 & 0x7fffffff00000000) == 0) && ((int)local_28 == 0)) {
-      racers[extraout_ECX_02].field_3f = 0;
-      local_28 = dVar1;
+    local_28 = (double)local_50[0];
+    fVar1 = local_50[2];
+    if ((((ulonglong)local_28 & 0x7fffffff00000000) == 0) && (local_28._0_4_ == 0)) {
+      racers[object].field_3f = 0;
       goto LAB_00407d8d;
     }
   }
   else {
-    if (unaff_ECX != 1) goto LAB_00407d8d;
+    if (local_18 != 1) goto LAB_00407d8d;
     if ((param_3 != 3) && (param_3 != 1)) {
       local_38 = (double)local_50[2];
+      fVar1 = local_50[0];
       if ((((ulonglong)local_38 & 0x7fffffff00000000) == 0) && (local_38._0_4_ == 0)) {
-        racers[extraout_ECX_02].field_3f = 0x100;
+        racers[object].field_3f = 0x100;
         goto LAB_00407d8d;
       }
       goto LAB_0040800c;
     }
-    uVar4 = CONCAT22((short)((uint)(extraout_ECX_02 * 5) >> 0x10),
-                     (ushort)(0.0 < local_50[2]) << 8 | (ushort)NAN(local_50[2]) << 10 |
-                     (ushort)(local_50[2] == 0.0) << 0xe);
-    dVar1 = local_28;
-    if ((local_50[2] == 0.0) != 0) {
-      racers[extraout_ECX_02].field_3f = 0x312;
+    fVar1 = local_50[0];
+    if (local_50[2] == 0.0) {
+      racers[object].field_3f = 0x312;
       goto LAB_00407d8d;
     }
   }
-  local_28 = dVar1;
-  atan2_checked(uVar4,extraout_ECX_02 * 0x4b);
+  fVar6 = (float10)fVar1;
+  atan2_checked();
   racer_object = racers;
-  fVar6 = CHP();
+  fVar6 = (fVar6 * (float10)1024.0) / (float10)6.283185307;
+  CHP();
   local_20 = (int)ROUND(fVar6);
-  *(int *)((int)&racer_object->field_3f + extraout_EDX_01) = local_20;
+  racer_object[object].field_3f = local_20;
 LAB_00407d8d:
-  opponent_data[racers[extraout_ECX_02].opponent].active = 0;
-  racers[extraout_ECX_02].in_use = '\x01';
+  opponent_data[racers[object].opponent].active = 0;
+  racers[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00442f13);
-  build_object_execute_buffer();
+  build_object_execute_buffer(object);
   debugmsg(s_done_creating_execute_buffer_obj_00442f33);
   return;
 }

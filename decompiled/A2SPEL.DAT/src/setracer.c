@@ -3,7 +3,7 @@
 
 /* ==== 00411258 player_at_finish ==== */
 
-longlong __watcall player_at_finish(undefined4 param_1,uint param_2)
+undefined4 __watcall player_at_finish(void)
 
 {
   bool bVar1;
@@ -12,78 +12,69 @@ longlong __watcall player_at_finish(undefined4 param_1,uint param_2)
     bVar1 = player_chunk == 0xf;
   }
   else {
-    if (*(int *)(&track_info + track_index * 0x10) != 1) goto LAB_00411270;
+    if (*(int *)(&track_info + track_index * 0x10) != 1) {
+      return 0;
+    }
     bVar1 = weg_chunk_count + -0xf == player_chunk;
   }
-  if (bVar1) {
-    return CONCAT44(param_2,1);
+  if (!bVar1) {
+    return 0;
   }
-LAB_00411270:
-  return (ulonglong)param_2 << 0x20;
+  return 1;
 }
 
 
 /* ==== 00411296 set_all_objects ==== */
 
-void __watcall set_all_objects(undefined4 param_1,undefined4 param_2)
+void __watcall set_all_objects(void)
 
 {
   int iVar1;
-  undefined4 place_rival_racers_result;
-  int position_val;
-  float unaff_ECX;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  undefined4 extraout_EDX_01;
-  undefined4 extraout_EDX_02;
-  undefined4 extraout_EDX_03;
-  int extraout_EDX_04;
-  undefined4 extraout_EDX_05;
-  float unaff_EBX;
+  undefined4 unaff_ECX;
+  float unaff_EDX;
+  int unaff_EBX;
   
-  position_val = (int)infio._59_4_ >> 0x10;
   if (*(int *)(&track_info + track_index * 0x10) == 0) {
-    iVar1 = set_racer_start_position(0,position_val);
-    create_all_opponents(iVar1,position_val);
-    place_rival_racers_result = place_rival_racers();
+    set_racer_start_position(0,(int)infio._59_4_ >> 0x10);
+    create_all_opponents();
+    place_rival_racers(weg_chunk_count + -0xf);
     place_police_cars();
-    scatter_all_traffic(place_rival_racers_result);
+    scatter_all_traffic();
     place_random_pionnen();
-    place_static_object_on_road(0x17,extraout_EDX_04,1);
-    position_val = 0x16;
-    iVar1 = weg_chunk_count + -0x10;
-    unaff_EBX = 1.4013e-45;
+    place_static_object_on_road(0x17,2.10195e-44,1,1,0x3c);
+    iVar1 = 0x16;
+    unaff_EDX = (float)(weg_chunk_count + -0x10);
+    unaff_EBX = 1;
   }
   else {
     if (*(int *)(&track_info + track_index * 0x10) != 1) goto LAB_004112b4;
-    iVar1 = set_racer_start_position(0,position_val);
-    create_all_opponents(iVar1,position_val);
-    place_rival_racers_result = place_rival_racers();
+    set_racer_start_position(0,(int)infio._59_4_ >> 0x10);
+    create_all_opponents();
+    place_rival_racers(0xf);
     place_police_cars();
-    scatter_all_traffic(place_rival_racers_result);
+    scatter_all_traffic();
     place_random_pionnen();
-    place_static_object_on_road(0x16,0x10,2);
-    unaff_EBX = 2.8026e-45;
-    position_val = 0x17;
-    iVar1 = weg_chunk_count + -0xf;
+    place_static_object_on_road(0x16,2.24208e-44,2,1,0x3c);
+    unaff_EBX = 2;
+    iVar1 = 0x17;
+    unaff_EDX = (float)(weg_chunk_count + -0xf);
   }
-  unaff_ECX = 1.4013e-45;
-  place_static_object_on_road(position_val,iVar1,(int)unaff_EBX);
-  param_2 = extraout_EDX_05;
+  unaff_ECX = 1;
+  place_static_object_on_road(iVar1,unaff_EDX,unaff_EBX,1,0x3c);
 LAB_004112b4:
-  load_static_object(0x26,param_2,unaff_EBX,unaff_ECX,0,0);
-  load_static_object(0x27,extraout_EDX,unaff_EBX,unaff_ECX,0,0);
-  load_static_object(0x28,extraout_EDX_00,unaff_EBX,unaff_ECX,0,0);
-  load_static_object(0x29,extraout_EDX_01,unaff_EBX,unaff_ECX,0,0);
-  load_static_object(0x2a,extraout_EDX_02,unaff_EBX,unaff_ECX,0,0);
-  load_static_object(0x2b,extraout_EDX_03,unaff_EBX,unaff_ECX,0,0);
+  load_static_object(0x26,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
+  load_static_object(0x27,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
+  load_static_object(0x28,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
+  load_static_object(0x29,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
+  load_static_object(0x2a,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
+  load_static_object(0x2b,unaff_EDX,unaff_EBX,unaff_ECX,0.0,0.0,0,0);
   return;
 }
 
 
 /* ==== 00411401 place_rival_racers ==== */
 
-void __watcall place_rival_racers(void)
+void __watcall place_rival_racers(undefined4 param_1)
 
 {
   set_racer_start_position(1,(int)infio.racer_1);
@@ -101,7 +92,7 @@ void __watcall place_police_cars(void)
 
 {
   int iVar1;
-  int random;
+  uint random;
   int chunk;
   int police;
   
@@ -109,7 +100,7 @@ void __watcall place_police_cars(void)
   chunk = 0;
   for (police = 0; police < police_count; police = police + 1) {
     random = rand();
-    chunk = chunk + random % iVar1 + iVar1;
+    chunk = chunk + (int)random % iVar1 + iVar1;
     set_police_car(police,chunk);
   }
   return;
@@ -118,33 +109,31 @@ void __watcall place_police_cars(void)
 
 /* ==== 004114ba create_all_opponents ==== */
 
-undefined8 __watcall create_all_opponents(undefined4 param_1,undefined4 param_2)
+void __watcall create_all_opponents(void)
 
 {
-  undefined4 opponent;
   int i;
   int j;
   
-  create_opponent(0x15,1);
-  create_opponent(0x12,1);
-  create_opponent(0x11,1);
-  create_opponent(0x16,1);
-  opponent = create_opponent(0x14,1);
+  create_opponent(0x15,1,3);
+  create_opponent(0x12,1,3);
+  create_opponent(0x11,1,3);
+  create_opponent(0x16,1,3);
+  create_opponent(0x14,1,3);
   for (i = 0; i < police_count; i = i + 1) {
-    opponent = create_opponent(0xc,1);
+    create_opponent(0xc,1,4);
   }
   i = 0;
   for (j = 0; j < civilian_count; j = j + 1) {
-    opponent = create_opponent(i,1);
+    create_opponent(i,1,2);
     do {
       i = i + 1;
       if (i == 0x10) {
-        opponent = 1;
         i = 0;
       }
     } while ((i == 4) || (i == 0xc));
   }
-  return CONCAT44(param_2,opponent);
+  return;
 }
 
 
@@ -153,14 +142,20 @@ undefined8 __watcall create_all_opponents(undefined4 param_1,undefined4 param_2)
 void __watcall place_random_pionnen(void)
 
 {
-  int random;
+  uint random;
+  int iVar1;
   int i;
-  float10 chp;
+  float10 fVar2;
+  undefined4 local_14;
   
   random = rand();
-  for (i = 0; i < random % 2 + 4; i = i + 1) {
-    chp = CHP();
-    place_pion_group((int)ROUND(chp));
+  iVar1 = weg_chunk_count / 0x14;
+  local_14 = 0;
+  for (i = 0; i < (int)random % 2 + 4; i = i + 1) {
+    fVar2 = (float10)iVar1 + (float10)local_14 * (float10)1.5;
+    local_14 = local_14 + iVar1;
+    CHP();
+    place_pion_group((int)ROUND(fVar2));
   }
   return;
 }
@@ -223,14 +218,15 @@ void __watcall draw_big_digit_2(int digit,int frame)
 void __watcall start_camera_intro(void)
 
 {
-  undefined8 atan_lookup_result;
+  int atan_lookup_result;
+  undefined4 unaff_ECX;
   
   set_camera_position(1);
   racers[player_index].visible = '\x01';
   camera_height = 350.0;
   camera_distance = -31.0;
-  atan_lookup_result = atan_lookup(atan_table_id,0xc1f80000);
-  camera_pitch = (float)(int)atan_lookup_result;
+  atan_lookup_result = atan_lookup(atan_table_id,0xc1f80000,0x43af0000,unaff_ECX,350.0);
+  camera_pitch = (float)atan_lookup_result;
   camera_yaw = (float)player_heading;
   camera_x = -player_x;
   DAT_00475a2c = 1;
@@ -242,18 +238,26 @@ void __watcall start_camera_intro(void)
 
 /* ==== 0041177a caseD_0 ==== */
 
-void __watcall switchD_0040c81f::caseD_0(void)
+undefined4 __watcall switchD_0040c81f::caseD_0(void)
 
 {
+  undefined4 in_EAX;
+  undefined2 uVar2;
+  undefined4 uVar1;
+  
+  uVar2 = (undefined2)((uint)in_EAX >> 0x10);
   if (DAT_00475a2c == 0) {
     start_camera_intro();
   }
   camera_height = camera_height + -10.0;
-  if (camera_height <= 0.0) {
+  uVar1 = CONCAT22(uVar2,(ushort)(0.0 < camera_height) << 8 | (ushort)NAN(camera_height) << 10 |
+                         (ushort)(camera_height == 0.0) << 0xe);
+  if (0.0 >= camera_height) {
+    uVar1 = 2;
     set_camera_position(2);
     race_state = 2;
   }
-  return;
+  return uVar1;
 }
 
 
@@ -289,52 +293,59 @@ void __watcall stop_player_car(void)
 int __watcall set_racer_start_position(int racer,int position)
 
 {
+  int arg5;
   int iVar1;
-  opponent_t *poVar2;
+  opponent_t *player_object;
   uint ini_value_setting;
-  int extraout_ECX;
-  int extraout_ECX_00;
   int unaff_EBX;
-  float weg_section_idx;
+  int weg_section_idx;
   int unaff_EDI;
-  float fVar3;
-  longlong player_object;
+  int arg7;
+  float local_24;
+  float local_20;
   int local_1c;
   
   if ((racer < 0) || (5 < racer)) {
     fatal_exit(s__s__d____Racer_index__d_out_of_b_00446191,s_setracer_cpp_00446184,0x34,racer);
-    position = extraout_ECX;
   }
-  iVar1 = *(int *)(&track_info + track_index * 0x10);
-  if (iVar1 == 0) {
+  arg5 = *(int *)(&track_info + track_index * 0x10);
+  if (arg5 == 0) {
     unaff_EDI = 8;
+    local_24 = -20.0;
     local_1c = -1;
   }
-  else if (iVar1 == 1) {
+  else if (arg5 == 1) {
     unaff_EDI = 2;
+    local_24 = 20.0;
     local_1c = 1;
   }
   else {
     fatal_exit(s__s__d____Illegal_heading_for_rac_004461c7,s_setracer_cpp_004461ba,0x45,racer);
-    position = extraout_ECX_00;
   }
-  weg_section_idx = (float)(unaff_EBX - ((position + -1) / 2 + 1) * local_1c);
-  fVar3 = (float)(unaff_EDI + (position % 2) * local_1c);
-  if (racer == 0) {
-    debugmsg(s__s__d____Starting_racer__d__Head_004461fc,s_setracer_cpp_004461ef,0x57,0,iVar1,
-             weg_section_idx,fVar3,weg_chunk_count);
-    player_object = load_player_object(iVar1,(int)weg_section_idx,fVar3);
-    poVar2 = (opponent_t *)player_object;
+  iVar1 = weg_chunk_count;
+  if (position % 2 == 1) {
+    local_20 = 1.0;
   }
   else {
-    place_opponent(racer,iVar1,weg_section_idx);
+    local_20 = -1.0;
+  }
+  weg_section_idx = unaff_EBX - ((position + -1) / 2 + 1) * local_1c;
+  arg7 = unaff_EDI + (position % 2) * local_1c;
+  if (racer == 0) {
+    debugmsg(s__s__d____Starting_racer__d__Head_004461fc,s_setracer_cpp_004461ef,0x57,0,arg5,
+             weg_section_idx,arg7,weg_chunk_count);
+    player_object =
+         (opponent_t *)load_player_object(arg5,weg_section_idx,arg7,iVar1,local_20 * local_24);
+  }
+  else {
+    place_opponent(racer,arg5,weg_section_idx,arg7,local_20 * local_24);
     set_ini_filename(s_a2_ini_0044624d);
     ini_value_setting = read_ini_value_setting(s_RACE_0044625f,s_RACERSPEED_00446254);
-    poVar2 = opponent_data;
+    player_object = opponent_data;
     *(float *)(driver_list + 8 + opponent_data[racer].field_e0 * 0x1c) =
          (float)(int)ini_value_setting;
   }
-  return (int)poVar2;
+  return (int)player_object;
 }
 
 
@@ -344,6 +355,8 @@ void __watcall set_police_car(int police,int chunk)
 
 {
   int iVar1;
+  uint random;
+  int unaff_ECX;
   
   if ((police < 0) || (police_count <= police)) {
     fatal_exit(s__s__d____Illegal_police_index_va_00446271,s_setracer_cpp_00446264,0x6d,police);
@@ -354,22 +367,24 @@ void __watcall set_police_car(int police,int chunk)
   }
   iVar1 = *(int *)(&track_info + track_index * 0x10);
   if (iVar1 == 0) {
-    rand();
+    random = rand();
+    unaff_ECX = 10 - (int)random % 2;
   }
   else if (iVar1 == 1) {
-    rand();
+    random = rand();
+    unaff_ECX = (int)random % 2;
   }
   else {
     fatal_exit(s__s__d____Illegal_heading_for_pol_004462ea,s_setracer_cpp_004462dd,0x7d,police);
   }
-  place_opponent(police + 6,iVar1,(float)chunk);
+  place_opponent(police + 6,iVar1,chunk,unaff_ECX,0.0);
   return;
 }
 
 
 /* ==== 00411b65 scatter_all_traffic ==== */
 
-void __watcall scatter_all_traffic(undefined4 param_1)
+void __watcall scatter_all_traffic(void)
 
 {
   scatter_traffic(police_count + 6,0x1e);
@@ -382,38 +397,31 @@ void __watcall scatter_all_traffic(undefined4 param_1)
 undefined4 __watcall get_racer_value(void)
 
 {
-  undefined4 in_EAX;
-  undefined4 unaff_EDX;
-  undefined8 race_ranking;
+  undefined4 *race_ranking;
   
-  race_ranking = compute_race_ranking(in_EAX,unaff_EDX);
-  return *(undefined4 *)race_ranking;
+  race_ranking = (undefined4 *)compute_race_ranking();
+  return *race_ranking;
 }
 
 
 /* ==== 00411b82 get_racer_entry ==== */
 
-undefined8 __watcall get_racer_entry(int param_1,undefined4 param_2)
+undefined4 __watcall get_racer_entry(int param_1)
 
 {
-  int extraout_EDX;
-  int iVar1;
-  undefined8 race_ranking;
+  undefined *race_ranking;
   
-  if ((param_1 < 0) || (iVar1 = param_1, 5 < param_1)) {
-    param_1 = fatal_exit(s__s__d____Illegal_racer_index__d__00446326,s_setracer_cpp_00446319,0x97,
-                         param_1);
-    iVar1 = extraout_EDX;
+  if ((param_1 < 0) || (5 < param_1)) {
+    fatal_exit(s__s__d____Illegal_racer_index__d__00446326,s_setracer_cpp_00446319,0x97,param_1);
   }
-  race_ranking = compute_race_ranking(param_1,iVar1);
-  return CONCAT44(param_2,*(undefined4 *)
-                           ((int)race_ranking + (int)((ulonglong)race_ranking >> 0x20) * 4));
+  race_ranking = compute_race_ranking();
+  return *(undefined4 *)(race_ranking + param_1 * 4);
 }
 
 
 /* ==== 00411bb0 compute_race_ranking ==== */
 
-undefined8 __watcall compute_race_ranking(undefined4 param_1,undefined4 param_2)
+undefined * __watcall compute_race_ranking(void)
 
 {
   int *opponent_chunk;
@@ -421,7 +429,15 @@ undefined8 __watcall compute_race_ranking(undefined4 param_1,undefined4 param_2)
   int k;
   int i;
   int j;
-  float10 chp;
+  float10 in_ST0;
+  float10 in_ST1;
+  float10 in_ST2;
+  float10 in_ST3;
+  float10 in_ST4;
+  float10 in_ST5;
+  float10 in_ST6;
+  float10 in_ST7;
+  float10 fVar2;
   int aiStack_54 [6];
   int local_3c [7];
   int local_20;
@@ -431,14 +447,23 @@ undefined8 __watcall compute_race_ranking(undefined4 param_1,undefined4 param_2)
   local_20 = *(int *)(&track_info + track_index * 0x10);
   j = 0;
   do {
-    racer_progress_in_section();
-    chp = CHP();
-    local_3c[6] = (int)ROUND(chp);
+    racer_progress_in_section(i);
+    CHP();
+    local_3c[6] = (int)ROUND(in_ST0);
     *(int *)((int)aiStack_54 + j) = local_3c[6];
-    opponent_chunk = get_opponent_chunk(s_setracer_cpp_00446348,199);
+    fVar2 = in_ST7;
+    opponent_chunk = get_opponent_chunk(s_setracer_cpp_00446348,199,i);
     i = i + 1;
     *(int *)((int)local_3c + j) = *opponent_chunk * 100 + *(int *)((int)aiStack_54 + j);
     j = j + 4;
+    in_ST0 = in_ST1;
+    in_ST1 = in_ST2;
+    in_ST2 = in_ST3;
+    in_ST3 = in_ST4;
+    in_ST4 = in_ST5;
+    in_ST5 = in_ST6;
+    in_ST6 = in_ST7;
+    in_ST7 = fVar2;
   } while (i < 6);
   j = 0;
   bubble_sort_ints(local_3c,6);
@@ -447,7 +472,7 @@ undefined8 __watcall compute_race_ranking(undefined4 param_1,undefined4 param_2)
     i = local_1c;
     k = 0;
     for (iVar1 = 0; iVar1 < 0x15; iVar1 = iVar1 + 4) {
-      opponent_chunk = get_opponent_chunk(s_setracer_cpp_00446355,0xcf);
+      opponent_chunk = get_opponent_chunk(s_setracer_cpp_00446355,0xcf,j);
       if (*opponent_chunk * 100 + *(int *)((int)aiStack_54 + i) == *(int *)((int)local_3c + iVar1))
       {
         if (local_20 == 0) {
@@ -463,7 +488,7 @@ undefined8 __watcall compute_race_ranking(undefined4 param_1,undefined4 param_2)
     local_1c = local_1c + 4;
     j = j + 1;
     if (5 < j) {
-      return CONCAT44(param_2,&DAT_00475a38);
+      return &DAT_00475a38;
     }
   } while( true );
 }
@@ -502,19 +527,10 @@ int __watcall get_racer_lane(int racer)
 
 /* ==== 00411d4a racer_progress_in_section ==== */
 
-float10 __watcall racer_progress_in_section(void)
+void __watcall racer_progress_in_section(undefined4 param_1)
 
 {
-  int iVar1;
-  int in_EAX;
-  uint uVar2;
-  
-  uVar2 = weg_sections[opponent_data[in_EAX].chunk].heading & 0x3ff;
-  iVar1 = weg_sections[opponent_data[in_EAX].chunk].point * 0x21;
-  return ((float10)opponent_data[in_EAX].z - (float10)*(float *)(iVar1 + 8 + weg_points)) *
-         (float10)*(float *)(cos_table + uVar2 * 4) +
-         (float10)*(float *)(sin_table + uVar2 * 4) *
-         ((float10)opponent_data[in_EAX].x - (float10)*(float *)(iVar1 + weg_points));
+  return;
 }
 
 
@@ -550,27 +566,25 @@ void __watcall bubble_sort_ints(int *values,int count)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined8 __watcall init_race_timers(int param_1,undefined4 param_2)
+void __watcall init_race_timers(int param_1)
 
 {
-  undefined8 now;
-  
   time_left = param_1;
-  now = time(&DAT_00475a54,param_2);
-  now = time(&DAT_00475a58,(int)((ulonglong)now >> 0x20));
-  now = time(&DAT_00475a64,(int)((ulonglong)now >> 0x20));
-  now = time(&DAT_00475a70,(int)((ulonglong)now >> 0x20));
-  now = time(&DAT_00475a7c,(int)((ulonglong)now >> 0x20));
-  now = time(&DAT_00475a88,(int)((ulonglong)now >> 0x20));
-  time(&DAT_00475a94,(int)((ulonglong)now >> 0x20));
-  now = time(&DAT_00475aa0,0);
-  racer_finish_times = (undefined4)((ulonglong)now >> 0x20);
-  _DAT_00475a68 = racer_finish_times;
-  _DAT_00475a74 = racer_finish_times;
-  _DAT_00475a80 = racer_finish_times;
-  _DAT_00475a8c = racer_finish_times;
-  _DAT_00475a98 = racer_finish_times;
-  _DAT_00475aa4 = racer_finish_times;
+  time(&DAT_00475a54);
+  time((undefined4 *)&DAT_00475a58);
+  time((undefined4 *)&DAT_00475a64);
+  time((undefined4 *)&DAT_00475a70);
+  time((undefined4 *)&DAT_00475a7c);
+  time((undefined4 *)&DAT_00475a88);
+  time((undefined4 *)&DAT_00475a94);
+  time((undefined4 *)&DAT_00475aa0);
+  racer_finish_times = 0;
+  _DAT_00475a68 = 0;
+  _DAT_00475a74 = 0;
+  _DAT_00475a80 = 0;
+  _DAT_00475a8c = 0;
+  _DAT_00475a98 = 0;
+  _DAT_00475aa4 = 0;
   _DAT_00475a60 = 1;
   _DAT_00475a6c = 1;
   _DAT_00475a78 = 1;
@@ -578,7 +592,7 @@ undefined8 __watcall init_race_timers(int param_1,undefined4 param_2)
   _DAT_00475a90 = 1;
   _DAT_00475a9c = 1;
   _DAT_00475aa8 = 1;
-  return CONCAT44(param_2,(int)now);
+  return;
 }
 
 
@@ -587,18 +601,16 @@ undefined8 __watcall init_race_timers(int param_1,undefined4 param_2)
 void __watcall set_racer_finish_time(int param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  undefined4 racer_entry;
   
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__set_racer_finish_time__invalid_r_00446364,param_1);
   }
   if ((&racer_finish_times)[param_1 * 3] == 0) {
-    uVar2 = time(&time_now,param_1 * 0xc);
-    iVar1 = (int)((ulonglong)uVar2 >> 0x20);
-    *(int *)((int)&racer_finish_times + iVar1) = time_now - *(int *)(&DAT_00475a58 + iVar1);
-    uVar2 = get_racer_entry(param_1,iVar1);
-    *(int *)(&DAT_00475a60 + (int)((ulonglong)uVar2 >> 0x20)) = (int)uVar2;
+    time(&time_now);
+    (&racer_finish_times)[param_1 * 3] = time_now - *(int *)(&DAT_00475a58 + param_1 * 0xc);
+    racer_entry = get_racer_entry(param_1);
+    *(undefined4 *)(&DAT_00475a60 + param_1 * 0xc) = racer_entry;
   }
   return;
 }
@@ -606,41 +618,37 @@ void __watcall set_racer_finish_time(int param_1)
 
 /* ==== 00411f18 get_racer_finish_time ==== */
 
-undefined8 __watcall get_racer_finish_time(int param_1,undefined4 param_2)
+int __watcall get_racer_finish_time(int param_1)
 
 {
-  int random;
-  int extraout_EDX;
+  uint random;
   
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__get_racer_finish_time__invalid_r_00446396,param_1);
-    param_1 = extraout_EDX;
   }
   if ((&racer_finish_times)[param_1 * 3] != 0) {
-    return CONCAT44(param_2,(&racer_finish_times)[param_1 * 3]);
+    return (&racer_finish_times)[param_1 * 3];
   }
   random = rand();
-  return CONCAT44(param_2,racer_finish_times + random % 0x3c + 5);
+  return racer_finish_times + (int)random % 0x3c + 5;
 }
 
 
 /* ==== 00411f6a get_racer_finish_time_2 ==== */
 
-undefined8 __watcall get_racer_finish_time_2(int param_1,undefined4 param_2)
+undefined4 __watcall get_racer_finish_time_2(int param_1)
 
 {
-  int extraout_EDX;
-  undefined8 racer_entry;
+  undefined4 racer_entry;
   
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__get_racer_finish_time__invalid_r_004463c8,param_1);
-    param_1 = extraout_EDX;
   }
   if ((&racer_finish_times)[param_1 * 3] != 0) {
-    return CONCAT44(param_2,*(undefined4 *)(&DAT_00475a60 + param_1 * 0xc));
+    return *(undefined4 *)(&DAT_00475a60 + param_1 * 0xc);
   }
-  racer_entry = get_racer_entry(param_1,param_1);
-  return CONCAT44(param_2,(int)racer_entry);
+  racer_entry = get_racer_entry(param_1);
+  return racer_entry;
 }
 
 

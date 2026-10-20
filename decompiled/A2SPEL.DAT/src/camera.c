@@ -3,7 +3,7 @@
 
 /* ==== 00427414 find_free_camera ==== */
 
-undefined8 __watcall find_free_camera(undefined4 param_1,undefined4 param_2)
+int __watcall find_free_camera(void)
 
 {
   int iVar1;
@@ -13,23 +13,27 @@ undefined8 __watcall find_free_camera(undefined4 param_1,undefined4 param_2)
   iVar1 = 0;
   while( true ) {
     if (camera_count * 0x5c <= iVar1) {
-      return CONCAT44(param_2,0xffffffff);
+      return -1;
     }
     if (*(int *)(cameras + iVar1 + 0x58) == 0) break;
     iVar1 = iVar1 + 0x5c;
     i = i + 1;
   }
   *(undefined4 *)(cameras + iVar1 + 0x58) = 1;
-  return CONCAT44(param_2,i);
+  return i;
 }
 
 
 /* ==== 00427698 find_free_camera_tail ==== */
 
-void __watcall find_free_camera_tail(void)
+undefined4 __watcall
+find_free_camera_tail
+          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,
+          undefined4 param_9,undefined4 param_10)
 
 {
-  return;
+  return param_1;
 }
 
 
@@ -37,68 +41,81 @@ void __watcall find_free_camera_tail(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall
-set_camera(int param_1,undefined4 param_2,undefined4 param_3,int param_4,int param_5,int param_6)
+void __watcall set_camera(int param_1)
 
 {
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
-  undefined8 uVar1;
+  undefined4 uVar1;
+  long lVar2;
+  char *d3d_error_string_result;
+  int fatal_exit_result;
+  undefined4 extraout_ECX;
+  undefined4 unaff_EBP;
+  undefined8 uVar3;
+  undefined4 in_stack_00000004;
+  undefined4 in_stack_00000008;
   undefined4 in_stack_0000000c;
-  int in_stack_00000010;
-  int in_stack_00000014;
-  int in_stack_00000018;
-  float afStack_54 [16];
+  uint in_stack_00000010;
+  uint in_stack_00000014;
+  uint in_stack_00000018;
+  float afStack_54 [11];
+  undefined4 in_stack_ffffffd8;
+  undefined4 in_stack_ffffffdc;
+  undefined4 in_stack_ffffffe0;
+  undefined4 in_stack_ffffffe4;
+  undefined4 in_stack_ffffffe8;
   
   if (DAT_004770d8 == 0) {
     fatal_exit(s__s__d___camera_array_has_not_bee_0045023b,s_camera_cpp_00450230,0x13c);
-    param_1 = extraout_EDX;
   }
   if ((param_1 < 0) || (camera_count < param_1)) {
     fatal_exit(s__s__d___error_illegal_camera_pos_00450276,s_camera_cpp_0045026b,0x140,param_1);
-    param_1 = extraout_EDX_00;
   }
   if (*(int *)(cameras + 0x58 + param_1 * 0x5c) == 0) {
     fatal_exit(s__s__d___error_illegal_camera__d_004502a7,s_camera_cpp_0045029c,0x144,param_1);
-    param_1 = extraout_EDX_01;
   }
-  *(int *)(cameras + param_1 * 0x5c) = param_5;
-  *(int *)(cameras + 4 + param_1 * 0x5c) = param_6;
+  *(undefined4 *)(cameras + param_1 * 0x5c) = in_stack_00000004;
+  *(undefined4 *)(cameras + 4 + param_1 * 0x5c) = in_stack_00000008;
   *(undefined4 *)(cameras + 8 + param_1 * 0x5c) = in_stack_0000000c;
   *(float *)(cameras + 0x18 + param_1 * 0x5c) =
-       (float)in_stack_00000010 * 2.0 * 3.141596 * 0.0009765625;
+       (float)(int)in_stack_00000010 * 2.0 * 3.141596 * 0.0009765625;
   *(float *)(cameras + 0x1c + param_1 * 0x5c) =
-       (float)in_stack_00000014 * 2.0 * 3.141596 * 0.0009765625;
+       (float)(int)in_stack_00000014 * 2.0 * 3.141596 * 0.0009765625;
   *(float *)(cameras + 0x20 + param_1 * 0x5c) =
-       (float)in_stack_00000018 * 2.0 * 3.141596 * 0.0009765625;
-  memset(&view_matrix,0,0x40);
+       (float)(int)in_stack_00000018 * 2.0 * 3.141596 * 0.0009765625;
+  memset((undefined4 *)&view_matrix,0,0x40);
   _DAT_00477090 = 0x3f800000;
   _DAT_0047707c = 0x3f800000;
   _DAT_00477068 = 0x3f800000;
   _view_matrix = 0x3f800000;
-  rotate_matrix_x(&view_matrix,afStack_54);
-  rotate_matrix_z(&view_matrix,afStack_54);
-  rotate_matrix_y(&view_matrix,afStack_54);
-  memset(&DAT_00477094,0,0x40);
+  rotate_matrix_x((float *)&view_matrix,afStack_54,in_stack_00000010);
+  rotate_matrix_z((float *)&view_matrix,afStack_54,in_stack_00000018);
+  rotate_matrix_y((float *)&view_matrix,afStack_54,in_stack_00000014);
+  memset((undefined4 *)&DAT_00477094,0,0x40);
   _DAT_004770d0 = 0x3f800000;
   _DAT_004770bc = 0x3f800000;
-  _DAT_004770c4 = param_5;
+  _DAT_004770c4 = in_stack_00000004;
   _DAT_004770a8 = 0x3f800000;
-  _DAT_004770c8 = param_6;
+  _DAT_004770c8 = in_stack_00000008;
   _DAT_004770cc = in_stack_0000000c;
   _DAT_00477094 = 0x3f800000;
-  uVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c8,&view_matrix);
-  if ((int)uVar1 != 0) {
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    fatal_exit(s__s__d____D3DError_moving_camera___004502d4,s_camera_cpp_004502c9,0x17a,(int)uVar1);
+  lVar2 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764c8,&view_matrix);
+  if (lVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar2);
+    fatal_exit(s__s__d____D3DError_moving_camera___004502d4,s_camera_cpp_004502c9,0x17a,
+               d3d_error_string_result);
   }
-  uVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764cc,&DAT_00477094);
-  if ((int)uVar1 != 0) {
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    fatal_exit(s__s__d____D3DError_moving_camera___00450306,s_camera_cpp_004502fb,0x17e,(int)uVar1);
+  uVar1 = DAT_004764cc;
+  uVar3 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764cc,&DAT_00477094);
+  fatal_exit_result = 0;
+  if ((long)uVar3 != 0) {
+    d3d_error_string_result = d3d_error_string((long)uVar3);
+    fatal_exit_result =
+         fatal_exit(s__s__d____D3DError_moving_camera___00450306,s_camera_cpp_004502fb,0x17e,
+                    d3d_error_string_result);
   }
-  find_free_camera_tail();
+  find_free_camera_tail
+            (fatal_exit_result,(int)((ulonglong)uVar3 >> 0x20),uVar1,extraout_ECX,in_stack_ffffffd8,
+             in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4,in_stack_ffffffe8,unaff_EBP);
   return;
 }
 
@@ -107,47 +124,31 @@ set_camera(int param_1,undefined4 param_2,undefined4 param_3,int param_4,int par
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-longlong __watcall init_cameras(int param_1,uint param_2)
+void __watcall init_cameras(int param_1)
 
 {
-  HLOCAL pvVar1;
-  int iVar2;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int iVar3;
+  int iVar1;
   int i;
-  undefined4 extraout_EDX;
-  HLOCAL pvVar4;
-  undefined8 uVar5;
   
-  uVar5 = init_math3d(param_1,param_1);
-  cameras = LocalAlloc(0x40,(int)((ulonglong)uVar5 >> 0x20) * 0x5c);
-  iVar3 = extraout_ECX;
+  init_math3d();
+  cameras = LocalAlloc(0x40,param_1 * 0x5c);
   if (cameras == (HLOCAL)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_c_00450350,s_camera_cpp_00450345,0x18d);
-    iVar3 = extraout_ECX_00;
   }
   _DAT_004770dc = 0;
   DAT_004770d8 = 1;
-  iVar2 = 0;
-  pvVar4 = (HLOCAL)0x1;
+  iVar1 = 0;
   camera_count = param_1;
-  for (i = 0; pvVar1 = cameras, i < camera_count; i = i + 1) {
-    *(undefined4 *)((int)cameras + iVar2 + 0x58) = 0;
-    iVar2 = iVar2 + 0x5c;
-    pvVar4 = pvVar1;
+  for (i = 0; i < camera_count; i = i + 1) {
+    *(undefined4 *)((int)cameras + iVar1 + 0x58) = 0;
+    iVar1 = iVar1 + 0x5c;
   }
-  uVar5 = find_free_camera(iVar2,i);
-  DAT_00459700 = (int)uVar5;
+  DAT_00459700 = find_free_camera();
   if (DAT_00459700 == -1) {
     fatal_exit(s__s__d____get_new_camera_failed_0045038a,s_camera_cpp_0045037f,0x199);
-    uVar5 = CONCAT44(extraout_EDX,DAT_00459700);
-    iVar3 = extraout_ECX_01;
   }
-  DAT_00459700 = (int)uVar5;
-  set_camera(DAT_00459700,(int)((ulonglong)uVar5 >> 0x20),pvVar4,iVar3,0,0x3f800000);
-  return (ulonglong)param_2 << 0x20;
+  set_camera(DAT_00459700);
+  return;
 }
 
 

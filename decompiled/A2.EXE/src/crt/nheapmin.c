@@ -3,7 +3,7 @@
 
 /* ==== 00403733 heapmin ==== */
 
-longlong __watcall heapmin(undefined4 param_1,uint unaff_EDX)
+void __watcall heapmin(void)
 
 {
   int *address;
@@ -18,13 +18,13 @@ longlong __watcall heapmin(undefined4 param_1,uint unaff_EDX)
     }
   }
   (*(code *)ReleaseNHeap_1)();
-  return (ulonglong)unaff_EDX << 0x20;
+  return;
 }
 
 
 /* ==== 00403747 ReturnMemToSystem ==== */
 
-undefined8 __watcall ReturnMemToSystem(LPVOID address,undefined4 unaff_EDX)
+undefined4 __watcall ReturnMemToSystem(LPVOID address)
 
 {
   LPVOID pvVar1;
@@ -46,7 +46,7 @@ undefined8 __watcall ReturnMemToSystem(LPVOID address,undefined4 unaff_EDX)
     }
     uVar3 = 0;
   }
-  return CONCAT44(unaff_EDX,uVar3);
+  return uVar3;
 }
 
 
@@ -58,20 +58,19 @@ void __watcall ReleaseMiniHeap(LPVOID address)
   int iVar1;
   int iVar2;
   int iVar3;
-  undefined8 return_mem_to_system;
   
   iVar1 = *(int *)((int)address + 4);
-  return_mem_to_system = ReturnMemToSystem(address,*(undefined4 *)((int)address + 8));
-  iVar3 = (int)((ulonglong)return_mem_to_system >> 0x20);
-  if ((int)return_mem_to_system == 0) {
-    iVar2 = iVar3;
+  iVar2 = *(int *)((int)address + 8);
+  iVar3 = ReturnMemToSystem(address);
+  if (iVar3 == 0) {
+    iVar3 = iVar2;
     if (iVar1 != 0) {
-      *(int *)(iVar1 + 8) = iVar3;
-      iVar2 = nheapbeg;
+      *(int *)(iVar1 + 8) = iVar2;
+      iVar3 = nheapbeg;
     }
-    nheapbeg = iVar2;
-    if (iVar3 != 0) {
-      *(int *)(iVar3 + 4) = iVar1;
+    nheapbeg = iVar3;
+    if (iVar2 != 0) {
+      *(int *)(iVar2 + 4) = iVar1;
     }
   }
   return;

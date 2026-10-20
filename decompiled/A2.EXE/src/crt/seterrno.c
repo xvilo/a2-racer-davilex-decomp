@@ -3,12 +3,12 @@
 
 /* ==== 004016ff set_errno ==== */
 
-void __watcall set_errno(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall set_errno(undefined4 param_1)
 
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar1 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar1 + 4) = (int)((ulonglong)uVar1 >> 0x20);
   return;
 }
@@ -16,22 +16,22 @@ void __watcall set_errno(undefined4 param_1,undefined4 unaff_EDX)
 
 /* ==== 00401714 set_EINVAL ==== */
 
-undefined4 __watcall set_EINVAL(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall set_EINVAL(void)
 
 {
-  set_errno(9,unaff_EDX);
+  set_errno(9);
   return 0xffffffff;
 }
 
 
 /* ==== 00401724 set_doserrno ==== */
 
-void __watcall set_doserrno(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall set_doserrno(undefined4 param_1)
 
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar1 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar1 + 8) = (int)((ulonglong)uVar1 >> 0x20);
   return;
 }
@@ -51,186 +51,193 @@ void __watcall write_comspec_switch(char *param_1)
 
 /* ==== 0040173e path_exists ==== */
 
-int __watcall path_exists(char *filename_val)
+int __watcall path_exists(char *file_name)
 
 {
   int access_result;
   
-  access_result = access(filename_val,0);
+  access_result = access(file_name,0);
   return (uint)(access_result == 0);
 }
 
 
 /* ==== 00401750 spawnve ==== */
 
-/* WARNING: Removing unreachable block (ram,0x00401917) */
-/* WARNING: Removing unreachable block (ram,0x00401a0e) */
-
-intptr_t __watcall spawnve(int param_1,char *_Filename,char **_ArgList,char **_Env)
+uint __watcall spawnve(undefined4 param_1,byte *param_2,int *param_3,int *param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
-  char *env_value;
-  undefined4 extraout_ECX;
-  undefined4 extraout_ECX_00;
-  undefined4 extraout_ECX_01;
-  undefined4 extraout_ECX_02;
-  undefined4 unaff_EDX;
-  uint unaff_EDX_00;
-  undefined4 unaff_EDX_01;
-  undefined4 unaff_EDX_02;
-  byte *unaff_EDX_03;
-  undefined4 unaff_EDX_04;
-  char *extraout_EDX;
-  int *extraout_EDX_00;
-  byte bVar4;
-  undefined8 uVar5;
-  undefined8 stackavail_result;
-  int *piVar6;
-  undefined4 uVar7;
-  LPSTR alloca_stack_check_result [28];
+  int *piVar1;
+  byte *pbVar2;
+  int iVar3;
+  undefined1 *stackavail_result;
+  char *arg7;
+  undefined4 arg4;
+  char *pcVar4;
+  char *_Filename;
+  byte bVar5;
+  undefined8 uVar6;
+  char *alloca_stack_check_result;
+  undefined4 *local_bc;
+  int *piStack_b8;
   byte *local_50;
-  byte *str1;
+  byte *local_4c;
   byte *local_48;
   byte *local_44;
   char local_40 [4];
   uint local_3c;
-  undefined1 local_38 [4];
-  int local_34;
-  uint local_30;
-  byte *local_2c;
-  int *local_28;
-  int *local_20;
+  undefined4 local_38;
+  undefined4 local_34;
+  undefined4 *local_30;
+  byte *buffer;
+  char *buffer_2;
+  int *local_24;
+  char *local_20;
   uint local_1c;
   byte *local_18;
+  byte local_14;
   
-  bVar4 = 0;
-  alloca_stack_check_result[0] = (LPSTR)alloca_stack_check();
-  if ((LPSTR)0x1 < alloca_stack_check_result[0]) {
-    set_errno(9,_Env);
-    return -1;
+  bVar5 = 0;
+  alloca_stack_check_result =
+       (char *)alloca_stack_check(param_1,param_2,param_3,param_4,(undefined1 *)0xe0);
+  local_14 = 0;
+  local_24 = param_3;
+  if ((char *)0x1 < alloca_stack_check_result) {
+    set_errno(9);
+    return 0xffffffff;
   }
-  local_1c = build_environment_block(_ArgList,(int *)_Env,&local_30,&local_34,(int)local_38);
+  local_1c = build_environment_block
+                       (param_3,param_4,&local_30,&local_34,&local_38,(int *)&local_3c,0);
   if (local_1c == 0xffffffff) {
-    return -1;
+    return 0xffffffff;
   }
-  iVar1 = string_length(_Filename);
-  uVar5 = nmalloc(iVar1 + 0x10eU,iVar1 + 0x10eU);
-  iVar1 = (int)((ulonglong)uVar5 >> 0x20);
-  local_2c = (byte *)uVar5;
-  local_18 = local_2c;
-  if (local_2c == (byte *)0x0) {
-    stackavail_result = stackavail(0,iVar1);
-    uVar5 = CONCAT44((int)((ulonglong)stackavail_result >> 0x20),local_2c);
-    if ((iVar1 + 3U & 0xfffffffc) < (uint)stackavail_result) {
-      local_18 = (byte *)alloca_stack_check_result;
+  iVar3 = string_length((char *)param_2);
+  buffer = (byte *)nmalloc(iVar3 + 0x10e);
+  local_18 = buffer;
+  if (buffer == (byte *)0x0) {
+    stackavail_result = stackavail();
+    if ((undefined1 *)(iVar3 + 0x111U & 0xfffffffc) < stackavail_result) {
+      local_18 = (byte *)&alloca_stack_check_result;
     }
     else {
       local_18 = (byte *)0x0;
     }
     if (local_18 == (byte *)0x0) {
       nfree(local_30);
-      return -1;
+      return 0xffffffff;
     }
   }
-  local_2c = (byte *)uVar5;
-  split_spawn_path(_Filename,local_18 + (int)((ulonglong)uVar5 >> 0x20) + -0x107);
+  split_spawn_path(param_2,local_18 + iVar3 + 7,&local_48,&local_44,&local_50,&local_4c);
   (*(code *)Save8087)();
-  uVar5 = nmalloc(local_3c,unaff_EDX);
-  local_28 = (int *)uVar5;
-  local_20 = local_28;
-  if (local_28 == (int *)0x0) {
-    uVar5 = stackavail(0,local_3c + 3 & 0xfffffffc);
-    unaff_EDX_00 = (uint)((ulonglong)uVar5 >> 0x20);
-    if (unaff_EDX_00 < (uint)uVar5) {
-      local_20 = (int *)alloca_stack_check_result;
+  buffer_2 = (char *)nmalloc(local_3c);
+  local_20 = buffer_2;
+  if (buffer_2 == (char *)0x0) {
+    stackavail_result = stackavail();
+    if ((undefined1 *)(local_3c + 3 & 0xfffffffc) < stackavail_result) {
+      local_20 = (char *)&alloca_stack_check_result;
     }
     else {
-      local_20 = (int *)0x0;
+      local_20 = (char *)0x0;
     }
-    if (local_20 == (int *)0x0) {
-      set_errno(2,unaff_EDX_00);
+    if (local_20 == (char *)0x0) {
+      set_errno(2);
       local_1c = 0xffffffff;
-      set_doserrno(10,unaff_EDX_01);
+      set_doserrno(10);
       goto LAB_00401a34;
     }
   }
-  makepath(local_18,local_48,local_44,local_50,str1);
-  set_errno(1,unaff_EDX_02);
-  if (*str1 == 0) {
+  makepath(local_18,local_48,local_44,local_50,local_4c);
+  set_errno(1);
+  if (*local_4c == 0) {
 LAB_004018e8:
-    iVar1 = (*(code *)GetThreadPtr)();
-    uVar7 = extraout_ECX;
-    if ((*(int *)(iVar1 + 4) != 1) &&
-       (iVar1 = (*(code *)GetThreadPtr)(), uVar7 = extraout_ECX_00, *(int *)(iVar1 + 4) != 9))
-    goto LAB_00401a34;
-    iVar1 = string_length((char *)local_18);
-    unaff_EDX_03 = local_18 + iVar1;
-    *(undefined4 *)unaff_EDX_03 = s__com_004051e5._0_4_;
-    unaff_EDX_03[(uint)bVar4 * -8 + 4] = s__com_004051e5[(uint)bVar4 * -8 + 4];
-    uVar5 = set_errno(0,unaff_EDX_03);
-    uVar5 = dospawn((int)uVar5,(int)((ulonglong)uVar5 >> 0x20),(int)local_44,uVar7,
-                    alloca_stack_check_result[0],local_18,local_20);
-    local_1c = (uint)uVar5;
-    uVar5 = (*(code *)GetThreadPtr)();
-    unaff_EDX_04 = (undefined4)((ulonglong)uVar5 >> 0x20);
-    uVar7 = extraout_ECX_01;
-    if (*(int *)((int)uVar5 + 4) != 1) {
-      uVar5 = (*(code *)GetThreadPtr)();
-      unaff_EDX_04 = (undefined4)((ulonglong)uVar5 >> 0x20);
-      uVar7 = extraout_ECX_02;
-      if (*(int *)((int)uVar5 + 4) != 9) goto LAB_00401a34;
+    iVar3 = (*(code *)GetThreadPtr)();
+    if (*(int *)(iVar3 + 4) != 1) {
+      piStack_b8 = (int *)0x4018fa;
+      iVar3 = (*(code *)GetThreadPtr)();
+      if (*(int *)(iVar3 + 4) != 9) goto LAB_00401a34;
     }
-    uVar5 = set_errno(0,unaff_EDX_04);
-    pcVar2 = (char *)((ulonglong)uVar5 >> 0x20);
-    *(undefined4 *)pcVar2 = s__exe_004051ea._0_4_;
-    pcVar2[(uint)bVar4 * -8 + 4] = s__exe_004051ea[(uint)bVar4 * -8 + 4];
-    uVar5 = dospawn((int)uVar5,pcVar2,(int)local_44,uVar7,alloca_stack_check_result[0],local_18,
-                    local_20);
-    local_1c = (uint)uVar5;
-    uVar5 = (*(code *)GetThreadPtr)();
-    uVar7 = (undefined4)((ulonglong)uVar5 >> 0x20);
-    if (*(int *)((int)uVar5 + 4) != 1) {
-      uVar5 = (*(code *)GetThreadPtr)();
-      uVar7 = (undefined4)((ulonglong)uVar5 >> 0x20);
-      if (*(int *)((int)uVar5 + 4) != 9) goto LAB_00401a34;
+    pbVar2 = local_18;
+    piStack_b8 = (int *)0x40190f;
+    iVar3 = string_length((char *)local_18);
+    if (local_14 == 0) {
+      *(undefined4 *)(pbVar2 + iVar3) = s__com_004051e5._0_4_;
+      (pbVar2 + iVar3)[(uint)bVar5 * -8 + 4] = s__com_004051e5[(uint)bVar5 * -8 + 4];
+      piStack_b8 = (int *)0x401935;
+      set_errno(0);
+      piStack_b8 = local_24;
+      local_bc = local_30;
+      alloca_stack_check_result = local_20;
+      local_1c = dospawn();
     }
-    set_errno(0,uVar7);
-    *(undefined4 *)extraout_EDX = s__bat_004051e0._0_4_;
-    extraout_EDX[(uint)bVar4 * -8 + 4] = s__bat_004051e0[(uint)bVar4 * -8 + 4];
-    iVar1 = path_exists((char *)local_18);
-    if (iVar1 == 0) goto LAB_00401a34;
+    else {
+      piStack_b8 = (int *)0x401921;
+      set_errno(1);
+    }
+    piStack_b8 = (int *)0x401955;
+    uVar6 = (*(code *)GetThreadPtr)();
+    pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+    if (*(int *)((int)uVar6 + 4) != 1) {
+      piStack_b8 = (int *)0x401961;
+      uVar6 = (*(code *)GetThreadPtr)();
+      pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+      if (*(int *)((int)uVar6 + 4) != 9) goto LAB_00401a34;
+    }
+    piStack_b8 = (int *)0x401972;
+    set_errno(0);
+    piStack_b8 = local_24;
+    *(undefined4 *)pcVar4 = s__exe_004051ea._0_4_;
+    pcVar4[(uint)bVar5 * -8 + 4] = s__exe_004051ea[(uint)bVar5 * -8 + 4];
+    local_bc = local_30;
+    alloca_stack_check_result = local_20;
+    local_1c = dospawn();
+    piStack_b8 = (int *)0x40199d;
+    uVar6 = (*(code *)GetThreadPtr)();
+    pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+    if (*(int *)((int)uVar6 + 4) != 1) {
+      uVar6 = (*(code *)GetThreadPtr)();
+      pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+      if (*(int *)((int)uVar6 + 4) != 9) goto LAB_00401a34;
+    }
+    set_errno(0);
+    *(undefined4 *)pcVar4 = s__bat_004051e0._0_4_;
+    pcVar4[(uint)bVar5 * -8 + 4] = s__bat_004051e0[(uint)bVar5 * -8 + 4];
+    iVar3 = path_exists((char *)local_18);
+    if (iVar3 == 0) goto LAB_00401a34;
   }
   else {
-    iVar1 = stricmp((char *)str1,s__bat_004051e0);
-    if (iVar1 != 0) {
-      uVar5 = set_errno(0,s__bat_004051e0);
-      uVar5 = dospawn((int)uVar5,(int)((ulonglong)uVar5 >> 0x20),(int)local_44,local_50,
-                      alloca_stack_check_result[0],local_18,local_20);
-      local_1c = (uint)uVar5;
+    iVar3 = stricmp(local_4c,(byte *)s__bat_004051e0);
+    if (iVar3 != 0) {
+      set_errno(0);
+      local_1c = dospawn();
       goto LAB_004018e8;
     }
     local_1c = 0xffffffff;
-    iVar1 = path_exists((char *)local_18);
-    if (iVar1 == 0) goto LAB_004018e8;
+    iVar3 = path_exists((char *)local_18);
+    if (iVar3 == 0) goto LAB_004018e8;
   }
+  pcVar4 = local_20;
+  piVar1 = local_24;
+  arg4 = 1;
   nfree(local_30);
-  local_30 = 0;
-  build_command_line((int)local_18,extraout_EDX_00);
-  uVar7 = 0;
-  pcVar2 = local_40;
-  piVar6 = local_20;
-  write_comspec_switch(pcVar2);
-  pcVar3 = s_COMMAND_004051fb;
-  env_value = getenv(s_COMSPEC_004051ef);
-  local_1c = spawnl((int)env_value,(char *)0x0,(char *)local_20,1,alloca_stack_check_result[0],
-                    env_value,pcVar3,pcVar2,local_18,piVar6,uVar7);
+  local_30 = (undefined4 *)0x0;
+  build_command_line((char *)local_18,piVar1,pcVar4,1);
+  _Filename = (char *)(uint)local_14;
+  write_comspec_switch(local_40);
+  if (local_14 == 0) {
+    arg7 = s_COMMAND_004051fb;
+  }
+  else {
+    arg7 = s_CMD_004051f7;
+  }
+  iVar3 = getenv(s_COMSPEC_004051ef);
+  local_1c = spawnl(iVar3,_Filename,pcVar4,arg4,alloca_stack_check_result,iVar3,arg7);
 LAB_00401a34:
-  nfree((uint)local_28);
-  nfree((uint)local_2c);
+  piStack_b8 = (int *)0x401a3c;
+  nfree((undefined4 *)buffer_2);
+  piStack_b8 = (int *)0x401a44;
+  nfree((undefined4 *)buffer);
+  piStack_b8 = (int *)0x401a4c;
   nfree(local_30);
+  piStack_b8 = (int *)0x401a55;
   (*(code *)Rest8087)();
   return local_1c;
 }

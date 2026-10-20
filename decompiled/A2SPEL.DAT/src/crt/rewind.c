@@ -3,13 +3,13 @@
 
 /* ==== 00431189 get_ticks_centiseconds ==== */
 
-undefined8 __watcall get_ticks_centiseconds(undefined4 param_1,undefined4 param_2)
+uint __watcall get_ticks_centiseconds(void)
 
 {
   DWORD DVar1;
   
   DVar1 = GetTickCount();
-  return CONCAT44(param_2,DVar1 / 10);
+  return DVar1 / 10;
 }
 
 
@@ -18,22 +18,20 @@ undefined8 __watcall get_ticks_centiseconds(undefined4 param_1,undefined4 param_
 int __watcall clock_ticks(void)
 
 {
-  undefined4 in_EAX;
-  undefined4 unaff_EDX;
-  undefined8 ticks_centiseconds;
+  uint ticks_centiseconds;
   
-  ticks_centiseconds = get_ticks_centiseconds(in_EAX,unaff_EDX);
-  return (int)ticks_centiseconds - clock_start_ticks;
+  ticks_centiseconds = get_ticks_centiseconds();
+  return ticks_centiseconds - clock_start_ticks;
 }
 
 
 /* ==== 004311b5 rewind ==== */
 
-void __watcall rewind(FILE *_File)
+void __watcall rewind(int param_1)
 
 {
-  *(byte *)&_File->_flag = (byte)_File->_flag & 0xcf;
-  fseek(_File,0,0);
+  *(byte *)(param_1 + 0xc) = *(byte *)(param_1 + 0xc) & 0xcf;
+  fseek(param_1,0,0);
   return;
 }
 

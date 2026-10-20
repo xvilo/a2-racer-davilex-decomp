@@ -7,7 +7,8 @@
 /* WARNING: Instruction at (ram,0x0043f1d6) overlaps instruction at (ram,0x0043f1d5)
     */
 
-void __watcall bin2string_inline_table(void)
+undefined4 __watcall
+bin2string_inline_table(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4)
 
 {
   short sVar1;
@@ -20,11 +21,8 @@ void __watcall bin2string_inline_table(void)
   undefined4 uVar7;
   char *pcVar8;
   uint *puVar9;
-  int unaff_ECX;
   ushort *extraout_ECX;
-  byte extraout_DL;
-  char extraout_DL_00;
-  char unaff_BH;
+  char extraout_DL;
   undefined4 *unaff_ESI;
   undefined4 *unaff_EDI;
   int in_FS_OFFSET;
@@ -53,16 +51,16 @@ void __watcall bin2string_inline_table(void)
   pcVar8[in_FS_OFFSET] = pcVar8[in_FS_OFFSET] + bVar2;
   *pcVar8 = *pcVar8 + bVar2;
   *pcVar8 = *pcVar8 + bVar2;
-  piVar6 = (int *)CONCAT31(uVar10,bVar2 + (char)((uint)unaff_ECX >> 8));
+  piVar6 = (int *)CONCAT31(uVar10,bVar2 + (char)((uint)param_4 >> 8));
   pbVar5 = (byte *)((int)piVar6 + *piVar6);
   bVar3 = (byte)pbVar5;
   *pbVar5 = *pbVar5 + bVar3;
   *pbVar5 = *pbVar5 + bVar3;
   bVar2 = *pbVar5;
-  *pbVar5 = *pbVar5 + extraout_DL;
+  *pbVar5 = *pbVar5 + (byte)param_2;
   uVar10 = (undefined3)((uint)pbVar5 >> 8);
   cVar4 = bVar3 + (9 < (bVar3 & 0xf) | in_AF) * '\x06' +
-          (0x99 < bVar3 || CARRY1(bVar2,extraout_DL)) * '`';
+          (0x99 < bVar3 || CARRY1(bVar2,(byte)param_2)) * '`';
   pcVar8 = (char *)CONCAT31(uVar10,cVar4);
   *pcVar8 = *pcVar8 + cVar4;
   *pcVar8 = *pcVar8 + cVar4;
@@ -79,8 +77,8 @@ void __watcall bin2string_inline_table(void)
   while( true ) {
     bVar3 = *pbVar5;
     *pbVar5 = *pbVar5 + bVar2;
-    unaff_ECX = unaff_ECX + -1;
-    if (unaff_ECX == 0 || *pbVar5 != 0) break;
+    param_4 = param_4 + -1;
+    if (param_4 == 0 || *pbVar5 != 0) break;
     *(char *)(unaff_ESI + 0x26) = *(char *)(unaff_ESI + 0x26) + CARRY1(bVar3,bVar2);
   }
   uVar7 = func_0x0000023b();
@@ -91,7 +89,7 @@ void __watcall bin2string_inline_table(void)
   pcVar8 = (char *)func_0x012c3a72();
   bVar2 = (byte)pcVar8;
   *pcVar8 = *pcVar8 + bVar2;
-  *pcVar8 = *pcVar8 + extraout_DL_00;
+  *pcVar8 = *pcVar8 + extraout_DL;
   *unaff_EDI = *unaff_ESI;
   uVar10 = (undefined3)(CONCAT22((short)((uint)pcVar8 >> 0x10),CONCAT11(bVar2 / 0x18,bVar2)) >> 8);
   puVar9 = (uint *)CONCAT31(uVar10,bVar2 % 0x18);
@@ -104,7 +102,7 @@ void __watcall bin2string_inline_table(void)
   bVar2 = *pbVar5;
   *pbVar5 = *pbVar5 + bVar3;
   pcVar8 = (char *)((int)unaff_ESI + (uint)bVar11 * -8 + -0x6f);
-  *pcVar8 = *pcVar8 + unaff_BH + CARRY1(bVar2,bVar3);
+  *pcVar8 = *pcVar8 + (char)((uint)param_3 >> 8) + CARRY1(bVar2,bVar3);
   puVar9 = (uint *)((int)piVar6 + *piVar6);
   *(char *)((int)puVar9 + -0x790d5b3a) = *(char *)((int)puVar9 + -0x790d5b3a) + (char)puVar9;
   pcVar8 = (char *)((uint)puVar9 & *puVar9);
@@ -120,32 +118,30 @@ void __watcall bin2string_inline_table(void)
 
 /* ==== 0043f242 bin2string_inline_table_2 ==== */
 
-void __watcall bin2string_inline_table_2(void)
+undefined4 __watcall bin2string_inline_table_2(void)
 
 {
-  return;
+  undefined4 in_EAX;
+  
+  return in_EAX;
 }
 
 
 /* ==== 0043f244 frexp ==== */
 
-double __watcall frexp(double _X,int *_Y)
+void __watcall
+frexp(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
+     uint param_6,int *param_7)
 
 {
-  uint uVar1;
-  int iVar2;
-  int *in_stack_0000000c;
-  undefined2 uStack_12;
+  int iVar1;
   
-  iVar2 = 0;
-  uStack_12 = (ushort)((ulonglong)_X >> 0x30);
-  if ((((ulonglong)_X & 0x7fffffff00000000) != 0) || (_X._0_4_ != 0)) {
-    uVar1 = (uint)uStack_12;
-    uStack_12 = uStack_12 & 0x800f | 0x3fe0;
-    iVar2 = ((int)(uVar1 & 0x7ff0) >> 4) + -0x3fe;
+  iVar1 = 0;
+  if (((param_6 & 0x7fffffff) != 0) || (param_5 != 0)) {
+    iVar1 = ((int)(param_6 >> 0x10 & 0x7ff0) >> 4) + -0x3fe;
   }
-  *in_stack_0000000c = iVar2;
-  return SUB108((float10)(double)CONCAT26(uStack_12,SUB86(_X,0)),0);
+  *param_7 = iVar1;
+  return;
 }
 
 

@@ -3,21 +3,22 @@
 
 /* ==== 00415bbb math1err ==== */
 
-void __watcall math1err(uint param_1,undefined4 *unaff_EDX)
+void __watcall math1err(uint param_1,undefined4 *param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  math2err(param_1,unaff_EDX,unaff_EDX);
+  math2err(param_1,param_2,param_2,param_4);
   return;
 }
 
 
 /* ==== 00415bc5 math2err ==== */
 
-void __watcall math2err(uint param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX)
+int __watcall math2err(uint param_1,undefined4 *param_2,undefined4 *param_3,undefined4 param_4)
 
 {
   undefined4 uVar1;
   undefined4 uVar2;
+  int matherr_result;
   int unaff_ESI;
   int local_2c;
   undefined4 local_28;
@@ -27,10 +28,10 @@ void __watcall math2err(uint param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX
   undefined4 local_18;
   undefined8 local_14;
   
-  local_24 = *unaff_EDX;
-  local_20 = unaff_EDX[1];
-  local_1c = *unaff_EBX;
-  local_18 = unaff_EBX[1];
+  local_24 = *param_2;
+  local_20 = param_2[1];
+  local_1c = *param_3;
+  local_18 = param_3[1];
   if ((param_1 & 0x40) == 0) {
     if ((param_1 & 0x80) == 0) {
       if ((param_1 & 0x100) == 0) {
@@ -66,14 +67,12 @@ void __watcall math2err(uint param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX
         uVar2 = DAT_0041f744;
         uVar1 = HugeValue;
         if ((param_1 & 0x8000) == 0) {
-          uVar2 = unaff_EBX[1];
-          uVar1 = *unaff_EBX;
+          uVar2 = param_3[1];
+          uVar1 = *param_3;
         }
         local_14 = (double)CONCAT44(uVar2,uVar1);
       }
       else {
-        unaff_EDX = (undefined4 *)0x0;
-        unaff_EBX = (undefined4 *)0x3ff00000;
         local_14 = 1.0;
       }
     }
@@ -85,8 +84,8 @@ void __watcall math2err(uint param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX
     local_14 = -(double)CONCAT44(DAT_0041f744,HugeValue);
   }
   local_2c = unaff_ESI;
-  matherr(&local_2c,unaff_EDX,unaff_EBX);
-  return;
+  matherr_result = matherr(&local_2c);
+  return matherr_result;
 }
 
 

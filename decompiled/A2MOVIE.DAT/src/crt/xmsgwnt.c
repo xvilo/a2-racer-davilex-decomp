@@ -3,13 +3,12 @@
 
 /* ==== 0040f149 exit_with_msg ==== */
 
-void __watcall exit_with_msg(char *buffer)
+undefined4 __watcall exit_with_msg(char *buffer,UINT exit_code)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined4 unaff_EDX;
-  undefined4 extraout_EDX;
+  undefined4 exit_2_result;
   DWORD nNumberOfBytesToWrite;
   DWORD local_14;
   
@@ -20,24 +19,24 @@ void __watcall exit_with_msg(char *buffer)
   }
   WriteFile(*(HANDLE *)(FileHandleIDs + 8),buffer,nNumberOfBytesToWrite,&local_14,(LPOVERLAPPED)0x0)
   ;
-  exit_2(unaff_EDX,extraout_EDX);
-  return;
+  exit_2_result = exit_2(exit_code);
+  return exit_2_result;
 }
 
 
 /* ==== 0040f180 fatal_runtime_error ==== */
 
-void __watcall fatal_runtime_error(char *buffer)
+int __watcall fatal_runtime_error(char *buffer,UINT exit_code)
 
 {
-  int enter_wvideo;
-  undefined2 in_DS;
+  int iVar1;
+  ushort in_DS;
   
-  enter_wvideo = EnterWVIDEO(buffer,in_DS);
-  if (enter_wvideo == 0) {
-    exit_with_msg(buffer);
+  iVar1 = EnterWVIDEO(buffer,(uint)in_DS);
+  if (iVar1 == 0) {
+    iVar1 = exit_with_msg(buffer,exit_code);
   }
-  return;
+  return iVar1;
 }
 
 

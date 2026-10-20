@@ -6,25 +6,19 @@
 void __watcall draw_dashboard(void)
 
 {
-  int in_EAX;
-  undefined4 unaff_EDX;
-  undefined8 draw_race_position_result;
-  
   if (dashboard_on_screen == 0) {
     draw_speed_indicator();
     draw_fuel_warning();
   }
   else {
     draw_dashboard_panel();
-    in_EAX = control_type;
     draw_steering_wheel();
     draw_fuel_gauge();
     draw_speedometer();
     draw_rev_counter();
   }
-  draw_race_position_result = draw_race_position(in_EAX,unaff_EDX);
-  draw_time_left((int)draw_race_position_result,(int)((ulonglong)draw_race_position_result >> 0x20))
-  ;
+  draw_race_position();
+  draw_time_left();
   draw_money();
   if (dashboard_redraw_state != 2) {
     dashboard_redraw_state = dashboard_redraw_state + 1;
@@ -55,7 +49,7 @@ void __watcall draw_speed_indicator(void)
   uint uVar1;
   int unaff_EBX;
   int unaff_ESI;
-  float10 chp;
+  float10 fVar2;
   
   if (screen_resolution == 0) {
     unaff_EBX = 0x1e4;
@@ -71,9 +65,10 @@ void __watcall draw_speed_indicator(void)
     frame_val = 0;
   }
   else {
-    chp = CHP();
-    uVar1 = (int)ROUND(chp) >> 0x1f;
-    frame_val = ((int)ROUND(chp) ^ uVar1) - uVar1;
+    fVar2 = (float10)player_speed * (float10)2.666666666666666;
+    CHP();
+    uVar1 = (int)ROUND(fVar2) >> 0x1f;
+    frame_val = ((int)ROUND(fVar2) ^ uVar1) - uVar1;
     if (0x27 < frame_val) {
       frame_val = 0x27;
     }
@@ -95,7 +90,7 @@ void __watcall draw_fuel_warning(void)
   uint uVar1;
   int unaff_EBX;
   int unaff_ESI;
-  float10 chp;
+  float10 fVar2;
   
   if (screen_resolution == 0) {
     unaff_EBX = 0x1b0;
@@ -109,9 +104,10 @@ void __watcall draw_fuel_warning(void)
   }
   frame_val = 0;
   if (fuel != 0) {
-    chp = CHP();
-    uVar1 = (int)ROUND(chp) >> 0x1f;
-    frame_val = ((int)ROUND(chp) ^ uVar1) - uVar1;
+    fVar2 = (float10)fuel * (float10)0.06666666666666667;
+    CHP();
+    uVar1 = (int)ROUND(fVar2) >> 0x1f;
+    frame_val = ((int)ROUND(fVar2) ^ uVar1) - uVar1;
     if (0x13 < frame_val) {
       frame_val = 0x13;
     }
@@ -125,7 +121,7 @@ void __watcall draw_fuel_warning(void)
 
 /* ==== 00409383 draw_race_position ==== */
 
-void __watcall draw_race_position(undefined4 param_1,undefined4 param_2)
+void __watcall draw_race_position(void)
 
 {
   int iVar1;
@@ -172,7 +168,7 @@ void __watcall draw_race_position(undefined4 param_1,undefined4 param_2)
 
 /* ==== 0040946e draw_time_left ==== */
 
-void __watcall draw_time_left(undefined4 param_1,undefined4 param_2)
+void __watcall draw_time_left(void)
 
 {
   ulonglong uVar1;
@@ -192,7 +188,7 @@ void __watcall draw_time_left(undefined4 param_1,undefined4 param_2)
   int iStack_2c;
   
   if (race_running == 0) {
-    restart_time_clock(param_1,param_2);
+    restart_time_clock();
   }
   update_time_left();
   iVar6 = (int)((longlong)time_left % 0x3c);
@@ -338,15 +334,16 @@ void __watcall draw_speedometer(void)
 {
   int frame_val;
   uint uVar1;
-  float10 chp;
+  float10 fVar2;
   
   if (ABS(player_speed) == 0.0) {
     frame_val = 0;
   }
   else {
-    chp = CHP();
-    uVar1 = (int)ROUND(chp) >> 0x1f;
-    frame_val = ((int)ROUND(chp) ^ uVar1) - uVar1;
+    fVar2 = (float10)player_speed * (float10)2.666666666666666;
+    CHP();
+    uVar1 = (int)ROUND(fVar2) >> 0x1f;
+    frame_val = ((int)ROUND(fVar2) ^ uVar1) - uVar1;
     if (0x27 < frame_val) {
       frame_val = 0x27;
     }
@@ -375,15 +372,16 @@ void __watcall draw_rev_counter(void)
 {
   int frame_val;
   uint uVar1;
-  float10 chp;
+  float10 fVar2;
   
   if (engine_rpm == 0) {
     frame_val = 0;
   }
   else {
-    chp = CHP();
-    uVar1 = (int)ROUND(chp) >> 0x1f;
-    frame_val = ((int)ROUND(chp) ^ uVar1) - uVar1;
+    fVar2 = (float10)engine_rpm * (float10)0.2857142857142857;
+    CHP();
+    uVar1 = (int)ROUND(fVar2) >> 0x1f;
+    frame_val = ((int)ROUND(fVar2) ^ uVar1) - uVar1;
     if (0x13 < frame_val) {
       frame_val = 0x13;
     }
@@ -412,15 +410,16 @@ void __watcall draw_fuel_gauge(void)
 {
   int frame_val;
   uint uVar1;
-  float10 chp;
+  float10 fVar2;
   
   if (fuel == 0) {
     frame_val = 0;
   }
   else {
-    chp = CHP();
-    uVar1 = (int)ROUND(chp) >> 0x1f;
-    frame_val = ((int)ROUND(chp) ^ uVar1) - uVar1;
+    fVar2 = (float10)fuel * (float10)0.06666666666666667;
+    CHP();
+    uVar1 = (int)ROUND(fVar2) >> 0x1f;
+    frame_val = ((int)ROUND(fVar2) ^ uVar1) - uVar1;
     if (0x13 < frame_val) {
       frame_val = 0x13;
     }

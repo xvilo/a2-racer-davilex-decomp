@@ -3,22 +3,22 @@
 
 /* ==== 0041455a strncmp ==== */
 
-int __watcall strncmp(char *_Str1,char *_Str2,size_t _MaxCount)
+undefined4 __watcall strncmp(byte *param_1,byte *param_2,int param_3)
 
 {
   while( true ) {
-    if (_MaxCount == 0) {
+    if (param_3 == 0) {
       return 0;
     }
-    if (*_Str1 != *_Str2) break;
-    if (*_Str1 == 0) {
+    if (*param_1 != *param_2) break;
+    if (*param_1 == 0) {
       return 0;
     }
-    _Str1 = _Str1 + 1;
-    _Str2 = _Str2 + 1;
-    _MaxCount = _MaxCount - 1;
+    param_1 = param_1 + 1;
+    param_2 = param_2 + 1;
+    param_3 = param_3 + -1;
   }
-  return (uint)(byte)*_Str1 - (uint)(byte)*_Str2;
+  return (uint)*param_1 - (uint)*param_2;
 }
 
 

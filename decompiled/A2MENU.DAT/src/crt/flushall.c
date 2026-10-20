@@ -3,56 +3,44 @@
 
 /* ==== 00420ced flushall ==== */
 
-int __watcall flushall(void)
+void __watcall
+flushall(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
   int iVar1;
   uint extraout_ECX;
-  undefined4 *unaff_EDX;
-  int i;
-  undefined8 flush_result;
+  undefined4 *puVar2;
   
-  (*(code *)AccessIOB_1)();
-  i = 0;
-  for (unaff_EDX = OpenStreams; unaff_EDX != (undefined4 *)0x0; unaff_EDX = (undefined4 *)*unaff_EDX
-      ) {
-    iVar1 = unaff_EDX[1];
-    if (((*(uint *)(iVar1 + 0xc) & extraout_ECX) != 0) &&
-       (i = i + 1, (*(byte *)(iVar1 + 0xd) & 0x10) != 0)) {
-      flush_result = flush(iVar1,unaff_EDX);
-      unaff_EDX = (undefined4 *)((ulonglong)flush_result >> 0x20);
+  (*(code *)AccessIOB_1)(param_2,param_4,param_3);
+  for (puVar2 = OpenStreams; puVar2 != (undefined4 *)0x0; puVar2 = (undefined4 *)*puVar2) {
+    iVar1 = puVar2[1];
+    if (((*(uint *)(iVar1 + 0xc) & extraout_ECX) != 0) && ((*(byte *)(iVar1 + 0xd) & 0x10) != 0)) {
+      flush(iVar1);
     }
   }
   (*(code *)ReleaseIOB_1)();
-  return i;
+  return;
 }
 
 
 /* ==== 00420cf2 flushall_1 ==== */
 
-undefined8 __watcall
-flushall_1(undefined4 param_1,undefined4 unaff_EDX_00,undefined4 unaff_EBX,undefined4 unaff_ECX)
+void __watcall flushall_1(undefined4 param_1)
 
 {
   int iVar1;
   uint extraout_ECX;
-  undefined4 *unaff_EDX;
-  int i;
-  undefined8 flush_result;
+  undefined4 *puVar2;
   
-  (*(code *)AccessIOB_1)(unaff_EDX_00,unaff_ECX,unaff_EBX);
-  i = 0;
-  for (unaff_EDX = OpenStreams; unaff_EDX != (undefined4 *)0x0; unaff_EDX = (undefined4 *)*unaff_EDX
-      ) {
-    iVar1 = unaff_EDX[1];
-    if (((*(uint *)(iVar1 + 0xc) & extraout_ECX) != 0) &&
-       (i = i + 1, (*(byte *)(iVar1 + 0xd) & 0x10) != 0)) {
-      flush_result = flush(iVar1,unaff_EDX);
-      unaff_EDX = (undefined4 *)((ulonglong)flush_result >> 0x20);
+  (*(code *)AccessIOB_1)();
+  for (puVar2 = OpenStreams; puVar2 != (undefined4 *)0x0; puVar2 = (undefined4 *)*puVar2) {
+    iVar1 = puVar2[1];
+    if (((*(uint *)(iVar1 + 0xc) & extraout_ECX) != 0) && ((*(byte *)(iVar1 + 0xd) & 0x10) != 0)) {
+      flush(iVar1);
     }
   }
   (*(code *)ReleaseIOB_1)();
-  return CONCAT44(unaff_EDX_00,i);
+  return;
 }
 
 

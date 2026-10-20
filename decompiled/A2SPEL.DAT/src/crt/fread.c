@@ -3,125 +3,116 @@
 
 /* ==== 0042ca1f fread ==== */
 
-size_t __watcall fread(void *_DstBuf,size_t _ElementSize,size_t _Count,FILE *_File)
+uint __watcall fread(char *param_1,uint param_2,int param_3,int *param_4)
 
 {
   char cVar1;
   DWORD DVar2;
+  int fill_buffer_result;
   int extraout_ECX;
-  int unaff_EDX;
-  uint unaff_EDX_00;
-  uint i;
+  uint j;
+  int extraout_EDX;
+  uint number_of_bytes_to_read;
   char *pcVar3;
   char *pcVar4;
   byte bVar5;
-  undefined8 fill_buffer_result;
   char *pcStack_18;
-  uint j;
+  uint i;
   uint uStack_10;
   
   bVar5 = 0;
   (*(code *)AccessFileH_1)();
   if ((*(byte *)(extraout_ECX + 0xc) & 1) == 0) {
-    set_errno(4,unaff_EDX);
+    set_errno(4);
     *(byte *)(extraout_ECX + 0xc) = *(byte *)(extraout_ECX + 0xc) | 0x20;
     (*(code *)ReleaseFileH_1)();
     return 0;
   }
-  i = _Count * unaff_EDX;
-  if (i == 0) {
+  uStack_10 = param_3 * extraout_EDX;
+  if (uStack_10 == 0) {
     (*(code *)ReleaseFileH_1)();
     return 0;
   }
   if (*(int *)(extraout_ECX + 8) == 0) {
-    ioalloc((int)_File);
+    ioalloc(param_4);
   }
-  j = 0;
-  pcStack_18 = _DstBuf;
-  uStack_10 = i;
-  if ((_File->_flag & 0x40) == 0) {
-    pcVar3 = (char *)(i + (int)_DstBuf);
+  i = 0;
+  pcStack_18 = param_1;
+  if ((*(byte *)(param_4 + 3) & 0x40) == 0) {
+    pcVar3 = param_1 + uStack_10;
     do {
-      if (_File->_cnt == 0) {
-        fill_buffer_result = fill_buffer(&_File->_ptr,_DstBuf,pcVar3);
-        _DstBuf = (void *)((ulonglong)fill_buffer_result >> 0x20);
-        if ((int)fill_buffer_result == 0) break;
-      }
-      pcVar4 = _File->_ptr;
-      _File->_cnt = _File->_cnt + -1;
-      _File->_ptr = pcVar4 + 1;
+      if ((param_4[1] == 0) && (fill_buffer_result = fill_buffer(param_4), fill_buffer_result == 0))
+      break;
+      pcVar4 = (char *)*param_4;
+      param_4[1] = param_4[1] + -1;
+      *param_4 = (int)(pcVar4 + 1);
       cVar1 = *pcVar4;
       if (cVar1 == '\r') {
-        if (_File->_cnt == 0) {
-          fill_buffer_result = fill_buffer(&_File->_ptr,_DstBuf,pcVar3);
-          _DstBuf = (void *)((ulonglong)fill_buffer_result >> 0x20);
-          if ((int)fill_buffer_result == 0) break;
-        }
-        pcVar4 = _File->_ptr;
-        _File->_cnt = _File->_cnt + -1;
-        _File->_ptr = pcVar4 + 1;
+        if ((param_4[1] == 0) &&
+           (fill_buffer_result = fill_buffer(param_4), fill_buffer_result == 0)) break;
+        pcVar4 = (char *)*param_4;
+        param_4[1] = param_4[1] + -1;
+        *param_4 = (int)(pcVar4 + 1);
         cVar1 = *pcVar4;
       }
       if (cVar1 == '\x1a') goto LAB_0042cb4f;
-      *(char *)_DstBuf = cVar1;
-      j = j + 1;
-      _DstBuf = (void *)((int)_DstBuf + 1);
-    } while (_DstBuf != pcVar3);
+      *param_1 = cVar1;
+      i = i + 1;
+      param_1 = param_1 + 1;
+    } while (param_1 != pcVar3);
   }
   else {
     do {
       while( true ) {
-        unaff_EDX_00 = _File->_cnt;
-        if (unaff_EDX_00 != 0) {
-          if (uStack_10 < unaff_EDX_00) {
-            unaff_EDX_00 = uStack_10;
+        number_of_bytes_to_read = param_4[1];
+        if (number_of_bytes_to_read != 0) {
+          if (uStack_10 < number_of_bytes_to_read) {
+            number_of_bytes_to_read = uStack_10;
           }
-          pcVar3 = _File->_ptr;
+          pcVar3 = (char *)*param_4;
           pcVar4 = pcStack_18;
-          for (i = unaff_EDX_00 >> 2; i != 0; i = i - 1) {
+          for (j = number_of_bytes_to_read >> 2; j != 0; j = j - 1) {
             *(undefined4 *)pcVar4 = *(undefined4 *)pcVar3;
-            pcVar3 = pcVar3 + ((uint)bVar5 * -2 + 1) * 4;
-            pcVar4 = pcVar4 + ((uint)bVar5 * -2 + 1) * 4;
+            pcVar3 = pcVar3 + (uint)bVar5 * -8 + 4;
+            pcVar4 = pcVar4 + (uint)bVar5 * -8 + 4;
           }
-          for (i = unaff_EDX_00 & 3; i != 0; i = i - 1) {
+          for (j = number_of_bytes_to_read & 3; j != 0; j = j - 1) {
             *pcVar4 = *pcVar3;
             pcVar3 = pcVar3 + (uint)bVar5 * -2 + 1;
             pcVar4 = pcVar4 + (uint)bVar5 * -2 + 1;
           }
-          pcStack_18 = pcStack_18 + unaff_EDX_00;
-          i = j + unaff_EDX_00;
-          uStack_10 = uStack_10 - unaff_EDX_00;
-          _File->_ptr = _File->_ptr + unaff_EDX_00;
-          _File->_cnt = _File->_cnt - unaff_EDX_00;
-          j = i;
+          pcStack_18 = pcStack_18 + number_of_bytes_to_read;
+          i = i + number_of_bytes_to_read;
+          uStack_10 = uStack_10 - number_of_bytes_to_read;
+          *param_4 = *param_4 + number_of_bytes_to_read;
+          param_4[1] = param_4[1] - number_of_bytes_to_read;
         }
         if (uStack_10 == 0) goto LAB_0042cc03;
-        if ((uStack_10 < (uint)_File->_charbuf) && ((_File->_flag & 0x400) == 0)) break;
-        _File->_cnt = 0;
-        _File->_ptr = _File->_base;
-        i = uStack_10;
-        if (((_File->_flag & 0x400) == 0) && (0x200 < uStack_10)) {
-          i = (uStack_10 >> 8 & 0xfffffe) << 8;
+        if ((uStack_10 < (uint)param_4[5]) && ((*(byte *)((int)param_4 + 0xd) & 4) == 0)) break;
+        param_4[1] = 0;
+        *param_4 = param_4[2];
+        number_of_bytes_to_read = uStack_10;
+        if (((*(byte *)((int)param_4 + 0xd) & 4) == 0) && (0x200 < uStack_10)) {
+          number_of_bytes_to_read = (uStack_10 >> 8 & 0xfffffe) << 8;
         }
-        DVar2 = qread(_File->_file,pcStack_18,i);
+        DVar2 = qread(param_4[4],pcStack_18,number_of_bytes_to_read);
         if (DVar2 == 0xffffffff) {
-          *(byte *)&_File->_flag = (byte)_File->_flag | 0x20;
+          *(byte *)(param_4 + 3) = *(byte *)(param_4 + 3) | 0x20;
           goto LAB_0042cc03;
         }
         if (DVar2 == 0) goto LAB_0042cb4f;
         pcStack_18 = pcStack_18 + DVar2;
-        i = uStack_10 - DVar2;
-        j = j + DVar2;
-        uStack_10 = i;
+        uStack_10 = uStack_10 - DVar2;
+        i = i + DVar2;
       }
-      fill_buffer_result = fill_buffer(&_File->_ptr,unaff_EDX_00,i);
-    } while ((int)fill_buffer_result != 0);
+      fill_buffer_result = fill_buffer(param_4);
+    } while (fill_buffer_result != 0);
   }
 LAB_0042cc03:
   (*(code *)ReleaseFileH_1)();
-  return j / _ElementSize;
+  return i / param_2;
 LAB_0042cb4f:
-  *(byte *)&_File->_flag = (byte)_File->_flag | 0x10;
+  *(byte *)(param_4 + 3) = *(byte *)(param_4 + 3) | 0x10;
   goto LAB_0042cc03;
 }
 

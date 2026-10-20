@@ -3,80 +3,79 @@
 
 /* ==== 0041ef27 brktime ==== */
 
-undefined4 * __watcall brktime(int param_1,uint unaff_EDX_00,int unaff_EBX,undefined4 *unaff_ECX)
+undefined4 * __watcall brktime(int param_1,uint param_2,int param_3,undefined4 *param_4)
 
 {
   ulonglong uVar1;
-  uint unaff_EDX;
+  int leapyear_result;
   uint uVar2;
   uint i;
   undefined *puVar3;
   uint uVar4;
-  longlong leapyear_result;
   
-  if ((unaff_EDX_00 < 0xa8c0) && (0 < unaff_EBX)) {
-    i = (unaff_EDX_00 + 0x15180) - unaff_EBX;
+  if ((param_2 < 0xa8c0) && (0 < param_3)) {
+    i = (param_2 + 0x15180) - param_3;
     uVar4 = (param_1 + i / 0x15180) - 1;
   }
   else {
-    i = unaff_EDX_00 - unaff_EBX;
+    i = param_2 - param_3;
     uVar4 = param_1 + i / 0x15180;
   }
-  unaff_ECX[2] = (int)(((ulonglong)i % 0x15180) / 0xe10);
+  param_4[2] = (int)(((ulonglong)i % 0x15180) / 0xe10);
   uVar1 = ((ulonglong)i % 0x15180) % 0xe10;
-  unaff_ECX[1] = (int)(uVar1 / 0x3c);
-  *unaff_ECX = (int)(uVar1 % 0x3c);
+  param_4[1] = (int)(uVar1 / 0x3c);
+  *param_4 = (int)(uVar1 % 0x3c);
   i = uVar4 / 0x16e;
   uVar2 = uVar4 + i * -0x16d;
   if (i != 0) {
     uVar2 = uVar2 - (i - 1 >> 2);
   }
-  leapyear_result = leapyear(i + 0x76c,i);
-  unaff_EDX = (uint)((ulonglong)leapyear_result >> 0x20);
-  i = (int)leapyear_result + 0x16d;
-  for (; i <= uVar2; uVar2 = uVar2 - i) {
-    unaff_EDX = unaff_EDX + 1;
+  leapyear_result = leapyear(i + 0x76c);
+  for (; leapyear_result + 0x16dU <= uVar2; uVar2 = uVar2 - (leapyear_result + 0x16dU)) {
+    i = i + 1;
   }
   puVar3 = &diyr;
-  unaff_ECX[5] = unaff_EDX;
-  unaff_ECX[7] = uVar2;
-  leapyear_result = leapyear(unaff_EDX + 0x76c,unaff_EDX);
-  if ((int)leapyear_result != 0) {
+  param_4[5] = i;
+  param_4[7] = uVar2;
+  leapyear_result = leapyear(i + 0x76c);
+  if (leapyear_result != 0) {
     puVar3 = &dilyr;
   }
   i = uVar2 / 0x1f;
   if ((uint)(*(int *)(puVar3 + i * 2) >> 0x10) <= uVar2) {
     i = i + 1;
   }
-  unaff_ECX[4] = i;
-  unaff_ECX[3] = (uVar2 - (int)*(short *)(puVar3 + i * 2)) + 1;
-  unaff_ECX[6] = (uVar4 + 1) % 7;
-  return unaff_ECX;
+  param_4[4] = i;
+  param_4[3] = (uVar2 - (int)*(short *)(puVar3 + i * 2)) + 1;
+  param_4[6] = (uVar4 + 1) % 7;
+  return param_4;
 }
 
 
 /* ==== 0041f03c gmtime ==== */
 
-tm * __watcall gmtime(time_t *_Time)
+undefined4 * __watcall gmtime(uint *param_1,undefined4 *param_2)
 
 {
-  tm *brktime_result;
-  undefined4 *unaff_EDX;
+  undefined4 *brktime_result;
   
-  unaff_EDX[8] = 0;
-  brktime_result = (tm *)brktime(0x63df,(uint)*_Time,0,unaff_EDX);
+  param_2[8] = 0;
+  brktime_result = brktime(0x63df,*param_1,0,param_2);
   return brktime_result;
 }
 
 
 /* ==== 0041f05a gmtime_1 ==== */
 
-void __watcall gmtime_1(time_t *time_val,time_t *unaff_EDX,undefined4 unaff_EBX)
+undefined4 * __watcall gmtime_1(uint *param_1)
 
 {
-  (*(code *)GetThreadPtr)(unaff_EDX,unaff_EBX);
-  gmtime(time_val);
-  return;
+  int iVar1;
+  undefined4 *gmtime_result;
+  
+  iVar1 = (*(code *)GetThreadPtr)();
+  gmtime_result = gmtime(param_1,(undefined4 *)(iVar1 + 0x14));
+  return gmtime_result;
 }
 
 

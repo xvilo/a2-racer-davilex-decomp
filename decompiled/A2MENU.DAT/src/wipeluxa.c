@@ -8,14 +8,12 @@ wipe_luxaflex_horizontal(int param_1,int param_2,int param_3,int param_4,int par
 
 {
   long lVar1;
-  char *dd_error_string_result;
-  int extraout_ECX;
-  int extraout_EDX;
+  char *arg4;
   int iVar2;
   int iVar3;
-  char *format;
   char *pcVar4;
-  undefined4 uVar5;
+  char *arg2;
+  undefined4 arg3;
   int local_2c;
   int local_28;
   int local_24;
@@ -27,8 +25,6 @@ wipe_luxaflex_horizontal(int param_1,int param_2,int param_3,int param_4,int par
   
   if (called_true_handle_wipe == 0) {
     fatal_exit(s__wipe_luxaflex_horizontal__illeg_00431ab0);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   hide_mouse();
   iVar2 = 0;
@@ -59,23 +55,23 @@ wipe_luxaflex_horizontal(int param_1,int param_2,int param_3,int param_4,int par
         lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
                           (xvga_screen,&local_2c,xvga_back_screen,&local_1c,0x8000,0);
         if (lVar1 != 0) {
-          dd_error_string_result = dd_error_string(lVar1);
-          uVar5 = 0x47;
-          pcVar4 = s_wipeluxa_cpp_00431aec;
-          format = s__s__d____wipe_luxafle_horizontal_00431af9;
-          goto LAB_0041e55f;
+          arg4 = dd_error_string(lVar1);
+          arg3 = 0x47;
+          arg2 = s_wipeluxa_cpp_00431aec;
+          pcVar4 = s__s__d____wipe_luxafle_horizontal_00431af9;
+          goto override_prt_41e55f_f69790bb;
         }
       }
       else if ((param_1 == 2) &&
               (lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
                                  (xvga_screen,&local_2c,xvga_buffer_screen,&local_1c,0x8000,0),
               lVar1 != 0)) {
-        dd_error_string_result = dd_error_string(lVar1);
-        uVar5 = 0x4d;
-        pcVar4 = s_wipeluxa_cpp_00431b2a;
-        format = s__s__d____wipe_luxafle_horizontal_00431b37;
-LAB_0041e55f:
-        fatal_exit(format,pcVar4,uVar5,dd_error_string_result);
+        arg4 = dd_error_string(lVar1);
+        arg3 = 0x4d;
+        arg2 = s_wipeluxa_cpp_00431b2a;
+        pcVar4 = s__s__d____wipe_luxafle_horizontal_00431b37;
+override_prt_41e55f_f69790bb:
+        fatal_exit(pcVar4,arg2,arg3,arg4);
       }
     }
     iVar2 = iVar2 + 0x10;
@@ -89,60 +85,78 @@ void __watcall
 wipe_luxaflex_verticale(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
 
 {
-  long lVar1;
-  char *dd_error_string_result;
-  int extraout_ECX;
-  int iVar2;
-  char *format;
-  char *pcVar3;
-  undefined4 uVar4;
+  int iVar1;
+  long lVar2;
+  char *arg4;
+  int iVar3;
+  char *pcVar4;
+  char *arg2;
+  undefined4 arg3;
+  int local_34;
+  int local_30;
+  int local_2c;
+  int local_28;
+  int local_24;
+  int local_20;
+  int local_1c;
+  int local_18;
   int local_14;
+  int local_10;
   
   if (called_true_handle_wipe == 0) {
     fatal_exit(s__wipe_luxaflex_horizontal__illeg_00431b68);
-    param_4 = extraout_ECX;
   }
   hide_mouse();
+  local_28 = param_5 + param_3;
+  iVar1 = param_2 + 1;
+  local_10 = param_2 + param_4;
   local_14 = 0;
-  iVar2 = local_14;
+  iVar3 = local_14;
+  local_30 = param_3;
+  local_20 = param_3;
+  local_18 = local_28;
   do {
     while( true ) {
-      if (iVar2 < param_2 + param_4) break;
+      if (iVar3 < local_10) break;
       if (param_6 == 0) {
         Sleep(0);
       }
-      iVar2 = local_14 + 1;
-      local_14 = iVar2;
-      if (0xf < iVar2) {
+      iVar3 = local_14 + 1;
+      local_14 = iVar3;
+      if (0xf < iVar3) {
         show_mouse();
         return;
       }
     }
+    local_34 = param_2;
+    local_2c = iVar1;
+    local_24 = param_2;
+    local_1c = iVar1;
     if (param_1 != 0) {
       if ((uint)param_1 < 2) {
-        lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
-                          (xvga_screen,&stack0xffffffcc,xvga_back_screen,&stack0xffffffdc,0x8000,0);
-        if (lVar1 != 0) {
-          dd_error_string_result = dd_error_string(lVar1);
-          uVar4 = 0x98;
-          pcVar3 = s_wipeluxa_cpp_00431ba4;
-          format = s__s__d____wipe_luxafle_horizontal_00431bb1;
-          goto LAB_0041e67c;
+        lVar2 = (**(code **)(*(int *)xvga_screen + 0x14))
+                          (xvga_screen,&local_34,xvga_back_screen,&local_24,0x8000,0);
+        if (lVar2 != 0) {
+          arg4 = dd_error_string(lVar2);
+          arg3 = 0x98;
+          arg2 = s_wipeluxa_cpp_00431ba4;
+          pcVar4 = s__s__d____wipe_luxafle_horizontal_00431bb1;
+          goto override_prt_41e67c_f69790bb;
         }
       }
       else if ((param_1 == 2) &&
-              (lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
-                                 (xvga_screen,&stack0xffffffcc,xvga_buffer_screen,&stack0xffffffdc,
-                                  0x8000,0), lVar1 != 0)) {
-        dd_error_string_result = dd_error_string(lVar1);
-        uVar4 = 0x9e;
-        pcVar3 = s_wipeluxa_cpp_00431be2;
-        format = s__s__d____wipe_luxafle_horizontal_00431bef;
-LAB_0041e67c:
-        fatal_exit(format,pcVar3,uVar4,dd_error_string_result);
+              (lVar2 = (**(code **)(*(int *)xvga_screen + 0x14))
+                                 (xvga_screen,&local_34,xvga_buffer_screen,&local_24,0x8000,0),
+              lVar2 != 0)) {
+        arg4 = dd_error_string(lVar2);
+        arg3 = 0x9e;
+        arg2 = s_wipeluxa_cpp_00431be2;
+        pcVar4 = s__s__d____wipe_luxafle_horizontal_00431bef;
+override_prt_41e67c_f69790bb:
+        fatal_exit(pcVar4,arg2,arg3,arg4);
       }
     }
-    iVar2 = iVar2 + 0x10;
+    iVar3 = iVar3 + 0x10;
   } while( true );
 }
 

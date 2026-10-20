@@ -5,10 +5,16 @@
 
 /* WARNING: Removing unreachable block (ram,0x00423252) */
 
-void __watcall verify_pentium_fdiv_bug(void)
+uint __watcall verify_pentium_fdiv_bug(void)
 
 {
-  return;
+  uint uVar1;
+  
+  uVar1 = (uint)real87;
+  if (2 < real87) {
+    uVar1 = 0x100;
+  }
+  return uVar1;
 }
 
 

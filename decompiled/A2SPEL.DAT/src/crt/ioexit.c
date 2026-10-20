@@ -3,34 +3,34 @@
 
 /* ==== 00439a5f docloseall ==== */
 
-undefined8 __watcall docloseall(int param_1,undefined4 unaff_EDX_00)
+int __watcall docloseall(int param_1)
 
 {
   undefined4 *puVar1;
   undefined *puVar2;
   undefined4 *puVar3;
-  int unaff_EDX;
+  int iVar4;
   int i;
   
   i = 0;
   puVar3 = OpenStreams;
 LAB_00439aac:
   if (puVar3 == (undefined4 *)0x0) {
-    return CONCAT44(unaff_EDX_00,i);
+    return i;
   }
   puVar1 = (undefined4 *)*puVar3;
   puVar2 = (undefined *)puVar3[1];
-  unaff_EDX = 1;
+  iVar4 = 1;
   puVar3 = puVar1;
   if (((puVar2[0xd] & 0x40) == 0) && ((puVar2[0xd] & 8) == 0)) goto code_r0x00439a97;
   goto LAB_00439aa4;
 code_r0x00439a97:
   if (&iob + param_1 * 0x1a <= puVar2) {
     if (puVar2 < &DAT_0045996a) {
-      unaff_EDX = 0;
+      iVar4 = 0;
     }
 LAB_00439aa4:
-    shutdown_stream((int)puVar2,unaff_EDX);
+    shutdown_stream((int)puVar2,iVar4);
     i = i + 1;
   }
   goto LAB_00439aac;

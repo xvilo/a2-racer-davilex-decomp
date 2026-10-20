@@ -3,31 +3,34 @@
 
 /* ==== 0041c451 free ==== */
 
-void __watcall free(void *_Memory)
+undefined4 __watcall free(undefined4 *param_1)
 
 {
-  void *pvVar1;
-  void *pvVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  ushort in_DS;
   
-  if (_Memory != (void *)0x0) {
+  uVar1 = 0;
+  if (param_1 != (undefined4 *)0x0) {
     (*(code *)AccessNHeap_1)();
-    pvVar1 = nheapbeg;
-    if (((MiniHeapFreeRover == (void *)0x0) || (_Memory < MiniHeapFreeRover)) ||
-       (pvVar2 = MiniHeapFreeRover, *(void **)((int)MiniHeapFreeRover + 8) <= _Memory)) {
-      for (; (pvVar2 = pvVar1, *(void **)((int)pvVar1 + 8) != (void *)0x0 &&
-             ((_Memory < pvVar1 || (*(void **)((int)pvVar1 + 8) <= _Memory))));
-          pvVar1 = *(void **)((int)pvVar1 + 8)) {
+    puVar2 = nheapbeg;
+    if (((MiniHeapFreeRover == (undefined4 *)0x0) || (param_1 < MiniHeapFreeRover)) ||
+       (puVar3 = MiniHeapFreeRover, (undefined4 *)MiniHeapFreeRover[2] <= param_1)) {
+      for (; (puVar3 = puVar2, (undefined4 *)puVar2[2] != (undefined4 *)0x0 &&
+             ((param_1 < puVar2 || ((undefined4 *)puVar2[2] <= param_1))));
+          puVar2 = (undefined4 *)puVar2[2]) {
       }
     }
-    MemFree();
-    if ((pvVar2 < MiniHeapRover) && (LargestSizeB4MiniHeapRover < *(uint *)((int)pvVar2 + 0x14))) {
-      LargestSizeB4MiniHeapRover = *(uint *)((int)pvVar2 + 0x14);
+    MemFree(param_1,(uint)in_DS,(int)puVar3);
+    if ((puVar3 < MiniHeapRover) && (LargestSizeB4MiniHeapRover < (uint)puVar3[5])) {
+      LargestSizeB4MiniHeapRover = puVar3[5];
     }
     nheap_clean = 0;
-    MiniHeapFreeRover = pvVar2;
-    (*(code *)ReleaseNHeap_1)();
+    MiniHeapFreeRover = puVar3;
+    uVar1 = (*(code *)ReleaseNHeap_1)();
   }
-  return;
+  return uVar1;
 }
 
 

@@ -3,18 +3,17 @@
 
 /* ==== 0043b380 byteswap ==== */
 
-void __watcall byteswap(void)
+void __watcall byteswap(undefined4 param_1,undefined4 param_2,undefined4 param_3,uint param_4)
 
 {
   undefined1 uVar1;
   undefined4 uVar2;
   uint uVar3;
-  uint unaff_ECX;
   uint i;
   undefined4 *unaff_ESI;
   undefined4 *unaff_EDI;
   
-  for (i = unaff_ECX >> 2; i != 0; i = i - 1) {
+  for (i = param_4 >> 2; i != 0; i = i - 1) {
     LOCK();
     uVar2 = *unaff_ESI;
     *unaff_ESI = *unaff_EDI;
@@ -23,8 +22,8 @@ void __watcall byteswap(void)
     unaff_ESI = unaff_ESI + 1;
     unaff_EDI = unaff_EDI + 1;
   }
-  i = (uint)((byte)unaff_ECX & 3);
-  uVar3 = unaff_ECX & 3;
+  i = (uint)((byte)param_4 & 3);
+  uVar3 = param_4 & 3;
   while (uVar3 != 0) {
     LOCK();
     uVar1 = *(undefined1 *)unaff_ESI;
@@ -43,33 +42,33 @@ void __watcall byteswap(void)
 /* ==== 0043b3a6 med3 ==== */
 
 undefined4 __watcall
-med3(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX,undefined *unaff_ECX)
+med3(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined *param_4)
 
 {
   int iVar1;
   
-  iVar1 = (*(code *)unaff_ECX)();
+  iVar1 = (*(code *)param_4)();
   if (iVar1 < 1) {
-    iVar1 = (*(code *)unaff_ECX)();
+    iVar1 = (*(code *)param_4)();
     if (-1 < iVar1) {
       return param_1;
     }
-    iVar1 = (*(code *)unaff_ECX)();
+    iVar1 = (*(code *)param_4)();
     if (iVar1 < 1) {
-      return unaff_EDX;
+      return param_2;
     }
   }
   else {
-    iVar1 = (*(code *)unaff_ECX)();
+    iVar1 = (*(code *)param_4)();
     if (iVar1 < 1) {
       return param_1;
     }
-    iVar1 = (*(code *)unaff_ECX)();
+    iVar1 = (*(code *)param_4)();
     if (0 < iVar1) {
-      return unaff_EDX;
+      return param_2;
     }
   }
-  return unaff_EBX;
+  return param_3;
 }
 
 
@@ -77,241 +76,257 @@ med3(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX,undefined *una
 
 /* WARNING: Removing unreachable block (ram,0x0043b5f1) */
 
-void __watcall
-qsort(void *_Base,size_t _NumOfElements,size_t _SizeOfElements,_PtFuncCompare *_PtFuncCompare)
+int * __watcall qsort(int *param_1,int *param_2,int *param_3,undefined *param_4)
 
 {
-  undefined1 uVar1;
-  undefined4 uVar2;
-  int iVar3;
-  undefined1 *puVar4;
+  int iVar1;
   uint k;
-  undefined1 *puVar5;
   uint j;
-  undefined4 *puVar6;
-  void *pvVar7;
-  undefined4 *puVar8;
-  undefined4 *puVar9;
-  void *pvVar10;
-  byte bVar11;
-  undefined4 *local_160;
+  int *piVar2;
+  int *piVar3;
+  int *piVar4;
+  int *piVar5;
+  int *piVar6;
+  byte bVar7;
+  undefined8 uVar8;
+  int *local_164;
+  int *local_160;
   undefined4 auStack_15c [32];
   uint auStack_dc [32];
-  undefined4 local_5c;
+  int local_5c;
   int local_58;
   int local_54;
-  int local_50;
-  undefined4 *local_4c;
-  undefined4 *local_48;
-  undefined4 *local_44;
-  undefined4 *local_40;
-  undefined4 *local_3c;
+  int *local_50;
+  int *local_4c;
+  int *local_48;
+  int *local_44;
+  int *local_40;
+  int *local_3c;
   int local_38;
   uint local_34;
   int local_30;
   int i;
-  undefined4 *local_24;
-  undefined4 *local_20;
-  undefined4 *local_1c;
+  code *local_28;
+  int *local_24;
+  int *local_20;
+  int *local_1c;
   
-  bVar11 = 0;
-  if ((((uint)_Base | _SizeOfElements) & 3) == 0) {
-    local_34 = (uint)(4 < _SizeOfElements);
+  bVar7 = 0;
+  local_28 = (code *)param_4;
+  if ((((uint)param_1 | (uint)param_3) & 3) == 0) {
+    local_34 = (uint)((int *)0x4 < param_3);
   }
   else {
     local_34 = 2;
   }
-  local_54 = _SizeOfElements * 3;
+  local_54 = (int)param_3 * 3;
+  piVar6 = (int *)((int)param_3 * 2);
   i = 0;
-  local_50 = _SizeOfElements * 2;
-  local_160 = _Base;
+  local_50 = piVar6;
+  piVar5 = param_3;
+  local_164 = param_2;
+  local_160 = param_1;
 LAB_0043b444:
   do {
-    if ((void *)0x1 < _NumOfElements) {
-      if ((void *)0xf < _NumOfElements) {
-        puVar9 = (undefined4 *)((int)local_160 + (_NumOfElements >> 1) * _SizeOfElements);
-        if ((void *)0x1d < _NumOfElements) {
+    if ((int *)0x1 < local_164) {
+      if ((int *)0xf < local_164) {
+        piVar6 = (int *)((int)local_160 + ((uint)local_164 >> 1) * (int)param_3);
+        if ((int *)0x1d < local_164) {
           local_48 = local_160;
-          puVar8 = (undefined4 *)((_NumOfElements - 1) * _SizeOfElements + (int)local_160);
-          if ((void *)0x2a < _NumOfElements) {
-            local_38 = _SizeOfElements * (_NumOfElements >> 3);
+          piVar5 = (int *)(((int)local_164 + -1) * (int)param_3 + (int)local_160);
+          param_2 = piVar6;
+          if ((int *)0x2a < local_164) {
+            local_38 = (int)param_3 * ((uint)local_164 >> 3);
             local_58 = local_38 * 2;
-            local_48 = (undefined4 *)
-                       med3(local_160,(undefined4 *)((int)local_160 + local_38),
-                            (undefined1 *)((int)local_160 + local_58),_PtFuncCompare);
-            puVar9 = (undefined4 *)
-                     med3((int)puVar9 - local_38,puVar9,(undefined1 *)(local_38 + (int)puVar9),
-                          _PtFuncCompare);
-            puVar8 = (undefined4 *)
-                     med3((int)puVar8 - local_58,(int)puVar8 - local_38,puVar8,_PtFuncCompare);
+            local_48 = (int *)med3(local_160,(int *)((int)local_160 + local_38),
+                                   (int)local_160 + local_58,local_28);
+            param_2 = (int *)med3((int)piVar6 - local_38,piVar6,local_38 + (int)piVar6,local_28);
+            piVar5 = (int *)med3((int)piVar5 - local_58,(int)piVar5 - local_38,piVar5,local_28);
           }
-          puVar9 = (undefined4 *)med3(local_48,puVar9,puVar8,_PtFuncCompare);
+          piVar6 = (int *)med3(local_48,param_2,piVar5,local_28);
         }
         if (local_34 == 0) {
           local_40 = &local_5c;
-          local_5c = *puVar9;
+          local_5c = *piVar6;
         }
         else {
           local_40 = local_160;
-          byteswap();
+          byteswap(local_160,param_2,piVar5,(uint)param_3);
         }
+        piVar5 = (int *)(((int)local_164 + -1) * (int)param_3);
         local_24 = local_160;
-        local_20 = (undefined4 *)((int)local_160 + (_NumOfElements - 1) * _SizeOfElements);
-        puVar9 = local_160;
-        local_1c = local_20;
+        piVar6 = (int *)((int)local_160 + (int)piVar5);
+        local_20 = piVar6;
+        local_1c = piVar6;
+        piVar2 = local_160;
 LAB_0043b62c:
-        for (; puVar9 <= local_1c; puVar9 = (undefined4 *)((int)puVar9 + _SizeOfElements)) {
-          iVar3 = (*_PtFuncCompare)((void *)_SizeOfElements,(void *)_NumOfElements);
-          if (0 < iVar3) break;
-          if (iVar3 == 0) {
+        for (; piVar2 <= local_1c; piVar2 = (int *)((int)piVar2 + (int)param_3)) {
+          uVar8 = (*local_28)();
+          piVar6 = (int *)((ulonglong)uVar8 >> 0x20);
+          piVar5 = (int *)uVar8;
+          if (0 < (int)piVar5) break;
+          if (piVar5 == (int *)0x0) {
             if (local_34 == 0) {
-              uVar2 = *local_24;
-              *local_24 = *puVar9;
-              *puVar9 = uVar2;
+              piVar6 = (int *)*local_24;
+              *local_24 = *piVar2;
+              *piVar2 = (int)piVar6;
             }
             else {
-              _NumOfElements = 0x43b655;
-              byteswap();
+              byteswap(0,piVar6,piVar2,(uint)param_3);
             }
-            local_24 = (undefined4 *)((int)local_24 + _SizeOfElements);
+            local_24 = (int *)((int)local_24 + (int)param_3);
+            piVar5 = param_3;
           }
         }
-        for (; puVar9 <= local_1c; local_1c = (undefined4 *)((int)local_1c - _SizeOfElements)) {
-          iVar3 = (*_PtFuncCompare)((void *)_SizeOfElements,(void *)_NumOfElements);
-          if (iVar3 < 0) break;
-          if (iVar3 == 0) {
+        for (; uVar8 = CONCAT44(piVar6,piVar5), piVar2 <= local_1c;
+            local_1c = (int *)((int)local_1c - (int)param_3)) {
+          uVar8 = (*local_28)();
+          piVar6 = (int *)((ulonglong)uVar8 >> 0x20);
+          if ((int)uVar8 < 0) break;
+          if ((int)uVar8 == 0) {
             if (local_34 == 0) {
-              uVar2 = *local_1c;
+              piVar6 = (int *)*local_1c;
               *local_1c = *local_20;
-              *local_20 = uVar2;
+              *local_20 = (int)piVar6;
             }
             else {
-              _NumOfElements = 0x43b6a1;
-              byteswap();
+              byteswap(0,piVar6,piVar2,(uint)param_3);
             }
-            local_20 = (undefined4 *)((int)local_20 - _SizeOfElements);
+            local_20 = (int *)((int)local_20 - (int)param_3);
           }
+          piVar5 = param_3;
         }
-        if (puVar9 <= local_1c) {
+        piVar6 = (int *)((ulonglong)uVar8 >> 0x20);
+        if (piVar2 <= local_1c) {
           if (local_34 == 0) {
-            uVar2 = *puVar9;
-            *puVar9 = *local_1c;
-            *local_1c = uVar2;
+            iVar1 = *piVar2;
+            *piVar2 = *local_1c;
+            *local_1c = iVar1;
+            piVar6 = local_1c;
           }
           else {
-            byteswap();
+            byteswap((int)uVar8,piVar6,piVar2,(uint)param_3);
           }
-          puVar9 = (undefined4 *)((int)puVar9 + _SizeOfElements);
-          local_1c = (undefined4 *)((int)local_1c - _SizeOfElements);
+          piVar2 = (int *)((int)piVar2 + (int)param_3);
+          local_1c = (int *)((int)local_1c - (int)param_3);
+          piVar5 = param_3;
           goto LAB_0043b62c;
         }
-        local_44 = (undefined4 *)((int)local_160 + _NumOfElements * _SizeOfElements);
-        j = (int)puVar9 - (int)local_24;
-        if ((int)local_24 - (int)local_160 < (int)puVar9 - (int)local_24) {
+        local_44 = (int *)((int)local_160 + (int)local_164 * (int)param_3);
+        j = (int)piVar2 - (int)local_24;
+        if ((int)local_24 - (int)local_160 < (int)piVar2 - (int)local_24) {
           j = (int)local_24 - (int)local_160;
         }
         if (j != 0) {
-          puVar8 = (undefined4 *)((int)puVar9 - j);
-          puVar6 = local_160;
+          piVar6 = (int *)((int)piVar2 - j);
+          piVar5 = local_160;
           for (k = j >> 2; k != 0; k = k - 1) {
             LOCK();
-            uVar2 = *puVar6;
-            *puVar6 = *puVar8;
+            iVar1 = *piVar5;
+            *piVar5 = *piVar6;
             UNLOCK();
-            *puVar8 = uVar2;
-            puVar6 = puVar6 + 1;
-            puVar8 = puVar8 + (uint)bVar11 * -2 + 1;
+            *piVar6 = iVar1;
+            piVar5 = piVar5 + 1;
+            piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
           }
           k = (uint)((byte)j & 3);
           j = j & 3;
           while (j != 0) {
             LOCK();
-            uVar1 = *(undefined1 *)puVar6;
-            *(undefined1 *)puVar6 = *(undefined1 *)puVar8;
+            iVar1 = *piVar5;
+            *(char *)piVar5 = (char)*piVar6;
             UNLOCK();
-            *(undefined1 *)puVar8 = uVar1;
-            puVar6 = (undefined4 *)((int)puVar6 + 1);
+            *(char *)piVar6 = (char)iVar1;
+            piVar5 = (int *)((int)piVar5 + 1);
             k = k - 1;
-            puVar8 = (undefined4 *)((int)puVar8 + (uint)bVar11 * -2 + 1);
+            piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
             j = k;
           }
         }
-        puVar4 = (undefined1 *)((int)local_44 + (-_SizeOfElements - (int)local_20));
-        puVar5 = (undefined1 *)((int)local_20 - (int)local_1c);
-        if (puVar4 <= (undefined1 *)((int)local_20 - (int)local_1c)) {
-          puVar5 = puVar4;
+        piVar6 = (int *)((int)local_44 + (-(int)param_3 - (int)local_20));
+        piVar5 = (int *)((int)local_20 - (int)local_1c);
+        if (piVar6 <= (int *)((int)local_20 - (int)local_1c)) {
+          piVar5 = piVar6;
         }
-        if (puVar5 != (undefined1 *)0x0) {
-          puVar8 = (undefined4 *)((int)local_44 - (int)puVar5);
-          puVar6 = puVar9;
-          for (j = (uint)puVar5 >> 2; j != 0; j = j - 1) {
+        if (piVar5 != (int *)0x0) {
+          piVar4 = (int *)((int)local_44 - (int)piVar5);
+          piVar3 = piVar2;
+          for (j = (uint)piVar5 >> 2; j != 0; j = j - 1) {
             LOCK();
-            uVar2 = *puVar6;
-            *puVar6 = *puVar8;
+            piVar6 = (int *)*piVar3;
+            *piVar3 = *piVar4;
             UNLOCK();
-            *puVar8 = uVar2;
-            puVar6 = puVar6 + 1;
-            puVar8 = puVar8 + (uint)bVar11 * -2 + 1;
+            *piVar4 = (int)piVar6;
+            piVar3 = piVar3 + 1;
+            piVar4 = piVar4 + (uint)bVar7 * -2 + 1;
           }
-          j = (uint)((byte)puVar5 & 3);
-          k = (uint)puVar5 & 3;
+          j = (uint)((byte)piVar5 & 3);
+          k = (uint)piVar5 & 3;
           while (k != 0) {
             LOCK();
-            uVar1 = *(undefined1 *)puVar6;
-            *(undefined1 *)puVar6 = *(undefined1 *)puVar8;
+            iVar1 = *piVar3;
+            *(char *)piVar3 = (char)*piVar4;
+            piVar6 = (int *)CONCAT31((int3)((uint)piVar6 >> 8),(char)iVar1);
             UNLOCK();
-            *(undefined1 *)puVar8 = uVar1;
-            puVar6 = (undefined4 *)((int)puVar6 + 1);
+            *(char *)piVar4 = (char)iVar1;
+            piVar3 = (int *)((int)piVar3 + 1);
             j = j - 1;
-            puVar8 = (undefined4 *)((int)puVar8 + (uint)bVar11 * -2 + 1);
+            piVar4 = (int *)((int)piVar4 + (uint)bVar7 * -2 + 1);
             k = j;
           }
         }
-        pvVar10 = (void *)((int)puVar9 - (int)local_24);
-        pvVar7 = (void *)((int)local_20 - (int)local_1c);
-        if (pvVar7 < pvVar10) {
-          if (pvVar10 <= _SizeOfElements) goto LAB_0043b4e2;
-          auStack_15c[i] = local_160;
-          auStack_dc[i] = (uint)pvVar10 / _SizeOfElements;
-          local_160 = (undefined4 *)((int)local_44 - (int)pvVar7);
+        piVar2 = (int *)((int)piVar2 - (int)local_24);
+        piVar4 = (int *)((int)local_20 - (int)local_1c);
+        piVar5 = (int *)(i * 4);
+        if (piVar4 < piVar2) {
+          if (piVar2 <= param_3) goto LAB_0043b4e2;
+          *(int **)((int)piVar5 + (int)auStack_15c) = local_160;
+          *(uint *)((int)piVar5 + (int)auStack_dc) = (uint)piVar2 / (uint)param_3;
+          local_160 = (int *)((int)local_44 - (int)piVar4);
         }
         else {
-          auStack_dc[i] = (uint)pvVar7 / _SizeOfElements;
-          auStack_15c[i] = (undefined4 *)((int)local_44 - (int)pvVar7);
-          pvVar7 = pvVar10;
+          *(uint *)((int)piVar5 + (int)auStack_dc) = (uint)piVar4 / (uint)param_3;
+          *(int **)((int)piVar5 + (int)auStack_15c) = (int *)((int)local_44 - (int)piVar4);
+          piVar4 = piVar2;
         }
-        _NumOfElements = (uint)pvVar7 / _SizeOfElements;
+        param_2 = (int *)((uint)piVar4 % (uint)param_3);
+        piVar6 = (int *)((uint)piVar4 / (uint)param_3);
         i = i + 1;
+        local_164 = piVar6;
         goto LAB_0043b444;
       }
-      local_4c = (undefined4 *)((int)local_160 + _NumOfElements * _SizeOfElements);
-      for (local_30 = local_54; 0 < local_30; local_30 = local_30 - local_50) {
-        for (local_3c = (undefined4 *)((int)local_160 + local_30); puVar9 = local_3c,
-            local_3c < local_4c; local_3c = (undefined4 *)((int)local_3c + local_30)) {
-          for (; local_160 < puVar9; puVar9 = (undefined4 *)((int)puVar9 - local_30)) {
-            puVar8 = (undefined4 *)((int)puVar9 - local_30);
-            iVar3 = (*_PtFuncCompare)((void *)_SizeOfElements,(void *)_NumOfElements);
-            if (iVar3 < 1) break;
+      local_4c = (int *)((int)local_160 + (int)local_164 * (int)param_3);
+      piVar6 = (int *)((int)local_164 * (int)param_3);
+      for (local_30 = local_54; 0 < local_30; local_30 = local_30 - (int)local_50) {
+        for (local_3c = (int *)((int)local_160 + local_30); piVar6 = local_3c, local_3c < local_4c;
+            local_3c = (int *)((int)local_3c + local_30)) {
+          for (; local_160 < piVar6; piVar6 = (int *)((int)piVar6 - local_30)) {
+            piVar5 = (int *)((int)piVar6 - local_30);
+            uVar8 = (*local_28)();
+            if ((int)uVar8 < 1) break;
             if (local_34 == 0) {
-              uVar2 = *puVar9;
-              *puVar9 = *puVar8;
-              *puVar8 = uVar2;
+              iVar1 = *piVar6;
+              *piVar6 = *piVar5;
+              *piVar5 = iVar1;
             }
             else {
-              _NumOfElements = 0x43b4a3;
-              byteswap();
+              byteswap((int)uVar8,(int)((ulonglong)uVar8 >> 0x20),piVar6,(uint)param_3);
             }
           }
+          piVar5 = piVar6;
         }
+        piVar6 = local_50;
       }
     }
 LAB_0043b4e2:
     if (i == 0) {
-      return;
+      return piVar6;
     }
     i = i + -1;
-    local_160 = (undefined4 *)auStack_15c[i];
-    _NumOfElements = auStack_dc[i];
+    param_2 = (int *)auStack_15c[i];
+    piVar6 = (int *)auStack_dc[i];
+    local_164 = piVar6;
+    local_160 = param_2;
   } while( true );
 }
 

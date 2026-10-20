@@ -36,7 +36,7 @@ void __watcall set_ini_filename(char *param_1)
   }
   fatal_exit(s__set_ini_filename___s__d____file_00446d78,s_inifile_cpp_00446d6c,0x2c);
 LAB_00414554:
-  getcwd(&ini_filename,0x118);
+  getcwd((undefined4 *)&ini_filename,0x118);
   j = 0xffffffff;
   pcVar4 = &ini_filename;
   do {
@@ -101,13 +101,8 @@ LAB_00414554:
 void __watcall write_ini_string_setting(char *param_1,char *param_2,char *param_3)
 
 {
-  LPCSTR extraout_ECX;
-  LPCSTR extraout_EDX;
-  
   if (ini_file_init_ok == 0) {
     fatal_exit(s__write_ini_string_setting___s__d_00446dc1,s_inifile_cpp_00446db5,0x41);
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   WritePrivateProfileStringA(param_1,param_2,param_3,&ini_filename);
   return;
@@ -116,17 +111,15 @@ void __watcall write_ini_string_setting(char *param_1,char *param_2,char *param_
 
 /* ==== 00414612 write_ini_value_setting ==== */
 
-void __watcall write_ini_value_setting(char *param_1,char *param_2,int val)
+void __watcall write_ini_value_setting(char *param_1,char *param_2,int param_3)
 
 {
-  int extraout_ECX;
   char local_30 [36];
   
   if (ini_file_init_ok == 0) {
     fatal_exit(s__write_ini_value_setting___s__d__00446e19,s_inifile_cpp_00446e0d,0x4f);
-    val = extraout_ECX;
   }
-  itoa(val,local_30,10);
+  itoa(param_3,local_30,10);
   WritePrivateProfileStringA(param_1,param_2,local_30,&ini_filename);
   return;
 }
@@ -138,11 +131,9 @@ uint __watcall read_ini_value_setting(char *param_1,char *param_2)
 
 {
   UINT UVar1;
-  LPCSTR extraout_EDX;
   
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_value_setting___s__d____00446e70,s_inifile_cpp_00446e64,0x5c);
-    param_2 = extraout_EDX;
   }
   UVar1 = GetPrivateProfileIntA(param_1,param_2,0,&ini_filename);
   return UVar1;
@@ -154,13 +145,8 @@ uint __watcall read_ini_value_setting(char *param_1,char *param_2)
 void __watcall read_ini_string_setting(char *param_1,char *param_2,char *param_3,int param_4)
 
 {
-  DWORD extraout_ECX;
-  LPCSTR extraout_EDX;
-  
   if (ini_file_init_ok == 0) {
     fatal_exit(s__read_ini_string_setting___s__d__00446ec6,s_inifile_cpp_00446eba,0x67);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   GetPrivateProfileStringA(param_1,param_2,&DAT_00446f11,param_3,param_4,&ini_filename);
   return;

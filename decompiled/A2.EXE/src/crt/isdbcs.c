@@ -3,7 +3,7 @@
 
 /* ==== 00403c97 checkIsDBCS ==== */
 
-void __watcall checkIsDBCS(void)
+BOOL __watcall checkIsDBCS(void)
 
 {
   BOOL BVar1;
@@ -13,7 +13,7 @@ void __watcall checkIsDBCS(void)
   if ((BVar1 != 0) && ((_Stack_1c.LeadByte[0] != '\0' || (_Stack_1c.LeadByte[1] != '\0')))) {
     IsDBCS = 1;
   }
-  return;
+  return BVar1;
 }
 
 

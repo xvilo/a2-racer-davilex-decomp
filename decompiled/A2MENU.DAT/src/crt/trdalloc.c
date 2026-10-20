@@ -3,20 +3,20 @@
 
 /* ==== 00421466 FiniThreadProcessing ==== */
 
-void __watcall FiniThreadProcessing(undefined4 param_1,void *unaff_EDX)
+void __watcall FiniThreadProcessing(void)
 
 {
   undefined4 *puVar1;
-  undefined4 *_Memory;
+  undefined4 *puVar2;
   
-  _Memory = thread_data_list;
-  while (_Memory != (undefined4 *)0x0) {
-    puVar1 = (undefined4 *)*_Memory;
-    if (_Memory[3] != 0) {
-      free((void *)_Memory[2]);
+  puVar2 = thread_data_list;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    if (puVar2[3] != 0) {
+      free((undefined4 *)puVar2[2]);
     }
-    free(_Memory);
-    _Memory = puVar1;
+    free(puVar2);
+    puVar2 = puVar1;
   }
   return;
 }

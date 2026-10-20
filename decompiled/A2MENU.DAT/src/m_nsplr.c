@@ -8,13 +8,11 @@ void __watcall mns_draw_selected_slot_info(int param_1)
 {
   int iVar1;
   char *pcVar2;
-  int extraout_EDX;
   int iVar3;
   
   iVar1 = *(int *)(*(int *)(xvga_anims + 8) + 0xc);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mns_draw_selected_slot_i_004286a4,s_m_nsplr_cpp_00428698,0x107,1,0);
-    iVar1 = extraout_EDX;
   }
   iVar3 = param_1 * 8;
   set_mem_image(2,iVar1,*(int *)(mns_slot_list + iVar3),*(int *)(&DAT_00434290 + iVar3),2);
@@ -49,7 +47,6 @@ void __watcall mns_draw_slot_info(int param_1)
   int slot_check_index_result;
   int iVar3;
   char *pcVar4;
-  char *extraout_EDX;
   int iVar5;
   
   iVar3 = *(int *)(*(int *)(xvga_anims + 8) + 4);
@@ -79,7 +76,7 @@ void __watcall mns_draw_slot_info(int param_1)
   iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_0042882a,0x13f);
   win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0xfe,*(int *)(&DAT_00434290 + iVar5),
                s__9d_00428836,*(undefined4 *)(&DAT_004372d4 + iVar3 * 0x13c));
-  iVar3 = slot_check_index(param_1,extraout_EDX,0x143);
+  iVar3 = slot_check_index(param_1,s_m_nsplr_cpp_0042883a,0x143);
   pcVar4 = slot_tijd_string(iVar3);
   win_print_xy(2,*(int *)(mns_slot_list + iVar5) + 0x189,*(int *)(&DAT_00434290 + iVar5),
                s___6s_00428846,pcVar4);
@@ -134,23 +131,18 @@ void __watcall mns_open_screen(int param_1)
 
 {
   int use_mns_menu_cfg_anims_result;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int iVar1;
   
   debugmsg(s__s__d___mns_open_screen____initi_004288c2,s_m_nsplr_cpp_004288b6,0x172);
   load_pcx_file_1(2,s_NSPEL_2_PCX_004288eb,0x1f);
   use_mns_menu_cfg_anims_result = use_mns_menu_cfg_anims();
-  iVar1 = extraout_ECX;
   if (use_mns_menu_cfg_anims_result != 0) {
     fatal_exit(s__s__d___mns_open_screen____Could_00428903,s_m_nsplr_cpp_004288f7,0x175);
-    iVar1 = extraout_ECX_00;
   }
   reset_anim_base();
   hide_mouse();
   handle_wipe(2,3,600);
   show_mouse();
-  mns_print_slot(iVar1);
+  mns_print_slot(param_1);
   activate_form((fform_t *)mns_form);
   return;
 }
@@ -181,10 +173,8 @@ int __watcall menu_nieuwesplr(void)
   bool bVar1;
   bool bVar2;
   int iVar3;
-  char *slot_naam_string_result;
+  char *arg2;
   uint handle_form_result;
-  int extraout_ECX;
-  int extraout_ECX_00;
   int iVar4;
   char local_3c [32];
   int local_1c;
@@ -216,7 +206,6 @@ LAB_00408abd:
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
           snd_play(&local_1c,s_MNS_01_wav_004289dc);
           iVar4 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_004289e7);
-          iVar3 = extraout_ECX;
           if (iVar4 == 0) {
             snd_stop(&local_1c);
             snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
@@ -224,8 +213,8 @@ LAB_00408abd:
           }
           snd_stop(&local_1c);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
-          create_slot(extraout_ECX,local_3c);
-          mns_print_slot(extraout_ECX);
+          create_slot(iVar3,local_3c);
+          mns_print_slot(iVar3);
         }
         set_active_slot(iVar3);
       }
@@ -237,11 +226,11 @@ LAB_00408abd:
             snd_wait(&local_1c);
             snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
             snd_play(&local_1c,s_MNS_02_wav_00428a31);
-            iVar3 = slot_check_index(iVar3,s_m_nsplr_cpp_00428a3c,0x1e3);
-            slot_naam_string_result = slot_naam_string(iVar3);
-            iVar3 = req_vraag(s_Wil_je_deze_speler___s__verwijde_00428a48,slot_naam_string_result);
-            if (iVar3 != 0) {
-              clear_slot(extraout_ECX_00);
+            iVar4 = slot_check_index(iVar3,s_m_nsplr_cpp_00428a3c,0x1e3);
+            arg2 = slot_naam_string(iVar4);
+            iVar4 = req_vraag(s_Wil_je_deze_speler___s__verwijde_00428a48,arg2);
+            if (iVar4 != 0) {
+              clear_slot(iVar3);
             }
             snd_stop(&local_1c);
             snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);

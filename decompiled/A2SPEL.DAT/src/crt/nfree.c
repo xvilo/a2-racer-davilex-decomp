@@ -5,19 +5,16 @@
 
 undefined4 __watcall
 enum_d3d_device_callback
-          (undefined4 *param_1,LPCSTR param_2,LPCSTR param_3,undefined4 *param_4,undefined4 *param_5
-          )
+          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 *param_5,LPCSTR param_6,LPCSTR param_7,undefined4 *param_8,undefined4 *param_9,
+          undefined4 param_10)
 
 {
   uint bpp_to_ddbd_flag_result;
   int i;
   undefined4 *puVar1;
-  LPCSTR in_stack_00000008;
-  LPCSTR in_stack_0000000c;
-  undefined4 *in_stack_00000010;
-  undefined4 *in_stack_00000014;
   
-  if ((*(char *)(in_stack_00000010 + 2) == '\0') || (DAT_0048311e == 0)) {
+  if ((*(char *)(param_8 + 2) == '\0') || (DAT_0048311e == 0)) {
     puVar1 = (undefined4 *)(&d3d_devices + d3d_device_count * 0x11c);
     for (i = 4; i != 0; i = i + -1) {
       *puVar1 = *param_5;
@@ -29,24 +26,24 @@ enum_d3d_device_callback
       param_5 = (undefined4 *)((int)param_5 + 1);
       puVar1 = (undefined4 *)((int)puVar1 + 1);
     }
-    lstrcpyA((LPSTR)(d3d_device_count * 0x11c + 0x481fba),in_stack_00000008);
-    lstrcpyA(&DAT_00481f9c + d3d_device_count * 0x11c,in_stack_0000000c);
-    if (*(char *)(in_stack_00000010 + 2) == '\0') {
+    lstrcpyA((LPSTR)(d3d_device_count * 0x11c + 0x481fba),param_6);
+    lstrcpyA(&DAT_00481f9c + d3d_device_count * 0x11c,param_7);
+    if (*(char *)(param_8 + 2) == '\0') {
       *(undefined4 *)(&DAT_004820a8 + d3d_device_count * 0x11c) = 0;
-      in_stack_00000010 = in_stack_00000014;
+      param_8 = param_9;
     }
     else {
       *(undefined4 *)(&DAT_004820a8 + d3d_device_count * 0x11c) = 1;
     }
     puVar1 = (undefined4 *)(&DAT_00481fec + d3d_device_count * 0x11c);
     for (i = 0x2b; i != 0; i = i + -1) {
-      *puVar1 = *in_stack_00000010;
-      in_stack_00000010 = in_stack_00000010 + 1;
+      *puVar1 = *param_8;
+      param_8 = param_8 + 1;
       puVar1 = puVar1 + 1;
     }
     for (i = 0; i != 0; i = i + -1) {
-      *(undefined1 *)puVar1 = *(undefined1 *)in_stack_00000010;
-      in_stack_00000010 = (undefined4 *)((int)in_stack_00000010 + 1);
+      *(undefined1 *)puVar1 = *(undefined1 *)param_8;
+      param_8 = (undefined4 *)((int)param_8 + 1);
       puVar1 = (undefined4 *)((int)puVar1 + 1);
     }
     *(uint *)(&DAT_004820ac + d3d_device_count * 0x11c) =
@@ -54,7 +51,7 @@ enum_d3d_device_callback
     *(uint *)(&DAT_004820b0 + d3d_device_count * 0x11c) =
          (uint)(*(int *)(&DAT_0048208c + d3d_device_count * 0x11c) != 0);
     i = d3d_device_count * 0x11c;
-    bpp_to_ddbd_flag_result = bpp_to_ddbd_flag();
+    bpp_to_ddbd_flag_result = bpp_to_ddbd_flag(DAT_004830f6);
     *(uint *)(&DAT_004820b4 + d3d_device_count * 0x11c) =
          (uint)((*(uint *)(&DAT_00482088 + i) & bpp_to_ddbd_flag_result) != 0);
     if (DAT_00482f7a == 0) {
@@ -71,7 +68,10 @@ enum_d3d_device_callback
 
 /* ==== 004303a0 enum_dd_mode_callback ==== */
 
-undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
+undefined4 __watcall
+enum_dd_mode_callback
+          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 *param_5,int *param_6)
 
 {
   uint uVar1;
@@ -81,12 +81,10 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
   undefined4 *puVar2;
   undefined4 *puVar3;
   byte bVar4;
-  undefined4 *in_stack_00000004;
-  int *in_stack_00000008;
   
   bVar4 = 0;
-  memset(&dd_modes + dd_mode_count * 0x80,0,0x80);
-  puVar2 = in_stack_00000004;
+  memset((undefined4 *)(&dd_modes + dd_mode_count * 0x80),0,0x80);
+  puVar2 = param_5;
   puVar3 = (undefined4 *)(&dd_modes + dd_mode_count * 0x80);
   for (i = 0x1b; i != 0; i = i + -1) {
     *puVar3 = *puVar2;
@@ -98,7 +96,7 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
     puVar2 = (undefined4 *)((int)puVar2 + (uint)bVar4 * -2 + 1);
     puVar3 = (undefined4 *)((int)puVar3 + (uint)bVar4 * -2 + 1);
   }
-  bVar4 = *(byte *)(in_stack_00000004 + 0x13);
+  bVar4 = *(byte *)(param_5 + 0x13);
   i = dd_mode_count * 0x80;
   if ((bVar4 & 0x20) == 0) {
     if ((bVar4 & 8) == 0) {
@@ -107,19 +105,19 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
       }
       *(undefined4 *)(&DAT_004826b8 + i) = 0;
       *(undefined4 *)(&DAT_004826c8 + dd_mode_count * 0x80) = 0;
-      for (uVar1 = in_stack_00000004[0x16]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
+      for (uVar1 = param_5[0x16]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
       }
       i = 0;
       for (; (uVar1 & 1) != 0; uVar1 = uVar1 >> 1) {
         i = i + 1;
       }
-      for (uVar1 = in_stack_00000004[0x17]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
+      for (uVar1 = param_5[0x17]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
       }
       j = 0;
       for (; (uVar1 & 1) != 0; uVar1 = uVar1 >> 1) {
         j = j + 1;
       }
-      for (uVar1 = in_stack_00000004[0x18]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
+      for (uVar1 = param_5[0x18]; (uVar1 & 1) == 0; uVar1 = uVar1 >> 1) {
       }
       k = 0;
       for (; (uVar1 & 1) != 0; uVar1 = uVar1 >> 1) {
@@ -138,12 +136,12 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
     *(undefined4 *)(&DAT_004826b8 + i) = 1;
     *(undefined4 *)(&DAT_004826c8 + dd_mode_count * 0x80) = 8;
   }
-  *in_stack_00000008 = -1;
-  if (*in_stack_00000008 != 0) {
-    *in_stack_00000008 = dd_mode_count;
+  *param_6 = -1;
+  if (*param_6 != 0) {
+    *param_6 = dd_mode_count;
   }
   if (*(int *)(&DAT_004826b8 + dd_mode_count * 0x80) != 0) {
-    *in_stack_00000008 = dd_mode_count;
+    *param_6 = dd_mode_count;
   }
   dd_mode_count = dd_mode_count + 1;
   return 1;
@@ -152,31 +150,34 @@ undefined4 __watcall enum_dd_mode_callback(undefined4 *param_1,int *param_2)
 
 /* ==== 004309be nfree ==== */
 
-void __watcall nfree(uint param_1)
+undefined4 __watcall nfree(undefined4 *param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  ushort in_DS;
   
-  if (param_1 != 0) {
+  uVar1 = 0;
+  if (param_1 != (undefined4 *)0x0) {
     (*(code *)AccessNHeap_1)();
-    uVar1 = nheapbeg;
-    if (((MiniHeapFreeRover == 0) || (param_1 < MiniHeapFreeRover)) ||
-       (uVar2 = MiniHeapFreeRover, *(uint *)(MiniHeapFreeRover + 8) <= param_1)) {
-      for (; (uVar2 = uVar1, *(uint *)(uVar1 + 8) != 0 &&
-             ((param_1 < uVar1 || (*(uint *)(uVar1 + 8) <= param_1)))); uVar1 = *(uint *)(uVar1 + 8)
-          ) {
+    puVar2 = nheapbeg;
+    if (((MiniHeapFreeRover == (undefined4 *)0x0) || (param_1 < MiniHeapFreeRover)) ||
+       (puVar3 = MiniHeapFreeRover, (undefined4 *)MiniHeapFreeRover[2] <= param_1)) {
+      for (; (puVar3 = puVar2, (undefined4 *)puVar2[2] != (undefined4 *)0x0 &&
+             ((param_1 < puVar2 || ((undefined4 *)puVar2[2] <= param_1))));
+          puVar2 = (undefined4 *)puVar2[2]) {
       }
     }
-    MemFree();
-    if ((uVar2 < MiniHeapRover) && (LargestSizeB4MiniHeapRover < *(uint *)(uVar2 + 0x14))) {
-      LargestSizeB4MiniHeapRover = *(uint *)(uVar2 + 0x14);
+    MemFree(param_1,(uint)in_DS,(int)puVar3);
+    if ((puVar3 < MiniHeapRover) && (LargestSizeB4MiniHeapRover < (uint)puVar3[5])) {
+      LargestSizeB4MiniHeapRover = puVar3[5];
     }
     nheap_clean = 0;
-    MiniHeapFreeRover = uVar2;
-    (*(code *)ReleaseNHeap_1)();
+    MiniHeapFreeRover = puVar3;
+    uVar1 = (*(code *)ReleaseNHeap_1)();
   }
-  return;
+  return uVar1;
 }
 
 

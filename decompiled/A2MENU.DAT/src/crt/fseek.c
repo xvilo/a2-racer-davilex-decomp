@@ -3,17 +3,17 @@
 
 /* ==== 00413566 update_buffer ==== */
 
-undefined4 __watcall update_buffer(int param_1,int *unaff_EDX)
+undefined4 __watcall update_buffer(int param_1,int *param_2)
 
 {
-  *(byte *)(unaff_EDX + 3) = *(byte *)(unaff_EDX + 3) & 0xef;
-  if ((param_1 <= unaff_EDX[1]) && (unaff_EDX[2] - *unaff_EDX <= param_1)) {
-    *unaff_EDX = *unaff_EDX + param_1;
-    unaff_EDX[1] = unaff_EDX[1] - param_1;
+  *(byte *)(param_2 + 3) = *(byte *)(param_2 + 3) & 0xef;
+  if ((param_1 <= param_2[1]) && (param_2[2] - *param_2 <= param_1)) {
+    *param_2 = *param_2 + param_1;
+    param_2[1] = param_2[1] - param_1;
     return 0;
   }
-  unaff_EDX[1] = 0;
-  *unaff_EDX = unaff_EDX[2];
+  param_2[1] = 0;
+  *param_2 = param_2[2];
   return 1;
 }
 
@@ -22,73 +22,67 @@ undefined4 __watcall update_buffer(int param_1,int *unaff_EDX)
 
 /* WARNING: Removing unreachable block (ram,0x00413634) */
 
-int __watcall fseek(FILE *_File,long _Offset,int _Origin)
+undefined4 __watcall fseek(undefined4 param_1,int param_2,DWORD move_method)
 
 {
-  DWORD DVar1;
-  int iVar2;
-  long tell_result;
+  int iVar1;
+  DWORD DVar2;
   int iVar3;
-  int *unaff_EDX;
-  undefined4 unaff_EDX_00;
-  undefined4 unaff_EDX_01;
-  undefined8 flush_result;
+  int *extraout_ECX;
   
   (*(code *)AccessFileH_1)();
-  if ((*(byte *)(unaff_EDX + 3) & 6) == 0) {
-    if (_Origin == 0) {
-      tell_result = tell(unaff_EDX[4]);
-      iVar3 = update_buffer(_Offset - (tell_result - unaff_EDX[1]),unaff_EDX);
-      if (iVar3 == 0) goto LAB_0041368d;
+  if ((*(byte *)(extraout_ECX + 3) & 6) == 0) {
+    if (move_method == 0) {
+      iVar1 = tell(extraout_ECX[4]);
+      iVar1 = update_buffer(param_2 - (iVar1 - extraout_ECX[1]),extraout_ECX);
+      if (iVar1 == 0) goto LAB_0041368d;
       goto LAB_004135fd;
     }
-    if ((uint)_Origin < 2) {
-      iVar3 = unaff_EDX[1];
-      iVar2 = update_buffer(_Offset,unaff_EDX);
-      if (iVar2 == 0) goto LAB_0041368d;
-      iVar2 = unaff_EDX[4];
-      _Offset = _Offset - iVar3;
+    if (move_method < 2) {
+      iVar1 = extraout_ECX[1];
+      iVar3 = update_buffer(param_2,extraout_ECX);
+      if (iVar3 == 0) goto LAB_0041368d;
+      iVar3 = extraout_ECX[4];
+      param_2 = param_2 - iVar1;
     }
     else {
-      unaff_EDX_01 = unaff_EDX_00;
-      if (_Origin != 2) goto LAB_004135d9;
-      *(byte *)(unaff_EDX + 3) = *(byte *)(unaff_EDX + 3) & 0xef;
-      *unaff_EDX = unaff_EDX[2];
-      iVar2 = unaff_EDX[4];
-      unaff_EDX[1] = 0;
+      if (move_method != 2) goto LAB_004135d9;
+      *(byte *)(extraout_ECX + 3) = *(byte *)(extraout_ECX + 3) & 0xef;
+      *extraout_ECX = extraout_ECX[2];
+      iVar3 = extraout_ECX[4];
+      extraout_ECX[1] = 0;
     }
   }
   else {
-    if ((*(byte *)((int)unaff_EDX + 0xd) & 0x10) == 0) {
-      if (_Origin == 1) {
-        _Offset = _Offset - unaff_EDX[1];
+    if ((*(byte *)((int)extraout_ECX + 0xd) & 0x10) == 0) {
+      if (move_method == 1) {
+        param_2 = param_2 - extraout_ECX[1];
       }
-      unaff_EDX[1] = 0;
-      *unaff_EDX = unaff_EDX[2];
+      extraout_ECX[1] = 0;
+      *extraout_ECX = extraout_ECX[2];
     }
     else {
-      flush_result = flush(unaff_EDX,unaff_EDX_00);
-      unaff_EDX_01 = (undefined4)((ulonglong)flush_result >> 0x20);
-      if ((int)flush_result != 0) {
-        if ((_Origin != 0) || (-1 < _Offset)) goto LAB_00413610;
+      iVar1 = flush(extraout_ECX);
+      if (iVar1 != 0) {
+        if ((move_method != 0) || (-1 < param_2)) goto LAB_00413610;
 LAB_004135d9:
-        set_errno(9,unaff_EDX_01);
+        set_errno(9);
         goto LAB_00413610;
       }
     }
-    *(byte *)(unaff_EDX + 3) = *(byte *)(unaff_EDX + 3) & 0xeb;
+    *(byte *)(extraout_ECX + 3) = *(byte *)(extraout_ECX + 3) & 0xeb;
 LAB_004135fd:
-    iVar2 = unaff_EDX[4];
+    iVar3 = extraout_ECX[4];
   }
-  DVar1 = lseek_1(iVar2,_Offset,_Origin);
-  if (DVar1 != 0xffffffff) {
+  DVar2 = lseek_1(iVar3,param_2,move_method);
+  if (DVar2 != 0xffffffff) {
 LAB_0041368d:
     (*(code *)ReleaseFileH_1)();
     return 0;
   }
 LAB_00413610:
   (*(code *)ReleaseFileH_1)();
-  return -1;
+  return 0xffffffff;
 }
 
 

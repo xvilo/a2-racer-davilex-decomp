@@ -6,21 +6,12 @@
 int * __watcall get_mem_xsize(char *param_1,int param_2,int param_3)
 
 {
-  char *extraout_ECX;
-  char *extraout_ECX_00;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if ((param_3 < 0) || (max_mem_image_ptr <= param_3)) {
     fatal_exit(s__s__d____illegal_mem_image_array_0042d7e4,param_1,param_2,param_3,max_mem_image_ptr
               );
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_xsize_of_mem_image_w_0042d821,param_1,param_2);
-    param_1 = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
   }
   if (*(int *)(xvga_mem_images + param_3 * 0x20 + 8) < 1) {
     fatal_exit(s__s__d____suspect_illegal_image_x_0042d859,param_1,param_2,
@@ -35,21 +26,12 @@ int * __watcall get_mem_xsize(char *param_1,int param_2,int param_3)
 int * __watcall get_mem_ysize(char *param_1,int param_2,int param_3)
 
 {
-  char *extraout_ECX;
-  char *extraout_ECX_00;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if ((param_3 < 0) || (max_mem_image_ptr <= param_3)) {
     fatal_exit(s__s__d____illegal_mem_image_array_0042d883,param_1,param_2,param_3,max_mem_image_ptr
               );
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_ysize_of_mem_image_w_0042d8c0,param_1,param_2);
-    param_1 = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
   }
   if (*(int *)(xvga_mem_images + param_3 * 0x20 + 0xc) < 1) {
     fatal_exit(s__s__d____suspect_illegal_image_y_0042d8f8,param_1,param_2,
@@ -64,14 +46,9 @@ int * __watcall get_mem_ysize(char *param_1,int param_2,int param_3)
 int * __watcall get_mem_mx(char *param_1,int param_2,int param_3)
 
 {
-  char *extraout_ECX;
-  int extraout_EDX;
-  
   if ((param_3 < 0) || (max_mem_image_ptr <= param_3)) {
     fatal_exit(s__s__d____illegal_mem_image_array_0042d922,param_1,param_2,param_3,max_mem_image_ptr
               );
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_mx_of_mem_image_whi_0042d95c,param_1,param_2);
@@ -85,14 +62,9 @@ int * __watcall get_mem_mx(char *param_1,int param_2,int param_3)
 int * __watcall get_mem_my(char *param_1,int param_2,int param_3)
 
 {
-  char *extraout_ECX;
-  int extraout_EDX;
-  
   if ((param_3 < 0) || (max_mem_image_ptr <= param_3)) {
     fatal_exit(s__s__d____illegal_mem_image_array_0042d991,param_1,param_2,param_3,max_mem_image_ptr
               );
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if (init_mem_images_ok == 0) {
     fatal_exit(s__s__d____get_my_of_mem_image_whi_0042d9cb,param_1,param_2);
@@ -109,7 +81,7 @@ void __watcall free_sprites(void)
   if (init_sprites_ok != 0) {
     init_sprites_ok = 0;
     if (xvga_sprites != (sprite_t *)0x0) {
-      free(xvga_sprites);
+      free((undefined4 *)xvga_sprites);
     }
   }
   return;
@@ -154,16 +126,11 @@ int __watcall alloc_sprites(int param_1)
 void __watcall set_sprite_image(int param_1,int param_2)
 
 {
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if ((param_1 < 0) || (max_sprite_ptr <= param_1)) {
     fatal_exit(s__s__d____illegal_sprite_index__d_0042da0b,s_sprite_cpp_0042da00,0x80,param_1);
-    param_2 = extraout_EDX;
   }
   if ((param_2 < 0) || (max_mem_image_ptr <= param_2)) {
     fatal_exit(s__s__d____illegal_mem_image_index_0042da39,s_sprite_cpp_0042da2e,0x83,param_2);
-    param_2 = extraout_EDX_00;
   }
   *(int *)(xvga_sprites + param_1 * 0x18 + 0x10) = param_2;
   return;
@@ -175,20 +142,16 @@ void __watcall set_sprite_image(int param_1,int param_2)
 int __watcall get_sprite_image(int param_1)
 
 {
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int iVar1;
+  int arg4;
   
   if ((param_1 < 0) || (max_sprite_ptr <= param_1)) {
     fatal_exit(s__s__d____illegal_sprite_index__d_0042da6a,s_sprite_cpp_0042da5f,0x8d,param_1);
-    param_1 = extraout_EDX;
   }
-  iVar1 = *(int *)(xvga_sprites + param_1 * 0x18 + 0x10);
-  if ((iVar1 < 0) || (max_mem_image_ptr <= iVar1)) {
-    fatal_exit(s__s__d____illegal_mem_image_index_0042da98,s_sprite_cpp_0042da8d,0x91,iVar1);
-    iVar1 = extraout_EDX_00;
+  arg4 = *(int *)(xvga_sprites + param_1 * 0x18 + 0x10);
+  if ((arg4 < 0) || (max_mem_image_ptr <= arg4)) {
+    fatal_exit(s__s__d____illegal_mem_image_index_0042da98,s_sprite_cpp_0042da8d,0x91,arg4);
   }
-  return iVar1;
+  return arg4;
 }
 
 
@@ -263,7 +226,7 @@ int __watcall free_mem_images(void)
     }
     if (alloc_mem_images_ok != 0) {
       if (xvga_mem_images != (mem_image_t *)0x0) {
-        free(xvga_mem_images);
+        free((undefined4 *)xvga_mem_images);
       }
       alloc_mem_images_ok = 0;
     }
@@ -286,9 +249,8 @@ int __watcall alloc_mem_image(int param_1)
   HLOCAL pvVar2;
   IDirectDrawSurface *pIVar3;
   long lVar4;
-  char *dd_error_string_result;
+  char *arg4;
   SIZE_T uBytes;
-  SIZE_T extraout_EDX;
   int mem_image_index;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
@@ -329,9 +291,8 @@ LAB_0041194d:
         lVar4 = (**(code **)(**(int **)(xvga_mem_images + param_1 * 0x20 + 4) + 0x74))
                           (*(int **)(xvga_mem_images + param_1 * 0x20 + 4),8,&mem_image_color_key);
         if (lVar4 != 0) {
-          dd_error_string_result = dd_error_string(lVar4);
-          fatal_exit(s__s__d____failed_to_set_color_key_0042dbeb,s_sprite_cpp_0042dbe0,0x129,
-                     dd_error_string_result);
+          arg4 = dd_error_string(lVar4);
+          fatal_exit(s__s__d____failed_to_set_color_key_0042dbeb,s_sprite_cpp_0042dbe0,0x129,arg4);
         }
         mem_image_index = param_1 << 5;
 LAB_0041187f:
@@ -345,7 +306,6 @@ LAB_0041187f:
         fatal_exit(s__s__d____error_illegal_mem_image_0042dbad,s_sprite_cpp_0042dba2,0x117,uBytes,
                    *(undefined4 *)(xvga_mem_images + mem_image_index + 8),
                    *(undefined4 *)(xvga_mem_images + mem_image_index + 0xc));
-        uBytes = extraout_EDX;
       }
       pvVar2 = LocalAlloc(0x40,uBytes);
       mem_image_index = param_1 * 0x20;
@@ -364,12 +324,10 @@ int __watcall free_mem_image(int param_1)
 
 {
   uint uVar1;
-  int extraout_EDX;
   int mem_image_index;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0042dc5b,s_sprite_cpp_0042dc50,0x136,param_1);
-    param_1 = extraout_EDX;
   }
   mem_image_index = param_1 * 0x20;
   uVar1 = *(uint *)(xvga_mem_images + mem_image_index + 0x18);
@@ -388,7 +346,7 @@ int __watcall free_mem_image(int param_1)
         return 0;
       }
       *(undefined4 *)(xvga_mem_images + mem_image_index + 0x1c) = 0;
-      free(*(void **)(xvga_mem_images + mem_image_index));
+      free(*(undefined4 **)(xvga_mem_images + mem_image_index));
       return 0;
     }
   }
@@ -404,12 +362,10 @@ int __watcall lock_mem_image(int param_1)
 
 {
   uchar *surface_ptr;
-  int extraout_EDX;
   int mem_image_index;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0042dcd7,s_sprite_cpp_0042dccc,0x153,param_1);
-    param_1 = extraout_EDX;
   }
   mem_image_index = param_1 * 0x20;
   if (*(int *)(xvga_mem_images + mem_image_index + 0x18) == 2) {
@@ -426,12 +382,10 @@ int __watcall lock_mem_image_1(int param_1,int *param_2)
 
 {
   uchar *surface_ptr_3;
-  int *extraout_EDX;
   int mem_image_index;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0042dd15,s_sprite_cpp_0042dd0a,0x160,param_1);
-    param_2 = extraout_EDX;
   }
   mem_image_index = param_1 * 0x20;
   if (*(int *)(xvga_mem_images + mem_image_index + 0x18) == 2) {
@@ -451,11 +405,9 @@ int __watcall unlock_mem_image(int param_1)
 
 {
   mem_image_t *mem_image;
-  int extraout_EDX;
   
   if ((param_1 < 0) || (max_mem_image_ptr <= param_1)) {
     fatal_exit(s__s__d____index_out_of_mem_image_a_0042dd53,s_sprite_cpp_0042dd48,0x171,param_1);
-    param_1 = extraout_EDX;
   }
   mem_image = xvga_mem_images + param_1 * 0x20;
   if (*(int *)(mem_image + 0x18) == 2) {
@@ -470,104 +422,112 @@ int __watcall unlock_mem_image(int param_1)
 int __watcall use_mem_images(char *filename,char *filename_2,long *param_3)
 
 {
-  FILE *_File;
-  int mem_image_index;
-  FILE *_File_00;
-  int translate_pixel_result;
-  int j;
-  undefined2 *puVar1;
-  long offset;
+  int *file_2;
+  int k;
+  int m;
+  char *pcVar1;
+  int *piVar2;
+  int local_4c;
   int local_48;
   int local_44;
+  int *local_40;
+  int *file;
   int *local_38;
   int local_34;
+  int local_30;
+  int local_2c;
   int i;
-  int k;
-  undefined2 *dst_buf;
+  int j;
+  char *local_20;
+  int local_1c;
   byte local_18 [4];
   byte local_14 [4];
   
   if (init_mem_images_ok == 0) {
 LAB_00411e55:
-    mem_image_index = 0;
+    k = 0;
   }
   else {
-    _File = fopen(filename,s_rb_0042dd86);
-    if (_File != (FILE *)0x0) {
-      _File_00 = fopen(filename_2,s_rb_0042dd89);
-      if (_File_00 != (FILE *)0x0) {
+    local_40 = param_3;
+    file_2 = (int *)fopen(filename,(byte *)s_rb_0042dd86);
+    if (file_2 != (int *)0x0) {
+      file = (int *)fopen(filename_2,(byte *)s_rb_0042dd89);
+      if (file != (int *)0x0) {
         mem_image_usage = 0;
-        local_38 = param_3;
+        local_38 = local_40;
         while (-1 < *local_38) {
-          fseek(_File_00,(*local_38 + -1) * 4 + 2,0);
-          if ((_File_00->_flag & 0x20) != 0) {
+          fseek(file,(*local_38 + -1) * 4 + 2,0);
+          if ((*(byte *)(file + 3) & 0x20) != 0) {
             fatal_exit(s__s__d____index_file_seek_error___0042dd97,s_sprite_cpp_0042dd8c,0x1a5,
-                       param_3[local_34]);
+                       local_40[local_34]);
           }
-          fread(&offset,1,4,_File_00);
-          if (((_File_00->_flag & 0x20) != 0) || (fseek(_File,offset,0), (_File->_flag & 0x20) != 0)
-             ) {
-            fclose(_File);
+          fread((char *)&local_4c,1,4,file);
+          if (((*(byte *)(file + 3) & 0x20) != 0) ||
+             (fseek(file_2,local_4c,0), (*(byte *)(file_2 + 3) & 0x20) != 0)) {
+            fclose((int)file_2);
             return 0x3e9;
           }
           local_34 = *local_38;
-          mem_image_index = local_34 * 0x20;
-          fread(xvga_mem_images + mem_image_index + 8,1,2,_File);
-          fread(xvga_mem_images + mem_image_index + 0xc,1,2,_File);
-          fread(xvga_mem_images + mem_image_index + 0x10,1,2,_File);
-          fread(xvga_mem_images + mem_image_index + 0x14,1,2,_File);
+          k = local_34 * 0x20;
+          fread((char *)(xvga_mem_images + k + 8),1,2,file_2);
+          fread((char *)(xvga_mem_images + k + 0xc),1,2,file_2);
+          fread((char *)(xvga_mem_images + k + 0x10),1,2,file_2);
+          fread((char *)(xvga_mem_images + k + 0x14),1,2,file_2);
           mem_image_usage =
                mem_image_usage +
-               *(int *)(xvga_mem_images + mem_image_index + 8) *
-               *(int *)(xvga_mem_images + mem_image_index + 0xc);
+               *(int *)(xvga_mem_images + k + 8) * *(int *)(xvga_mem_images + k + 0xc);
           alloc_mem_image(local_34);
           lock_mem_image_1(local_34,&local_48);
-          dst_buf = *(undefined2 **)(xvga_mem_images + mem_image_index);
+          local_20 = *(char **)(xvga_mem_images + k);
           if (pf_conversion_mode == 0) {
             debugmsg(s_pf_none_0042ddfe);
-            for (j = 0; j < *(int *)(xvga_mem_images + mem_image_index + 0xc); j = j + 1) {
-              fread(dst_buf,1,*(size_t *)(xvga_mem_images + mem_image_index + 8),_File);
-              dst_buf = (undefined2 *)((int)dst_buf + local_48);
+            for (m = 0; m < *(int *)(xvga_mem_images + k + 0xc); m = m + 1) {
+              fread(local_20,1,*(int *)(xvga_mem_images + k + 8),file_2);
+              local_20 = local_20 + local_48;
             }
           }
           else if ((uint)pf_conversion_mode < 2) {
             debugmsg(s_converting_to_16_bits_0042ddd0);
-            local_44 = mem_image_index;
-            for (i = 0; i < *(int *)(xvga_mem_images + mem_image_index + 0xc); i = i + 1) {
-              puVar1 = dst_buf;
-              for (j = 0; j < *(int *)(xvga_mem_images + local_44 + 8); j = j + 1) {
-                fread(local_18,1,1,_File);
-                translate_pixel_result = translate_pixel((uint)local_18[0],8);
-                *puVar1 = (short)translate_pixel_result;
-                puVar1 = puVar1 + 1;
+            local_44 = k;
+            local_2c = k;
+            for (i = 0; i < *(int *)(xvga_mem_images + local_2c + 0xc); i = i + 1) {
+              pcVar1 = local_20;
+              for (k = 0; k < *(int *)(xvga_mem_images + local_44 + 8); k = k + 1) {
+                fread((char *)local_18,1,1,file_2);
+                m = translate_pixel((uint)local_18[0],8);
+                *(short *)pcVar1 = (short)m;
+                pcVar1 = pcVar1 + 2;
               }
-              dst_buf = (undefined2 *)((int)dst_buf + local_48);
+              local_20 = local_20 + local_48;
             }
           }
           else if (pf_conversion_mode == 2) {
             debugmsg(s_converting_to_24_bits_0042dde7);
-            for (k = 0; k < *(int *)(xvga_mem_images + mem_image_index + 0xc); k = k + 1) {
-              puVar1 = dst_buf;
-              for (j = 0; j < *(int *)(xvga_mem_images + mem_image_index + 8); j = j + 1) {
-                fread(local_14,1,1,_File);
-                translate_pixel_1((uint)local_14[0],8,puVar1);
-                puVar1 = (undefined2 *)((int)puVar1 + 3);
+            local_30 = k;
+            local_1c = k;
+            for (j = 0; j < *(int *)(xvga_mem_images + local_30 + 0xc); j = j + 1) {
+              pcVar1 = local_20;
+              for (k = 0; k < *(int *)(xvga_mem_images + local_1c + 8); k = k + 1) {
+                fread((char *)local_14,1,1,file_2);
+                translate_pixel_1((uint)local_14[0],8,pcVar1);
+                pcVar1 = pcVar1 + 3;
               }
-              dst_buf = (undefined2 *)((int)dst_buf + local_48);
+              local_20 = local_20 + local_48;
             }
           }
-          local_38 = local_38 + 1;
+          piVar2 = local_38 + 1;
           unlock_mem_image(local_34);
+          local_38 = piVar2;
         }
-        fclose(_File_00);
-        fclose(_File);
+        fclose((int)file);
+        fclose((int)file_2);
         goto LAB_00411e55;
       }
-      fclose(_File);
+      fclose((int)file_2);
     }
-    mem_image_index = 1000;
+    k = 1000;
   }
-  return mem_image_index;
+  return k;
 }
 
 
@@ -606,8 +566,8 @@ int __watcall disable_all_mem_images(void)
 int __watcall show_mem_images(void)
 
 {
+  uint random;
   int iVar1;
-  int random;
   int i;
   int mem_image_index;
   int iVar2;
@@ -618,10 +578,10 @@ int __watcall show_mem_images(void)
     for (i = 0; i < max_mem_image_ptr; i = i + 1) {
       if (*(int *)(xvga_mem_images + mem_image_index) != 0) {
         iVar2 = 1;
-        iVar1 = rand();
-        iVar1 = iVar1 % xvga_screen_ysize;
         random = rand();
-        set_mem_image(0,i,random % xvga_screen_xsize,iVar1,iVar2);
+        iVar1 = (int)random % xvga_screen_ysize;
+        random = rand();
+        set_mem_image(0,i,(int)random % xvga_screen_xsize,iVar1,iVar2);
         iVar1 = keyispressed(0xd);
         if (iVar1 != 0) {
           return 0;
@@ -648,13 +608,12 @@ int __watcall show_mem_images(void)
 int __watcall init_mem_images(char *filename,int param_2)
 
 {
-  FILE *_File;
+  int *file;
   int m;
   int mem_image_index;
-  FILE *_File_00;
   uint uVar1;
   int iVar2;
-  undefined2 *_DstBuf;
+  char *pcVar3;
   int local_48;
   int i;
   int j;
@@ -669,13 +628,13 @@ int __watcall init_mem_images(char *filename,int param_2)
   byte local_1c [4];
   byte local_18 [4];
   
-  _File = fopen(filename,s_rb_0042de34);
-  if (_File == (FILE *)0x0) {
+  file = (int *)fopen(filename,(byte *)s_rb_0042de34);
+  if (file == (int *)0x0) {
     m = 1000;
   }
   else {
-    rewind(_File);
-    fread((void *)((int)&local_22 + 2),1,2,_File);
+    rewind((int)file);
+    fread((char *)((int)&local_22 + 2),1,2,file);
     max_mem_image_ptr = (local_22 >> 0x10) + 1;
     debugmsg(s__s_maxmemimages____d_0042de37,filename,max_mem_image_ptr);
     uVar1 = (uint)((param_2 & 1U) == 1);
@@ -683,10 +642,10 @@ int __watcall init_mem_images(char *filename,int param_2)
     m = alloc_mem_images_1(max_mem_image_ptr,iVar2);
     if (m == 0) {
       if (uVar1 == 0) {
-        uStack_34 = (undefined2 *)CONCAT22(uStack_34._2_2_,(undefined2)uStack_34);
+        uStack_34 = (char *)CONCAT22(uStack_34._2_2_,(undefined2)uStack_34);
         if (alloc_mem_images_ok != 0) {
           mem_image_index = 0;
-          for (m = 0; uStack_34 = (undefined2 *)CONCAT22(uStack_34._2_2_,(undefined2)uStack_34),
+          for (m = 0; uStack_34 = (char *)CONCAT22(uStack_34._2_2_,(undefined2)uStack_34),
               m < max_mem_image_ptr; m = m + 1) {
             *(undefined4 *)(xvga_mem_images + mem_image_index) = 0;
             *(undefined4 *)(xvga_mem_images + mem_image_index + 0x1c) = 0;
@@ -701,10 +660,10 @@ int __watcall init_mem_images(char *filename,int param_2)
         mem_image_index_2 = 0;
         for (k = 0; k < max_mem_image_ptr; k = k + 1) {
           debugmsg(s__s_allocating_image__d_0042de63,filename,k);
-          fread((void *)((int)&local_2e + 2),1,2,_File_00);
-          fread((void *)((int)&local_2a + 2),1,2,_File);
-          fread(&sStack_30,1,2,_File);
-          fread((void *)((int)&local_26 + 2),1,2,_File);
+          fread((char *)((int)&local_2e + 2),1,2,file);
+          fread((char *)((int)&local_2a + 2),1,2,file);
+          fread((char *)&sStack_30,1,2,file);
+          fread((char *)((int)&local_26 + 2),1,2,file);
           m = mem_image_index_2;
           *(int *)(xvga_mem_images + mem_image_index_2 + 8) = local_2e >> 0x10;
           *(int *)(xvga_mem_images + mem_image_index_2 + 0xc) = local_2a >> 0x10;
@@ -712,49 +671,49 @@ int __watcall init_mem_images(char *filename,int param_2)
           *(int *)(xvga_mem_images + mem_image_index_2 + 0x14) = local_26 >> 0x10;
           alloc_mem_image(k);
           lock_mem_image_1(k,&local_48);
-          _DstBuf = *(undefined2 **)(xvga_mem_images + m);
+          pcVar3 = *(char **)(xvga_mem_images + m);
           if (pf_conversion_mode == 0) {
             for (m = 0; m < local_2a >> 0x10; m = m + 1) {
-              uStack_34 = _DstBuf;
-              fread(_DstBuf,1,local_2e >> 0x10,_File);
-              _DstBuf = (undefined2 *)((int)_DstBuf + local_48);
+              uStack_34 = pcVar3;
+              fread(pcVar3,1,local_2e >> 0x10,file);
+              pcVar3 = pcVar3 + local_48;
             }
           }
           else if ((uint)pf_conversion_mode < 2) {
             for (i = 0; i < local_2a >> 0x10; i = i + 1) {
-              uStack_34 = _DstBuf;
+              uStack_34 = pcVar3;
               for (m = 0; m < local_2e >> 0x10; m = m + 1) {
-                fread(local_18,1,1,_File);
+                fread((char *)local_18,1,1,file);
                 iVar2 = translate_pixel((uint)local_18[0],8);
-                *_DstBuf = (short)iVar2;
-                _DstBuf = _DstBuf + 1;
+                *(short *)pcVar3 = (short)iVar2;
+                pcVar3 = pcVar3 + 2;
               }
-              _DstBuf = (undefined2 *)((int)uStack_34 + local_48);
+              pcVar3 = uStack_34 + local_48;
             }
           }
           else if (pf_conversion_mode == 2) {
             for (j = 0; j < local_2a >> 0x10; j = j + 1) {
-              uStack_34 = _DstBuf;
+              uStack_34 = pcVar3;
               for (m = 0; m < local_2e >> 0x10; m = m + 1) {
-                fread(local_1c,1,1,_File);
-                translate_pixel_1((uint)local_1c[0],8,_DstBuf);
-                _DstBuf = (undefined2 *)((int)_DstBuf + 3);
+                fread((char *)local_1c,1,1,file);
+                translate_pixel_1((uint)local_1c[0],8,pcVar3);
+                pcVar3 = pcVar3 + 3;
               }
-              _DstBuf = (undefined2 *)((int)uStack_34 + local_48);
+              pcVar3 = uStack_34 + local_48;
             }
           }
-          uStack_34 = _DstBuf;
+          uStack_34 = pcVar3;
           unlock_mem_image(k);
-          if ((_File->_flag & 0x20) != 0) {
+          if ((*(byte *)(file + 3) & 0x20) != 0) {
             init_mem_images_ok = 0;
-            fclose(_File);
+            fclose((int)file);
             return 0x3e9;
           }
           mem_image_index_2 = mem_image_index_2 + 0x20;
         }
         debugmsg(s__s_allocating_images_done_0042de7b,filename);
       }
-      fclose(_File);
+      fclose((int)file);
       m = 0;
       init_mem_images_ok = 1;
     }

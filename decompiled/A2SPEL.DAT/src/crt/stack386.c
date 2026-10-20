@@ -3,7 +3,7 @@
 
 /* ==== 00436fad stackavail ==== */
 
-undefined8 __watcall stackavail(undefined4 param_1,undefined4 unaff_EDX)
+undefined1 * __watcall stackavail(void)
 
 {
   int *piVar1;
@@ -13,12 +13,12 @@ undefined8 __watcall stackavail(undefined4 param_1,undefined4 unaff_EDX)
   uVar3 = (*(code *)GetThreadPtr)();
   uVar2 = (uint)((ulonglong)uVar3 >> 0x20);
   if (*(uint *)uVar3 < uVar2) {
-    return CONCAT44(unaff_EDX,&stack0xfffffffc + -uVar2);
+    return &stack0xfffffffc + -uVar2;
   }
   uVar3 = (*(code *)GetThreadPtr)();
   *(undefined4 *)uVar3 = (int)((ulonglong)uVar3 >> 0x20);
   piVar1 = (int *)(*(code *)GetThreadPtr)();
-  return CONCAT44(unaff_EDX,&stack0xfffffffc + -*piVar1);
+  return &stack0xfffffffc + -*piVar1;
 }
 
 

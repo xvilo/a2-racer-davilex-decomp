@@ -3,35 +3,35 @@
 
 /* ==== 00420ba3 IOMode ==== */
 
-longlong __watcall IOMode(uint file_handle,uint unaff_EDX)
+undefined4 __watcall IOMode(uint param_1)
 
 {
   int isatty_result;
   int iVar1;
   
-  if (NFiles <= file_handle) {
-    return (ulonglong)unaff_EDX << 0x20;
+  if (NFiles <= param_1) {
+    return 0;
   }
-  if ((int)file_handle < 4) {
-    iVar1 = file_handle * 4;
+  if ((int)param_1 < 4) {
+    iVar1 = param_1 * 4;
     if ((iomode[iVar1 + 1] & 0x40) == 0) {
       iomode[iVar1 + 1] = iomode[iVar1 + 1] | 0x40;
-      isatty_result = isatty(file_handle);
+      isatty_result = isatty(param_1);
       if (isatty_result != 0) {
         iomode[iVar1 + 1] = iomode[iVar1 + 1] | 0x20;
       }
     }
   }
-  return CONCAT44(unaff_EDX,*(undefined4 *)(iomode + file_handle * 4));
+  return *(undefined4 *)(iomode + param_1 * 4);
 }
 
 
 /* ==== 00420bf8 SetIOMode ==== */
 
-void __watcall SetIOMode(int param_1,uint unaff_EDX)
+void __watcall SetIOMode(int param_1,uint param_2)
 
 {
-  *(uint *)(iomode + param_1 * 4) = unaff_EDX | 0x4000;
+  *(uint *)(iomode + param_1 * 4) = param_2 | 0x4000;
   return;
 }
 

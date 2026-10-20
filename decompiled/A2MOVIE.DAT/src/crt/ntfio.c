@@ -3,72 +3,72 @@
 
 /* ==== 0040f36c GetNTCreateAttr ==== */
 
-void __watcall GetNTCreateAttr(byte param_1,undefined4 *unaff_EDX,byte *unaff_EBX)
+uint __watcall GetNTCreateAttr(uint param_1,undefined4 *param_2,byte *param_3)
 
 {
   if ((param_1 & 1) == 0) {
-    *unaff_EDX = 0xc0000000;
-    unaff_EBX[0] = 0x80;
-    unaff_EBX[1] = 0;
-    unaff_EBX[2] = 0;
-    unaff_EBX[3] = 0;
+    *param_2 = 0xc0000000;
+    param_3[0] = 0x80;
+    param_3[1] = 0;
+    param_3[2] = 0;
+    param_3[3] = 0;
   }
   else {
-    *unaff_EDX = 0x80000000;
-    unaff_EBX[0] = 1;
-    unaff_EBX[1] = 0;
-    unaff_EBX[2] = 0;
-    unaff_EBX[3] = 0;
+    *param_2 = 0x80000000;
+    param_3[0] = 1;
+    param_3[1] = 0;
+    param_3[2] = 0;
+    param_3[3] = 0;
   }
   if ((param_1 & 2) != 0) {
-    *unaff_EBX = *unaff_EBX | 2;
+    *param_3 = *param_3 | 2;
   }
   if ((param_1 & 4) != 0) {
-    *unaff_EBX = *unaff_EBX | 4;
+    *param_3 = *param_3 | 4;
   }
-  return;
+  return param_1;
 }
 
 
 /* ==== 0040f399 GetNTAccessAttr ==== */
 
-void __watcall GetNTAccessAttr(int param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX)
+void __watcall GetNTAccessAttr(int param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
   if (param_1 == 2) {
-    *unaff_EDX = 0xc0000000;
+    *param_2 = 0xc0000000;
   }
   else {
     if (param_1 != 1) {
-      *unaff_EDX = 0x80000000;
-      *unaff_EBX = 1;
+      *param_2 = 0x80000000;
+      *param_3 = 1;
       return;
     }
-    *unaff_EDX = 0x40000000;
+    *param_2 = 0x40000000;
   }
-  *unaff_EBX = 0x80;
+  *param_3 = 0x80;
   return;
 }
 
 
 /* ==== 0040f3c5 GetNTShareAttr ==== */
 
-void __watcall GetNTShareAttr(int param_1,undefined4 *unaff_EDX)
+void __watcall GetNTShareAttr(int param_1,undefined4 *param_2)
 
 {
   if ((param_1 == 0) || (param_1 == 0x40)) {
-    *unaff_EDX = 3;
+    *param_2 = 3;
     return;
   }
   if (param_1 == 0x20) {
-    *unaff_EDX = 1;
+    *param_2 = 1;
     return;
   }
   if (param_1 == 0x30) {
-    *unaff_EDX = 2;
+    *param_2 = 2;
     return;
   }
-  *unaff_EDX = 0;
+  *param_2 = 0;
   return;
 }
 

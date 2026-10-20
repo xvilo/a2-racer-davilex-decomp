@@ -3,19 +3,19 @@
 
 /* ==== 0040d401 lseek ==== */
 
-long __watcall lseek(int _FileHandle,long _Offset,int _Origin)
+DWORD __watcall lseek(undefined4 param_1,undefined4 param_2,DWORD move_method)
 
 {
   DWORD DVar1;
   LONG lDistanceToMove;
   HANDLE hFile;
-  undefined8 uVar2;
+  int extraout_EDX;
   
   (*(code *)AccessFileH_1)();
-  DVar1 = SetFilePointer(hFile,lDistanceToMove,(PLONG)0x0,_Origin);
-  uVar2 = (*(code *)ReleaseFileH_1)();
-  if ((int)((ulonglong)uVar2 >> 0x20) == -1) {
-    set_errno_nt((int)uVar2,0xffffffff);
+  DVar1 = SetFilePointer(hFile,lDistanceToMove,(PLONG)0x0,move_method);
+  (*(code *)ReleaseFileH_1)();
+  if (extraout_EDX == -1) {
+    set_errno_nt();
   }
   return DVar1;
 }

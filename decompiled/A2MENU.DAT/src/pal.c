@@ -16,7 +16,7 @@ int __watcall init_xvga_palette(void)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   
   if (palette_init_ok == 0) {
     xvga_lib_palette = LocalAlloc(0x40,0x400);
@@ -27,9 +27,8 @@ int __watcall init_xvga_palette(void)
       lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x14))
                         (xvga_dd_object,0x44,xvga_lib_palette,&xvga_dd_palette,0);
       if (lVar1 != 0) {
-        dd_error_string_result = dd_error_string(lVar1);
-        fatal_exit(s__s__d____could_not_create_a_pale_00430329,s_pal_cpp_00430321,0x31,
-                   dd_error_string_result);
+        arg4 = dd_error_string(lVar1);
+        fatal_exit(s__s__d____could_not_create_a_pale_00430329,s_pal_cpp_00430321,0x31,arg4);
       }
       palette_init_ok = 1;
       attach_xvga_palette(0);
@@ -64,38 +63,36 @@ void __watcall attach_xvga_palette(int param_1)
 
 {
   long lVar1;
-  char *dd_error_string_result;
-  uint extraout_EDX;
-  char *format;
+  char *arg4;
   char *pcVar2;
-  undefined4 uVar3;
+  char *arg2;
+  undefined4 arg3;
   
   if (palette_ignore != 0) {
     return;
   }
   if (palette_init_ok == 0) {
     fatal_exit(s__s__d____palette_was_not_initial_0043035c,s_pal_cpp_00430354,0x57);
-    param_1 = extraout_EDX;
   }
   if (param_1 == 0) {
     lVar1 = (**(code **)(*(int *)xvga_screen + 0x7c))(xvga_screen,xvga_dd_palette);
     if (lVar1 == 0) {
       return;
     }
-    dd_error_string_result = dd_error_string(lVar1);
-    uVar3 = 0x5e;
-    pcVar2 = s_pal_cpp_00430383;
-    format = s__s__d____could_not_set_the_palet_0043038b;
+    arg4 = dd_error_string(lVar1);
+    arg3 = 0x5e;
+    arg2 = s_pal_cpp_00430383;
+    pcVar2 = s__s__d____could_not_set_the_palet_0043038b;
   }
   else if ((uint)param_1 < 2) {
     lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x7c))(xvga_back_screen,xvga_dd_palette);
     if (lVar1 == 0) {
       return;
     }
-    dd_error_string_result = dd_error_string(lVar1);
-    uVar3 = 100;
-    pcVar2 = s_pal_cpp_004303b5;
-    format = s__s__d____could_not_set_the_palet_004303bd;
+    arg4 = dd_error_string(lVar1);
+    arg3 = 100;
+    arg2 = s_pal_cpp_004303b5;
+    pcVar2 = s__s__d____could_not_set_the_palet_004303bd;
   }
   else {
     if (param_1 != 2) {
@@ -106,12 +103,12 @@ void __watcall attach_xvga_palette(int param_1)
     if (lVar1 == 0) {
       return;
     }
-    dd_error_string_result = dd_error_string(lVar1);
-    uVar3 = 0x6a;
-    pcVar2 = s_pal_cpp_004303e7;
-    format = s__s__d____could_not_set_the_palet_004303ef;
+    arg4 = dd_error_string(lVar1);
+    arg3 = 0x6a;
+    arg2 = s_pal_cpp_004303e7;
+    pcVar2 = s__s__d____could_not_set_the_palet_004303ef;
   }
-  fatal_exit(format,pcVar2,uVar3,dd_error_string_result);
+  fatal_exit(pcVar2,arg2,arg3,arg4);
   return;
 }
 
@@ -122,31 +119,24 @@ int __watcall set_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int par
 
 {
   long lVar1;
-  char *dd_error_string_result;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
+  char *arg4;
   
   if (palette_ignore == 0) {
     if (palette_init_ok == 0) {
       fatal_exit(s__s__d____palette_was_not_initial_0043044a,s_pal_cpp_00430442,0x7c);
-      param_2 = extraout_EDX;
     }
     if (param_2 < 0) {
       fatal_exit(s__s__d____illegal_palette_base_en_00430479,s_pal_cpp_00430471,0x80,param_2);
-      param_2 = extraout_EDX_00;
     }
     if ((param_2 + param_3 < 0) || (0x100 < param_2 + param_3)) {
       fatal_exit(s__s__d____trying_to_reference_an_i_004304ac,s_pal_cpp_004304a4,0x83,
                  param_2 + param_3);
-      param_2 = extraout_EDX_01;
     }
     lVar1 = (**(code **)(*(int *)xvga_dd_palette + 0x18))
                       (xvga_dd_palette,0,param_2,param_3,paletteentry);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      fatal_exit(s__s__d____could_set_entries___s__004304f1,s_pal_cpp_004304e9,0x87,
-                 dd_error_string_result);
+      arg4 = dd_error_string(lVar1);
+      fatal_exit(s__s__d____could_set_entries___s__004304f1,s_pal_cpp_004304e9,0x87,arg4);
     }
   }
   return 0;
@@ -159,31 +149,24 @@ int __watcall get_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int par
 
 {
   long lVar1;
-  char *dd_error_string_result;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
+  char *arg4;
   
   if (palette_ignore == 0) {
     if (palette_init_ok == 0) {
       fatal_exit(s__s__d____palette_was_not_initial_0043051b,s_pal_cpp_00430513,0x98);
-      param_2 = extraout_EDX;
     }
     if (param_2 < 0) {
       fatal_exit(s__s__d____illegal_palette_base_en_0043054a,s_pal_cpp_00430542,0x9b,param_2);
-      param_2 = extraout_EDX_00;
     }
     if ((param_2 + param_3 < 0) || (0x100 < param_2 + param_3)) {
       fatal_exit(s__s__d____trying_to_reference_an_i_0043057d,s_pal_cpp_00430575,0x9e,
                  param_2 + param_3);
-      param_2 = extraout_EDX_01;
     }
     lVar1 = (**(code **)(*(int *)xvga_dd_palette + 0x10))
                       (xvga_dd_palette,0,param_2,param_3,paletteentry);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      fatal_exit(s__s__d____could_set_entries___s__004305c2,s_pal_cpp_004305ba,0xa2,
-                 dd_error_string_result);
+      arg4 = dd_error_string(lVar1);
+      fatal_exit(s__s__d____could_set_entries___s__004305c2,s_pal_cpp_004305ba,0xa2,arg4);
     }
   }
   return 0;
@@ -198,30 +181,22 @@ set_xvga_palette_flag
 
 {
   tagPALETTEENTRY *paletteentry_2;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_ECX_02;
   int i;
   
   if (palette_ignore == 0) {
     if (palette_init_ok == 0) {
       fatal_exit(s__s__d____palette_was_not_initial_004305ec,s_pal_cpp_004305e4,0xb2);
-      param_4 = extraout_ECX;
     }
     if (paletteentry_index < 0) {
       fatal_exit(s__s__d____illegal_palette_base_en_0043061b,s_pal_cpp_00430613,0xb5,
                  paletteentry_index);
-      param_4 = extraout_ECX_00;
     }
     if ((paletteentry_index + param_3 < 0) || (0x100 < paletteentry_index + param_3)) {
       fatal_exit(s__s__d____trying_to_reference_an_i_0043064e,s_pal_cpp_00430646,0xb8,
                  paletteentry_index + param_3);
-      param_4 = extraout_ECX_01;
     }
     if (((param_4 != 0) && (param_4 != 0x40)) && (param_4 != 0x80)) {
       fatal_exit(s__s__d____illegal_flag_value__d_00430693,s_pal_cpp_0043068b,0xbe,param_4);
-      param_4 = extraout_ECX_02;
     }
     paletteentry_2 = paletteentry + paletteentry_index;
     for (i = paletteentry_index; i < paletteentry_index + param_3; i = i + 1) {

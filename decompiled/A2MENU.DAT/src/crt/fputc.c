@@ -3,57 +3,50 @@
 
 /* ==== 0041ce3e fputc ==== */
 
-int __watcall fputc(int _Ch,FILE *_File)
+uint __watcall fputc(uint param_1,undefined4 param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int *unaff_EDX;
-  int extraout_EDX;
-  int *extraout_EDX_00;
-  int *unaff_EDX_00;
-  undefined8 flush_result;
+  uint uVar1;
+  int iVar2;
+  int *extraout_EDX;
   
   (*(code *)AccessFileH_1)();
-  if ((*(byte *)(unaff_EDX + 3) & 2) == 0) {
-    set_errno(4,unaff_EDX);
-    *(byte *)(extraout_EDX + 0xc) = *(byte *)(extraout_EDX + 0xc) | 0x20;
+  if ((*(byte *)(extraout_EDX + 3) & 2) == 0) {
+    set_errno(4);
+    *(byte *)(extraout_EDX + 3) = *(byte *)(extraout_EDX + 3) | 0x20;
 LAB_0041ce62:
     (*(code *)ReleaseFileH_1)();
-    uVar2 = 0xffffffff;
+    uVar1 = 0xffffffff;
   }
   else {
-    unaff_EDX_00 = unaff_EDX;
-    if (unaff_EDX[2] == 0) {
-      ioalloc((int)unaff_EDX,(size_t)unaff_EDX);
-      unaff_EDX_00 = extraout_EDX_00;
+    if (extraout_EDX[2] == 0) {
+      ioalloc(extraout_EDX);
     }
-    uVar2 = 0x400;
-    if ((_Ch == 10) && (uVar2 = 0x600, (*(byte *)(unaff_EDX_00 + 3) & 0x40) == 0)) {
-      *(byte *)((int)unaff_EDX_00 + 0xd) = *(byte *)((int)unaff_EDX_00 + 0xd) | 0x10;
-      *(undefined1 *)*unaff_EDX_00 = 0xd;
-      iVar1 = unaff_EDX_00[1];
-      *unaff_EDX_00 = *unaff_EDX_00 + 1;
-      unaff_EDX_00[1] = iVar1 + 1;
-      if (iVar1 + 1 == unaff_EDX_00[5]) {
-        flush_result = flush(unaff_EDX_00,unaff_EDX_00);
-        unaff_EDX_00 = (int *)((ulonglong)flush_result >> 0x20);
-        if ((int)flush_result != 0) goto LAB_0041ce62;
+    uVar1 = 0x400;
+    if ((param_1 == 10) && (uVar1 = 0x600, (*(byte *)(extraout_EDX + 3) & 0x40) == 0)) {
+      *(byte *)((int)extraout_EDX + 0xd) = *(byte *)((int)extraout_EDX + 0xd) | 0x10;
+      *(undefined1 *)*extraout_EDX = 0xd;
+      iVar2 = extraout_EDX[1];
+      *extraout_EDX = *extraout_EDX + 1;
+      extraout_EDX[1] = iVar2 + 1;
+      if (iVar2 + 1 == extraout_EDX[5]) {
+        iVar2 = flush(extraout_EDX);
+        if (iVar2 != 0) goto LAB_0041ce62;
       }
     }
-    *(byte *)((int)unaff_EDX_00 + 0xd) = *(byte *)((int)unaff_EDX_00 + 0xd) | 0x10;
-    *(char *)*unaff_EDX_00 = (char)_Ch;
-    iVar1 = unaff_EDX_00[1];
-    *unaff_EDX_00 = *unaff_EDX_00 + 1;
-    unaff_EDX_00[1] = iVar1 + 1;
-    if (((uVar2 & unaff_EDX_00[3]) != 0) || (iVar1 + 1 == unaff_EDX_00[5])) {
-      flush_result = flush(unaff_EDX_00,unaff_EDX_00);
-      if ((int)flush_result != 0) goto LAB_0041ce62;
+    *(byte *)((int)extraout_EDX + 0xd) = *(byte *)((int)extraout_EDX + 0xd) | 0x10;
+    *(char *)*extraout_EDX = (char)param_1;
+    iVar2 = extraout_EDX[1];
+    *extraout_EDX = *extraout_EDX + 1;
+    extraout_EDX[1] = iVar2 + 1;
+    if (((uVar1 & extraout_EDX[3]) != 0) || (iVar2 + 1 == extraout_EDX[5])) {
+      iVar2 = flush(extraout_EDX);
+      if (iVar2 != 0) goto LAB_0041ce62;
     }
     (*(code *)ReleaseFileH_1)();
-    uVar2 = _Ch & 0xff;
+    uVar1 = param_1 & 0xff;
   }
-  return uVar2;
+  return uVar1;
 }
 
 

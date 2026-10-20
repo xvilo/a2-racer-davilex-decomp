@@ -7,22 +7,22 @@ void __watcall reqv_stop_snd(int *param_1)
 
 {
   int sound_buffer_busy_result;
+  int arg2;
+  int arg2_00;
   int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
-  int iVar1;
+  int arg2_01;
   
   if (-1 < *param_1) {
     debugmsg(s_snd_buffer____d_00429590,*param_1);
-    sound_buffer_busy_result = sound_buffer_busy(extraout_EDX);
-    iVar1 = extraout_EDX;
+    sound_buffer_busy_result = sound_buffer_busy(arg2);
+    arg2_01 = arg2;
     if (sound_buffer_busy_result != 0) {
-      debugmsg(s_snd_buffer_is_busy__d_004295a1,extraout_EDX);
-      stop_sound_buffer(extraout_EDX_00);
-      debugmsg(s_snd_buffer_is_stopped__d_004295b8,extraout_EDX_00);
-      iVar1 = extraout_EDX_01;
+      debugmsg(s_snd_buffer_is_busy__d_004295a1,arg2);
+      stop_sound_buffer(arg2_00);
+      debugmsg(s_snd_buffer_is_stopped__d_004295b8,arg2_00);
+      arg2_01 = extraout_EDX;
     }
-    debugmsg(s_not_busy_snd_buffer____d_004295d2,iVar1);
+    debugmsg(s_not_busy_snd_buffer____d_004295d2,arg2_01);
   }
   *param_1 = -1;
   return;

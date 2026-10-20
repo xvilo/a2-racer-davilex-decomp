@@ -51,11 +51,8 @@ void __watcall draw_focus_anim_button(fform_t *fform)
 void __watcall destroy_button(fform_t *fform)
 
 {
-  fform_t *extraout_EDX;
-  
   if (*(int *)(fform + 0x18) == 0) {
     fatal_exit(s__s__d_____destroy_button__no_val_00430ff0,s_buttons_cpp_00430fe4,0x55);
-    fform = extraout_EDX;
   }
   DestroyWindow(*(HWND *)(fform + 0x18));
   return;
@@ -157,53 +154,52 @@ void __watcall draw_button(tagDRAWITEMSTRUCT *drawitemstruct)
 {
   int iVar1;
   int iVar2;
-  uint uVar3;
-  int iVar4;
-  int *control_pointer;
+  int iVar3;
+  uint uVar4;
   int iVar5;
+  int *control_pointer;
   int iVar6;
-  int extraout_ECX;
   int control_image_index;
   int iVar7;
   
-  iVar4 = get_control_index(drawitemstruct->hwndItem);
+  iVar5 = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
   iVar1 = control_pointer[1];
   iVar2 = control_pointer[1];
-  iVar5 = control_pointer[2] / 2;
-  if (iVar4 == -1) {
+  iVar3 = control_pointer[2];
+  if (iVar5 == -1) {
     fatal_exit(s__s__d_____draw_button__no_valid_w_0043110f,s_buttons_cpp_00431103,0xbe);
-    iVar5 = extraout_ECX;
   }
   hide_mouse();
-  uVar3 = drawitemstruct->itemState;
-  if (uVar3 < 0x10) {
-    if (uVar3 != 4) {
+  uVar4 = drawitemstruct->itemState;
+  if (uVar4 < 0x10) {
+    if (uVar4 != 4) {
 LAB_0041afc2:
-      set_control_state(iVar4,0);
+      set_control_state(iVar5,0);
       iVar6 = *control_pointer;
       control_image_index = 0;
       goto LAB_0041af77;
     }
-    set_control_state(iVar4,2);
+    set_control_state(iVar5,2);
     control_image_index = 2;
   }
-  else if (uVar3 < 0x11) {
-    set_control_state(iVar4,1);
+  else if (uVar4 < 0x11) {
+    set_control_state(iVar5,1);
     control_image_index = 3;
   }
   else {
-    if (uVar3 != 0x11) goto LAB_0041afc2;
-    set_control_state(iVar4,4);
+    if (uVar4 != 0x11) goto LAB_0041afc2;
+    set_control_state(iVar5,4);
     control_image_index = 1;
   }
   iVar6 = *control_pointer;
 LAB_0041af77:
   control_image_index = get_control_image_index(iVar6,control_image_index);
   iVar7 = 1;
-  iVar6 = get_control_y(iVar4);
-  iVar4 = get_control_x(iVar4);
-  set_mem_image(0,control_image_index,iVar4 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar5 + iVar6,iVar7);
+  iVar6 = get_control_y(iVar5);
+  iVar5 = get_control_x(iVar5);
+  set_mem_image(0,control_image_index,iVar5 + (iVar2 - (iVar1 >> 0x1f) >> 1),iVar3 / 2 + iVar6,iVar7
+               );
   show_mouse();
   return;
 }

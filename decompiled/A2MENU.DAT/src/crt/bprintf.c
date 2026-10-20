@@ -3,7 +3,7 @@
 
 /* ==== 004144eb buf_putc ==== */
 
-void __watcall buf_putc(undefined4 *param_1,undefined1 unaff_DL)
+undefined4 * __watcall buf_putc(undefined4 *param_1,undefined4 param_2)
 
 {
   int *piVar1;
@@ -13,27 +13,27 @@ void __watcall buf_putc(undefined4 *param_1,undefined1 unaff_DL)
   if ((uint)param_1[4] < (uint)piVar1[1]) {
     puVar2 = (undefined1 *)*piVar1;
     *piVar1 = (int)(puVar2 + 1);
-    *puVar2 = unaff_DL;
+    *puVar2 = (undefined1)param_2;
     param_1[4] = param_1[4] + 1;
   }
-  return;
+  return param_1;
 }
 
 
 /* ==== 0041450a vbprintf ==== */
 
-void __watcall vbprintf(int param_1,int unaff_EDX,byte *unaff_EBX,int *unaff_ECX)
+int __watcall vbprintf(int param_1,int param_2,byte *param_3,int *param_4)
 
 {
   int prtf_result;
   int local_c;
   int local_8;
   
-  local_8 = unaff_EDX + -1;
+  local_8 = param_2 + -1;
   local_c = param_1;
-  prtf_result = prtf(&local_c,unaff_EBX,unaff_ECX,buf_putc);
+  prtf_result = prtf(&local_c,param_3,param_4,buf_putc);
   *(undefined1 *)(param_1 + prtf_result) = 0;
-  return;
+  return prtf_result;
 }
 
 

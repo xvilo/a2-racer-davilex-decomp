@@ -22,37 +22,43 @@ void __watcall crt_nop_hook_6(void)
 
 /* ==== 00414a61 initthread ==== */
 
-void __watcall initthread(void)
+undefined4 __watcall initthread(void)
 
 {
-  (*(code *)InitThread)();
-  return;
+  undefined4 uVar1;
+  
+  uVar1 = (*(code *)InitThread)();
+  return uVar1;
 }
 
 
 /* ==== 00414a68 RegisterThreadData ==== */
 
-void __watcall RegisterThreadData(undefined4 *param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX)
+undefined4 * __watcall
+RegisterThreadData(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
   undefined *puVar1;
+  undefined4 *puVar2;
   
   if (param_1 != (undefined4 *)0x0) {
     puVar1 = (undefined *)*param_1;
     *param_1 = BeginThread;
     BeginThread = puVar1;
   }
-  if (unaff_EDX != (undefined4 *)0x0) {
-    puVar1 = (undefined *)*unaff_EDX;
-    *unaff_EDX = EndThread;
-    EndThread = puVar1;
+  if (param_2 != (undefined4 *)0x0) {
+    param_1 = (undefined4 *)*param_2;
+    puVar2 = param_1;
+    *param_2 = EndThread;
+    EndThread = (undefined *)puVar2;
   }
-  if (unaff_EBX != (undefined4 *)0x0) {
-    puVar1 = (undefined *)*unaff_EBX;
-    *unaff_EBX = InitThread;
-    InitThread = puVar1;
+  if (param_3 != (undefined4 *)0x0) {
+    param_1 = (undefined4 *)*param_3;
+    puVar2 = param_1;
+    *param_3 = InitThread;
+    InitThread = (undefined *)puVar2;
   }
-  return;
+  return param_1;
 }
 
 

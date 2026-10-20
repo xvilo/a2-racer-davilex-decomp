@@ -3,24 +3,25 @@
 
 /* ==== 00403f9f NTRealKey ==== */
 
-longlong __watcall NTRealKey(short *param_1,uint unaff_EDX)
+undefined4 __watcall NTRealKey(short *param_1)
 
 {
   if (((*param_1 == 1) && (*(int *)(param_1 + 2) != 0)) &&
      (((ushort)param_1[5] < 0x10 || (0x12 < (ushort)param_1[5])))) {
-    return CONCAT44(unaff_EDX,1);
+    return 1;
   }
-  return (ulonglong)unaff_EDX << 0x20;
+  return 0;
 }
 
 
 /* ==== 00403fcb initConsoleHandles ==== */
 
-void __watcall
-initConsoleHandles(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 unaff_ECX)
+undefined4 __watcall initConsoleHandles(void)
 
 {
-  (*(code *)AccessFileH_1)(unaff_EDX,unaff_ECX);
+  undefined4 uVar1;
+  
+  (*(code *)AccessFileH_1)();
   if (console_in == (HANDLE)0xffffffff) {
     console_in = CreateFileA(s_conin__004053f8,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x80,
                              (HANDLE)0x0);
@@ -29,8 +30,8 @@ initConsoleHandles(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,un
     console_out = CreateFileA(s_conout__004053ff,0x40000000,2,(LPSECURITY_ATTRIBUTES)0x0,3,0x80,
                               (HANDLE)0x0);
   }
-  (*(code *)ReleaseFileH_1)();
-  return;
+  uVar1 = (*(code *)ReleaseFileH_1)();
+  return uVar1;
 }
 
 

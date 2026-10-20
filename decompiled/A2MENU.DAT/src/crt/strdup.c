@@ -3,7 +3,7 @@
 
 /* ==== 00420210 strdup_1 ==== */
 
-undefined8 __watcall strdup_1(char *param_1,undefined4 unaff_EDX)
+char * __watcall strdup_1(char *param_1)
 
 {
   char cVar1;
@@ -23,7 +23,7 @@ undefined8 __watcall strdup_1(char *param_1,undefined4 unaff_EDX)
     pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
   i = ~i;
-  pcVar2 = malloc(i);
+  pcVar2 = (char *)malloc(i);
   if (pcVar2 != (char *)0x0) {
     pcVar3 = pcVar2;
     for (j = i >> 2; j != 0; j = j - 1) {
@@ -37,7 +37,7 @@ undefined8 __watcall strdup_1(char *param_1,undefined4 unaff_EDX)
       pcVar3 = pcVar3 + (uint)bVar4 * -2 + 1;
     }
   }
-  return CONCAT44(unaff_EDX,pcVar2);
+  return pcVar2;
 }
 
 

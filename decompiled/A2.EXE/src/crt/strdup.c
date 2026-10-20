@@ -3,21 +3,19 @@
 
 /* ==== 004035b3 strdup ==== */
 
-char * __watcall strdup(char *_Src)
+char * __watcall strdup(char *param_1)
 
 {
   char cVar1;
   char *pcVar2;
   uint i_val;
   uint j;
-  undefined4 unaff_EDX;
   char *pcVar3;
   byte bVar4;
-  undefined8 buffer;
   
   bVar4 = 0;
   i_val = 0xffffffff;
-  pcVar2 = _Src;
+  pcVar2 = param_1;
   do {
     if (i_val == 0) break;
     i_val = i_val - 1;
@@ -25,18 +23,17 @@ char * __watcall strdup(char *_Src)
     pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
   i_val = ~i_val;
-  buffer = nmalloc(i_val,unaff_EDX);
-  pcVar2 = (char *)buffer;
+  pcVar2 = (char *)nmalloc(i_val);
   if (pcVar2 != (char *)0x0) {
     pcVar3 = pcVar2;
     for (j = i_val >> 2; j != 0; j = j - 1) {
-      *(undefined4 *)pcVar3 = *(undefined4 *)_Src;
-      _Src = _Src + (uint)bVar4 * -8 + 4;
+      *(undefined4 *)pcVar3 = *(undefined4 *)param_1;
+      param_1 = param_1 + (uint)bVar4 * -8 + 4;
       pcVar3 = pcVar3 + (uint)bVar4 * -8 + 4;
     }
     for (i_val = i_val & 3; i_val != 0; i_val = i_val - 1) {
-      *pcVar3 = *_Src;
-      _Src = _Src + (uint)bVar4 * -2 + 1;
+      *pcVar3 = *param_1;
+      param_1 = param_1 + (uint)bVar4 * -2 + 1;
       pcVar3 = pcVar3 + (uint)bVar4 * -2 + 1;
     }
   }

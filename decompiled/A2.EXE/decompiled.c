@@ -26,7 +26,7 @@ void __watcall build_infio_path(char *filename)
   byte bVar5;
   
   bVar5 = 0;
-  getcwd(&infio_path,0x118);
+  getcwd((undefined4 *)&infio_path,0x118);
   i_val = 0xffffffff;
   pcVar4 = &infio_path;
   do {
@@ -93,22 +93,23 @@ int __watcall run_module(char *module,char *arguments)
 {
   uint uVar1;
   int iVar2;
-  intptr_t spawnv_result;
+  uint spawnv_result;
   uint *errno_ptr;
   char *lpText;
   char *lpCaption;
-  char *local_58;
+  char *local_58 [20];
   int iVar3;
   
   iVar3 = 0;
   do {
     iVar2 = iVar3 + 4;
-    *(undefined4 *)((int)&local_58 + iVar3) = 0;
+    *(undefined4 *)((int)local_58 + iVar3) = 0;
     iVar3 = iVar2;
   } while (iVar2 != 0x50);
-  local_58 = module;
-  spawnv_result = spawnv(0,module,&local_58);
-  if (spawnv_result == -1) {
+  local_58[0] = module;
+  local_58[1] = arguments;
+  spawnv_result = spawnv(0,(byte *)module,(int *)local_58);
+  if (spawnv_result == 0xffffffff) {
     errno_ptr = (uint *)get_errno_ptr();
     uVar1 = *errno_ptr;
     if (uVar1 < 3) {
@@ -298,67 +299,58 @@ LAB_0040145a:
 
 /* ==== 00401486 getcwd ==== */
 
-char * __watcall getcwd(char *_DstBuf,int _SizeInBytes)
+void __watcall getcwd(undefined4 *param_1,uint param_2)
 
 {
   DWORD DVar1;
   undefined4 uVar2;
   uint i_val;
-  undefined4 unaff_EDX;
-  undefined4 unaff_EDX_00;
-  char *pcVar3;
-  char *pcVar4;
-  byte bVar5;
-  undefined8 buffer;
+  CHAR *pCVar3;
+  byte bVar4;
   CHAR aCStack_114 [260];
   
-  bVar5 = 0;
+  bVar4 = 0;
   DVar1 = GetCurrentDirectoryA(0x104,aCStack_114);
   if (DVar1 == 0) {
-    set_errno_nt(0,unaff_EDX);
+    set_errno_nt();
+    return;
+  }
+  if (param_1 == (undefined4 *)0x0) {
+    param_1 = (undefined4 *)nmalloc(DVar1 + 1);
+    if (param_1 != (undefined4 *)0x0) {
+LAB_004014d7:
+      pCVar3 = aCStack_114;
+      for (i_val = DVar1 + 1 >> 2; i_val != 0; i_val = i_val - 1) {
+        *param_1 = *(undefined4 *)pCVar3;
+        pCVar3 = (CHAR *)((int)pCVar3 + ((uint)bVar4 * -2 + 1) * 4);
+        param_1 = param_1 + (uint)bVar4 * -2 + 1;
+      }
+      for (i_val = DVar1 + 1 & 3; i_val != 0; i_val = i_val - 1) {
+        *(CHAR *)param_1 = *pCVar3;
+        pCVar3 = (CHAR *)((int)pCVar3 + (uint)bVar4 * -2 + 1);
+        param_1 = (undefined4 *)((int)param_1 + (uint)bVar4 * -2 + 1);
+      }
+      return;
+    }
+    uVar2 = 5;
   }
   else {
-    if (_DstBuf == (char *)0x0) {
-      buffer = nmalloc(DVar1 + 1,unaff_EDX);
-      unaff_EDX_00 = (undefined4)((ulonglong)buffer >> 0x20);
-      _DstBuf = (char *)buffer;
-      if (_DstBuf != (char *)0x0) {
-LAB_004014d7:
-        pcVar3 = aCStack_114;
-        pcVar4 = _DstBuf;
-        for (i_val = DVar1 + 1 >> 2; i_val != 0; i_val = i_val - 1) {
-          *(undefined4 *)pcVar4 = *(undefined4 *)pcVar3;
-          pcVar3 = pcVar3 + (uint)bVar5 * -8 + 4;
-          pcVar4 = pcVar4 + (uint)bVar5 * -8 + 4;
-        }
-        for (i_val = DVar1 + 1 & 3; i_val != 0; i_val = i_val - 1) {
-          *pcVar4 = *pcVar3;
-          pcVar3 = pcVar3 + (uint)bVar5 * -2 + 1;
-          pcVar4 = pcVar4 + (uint)bVar5 * -2 + 1;
-        }
-        return _DstBuf;
-      }
-      uVar2 = 5;
-    }
-    else {
-      if (DVar1 <= (uint)_SizeInBytes) goto LAB_004014d7;
-      uVar2 = 0xe;
-      unaff_EDX_00 = unaff_EDX;
-    }
-    set_errno(uVar2,unaff_EDX_00);
+    if (DVar1 <= param_2) goto LAB_004014d7;
+    uVar2 = 0xe;
   }
-  return (char *)0x0;
+  set_errno(uVar2);
+  return;
 }
 
 
 /* ==== 004014ff spawnv ==== */
 
-intptr_t __watcall spawnv(int param_1,char *_Filename,char **_ArgList)
+uint __watcall spawnv(undefined4 param_1,byte *param_2,int *param_3)
 
 {
-  intptr_t spawnve_result;
+  uint spawnve_result;
   
-  spawnve_result = spawnve(param_1,_Filename,_ArgList,environ);
+  spawnve_result = spawnve(param_1,param_2,param_3,environ);
   return spawnve_result;
 }
 
@@ -377,132 +369,122 @@ int * __watcall get_errno_ptr(void)
 
 /* ==== 00401522 wstart2 ==== */
 
-void __watcall wstart2(void)
+undefined4 __watcall wstart2(void)
 
 {
+  undefined4 win_main_1;
+  
   WinMainProc = WinMain;
-  WinMain_1();
-  return;
+  win_main_1 = WinMain_1();
+  return win_main_1;
 }
 
 
 /* ==== 004015ab set_errno_dos ==== */
 
-undefined8 __watcall set_errno_dos(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall set_errno_dos(uint param_1)
 
 {
   int iVar1;
-  uint extraout_EDX;
-  uint uVar2;
   
-  set_doserrno(param_1,param_1);
-  uVar2 = extraout_EDX;
-  if (extraout_EDX == 0x7b) {
+  set_doserrno(param_1);
+  if (param_1 == 0x7b) {
     iVar1 = 1;
   }
-  else if (extraout_EDX == 0xce) {
+  else if (param_1 == 0xce) {
     iVar1 = 9;
   }
-  else if (extraout_EDX == 0xb7) {
+  else if (param_1 == 0xb7) {
     iVar1 = 7;
   }
   else {
-    if (0x13 < extraout_EDX) {
-      uVar2 = 0x13;
+    if (0x13 < param_1) {
+      param_1 = 0x13;
     }
-    iVar1 = *(int *)(&DAT_004059c1 + uVar2) >> 0x18;
+    iVar1 = *(int *)(&DAT_004059c1 + param_1) >> 0x18;
   }
-  set_errno(iVar1,uVar2);
-  return CONCAT44(unaff_EDX,0xffffffff);
+  set_errno(iVar1);
+  return 0xffffffff;
 }
 
 
 /* ==== 004015fc set_errno_nt ==== */
 
-undefined8 __watcall set_errno_nt(undefined4 param_1,undefined4 unaff_EDX_00)
+undefined4 __watcall set_errno_nt(void)
 
 {
   DWORD DVar1;
-  undefined4 unaff_EDX;
-  undefined8 set_errno_dos_result;
+  undefined4 set_errno_dos_result;
   
   DVar1 = GetLastError();
-  set_errno_dos_result = set_errno_dos(DVar1,unaff_EDX);
-  return CONCAT44(unaff_EDX_00,(int)set_errno_dos_result);
+  set_errno_dos_result = set_errno_dos(DVar1);
+  return set_errno_dos_result;
 }
 
 
 /* ==== 0040160b nmalloc ==== */
 
-undefined8 __watcall nmalloc(uint param_1,undefined4 unaff_EDX)
+undefined4 __watcall nmalloc(uint param_1)
 
 {
   bool bVar1;
   undefined4 uVar2;
   uint uVar3;
-  uint *mem_allocator;
+  int mem_allocator;
   int iVar4;
   undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
   uint uVar5;
-  undefined8 expand_dgroup;
+  ushort in_DS;
   
-  if ((param_1 != 0) && (param_1 < 0xffffffd5)) {
+  if ((param_1 == 0) || (0xffffffd4 < param_1)) {
+    uVar2 = 0;
+  }
+  else {
     bVar1 = false;
     uVar5 = param_1 + 3 & 0xfffffffc;
     (*(code *)AccessNHeap_1)();
-    uVar2 = extraout_EDX;
-LAB_00401644:
-    do {
-      uVar3 = uVar5;
-      if (uVar5 < 0xc) {
-        uVar3 = 0xc;
-      }
-      if ((uVar3 <= LargestSizeB4MiniHeapRover) || (iVar4 = MiniHeapRover, MiniHeapRover == 0)) {
-        LargestSizeB4MiniHeapRover = 0;
-        iVar4 = nheapbeg;
-      }
-      for (; iVar4 != 0; iVar4 = *(int *)(iVar4 + 8)) {
-        MiniHeapRover = iVar4;
-        mem_allocator = MemAllocator();
-        if (mem_allocator != (uint *)0x0) goto LAB_004016db;
-        if (LargestSizeB4MiniHeapRover < *(uint *)(iVar4 + 0x14)) {
-          LargestSizeB4MiniHeapRover = *(uint *)(iVar4 + 0x14);
+    while( true ) {
+      while( true ) {
+        uVar3 = uVar5;
+        if (uVar5 < 0xc) {
+          uVar3 = 0xc;
         }
-        uVar2 = 0;
-      }
-      if (!bVar1) {
-        expand_dgroup = ExpandDGROUP(param_1,uVar2);
-        uVar2 = (undefined4)((ulonglong)expand_dgroup >> 0x20);
-        if ((int)expand_dgroup != 0) {
-          bVar1 = true;
-          goto LAB_00401644;
+        if ((uVar3 <= LargestSizeB4MiniHeapRover) || (iVar4 = MiniHeapRover, MiniHeapRover == 0)) {
+          LargestSizeB4MiniHeapRover = 0;
+          iVar4 = nheapbeg;
         }
+        for (; iVar4 != 0; iVar4 = *(int *)(iVar4 + 8)) {
+          MiniHeapRover = iVar4;
+          mem_allocator = MemAllocator(param_1,(uint)in_DS,iVar4);
+          if (mem_allocator != 0) goto LAB_004016db;
+          if (LargestSizeB4MiniHeapRover < *(uint *)(iVar4 + 0x14)) {
+            LargestSizeB4MiniHeapRover = *(uint *)(iVar4 + 0x14);
+          }
+        }
+        if ((bVar1) || (iVar4 = ExpandDGROUP(param_1), iVar4 == 0)) break;
+        bVar1 = true;
       }
       iVar4 = nmemneed();
-      if (iVar4 == 0) goto LAB_004016db;
+      if (iVar4 == 0) break;
       bVar1 = false;
-    } while( true );
-  }
-  uVar2 = 0;
-LAB_004016eb:
-  return CONCAT44(unaff_EDX,uVar2);
+    }
 LAB_004016db:
-  nheap_clean = 0;
-  (*(code *)ReleaseNHeap_1)();
-  uVar2 = extraout_EDX_00;
-  goto LAB_004016eb;
+    nheap_clean = 0;
+    (*(code *)ReleaseNHeap_1)();
+    uVar2 = extraout_EDX;
+  }
+  return uVar2;
 }
 
 
 /* ==== 004016ff set_errno ==== */
 
-void __watcall set_errno(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall set_errno(undefined4 param_1)
 
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar1 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar1 + 4) = (int)((ulonglong)uVar1 >> 0x20);
   return;
 }
@@ -510,22 +492,22 @@ void __watcall set_errno(undefined4 param_1,undefined4 unaff_EDX)
 
 /* ==== 00401714 set_EINVAL ==== */
 
-undefined4 __watcall set_EINVAL(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall set_EINVAL(void)
 
 {
-  set_errno(9,unaff_EDX);
+  set_errno(9);
   return 0xffffffff;
 }
 
 
 /* ==== 00401724 set_doserrno ==== */
 
-void __watcall set_doserrno(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall set_doserrno(undefined4 param_1)
 
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar1 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar1 + 8) = (int)((ulonglong)uVar1 >> 0x20);
   return;
 }
@@ -545,186 +527,193 @@ void __watcall write_comspec_switch(char *param_1)
 
 /* ==== 0040173e path_exists ==== */
 
-int __watcall path_exists(char *filename_val)
+int __watcall path_exists(char *file_name)
 
 {
   int access_result;
   
-  access_result = access(filename_val,0);
+  access_result = access(file_name,0);
   return (uint)(access_result == 0);
 }
 
 
 /* ==== 00401750 spawnve ==== */
 
-/* WARNING: Removing unreachable block (ram,0x00401917) */
-/* WARNING: Removing unreachable block (ram,0x00401a0e) */
-
-intptr_t __watcall spawnve(int param_1,char *_Filename,char **_ArgList,char **_Env)
+uint __watcall spawnve(undefined4 param_1,byte *param_2,int *param_3,int *param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
-  char *env_value;
-  undefined4 extraout_ECX;
-  undefined4 extraout_ECX_00;
-  undefined4 extraout_ECX_01;
-  undefined4 extraout_ECX_02;
-  undefined4 unaff_EDX;
-  uint unaff_EDX_00;
-  undefined4 unaff_EDX_01;
-  undefined4 unaff_EDX_02;
-  byte *unaff_EDX_03;
-  undefined4 unaff_EDX_04;
-  char *extraout_EDX;
-  int *extraout_EDX_00;
-  byte bVar4;
-  undefined8 uVar5;
-  undefined8 stackavail_result;
-  int *piVar6;
-  undefined4 uVar7;
-  LPSTR alloca_stack_check_result [28];
+  int *piVar1;
+  byte *pbVar2;
+  int iVar3;
+  undefined1 *stackavail_result;
+  char *arg7;
+  undefined4 arg4;
+  char *pcVar4;
+  char *_Filename;
+  byte bVar5;
+  undefined8 uVar6;
+  char *alloca_stack_check_result;
+  undefined4 *local_bc;
+  int *piStack_b8;
   byte *local_50;
-  byte *str1;
+  byte *local_4c;
   byte *local_48;
   byte *local_44;
   char local_40 [4];
   uint local_3c;
-  undefined1 local_38 [4];
-  int local_34;
-  uint local_30;
-  byte *local_2c;
-  int *local_28;
-  int *local_20;
+  undefined4 local_38;
+  undefined4 local_34;
+  undefined4 *local_30;
+  byte *buffer;
+  char *buffer_2;
+  int *local_24;
+  char *local_20;
   uint local_1c;
   byte *local_18;
+  byte local_14;
   
-  bVar4 = 0;
-  alloca_stack_check_result[0] = (LPSTR)alloca_stack_check();
-  if ((LPSTR)0x1 < alloca_stack_check_result[0]) {
-    set_errno(9,_Env);
-    return -1;
+  bVar5 = 0;
+  alloca_stack_check_result =
+       (char *)alloca_stack_check(param_1,param_2,param_3,param_4,(undefined1 *)0xe0);
+  local_14 = 0;
+  local_24 = param_3;
+  if ((char *)0x1 < alloca_stack_check_result) {
+    set_errno(9);
+    return 0xffffffff;
   }
-  local_1c = build_environment_block(_ArgList,(int *)_Env,&local_30,&local_34,(int)local_38);
+  local_1c = build_environment_block
+                       (param_3,param_4,&local_30,&local_34,&local_38,(int *)&local_3c,0);
   if (local_1c == 0xffffffff) {
-    return -1;
+    return 0xffffffff;
   }
-  iVar1 = string_length(_Filename);
-  uVar5 = nmalloc(iVar1 + 0x10eU,iVar1 + 0x10eU);
-  iVar1 = (int)((ulonglong)uVar5 >> 0x20);
-  local_2c = (byte *)uVar5;
-  local_18 = local_2c;
-  if (local_2c == (byte *)0x0) {
-    stackavail_result = stackavail(0,iVar1);
-    uVar5 = CONCAT44((int)((ulonglong)stackavail_result >> 0x20),local_2c);
-    if ((iVar1 + 3U & 0xfffffffc) < (uint)stackavail_result) {
-      local_18 = (byte *)alloca_stack_check_result;
+  iVar3 = string_length((char *)param_2);
+  buffer = (byte *)nmalloc(iVar3 + 0x10e);
+  local_18 = buffer;
+  if (buffer == (byte *)0x0) {
+    stackavail_result = stackavail();
+    if ((undefined1 *)(iVar3 + 0x111U & 0xfffffffc) < stackavail_result) {
+      local_18 = (byte *)&alloca_stack_check_result;
     }
     else {
       local_18 = (byte *)0x0;
     }
     if (local_18 == (byte *)0x0) {
       nfree(local_30);
-      return -1;
+      return 0xffffffff;
     }
   }
-  local_2c = (byte *)uVar5;
-  split_spawn_path(_Filename,local_18 + (int)((ulonglong)uVar5 >> 0x20) + -0x107);
+  split_spawn_path(param_2,local_18 + iVar3 + 7,&local_48,&local_44,&local_50,&local_4c);
   (*(code *)Save8087)();
-  uVar5 = nmalloc(local_3c,unaff_EDX);
-  local_28 = (int *)uVar5;
-  local_20 = local_28;
-  if (local_28 == (int *)0x0) {
-    uVar5 = stackavail(0,local_3c + 3 & 0xfffffffc);
-    unaff_EDX_00 = (uint)((ulonglong)uVar5 >> 0x20);
-    if (unaff_EDX_00 < (uint)uVar5) {
-      local_20 = (int *)alloca_stack_check_result;
+  buffer_2 = (char *)nmalloc(local_3c);
+  local_20 = buffer_2;
+  if (buffer_2 == (char *)0x0) {
+    stackavail_result = stackavail();
+    if ((undefined1 *)(local_3c + 3 & 0xfffffffc) < stackavail_result) {
+      local_20 = (char *)&alloca_stack_check_result;
     }
     else {
-      local_20 = (int *)0x0;
+      local_20 = (char *)0x0;
     }
-    if (local_20 == (int *)0x0) {
-      set_errno(2,unaff_EDX_00);
+    if (local_20 == (char *)0x0) {
+      set_errno(2);
       local_1c = 0xffffffff;
-      set_doserrno(10,unaff_EDX_01);
+      set_doserrno(10);
       goto LAB_00401a34;
     }
   }
-  makepath(local_18,local_48,local_44,local_50,str1);
-  set_errno(1,unaff_EDX_02);
-  if (*str1 == 0) {
+  makepath(local_18,local_48,local_44,local_50,local_4c);
+  set_errno(1);
+  if (*local_4c == 0) {
 LAB_004018e8:
-    iVar1 = (*(code *)GetThreadPtr)();
-    uVar7 = extraout_ECX;
-    if ((*(int *)(iVar1 + 4) != 1) &&
-       (iVar1 = (*(code *)GetThreadPtr)(), uVar7 = extraout_ECX_00, *(int *)(iVar1 + 4) != 9))
-    goto LAB_00401a34;
-    iVar1 = string_length((char *)local_18);
-    unaff_EDX_03 = local_18 + iVar1;
-    *(undefined4 *)unaff_EDX_03 = s__com_004051e5._0_4_;
-    unaff_EDX_03[(uint)bVar4 * -8 + 4] = s__com_004051e5[(uint)bVar4 * -8 + 4];
-    uVar5 = set_errno(0,unaff_EDX_03);
-    uVar5 = dospawn((int)uVar5,(int)((ulonglong)uVar5 >> 0x20),(int)local_44,uVar7,
-                    alloca_stack_check_result[0],local_18,local_20);
-    local_1c = (uint)uVar5;
-    uVar5 = (*(code *)GetThreadPtr)();
-    unaff_EDX_04 = (undefined4)((ulonglong)uVar5 >> 0x20);
-    uVar7 = extraout_ECX_01;
-    if (*(int *)((int)uVar5 + 4) != 1) {
-      uVar5 = (*(code *)GetThreadPtr)();
-      unaff_EDX_04 = (undefined4)((ulonglong)uVar5 >> 0x20);
-      uVar7 = extraout_ECX_02;
-      if (*(int *)((int)uVar5 + 4) != 9) goto LAB_00401a34;
+    iVar3 = (*(code *)GetThreadPtr)();
+    if (*(int *)(iVar3 + 4) != 1) {
+      piStack_b8 = (int *)0x4018fa;
+      iVar3 = (*(code *)GetThreadPtr)();
+      if (*(int *)(iVar3 + 4) != 9) goto LAB_00401a34;
     }
-    uVar5 = set_errno(0,unaff_EDX_04);
-    pcVar2 = (char *)((ulonglong)uVar5 >> 0x20);
-    *(undefined4 *)pcVar2 = s__exe_004051ea._0_4_;
-    pcVar2[(uint)bVar4 * -8 + 4] = s__exe_004051ea[(uint)bVar4 * -8 + 4];
-    uVar5 = dospawn((int)uVar5,pcVar2,(int)local_44,uVar7,alloca_stack_check_result[0],local_18,
-                    local_20);
-    local_1c = (uint)uVar5;
-    uVar5 = (*(code *)GetThreadPtr)();
-    uVar7 = (undefined4)((ulonglong)uVar5 >> 0x20);
-    if (*(int *)((int)uVar5 + 4) != 1) {
-      uVar5 = (*(code *)GetThreadPtr)();
-      uVar7 = (undefined4)((ulonglong)uVar5 >> 0x20);
-      if (*(int *)((int)uVar5 + 4) != 9) goto LAB_00401a34;
+    pbVar2 = local_18;
+    piStack_b8 = (int *)0x40190f;
+    iVar3 = string_length((char *)local_18);
+    if (local_14 == 0) {
+      *(undefined4 *)(pbVar2 + iVar3) = s__com_004051e5._0_4_;
+      (pbVar2 + iVar3)[(uint)bVar5 * -8 + 4] = s__com_004051e5[(uint)bVar5 * -8 + 4];
+      piStack_b8 = (int *)0x401935;
+      set_errno(0);
+      piStack_b8 = local_24;
+      local_bc = local_30;
+      alloca_stack_check_result = local_20;
+      local_1c = dospawn();
     }
-    set_errno(0,uVar7);
-    *(undefined4 *)extraout_EDX = s__bat_004051e0._0_4_;
-    extraout_EDX[(uint)bVar4 * -8 + 4] = s__bat_004051e0[(uint)bVar4 * -8 + 4];
-    iVar1 = path_exists((char *)local_18);
-    if (iVar1 == 0) goto LAB_00401a34;
+    else {
+      piStack_b8 = (int *)0x401921;
+      set_errno(1);
+    }
+    piStack_b8 = (int *)0x401955;
+    uVar6 = (*(code *)GetThreadPtr)();
+    pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+    if (*(int *)((int)uVar6 + 4) != 1) {
+      piStack_b8 = (int *)0x401961;
+      uVar6 = (*(code *)GetThreadPtr)();
+      pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+      if (*(int *)((int)uVar6 + 4) != 9) goto LAB_00401a34;
+    }
+    piStack_b8 = (int *)0x401972;
+    set_errno(0);
+    piStack_b8 = local_24;
+    *(undefined4 *)pcVar4 = s__exe_004051ea._0_4_;
+    pcVar4[(uint)bVar5 * -8 + 4] = s__exe_004051ea[(uint)bVar5 * -8 + 4];
+    local_bc = local_30;
+    alloca_stack_check_result = local_20;
+    local_1c = dospawn();
+    piStack_b8 = (int *)0x40199d;
+    uVar6 = (*(code *)GetThreadPtr)();
+    pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+    if (*(int *)((int)uVar6 + 4) != 1) {
+      uVar6 = (*(code *)GetThreadPtr)();
+      pcVar4 = (char *)((ulonglong)uVar6 >> 0x20);
+      if (*(int *)((int)uVar6 + 4) != 9) goto LAB_00401a34;
+    }
+    set_errno(0);
+    *(undefined4 *)pcVar4 = s__bat_004051e0._0_4_;
+    pcVar4[(uint)bVar5 * -8 + 4] = s__bat_004051e0[(uint)bVar5 * -8 + 4];
+    iVar3 = path_exists((char *)local_18);
+    if (iVar3 == 0) goto LAB_00401a34;
   }
   else {
-    iVar1 = stricmp((char *)str1,s__bat_004051e0);
-    if (iVar1 != 0) {
-      uVar5 = set_errno(0,s__bat_004051e0);
-      uVar5 = dospawn((int)uVar5,(int)((ulonglong)uVar5 >> 0x20),(int)local_44,local_50,
-                      alloca_stack_check_result[0],local_18,local_20);
-      local_1c = (uint)uVar5;
+    iVar3 = stricmp(local_4c,(byte *)s__bat_004051e0);
+    if (iVar3 != 0) {
+      set_errno(0);
+      local_1c = dospawn();
       goto LAB_004018e8;
     }
     local_1c = 0xffffffff;
-    iVar1 = path_exists((char *)local_18);
-    if (iVar1 == 0) goto LAB_004018e8;
+    iVar3 = path_exists((char *)local_18);
+    if (iVar3 == 0) goto LAB_004018e8;
   }
+  pcVar4 = local_20;
+  piVar1 = local_24;
+  arg4 = 1;
   nfree(local_30);
-  local_30 = 0;
-  build_command_line((int)local_18,extraout_EDX_00);
-  uVar7 = 0;
-  pcVar2 = local_40;
-  piVar6 = local_20;
-  write_comspec_switch(pcVar2);
-  pcVar3 = s_COMMAND_004051fb;
-  env_value = getenv(s_COMSPEC_004051ef);
-  local_1c = spawnl((int)env_value,(char *)0x0,(char *)local_20,1,alloca_stack_check_result[0],
-                    env_value,pcVar3,pcVar2,local_18,piVar6,uVar7);
+  local_30 = (undefined4 *)0x0;
+  build_command_line((char *)local_18,piVar1,pcVar4,1);
+  _Filename = (char *)(uint)local_14;
+  write_comspec_switch(local_40);
+  if (local_14 == 0) {
+    arg7 = s_COMMAND_004051fb;
+  }
+  else {
+    arg7 = s_CMD_004051f7;
+  }
+  iVar3 = getenv(s_COMSPEC_004051ef);
+  local_1c = spawnl(iVar3,_Filename,pcVar4,arg4,alloca_stack_check_result,iVar3,arg7);
 LAB_00401a34:
-  nfree((uint)local_28);
-  nfree((uint)local_2c);
+  piStack_b8 = (int *)0x401a3c;
+  nfree((undefined4 *)buffer_2);
+  piStack_b8 = (int *)0x401a44;
+  nfree((undefined4 *)buffer);
+  piStack_b8 = (int *)0x401a4c;
   nfree(local_30);
+  piStack_b8 = (int *)0x401a55;
   (*(code *)Rest8087)();
   return local_1c;
 }
@@ -752,32 +741,28 @@ void __watcall crt_nop_hook_1(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined4 __watcall NTInit(int param_1,void *unaff_EDX,HMODULE unaff_EBX,size_t unaff_ECX)
+void __watcall NTInit(int param_1,undefined4 *param_2,HMODULE module_val)
 
 {
-  LPSTR _Src;
-  DWORD DVar1;
-  undefined4 uVar2;
-  undefined8 init_thread_data;
+  LPSTR pCVar1;
+  DWORD DVar2;
   CHAR local_10c [260];
   
   Is_DLL = param_1;
-  init_thread_data = InitThreadData(unaff_EDX,(size_t)unaff_EDX,unaff_EBX,unaff_ECX);
-  FirstThreadData = (int)init_thread_data;
-  if (FirstThreadData == 0) {
+  FirstThreadData = InitThreadData(param_2);
+  if (FirstThreadData == (undefined4 *)0x0) {
     if (param_1 == 0) {
                     /* WARNING: Subroutine does not return */
       ExitProcess(1);
     }
-    uVar2 = 0;
   }
   else {
-    NTInitFileHandles(FirstThreadData,(int)((ulonglong)init_thread_data >> 0x20));
+    NTInitFileHandles();
     Envptr = GetEnvironmentStrings();
     GetModuleFileNameA((HMODULE)0x0,local_10c,0x104);
     _LpPgmName = strdup(local_10c);
-    _Src = GetCommandLineA();
-    _LpCmdLine = strdup(_Src);
+    pCVar1 = GetCommandLineA();
+    _LpCmdLine = strdup(pCVar1);
     if (*_LpCmdLine != '\"') {
       do {
         if (((&IsTable)[(byte)(*_LpCmdLine + 1)] & 2) != 0) goto LAB_00401b2b;
@@ -795,48 +780,46 @@ undefined4 __watcall NTInit(int param_1,void *unaff_EDX,HMODULE unaff_EBX,size_t
 LAB_00401b2b:
     } while (((&IsTable)[(byte)(*_LpCmdLine + 1)] & 2) != 0);
     if (param_1 != 0) {
-      GetModuleFileNameA(unaff_EBX,local_10c,0x104);
+      GetModuleFileNameA(module_val,local_10c,0x104);
       _LpDllName = strdup(local_10c);
     }
-    DVar1 = GetVersion();
-    osmajor = (undefined1)(DVar1 >> 0x18);
-    osbuild = (undefined2)DVar1;
-    osminor = (byte)(DVar1 >> 0x10) & 0xf;
-    uVar2 = 1;
+    DVar2 = GetVersion();
+    osmajor = (undefined1)(DVar2 >> 0x18);
+    osbuild = (undefined2)DVar2;
+    osminor = (byte)(DVar2 >> 0x10) & 0xf;
   }
-  return uVar2;
+  return;
 }
 
 
 /* ==== 00401ba6 NTMainInit ==== */
 
-void __watcall NTMainInit(undefined4 param_1,void *unaff_EDX)
+void __watcall NTMainInit(undefined4 param_1,undefined4 *param_2)
 
 {
   undefined4 uVar1;
-  HMODULE unaff_EBX;
+  HMODULE module_val;
   undefined4 *puVar2;
-  size_t unaff_ECX;
   int in_FS_OFFSET;
   
-  unaff_EBX = GetModuleHandleA((LPCSTR)0x0);
-  NTInit(0,unaff_EDX,unaff_EBX,unaff_ECX);
-  NewExceptionHandler(param_1,unaff_EDX);
+  module_val = GetModuleHandleA((LPCSTR)0x0);
+  NTInit(0,param_2,module_val);
+  NewExceptionHandler(param_1);
   (*(code *)sig_init_rtn)();
   uVar1 = *(undefined4 *)(in_FS_OFFSET + 8);
   puVar2 = (undefined4 *)(*(code *)GetThreadPtr)();
   *puVar2 = uVar1;
-  InitRtns();
+  InitRtns(0xff);
   return;
 }
 
 
 /* ==== 00401bec exit_2 ==== */
 
-void __watcall exit_2(UINT exit_code,undefined4 unaff_EDX,undefined4 param_3,undefined4 unaff_ECX)
+undefined4 __watcall exit_2(UINT exit_code)
 
 {
-  DoneExceptionHandler(exit_code,unaff_EDX);
+  DoneExceptionHandler();
   FiniRtns(0,0xff);
   (*(code *)ThreadExitRtn)();
                     /* WARNING: Subroutine does not return */
@@ -849,118 +832,116 @@ void __watcall exit_2(UINT exit_code,undefined4 unaff_EDX,undefined4 param_3,und
 /* WARNING: Unable to track spacebase fully for stack */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall WinMain_1(void)
+undefined4 __watcall WinMain_1(void)
 
 {
   int iVar1;
-  undefined4 nt_main_init;
-  LPSTR _Src;
-  char *pcVar2;
-  HMODULE pHVar3;
-  int code;
-  uint uVar4;
-  undefined1 *puVar5;
-  undefined1 *puVar6;
-  undefined8 stackavail_result;
+  int iVar2;
+  undefined1 *stackavail_result;
+  LPSTR pCVar3;
+  char *pcVar4;
+  HMODULE pHVar5;
+  undefined4 uVar6;
+  undefined1 *puVar7;
+  undefined1 *puVar8;
+  undefined1 *puVar9;
   undefined4 uStack_1c;
-  undefined1 local_18 [8];
+  undefined4 local_18 [2];
   
   uStack_1c = 0x401c1e;
-  InitRtns();
-  code = -(ThreadDataSize + 3 & 0xfffffffc);
-  puVar5 = local_18 + code;
-  *(undefined4 *)(local_18 + code + -4) = 0x401c3b;
-  memset(local_18 + code,0,ThreadDataSize);
-  *(undefined4 *)(local_18 + code + -4) = 0x401c45;
-  nt_main_init = NTMainInit(local_18,local_18 + code);
-  *(undefined4 *)(local_18 + code + -4) = 0x401c56;
-  stackavail_result = stackavail(nt_main_init,DAT_00405af0 + 3U & 0xfffffffc);
-  uVar4 = (uint)((ulonglong)stackavail_result >> 0x20);
-  if (uVar4 < (uint)stackavail_result) {
-    iVar1 = -uVar4;
-    puVar5 = local_18 + iVar1 + code;
-    _DAT_00405af4 = local_18 + iVar1 + code;
+  InitRtns(1);
+  iVar1 = -(ThreadDataSize + 3U & 0xfffffffc);
+  puVar8 = (undefined1 *)((int)local_18 + iVar1);
+  *(undefined4 *)((int)local_18 + iVar1 + -4) = 0x401c3b;
+  memset((undefined4 *)((int)local_18 + iVar1),0,ThreadDataSize);
+  *(undefined4 *)((int)local_18 + iVar1 + -4) = 0x401c45;
+  NTMainInit(local_18,(undefined4 *)((int)local_18 + iVar1));
+  puVar7 = (undefined1 *)(DAT_00405af0 + 3U & 0xfffffffc);
+  *(undefined4 *)((int)local_18 + iVar1 + -4) = 0x401c56;
+  stackavail_result = stackavail();
+  if (puVar7 < stackavail_result) {
+    iVar2 = -(int)puVar7;
+    puVar8 = (undefined1 *)((int)local_18 + iVar2 + iVar1);
+    _DAT_00405af4 = (undefined1 *)((int)local_18 + iVar2 + iVar1);
   }
   else {
     _DAT_00405af4 = (undefined1 *)0x0;
   }
   _DAT_00405af4 = _DAT_00405af4 + DAT_00405af0;
-  *(undefined4 *)(puVar5 + -4) = 0x401c78;
+  *(undefined4 *)(puVar8 + -4) = 0x401c78;
   init_amblksiz();
-  *(undefined4 *)(puVar5 + -4) = 0x401c7d;
-  _Src = GetCommandLineA();
-  *(undefined4 *)(puVar5 + -4) = 0x401c82;
-  pcVar2 = strdup(_Src);
-  if (*pcVar2 != '\"') {
+  *(undefined4 *)(puVar8 + -4) = 0x401c7d;
+  pCVar3 = GetCommandLineA();
+  *(undefined4 *)(puVar8 + -4) = 0x401c82;
+  pcVar4 = strdup(pCVar3);
+  if (*pcVar4 != '\"') {
     do {
-      if (((&IsTable)[(byte)(*pcVar2 + 1)] & 2) != 0) goto LAB_00401cc4;
-      if (*pcVar2 == '\0') goto LAB_00401cc4;
-      pcVar2 = pcVar2 + 1;
+      if (((&IsTable)[(byte)(*pcVar4 + 1)] & 2) != 0) goto LAB_00401cc4;
+      if (*pcVar4 == '\0') goto LAB_00401cc4;
+      pcVar4 = pcVar4 + 1;
     } while( true );
   }
   do {
-    pcVar2 = pcVar2 + 1;
-    if (*pcVar2 == '\"') break;
-  } while (*pcVar2 != '\0');
-  if (*pcVar2 == '\0') goto LAB_00401cc4;
+    pcVar4 = pcVar4 + 1;
+    if (*pcVar4 == '\"') break;
+  } while (*pcVar4 != '\0');
+  if (*pcVar4 == '\0') goto LAB_00401cc4;
   do {
-    pcVar2 = pcVar2 + 1;
+    pcVar4 = pcVar4 + 1;
 LAB_00401cc4:
-  } while (((&IsTable)[(byte)(*pcVar2 + 1)] & 2) != 0);
-  *(undefined4 *)(puVar5 + -4) = 10;
-  *(char **)(puVar5 + -8) = pcVar2;
-  *(undefined4 *)(puVar5 + -0xc) = 0;
-  *(undefined4 *)(puVar5 + -0x10) = 0;
-  *(undefined4 *)(puVar5 + -0x14) = 0x401ce9;
-  pHVar3 = GetModuleHandleA(*(LPCSTR *)(puVar5 + -0x10));
-  *(HMODULE *)(puVar5 + -0x10) = pHVar3;
-  puVar6 = puVar5 + -0x14;
-  *(undefined4 *)(puVar5 + -0x14) = 0x401cf0;
-  code = (*WinMainProc)();
+  } while (((&IsTable)[(byte)(*pcVar4 + 1)] & 2) != 0);
+  *(undefined4 *)(puVar8 + -4) = 10;
+  *(char **)(puVar8 + -8) = pcVar4;
+  *(undefined4 *)(puVar8 + -0xc) = 0;
+  *(undefined4 *)(puVar8 + -0x10) = 0;
+  *(undefined4 *)(puVar8 + -0x14) = 0x401ce9;
+  pHVar5 = GetModuleHandleA(*(LPCSTR *)(puVar8 + -0x10));
+  *(HMODULE *)(puVar8 + -0x10) = pHVar5;
+  puVar9 = puVar8 + -0x14;
+  *(undefined4 *)(puVar8 + -0x14) = 0x401cf0;
+  uVar6 = (*WinMainProc)();
                     /* WARNING: Subroutine does not return */
-  *(undefined **)(puVar6 + -4) = &UNK_00401cf5;
-  exit(code);
+  *(undefined **)(puVar9 + -4) = &UNK_00401cf5;
+  exit(uVar6);
 }
 
 
 /* ==== 00401cfc MemAllocator ==== */
 
-uint * __watcall MemAllocator(void)
+undefined4 __watcall MemAllocator(uint param_1,undefined4 param_2,int param_3)
 
 {
   uint uVar1;
-  uint in_EAX;
   uint uVar2;
-  int unaff_EBX;
   uint *puVar3;
   uint uVar4;
   uint *puVar5;
   
-  if (((in_EAX != 0) && (in_EAX < 0xfffffff5)) &&
-     (uVar2 = in_EAX + 0xb & 0xfffffff8, uVar2 = (uVar2 - 0x10 & -(uint)(0xf < uVar2)) + 0x10,
-     uVar2 <= *(uint *)(unaff_EBX + 0x14))) {
-    puVar3 = *(uint **)(unaff_EBX + 0xc);
-    uVar4 = *(uint *)(unaff_EBX + 0x10);
+  if (((param_1 != 0) && (param_1 < 0xfffffff5)) &&
+     (uVar2 = param_1 + 0xb & 0xfffffff8, uVar2 = (uVar2 - 0x10 & -(uint)(0xf < uVar2)) + 0x10,
+     uVar2 <= *(uint *)(param_3 + 0x14))) {
+    puVar3 = *(uint **)(param_3 + 0xc);
+    uVar4 = *(uint *)(param_3 + 0x10);
     if (uVar2 <= uVar4) {
-      puVar3 = *(uint **)(unaff_EBX + 0x28);
+      puVar3 = *(uint **)(param_3 + 0x28);
       uVar4 = 0;
     }
     do {
       uVar1 = *puVar3;
       if (uVar2 <= uVar1) {
-        *(uint *)(unaff_EBX + 0x10) = uVar4;
-        *(int *)(unaff_EBX + 0x18) = *(int *)(unaff_EBX + 0x18) + 1;
+        *(uint *)(param_3 + 0x10) = uVar4;
+        *(int *)(param_3 + 0x18) = *(int *)(param_3 + 0x18) + 1;
         uVar4 = puVar3[2];
         if (uVar1 - uVar2 < 0x10) {
-          *(int *)(unaff_EBX + 0x1c) = *(int *)(unaff_EBX + 0x1c) + -1;
+          *(int *)(param_3 + 0x1c) = *(int *)(param_3 + 0x1c) + -1;
           uVar2 = puVar3[1];
           *(uint *)(uVar2 + 8) = uVar4;
           *(uint *)(uVar4 + 4) = uVar2;
-          *(uint *)(unaff_EBX + 0xc) = uVar2;
+          *(uint *)(param_3 + 0xc) = uVar2;
         }
         else {
           puVar5 = (uint *)((int)puVar3 + uVar2);
-          *(uint **)(unaff_EBX + 0xc) = puVar5;
+          *(uint **)(param_3 + 0xc) = puVar5;
           *puVar5 = uVar1 - uVar2;
           *puVar3 = uVar2;
           uVar2 = puVar3[1];
@@ -974,65 +955,63 @@ uint * __watcall MemAllocator(void)
       }
       uVar4 = (uVar4 - uVar1 & -(uint)(uVar1 <= uVar4)) + uVar1;
       puVar3 = (uint *)puVar3[2];
-    } while (puVar3 != (uint *)(unaff_EBX + 0x20U));
-    *(uint *)(unaff_EBX + 0x14) = uVar4;
+    } while (puVar3 != (uint *)(param_3 + 0x20U));
+    *(uint *)(param_3 + 0x14) = uVar4;
   }
-  return (uint *)0x0;
+  return 0;
 }
 
 
 /* ==== 00401da4 MemFree ==== */
 
-void __watcall MemFree(void)
+void __watcall MemFree(undefined4 *param_1,undefined4 param_2,int param_3)
 
 {
-  undefined4 *in_EAX;
   uint uVar1;
   int i_val;
   uint uVar2;
-  int unaff_EBX;
   uint *puVar3;
   uint *puVar4;
   uint *puVar5;
   
-  if (in_EAX == (undefined4 *)0x0) {
+  if (param_1 == (undefined4 *)0x0) {
     return;
   }
-  puVar3 = in_EAX + -1;
+  puVar3 = param_1 + -1;
   if ((*puVar3 & 1) == 0) {
     return;
   }
   uVar2 = *puVar3 & 0xfffffffe;
   puVar5 = (uint *)((int)puVar3 + uVar2);
   if ((*puVar5 & 1) == 0) {
-    if (puVar5 == *(uint **)(unaff_EBX + 0xc)) {
-      *(uint **)(unaff_EBX + 0xc) = puVar3;
+    if (puVar5 == *(uint **)(param_3 + 0xc)) {
+      *(uint **)(param_3 + 0xc) = puVar3;
     }
     *puVar3 = uVar2 + *puVar5;
     uVar2 = puVar5[1];
     puVar5 = (uint *)puVar5[2];
     *(uint **)(uVar2 + 8) = puVar5;
     puVar5[1] = uVar2;
-    *(int *)(unaff_EBX + 0x1c) = *(int *)(unaff_EBX + 0x1c) + -1;
+    *(int *)(param_3 + 0x1c) = *(int *)(param_3 + 0x1c) + -1;
   }
   else {
     *puVar3 = uVar2;
-    puVar5 = *(uint **)(unaff_EBX + 0xc);
+    puVar5 = *(uint **)(param_3 + 0xc);
     if (puVar3 < puVar5) {
-      if (((uint *)puVar5[1] < puVar3) || (puVar5 = *(uint **)(unaff_EBX + 0x28), puVar3 < puVar5))
+      if (((uint *)puVar5[1] < puVar3) || (puVar5 = *(uint **)(param_3 + 0x28), puVar3 < puVar5))
       goto LAB_00401e62;
     }
     else {
       puVar5 = (uint *)puVar5[2];
       if ((puVar3 < puVar5) ||
-         (puVar5 = (uint *)(unaff_EBX + 0x20), *(uint **)(unaff_EBX + 0x24) < puVar3))
+         (puVar5 = (uint *)(param_3 + 0x20), *(uint **)(param_3 + 0x24) < puVar3))
       goto LAB_00401e62;
     }
-    uVar2 = *(uint *)(unaff_EBX + 0x1c);
-    uVar1 = *(uint *)(unaff_EBX + 0x18) / (uVar2 + 1);
+    uVar2 = *(uint *)(param_3 + 0x1c);
+    uVar1 = *(uint *)(param_3 + 0x18) / (uVar2 + 1);
     if (uVar1 < uVar2) {
       i_val = uVar1 * 2;
-      if (*(int *)(unaff_EBX + 0x18) - uVar2 <= uVar2) {
+      if (*(int *)(param_3 + 0x18) - uVar2 <= uVar2) {
         i_val = 0;
       }
       puVar5 = (uint *)((int)puVar3 + *puVar3);
@@ -1044,9 +1023,9 @@ void __watcall MemFree(void)
         i_val = i_val + -1;
       } while (i_val != 0);
     }
-    puVar5 = *(uint **)(unaff_EBX + 0xc);
+    puVar5 = *(uint **)(param_3 + 0xc);
     if (puVar3 < puVar5) {
-      puVar5 = *(uint **)(unaff_EBX + 0x28);
+      puVar5 = *(uint **)(param_3 + 0x28);
     }
     while (((puVar5 <= puVar3 && (puVar5 = (uint *)puVar5[2], puVar5 <= puVar3)) &&
            (puVar5 = (uint *)puVar5[2], puVar5 <= puVar3))) {
@@ -1059,24 +1038,24 @@ LAB_00401e62:
   if ((uint *)((int)puVar4 + *puVar4) == puVar3) {
     uVar2 = uVar2 + *puVar4;
     *puVar4 = uVar2;
-    if (puVar3 == *(uint **)(unaff_EBX + 0xc)) {
-      *(uint **)(unaff_EBX + 0xc) = puVar4;
+    if (puVar3 == *(uint **)(param_3 + 0xc)) {
+      *(uint **)(param_3 + 0xc) = puVar4;
     }
   }
   else {
-    *(int *)(unaff_EBX + 0x1c) = *(int *)(unaff_EBX + 0x1c) + 1;
-    in_EAX[1] = puVar5;
-    *in_EAX = puVar4;
+    *(int *)(param_3 + 0x1c) = *(int *)(param_3 + 0x1c) + 1;
+    param_1[1] = puVar5;
+    *param_1 = puVar4;
     puVar4[2] = (uint)puVar3;
     puVar5[1] = (uint)puVar3;
     puVar4 = puVar3;
   }
-  *(int *)(unaff_EBX + 0x18) = *(int *)(unaff_EBX + 0x18) + -1;
-  if ((puVar4 < *(uint **)(unaff_EBX + 0xc)) && (*(uint *)(unaff_EBX + 0x10) < uVar2)) {
-    *(uint *)(unaff_EBX + 0x10) = uVar2;
+  *(int *)(param_3 + 0x18) = *(int *)(param_3 + 0x18) + -1;
+  if ((puVar4 < *(uint **)(param_3 + 0xc)) && (*(uint *)(param_3 + 0x10) < uVar2)) {
+    *(uint *)(param_3 + 0x10) = uVar2;
   }
-  if (*(uint *)(unaff_EBX + 0x14) < uVar2) {
-    *(uint *)(unaff_EBX + 0x14) = uVar2;
+  if (*(uint *)(param_3 + 0x14) < uVar2) {
+    *(uint *)(param_3 + 0x14) = uVar2;
   }
   return;
 }
@@ -1084,7 +1063,7 @@ LAB_00401e62:
 
 /* ==== 00401eaf LinkUpNewMHeap ==== */
 
-undefined8 __watcall LinkUpNewMHeap(int *param_1,undefined4 unaff_EDX)
+int * __watcall LinkUpNewMHeap(int *param_1)
 
 {
   int *piVar1;
@@ -1119,82 +1098,72 @@ undefined8 __watcall LinkUpNewMHeap(int *param_1,undefined4 unaff_EDX)
   param_1[3] = (int)piVar1;
   *piVar3 = *param_1 + -0x2c;
   *(undefined4 *)((int)piVar3 + *param_1 + -0x2c) = 0xffffffff;
-  return CONCAT44(unaff_EDX,piVar3);
+  return piVar3;
 }
 
 
 /* ==== 00401f23 CreateNewNHeap ==== */
 
-undefined8 __watcall CreateNewNHeap(SIZE_T param_1,uint unaff_EDX)
+undefined4 __watcall CreateNewNHeap(void)
 
 {
-  undefined4 uVar1;
-  uint *puVar2;
-  uint uVar3;
-  int iVar4;
-  longlong adjust_amount;
-  undefined8 link_up_new_m_heap;
+  SIZE_T in_EAX;
+  int adjust_amount;
+  uint *virtual_alloc;
+  uint uVar1;
+  uint *link_up_new_m_heap;
   SIZE_T size;
   
   if ((heap_enabled != 0) && (curbrk != -2)) {
-    size = param_1;
-    adjust_amount = AdjustAmount(&size,unaff_EDX);
-    uVar1 = 0;
-    if ((int)adjust_amount == 0) goto LAB_00401faa;
-    puVar2 = VirtualAlloc((LPVOID)0x0,size,0x1000,0x40);
-    uVar1 = 0;
-    if (puVar2 == (uint *)0x0) goto LAB_00401faa;
-    uVar3 = size - 4;
-    if ((uVar3 <= size) && (0x37 < uVar3)) {
-      *puVar2 = uVar3;
-      size = uVar3;
-      link_up_new_m_heap = LinkUpNewMHeap((int *)puVar2,puVar2);
-      iVar4 = (int)((ulonglong)link_up_new_m_heap >> 0x20);
-      puVar2 = (uint *)link_up_new_m_heap;
-      size = *puVar2;
-      *puVar2 = size | 1;
-      *(undefined4 *)(iVar4 + 0x14) = 0xffffffff;
-      *(int *)(iVar4 + 0x18) = *(int *)(iVar4 + 0x18) + 1;
-      nfree((uint)(puVar2 + 1));
-      uVar1 = 1;
-      goto LAB_00401faa;
+    size = in_EAX;
+    adjust_amount = AdjustAmount(&size);
+    if (adjust_amount == 0) {
+      return 0;
+    }
+    virtual_alloc = VirtualAlloc((LPVOID)0x0,size,0x1000,0x40);
+    if (virtual_alloc == (uint *)0x0) {
+      return 0;
+    }
+    uVar1 = size - 4;
+    if ((uVar1 <= size) && (0x37 < uVar1)) {
+      *virtual_alloc = uVar1;
+      size = uVar1;
+      link_up_new_m_heap = (uint *)LinkUpNewMHeap((int *)virtual_alloc);
+      size = *link_up_new_m_heap;
+      *link_up_new_m_heap = size | 1;
+      virtual_alloc[5] = 0xffffffff;
+      virtual_alloc[6] = virtual_alloc[6] + 1;
+      nfree(link_up_new_m_heap + 1);
+      return 1;
     }
   }
-  uVar1 = 0;
-LAB_00401faa:
-  return CONCAT44(unaff_EDX,uVar1);
+  return 0;
 }
 
 
 /* ==== 00401fb3 ExpandDGROUP ==== */
 
-undefined8 __watcall ExpandDGROUP(undefined4 param_1,undefined4 unaff_EDX_00)
+undefined4 __watcall ExpandDGROUP(undefined4 param_1)
 
 {
-  SIZE_T unaff_EDX;
-  longlong heapmin_result;
-  undefined8 new_n_heap;
+  undefined4 new_n_heap;
   
-  heapmin_result = heapmin(param_1,param_1);
-  unaff_EDX = (SIZE_T)((ulonglong)heapmin_result >> 0x20);
-  new_n_heap = CreateNewNHeap(unaff_EDX,unaff_EDX);
-  return CONCAT44(unaff_EDX_00,(int)new_n_heap);
+  heapmin();
+  new_n_heap = CreateNewNHeap();
+  return new_n_heap;
 }
 
 
 /* ==== 00401fc4 AdjustAmount ==== */
 
-longlong __watcall AdjustAmount(uint *param_1,uint unaff_EDX)
+undefined4 __watcall AdjustAmount(uint *param_1)
 
 {
   uint uVar1;
-  uint uVar2;
   
   uVar1 = *param_1 + 0xb & 0xfffffff8;
-  uVar2 = 0;
   if (uVar1 == 0) {
-LAB_0040200b:
-    return CONCAT44(unaff_EDX,uVar2);
+    return 0;
   }
   *param_1 = uVar1;
   uVar1 = uVar1 + 0x3c;
@@ -1204,13 +1173,12 @@ LAB_0040200b:
     }
     *param_1 = uVar1;
     if (*param_1 <= uVar1 + 0xfff) {
-      uVar2 = uVar1 + 0xfff >> 8 & 0xfffff0;
-      *param_1 = uVar2 << 8;
-      uVar2 = (uint)(uVar2 != 0);
-      goto LAB_0040200b;
+      uVar1 = uVar1 + 0xfff >> 8 & 0xfffff0;
+      *param_1 = uVar1 << 8;
+      return (uint)(uVar1 != 0);
     }
   }
-  return (ulonglong)unaff_EDX << 0x20;
+  return 0;
 }
 
 
@@ -1227,85 +1195,81 @@ undefined4 __watcall nmemneed(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall setenvp(undefined4 param_1,uint unaff_EDX_00)
+undefined4 * __watcall setenvp(void)
 
 {
   char cVar1;
-  int iVar2;
-  uint uVar3;
+  undefined4 *in_EAX;
+  uint uVar2;
+  char *pcVar3;
   char *pcVar4;
   int i_val;
-  uint unaff_EDX;
-  char *pcVar5;
-  size_t _Size;
-  undefined8 buffer;
+  int iVar5;
+  int j;
   
   pcVar4 = Envptr;
   if (environ == 0) {
     i_val = 0;
-    unaff_EDX = unaff_EDX_00 & 0xffffff00;
-    pcVar5 = Envptr;
-    while (*pcVar5 != '\0') {
+    pcVar3 = Envptr;
+    while (*pcVar3 != '\0') {
       do {
-        cVar1 = *pcVar5;
-        unaff_EDX = (uint)CONCAT21((short)(unaff_EDX >> 0x10),cVar1) << 8;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar3;
+        pcVar3 = pcVar3 + 1;
       } while (cVar1 != '\0');
       i_val = i_val + 1;
     }
-    uVar3 = (int)pcVar5 - (int)Envptr;
-    if (uVar3 == 0) {
-      uVar3 = 1;
+    uVar2 = (int)pcVar3 - (int)Envptr;
+    if (uVar2 == 0) {
+      uVar2 = 1;
     }
-    buffer = nmalloc(uVar3,unaff_EDX);
-    pcVar5 = (char *)buffer;
-    if (pcVar5 != (char *)0x0) {
-      buffer = nmalloc(i_val * 5 + 4,pcVar5);
-      if ((int)buffer == 0) {
-        nfree((uint)((ulonglong)buffer >> 0x20));
+    pcVar3 = (char *)nmalloc(uVar2);
+    in_EAX = (undefined4 *)0x0;
+    if (pcVar3 != (char *)0x0) {
+      i_val = nmalloc(i_val * 5 + 4);
+      if (i_val == 0) {
+        in_EAX = (undefined4 *)nfree((undefined4 *)pcVar3);
       }
       else {
-        _Size = 0;
-        i_val = 0;
-        environ = (int)buffer;
-        while (iVar2 = environ, *pcVar4 != '\0') {
-          *(char **)(i_val + environ) = pcVar5;
+        j = 0;
+        iVar5 = 0;
+        environ = i_val;
+        while (i_val = environ, *pcVar4 != '\0') {
+          *(char **)(iVar5 + environ) = pcVar3;
           do {
             cVar1 = *pcVar4;
             pcVar4 = pcVar4 + 1;
-            *pcVar5 = cVar1;
-            pcVar5 = pcVar5 + 1;
+            *pcVar3 = cVar1;
+            pcVar3 = pcVar3 + 1;
           } while (cVar1 != '\0');
-          i_val = i_val + 4;
-          _Size = _Size + 1;
+          iVar5 = iVar5 + 4;
+          j = j + 1;
         }
-        *(undefined4 *)(i_val + environ) = 0;
-        _env_mask = (void *)(iVar2 + i_val + 4);
-        memset(_env_mask,0,_Size);
+        *(undefined4 *)(iVar5 + environ) = 0;
+        _env_mask = (undefined4 *)(i_val + iVar5 + 4);
+        in_EAX = memset(_env_mask,0,j);
       }
     }
   }
-  return;
+  return in_EAX;
 }
 
 
 /* ==== 004020c9 access ==== */
 
-int __watcall access(char *_Filename,int _AccessMode)
+undefined4 __watcall access(LPCSTR file_name,uint param_2)
 
 {
   DWORD DVar1;
-  undefined4 unaff_EDX;
-  undefined8 uVar2;
+  undefined4 uVar2;
   
-  DVar1 = GetFileAttributesA(_Filename);
+  DVar1 = GetFileAttributesA(file_name);
   if (DVar1 == 0xffffffff) {
-    uVar2 = set_errno_nt(0xffffffff,unaff_EDX);
-    return (int)uVar2;
+    uVar2 = set_errno_nt();
+    return uVar2;
   }
-  if (((_AccessMode & 2U) != 0) && ((DVar1 & 1) != 0)) {
-    uVar2 = set_errno_dos(5,unaff_EDX);
-    return (int)uVar2;
+  if (((param_2 & 2) != 0) && ((DVar1 & 1) != 0)) {
+    uVar2 = set_errno_dos(5);
+    return uVar2;
   }
   return 0;
 }
@@ -1313,71 +1277,70 @@ int __watcall access(char *_Filename,int _AccessMode)
 
 /* ==== 004020fd alloca_stack_check ==== */
 
-undefined4 __watcall alloca_stack_check(void)
+undefined4 __watcall
+alloca_stack_check(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                  undefined1 *param_5)
 
 {
-  undefined4 in_EAX;
-  int in_stack_00000004;
-  
   LOCK();
   UNLOCK();
-  check_stack_overflow(in_stack_00000004);
-  return in_EAX;
+  check_stack_overflow(param_5,param_2,param_3);
+  return param_1;
 }
 
 
 /* ==== 0040210d check_stack_overflow ==== */
 
-undefined4 __watcall check_stack_overflow(int param_1)
-
-{
-  bool bVar1;
-  uint *puVar2;
-  undefined4 uVar3;
-  int iVar4;
-  int iVar5;
-  int in_stack_00000004;
-  code *pcStack_4;
-  
-  if ((uint)param_1 < &pcStack_4) {
-    pcStack_4 = (code *)param_1;
-    puVar2 = (uint *)(*(code *)GetThreadPtr)();
-    if (*puVar2 < (uint)-(param_1 - (int)&pcStack_4)) {
-      uVar3 = probe_stack_pages(-(param_1 - (int)&pcStack_4));
-      return uVar3;
-    }
-  }
-  pcStack_4 = probe_stack_pages;
-  uVar3 = wcpp_2_fatal_runtime_error(s_Stack_Overflow__00405a38,1);
-  iVar5 = -4;
-  do {
-    *(int *)(&stack0xfffffff8 + iVar5) = iVar5;
-    iVar5 = iVar5 + -0x1000;
-    iVar4 = in_stack_00000004 + -0x1000;
-    bVar1 = 0xfff < in_stack_00000004;
-    in_stack_00000004 = iVar4;
-  } while (iVar4 != 0 && bVar1);
-  return uVar3;
-}
-
-
-/* ==== 0040213c probe_stack_pages ==== */
-
-int __watcall probe_stack_pages(int param_1)
+void __watcall check_stack_overflow(undefined1 *param_1,undefined4 param_2,undefined4 param_3)
 
 {
   bool bVar1;
   int iVar2;
   int iVar3;
+  undefined4 extraout_ECX;
+  undefined8 uVar4;
   int in_stack_00000004;
+  
+  if (param_1 < &stack0xfffffffc) {
+    iVar2 = (int)param_1 - (int)&stack0xfffffffc;
+    uVar4 = (*(code *)GetThreadPtr)();
+    if (*(uint *)uVar4 < (uint)-iVar2) {
+      probe_stack_pages(-iVar2,(int)((ulonglong)uVar4 >> 0x20),param_3,extraout_ECX,(int)param_1);
+      return;
+    }
+  }
+  wcpp_2_fatal_runtime_error(s_Stack_Overflow__00405a38,1);
+  iVar2 = -4;
+  do {
+    *(int *)(&stack0xfffffff8 + iVar2) = iVar2;
+    iVar2 = iVar2 + -0x1000;
+    iVar3 = in_stack_00000004 + -0x1000;
+    bVar1 = 0xfff < in_stack_00000004;
+    in_stack_00000004 = iVar3;
+  } while (iVar3 != 0 && bVar1);
+  return;
+}
+
+
+/* ==== 0040213c probe_stack_pages ==== */
+
+undefined4 __watcall
+probe_stack_pages(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 int param_5)
+
+{
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  int aiStack_8 [2];
   
   iVar3 = -4;
   do {
-    *(int *)(&stack0xfffffff8 + iVar3) = iVar3;
+    *(int *)((int)aiStack_8 + iVar3) = iVar3;
     iVar3 = iVar3 + -0x1000;
-    iVar2 = in_stack_00000004 + -0x1000;
-    bVar1 = 0xfff < in_stack_00000004;
-    in_stack_00000004 = iVar2;
+    iVar2 = param_5 + -0x1000;
+    bVar1 = 0xfff < param_5;
+    param_5 = iVar2;
   } while (iVar2 != 0 && bVar1);
   return param_1;
 }
@@ -1401,110 +1364,101 @@ char * __watcall stpcpy(char *param_1,char *param_2)
 
 uint __watcall
 build_environment_block
-          (undefined4 *param_1,int *param_2,undefined4 *param_3,int *param_4,int param_5)
+          (int *param_1,int *param_2,undefined4 *param_3,undefined4 *param_4,undefined4 *param_5,
+          int *param_6,int param_7)
 
 {
   undefined4 uVar1;
   int length;
   char *pcVar2;
   int *piVar3;
-  int *piVar4;
-  undefined4 unaff_EDX;
   int i_val;
-  uint uVar5;
-  undefined8 buffer;
-  int *in_stack_00000008;
-  int in_stack_0000000c;
+  uint uVar4;
   
-  piVar3 = param_2;
   if (param_2 == (int *)0x0) {
-    piVar3 = environ;
+    param_2 = environ;
   }
   i_val = 0;
-  piVar4 = piVar3;
-  if (piVar3 != (int *)0x0) {
-    for (; param_2 = piVar4, *piVar4 != 0; piVar4 = piVar4 + 1) {
-      length = string_length((char *)*piVar4);
+  piVar3 = param_2;
+  if (param_2 != (int *)0x0) {
+    for (; *piVar3 != 0; piVar3 = piVar3 + 1) {
+      length = string_length((char *)*piVar3);
       i_val = i_val + length + 1;
     }
   }
   i_val = i_val + 1;
-  if (in_stack_0000000c != 0) {
+  if (param_7 != 0) {
     length = string_length((char *)*param_1);
     i_val = i_val + length + 3;
   }
   uVar1 = amblksiz;
-  uVar5 = i_val + 0xf;
+  uVar4 = i_val + 0xf;
   amblksiz = 0x10;
-  buffer = nmalloc(uVar5,param_2);
-  pcVar2 = (char *)buffer;
-  if (pcVar2 == (char *)0x0) {
-    buffer = nmalloc(uVar5,(int)((ulonglong)buffer >> 0x20));
-    pcVar2 = (char *)buffer;
-    if (pcVar2 == (char *)0x0) {
-      set_errno(5,(int)((ulonglong)buffer >> 0x20));
-      set_doserrno(8,unaff_EDX);
-      amblksiz = uVar1;
-      return 0xffffffff;
-    }
+  pcVar2 = (char *)nmalloc(uVar4);
+  if ((pcVar2 == (char *)0x0) && (pcVar2 = (char *)nmalloc(uVar4), pcVar2 == (char *)0x0)) {
+    set_errno(5);
+    set_doserrno(8);
+    uVar4 = 0xffffffff;
+    amblksiz = uVar1;
   }
-  amblksiz = uVar1;
-  *param_3 = pcVar2;
-  *(undefined4 *)param_5 = 0;
-  *param_4 = (int)pcVar2;
-  if (piVar3 != (int *)0x0) {
-    for (; *piVar3 != 0; piVar3 = piVar3 + 1) {
-      pcVar2 = stpcpy(pcVar2,(char *)*piVar3);
-      pcVar2 = pcVar2 + 1;
-    }
-  }
-  *pcVar2 = '\0';
-  if (in_stack_0000000c != 0) {
-    strcpy_inline(pcVar2 + 3,(char *)*param_1);
-  }
-  i_val = 0;
-  if (*param_1 != 0) {
-    while( true ) {
-      param_1 = param_1 + 1;
-      if ((char *)*param_1 == (char *)0x0) break;
-      if (i_val != 0) {
-        i_val = i_val + 1;
+  else {
+    amblksiz = uVar1;
+    *param_3 = pcVar2;
+    *param_5 = 0;
+    *param_4 = pcVar2;
+    if (param_2 != (int *)0x0) {
+      for (; *param_2 != 0; param_2 = param_2 + 1) {
+        pcVar2 = stpcpy(pcVar2,(char *)*param_2);
+        pcVar2 = pcVar2 + 1;
       }
-      length = string_length((char *)*param_1);
-      i_val = i_val + length;
     }
+    *pcVar2 = '\0';
+    if (param_7 != 0) {
+      strcpy_inline(pcVar2 + 3,(char *)*param_1);
+    }
+    i_val = 0;
+    if (*param_1 != 0) {
+      while( true ) {
+        param_1 = param_1 + 1;
+        if ((char *)*param_1 == (char *)0x0) break;
+        if (i_val != 0) {
+          i_val = i_val + 1;
+        }
+        length = string_length((char *)*param_1);
+        i_val = i_val + length;
+      }
+    }
+    *param_6 = i_val + 0x108;
+    uVar4 = uVar4 >> 4;
   }
-  *in_stack_00000008 = i_val + 0x108;
-  return uVar5 >> 4;
+  return uVar4;
 }
 
 
 /* ==== 0040227d build_command_line ==== */
 
-void __watcall build_command_line(int param_1,int *param_2)
+void __watcall build_command_line(char *param_1,int *param_2,char *param_3,int param_4)
 
 {
   char *pcVar1;
-  int unaff_ECX;
-  char *unaff_EBX;
   int *piVar2;
   
-  if (unaff_ECX == 0) {
-    pcVar1 = stpcpy(unaff_EBX,(char *)param_1);
+  if (param_4 == 0) {
+    pcVar1 = stpcpy(param_3,param_1);
     *pcVar1 = ' ';
-    unaff_EBX = pcVar1 + 1;
+    param_3 = pcVar1 + 1;
   }
   if ((*param_2 != 0) && (piVar2 = param_2 + 1, *piVar2 != 0)) {
     while( true ) {
       pcVar1 = (char *)*piVar2;
       piVar2 = piVar2 + 1;
-      unaff_EBX = stpcpy(unaff_EBX,pcVar1);
+      param_3 = stpcpy(param_3,pcVar1);
       if (*piVar2 == 0) break;
-      *unaff_EBX = ' ';
-      unaff_EBX = unaff_EBX + 1;
+      *param_3 = ' ';
+      param_3 = param_3 + 1;
     }
   }
-  *unaff_EBX = '\0';
+  *param_3 = '\0';
   return;
 }
 
@@ -1530,7 +1484,7 @@ int __watcall string_length(char *param_1)
 
 /* ==== 004022d7 stackavail ==== */
 
-undefined8 __watcall stackavail(undefined4 param_1,undefined4 unaff_EDX)
+undefined1 * __watcall stackavail(void)
 
 {
   int *piVar1;
@@ -1540,128 +1494,141 @@ undefined8 __watcall stackavail(undefined4 param_1,undefined4 unaff_EDX)
   uVar3 = (*(code *)GetThreadPtr)();
   uVar2 = (uint)((ulonglong)uVar3 >> 0x20);
   if (*(uint *)uVar3 < uVar2) {
-    return CONCAT44(unaff_EDX,&stack0xfffffffc + -uVar2);
+    return &stack0xfffffffc + -uVar2;
   }
   uVar3 = (*(code *)GetThreadPtr)();
   *(undefined4 *)uVar3 = (int)((ulonglong)uVar3 >> 0x20);
   piVar1 = (int *)(*(code *)GetThreadPtr)();
-  return CONCAT44(unaff_EDX,&stack0xfffffffc + -*piVar1);
+  return &stack0xfffffffc + -*piVar1;
 }
 
 
 /* ==== 00402306 nfree ==== */
 
-void __watcall nfree(uint param_1)
+undefined4 __watcall nfree(undefined4 *param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  ushort in_DS;
   
-  if (param_1 != 0) {
+  uVar1 = 0;
+  if (param_1 != (undefined4 *)0x0) {
     (*(code *)AccessNHeap_1)();
-    uVar1 = nheapbeg;
-    if (((MiniHeapFreeRover == 0) || (param_1 < MiniHeapFreeRover)) ||
-       (uVar2 = MiniHeapFreeRover, *(uint *)(MiniHeapFreeRover + 8) <= param_1)) {
-      for (; (uVar2 = uVar1, *(uint *)(uVar1 + 8) != 0 &&
-             ((param_1 < uVar1 || (*(uint *)(uVar1 + 8) <= param_1)))); uVar1 = *(uint *)(uVar1 + 8)
-          ) {
+    puVar2 = nheapbeg;
+    if (((MiniHeapFreeRover == (undefined4 *)0x0) || (param_1 < MiniHeapFreeRover)) ||
+       (puVar3 = MiniHeapFreeRover, (undefined4 *)MiniHeapFreeRover[2] <= param_1)) {
+      for (; (puVar3 = puVar2, (undefined4 *)puVar2[2] != (undefined4 *)0x0 &&
+             ((param_1 < puVar2 || ((undefined4 *)puVar2[2] <= param_1))));
+          puVar2 = (undefined4 *)puVar2[2]) {
       }
     }
-    MemFree();
-    if ((uVar2 < MiniHeapRover) && (LargestSizeB4MiniHeapRover < *(uint *)(uVar2 + 0x14))) {
-      LargestSizeB4MiniHeapRover = *(uint *)(uVar2 + 0x14);
+    MemFree(param_1,(uint)in_DS,(int)puVar3);
+    if ((puVar3 < MiniHeapRover) && (LargestSizeB4MiniHeapRover < (uint)puVar3[5])) {
+      LargestSizeB4MiniHeapRover = puVar3[5];
     }
     nheap_clean = 0;
-    MiniHeapFreeRover = uVar2;
-    (*(code *)ReleaseNHeap_1)();
+    MiniHeapFreeRover = puVar3;
+    uVar1 = (*(code *)ReleaseNHeap_1)();
   }
-  return;
+  return uVar1;
 }
 
 
 /* ==== 00402394 copy_path_component ==== */
 
-byte * __watcall copy_path_component(int param_1,byte *dest)
+byte * __watcall copy_path_component(undefined4 *param_1,byte *param_2,byte *param_3,int param_4)
 
 {
   int iVar1;
   int mbsnbcnt_result;
-  int unaff_ECX;
-  uint unaff_EDX;
-  byte *unaff_EBX;
+  uint uVar2;
   
-  if (param_1 == 0) {
-    return dest;
+  if (param_1 == (undefined4 *)0x0) {
+    return param_2;
   }
-  *(byte **)param_1 = dest;
-  unaff_EDX = unaff_ECX - (int)unaff_EBX;
-  if (0x106 < unaff_EDX) {
-    unaff_EDX = 0x106;
+  *param_1 = param_2;
+  uVar2 = param_4 - (int)param_3;
+  if (0x106 < uVar2) {
+    uVar2 = 0x106;
   }
-  iVar1 = mbsnccnt(unaff_EBX,unaff_EDX);
-  mbsncpy((char *)dest,unaff_EBX,iVar1);
-  mbsnbcnt_result = mbsnbcnt(dest,iVar1);
-  dest[mbsnbcnt_result] = 0;
-  iVar1 = mbsnbcnt(dest,iVar1);
-  return dest + iVar1 + 1;
+  iVar1 = mbsnccnt(param_3,uVar2);
+  mbsncpy((char *)param_2,param_3,iVar1);
+  mbsnbcnt_result = mbsnbcnt(param_2,iVar1);
+  param_2[mbsnbcnt_result] = 0;
+  iVar1 = mbsnbcnt(param_2,iVar1);
+  return param_2 + iVar1 + 1;
 }
 
 
 /* ==== 004023e6 split_spawn_path ==== */
 
-void __watcall split_spawn_path(byte *param_1,byte *param_2)
+void __watcall
+split_spawn_path(byte *param_1,byte *param_2,undefined4 *param_3,undefined4 *param_4,
+                undefined4 *param_5,undefined4 *param_6)
 
 {
   byte bVar1;
+  uint mbptov_result;
   uint uVar2;
-  byte *dest;
-  int unaff_ECX;
-  undefined4 *unaff_EBX;
-  undefined8 mbptov_result;
-  int in_stack_00000004;
-  int in_stack_00000008;
+  byte *pbVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  byte *pbVar6;
   
-  dest = param_2;
   if ((*param_1 == 0) || (param_1[1] != 0x3a)) {
-    if (unaff_EBX != (undefined4 *)0x0) {
-      *unaff_EBX = param_2;
+    pbVar6 = param_1;
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = param_2;
       *param_2 = 0;
-      dest = param_2 + 1;
+      param_2 = param_2 + 1;
     }
   }
   else {
-    if (unaff_EBX != (undefined4 *)0x0) {
-      *unaff_EBX = param_2;
+    pbVar3 = param_2;
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = param_2;
       bVar1 = *param_1;
       param_2[1] = 0x3a;
       param_2[2] = 0;
-      dest = param_2 + 3;
+      pbVar3 = param_2 + 3;
       *param_2 = bVar1;
     }
-    param_2 = (byte *)0x2;
     param_1 = mbsninc(param_1,2);
+    pbVar6 = param_1;
+    param_2 = pbVar3;
   }
-  while( true ) {
-    mbptov_result = mbptov(param_1,param_2);
-    param_2 = (byte *)mbptov_result;
-    if (param_2 == (byte *)0x0) break;
-    if (param_2 == (byte *)0x2e) {
-      param_1 = param_1 + 1;
-    }
-    else {
+  do {
+    pbVar4 = pbVar6;
+    pbVar6 = pbVar4;
+    pbVar3 = (byte *)0x0;
+    do {
+      while( true ) {
+        pbVar5 = pbVar6;
+        mbptov_result = mbptov(pbVar5);
+        if (mbptov_result == 0) {
+          pbVar6 = copy_path_component(param_4,param_2,param_1,(int)pbVar4);
+          if (pbVar3 == (byte *)0x0) {
+            pbVar3 = pbVar5;
+          }
+          pbVar6 = copy_path_component(param_5,pbVar6,pbVar4,(int)pbVar3);
+          copy_path_component(param_6,pbVar6,pbVar3,(int)pbVar5);
+          return;
+        }
+        if (mbptov_result != 0x2e) break;
+        pbVar6 = pbVar5 + 1;
+        pbVar3 = pbVar5;
+      }
       if (IsDBCS == 0) {
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00405b35)[*param_1] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*pbVar5] & 1);
       }
-      param_1 = param_1 + uVar2 + 1;
-    }
-  }
-  dest = copy_path_component(unaff_ECX,dest);
-  dest = copy_path_component(in_stack_00000004,dest);
-  copy_path_component(in_stack_00000008,dest);
-  return;
+      pbVar6 = pbVar5 + uVar2 + 1;
+    } while ((mbptov_result != 0x5c) && (mbptov_result != 0x2f));
+  } while( true );
 }
 
 
@@ -1676,14 +1643,14 @@ void __watcall crt_nop_hook_2(void)
 
 /* ==== 004024c2 pickup ==== */
 
-int __watcall pickup(int param_1,int *unaff_EDX)
+int __watcall pickup(int param_1,int *param_2)
 
 {
   if ((param_1 == 0x5c) || (param_1 == 0x2f)) {
-    if (*unaff_EDX == 0) {
-      *unaff_EDX = param_1;
+    if (*param_2 == 0) {
+      *param_2 = param_1;
     }
-    param_1 = *unaff_EDX;
+    param_1 = *param_2;
   }
   return param_1;
 }
@@ -1691,42 +1658,37 @@ int __watcall pickup(int param_1,int *unaff_EDX)
 
 /* ==== 004024d6 makepath ==== */
 
-void __watcall
-makepath(byte *param_1,byte *unaff_EDX_00,byte *unaff_EBX,byte *unaff_ECX,byte *param_5)
+void __watcall makepath(byte *param_1,byte *param_2,byte *param_3,byte *param_4,byte *param_5)
 
 {
   byte bVar1;
-  int pickup_result;
   uint uVar2;
-  int *piVar3;
-  byte *unaff_EDX;
+  int pickup_result;
+  byte *pbVar3;
   byte *pbVar4;
   byte *pbVar5;
-  undefined8 uVar6;
   uint local_10;
   
   local_10 = 0;
-  unaff_EDX = param_1;
-  if ((unaff_EDX_00 != (byte *)0x0) && (*unaff_EDX_00 != 0)) {
-    *param_1 = *unaff_EDX_00;
+  pbVar4 = param_1;
+  if ((param_2 != (byte *)0x0) && (*param_2 != 0)) {
+    *param_1 = *param_2;
     param_1[1] = 0x3a;
-    unaff_EDX = param_1 + 2;
+    pbVar4 = param_1 + 2;
   }
-  *unaff_EDX = 0;
-  if ((unaff_EBX != (byte *)0x0) && (*unaff_EBX != 0)) {
+  *pbVar4 = 0;
+  if ((param_3 != (byte *)0x0) && (*param_3 != 0)) {
     do {
-      uVar6 = mbptov(unaff_EBX,&local_10);
-      piVar3 = (int *)((ulonglong)uVar6 >> 0x20);
-      pickup_result = pickup((int)uVar6,piVar3);
-      uVar6 = mbvtop_1(pickup_result,piVar3);
-      pbVar4 = (byte *)uVar6;
-      pbVar5 = unaff_EDX;
+      uVar2 = mbptov(param_3);
+      pickup_result = pickup(uVar2,(int *)&local_10);
+      pbVar3 = mbvtop_1(pickup_result);
+      pbVar5 = pbVar4;
       do {
-        bVar1 = *pbVar4;
+        bVar1 = *pbVar3;
         *pbVar5 = bVar1;
         if (bVar1 == 0) break;
-        bVar1 = pbVar4[1];
-        pbVar4 = pbVar4 + 2;
+        bVar1 = pbVar3[1];
+        pbVar3 = pbVar3 + 2;
         pbVar5[1] = bVar1;
         pbVar5 = pbVar5 + 2;
       } while (bVar1 != 0);
@@ -1734,96 +1696,94 @@ makepath(byte *param_1,byte *unaff_EDX_00,byte *unaff_EBX,byte *unaff_ECX,byte *
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_EDX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*pbVar4] & 1);
       }
-      unaff_EDX = unaff_EDX + uVar2 + 1;
+      pbVar4 = pbVar4 + uVar2 + 1;
       uVar2 = 0;
       if (IsDBCS != 0) {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_EBX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*param_3] & 1);
       }
-      unaff_EBX = unaff_EBX + uVar2 + 1;
-    } while (*unaff_EBX != 0);
+      param_3 = param_3 + uVar2 + 1;
+    } while (*param_3 != 0);
     if (local_10 == 0) {
       local_10 = 0x5c;
     }
-    pbVar5 = mbsdec(param_1,unaff_EDX);
+    pbVar5 = mbsdec(param_1,pbVar4);
     if (*pbVar5 == local_10) {
-      unaff_EDX = unaff_EDX + -1;
+      pbVar4 = pbVar4 + -1;
     }
     else {
-      *unaff_EDX = (byte)local_10;
+      *pbVar4 = (byte)local_10;
     }
   }
   if (local_10 == 0) {
     local_10 = 0x5c;
   }
-  if (unaff_ECX == (byte *)0x0) {
-    if (*unaff_EDX == local_10) {
-      unaff_EDX = unaff_EDX + 1;
+  if (param_4 == (byte *)0x0) {
+    if (*pbVar4 == local_10) {
+      pbVar4 = pbVar4 + 1;
     }
   }
   else {
-    uVar6 = mbptov(unaff_ECX,&local_10);
-    uVar2 = pickup((int)uVar6,(int *)((ulonglong)uVar6 >> 0x20));
-    if ((uVar2 != local_10) && (*unaff_EDX == local_10)) {
-      unaff_EDX = unaff_EDX + 1;
+    uVar2 = mbptov(param_4);
+    uVar2 = pickup(uVar2,(int *)&local_10);
+    if ((uVar2 != local_10) && (*pbVar4 == local_10)) {
+      pbVar4 = pbVar4 + 1;
     }
     do {
-      uVar6 = mbptov(unaff_ECX,&local_10);
-      piVar3 = (int *)((ulonglong)uVar6 >> 0x20);
-      pickup_result = pickup((int)uVar6,piVar3);
-      uVar6 = mbvtop_1(pickup_result,piVar3);
-      pbVar4 = (byte *)uVar6;
-      pbVar5 = unaff_EDX;
+      uVar2 = mbptov(param_4);
+      pickup_result = pickup(uVar2,(int *)&local_10);
+      pbVar3 = mbvtop_1(pickup_result);
+      pbVar5 = pbVar4;
       do {
-        bVar1 = *pbVar4;
+        bVar1 = *pbVar3;
         *pbVar5 = bVar1;
         if (bVar1 == 0) break;
-        bVar1 = pbVar4[1];
-        pbVar4 = pbVar4 + 2;
+        bVar1 = pbVar3[1];
+        pbVar3 = pbVar3 + 2;
         pbVar5[1] = bVar1;
         pbVar5 = pbVar5 + 2;
       } while (bVar1 != 0);
       uVar2 = 0;
       if (IsDBCS != 0) {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_EDX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*pbVar4] & 1);
       }
-      unaff_EDX = unaff_EDX + uVar2 + 1;
+      pbVar4 = pbVar4 + uVar2 + 1;
       if (IsDBCS == 0) {
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_ECX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*param_4] & 1);
       }
-      unaff_ECX = unaff_ECX + uVar2 + 1;
-    } while (*unaff_ECX != 0);
+      param_4 = param_4 + uVar2 + 1;
+    } while (*param_4 != 0);
   }
   if ((param_5 != (byte *)0x0) && (*param_5 != 0)) {
     if (*param_5 != 0x2e) {
-      *unaff_EDX = 0x2e;
-      unaff_EDX = unaff_EDX + 1;
+      *pbVar4 = 0x2e;
+      pbVar4 = pbVar4 + 1;
     }
     for (; *param_5 != 0; param_5 = param_5 + 1) {
-      *unaff_EDX = *param_5;
-      unaff_EDX = unaff_EDX + 1;
+      *pbVar4 = *param_5;
+      pbVar4 = pbVar4 + 1;
     }
   }
-  *unaff_EDX = 0;
+  *pbVar4 = 0;
   return;
 }
 
 
 /* ==== 004026c1 stricmp ==== */
 
-int __watcall stricmp(char *_Str1,char *_Str2)
+int __watcall stricmp(byte *param_1,byte *param_2)
 
 {
   byte bVar1;
   byte bVar2;
   
   while( true ) {
-    bVar1 = *_Str1;
-    bVar2 = *_Str2;
+    bVar1 = *param_1;
+    bVar2 = *param_2;
     if ((0x40 < bVar1) && (bVar1 < 0x5b)) {
       bVar1 = bVar1 + 0x20;
     }
@@ -1831,8 +1791,8 @@ int __watcall stricmp(char *_Str1,char *_Str2)
       bVar2 = bVar2 + 0x20;
     }
     if ((bVar1 != bVar2) || (bVar2 == 0)) break;
-    _Str1 = _Str1 + 1;
-    _Str2 = _Str2 + 1;
+    param_1 = param_1 + 1;
+    param_2 = param_2 + 1;
   }
   return (uint)bVar1 - (uint)bVar2;
 }
@@ -1840,26 +1800,24 @@ int __watcall stricmp(char *_Str1,char *_Str2)
 
 /* ==== 00402708 dospawn ==== */
 
-undefined8 __watcall
-dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPSTR param_5,
-       LPVOID param_6,int *command_line)
+DWORD __watcall dospawn(void)
 
 {
   BOOL BVar1;
   DWORD DVar2;
-  undefined4 unaff_EDX_00;
-  undefined4 unaff_EDX_00_00;
-  undefined8 uVar3;
+  int in_stack_00000004;
+  char *in_stack_00000008;
+  char *in_stack_0000000c;
   LPVOID in_stack_00000010;
   int *in_stack_00000014;
   _STARTUPINFOA startupinfo;
   _PROCESS_INFORMATION local_2c;
   DWORD local_1c;
   
-  build_command_line((int)param_6,in_stack_00000014);
-  memset(&startupinfo,0,0x44);
+  build_command_line(in_stack_00000008,in_stack_00000014,in_stack_0000000c,0);
+  memset(&startupinfo.cb,0,0x44);
   startupinfo.wShowWindow = 1;
-  BVar1 = CreateProcessA((LPCSTR)0x0,(LPSTR)command_line,(LPSECURITY_ATTRIBUTES)0x0,
+  BVar1 = CreateProcessA((LPCSTR)0x0,in_stack_0000000c,(LPSECURITY_ATTRIBUTES)0x0,
                          (LPSECURITY_ATTRIBUTES)0x0,1,0,in_stack_00000010,(LPCSTR)0x0,&startupinfo,
                          &local_2c);
   if (BVar1 == 0) {
@@ -1867,101 +1825,99 @@ dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPS
     if (((DVar2 == 5) || (DVar2 == 0xc1)) || (DVar2 == 0xa1)) {
       DVar2 = 2;
     }
-    uVar3 = set_errno_dos(DVar2,DVar2);
-    local_1c = (DWORD)uVar3;
+    local_1c = set_errno_dos(DVar2);
   }
   else {
     DVar2 = local_2c.dwProcessId;
-    if (param_5 == (LPSTR)0x0) {
-      if ((osbuild >> 8 & 0x80) != 0) {
-        Sleep(1000);
-        local_1c = 0x103;
-        do {
+    if (in_stack_00000004 == 0) {
+      if ((osbuild >> 8 & 0x80) == 0) {
+        DVar2 = WaitForSingleObject(local_2c.hProcess,0xffffffff);
+        if (DVar2 == 0) {
+          GetExitCodeProcess(local_2c.hProcess,&local_1c);
           DVar2 = local_1c;
-          if (local_1c != 0x103) goto LAB_00402824;
-          Sleep(100);
-          BVar1 = GetExitCodeProcess(local_2c.hProcess,&local_1c);
-        } while (BVar1 != 0);
-        uVar3 = set_errno_nt(0,unaff_EDX_00);
-        local_1c = (DWORD)uVar3;
-        goto LAB_0040283c;
-      }
-      DVar2 = WaitForSingleObject(local_2c.hProcess,0xffffffff);
-      if (DVar2 == 0) {
-        GetExitCodeProcess(local_2c.hProcess,&local_1c);
-        DVar2 = local_1c;
+        }
+        else {
+          DVar2 = set_errno_nt();
+        }
       }
       else {
-        uVar3 = set_errno_nt(DVar2,unaff_EDX_00_00);
-        DVar2 = (DWORD)uVar3;
+        Sleep(1000);
+        local_1c = 0x103;
+        while (DVar2 = local_1c, local_1c == 0x103) {
+          Sleep(100);
+          BVar1 = GetExitCodeProcess(local_2c.hProcess,&local_1c);
+          if (BVar1 == 0) {
+            DVar2 = set_errno_nt();
+            return DVar2;
+          }
+        }
       }
     }
-LAB_00402824:
     local_1c = DVar2;
     CloseHandle(local_2c.hProcess);
     CloseHandle(local_2c.hThread);
   }
-LAB_0040283c:
-  return CONCAT44(param_2,local_1c);
+  return local_1c;
 }
 
 
 /* ==== 00402846 getenv ==== */
 
-char * __watcall getenv(char *_VarName)
+undefined4 __watcall getenv(char *param_1)
 
 {
   char cVar1;
+  byte *pbVar2;
   int cmp;
   uint i_val;
-  size_t _MaxCount;
-  undefined4 *puVar2;
-  char *str1;
+  int iVar3;
+  undefined4 *puVar4;
+  char *pcVar5;
   
-  if ((environ != (undefined4 *)0x0) && (_VarName != (char *)0x0)) {
+  if ((environ != (undefined4 *)0x0) && (param_1 != (char *)0x0)) {
     i_val = 0xffffffff;
-    str1 = _VarName;
+    pcVar5 = param_1;
     do {
       if (i_val == 0) break;
       i_val = i_val - 1;
-      cVar1 = *str1;
-      str1 = str1 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    _MaxCount = ~i_val - 1;
-    for (puVar2 = environ; str1 = (char *)*puVar2, str1 != (char *)0x0; puVar2 = puVar2 + 1) {
-      cmp = strnicmp(str1,_VarName,_MaxCount);
-      if ((cmp == 0) && (str1[_MaxCount] == '=')) {
-        return str1 + ~i_val;
+    iVar3 = ~i_val - 1;
+    for (puVar4 = environ; pbVar2 = (byte *)*puVar4, pbVar2 != (byte *)0x0; puVar4 = puVar4 + 1) {
+      cmp = strnicmp(pbVar2,param_1,iVar3);
+      if ((cmp == 0) && (pbVar2[iVar3] == 0x3d)) {
+        return pbVar2 + ~i_val;
       }
     }
   }
-  return (char *)0x0;
+  return 0;
 }
 
 
 /* ==== 004028a7 spawnl ==== */
 
-intptr_t __watcall spawnl(int param_1,char *_Filename,char *_ArgList,...)
+uint __watcall spawnl(void...)
 
 {
-  intptr_t spawnve_result;
-  int in_stack_00000004;
-  char *in_stack_00000008;
+  uint spawnve_result;
+  undefined4 in_stack_00000004;
+  byte *in_stack_00000008;
   
-  spawnve_result = spawnve(in_stack_00000004,in_stack_00000008,(char **)&stack0x0000000c,environ);
+  spawnve_result = spawnve(in_stack_00000004,in_stack_00000008,(int *)&stack0x0000000c,environ);
   return spawnve_result;
 }
 
 
 /* ==== 004028e9 raise_sigill_handler ==== */
 
-undefined4 __watcall raise_sigill_handler(void)
+undefined4 __watcall
+raise_sigill_handler
+          (undefined4 param_1,int param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5)
 
 {
-  int unaff_EDX;
-  
   raise(4);
-  if ((unaff_EDX != 2) && (unaff_EDX != 3)) {
+  if ((param_2 != 2) && (param_2 != 3)) {
     return 1;
   }
   return 0;
@@ -1991,24 +1947,24 @@ undefined4 __watcall CtrlHandlerIsNeeded(void)
 
 /* ==== 0040295d StartCtrlHandler ==== */
 
-undefined8 __watcall StartCtrlHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall StartCtrlHandler(void)
 
 {
   BOOL BVar1;
   
-  if (CtrlHandlerRunning == 0) {
+  if (CtrlHandlerRunning == '\0') {
     BVar1 = SetConsoleCtrlHandler((PHANDLER_ROUTINE)&CtrlSignalHandler,1);
     if (BVar1 != 0) {
-      CtrlHandlerRunning = 1;
+      CtrlHandlerRunning = '\x01';
     }
   }
-  return CONCAT44(unaff_EDX,(uint)CtrlHandlerRunning);
+  return;
 }
 
 
 /* ==== 00402989 KillCtrlHandler ==== */
 
-undefined8 __watcall KillCtrlHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall KillCtrlHandler(void)
 
 {
   BOOL BVar1;
@@ -2019,78 +1975,71 @@ undefined8 __watcall KillCtrlHandler(undefined4 param_1,undefined4 unaff_EDX)
       CtrlHandlerRunning = '\0';
     }
   }
-  return CONCAT44(unaff_EDX,(uint)(CtrlHandlerRunning == '\0'));
+  return;
 }
 
 
 /* ==== 004029c0 sigabort ==== */
 
-undefined8 __watcall
-sigabort(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX,undefined4 unaff_ECX)
+undefined4 __watcall
+sigabort(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   int iVar2;
-  uint extraout_EDX;
-  uint unaff_EDX_00;
   ulonglong uVar3;
   code *pcVar4;
   
   uVar3 = (*(code *)GetThreadPtr)();
-  unaff_EDX_00 = (uint)(uVar3 >> 0x20);
+  iVar2 = (int)(uVar3 >> 0x20);
   pcVar4 = *(code **)((int)uVar3 + 0x60);
   if (uVar3 < 0x200000000) {
-    if (unaff_EDX_00 == 1) {
-      if (pcVar4 == (code *)0x2) {
+    if (iVar2 != 1) {
+      return 0xffffffff;
+    }
+    if (pcVar4 == (code *)0x2) {
                     /* WARNING: Subroutine does not return */
-        terminate();
-      }
-LAB_00402aec:
-      if (((pcVar4 != (code *)0x1) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
-        iVar2 = (*(code *)GetThreadPtr)(pcVar4,unaff_EDX,unaff_ECX,unaff_EBX);
-        *(undefined4 *)(iVar2 + 0x58 + unaff_EDX_00 * 8) = 2;
-        (*pcVar4)();
-        unaff_EDX_00 = extraout_EDX;
-      }
-      iVar2 = CtrlHandlerIsNeeded();
-      if (iVar2 == 0) {
-        KillCtrlHandler(0,unaff_EDX_00);
-      }
-      goto LAB_00402b21;
+      terminate();
     }
   }
   else {
     if (uVar3 < 0x300000000) {
-      sigfpe_handler(0x8c,unaff_EDX_00);
-LAB_00402b21:
-      uVar1 = 0;
-      goto LAB_00402b23;
+      sigfpe_handler(0x8c);
+      return 0;
     }
-    if (uVar3 < 0xd00000000) goto LAB_00402aec;
+    if (0xcffffffff < uVar3) {
+      return 0xffffffff;
+    }
   }
-  uVar1 = 0xffffffff;
-LAB_00402b23:
-  return CONCAT44(unaff_EDX,uVar1);
+  if (((pcVar4 != (code *)0x1) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
+    iVar1 = (*(code *)GetThreadPtr)(pcVar4,param_2,param_4,param_3);
+    *(undefined4 *)(iVar1 + 0x58 + iVar2 * 8) = 2;
+    (*pcVar4)();
+  }
+  iVar2 = CtrlHandlerIsNeeded();
+  if (iVar2 == 0) {
+    KillCtrlHandler();
+  }
+  return 0;
 }
 
 
 /* ==== 004029c5 raise ==== */
 
-int __watcall raise(int _SigNum)
+void __watcall raise(int param_1)
 
 {
   code *pcVar1;
   int iVar2;
-  uint extraout_EDX;
-  uint unaff_EDX;
-  ulonglong uVar3;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar3 = (*(code *)GetThreadPtr)();
-  unaff_EDX = (uint)(uVar3 >> 0x20);
-  pcVar1 = *(code **)((int)uVar3 + 0x58 + _SigNum * 8);
-  if (uVar3 < 0x200000000) {
-    if (unaff_EDX != 1) {
-      return -1;
+  uVar4 = (*(code *)GetThreadPtr)();
+  iVar3 = (int)(uVar4 >> 0x20);
+  pcVar1 = *(code **)((int)uVar4 + 0x58 + param_1 * 8);
+  if (uVar4 < 0x200000000) {
+    if (iVar3 != 1) {
+      return;
     }
     if (pcVar1 == (code *)0x2) {
                     /* WARNING: Subroutine does not return */
@@ -2098,31 +2047,30 @@ int __watcall raise(int _SigNum)
     }
   }
   else {
-    if (uVar3 < 0x300000000) {
-      sigfpe_handler(0x8c,unaff_EDX);
-      return 0;
+    if (uVar4 < 0x300000000) {
+      sigfpe_handler(0x8c);
+      return;
     }
-    if (0xcffffffff < uVar3) {
-      return -1;
+    if (0xcffffffff < uVar4) {
+      return;
     }
   }
   if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
-    *(undefined4 *)(iVar2 + 0x58 + unaff_EDX * 8) = 2;
+    *(undefined4 *)(iVar2 + 0x58 + iVar3 * 8) = 2;
     (*pcVar1)();
-    unaff_EDX = extraout_EDX;
   }
-  iVar2 = CtrlHandlerIsNeeded();
-  if (iVar2 == 0) {
-    KillCtrlHandler(0,unaff_EDX);
+  iVar3 = CtrlHandlerIsNeeded();
+  if (iVar3 == 0) {
+    KillCtrlHandler();
   }
-  return 0;
+  return;
 }
 
 
 /* ==== 004029fe sigfpe_handler ==== */
 
-longlong __watcall sigfpe_handler(undefined4 param_1,uint unaff_EDX)
+void __watcall sigfpe_handler(undefined4 param_1)
 
 {
   code *pcVar1;
@@ -2134,52 +2082,52 @@ longlong __watcall sigfpe_handler(undefined4 param_1,uint unaff_EDX)
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x68) = 2;
     (*pcVar1)();
-    return (ulonglong)unaff_EDX << 0x20;
+    return;
   }
-  return CONCAT44(unaff_EDX,0xffffffff);
+  return;
 }
 
 
 /* ==== 00402a45 signal ==== */
 
-void __watcall signal(int param_1)
+undefined4 __watcall signal(int param_1,int param_2)
 
 {
   int ctrl_handler_is_needed;
   undefined4 extraout_ECX;
-  int unaff_EDX_00;
-  undefined4 unaff_EDX;
-  undefined8 uVar1;
+  undefined4 extraout_ECX_00;
+  undefined4 uVar1;
+  undefined8 uVar2;
   
   if ((param_1 < 1) || (0xc < param_1)) {
-    set_errno(9,unaff_EDX_00);
-    return;
+    set_errno(9);
+    return 3;
   }
   abort_1 = sigabort;
-  if ((unaff_EDX_00 != 2) && (unaff_EDX_00 != 3)) {
-    uVar1 = (*(code *)GetThreadPtr)();
-    if ((*(int *)((int)uVar1 + 0x5c + (int)((ulonglong)uVar1 >> 0x20) * 8) != 0) && (param_1 == 2))
+  if ((param_2 != 2) && (param_2 != 3)) {
+    uVar2 = (*(code *)GetThreadPtr)();
+    if ((*(int *)((int)uVar2 + 0x5c + (int)((ulonglong)uVar2 >> 0x20) * 8) != 0) && (param_1 == 2))
     {
-      control87(0,0x9f);
+      control87(0,0x9f,2,extraout_ECX);
     }
   }
   (*(code *)GetThreadPtr)();
-  uVar1 = (*(code *)GetThreadPtr)();
-  unaff_EDX = (undefined4)((ulonglong)uVar1 >> 0x20);
-  *(undefined4 *)((int)uVar1 + 0x58 + param_1 * 8) = extraout_ECX;
+  uVar2 = (*(code *)GetThreadPtr)();
+  uVar1 = (undefined4)((ulonglong)uVar2 >> 0x20);
+  *(undefined4 *)((int)uVar2 + 0x58 + param_1 * 8) = extraout_ECX_00;
   ctrl_handler_is_needed = CtrlHandlerIsNeeded();
   if (ctrl_handler_is_needed != 0) {
-    StartCtrlHandler(ctrl_handler_is_needed,unaff_EDX);
-    return;
+    StartCtrlHandler();
+    return uVar1;
   }
-  KillCtrlHandler(0,unaff_EDX);
-  return;
+  KillCtrlHandler();
+  return uVar1;
 }
 
 
 /* ==== 00402b2a SigInit ==== */
 
-undefined8 __watcall SigInit(undefined4 param_1,undefined4 unaff_EDX)
+uint __watcall SigInit(void)
 
 {
   int iVar1;
@@ -2194,7 +2142,7 @@ undefined8 __watcall SigInit(undefined4 param_1,undefined4 unaff_EDX)
     *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(&SignalTable + iVar2);
     *(undefined4 *)(iVar1 + 0x5c) = *(undefined4 *)(iVar2 + 0x405a58);
   } while (iVar2 != 0x60);
-  return CONCAT44(unaff_EDX,(uint)in_DS);
+  return (uint)in_DS;
 }
 
 
@@ -2209,14 +2157,14 @@ void __watcall crt_nop_hook_3(void)
 
 /* ==== 00402f28 NewExceptionHandler ==== */
 
-void __watcall NewExceptionHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall NewExceptionHandler(undefined4 param_1)
 
 {
   int iVar1;
   int in_FS_OFFSET;
   undefined8 uVar2;
   
-  uVar2 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar2 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar2 + 0x54) = (int)((ulonglong)uVar2 >> 0x20);
   uVar2 = (*(code *)GetThreadPtr)();
   **(undefined4 **)((int)uVar2 + 0x54) = (int)((ulonglong)uVar2 >> 0x20);
@@ -2231,22 +2179,21 @@ void __watcall NewExceptionHandler(undefined4 param_1,undefined4 unaff_EDX)
 
 /* ==== 00402f66 DoneExceptionHandler ==== */
 
-void __watcall DoneExceptionHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall DoneExceptionHandler(void)
 
 {
   int iVar1;
   undefined4 *in_FS_OFFSET;
-  undefined8 uVar2;
   
-  iVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  iVar1 = (*(code *)GetThreadPtr)();
   if (*(undefined4 **)(iVar1 + 0x54) != (undefined4 *)0x0) {
     *in_FS_OFFSET = **(undefined4 **)(iVar1 + 0x54);
   }
-  uVar2 = (*(code *)GetThreadPtr)();
-  *(undefined4 *)((int)uVar2 + 0x54) = 0;
+  iVar1 = (*(code *)GetThreadPtr)();
+  *(undefined4 *)(iVar1 + 0x54) = 0;
   iVar1 = CtrlHandlerIsNeeded();
   if (iVar1 != 0) {
-    KillCtrlHandler(iVar1,(int)((ulonglong)uVar2 >> 0x20));
+    KillCtrlHandler();
     iVar1 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar1 + 0x78) = 2;
     iVar1 = (*(code *)GetThreadPtr)();
@@ -2258,7 +2205,7 @@ void __watcall DoneExceptionHandler(undefined4 param_1,undefined4 unaff_EDX)
 
 /* ==== 00402fb5 NTAtMaxFiles ==== */
 
-undefined8 __watcall NTAtMaxFiles(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall NTAtMaxFiles(void)
 
 {
   undefined4 uVar1;
@@ -2274,13 +2221,13 @@ LAB_00402fcb:
     }
     uVar1 = 1;
   }
-  return CONCAT44(unaff_EDX,uVar1);
+  return uVar1;
 }
 
 
 /* ==== 00402ffa NTAddFileHandle ==== */
 
-undefined8 __watcall NTAddFileHandle(int param_1,undefined4 unaff_EDX)
+int __watcall NTAddFileHandle(int param_1)
 
 {
   int iVar1;
@@ -2295,7 +2242,7 @@ undefined8 __watcall NTAddFileHandle(int param_1,undefined4 unaff_EDX)
       FileHandleIDs[topFileID] = param_1;
       topFileID = topFileID + 1;
       (*(code *)ReleaseFList_1)();
-      return CONCAT44(unaff_EDX,topFileID + -1);
+      return topFileID + -1;
     }
     if (*(int *)((int)FileHandleIDs + iVar1) == 0) break;
     iVar1 = iVar1 + 4;
@@ -2303,16 +2250,17 @@ undefined8 __watcall NTAddFileHandle(int param_1,undefined4 unaff_EDX)
   }
   *(int *)((int)FileHandleIDs + iVar1) = param_1;
   (*(code *)ReleaseFList_1)();
-  return CONCAT44(unaff_EDX,i_val);
+  return i_val;
 }
 
 
 /* ==== 00403073 NTAddSpecificFileHandle ==== */
 
-void __watcall NTAddSpecificFileHandle(HANDLE handle,int unaff_EDX)
+undefined4 __watcall NTAddSpecificFileHandle(HANDLE handle,int param_2)
 
 {
   int iVar1;
+  undefined4 uVar2;
   uint extraout_EDX;
   DWORD nStdHandle;
   
@@ -2329,68 +2277,65 @@ void __watcall NTAddSpecificFileHandle(HANDLE handle,int unaff_EDX)
   }
   SetStdHandle(nStdHandle,handle);
 LAB_004030a5:
-  if (unaff_EDX < topFileID) {
-    FileHandleIDs[unaff_EDX] = handle;
+  if (param_2 < topFileID) {
+    FileHandleIDs[param_2] = handle;
   }
   else {
-    FileHandleIDs = nrealloc(FileHandleIDs,unaff_EDX * 4 + 4);
-    for (iVar1 = topFileID << 2; iVar1 < unaff_EDX * 4; iVar1 = iVar1 + 4) {
+    FileHandleIDs = nrealloc(FileHandleIDs,param_2 * 4 + 4);
+    for (iVar1 = topFileID << 2; iVar1 < param_2 * 4; iVar1 = iVar1 + 4) {
       *(undefined4 *)((int)FileHandleIDs + iVar1) = 0;
     }
-    topFileID = unaff_EDX + 1;
-    FileHandleIDs[unaff_EDX] = handle;
+    topFileID = param_2 + 1;
+    FileHandleIDs[param_2] = handle;
   }
-  (*(code *)ReleaseFList_1)();
-  return;
+  uVar2 = (*(code *)ReleaseFList_1)();
+  return uVar2;
 }
 
 
 /* ==== 0040310f NTRemoveFileHandle ==== */
 
-void __watcall NTRemoveFileHandle(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall NTRemoveFileHandle(undefined4 param_1)
 
 {
+  undefined4 uVar1;
   int extraout_EDX;
   
-  (*(code *)AccessFList_1)(unaff_EDX);
+  (*(code *)AccessFList_1)();
   if ((0 < extraout_EDX) && (extraout_EDX < topFileID)) {
     *(undefined4 *)(FileHandleIDs + extraout_EDX * 4) = 0;
   }
-  (*(code *)ReleaseFList_1)();
-  return;
+  uVar1 = (*(code *)ReleaseFList_1)();
+  return uVar1;
 }
 
 
 /* ==== 0040313b NTInitFileHandles ==== */
 
-undefined8 __watcall NTInitFileHandles(undefined4 param_1,undefined4 unaff_EDX_02)
+void __watcall NTInitFileHandles(void)
 
 {
   HANDLE std_handle;
-  undefined4 unaff_EDX;
-  undefined4 unaff_EDX_03;
-  undefined4 unaff_EDX_04;
-  undefined8 nt_add_file_handle;
   
   topFileID = 0;
   FileHandleIDs = 0;
   std_handle = GetStdHandle(0xfffffff6);
-  NTAddFileHandle((int)std_handle,unaff_EDX);
+  NTAddFileHandle((int)std_handle);
   std_handle = GetStdHandle(0xfffffff5);
-  NTAddFileHandle((int)std_handle,unaff_EDX_03);
+  NTAddFileHandle((int)std_handle);
   std_handle = GetStdHandle(0xfffffff4);
-  nt_add_file_handle = NTAddFileHandle((int)std_handle,unaff_EDX_04);
-  return CONCAT44(unaff_EDX_02,(int)nt_add_file_handle);
+  NTAddFileHandle((int)std_handle);
+  return;
 }
 
 
 /* ==== 00403172 NTGetFakeHandle ==== */
 
-undefined8 __watcall NTGetFakeHandle(undefined4 param_1,undefined4 unaff_EDX)
+int __watcall NTGetFakeHandle(void)
 
 {
   fakeHandle = fakeHandle + 1;
-  return CONCAT44(unaff_EDX,fakeHandle);
+  return fakeHandle;
 }
 
 
@@ -2420,54 +2365,55 @@ void __watcall CloseSemaphore(undefined4 *param_1)
 
 /* ==== 004031b1 AccessIOB ==== */
 
-void __watcall AccessIOB(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessIOB(void)
 
 {
-  AccessSemaphore((undefined4 *)&IOBSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&IOBSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 004031bb ReleaseIOB ==== */
 
-void __watcall ReleaseIOB(void)
+undefined4 * __watcall ReleaseIOB(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&IOBSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&IOBSemaphore);
+  return release_semaphore;
 }
 
 
 /* ==== 004031c5 AccessFileH ==== */
 
-void __watcall AccessFileH(uint param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessFileH(uint param_1)
 
 {
-  AccessSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10),unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10));
+  return DVar1;
 }
 
 
 /* ==== 004031d2 ReleaseFileH ==== */
 
-void __watcall ReleaseFileH(void)
+undefined4 * __watcall ReleaseFileH(uint param_1)
 
 {
-  uint in_EAX;
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&FileSemaphores + (in_EAX & 0xf) * 0x10,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10));
+  return release_semaphore;
 }
 
 
 /* ==== 004031e2 InitAccessH ==== */
 
-undefined8 __watcall InitAccessH(int param_1,undefined4 unaff_EDX)
+int __watcall InitAccessH(int param_1)
 
 {
   int iVar1;
@@ -2482,7 +2428,7 @@ undefined8 __watcall InitAccessH(int param_1,undefined4 unaff_EDX)
       FileHandleIDs[topFileID] = param_1;
       topFileID = topFileID + 1;
       (*(code *)ReleaseFList_1)();
-      return CONCAT44(unaff_EDX,topFileID + -1);
+      return topFileID + -1;
     }
     if (*(int *)((int)FileHandleIDs + iVar1) == 0) break;
     iVar1 = iVar1 + 4;
@@ -2490,89 +2436,92 @@ undefined8 __watcall InitAccessH(int param_1,undefined4 unaff_EDX)
   }
   *(int *)((int)FileHandleIDs + iVar1) = param_1;
   (*(code *)ReleaseFList_1)();
-  return CONCAT44(unaff_EDX,iVar2);
+  return iVar2;
 }
 
 
 /* ==== 004031e7 FiniAccessH ==== */
 
-void __watcall FiniAccessH(uint param_1)
+undefined4 __watcall FiniAccessH(uint param_1)
 
 {
-  undefined4 unaff_EDX;
+  undefined4 nt_remove_file_handle;
   
   CloseSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10));
-  NTRemoveFileHandle(unaff_EDX,unaff_EDX);
-  return;
+  nt_remove_file_handle = NTRemoveFileHandle(param_1);
+  return nt_remove_file_handle;
 }
 
 
 /* ==== 00403203 AccessNHeap ==== */
 
-void __watcall AccessNHeap(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessNHeap(void)
 
 {
-  AccessSemaphore((undefined4 *)&NHeapSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&NHeapSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 0040320a ReleaseNHeap ==== */
 
-void __watcall ReleaseNHeap(void)
+undefined4 * __watcall ReleaseNHeap(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&NHeapSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&NHeapSemaphore);
+  return release_semaphore;
 }
 
 
 /* ==== 00403214 AccessFHeap ==== */
 
-void __watcall AccessFHeap(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessFHeap(void)
 
 {
-  AccessSemaphore((undefined4 *)&FHeapSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&FHeapSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 0040321b ReleaseFHeap ==== */
 
-void __watcall ReleaseFHeap(void)
+undefined4 * __watcall ReleaseFHeap(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&FHeapSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&FHeapSemaphore);
+  return release_semaphore;
 }
 
 
 /* ==== 00403225 AccessTDList ==== */
 
-void __watcall AccessTDList(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessTDList(void)
 
 {
-  AccessSemaphore((undefined4 *)&TDListSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&TDListSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 0040322c ReleaseTDList ==== */
 
-void __watcall ReleaseTDList(void)
+undefined4 * __watcall ReleaseTDList(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&TDListSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&TDListSemaphore);
+  return release_semaphore;
 }
 
 
@@ -2580,63 +2529,58 @@ void __watcall ReleaseTDList(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall AccessFList(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall
+AccessFList(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  LPLONG current_thread_id;
-  LONG extraout_EDX;
-  LONG extraout_EDX_00;
-  LONG lReleaseCount;
+  DWORD DVar1;
+  DWORD DVar2;
   
-  current_thread_id = (LPLONG)GetCurrentThreadId();
-  if (current_thread_id != plRam00406194) {
+  DVar1 = GetCurrentThreadId();
+  DVar2 = DVar1;
+  if (DVar1 != DRam00406194) {
     if (iRam00406190 == 0) {
-      AccessSemaphore((undefined4 *)&InitSemaphore,plRam00406194);
-      lReleaseCount = extraout_EDX;
+      AccessSemaphore((undefined4 *)&InitSemaphore);
       if (iRam00406190 == 0) {
         _FListSemaphore = CreateMutexA((LPSECURITY_ATTRIBUTES)0x0,0,(LPCSTR)0x0);
         iRam00406190 = 1;
-        lReleaseCount = extraout_EDX_00;
       }
-      ReleaseSemaphore(&InitSemaphore,lReleaseCount,(LPLONG)&FListSemaphore);
+      ReleaseSemaphore((undefined4 *)&InitSemaphore);
     }
-    WaitForSingleObject(_FListSemaphore,0xffffffff);
-    plRam00406194 = current_thread_id;
+    DVar2 = WaitForSingleObject(_FListSemaphore,0xffffffff);
+    DRam00406194 = DVar1;
   }
   iRam00406198 = iRam00406198 + 1;
-  return;
+  return DVar2;
 }
 
 
 /* ==== 00403238 AccessSemaphore ==== */
 
-void __watcall AccessSemaphore(undefined4 *previous_count,LPLONG unaff_EDX)
+DWORD __watcall AccessSemaphore(undefined4 *param_1)
 
 {
-  LPLONG current_thread_id;
+  DWORD DVar1;
   HANDLE mutex;
-  LONG extraout_EDX;
-  LONG extraout_EDX_00;
-  LONG lReleaseCount;
+  DWORD DVar2;
   
-  current_thread_id = (LPLONG)GetCurrentThreadId();
-  if (current_thread_id != (LPLONG)previous_count[2]) {
-    if (previous_count[1] == 0) {
-      AccessSemaphore((undefined4 *)&InitSemaphore,(LPLONG)previous_count[2]);
-      lReleaseCount = extraout_EDX;
-      if (previous_count[1] == 0) {
+  DVar1 = GetCurrentThreadId();
+  DVar2 = DVar1;
+  if (DVar1 != param_1[2]) {
+    if (param_1[1] == 0) {
+      AccessSemaphore((undefined4 *)&InitSemaphore);
+      if (param_1[1] == 0) {
         mutex = CreateMutexA((LPSECURITY_ATTRIBUTES)0x0,0,(LPCSTR)0x0);
-        previous_count[1] = 1;
-        *previous_count = mutex;
-        lReleaseCount = extraout_EDX_00;
+        param_1[1] = 1;
+        *param_1 = mutex;
       }
-      ReleaseSemaphore(&InitSemaphore,lReleaseCount,previous_count);
+      ReleaseSemaphore((undefined4 *)&InitSemaphore);
     }
-    WaitForSingleObject((HANDLE)*previous_count,0xffffffff);
-    previous_count[2] = current_thread_id;
+    DVar2 = WaitForSingleObject((HANDLE)*param_1,0xffffffff);
+    param_1[2] = DVar1;
   }
-  previous_count[3] = previous_count[3] + 1;
-  return;
+  param_1[3] = param_1[3] + 1;
+  return DVar2;
 }
 
 
@@ -2644,83 +2588,83 @@ void __watcall AccessSemaphore(undefined4 *previous_count,LPLONG unaff_EDX)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall ReleaseFList(void)
+undefined * __watcall
+ReleaseFList(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
+  undefined *puVar1;
+  
+  puVar1 = &FListSemaphore;
   if (iRam00406198 != 0) {
     iRam00406198 = iRam00406198 + -1;
     if (iRam00406198 == 0) {
       iRam00406194 = iRam00406198;
-      ReleaseMutex(_FListSemaphore);
+      puVar1 = (undefined *)ReleaseMutex(_FListSemaphore);
     }
   }
-  return;
+  return puVar1;
 }
 
 
 /* ==== 0040329a ReleaseSemaphore ==== */
 
-BOOL __watcall ReleaseSemaphore(HANDLE hSemaphore,LONG lReleaseCount,LPLONG lpPreviousCount)
+undefined4 * __watcall ReleaseSemaphore(undefined4 *param_1)
 
 {
   int iVar1;
   
-  if (*(int *)((int)hSemaphore + 0xc) != 0) {
-    iVar1 = *(int *)((int)hSemaphore + 0xc) + -1;
-    *(int *)((int)hSemaphore + 0xc) = iVar1;
+  if (param_1[3] != 0) {
+    iVar1 = param_1[3] + -1;
+    param_1[3] = iVar1;
     if (iVar1 == 0) {
-      *(undefined4 *)((int)hSemaphore + 8) = 0;
-      hSemaphore = (HANDLE)ReleaseMutex(*(HANDLE *)hSemaphore);
+      param_1[2] = 0;
+      param_1 = (undefined4 *)ReleaseMutex((HANDLE)*param_1);
     }
   }
-  return (BOOL)hSemaphore;
+  return param_1;
 }
 
 
 /* ==== 004032bf MultipleThread ==== */
 
-undefined8 __watcall MultipleThread(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+LPVOID __watcall MultipleThread(void)
 
 {
   LPVOID pvVar1;
-  size_t unaff_ECX;
-  undefined8 thread_data;
   
   pvVar1 = TlsGetValue(TlsIndex);
   if (pvVar1 == (LPVOID)0x0) {
-    thread_data = GetThreadData(0,0,unaff_EBX,unaff_ECX);
-    pvVar1 = (LPVOID)thread_data;
+    pvVar1 = GetThreadData();
   }
-  return CONCAT44(unaff_EDX,pvVar1);
+  return pvVar1;
 }
 
 
 /* ==== 004032df InitThreadData ==== */
 
-undefined8 __watcall
-InitThreadData(void *param_1,size_t unaff_EDX,undefined4 param_3,size_t unaff_ECX)
+undefined4 * __watcall InitThreadData(undefined4 *param_1)
 
 {
   DWORD DVar1;
   
-  if (param_1 == (void *)0x0) {
+  if (param_1 == (undefined4 *)0x0) {
     param_1 = calloc(1,ThreadDataSize);
-    if (param_1 != (void *)0x0) {
+    if (param_1 != (undefined4 *)0x0) {
       *(undefined1 *)((int)param_1 + 0x52) = 1;
     }
   }
-  if (param_1 != (void *)0x0) {
-    *(undefined4 *)((int)param_1 + 0xc) = 1;
+  if (param_1 != (undefined4 *)0x0) {
+    param_1[3] = 1;
     DVar1 = GetCurrentThreadId();
     *(DWORD *)((int)param_1 + 0xda) = DVar1;
   }
-  return CONCAT44(unaff_EDX,param_1);
+  return param_1;
 }
 
 
 /* ==== 0040331e NTThreadInit ==== */
 
-undefined8 __watcall NTThreadInit(undefined4 param_1,undefined4 unaff_EDX)
+uint __watcall NTThreadInit(void)
 
 {
   TlsIndex = TlsAlloc();
@@ -2729,91 +2673,92 @@ undefined8 __watcall NTThreadInit(undefined4 param_1,undefined4 unaff_EDX)
       TlsIndex = TlsAlloc();
     }
   }
-  return CONCAT44(unaff_EDX,(uint)(TlsIndex != 0xffffffff));
+  return (uint)(TlsIndex != 0xffffffff);
 }
 
 
 /* ==== 0040336a NTAddThread ==== */
 
-longlong __watcall NTAddThread(void *param_1,size_t unaff_EDX,undefined4 unaff_EBX,size_t unaff_ECX)
+undefined4 __watcall NTAddThread(undefined4 *param_1)
 
 {
-  LPVOID lpTlsValue;
+  undefined4 *lpTlsValue;
   int add_thread_data;
   undefined4 uVar1;
-  undefined8 init_thread_data;
   
   if (TlsIndex == 0xffffffff) {
-LAB_00403376:
-    return (ulonglong)unaff_EDX << 0x20;
+    return 0;
   }
-  init_thread_data = InitThreadData(param_1,unaff_EDX,unaff_EBX,unaff_ECX);
-  lpTlsValue = (LPVOID)init_thread_data;
+  lpTlsValue = InitThreadData(param_1);
   uVar1 = 0;
-  if (lpTlsValue != (LPVOID)0x0) {
-    add_thread_data =
-         AddThreadData(*(undefined4 *)((int)lpTlsValue + 0xda),(int)lpTlsValue,lpTlsValue,unaff_ECX)
-    ;
+  if (lpTlsValue != (undefined4 *)0x0) {
+    add_thread_data = AddThreadData(*(undefined4 *)((int)lpTlsValue + 0xda),(int)lpTlsValue);
     if (add_thread_data == 0) {
-      nfree((uint)lpTlsValue);
-      goto LAB_00403376;
+      nfree(lpTlsValue);
+      return 0;
     }
     TlsSetValue(TlsIndex,lpTlsValue);
     uVar1 = 1;
   }
-  return CONCAT44(unaff_EDX,uVar1);
+  return uVar1;
 }
 
 
 /* ==== 004033b7 NTRemoveThread ==== */
 
-void __watcall NTRemoveThread(int param_1)
+int __watcall NTRemoveThread(int param_1)
 
 {
   HANDLE hObject;
   LPVOID tls_get_value;
-  undefined4 unaff_ECX;
-  undefined4 unaff_EDX;
+  int iVar1;
   
+  iVar1 = param_1;
   if (TlsIndex != 0xffffffff) {
     tls_get_value = TlsGetValue(TlsIndex);
+    iVar1 = 0;
     if (tls_get_value != (LPVOID)0x0) {
       hObject = *(HANDLE *)((int)tls_get_value + 0xde);
-      RemoveThreadData(*(undefined4 *)((int)tls_get_value + 0xda),unaff_EDX,hObject,unaff_ECX);
-      TlsSetValue(TlsIndex,(LPVOID)0x0);
+      RemoveThreadData(*(undefined4 *)((int)tls_get_value + 0xda));
+      iVar1 = TlsSetValue(TlsIndex,(LPVOID)0x0);
       if ((hObject != (HANDLE)0x0) && (param_1 != 0)) {
-        CloseHandle(hObject);
+        iVar1 = CloseHandle(hObject);
       }
     }
   }
-  return;
+  return iVar1;
 }
 
 
 /* ==== 00403404 ThreadExit ==== */
 
-void __watcall ThreadExit(void)
+int __watcall
+ThreadExit(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  NTRemoveThread(1);
+  int iVar1;
+  
+  iVar1 = NTRemoveThread(1);
   if (TlsIndex != 0xffffffff) {
-    TlsFree(TlsIndex);
+    iVar1 = TlsFree(TlsIndex);
     TlsIndex = 0xffffffff;
   }
-  return;
+  return iVar1;
 }
 
 
 /* ==== 0040340e NTThreadFini ==== */
 
-void __watcall NTThreadFini(void)
+BOOL __watcall NTThreadFini(void)
 
 {
+  BOOL in_EAX;
+  
   if (TlsIndex != 0xffffffff) {
-    TlsFree(TlsIndex);
+    in_EAX = TlsFree(TlsIndex);
     TlsIndex = 0xffffffff;
   }
-  return;
+  return in_EAX;
 }
 
 
@@ -2844,7 +2789,7 @@ void __watcall InitMultipleThread(void)
   ReleaseFList_1 = ReleaseFList;
   ThreadExitRtn = ThreadExit;
   AccessFList_1 = AccessFList;
-  AddThreadData(*(undefined4 *)((int)FirstThreadData + 0xda),(int)FirstThreadData,1,0x403233);
+  AddThreadData(*(undefined4 *)((int)FirstThreadData + 0xda),(int)FirstThreadData);
   TlsSetValue(TlsIndex,FirstThreadData);
   GetThreadPtr = MultipleThread;
   return;
@@ -2853,13 +2798,14 @@ void __watcall InitMultipleThread(void)
 
 /* ==== 00403547 FiniSema4s ==== */
 
-void __watcall FiniSema4s(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+BOOL __watcall FiniSema4s(void)
 
 {
+  BOOL BVar1;
   int extraout_EDX;
   int extraout_EDX_00;
   
-  (*(code *)CloseSema4)(unaff_EDX,unaff_EBX);
+  (*(code *)CloseSema4)();
   (*(code *)CloseSema4)();
   (*(code *)CloseSema4)();
   do {
@@ -2869,28 +2815,26 @@ void __watcall FiniSema4s(undefined4 param_1,undefined4 unaff_EDX,undefined4 una
   FiniThreadProcessing();
   (*(code *)CloseSema4)();
   (*(code *)CloseSema4)();
-  NTThreadFini();
-  return;
+  BVar1 = NTThreadFini();
+  return BVar1;
 }
 
 
 /* ==== 004035b3 strdup ==== */
 
-char * __watcall strdup(char *_Src)
+char * __watcall strdup(char *param_1)
 
 {
   char cVar1;
   char *pcVar2;
   uint i_val;
   uint j;
-  undefined4 unaff_EDX;
   char *pcVar3;
   byte bVar4;
-  undefined8 buffer;
   
   bVar4 = 0;
   i_val = 0xffffffff;
-  pcVar2 = _Src;
+  pcVar2 = param_1;
   do {
     if (i_val == 0) break;
     i_val = i_val - 1;
@@ -2898,18 +2842,17 @@ char * __watcall strdup(char *_Src)
     pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
   i_val = ~i_val;
-  buffer = nmalloc(i_val,unaff_EDX);
-  pcVar2 = (char *)buffer;
+  pcVar2 = (char *)nmalloc(i_val);
   if (pcVar2 != (char *)0x0) {
     pcVar3 = pcVar2;
     for (j = i_val >> 2; j != 0; j = j - 1) {
-      *(undefined4 *)pcVar3 = *(undefined4 *)_Src;
-      _Src = _Src + (uint)bVar4 * -8 + 4;
+      *(undefined4 *)pcVar3 = *(undefined4 *)param_1;
+      param_1 = param_1 + (uint)bVar4 * -8 + 4;
       pcVar3 = pcVar3 + (uint)bVar4 * -8 + 4;
     }
     for (i_val = i_val & 3; i_val != 0; i_val = i_val - 1) {
-      *pcVar3 = *_Src;
-      _Src = _Src + (uint)bVar4 * -2 + 1;
+      *pcVar3 = *param_1;
+      param_1 = param_1 + (uint)bVar4 * -2 + 1;
       pcVar3 = pcVar3 + (uint)bVar4 * -2 + 1;
     }
   }
@@ -2919,36 +2862,37 @@ char * __watcall strdup(char *_Src)
 
 /* ==== 004035f8 InitRtns ==== */
 
-void __watcall InitRtns(void)
+undefined4 __watcall InitRtns(undefined4 param_1)
 
 {
-  byte in_AL;
-  byte bVar1;
+  undefined4 uVar1;
   char *pcVar2;
   char *pcVar3;
   
+  uVar1 = param_1;
   while( true ) {
     pcVar2 = &DAT_00405d10;
-    bVar1 = in_AL;
+    uVar1 = CONCAT31((int3)((uint)uVar1 >> 8),(char)param_1);
     for (pcVar3 = &DAT_00405cf8; pcVar3 < &DAT_00405d10; pcVar3 = pcVar3 + 6) {
-      if ((*pcVar3 != '\x02') && ((byte)pcVar3[1] <= bVar1)) {
-        bVar1 = pcVar3[1];
+      if ((*pcVar3 != '\x02') && ((byte)pcVar3[1] <= (byte)uVar1)) {
+        uVar1 = CONCAT31((int3)((uint)uVar1 >> 8),pcVar3[1]);
         pcVar2 = pcVar3;
       }
     }
     if (pcVar2 == &DAT_00405d10) break;
+    uVar1 = 0;
     if (*(code **)(pcVar2 + 2) != (code *)0x0) {
-      (**(code **)(pcVar2 + 2))();
+      uVar1 = (**(code **)(pcVar2 + 2))();
     }
     *pcVar2 = '\x02';
   }
-  return;
+  return uVar1;
 }
 
 
 /* ==== 00403643 FiniRtns ==== */
 
-void __watcall FiniRtns(undefined4 param_1,byte param_2)
+void __watcall FiniRtns(undefined4 param_1,undefined4 param_2)
 
 {
   byte bVar1;
@@ -2965,7 +2909,7 @@ void __watcall FiniRtns(undefined4 param_1,byte param_2)
       }
     }
     if (pcVar2 == &DAT_00405d16) break;
-    if ((bVar1 <= param_2) && (*(code **)(pcVar2 + 2) != (code *)0x0)) {
+    if ((bVar1 <= (byte)param_2) && (*(code **)(pcVar2 + 2) != (code *)0x0)) {
       (**(code **)(pcVar2 + 2))();
     }
     *pcVar2 = '\x02';
@@ -2976,24 +2920,25 @@ void __watcall FiniRtns(undefined4 param_1,byte param_2)
 
 /* ==== 00403692 RegisterThreadDataSize ==== */
 
-void __watcall RegisterThreadDataSize(int param_1)
+int __watcall RegisterThreadDataSize(int param_1)
 
 {
+  int iVar1;
+  
+  iVar1 = ThreadDataSize;
   ThreadDataSize = ThreadDataSize + param_1;
-  return;
+  return iVar1;
 }
 
 
 /* ==== 004036b0 memset ==== */
 
-void * __watcall memset(void *_Dst,int _Val,size_t _Size)
+undefined4 * __watcall memset(undefined4 *param_1,undefined4 param_2,undefined4 param_3)
 
 {
-  undefined1 uVar1;
-  
-  uVar1 = (undefined1)_Val;
-  STOSB((uint)_Dst,CONCAT31(CONCAT21(CONCAT11(uVar1,uVar1),uVar1),uVar1));
-  return _Dst;
+  STOSB(param_1,CONCAT31(CONCAT21(CONCAT11((undefined1)param_2,(undefined1)param_2),
+                                  (undefined1)param_2),(undefined1)param_2),param_3,param_3);
+  return param_1;
 }
 
 
@@ -3018,62 +2963,57 @@ void __watcall crt_nop_hook_5(void)
 
 /* ==== 004036d4 exit ==== */
 
-void __watcall exit(int _Code)
+void __watcall exit(undefined4 param_1)
 
 {
-  undefined4 unaff_EDX_00;
-  undefined4 unaff_EBX;
+  undefined4 extraout_EDX;
   
   (*(code *)atexit)();
   (*(code *)int23_exit)();
-  exit_1(unaff_EDX_00,unaff_EDX_00,unaff_EBX);
+  exit_1(extraout_EDX);
   return;
 }
 
 
 /* ==== 004036ec exit_1 ==== */
 
-void __watcall exit_1(undefined4 param_1,undefined4 unaff_EDX_00,undefined4 unaff_EBX)
+undefined4 __watcall exit_1(undefined4 param_1)
 
 {
-  undefined4 extraout_ECX;
-  undefined4 extraout_ECX_00;
-  undefined4 unaff_ECX;
+  undefined4 exit_2_result;
   UINT extraout_EDX;
   UINT extraout_EDX_00;
   UINT exit_code;
   
-  (*(code *)int23_exit)(unaff_EDX_00);
+  (*(code *)int23_exit)();
   (*(code *)FPE_handler_exit)();
-  unaff_ECX = extraout_ECX;
   exit_code = extraout_EDX;
   if (WindowExitRtn != (code *)0x0) {
     (*WindowExitRtn)();
-    unaff_ECX = extraout_ECX_00;
     exit_code = extraout_EDX_00;
   }
-  exit_2(exit_code,exit_code,unaff_EBX,unaff_ECX);
-  return;
+  exit_2_result = exit_2(exit_code);
+  return exit_2_result;
 }
 
 
 /* ==== 00403712 heapenable ==== */
 
-undefined8 __watcall heapenable(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+undefined4 __watcall heapenable(undefined4 param_1)
 
 {
   undefined4 extraout_EDX;
   
-  (*(code *)AccessNHeap_1)(unaff_EDX,unaff_EBX);
+  (*(code *)AccessNHeap_1)();
   heap_enabled = param_1;
   (*(code *)ReleaseNHeap_1)();
-  return CONCAT44(unaff_EDX,extraout_EDX);
+  return extraout_EDX;
 }
 
 
 /* ==== 00403733 heapmin ==== */
 
-longlong __watcall heapmin(undefined4 param_1,uint unaff_EDX)
+void __watcall heapmin(void)
 
 {
   int *address;
@@ -3088,13 +3028,13 @@ longlong __watcall heapmin(undefined4 param_1,uint unaff_EDX)
     }
   }
   (*(code *)ReleaseNHeap_1)();
-  return (ulonglong)unaff_EDX << 0x20;
+  return;
 }
 
 
 /* ==== 00403747 ReturnMemToSystem ==== */
 
-undefined8 __watcall ReturnMemToSystem(LPVOID address,undefined4 unaff_EDX)
+undefined4 __watcall ReturnMemToSystem(LPVOID address)
 
 {
   LPVOID pvVar1;
@@ -3116,7 +3056,7 @@ undefined8 __watcall ReturnMemToSystem(LPVOID address,undefined4 unaff_EDX)
     }
     uVar3 = 0;
   }
-  return CONCAT44(unaff_EDX,uVar3);
+  return uVar3;
 }
 
 
@@ -3128,20 +3068,19 @@ void __watcall ReleaseMiniHeap(LPVOID address)
   int iVar1;
   int iVar2;
   int iVar3;
-  undefined8 return_mem_to_system;
   
   iVar1 = *(int *)((int)address + 4);
-  return_mem_to_system = ReturnMemToSystem(address,*(undefined4 *)((int)address + 8));
-  iVar3 = (int)((ulonglong)return_mem_to_system >> 0x20);
-  if ((int)return_mem_to_system == 0) {
-    iVar2 = iVar3;
+  iVar2 = *(int *)((int)address + 8);
+  iVar3 = ReturnMemToSystem(address);
+  if (iVar3 == 0) {
+    iVar3 = iVar2;
     if (iVar1 != 0) {
-      *(int *)(iVar1 + 8) = iVar3;
-      iVar2 = nheapbeg;
+      *(int *)(iVar1 + 8) = iVar2;
+      iVar3 = nheapbeg;
     }
-    nheapbeg = iVar2;
-    if (iVar3 != 0) {
-      *(int *)(iVar3 + 4) = iVar1;
+    nheapbeg = iVar3;
+    if (iVar2 != 0) {
+      *(int *)(iVar2 + 4) = iVar1;
     }
   }
   return;
@@ -3150,13 +3089,12 @@ void __watcall ReleaseMiniHeap(LPVOID address)
 
 /* ==== 004037f8 exit_with_msg ==== */
 
-void __watcall exit_with_msg(char *buffer,UINT unaff_EDX_00)
+undefined4 __watcall exit_with_msg(char *buffer,UINT exit_code)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined4 unaff_ECX;
-  undefined4 unaff_EDX;
+  undefined4 exit_2_result;
   DWORD nNumberOfBytesToWrite;
   DWORD local_14;
   
@@ -3167,24 +3105,24 @@ void __watcall exit_with_msg(char *buffer,UINT unaff_EDX_00)
   }
   WriteFile(*(HANDLE *)(FileHandleIDs + 8),buffer,nNumberOfBytesToWrite,&local_14,(LPOVERLAPPED)0x0)
   ;
-  exit_2(unaff_EDX_00,unaff_EDX,nNumberOfBytesToWrite,unaff_ECX);
-  return;
+  exit_2_result = exit_2(exit_code);
+  return exit_2_result;
 }
 
 
 /* ==== 0040382f wcpp_2_fatal_runtime_error ==== */
 
-void __watcall wcpp_2_fatal_runtime_error(char *buffer,UINT unaff_EDX)
+int __watcall wcpp_2_fatal_runtime_error(char *buffer,UINT exit_code)
 
 {
-  int enter_wvideo;
-  undefined2 in_DS;
+  int iVar1;
+  ushort in_DS;
   
-  enter_wvideo = EnterWVIDEO(buffer,in_DS);
-  if (enter_wvideo == 0) {
-    exit_with_msg(buffer,unaff_EDX);
+  iVar1 = EnterWVIDEO(buffer,(uint)in_DS);
+  if (iVar1 == 0) {
+    iVar1 = exit_with_msg(buffer,exit_code);
   }
-  return;
+  return iVar1;
 }
 
 
@@ -3214,26 +3152,26 @@ char * __watcall strcpy_inline(char *param_1,char *param_2)
 
 /* ==== 0040386b mbsnccnt ==== */
 
-int __watcall mbsnccnt(byte *param_1,int unaff_EDX)
+int __watcall mbsnccnt(byte *param_1,int param_2)
 
 {
   byte *pbVar1;
   uint local_14;
   
   if (IsDBCS != 0) {
-    pbVar1 = param_1 + unaff_EDX;
-    unaff_EDX = 0;
+    pbVar1 = param_1 + param_2;
+    param_2 = 0;
     while ((param_1 = mbgetcode(param_1,&local_14), local_14 != 0 && (param_1 <= pbVar1))) {
-      unaff_EDX = unaff_EDX + 1;
+      param_2 = param_2 + 1;
     }
   }
-  return unaff_EDX;
+  return param_2;
 }
 
 
 /* ==== 004038a9 mbsnbcnt ==== */
 
-int __watcall mbsnbcnt(byte *param_1,int unaff_EDX)
+int __watcall mbsnbcnt(byte *param_1,int param_2)
 
 {
   byte *mbgetcode_result;
@@ -3242,43 +3180,43 @@ int __watcall mbsnbcnt(byte *param_1,int unaff_EDX)
   mbgetcode_result = param_1;
   if (IsDBCS != 0) {
     do {
-      unaff_EDX = unaff_EDX + -1;
-      if (unaff_EDX == -1) break;
+      param_2 = param_2 + -1;
+      if (param_2 == -1) break;
       mbgetcode_result = mbgetcode(mbgetcode_result,&local_c);
     } while (local_c != 0);
-    unaff_EDX = (int)mbgetcode_result - (int)param_1;
+    param_2 = (int)mbgetcode_result - (int)param_1;
   }
-  return unaff_EDX;
+  return param_2;
 }
 
 
 /* ==== 004038da mbsninc ==== */
 
-byte * __watcall mbsninc(byte *param_1,int unaff_EDX)
+byte * __watcall mbsninc(byte *param_1,int param_2)
 
 {
   int mbsnbcnt_result;
   
   if (IsDBCS != 0) {
-    mbsnbcnt_result = mbsnbcnt(param_1,unaff_EDX);
+    mbsnbcnt_result = mbsnbcnt(param_1,param_2);
     return param_1 + mbsnbcnt_result;
   }
-  return param_1 + unaff_EDX;
+  return param_1 + param_2;
 }
 
 
 /* ==== 004038f3 mbsninc_1 ==== */
 
-byte * __watcall mbsninc_1(byte *param_1,int unaff_EDX)
+byte * __watcall mbsninc_1(byte *param_1,int param_2)
 
 {
   bool bVar1;
   
   if (IsDBCS == 0) {
-    param_1 = param_1 + unaff_EDX;
+    param_1 = param_1 + param_2;
   }
   else {
-    for (; 0 < unaff_EDX; unaff_EDX = unaff_EDX + -1) {
+    for (; 0 < param_2; param_2 = param_2 + -1) {
       if (IsDBCS == 0) {
         bVar1 = true;
       }
@@ -3294,7 +3232,7 @@ byte * __watcall mbsninc_1(byte *param_1,int unaff_EDX)
 
 /* ==== 00403938 mbscat ==== */
 
-char * __watcall mbscat(char *param_1,char *unaff_EDX)
+char * __watcall mbscat(char *param_1,char *param_2)
 
 {
   char cVar1;
@@ -3304,7 +3242,7 @@ char * __watcall mbscat(char *param_1,char *unaff_EDX)
   char *pcVar2;
   
   i_val = 0xffffffff;
-  pcVar2 = unaff_EDX;
+  pcVar2 = param_2;
   do {
     if (i_val == 0) break;
     i_val = i_val - 1;
@@ -3321,13 +3259,13 @@ char * __watcall mbscat(char *param_1,char *unaff_EDX)
   } while (cVar1 != '\0');
   pcVar2 = param_1 + (~j - 1);
   for (k = ~i_val >> 2; k != 0; k = k - 1) {
-    *(undefined4 *)pcVar2 = *(undefined4 *)unaff_EDX;
-    unaff_EDX = unaff_EDX + 4;
+    *(undefined4 *)pcVar2 = *(undefined4 *)param_2;
+    param_2 = param_2 + 4;
     pcVar2 = pcVar2 + 4;
   }
   for (i_val = ~i_val & 3; i_val != 0; i_val = i_val - 1) {
-    *pcVar2 = *unaff_EDX;
-    unaff_EDX = unaff_EDX + 1;
+    *pcVar2 = *param_2;
+    param_2 = param_2 + 1;
     pcVar2 = pcVar2 + 1;
   }
   return param_1 + (~j - 1);
@@ -3336,7 +3274,7 @@ char * __watcall mbscat(char *param_1,char *unaff_EDX)
 
 /* ==== 00403989 mbscpy ==== */
 
-char * __watcall mbscpy(char *param_1,char *unaff_EDX)
+char * __watcall mbscpy(char *param_1,char *param_2)
 
 {
   char cVar1;
@@ -3345,7 +3283,7 @@ char * __watcall mbscpy(char *param_1,char *unaff_EDX)
   char *pcVar2;
   
   j = 0xffffffff;
-  pcVar2 = unaff_EDX;
+  pcVar2 = param_2;
   do {
     if (j == 0) break;
     j = j - 1;
@@ -3354,13 +3292,13 @@ char * __watcall mbscpy(char *param_1,char *unaff_EDX)
   } while (cVar1 != '\0');
   pcVar2 = param_1;
   for (i_val = ~j >> 2; i_val != 0; i_val = i_val - 1) {
-    *(undefined4 *)pcVar2 = *(undefined4 *)unaff_EDX;
-    unaff_EDX = unaff_EDX + 4;
+    *(undefined4 *)pcVar2 = *(undefined4 *)param_2;
+    param_2 = param_2 + 4;
     pcVar2 = pcVar2 + 4;
   }
   for (j = ~j & 3; j != 0; j = j - 1) {
-    *pcVar2 = *unaff_EDX;
-    unaff_EDX = unaff_EDX + 1;
+    *pcVar2 = *param_2;
+    param_2 = param_2 + 1;
     pcVar2 = pcVar2 + 1;
   }
   return param_1;
@@ -3369,7 +3307,7 @@ char * __watcall mbscpy(char *param_1,char *unaff_EDX)
 
 /* ==== 004039a8 mbsdup ==== */
 
-char * __watcall mbsdup(char *param_1,undefined4 unaff_EDX)
+char * __watcall mbsdup(char *param_1)
 
 {
   char cVar1;
@@ -3378,7 +3316,6 @@ char * __watcall mbsdup(char *param_1,undefined4 unaff_EDX)
   uint j;
   char *pcVar3;
   byte bVar4;
-  undefined8 buffer;
   
   bVar4 = 0;
   i_val = 0xffffffff;
@@ -3390,8 +3327,7 @@ char * __watcall mbsdup(char *param_1,undefined4 unaff_EDX)
     pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
   i_val = ~i_val;
-  buffer = nmalloc(i_val,unaff_EDX);
-  pcVar2 = (char *)buffer;
+  pcVar2 = (char *)nmalloc(i_val);
   if (pcVar2 != (char *)0x0) {
     pcVar3 = pcVar2;
     for (j = i_val >> 2; j != 0; j = j - 1) {
@@ -3411,7 +3347,7 @@ char * __watcall mbsdup(char *param_1,undefined4 unaff_EDX)
 
 /* ==== 004039e9 mbsncat ==== */
 
-byte * __watcall mbsncat(byte *dest,byte *unaff_EDX,int unaff_EBX)
+byte * __watcall mbsncat(byte *param_1,byte *param_2,int param_3)
 
 {
   byte bVar1;
@@ -3423,38 +3359,38 @@ byte * __watcall mbsncat(byte *dest,byte *unaff_EDX,int unaff_EBX)
   
   bVar3 = 0;
   if (IsDBCS == 0) {
-    strncat((char *)dest,(char *)unaff_EDX,unaff_EBX);
+    strncat((char *)param_1,(char *)param_2,param_3);
   }
   else {
     i_val = 0xffffffff;
-    pbVar2 = dest;
+    pbVar2 = param_1;
     do {
       if (i_val == 0) break;
       i_val = i_val - 1;
       bVar1 = *pbVar2;
       pbVar2 = pbVar2 + 1;
     } while (bVar1 != 0);
-    mbsnbcnt_result = mbsnbcnt(dest,unaff_EBX);
-    pbVar2 = dest + (~i_val - 1);
+    mbsnbcnt_result = mbsnbcnt(param_1,param_3);
+    pbVar2 = param_1 + (~i_val - 1);
     for (j = mbsnbcnt_result >> 2; j != 0; j = j - 1) {
-      *(undefined4 *)pbVar2 = *(undefined4 *)unaff_EDX;
-      unaff_EDX = unaff_EDX + (uint)bVar3 * -8 + 4;
+      *(undefined4 *)pbVar2 = *(undefined4 *)param_2;
+      param_2 = param_2 + (uint)bVar3 * -8 + 4;
       pbVar2 = pbVar2 + (uint)bVar3 * -8 + 4;
     }
     for (j = mbsnbcnt_result & 3; j != 0; j = j - 1) {
-      *pbVar2 = *unaff_EDX;
-      unaff_EDX = unaff_EDX + (uint)bVar3 * -2 + 1;
+      *pbVar2 = *param_2;
+      param_2 = param_2 + (uint)bVar3 * -2 + 1;
       pbVar2 = pbVar2 + (uint)bVar3 * -2 + 1;
     }
-    (dest + (~i_val - 1))[mbsnbcnt_result] = 0;
+    (param_1 + (~i_val - 1))[mbsnbcnt_result] = 0;
   }
-  return dest;
+  return param_1;
 }
 
 
 /* ==== 00403a46 mbsnbcat ==== */
 
-byte * __watcall mbsnbcat(byte *dest,byte *unaff_EDX,char *unaff_EBX)
+byte * __watcall mbsnbcat(byte *param_1,byte *param_2,uint param_3)
 
 {
   byte bVar1;
@@ -3467,11 +3403,11 @@ byte * __watcall mbsnbcat(byte *dest,byte *unaff_EDX,char *unaff_EBX)
   bool bVar6;
   
   if (IsDBCS == 0) {
-    strncat((char *)dest,(char *)unaff_EDX,(size_t)unaff_EBX);
+    strncat((char *)param_1,(char *)param_2,param_3);
   }
   else {
-    pbVar4 = dest;
-    if (*dest != 0) {
+    pbVar4 = param_1;
+    if (*param_1 != 0) {
       do {
         pbVar5 = pbVar4;
         if (*pbVar4 == 0) goto LAB_00403a88;
@@ -3483,7 +3419,7 @@ byte * __watcall mbsnbcat(byte *dest,byte *unaff_EDX,char *unaff_EBX)
       pbVar5 = (byte *)0x0;
 LAB_00403a88:
       pbVar4 = pbVar5 + -1;
-      for (pbVar2 = dest; pbVar3 = dest, *pbVar2 != 0; pbVar2 = pbVar2 + i_val + 1) {
+      for (pbVar2 = param_1; pbVar3 = param_1, *pbVar2 != 0; pbVar2 = pbVar2 + i_val + 1) {
         if (pbVar2 == pbVar4) {
           if (IsDBCS == 0) {
             bVar6 = true;
@@ -3501,52 +3437,52 @@ LAB_00403a88:
           i_val = (uint)((&DAT_00405b35)[*pbVar2] & 1);
         }
       }
-      dest = pbVar3;
+      param_1 = pbVar3;
       if (pbVar3 != pbVar4) {
-        dest = pbVar5;
+        param_1 = pbVar5;
       }
     }
     i_val = 0xffffffff;
-    pbVar4 = dest;
+    pbVar4 = param_1;
     do {
       if (i_val == 0) break;
       i_val = i_val - 1;
       bVar1 = *pbVar4;
       pbVar4 = pbVar4 + 1;
     } while (bVar1 != 0);
-    pbVar4 = dest + (~i_val - 1);
-    for (j = (uint)unaff_EBX >> 2; j != 0; j = j - 1) {
-      *(undefined4 *)pbVar4 = *(undefined4 *)unaff_EDX;
-      unaff_EDX = unaff_EDX + 4;
+    pbVar4 = param_1 + (~i_val - 1);
+    for (j = param_3 >> 2; j != 0; j = j - 1) {
+      *(undefined4 *)pbVar4 = *(undefined4 *)param_2;
+      param_2 = param_2 + 4;
       pbVar4 = pbVar4 + 4;
     }
-    for (j = (uint)unaff_EBX & 3; j != 0; j = j - 1) {
-      *pbVar4 = *unaff_EDX;
-      unaff_EDX = unaff_EDX + 1;
+    for (j = param_3 & 3; j != 0; j = j - 1) {
+      *pbVar4 = *param_2;
+      param_2 = param_2 + 1;
       pbVar4 = pbVar4 + 1;
     }
-    (dest + (~i_val - 1))[(int)unaff_EBX] = 0;
+    (param_1 + (~i_val - 1))[param_3] = 0;
   }
-  return dest;
+  return param_1;
 }
 
 
 /* ==== 00403b38 mbsncpy ==== */
 
-char * __watcall mbsncpy(char *dest,byte *unaff_EDX,int unaff_EBX_00)
+void __watcall mbsncpy(char *param_1,byte *param_2,int param_3)
 
 {
-  int unaff_EBX;
+  int mbsnbcnt_result;
   
-  unaff_EBX = mbsnbcnt(unaff_EDX,unaff_EBX_00);
-  mbsnbcpy(dest,(char *)unaff_EDX,unaff_EBX);
-  return dest;
+  mbsnbcnt_result = mbsnbcnt(param_2,param_3);
+  mbsnbcpy(param_1,(char *)param_2,mbsnbcnt_result);
+  return;
 }
 
 
 /* ==== 00403b57 mbsnbcpy ==== */
 
-char * __watcall mbsnbcpy(char *dest,char *unaff_EDX,int unaff_EBX)
+void __watcall mbsnbcpy(char *param_1,char *param_2,int param_3)
 
 {
   char cVar1;
@@ -3557,11 +3493,11 @@ char * __watcall mbsnbcpy(char *dest,char *unaff_EDX,int unaff_EBX)
   char *pcVar4;
   
   if (IsDBCS == 0) {
-    strncpy(dest,unaff_EDX,unaff_EBX);
+    strncpy(param_1,param_2,param_3);
   }
   else {
     i_val = 0xffffffff;
-    pcVar4 = unaff_EDX;
+    pcVar4 = param_2;
     do {
       if (i_val == 0) break;
       i_val = i_val - 1;
@@ -3572,46 +3508,46 @@ char * __watcall mbsnbcpy(char *dest,char *unaff_EDX,int unaff_EBX)
     iVar3 = i_val - 1;
     bVar2 = 0;
     if (IsDBCS != 0) {
-      bVar2 = (&DAT_00405b35)[(byte)unaff_EDX[unaff_EBX]] & 1;
+      bVar2 = (&DAT_00405b35)[(byte)param_2[param_3]] & 1;
     }
-    if ((bVar2 != 0) && (unaff_EBX < iVar3)) {
-      unaff_EBX = unaff_EBX + -1;
+    if ((bVar2 != 0) && (param_3 < iVar3)) {
+      param_3 = param_3 + -1;
     }
-    pcVar4 = dest;
-    if ((int)i_val < unaff_EBX) {
+    pcVar4 = param_1;
+    if ((int)i_val < param_3) {
       for (j = i_val >> 2; j != 0; j = j - 1) {
-        *(undefined4 *)pcVar4 = *(undefined4 *)unaff_EDX;
-        unaff_EDX = unaff_EDX + 4;
-        pcVar4 = pcVar4 + 4;
+        *(undefined4 *)param_1 = *(undefined4 *)param_2;
+        param_2 = param_2 + 4;
+        param_1 = param_1 + 4;
       }
       for (i_val = i_val & 3; i_val != 0; i_val = i_val - 1) {
-        *pcVar4 = *unaff_EDX;
-        unaff_EDX = unaff_EDX + 1;
-        pcVar4 = pcVar4 + 1;
+        *param_1 = *param_2;
+        param_2 = param_2 + 1;
+        param_1 = param_1 + 1;
       }
     }
     else {
       do {
-        cVar1 = *unaff_EDX;
+        cVar1 = *param_2;
         *pcVar4 = cVar1;
         if (cVar1 == '\0') break;
-        cVar1 = unaff_EDX[1];
-        unaff_EDX = unaff_EDX + 2;
+        cVar1 = param_2[1];
+        param_2 = param_2 + 2;
         pcVar4[1] = cVar1;
         pcVar4 = pcVar4 + 2;
       } while (cVar1 != '\0');
-      if (iVar3 != unaff_EBX) {
-        memset(dest + iVar3,0,iVar3 - unaff_EBX);
+      if (iVar3 != param_3) {
+        memset((undefined4 *)(param_1 + iVar3),0,iVar3 - param_3);
       }
     }
   }
-  return dest;
+  return;
 }
 
 
 /* ==== 00403c0b mbptov ==== */
 
-undefined8 __watcall mbptov(byte *param_1,undefined4 unaff_EDX)
+uint __watcall mbptov(byte *param_1)
 
 {
   byte bVar1;
@@ -3621,33 +3557,33 @@ undefined8 __watcall mbptov(byte *param_1,undefined4 unaff_EDX)
     bVar1 = (&DAT_00405b35)[*param_1] & 1;
   }
   if (bVar1 != 0) {
-    return CONCAT44(unaff_EDX,(uint)CONCAT11(*param_1,param_1[1]));
+    return (uint)CONCAT11(*param_1,param_1[1]);
   }
-  return CONCAT44(unaff_EDX,(uint)*param_1);
+  return (uint)*param_1;
 }
 
 
 /* ==== 00403c49 mbvtop ==== */
 
-void __watcall mbvtop(undefined4 param_1,char *unaff_EDX)
+char * __watcall mbvtop(undefined4 param_1,char *param_2)
 
 {
   char cVar1;
   
   cVar1 = (char)((uint)param_1 >> 8);
   if (cVar1 != '\0') {
-    unaff_EDX[1] = (char)param_1;
-    *unaff_EDX = cVar1;
-    return;
+    param_2[1] = (char)param_1;
+    *param_2 = cVar1;
+    return param_2;
   }
-  *unaff_EDX = (char)param_1;
-  return;
+  *param_2 = (char)param_1;
+  return param_2;
 }
 
 
 /* ==== 00403c63 mbvtop_1 ==== */
 
-undefined8 __watcall mbvtop_1(undefined4 param_1,undefined4 unaff_EDX)
+undefined * __watcall mbvtop_1(undefined4 param_1)
 
 {
   DAT_0040619c = (char)((uint)param_1 >> 8);
@@ -3659,13 +3595,13 @@ undefined8 __watcall mbvtop_1(undefined4 param_1,undefined4 unaff_EDX)
     DAT_0040619e = 0;
     DAT_0040619d = (char)param_1;
   }
-  return CONCAT44(unaff_EDX,&DAT_0040619c);
+  return &DAT_0040619c;
 }
 
 
 /* ==== 00403c97 checkIsDBCS ==== */
 
-void __watcall checkIsDBCS(void)
+BOOL __watcall checkIsDBCS(void)
 
 {
   BOOL BVar1;
@@ -3675,13 +3611,13 @@ void __watcall checkIsDBCS(void)
   if ((BVar1 != 0) && ((_Stack_1c.LeadByte[0] != '\0' || (_Stack_1c.LeadByte[1] != '\0')))) {
     IsDBCS = 1;
   }
-  return;
+  return BVar1;
 }
 
 
 /* ==== 00403cc8 mbgetcode ==== */
 
-byte * __watcall mbgetcode(byte *param_1,uint *unaff_EDX)
+byte * __watcall mbgetcode(byte *param_1,uint *param_2)
 
 {
   byte *pbVar1;
@@ -3691,24 +3627,24 @@ byte * __watcall mbgetcode(byte *param_1,uint *unaff_EDX)
   
   pbVar1 = param_1 + 1;
   if (IsDBCS == 0) {
-    *unaff_EDX = (uint)*param_1;
+    *param_2 = (uint)*param_1;
     pbVar3 = pbVar1;
   }
   else {
     bVar2 = *param_1;
-    *unaff_EDX = (uint)bVar2;
+    *param_2 = (uint)bVar2;
     pbVar3 = param_1;
     if (bVar2 != 0) {
       if (IsDBCS == 0) {
         bVar4 = true;
       }
       else {
-        bVar4 = ((&DAT_00405b35)[(byte)*unaff_EDX] & 1) == 0;
+        bVar4 = ((&DAT_00405b35)[(byte)*param_2] & 1) == 0;
       }
       pbVar3 = pbVar1;
       if (!bVar4) {
         if (*pbVar1 != 0) {
-          *unaff_EDX = *unaff_EDX << 8 | (uint)*pbVar1;
+          *param_2 = *param_2 << 8 | (uint)*pbVar1;
           return param_1 + 2;
         }
         *param_1 = 0;
@@ -3722,7 +3658,7 @@ byte * __watcall mbgetcode(byte *param_1,uint *unaff_EDX)
 
 /* ==== 00403d35 mbsnextc ==== */
 
-undefined8 __watcall mbsnextc(byte *param_1,undefined4 unaff_EDX)
+uint __watcall mbsnextc(byte *param_1)
 
 {
   byte bVar1;
@@ -3741,17 +3677,17 @@ undefined8 __watcall mbsnextc(byte *param_1,undefined4 unaff_EDX)
         bVar3 = (&DAT_00405b35)[bVar1] & 1;
       }
       if ((bVar3 != 0) && (param_1[1] != 0)) {
-        return CONCAT44(unaff_EDX,(uint)CONCAT11(bVar1,param_1[1]));
+        return (uint)CONCAT11(bVar1,param_1[1]);
       }
     }
   }
-  return CONCAT44(unaff_EDX,uVar2);
+  return uVar2;
 }
 
 
 /* ==== 00403d87 mbsinc ==== */
 
-undefined8 __watcall mbsinc(byte *param_1,undefined4 unaff_EDX)
+byte * __watcall mbsinc(byte *param_1)
 
 {
   byte *pbVar1;
@@ -3767,10 +3703,10 @@ undefined8 __watcall mbsinc(byte *param_1,undefined4 unaff_EDX)
     }
     pbVar1 = param_1 + 1;
     if (!bVar2) {
-      return CONCAT44(unaff_EDX,param_1 + 2);
+      return param_1 + 2;
     }
   }
-  return CONCAT44(unaff_EDX,pbVar1);
+  return pbVar1;
 }
 
 
@@ -3778,14 +3714,14 @@ undefined8 __watcall mbsinc(byte *param_1,undefined4 unaff_EDX)
 
 /* WARNING: Removing unreachable block (ram,0x00403e07) */
 
-byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
+byte * __watcall mbsdec(byte *param_1,byte *param_2)
 
 {
   byte *pbVar1;
   bool bVar2;
   
-  if (param_1 < unaff_EDX) {
-    pbVar1 = unaff_EDX + -1;
+  if (param_1 < param_2) {
+    pbVar1 = param_2 + -1;
     if (IsDBCS != 0) {
       if (((&DAT_00405b35)[*pbVar1] & 1) == 0) {
         do {
@@ -3798,10 +3734,10 @@ byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
             bVar2 = ((&DAT_00405b35)[*pbVar1] & 1) == 0;
           }
         } while (!bVar2);
-        pbVar1 = unaff_EDX + (-1 - ((int)unaff_EDX - (int)pbVar1) % 2);
+        pbVar1 = param_2 + (-1 - ((int)param_2 - (int)pbVar1) % 2);
       }
       else {
-        pbVar1 = unaff_EDX + -2;
+        pbVar1 = param_2 + -2;
       }
     }
   }
@@ -3814,20 +3750,20 @@ byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
 
 /* ==== 00403e53 strnicmp ==== */
 
-int __watcall strnicmp(char *_Str1,char *_Str,size_t _MaxCount)
+undefined4 __watcall strnicmp(byte *param_1,undefined1 *param_2,int param_3)
 
 {
   byte bVar2;
   uint uVar1;
   
   while( true ) {
-    if (_MaxCount == 0) {
+    if (param_3 == 0) {
       return 0;
     }
-    bVar2 = *_Str1;
-    uVar1 = (uint)CONCAT11(*_Str,bVar2);
+    bVar2 = *param_1;
+    uVar1 = (uint)CONCAT11(*param_2,bVar2);
     if ((0x40 < bVar2) && (bVar2 < 0x5b)) {
-      uVar1 = (uint)CONCAT11(*_Str,bVar2 + 0x20);
+      uVar1 = (uint)CONCAT11(*param_2,bVar2 + 0x20);
     }
     bVar2 = (byte)(uVar1 >> 8);
     if ((0x40 < bVar2) && (bVar2 < 0x5b)) {
@@ -3838,9 +3774,9 @@ int __watcall strnicmp(char *_Str1,char *_Str,size_t _MaxCount)
     if (bVar2 == 0) {
       return 0;
     }
-    _Str1 = _Str1 + 1;
-    _Str = _Str + 1;
-    _MaxCount = _MaxCount - 1;
+    param_1 = param_1 + 1;
+    param_2 = param_2 + 1;
+    param_3 = param_3 + -1;
   }
   return (uVar1 & 0xff) - (uint)bVar2;
 }
@@ -3858,23 +3794,16 @@ void __watcall terminate(void)
 
 /* ==== 00403ebe control87 ==== */
 
-uint __watcall control87(uint param_1,uint unaff_EDX)
+void __watcall control87(uint param_1,uint param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  ushort in_FPUControlWord;
-  undefined4 local_18;
-  
-  local_18 = 0;
-  if ((_087 != '\0') && (local_18 = (uint)in_FPUControlWord, unaff_EDX != 0)) {
-    local_18 = ~unaff_EDX & local_18 | unaff_EDX & param_1 & 0xffff;
-  }
-  return local_18;
+  return;
 }
 
 
 /* ==== 00403f11 save_8087 ==== */
 
-void __watcall save_8087(undefined2 *param_1)
+undefined2 * __watcall save_8087(undefined2 *param_1)
 
 {
   undefined2 in_FPUControlWord;
@@ -3906,72 +3835,77 @@ void __watcall save_8087(undefined2 *param_1)
   *(unkbyte10 *)(param_1 + 0x27) = in_ST5;
   *(unkbyte10 *)(param_1 + 0x2c) = in_ST6;
   *(unkbyte10 *)(param_1 + 0x31) = in_ST7;
-  return;
+  return param_1;
 }
 
 
 /* ==== 00403f16 rest_8087 ==== */
 
-undefined1  [10] __watcall rest_8087(int param_1)
+undefined4 __watcall rest_8087(undefined4 param_1)
 
 {
-  return *(undefined1 (*) [10])(param_1 + 0x1c);
+  return param_1;
 }
 
 
 /* ==== 00403f1a init_8087 ==== */
 
-void __watcall init_8087(void)
+uint __watcall init_8087(void)
 
 {
+  uint _0x87;
+  
   if (real87 != '\0') {
     Save8087 = save_8087;
     Rest8087 = rest_8087;
   }
-  init_80x87();
-  return;
+  _0x87 = init_80x87();
+  return _0x87;
 }
 
 
 /* ==== 00403f55 chk8087 ==== */
 
-void __watcall chk8087(void)
+uint __watcall chk8087(void)
 
 {
-  char _087_val;
+  undefined4 in_EAX;
+  uint uVar1;
   
+  uVar1 = CONCAT22((short)((uint)in_EAX >> 0x10),CONCAT11(_087,(char)in_EAX));
   if (_087 == '\0') {
     real87 = _087;
-    _087_val = init_8087();
+    uVar1 = init_8087();
     if (no87 == '\0') {
-      _087 = _087_val;
-      real87 = _087_val;
+      _087 = (char)uVar1;
+      real87 = (char)uVar1;
     }
   }
-  return;
+  return uVar1;
 }
 
 
 /* ==== 00403f9f NTRealKey ==== */
 
-longlong __watcall NTRealKey(short *param_1,uint unaff_EDX)
+undefined4 __watcall NTRealKey(short *param_1)
 
 {
   if (((*param_1 == 1) && (*(int *)(param_1 + 2) != 0)) &&
      (((ushort)param_1[5] < 0x10 || (0x12 < (ushort)param_1[5])))) {
-    return CONCAT44(unaff_EDX,1);
+    return 1;
   }
-  return (ulonglong)unaff_EDX << 0x20;
+  return 0;
 }
 
 
 /* ==== 00403fcb initConsoleHandles ==== */
 
-void __watcall
-initConsoleHandles(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 unaff_ECX)
+undefined4 __watcall initConsoleHandles(void)
 
 {
-  (*(code *)AccessFileH_1)(unaff_EDX,unaff_ECX);
+  undefined4 uVar1;
+  
+  (*(code *)AccessFileH_1)();
   if (console_in == (HANDLE)0xffffffff) {
     console_in = CreateFileA(s_conin__004053f8,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x80,
                              (HANDLE)0x0);
@@ -3980,49 +3914,52 @@ initConsoleHandles(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,un
     console_out = CreateFileA(s_conout__004053ff,0x40000000,2,(LPSECURITY_ATTRIBUTES)0x0,3,0x80,
                               (HANDLE)0x0);
   }
-  (*(code *)ReleaseFileH_1)();
-  return;
+  uVar1 = (*(code *)ReleaseFileH_1)();
+  return uVar1;
 }
 
 
 /* ==== 0040404a IOMode ==== */
 
-longlong __watcall IOMode(uint file_handle,uint unaff_EDX)
+undefined4 __watcall IOMode(uint param_1)
 
 {
   int isatty_result;
   int iVar1;
   
-  if (NFiles <= file_handle) {
-    return (ulonglong)unaff_EDX << 0x20;
+  if (NFiles <= param_1) {
+    return 0;
   }
-  if ((int)file_handle < 4) {
-    iVar1 = file_handle * 4;
+  if ((int)param_1 < 4) {
+    iVar1 = param_1 * 4;
     if ((iomode[iVar1 + 1] & 0x40) == 0) {
       iomode[iVar1 + 1] = iomode[iVar1 + 1] | 0x40;
-      isatty_result = isatty(file_handle);
+      isatty_result = isatty(param_1);
       if (isatty_result != 0) {
         iomode[iVar1 + 1] = iomode[iVar1 + 1] | 0x20;
       }
     }
   }
-  return CONCAT44(unaff_EDX,*(undefined4 *)(iomode + file_handle * 4));
+  return *(undefined4 *)(iomode + param_1 * 4);
 }
 
 
 /* ==== 0040409f SetIOMode ==== */
 
-void __watcall SetIOMode(int param_1,uint unaff_EDX)
+undefined * __watcall SetIOMode(int param_1,uint param_2)
 
 {
-  *(uint *)(iomode + param_1 * 4) = unaff_EDX | 0x4000;
-  return;
+  undefined *puVar1;
+  
+  puVar1 = iomode;
+  *(uint *)(iomode + param_1 * 4) = param_2 | 0x4000;
+  return puVar1;
 }
 
 
 /* ==== 004040b4 nrealloc ==== */
 
-undefined4 * __watcall nrealloc(undefined4 *param_1,uint unaff_EDX)
+undefined4 * __watcall nrealloc(undefined4 *param_1,uint param_2)
 
 {
   undefined4 *puVar1;
@@ -4031,23 +3968,20 @@ undefined4 * __watcall nrealloc(undefined4 *param_1,uint unaff_EDX)
   undefined4 *puVar2;
   undefined4 *puVar3;
   byte bVar4;
-  undefined8 buffer;
   
   bVar4 = 0;
   if (param_1 == (undefined4 *)0x0) {
-    buffer = nmalloc(unaff_EDX,unaff_EDX);
-    puVar1 = (undefined4 *)buffer;
+    puVar1 = (undefined4 *)nmalloc(param_2);
   }
-  else if (unaff_EDX == 0) {
-    nfree((uint)param_1);
+  else if (param_2 == 0) {
+    nfree(param_1);
     puVar1 = (undefined4 *)0x0;
   }
   else {
     i_val = msize((int)param_1);
-    puVar1 = (undefined4 *)expand((uint)param_1,unaff_EDX);
+    puVar1 = (undefined4 *)expand((uint)param_1,param_2);
     if (puVar1 == (undefined4 *)0x0) {
-      buffer = nmalloc(unaff_EDX,unaff_EDX);
-      puVar1 = (undefined4 *)buffer;
+      puVar1 = (undefined4 *)nmalloc(param_2);
       if (puVar1 == (undefined4 *)0x0) {
         expand((uint)param_1,i_val);
       }
@@ -4064,7 +3998,7 @@ undefined4 * __watcall nrealloc(undefined4 *param_1,uint unaff_EDX)
           puVar2 = (undefined4 *)((int)puVar2 + (uint)bVar4 * -2 + 1);
           puVar3 = (undefined4 *)((int)puVar3 + (uint)bVar4 * -2 + 1);
         }
-        nfree((uint)param_1);
+        nfree(param_1);
       }
     }
   }
@@ -4074,50 +4008,46 @@ undefined4 * __watcall nrealloc(undefined4 *param_1,uint unaff_EDX)
 
 /* ==== 0040412e GetThreadData ==== */
 
-undefined8 __watcall
-GetThreadData(undefined4 param_1,size_t unaff_EDX,undefined4 unaff_EBX,size_t unaff_ECX)
+LPVOID __watcall GetThreadData(void)
 
 {
+  int nt_add_thread;
   LPVOID tls_get_value;
-  longlong nt_add_thread;
   
-  nt_add_thread = NTAddThread((void *)0x0,unaff_EDX,unaff_EBX,unaff_ECX);
+  nt_add_thread = NTAddThread((undefined4 *)0x0);
   tls_get_value = (LPVOID)0x0;
-  if ((int)nt_add_thread != 0) {
+  if (nt_add_thread != 0) {
     tls_get_value = TlsGetValue(TlsIndex);
   }
   if (tls_get_value == (LPVOID)0x0) {
     wcpp_2_fatal_runtime_error(s_Thread_has_no_thread_specific_da_00405408,1);
   }
-  return CONCAT44(unaff_EDX,tls_get_value);
+  return tls_get_value;
 }
 
 
 /* ==== 00404165 AddThreadData ==== */
 
-undefined4 __watcall
-AddThreadData(undefined4 param_1,int unaff_EDX,undefined4 param_3,size_t unaff_ECX)
+undefined4 __watcall AddThreadData(undefined4 param_1,int param_2)
 
 {
-  void *buffer;
+  undefined4 *buffer;
+  int initthread_result;
   undefined4 extraout_ECX;
-  undefined4 *puVar1;
-  undefined8 initthread_result;
   
   (*(code *)AccessTDList_1)();
   buffer = calloc(1,0x10);
-  if (buffer != (void *)0x0) {
+  if (buffer != (undefined4 *)0x0) {
     initthread_result = initthread();
-    puVar1 = (undefined4 *)((ulonglong)initthread_result >> 0x20);
-    if ((int)initthread_result == 0) {
-      puVar1[2] = unaff_EDX;
-      puVar1[1] = param_1;
-      puVar1[3] = (uint)*(byte *)(unaff_EDX + 0x52);
-      *puVar1 = thread_data_list;
-      thread_data_list = puVar1;
+    if (initthread_result == 0) {
+      buffer[2] = param_2;
+      buffer[1] = param_1;
+      buffer[3] = (uint)*(byte *)(param_2 + 0x52);
+      *buffer = thread_data_list;
+      thread_data_list = buffer;
     }
     else {
-      nfree((uint)puVar1);
+      nfree(buffer);
     }
   }
   (*(code *)ReleaseTDList_1)();
@@ -4127,17 +4057,15 @@ AddThreadData(undefined4 param_1,int unaff_EDX,undefined4 param_3,size_t unaff_E
 
 /* ==== 004041c6 RemoveThreadData ==== */
 
-void __watcall
-RemoveThreadData(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX,undefined4 unaff_ECX)
+void __watcall RemoveThreadData(undefined4 param_1)
 
 {
   undefined4 *puVar1;
   int extraout_ECX;
-  undefined4 *extraout_EDX;
   undefined4 *puVar2;
   undefined4 *puVar3;
   
-  (*(code *)AccessTDList_1)(unaff_EDX,unaff_ECX,unaff_EBX);
+  (*(code *)AccessTDList_1)();
   puVar1 = thread_data_list;
   puVar3 = &thread_data_list;
   do {
@@ -4149,11 +4077,10 @@ LAB_00404206:
     }
     if (extraout_ECX == puVar2[1]) {
       if (puVar2[3] != 0) {
-        nfree(puVar2[2]);
-        puVar2 = extraout_EDX;
+        nfree((undefined4 *)puVar2[2]);
       }
       *puVar3 = *puVar2;
-      nfree((uint)puVar2);
+      nfree(puVar2);
       goto LAB_00404206;
     }
     puVar1 = (undefined4 *)*puVar2;
@@ -4168,17 +4095,15 @@ void __watcall FreeThreadDataList(void)
 
 {
   undefined4 *puVar1;
-  undefined4 *extraout_EDX;
   undefined4 *puVar2;
   
   puVar2 = thread_data_list;
   while (puVar2 != (undefined4 *)0x0) {
     puVar1 = (undefined4 *)*puVar2;
     if (puVar2[3] != 0) {
-      nfree(puVar2[2]);
-      puVar2 = extraout_EDX;
+      nfree((undefined4 *)puVar2[2]);
     }
-    nfree((uint)puVar2);
+    nfree(puVar2);
     puVar2 = puVar1;
   }
   return;
@@ -4187,16 +4112,16 @@ void __watcall FreeThreadDataList(void)
 
 /* ==== 00404239 calloc ==== */
 
-void * __watcall calloc(size_t _Count,size_t _Size)
+undefined4 * __watcall calloc(int param_1,int param_2)
 
 {
-  void *memset_result;
-  undefined8 buffer;
+  undefined4 *buffer;
+  undefined4 *memset_result;
   
-  buffer = nmalloc(_Count * _Size,_Size);
-  memset_result = (void *)0x0;
-  if ((void *)buffer != (void *)0x0) {
-    memset_result = memset((void *)buffer,0,_Count * _Size);
+  buffer = (undefined4 *)nmalloc(param_1 * param_2);
+  memset_result = (undefined4 *)0x0;
+  if (buffer != (undefined4 *)0x0) {
+    memset_result = memset(buffer,0,param_1 * param_2);
   }
   return memset_result;
 }
@@ -4208,17 +4133,15 @@ void __watcall FiniThreadProcessing(void)
 
 {
   undefined4 *puVar1;
-  undefined4 *extraout_EDX;
   undefined4 *puVar2;
   
   puVar2 = thread_data_list;
   while (puVar2 != (undefined4 *)0x0) {
     puVar1 = (undefined4 *)*puVar2;
     if (puVar2[3] != 0) {
-      nfree(puVar2[2]);
-      puVar2 = extraout_EDX;
+      nfree((undefined4 *)puVar2[2]);
     }
-    nfree((uint)puVar2);
+    nfree(puVar2);
     puVar2 = puVar1;
   }
   return;
@@ -4227,31 +4150,27 @@ void __watcall FiniThreadProcessing(void)
 
 /* ==== 00404260 STOSB ==== */
 
-void __watcall STOSB(uint param_1,uint param_2)
+void __watcall STOSB(undefined4 *param_1,uint param_2,undefined4 param_3,uint param_4)
 
 {
-  undefined1 *puVar1;
-  uint unaff_ECX;
-  uint uVar2;
-  undefined1 uVar3;
-  undefined6 fill_dwords_result;
+  undefined4 *fill_dwords_result;
+  uint uVar1;
   
-  if (unaff_ECX != 0) {
+  if (param_4 != 0) {
     do {
-      if ((param_1 & 3) == 0) break;
+      if (((uint)param_1 & 3) == 0) break;
       *(char *)param_1 = (char)param_2;
-      param_1 = param_1 + 1;
+      param_1 = (undefined4 *)((int)param_1 + 1);
       param_2 = param_2 >> 8 | param_2 << 0x18;
-      unaff_ECX = unaff_ECX - 1;
-    } while (unaff_ECX != 0);
-    fill_dwords_result = fill_dwords(param_1,param_2);
-    puVar1 = (undefined1 *)fill_dwords_result;
-    uVar2 = unaff_ECX & 3;
-    if (uVar2 != 0) {
-      uVar3 = (undefined1)((uint6)fill_dwords_result >> 0x20);
-      *puVar1 = uVar3;
-      if ((uVar2 != 1) && (puVar1[1] = (char)((uint6)fill_dwords_result >> 0x28), uVar2 != 2)) {
-        puVar1[2] = uVar3;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+    fill_dwords_result = fill_dwords(param_1,param_2,param_3,param_4 >> 2);
+    uVar1 = param_4 & 3;
+    if (uVar1 != 0) {
+      *(char *)fill_dwords_result = (char)param_2;
+      if ((uVar1 != 1) &&
+         (*(char *)((int)fill_dwords_result + 1) = (char)(param_2 >> 8), uVar1 != 2)) {
+        *(char *)((int)fill_dwords_result + 2) = (char)param_2;
       }
     }
   }
@@ -4261,27 +4180,27 @@ void __watcall STOSB(uint param_1,uint param_2)
 
 /* ==== 00404297 fill_dwords ==== */
 
-undefined4 * __watcall fill_dwords(uint param_1,undefined4 param_2)
+undefined4 * __watcall
+fill_dwords(undefined4 *param_1,undefined4 param_2,undefined4 param_3,uint param_4)
 
 {
   undefined4 *puVar1;
-  uint unaff_ECX;
   int iVar2;
   uint uVar3;
   
-  puVar1 = (undefined4 *)param_1;
-  if (unaff_ECX != 0) {
+  puVar1 = param_1;
+  if (param_4 != 0) {
     do {
-      if ((param_1 & 0x1f) == 0) break;
-      *(undefined4 *)param_1 = param_2;
-      param_1 = param_1 + 4;
-      unaff_ECX = unaff_ECX - 1;
-    } while (unaff_ECX != 0);
-    if (unaff_ECX >> 2 != 0) {
-      iVar2 = (unaff_ECX >> 2) - 1;
+      if (((uint)param_1 & 0x1f) == 0) break;
+      *param_1 = param_2;
+      param_1 = param_1 + 1;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+    if (param_4 >> 2 != 0) {
+      iVar2 = (param_4 >> 2) - 1;
       if (iVar2 != 0) {
         do {
-          puVar1 = (undefined4 *)param_1;
+          puVar1 = param_1;
           *puVar1 = param_2;
           puVar1[1] = param_2;
           puVar1[2] = param_2;
@@ -4292,29 +4211,29 @@ undefined4 * __watcall fill_dwords(uint param_1,undefined4 param_2)
           iVar2 = iVar2 + -2;
           puVar1[6] = param_2;
           puVar1[7] = param_2;
-          param_1 = (uint)(puVar1 + 8);
+          param_1 = puVar1 + 8;
         } while (iVar2 != 0);
         puVar1 = puVar1 + 4;
 LAB_004042d6:
-        param_1 = (uint)(puVar1 + 4);
+        param_1 = puVar1 + 4;
       }
-      *(undefined4 *)param_1 = param_2;
-      *(undefined4 *)(param_1 + 4) = param_2;
-      *(undefined4 *)(param_1 + 8) = param_2;
-      *(undefined4 *)(param_1 + 0xc) = param_2;
-      param_1 = param_1 + 0x10;
+      *param_1 = param_2;
+      param_1[1] = param_2;
+      param_1[2] = param_2;
+      param_1[3] = param_2;
+      param_1 = param_1 + 4;
     }
-    uVar3 = unaff_ECX & 3;
-    puVar1 = (undefined4 *)param_1;
+    uVar3 = param_4 & 3;
+    puVar1 = param_1;
     if (uVar3 != 0) {
-      *(undefined4 *)param_1 = param_2;
-      puVar1 = (undefined4 *)(param_1 + 4);
+      *param_1 = param_2;
+      puVar1 = param_1 + 1;
       if (uVar3 != 1) {
         *puVar1 = param_2;
-        puVar1 = (undefined4 *)(param_1 + 8);
+        puVar1 = param_1 + 2;
         if (uVar3 != 2) {
           *puVar1 = param_2;
-          puVar1 = (undefined4 *)(param_1 + 0xc);
+          puVar1 = param_1 + 3;
         }
       }
     }
@@ -4325,7 +4244,7 @@ LAB_004042d6:
 
 /* ==== 00404303 EnterWVIDEO ==== */
 
-undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined2 unaff_DX)
+undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined4 param_2)
 
 {
   code *pcVar1;
@@ -4333,7 +4252,7 @@ undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined2 unaff_DX)
   
   if (WD_Present != '\0') {
     pcVar1 = (code *)swi(3);
-    uVar2 = (*pcVar1)(unaff_DX);
+    uVar2 = (*pcVar1)((undefined2)param_2);
     return uVar2;
   }
   return 0;
@@ -4345,78 +4264,76 @@ undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined2 unaff_DX)
 /* WARNING: Instruction at (ram,0x00404348) overlaps instruction at (ram,0x00404346)
     */
 
-char * __watcall strncat(char *_Dest,char *_Source,size_t _Count)
+void __watcall strncat(char *param_1,char *param_2,int param_3)
 
 {
   char cVar1;
   char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  bool bVar5;
+  bool bVar4;
   
   pcVar2 = (char *)0xffffffff;
-  bVar5 = true;
-  pcVar3 = _Dest;
+  bVar4 = true;
   do {
-    pcVar4 = pcVar3;
+    pcVar3 = param_1;
     if (pcVar2 == (char *)0x0) break;
     pcVar2 = pcVar2 + -1;
-    pcVar4 = pcVar3 + 1;
-    bVar5 = *pcVar3 == '\0';
-    pcVar3 = pcVar4;
-  } while (!bVar5);
-  if (!bVar5) {
-    pcVar4 = pcVar2;
+    pcVar3 = param_1 + 1;
+    bVar4 = *param_1 == '\0';
+    param_1 = pcVar3;
+  } while (!bVar4);
+  if (!bVar4) {
+    pcVar3 = pcVar2;
   }
-  pcVar4 = pcVar4 + -1;
-  for (; (_Count != 0 && (cVar1 = *_Source, *pcVar4 = cVar1, cVar1 != '\0')); _Source = _Source + 1)
-  {
-    pcVar4 = pcVar4 + 1;
-    _Count = _Count - 1;
+  pcVar3 = pcVar3 + -1;
+  for (; (param_3 != 0 && (cVar1 = *param_2, *pcVar3 = cVar1, cVar1 != '\0')); param_2 = param_2 + 1
+      ) {
+    pcVar3 = pcVar3 + 1;
+    param_3 = param_3 + -1;
   }
-  *pcVar4 = '\0';
-  return _Dest;
+  *pcVar3 = '\0';
+  return;
 }
 
 
 /* ==== 00404368 strncpy ==== */
 
-char * __watcall strncpy(char *_Dest,char *_Source,size_t _Count)
+void __watcall strncpy(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = _Dest;
-  for (; (_Count != 0 && (*_Source != '\0')); _Source = _Source + 1) {
-    _Count = _Count - 1;
-    *pcVar1 = *_Source;
-    pcVar1 = pcVar1 + 1;
+  for (; (param_3 != 0 && (*param_2 != '\0')); param_2 = param_2 + 1) {
+    param_3 = param_3 + -1;
+    *param_1 = *param_2;
+    param_1 = param_1 + 1;
   }
-  for (; _Count != 0; _Count = _Count - 1) {
-    *pcVar1 = '\0';
-    pcVar1 = pcVar1 + 1;
+  for (; param_3 != 0; param_3 = param_3 + -1) {
+    *param_1 = '\0';
+    param_1 = param_1 + 1;
   }
-  return _Dest;
+  return;
 }
 
 
 /* ==== 0040438e init_80x87 ==== */
 
-ushort __watcall init_80x87(void)
+uint __watcall init_80x87(void)
 
 {
-  byte bVar2;
-  ushort uVar1;
+  undefined4 in_EAX;
+  uint uVar1;
   float10 fVar3;
   float10 fVar4;
+  undefined3 uVar2;
   
   fVar4 = (float10)1 / (float10)0;
   fVar3 = -fVar4;
-  bVar2 = fVar3 < fVar4 | (byte)((ushort)((ushort)(NAN(fVar3) || NAN(fVar4)) << 10) >> 8) |
-          (byte)((ushort)((ushort)(fVar3 == fVar4) << 0xe) >> 8);
-  uVar1 = CONCAT11(bVar2,2);
+  uVar2 = (undefined3)
+          (CONCAT22((short)((uint)in_EAX >> 0x10),
+                    (ushort)(fVar3 < fVar4) << 8 | (ushort)(NAN(fVar3) || NAN(fVar4)) << 10 |
+                    (ushort)(fVar3 == fVar4) << 0xe) >> 8);
+  uVar1 = CONCAT31(uVar2,2);
   if ((uVar1 & 0x4000) == 0) {
-    uVar1 = CONCAT11(bVar2,3);
+    uVar1 = CONCAT31(uVar2,3);
   }
   LOCK();
   UNLOCK();
@@ -4426,7 +4343,7 @@ ushort __watcall init_80x87(void)
 
 /* ==== 004043b5 isatty ==== */
 
-int __watcall isatty(int _FileHandle)
+undefined4 __watcall isatty(undefined4 param_1)
 
 {
   DWORD DVar1;
@@ -4454,15 +4371,15 @@ int __watcall msize(int param_1)
 
 /* ==== 004043ff expand ==== */
 
-uint __watcall expand(uint param_1,uint unaff_EDX)
+uint __watcall expand(uint param_1,uint param_2)
 
 {
   int heap_manager_expand;
-  short in_DS;
+  ushort in_DS;
   uint uStack_10;
   
   (*(code *)AccessNHeap_1)();
-  heap_manager_expand = HeapManager_expand(in_DS,param_1,unaff_EDX,&uStack_10);
+  heap_manager_expand = HeapManager_expand((uint)in_DS,param_1,param_2,&uStack_10);
   if (heap_manager_expand == 0) {
     (*(code *)ReleaseNHeap_1)();
   }
@@ -4476,7 +4393,7 @@ uint __watcall expand(uint param_1,uint unaff_EDX)
 
 /* ==== 00404439 HeapManager_expand ==== */
 
-undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_EBX,uint *unaff_ECX)
+undefined4 __watcall HeapManager_expand(undefined4 param_1,uint param_2,uint param_3,uint *param_4)
 
 {
   uint *puVar1;
@@ -4489,20 +4406,20 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
   uint unaff_ESI;
   short in_DS;
   
-  uVar3 = unaff_EBX + 7 & 0xfffffffc;
-  if (uVar3 < unaff_EBX) {
+  uVar3 = param_3 + 7 & 0xfffffffc;
+  if (uVar3 < param_3) {
     uVar3 = 0xffffffff;
   }
   if (uVar3 < 0xc) {
     uVar3 = 0xc;
   }
-  puVar1 = (uint *)(unaff_EDX - 4);
+  puVar1 = (uint *)(param_2 - 4);
   uVar5 = *puVar1 & 0xfffffffe;
   if (uVar5 < uVar3) {
     uVar3 = uVar3 - uVar5;
     puVar6 = (uint *)((int)puVar1 + uVar5);
     while( true ) {
-      *unaff_ECX = uVar3;
+      *param_4 = uVar3;
       uVar5 = *puVar6;
       if (uVar5 == 0xffffffff) break;
       if ((uVar5 & 1) != 0) {
@@ -4511,25 +4428,25 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
       uVar3 = puVar6[2];
       uVar2 = puVar6[1];
       uVar4 = nheapbeg;
-      if (in_DS == param_1) {
+      if (in_DS == (short)param_1) {
         for (; (unaff_ESI = uVar4, *(uint *)(uVar4 + 8) != 0 &&
-               ((unaff_EDX < uVar4 || (*(uint *)(uVar4 + 8) <= unaff_EDX))));
+               ((param_2 < uVar4 || (*(uint *)(uVar4 + 8) <= param_2))));
             uVar4 = *(uint *)(uVar4 + 8)) {
         }
       }
       if (puVar6 == *(uint **)(unaff_ESI + 0xc)) {
         *(uint *)(unaff_ESI + 0xc) = (*(uint **)(unaff_ESI + 0xc))[1];
       }
-      if (*unaff_ECX <= uVar5) {
-        uVar4 = uVar5 - *unaff_ECX;
+      if (*param_4 <= uVar5) {
+        uVar4 = uVar5 - *param_4;
         if (0xb < uVar4) {
-          puVar6 = (uint *)((int)puVar6 + *unaff_ECX);
+          puVar6 = (uint *)((int)puVar6 + *param_4);
           *puVar6 = uVar4;
           puVar6[1] = uVar2;
           puVar6[2] = uVar3;
           *(uint **)(uVar2 + 8) = puVar6;
           *(uint **)(uVar3 + 4) = puVar6;
-          *puVar1 = *puVar1 + *unaff_ECX;
+          *puVar1 = *puVar1 + *param_4;
           fheap_clean = 0;
           return 0;
         }
@@ -4539,8 +4456,8 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
       *puVar1 = *puVar1 + uVar5;
       *(int *)(unaff_ESI + 0x1c) = *(int *)(unaff_ESI + 0x1c) + -1;
       fheap_clean = 0;
-      if (*unaff_ECX <= uVar5) goto LAB_004045bd;
-      uVar3 = *unaff_ECX - uVar5;
+      if (*param_4 <= uVar5) goto LAB_004045bd;
+      uVar3 = *param_4 - uVar5;
       puVar6 = (uint *)((int)puVar6 + uVar5);
     }
     uVar7 = 2;
@@ -4550,14 +4467,14 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
       *puVar1 = uVar3 | 1;
       *(uint *)((int)puVar1 + uVar3) = uVar5 - uVar3 | 1;
       uVar5 = nheapbeg;
-      if (in_DS == param_1) {
+      if (in_DS == (short)param_1) {
         for (; (unaff_ESI = uVar5, *(uint *)(uVar5 + 8) != 0 &&
-               ((unaff_EDX < uVar5 || (*(uint *)(uVar5 + 8) <= unaff_EDX))));
+               ((param_2 < uVar5 || (*(uint *)(uVar5 + 8) <= param_2))));
             uVar5 = *(uint *)(uVar5 + 8)) {
         }
       }
       *(int *)(unaff_ESI + 0x18) = *(int *)(unaff_ESI + 0x18) + 1;
-      nfree((uint)((uint *)((int)puVar1 + uVar3) + 1));
+      nfree((uint *)((int)puVar1 + uVar3) + 1);
     }
 LAB_004045bd:
     uVar7 = 0;
@@ -4587,50 +4504,54 @@ void __watcall end_thread(void)
 
 /* ==== 004045e8 initthread ==== */
 
-void __watcall initthread(void)
+undefined4 __watcall initthread(void)
 
 {
-  (*(code *)InitThread)();
-  return;
+  undefined4 uVar1;
+  
+  uVar1 = (*(code *)InitThread)();
+  return uVar1;
 }
 
 
 /* ==== 004045ef RegisterThreadData ==== */
 
-void __watcall RegisterThreadData(undefined4 *param_1,undefined4 *unaff_EDX,undefined4 *unaff_EBX)
+undefined4 * __watcall
+RegisterThreadData(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
   undefined *puVar1;
+  undefined4 *puVar2;
   
   if (param_1 != (undefined4 *)0x0) {
     puVar1 = (undefined *)*param_1;
     *param_1 = BeginThread;
     BeginThread = puVar1;
   }
-  if (unaff_EDX != (undefined4 *)0x0) {
-    puVar1 = (undefined *)*unaff_EDX;
-    *unaff_EDX = EndThread;
-    EndThread = puVar1;
+  if (param_2 != (undefined4 *)0x0) {
+    param_1 = (undefined4 *)*param_2;
+    puVar2 = param_1;
+    *param_2 = EndThread;
+    EndThread = (undefined *)puVar2;
   }
-  if (unaff_EBX != (undefined4 *)0x0) {
-    puVar1 = (undefined *)*unaff_EBX;
-    *unaff_EBX = InitThread;
-    InitThread = puVar1;
+  if (param_3 != (undefined4 *)0x0) {
+    param_1 = (undefined4 *)*param_3;
+    puVar2 = param_1;
+    *param_3 = InitThread;
+    InitThread = (undefined *)puVar2;
   }
-  return;
+  return param_1;
 }
 
 
 /* ==== 004046da CBeginThread ==== */
 
-DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX)
+DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
-  DWORD _Val;
-  HANDLE hHandle;
-  HANDLE thread;
-  byte bVar1;
-  undefined8 nt_thread_init;
+  uint stack_size;
+  DWORD DVar1;
+  byte bVar2;
   char acStackY_1038 [4048];
   char cStack_50;
   char cStack_4f;
@@ -4639,51 +4560,58 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   undefined4 uStack_4c;
   char local_48 [24];
   undefined4 local_30;
+  undefined4 local_2c;
+  HANDLE current_thread;
+  uint local_24;
+  HANDLE local_20;
+  HANDLE *local_1c;
+  HANDLE thread;
   DWORD local_14;
   
-  bVar1 = 0;
+  bVar2 = 0;
   if (TlsIndex == -1) {
-    nt_thread_init = NTThreadInit(param_1,0xffffffff);
-    if ((int)nt_thread_init == 0) {
-      return (DWORD)((ulonglong)nt_thread_init >> 0x20);
+    stack_size = NTThreadInit();
+    if (stack_size == 0) {
+      return 0xffffffff;
     }
     InitMultipleThread();
   }
   local_30 = param_1;
-  GetCurrentThread();
+  local_2c = param_4;
+  current_thread = GetCurrentThread();
+  stack_size = param_3 + 0xfffU & 0xfffff000;
   cStack_50 = s___bgnthd_00405430[0];
   cStack_4f = s___bgnthd_00405430[1];
   cStack_4e = s___bgnthd_00405430[2];
   cStack_4d = s___bgnthd_00405430[3];
-  (&uStack_4c)[(uint)bVar1 * -2] = *(undefined4 *)(s___bgnthd_00405430 + (uint)bVar1 * -8 + 4);
-  local_48[(uint)bVar1 * -8 + (uint)bVar1 * -8] =
-       s___bgnthd_00405430[(uint)bVar1 * -8 + (uint)bVar1 * -8 + 8];
-  _Val = GetCurrentThreadId();
-  itoa(_Val,local_48,0x10);
-  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
-  thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,unaff_EBX + 0xfffU & 0xfffff000,
+  local_24 = stack_size;
+  (&uStack_4c)[(uint)bVar2 * -2] = *(undefined4 *)(s___bgnthd_00405430 + (uint)bVar2 * -8 + 4);
+  local_48[(uint)bVar2 * -8 + (uint)bVar2 * -8] =
+       s___bgnthd_00405430[(uint)bVar2 * -8 + (uint)bVar2 * -8 + 8];
+  DVar1 = GetCurrentThreadId();
+  itoa(DVar1,local_48,0x10);
+  local_20 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
+  local_1c = &thread;
+  thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,stack_size,
                         (LPTHREAD_START_ROUTINE)&begin_thread_helper,&local_30,0,&local_14);
   if (thread == (HANDLE)0x0) {
     local_14 = 0xffffffff;
   }
   else {
-    WaitForSingleObject(hHandle,0xffffffff);
+    WaitForSingleObject(local_20,0xffffffff);
   }
-  CloseHandle(hHandle);
+  CloseHandle(local_20);
   return local_14;
 }
 
 
 /* ==== 004047ae CEndThread ==== */
 
-void __watcall
-CEndThread(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 unaff_ECX)
+undefined4 __watcall CEndThread(void)
 
 {
-  undefined8 uVar1;
-  
-  uVar1 = (*(code *)sig_fini_rtn)(unaff_EDX,unaff_ECX);
-  DoneExceptionHandler((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
+  (*(code *)sig_fini_rtn)();
+  DoneExceptionHandler();
   if (Is_DLL == 0) {
     NTRemoveThread(1);
   }
@@ -4694,48 +4622,43 @@ CEndThread(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4
 
 /* ==== 004047fd utoa ==== */
 
-char * __watcall utoa(uint param_1,char *unaff_EDX,uint unaff_EBX)
+void __watcall utoa(uint param_1,char *param_2,uint param_3)
 
 {
   char cVar1;
-  uint uVar2;
-  char *pcVar3;
-  char *pcVar4;
+  char *pcVar2;
   char local_37 [35];
+  uint local_14;
   
-  pcVar3 = local_37;
+  pcVar2 = local_37;
   do {
-    uVar2 = param_1 / unaff_EBX;
-    *pcVar3 = "0123456789abcdefghijklmnopqrstuvwxyz"[param_1 % unaff_EBX];
-    pcVar3 = pcVar3 + 1;
-    param_1 = uVar2;
-    pcVar4 = unaff_EDX;
-  } while (uVar2 != 0);
+    local_14 = param_1 / param_3;
+    *pcVar2 = "0123456789abcdefghijklmnopqrstuvwxyz"[param_1 % param_3];
+    pcVar2 = pcVar2 + 1;
+    param_1 = local_14;
+  } while (local_14 != 0);
   do {
-    pcVar3 = pcVar3 + -1;
-    cVar1 = *pcVar3;
-    *pcVar4 = cVar1;
-    pcVar4 = pcVar4 + 1;
+    pcVar2 = pcVar2 + -1;
+    cVar1 = *pcVar2;
+    *param_2 = cVar1;
+    param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  return unaff_EDX;
+  return;
 }
 
 
 /* ==== 00404847 itoa ==== */
 
-char * __watcall itoa(int _Val,char *_DstBuf,int _Radix)
+void __watcall itoa(uint param_1,char *param_2,uint param_3)
 
 {
-  char *unaff_EDX;
-  
-  unaff_EDX = _DstBuf;
-  if ((_Radix == 10) && (_Val < 0)) {
-    _Val = -_Val;
-    *_DstBuf = '-';
-    unaff_EDX = _DstBuf + 1;
+  if ((param_3 == 10) && ((int)param_1 < 0)) {
+    param_1 = -param_1;
+    *param_2 = '-';
+    param_2 = param_2 + 1;
   }
-  utoa(_Val,unaff_EDX,_Radix);
-  return _DstBuf;
+  utoa(param_1,param_2,param_3);
+  return;
 }
 
 

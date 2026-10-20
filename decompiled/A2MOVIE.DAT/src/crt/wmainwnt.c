@@ -15,77 +15,77 @@ void __watcall crt_nop_hook_2(void)
 /* WARNING: Unable to track spacebase fully for stack */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall WinMain_1(void)
+undefined4 __watcall WinMain_1(void)
 
 {
   int iVar1;
-  undefined4 nt_main_init;
-  LPSTR _Src;
-  char *pcVar2;
-  HMODULE pHVar3;
-  int code;
-  uint uVar4;
-  undefined1 *puVar5;
-  undefined1 *puVar6;
-  undefined8 stackavail_result;
+  int iVar2;
+  undefined1 *stackavail_result;
+  LPSTR pCVar3;
+  char *pcVar4;
+  HMODULE pHVar5;
+  undefined4 uVar6;
+  undefined1 *puVar7;
+  undefined1 *puVar8;
+  undefined1 *puVar9;
   undefined4 uStack_1c;
-  undefined1 local_18 [8];
+  undefined4 local_18 [2];
   
   uStack_1c = 0x40bda5;
-  InitRtns();
-  code = -(ThreadDataSize + 3 & 0xfffffffc);
-  puVar5 = local_18 + code;
-  *(undefined4 *)(local_18 + code + -4) = 0x40bdc2;
-  memset(local_18 + code,0,ThreadDataSize);
-  *(undefined4 *)(local_18 + code + -4) = 0x40bdcc;
-  nt_main_init = NTMainInit(local_18,local_18 + code);
-  *(undefined4 *)(local_18 + code + -4) = 0x40bddd;
-  stackavail_result = stackavail(nt_main_init,DAT_00420044 + 3U & 0xfffffffc);
-  uVar4 = (uint)((ulonglong)stackavail_result >> 0x20);
-  if (uVar4 < (uint)stackavail_result) {
-    iVar1 = -uVar4;
-    puVar5 = local_18 + iVar1 + code;
-    _DAT_00420048 = local_18 + iVar1 + code;
+  InitRtns(1);
+  iVar1 = -(ThreadDataSize + 3U & 0xfffffffc);
+  puVar8 = (undefined1 *)((int)local_18 + iVar1);
+  *(undefined4 *)((int)local_18 + iVar1 + -4) = 0x40bdc2;
+  memset((undefined4 *)((int)local_18 + iVar1),0,ThreadDataSize);
+  *(undefined4 *)((int)local_18 + iVar1 + -4) = 0x40bdcc;
+  NTMainInit(local_18,(undefined4 *)((int)local_18 + iVar1));
+  puVar7 = (undefined1 *)(DAT_00420044 + 3U & 0xfffffffc);
+  *(undefined4 *)((int)local_18 + iVar1 + -4) = 0x40bddd;
+  stackavail_result = stackavail();
+  if (puVar7 < stackavail_result) {
+    iVar2 = -(int)puVar7;
+    puVar8 = (undefined1 *)((int)local_18 + iVar2 + iVar1);
+    _DAT_00420048 = (undefined1 *)((int)local_18 + iVar2 + iVar1);
   }
   else {
     _DAT_00420048 = (undefined1 *)0x0;
   }
   _DAT_00420048 = _DAT_00420048 + DAT_00420044;
-  *(undefined4 *)(puVar5 + -4) = 0x40bdff;
+  *(undefined4 *)(puVar8 + -4) = 0x40bdff;
   init_amblksiz();
-  *(undefined4 *)(puVar5 + -4) = 0x40be04;
-  _Src = GetCommandLineA();
-  *(undefined4 *)(puVar5 + -4) = 0x40be09;
-  pcVar2 = strdup(_Src);
-  if (*pcVar2 != '\"') {
+  *(undefined4 *)(puVar8 + -4) = 0x40be04;
+  pCVar3 = GetCommandLineA();
+  *(undefined4 *)(puVar8 + -4) = 0x40be09;
+  pcVar4 = strdup(pCVar3);
+  if (*pcVar4 != '\"') {
     do {
-      if (((&IsTable)[(byte)(*pcVar2 + 1)] & 2) != 0) goto LAB_0040be4b;
-      if (*pcVar2 == '\0') goto LAB_0040be4b;
-      pcVar2 = pcVar2 + 1;
+      if (((&IsTable)[(byte)(*pcVar4 + 1)] & 2) != 0) goto LAB_0040be4b;
+      if (*pcVar4 == '\0') goto LAB_0040be4b;
+      pcVar4 = pcVar4 + 1;
     } while( true );
   }
   do {
-    pcVar2 = pcVar2 + 1;
-    if (*pcVar2 == '\"') break;
-  } while (*pcVar2 != '\0');
-  if (*pcVar2 == '\0') goto LAB_0040be4b;
+    pcVar4 = pcVar4 + 1;
+    if (*pcVar4 == '\"') break;
+  } while (*pcVar4 != '\0');
+  if (*pcVar4 == '\0') goto LAB_0040be4b;
   do {
-    pcVar2 = pcVar2 + 1;
+    pcVar4 = pcVar4 + 1;
 LAB_0040be4b:
-  } while (((&IsTable)[(byte)(*pcVar2 + 1)] & 2) != 0);
-  *(undefined4 *)(puVar5 + -4) = 10;
-  *(char **)(puVar5 + -8) = pcVar2;
-  *(undefined4 *)(puVar5 + -0xc) = 0;
-  *(undefined4 *)(puVar5 + -0x10) = 0;
-  *(undefined4 *)(puVar5 + -0x14) = 0x40be70;
-  pHVar3 = GetModuleHandleA(*(LPCSTR *)(puVar5 + -0x10));
-  *(HMODULE *)(puVar5 + -0x10) = pHVar3;
-  puVar6 = puVar5 + -0x14;
-  *(undefined4 *)(puVar5 + -0x14) = 0x40be77;
-  code = (*WinMainProc)();
+  } while (((&IsTable)[(byte)(*pcVar4 + 1)] & 2) != 0);
+  *(undefined4 *)(puVar8 + -4) = 10;
+  *(char **)(puVar8 + -8) = pcVar4;
+  *(undefined4 *)(puVar8 + -0xc) = 0;
+  *(undefined4 *)(puVar8 + -0x10) = 0;
+  *(undefined4 *)(puVar8 + -0x14) = 0x40be70;
+  pHVar5 = GetModuleHandleA(*(LPCSTR *)(puVar8 + -0x10));
+  *(HMODULE *)(puVar8 + -0x10) = pHVar5;
+  puVar9 = puVar8 + -0x14;
+  *(undefined4 *)(puVar8 + -0x14) = 0x40be77;
+  uVar6 = (*WinMainProc)();
                     /* WARNING: Subroutine does not return */
-  *(undefined **)(puVar6 + -4) = &UNK_0040be7c;
-  exit(code);
+  *(undefined **)(puVar9 + -4) = &UNK_0040be7c;
+  exit(uVar6);
 }
 
 

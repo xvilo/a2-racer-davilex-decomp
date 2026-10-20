@@ -6,11 +6,8 @@
 int __watcall check_score_index(int param_1,char *param_2,int param_3)
 
 {
-  int extraout_ECX;
-  
   if ((param_1 < 0) || (9 < param_1)) {
     fatal_exit(s__s__d___score_check_index____Unk_004265fc,param_2,param_3,param_1,10);
-    param_1 = extraout_ECX;
   }
   return param_1;
 }
@@ -21,11 +18,8 @@ int __watcall check_score_index(int param_1,char *param_2,int param_3)
 int __watcall check_score_level(int param_1,char *param_2,int param_3)
 
 {
-  int extraout_ECX;
-  
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d___score_check_level____Unk_0042663b,param_2,param_3,param_1,6);
-    param_1 = extraout_ECX;
   }
   return param_1;
 }
@@ -33,24 +27,19 @@ int __watcall check_score_level(int param_1,char *param_2,int param_3)
 
 /* ==== 00403354 load_tmp_scoredbase ==== */
 
-void __watcall load_tmp_scoredbase(char *param_1)
+void __watcall load_tmp_scoredbase(char *filename)
 
 {
   int iVar1;
-  char *filename;
-  char *extraout_ECX;
-  char *filename_00;
   
-  debugmsg(s__s__d___load_tmp_scoredbase___s__00426682,s_score_cpp_00426678,0x95,param_1);
+  debugmsg(s__s__d___load_tmp_scoredbase___s__00426682,s_score_cpp_00426678,0x95,filename);
   iVar1 = file_exist(filename);
-  filename_00 = filename;
   if (iVar1 == 0) {
     fatal_exit(s__s__d___load_tmp_scoredbase____F_004266af,s_score_cpp_004266a5,0x97,filename);
-    filename_00 = extraout_ECX;
   }
-  iVar1 = file_read(&score_list,0xc08,filename_00);
+  iVar1 = file_read(&score_list,0xc08,filename);
   if (iVar1 != 0) {
-    file_delete(filename_00);
+    file_delete();
     init_scoredbase();
   }
   return;
@@ -99,18 +88,15 @@ void __watcall save_scoredbase(void)
 
 {
   int file_write_result;
-  undefined4 extraout_ECX;
-  char *filename;
   undefined4 extraout_EDX;
-  int count;
   
   debugmsg(s__s__d___save_scoredbase____004267d1,s_score_cpp_004267c7,200);
   debugmsg(s__s__d__save_tmp_scoredbase__s__00426703,s_score_cpp_004266f9,0xa7,s_SCORE_A2R_004267ef,
-           extraout_EDX,extraout_ECX);
-  file_write_result = file_write(&score_list,count,filename);
+           extraout_EDX);
+  file_write_result = file_write(&score_list,0xc08,s_SCORE_A2R_004267ef);
   if (file_write_result != 0) {
     fatal_exit(s__s__d___save_tmp_scoredbase____E_0042672e,s_score_cpp_00426724,0xa9,
-               file_write_result,filename);
+               file_write_result,s_SCORE_A2R_004267ef);
   }
   return;
 }
@@ -118,18 +104,16 @@ void __watcall save_scoredbase(void)
 
 /* ==== 00403487 save_tmp_scoredbase ==== */
 
-void __watcall save_tmp_scoredbase(char *param_1)
+void __watcall save_tmp_scoredbase(char *filename)
 
 {
-  int file_write_result;
-  char *filename;
-  int count;
+  int arg4;
+  int extraout_EDX;
   
-  debugmsg(s__s__d__save_tmp_scoredbase__s__00426703,s_score_cpp_004266f9,0xa7,param_1);
-  file_write_result = file_write(&score_list,count,filename);
-  if (file_write_result != 0) {
-    fatal_exit(s__s__d___save_tmp_scoredbase____E_0042672e,s_score_cpp_00426724,0xa9,
-               file_write_result,filename);
+  debugmsg(s__s__d__save_tmp_scoredbase__s__00426703,s_score_cpp_004266f9,0xa7,filename);
+  arg4 = file_write(&score_list,extraout_EDX,filename);
+  if (arg4 != 0) {
+    fatal_exit(s__s__d___save_tmp_scoredbase____E_0042672e,s_score_cpp_00426724,0xa9,arg4,filename);
   }
   return;
 }
@@ -182,20 +166,20 @@ int __watcall get_last_entered_levelscore(int param_1)
 
 /* ==== 00403568 compare_score ==== */
 
-int __watcall compare_score(void *str1,void *str2)
+int __watcall compare_score(void *param_1,void *param_2)
 
 {
   int cmp;
   
-  if (*(short *)((int)str1 + 0x24) < *(short *)((int)str2 + 0x24)) {
+  if (*(short *)((int)param_1 + 0x24) < *(short *)((int)param_2 + 0x24)) {
     return 1;
   }
-  if (*(short *)((int)str1 + 0x24) <= *(short *)((int)str2 + 0x24)) {
-    if (*(int *)((int)str2 + 0x20) < *(int *)((int)str1 + 0x20)) {
+  if (*(short *)((int)param_1 + 0x24) <= *(short *)((int)param_2 + 0x24)) {
+    if (*(int *)((int)param_2 + 0x20) < *(int *)((int)param_1 + 0x20)) {
       return 1;
     }
-    if (*(int *)((int)str2 + 0x20) <= *(int *)((int)str1 + 0x20)) {
-      cmp = strncmp(str1,str2,0x20);
+    if (*(int *)((int)param_2 + 0x20) <= *(int *)((int)param_1 + 0x20)) {
+      cmp = strncmp(param_1,param_2,0x20);
       return cmp;
     }
   }
@@ -205,31 +189,30 @@ int __watcall compare_score(void *str1,void *str2)
 
 /* ==== 004035a2 add_new_hiscore ==== */
 
-int __watcall add_new_hiscore(char *source,int param_2,int param_3,int param_4)
+int __watcall add_new_hiscore(char *param_1,int param_2,int param_3,int param_4)
 
 {
   int check_score_idx;
   int j;
-  int extraout_ECX;
-  _PtFuncCompare *_PtFuncCompare;
-  size_t _NumOfElements;
+  int *extraout_EDX;
   int i;
   score_t *score;
-  char *pcVar1;
+  int *piVar1;
   undefined4 *puVar2;
-  byte bVar3;
-  char local_2a8 [32];
+  int *piVar3;
+  byte bVar4;
+  int local_2a8 [8];
   int local_288;
   undefined2 local_284;
   undefined2 local_282;
   int local_280;
-  undefined4 local_f0 [55];
+  int local_f0 [55];
   int local_14;
   int local_10;
   
-  bVar3 = 0;
-  debugmsg(s__s__d___add_new_hiscore____s___d_00426821,s_score_cpp_00426817,0x101,source,param_2,
-           param_3,param_4,param_3,param_2);
+  bVar4 = 0;
+  debugmsg(s__s__d___add_new_hiscore____s___d_00426821,s_score_cpp_00426817,0x101,param_1,param_2,
+           param_3);
   i = 0;
   debugmsg(s_Creating_sort_buffer_of_hiscore_00426849);
   local_10 = 0;
@@ -238,43 +221,43 @@ int __watcall add_new_hiscore(char *source,int param_2,int param_3,int param_4)
     *(undefined2 *)(&DAT_004321ba + check_score_idx * 0x2c) = 0;
     check_score_idx = check_score_index(i,s_score_cpp_00426876,0x105);
     score = &score_list + check_score_idx * 0x2c;
-    pcVar1 = local_2a8 + local_10;
+    puVar2 = (undefined4 *)((int)local_2a8 + local_10);
     for (j = 0xb; j != 0; j = j + -1) {
-      *(undefined4 *)pcVar1 = *(undefined4 *)score;
-      score = score + ((uint)bVar3 * -2 + 1) * 4;
-      pcVar1 = pcVar1 + ((uint)bVar3 * -2 + 1) * 4;
+      *puVar2 = *(undefined4 *)score;
+      score = score + ((uint)bVar4 * -2 + 1) * 4;
+      puVar2 = puVar2 + (uint)bVar4 * -2 + 1;
     }
     local_10 = local_10 + 0x2c;
     i = i + 1;
   } while (i < 10);
-  local_284 = (short)param_3;
   debugmsg(s_Done_creating_sort_buffer_00426880);
-  pcVar1 = local_2a8;
-  puVar2 = local_f0;
-  for (i = extraout_ECX; i != 0; i = i + -1) {
-    *puVar2 = *(undefined4 *)pcVar1;
-    pcVar1 = pcVar1 + ((uint)bVar3 * -2 + 1) * 4;
-    puVar2 = puVar2 + (uint)bVar3 * -2 + 1;
+  piVar1 = local_2a8;
+  piVar3 = local_f0;
+  for (i = 0xb; i != 0; i = i + -1) {
+    *piVar3 = *piVar1;
+    piVar1 = piVar1 + (uint)bVar4 * -2 + 1;
+    piVar3 = piVar3 + (uint)bVar4 * -2 + 1;
   }
-  strncpy(local_2a8,source,0x20);
+  strncpy((char *)local_2a8,param_1,0x20);
+  local_284 = (undefined2)param_3;
   local_282 = 1;
   local_288 = param_2;
   local_280 = param_4;
   debugmsg(s_Done_initializing_current_score_t_0042689d);
-  qsort(local_2a8,_NumOfElements,0x2c,_PtFuncCompare);
+  qsort(local_2a8,extraout_EDX,(int *)0x2c,compare_score);
   i = 0;
   debugmsg(s_Done_sorting_and_now_start_copy__004268e0);
   local_14 = 0;
   do {
     check_score_idx = check_score_index(i,s_score_cpp_00426908,0x112);
-    pcVar1 = local_2a8 + local_14;
+    puVar2 = (undefined4 *)((int)local_2a8 + local_14);
     i = i + 1;
     local_14 = local_14 + 0x2c;
     score = &score_list + check_score_idx * 0x2c;
     for (j = 0xb; j != 0; j = j + -1) {
-      *(undefined4 *)score = *(undefined4 *)pcVar1;
-      pcVar1 = pcVar1 + ((uint)bVar3 * -2 + 1) * 4;
-      score = score + ((uint)bVar3 * -2 + 1) * 4;
+      *(undefined4 *)score = *puVar2;
+      puVar2 = puVar2 + (uint)bVar4 * -2 + 1;
+      score = score + ((uint)bVar4 * -2 + 1) * 4;
     }
   } while (i < 10);
   i = get_last_entered_hiscore();
@@ -284,30 +267,30 @@ int __watcall add_new_hiscore(char *source,int param_2,int param_3,int param_4)
 
 /* ==== 00403720 add_new_levelscore ==== */
 
-int __watcall add_new_levelscore(char *source,int param_2,int param_3,int param_4)
+int __watcall add_new_levelscore(char *param_1,int param_2,int param_3,int param_4)
 
 {
   int iVar1;
   int check_score_idx;
   int j;
-  int extraout_ECX;
-  size_t _NumOfElements;
+  int *extraout_EDX;
   int i;
   char *pcVar2;
-  undefined4 *puVar3;
-  char *pcVar4;
-  byte bVar5;
-  char local_2a8 [32];
+  int *piVar3;
+  undefined4 *puVar4;
+  int *piVar5;
+  byte bVar6;
+  int local_2a8 [8];
   int local_288;
   undefined2 local_284 [2];
   int local_280;
-  undefined4 local_f0 [55];
+  int local_f0 [55];
   int local_14;
   int local_10;
   
-  bVar5 = 0;
-  debugmsg(s__s__d___add_new_levelscore___s___0042691c,s_score_cpp_00426912,0x11f,source,param_2,
-           param_3,param_4,param_3,param_2);
+  bVar6 = 0;
+  debugmsg(s__s__d___add_new_levelscore___s___0042691c,s_score_cpp_00426912,0x11f,param_1,param_2,
+           param_3);
   i = 0;
   debugmsg(s_Creating_sort_buffer_list_00426944);
   local_10 = 0;
@@ -319,45 +302,45 @@ int __watcall add_new_levelscore(char *source,int param_2,int param_3,int param_
     check_score_idx = check_score_index(i,s_score_cpp_0042697f,0x123);
     i = i + 1;
     pcVar2 = s_Arnoud_0043234c + check_score_idx * 0x2c + iVar1 * 0x1b8;
-    pcVar4 = local_2a8 + local_10;
+    puVar4 = (undefined4 *)((int)local_2a8 + local_10);
     for (j = 0xb; j != 0; j = j + -1) {
-      *(undefined4 *)pcVar4 = *(undefined4 *)pcVar2;
-      pcVar2 = pcVar2 + ((uint)bVar5 * -2 + 1) * 4;
-      pcVar4 = pcVar4 + ((uint)bVar5 * -2 + 1) * 4;
+      *puVar4 = *(undefined4 *)pcVar2;
+      pcVar2 = pcVar2 + ((uint)bVar6 * -2 + 1) * 4;
+      puVar4 = puVar4 + (uint)bVar6 * -2 + 1;
     }
     iVar1 = local_10 + 0x2c;
     *(undefined2 *)((int)local_284 + local_10) = 0;
     local_10 = iVar1;
   } while (i < 10);
   debugmsg(s_Done_creating_sort_buffer_00426989);
-  pcVar2 = local_2a8;
-  puVar3 = local_f0;
-  for (i = extraout_ECX; i != 0; i = i + -1) {
-    *puVar3 = *(undefined4 *)pcVar2;
-    pcVar2 = pcVar2 + ((uint)bVar5 * -2 + 1) * 4;
-    puVar3 = puVar3 + (uint)bVar5 * -2 + 1;
+  piVar3 = local_2a8;
+  piVar5 = local_f0;
+  for (i = 0xb; i != 0; i = i + -1) {
+    *piVar5 = *piVar3;
+    piVar3 = piVar3 + (uint)bVar6 * -2 + 1;
+    piVar5 = piVar5 + (uint)bVar6 * -2 + 1;
   }
-  strncpy(local_2a8,source,0x20);
+  strncpy((char *)local_2a8,param_1,0x20);
   local_284[0] = 0;
   local_284[1] = 1;
   local_288 = param_2;
   local_280 = param_4;
   debugmsg(s_Done_initializing_current_score_t_004269a6);
-  qsort(local_2a8,_NumOfElements,0x2c,compare_score);
+  qsort(local_2a8,extraout_EDX,(int *)0x2c,compare_score);
   i = 0;
   debugmsg(s_Done_sorting_and_now_start_copy__004269ed);
   local_14 = 0;
   do {
     iVar1 = check_score_level(param_3,s_score_cpp_00426a15,0x131);
     check_score_idx = check_score_index(i,s_score_cpp_00426a1f,0x131);
-    pcVar2 = local_2a8 + local_14;
+    puVar4 = (undefined4 *)((int)local_2a8 + local_14);
     i = i + 1;
     local_14 = local_14 + 0x2c;
-    pcVar4 = s_Arnoud_0043234c + check_score_idx * 0x2c + iVar1 * 0x1b8;
+    pcVar2 = s_Arnoud_0043234c + check_score_idx * 0x2c + iVar1 * 0x1b8;
     for (j = 0xb; j != 0; j = j + -1) {
-      *(undefined4 *)pcVar4 = *(undefined4 *)pcVar2;
-      pcVar2 = pcVar2 + ((uint)bVar5 * -2 + 1) * 4;
-      pcVar4 = pcVar4 + ((uint)bVar5 * -2 + 1) * 4;
+      *(undefined4 *)pcVar2 = *puVar4;
+      puVar4 = puVar4 + (uint)bVar6 * -2 + 1;
+      pcVar2 = pcVar2 + ((uint)bVar6 * -2 + 1) * 4;
     }
   } while (i < 10);
   i = get_last_entered_levelscore(param_3);

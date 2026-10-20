@@ -3,31 +3,27 @@
 
 /* ==== 0040d560 STOSB ==== */
 
-void __watcall STOSB(uint param_1,uint param_2)
+void __watcall STOSB(undefined4 *param_1,uint param_2,undefined4 param_3,uint param_4)
 
 {
-  undefined1 *puVar1;
-  uint unaff_ECX;
-  uint uVar2;
-  undefined1 uVar3;
-  undefined6 fill_dwords_result;
+  undefined4 *fill_dwords_result;
+  uint uVar1;
   
-  if (unaff_ECX != 0) {
+  if (param_4 != 0) {
     do {
-      if ((param_1 & 3) == 0) break;
+      if (((uint)param_1 & 3) == 0) break;
       *(char *)param_1 = (char)param_2;
-      param_1 = param_1 + 1;
+      param_1 = (undefined4 *)((int)param_1 + 1);
       param_2 = param_2 >> 8 | param_2 << 0x18;
-      unaff_ECX = unaff_ECX - 1;
-    } while (unaff_ECX != 0);
-    fill_dwords_result = fill_dwords(param_1,param_2);
-    puVar1 = (undefined1 *)fill_dwords_result;
-    uVar2 = unaff_ECX & 3;
-    if (uVar2 != 0) {
-      uVar3 = (undefined1)((uint6)fill_dwords_result >> 0x20);
-      *puVar1 = uVar3;
-      if ((uVar2 != 1) && (puVar1[1] = (char)((uint6)fill_dwords_result >> 0x28), uVar2 != 2)) {
-        puVar1[2] = uVar3;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+    fill_dwords_result = fill_dwords(param_1,param_2,param_3,param_4 >> 2);
+    uVar1 = param_4 & 3;
+    if (uVar1 != 0) {
+      *(char *)fill_dwords_result = (char)param_2;
+      if ((uVar1 != 1) &&
+         (*(char *)((int)fill_dwords_result + 1) = (char)(param_2 >> 8), uVar1 != 2)) {
+        *(char *)((int)fill_dwords_result + 2) = (char)param_2;
       }
     }
   }

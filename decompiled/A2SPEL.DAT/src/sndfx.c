@@ -33,7 +33,7 @@ void __watcall load_samples(void)
 
 /* ==== 004101a8 find_free_sound_slot ==== */
 
-undefined8 __watcall find_free_sound_slot(undefined4 param_1,undefined4 param_2)
+int __watcall find_free_sound_slot(void)
 
 {
   int iVar1;
@@ -43,19 +43,19 @@ undefined8 __watcall find_free_sound_slot(undefined4 param_1,undefined4 param_2)
   iVar1 = 0;
   while( true ) {
     if (0x2f < iVar1) {
-      return CONCAT44(param_2,0xffffffff);
+      return -1;
     }
     if (*(int *)((int)&object_sound_slots + iVar1) == -1) break;
     iVar1 = iVar1 + 8;
     i = i + 1;
   }
-  return CONCAT44(param_2,i);
+  return i;
 }
 
 
 /* ==== 004101cc find_object_sound_slot ==== */
 
-undefined8 __watcall find_object_sound_slot(int param_1,undefined4 param_2)
+int __watcall find_object_sound_slot(int param_1)
 
 {
   int iVar1;
@@ -65,13 +65,13 @@ undefined8 __watcall find_object_sound_slot(int param_1,undefined4 param_2)
   iVar1 = 0;
   while( true ) {
     if (0x2f < iVar1) {
-      return CONCAT44(param_2,0xffffffff);
+      return -1;
     }
     if (param_1 == *(int *)((int)&object_sound_slots + iVar1)) break;
     iVar1 = iVar1 + 8;
     i = i + 1;
   }
-  return CONCAT44(param_2,i);
+  return i;
 }
 
 
@@ -81,35 +81,32 @@ void __watcall start_object_sound(int slot,int object)
 
 {
   uint uVar1;
-  char *str2;
   int opponent_index;
-  int extraout_ECX;
+  char *filename_val;
   int iVar2;
-  int extraout_EDX;
-  float10 chp;
+  float10 fVar3;
+  float in_stack_00000010;
   racer_object_t *racer_object;
   
   racer_object = racers;
-  opponent_index = object * 5;
-  chp = CHP();
+  fVar3 = (float10)in_stack_00000010;
+  opponent_index = CHP();
   opponent_index = *(int *)((int)racer_object + (object * 0x50 - opponent_index) + 0x37);
-  iVar2 = (&volume_by_distance)[(int)ROUND(chp)] - volume_attenuation;
+  iVar2 = (&volume_by_distance)[(int)ROUND(fVar3)] - volume_attenuation;
   if (engine_sound_enabled == 0) {
     return;
   }
   if ((opponent_index < 0) || (opponent_count < opponent_index)) {
     fatal_exit(s__s__d__Illegal_opponent_nr__d__m_0044583e,s_sndfx_cpp_00445834,0x87,opponent_index,
                opponent_count);
-    opponent_index = extraout_ECX;
-    iVar2 = extraout_EDX;
   }
   uVar1 = opponent_data[opponent_index].car_type;
   if (uVar1 < 5) {
     if (uVar1 != 1) goto LAB_004102d5;
-    str2 = s_truck01_wav_00458e95;
+    filename_val = s_truck01_wav_00458e95;
   }
   else if (uVar1 < 6) {
-    str2 = s_truck02_wav_00458ea4;
+    filename_val = s_truck02_wav_00458ea4;
   }
   else {
     if (uVar1 < 0xb) {
@@ -119,20 +116,21 @@ LAB_004102d5:
       goto LAB_004102eb;
     }
     if (uVar1 < 0xc) {
-      str2 = s_truck06_wav_00458ed1;
+      filename_val = s_truck06_wav_00458ed1;
     }
     else {
       if (uVar1 != 0xc) goto LAB_004102d5;
-      str2 = s_sirene_wav_00458e2c;
+      filename_val = s_sirene_wav_00458e2c;
     }
   }
-  opponent_index = play_sound_buffer_2(str2,iVar2,1);
+  opponent_index = play_sound_buffer_2(filename_val,iVar2,1);
   (&object_sound_handles)[slot * 2] = opponent_index;
 LAB_004102eb:
-  chp = CHP();
+  fVar3 = (float10)in_stack_00000010;
+  CHP();
   set_sound_buffer_vol
             ((&object_sound_handles)[slot * 2],
-             (&volume_by_distance)[(int)ROUND(chp)] - volume_attenuation);
+             (&volume_by_distance)[(int)ROUND(fVar3)] - volume_attenuation);
   (&object_sound_slots)[slot * 2] = object;
   return;
 }
@@ -140,35 +138,37 @@ LAB_004102eb:
 
 /* ==== 0041032e set_object_sound_volume ==== */
 
-void __watcall set_object_sound_volume(void)
+int __watcall
+set_object_sound_volume
+          (int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,
+          undefined4 param_6,undefined4 param_7,float param_8)
 
 {
-  int in_EAX;
-  float10 chp;
+  int chp;
+  float10 fVar1;
   
   if (engine_sound_enabled != 0) {
+    fVar1 = (float10)param_8;
     chp = CHP();
-    set_sound_buffer_vol
-              ((&object_sound_handles)[in_EAX * 2],
-               (&volume_by_distance)[(int)ROUND(chp)] - volume_attenuation);
+    param_1 = set_sound_buffer_vol
+                        ((&object_sound_handles)[chp * 2],
+                         (&volume_by_distance)[(int)ROUND(fVar1)] - volume_attenuation);
   }
-  return;
+  return param_1;
 }
 
 
 /* ==== 00410372 stop_object_sound ==== */
 
-void __watcall stop_object_sound(undefined4 param_1,undefined4 param_2)
+void __watcall stop_object_sound(int param_1)
 
 {
-  int iVar1;
-  undefined8 object_sound_slot;
+  int object_sound_slot;
   
-  object_sound_slot = find_object_sound_slot(param_1,param_2);
-  iVar1 = (int)object_sound_slot;
-  if ((engine_sound_enabled != 0) && (iVar1 != -1)) {
-    stop_sound_buffer((&object_sound_handles)[iVar1 * 2]);
-    (&object_sound_slots)[iVar1 * 2] = 0xffffffff;
+  object_sound_slot = find_object_sound_slot(param_1);
+  if ((engine_sound_enabled != 0) && (object_sound_slot != -1)) {
+    stop_sound_buffer((&object_sound_handles)[object_sound_slot * 2]);
+    (&object_sound_slots)[object_sound_slot * 2] = 0xffffffff;
   }
   return;
 }
@@ -176,37 +176,40 @@ void __watcall stop_object_sound(undefined4 param_1,undefined4 param_2)
 
 /* ==== 004103a5 update_object_sound ==== */
 
-void __watcall update_object_sound(float param_1,float param_2,float param_3)
+void __watcall update_object_sound(int object_val)
 
 {
-  undefined4 uVar1;
-  ushort uVar2;
-  undefined8 uVar3;
+  int object_sound_slot;
+  int slot_val;
+  undefined4 extraout_EDX;
   float in_stack_00000004;
   float in_stack_00000008;
   float in_stack_0000000c;
   float in_stack_00000010;
   
-  uVar3 = find_object_sound_slot(param_1,param_1);
-  uVar1 = (undefined4)((ulonglong)uVar3 >> 0x20);
+  object_sound_slot = find_object_sound_slot(object_val);
+  slot_val = engine_sound_enabled;
   if (engine_sound_enabled != 0) {
-    uVar2 = (ushort)(0.0 < in_stack_00000010) << 8 | (ushort)NAN(in_stack_00000010) << 10 |
-            (ushort)(in_stack_00000010 == 0.0) << 0xe;
-    if (0.0 < in_stack_00000010 || (in_stack_00000010 == 0.0) != 0) {
-      uVar2 = (ushort)(in_stack_00000010 < 500.0) << 8 | (ushort)NAN(in_stack_00000010) << 10 |
-              (ushort)(in_stack_00000010 == 500.0) << 0xe;
+    if ((in_stack_00000010 < 0.0) || (500.0 < in_stack_00000010)) {
+      in_stack_00000010 = 0.0;
     }
-    if ((int)uVar3 == -1) {
-      uVar3 = find_free_sound_slot(CONCAT22((short)((ulonglong)uVar3 >> 0x10),uVar2),uVar1);
-      if ((int)uVar3 != -1) {
-        start_object_sound((int)uVar3,(int)((ulonglong)uVar3 >> 0x20));
+    if (object_sound_slot == -1) {
+      slot_val = find_free_sound_slot();
+      if (slot_val != -1) {
+        start_object_sound(slot_val,object_val);
       }
     }
     else {
-      debugmsg(s_changing_pos_object__d___5_2f__5_00445866,uVar1,
-               (double)(in_stack_00000004 - player_x),(double)(in_stack_00000008 - player_y),
-               (double)(in_stack_0000000c - player_z));
-      set_object_sound_volume();
+      debugmsg(s_changing_pos_object__d___5_2f__5_00445866,object_val,
+               SUB84((double)(in_stack_00000004 - player_x),0),
+               (int)((ulonglong)(double)(in_stack_00000004 - player_x) >> 0x20),
+               SUB84((double)(in_stack_00000008 - player_y),0),
+               (int)((ulonglong)(double)(in_stack_00000008 - player_y) >> 0x20),
+               SUB84((double)(in_stack_0000000c - player_z),0),
+               (int)((ulonglong)(double)(in_stack_0000000c - player_z) >> 0x20));
+      set_object_sound_volume
+                (object_sound_slot,extraout_EDX,object_sound_slot,slot_val,in_stack_00000004,
+                 in_stack_00000008,in_stack_0000000c,in_stack_00000010);
     }
   }
   return;

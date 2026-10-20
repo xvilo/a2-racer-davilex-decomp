@@ -88,7 +88,7 @@ int __watcall get_key_state(int param_1)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   
   if (xvga_init_keyboard_ok == 0) {
     fatal_exit(s__s__d____error_keyboard_device_w_004522e2,s_ddinput_cpp_004522d6,0x56);
@@ -96,9 +96,8 @@ int __watcall get_key_state(int param_1)
   lVar1 = (**(code **)(*(int *)xvga_di_keyboard + 0x24))
                     (xvga_di_keyboard,0x100,&xvga_keyboard_state);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____error_getting_keyboard_d_00452322,s_ddinput_cpp_00452316,0x5a,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____error_getting_keyboard_d_00452322,s_ddinput_cpp_00452316,0x5a,arg4);
   }
   return (uint)(byte)(&xvga_keyboard_state)[param_1];
 }

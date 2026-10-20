@@ -3,118 +3,108 @@
 
 /* ==== 0041e71a dosret0 ==== */
 
-undefined8 __watcall dosret0(undefined4 param_1,int unaff_EDX)
+uint __watcall dosret0(uint param_1,int param_2)
 
 {
   int iVar1;
-  uint extraout_EDX;
-  uint uVar2;
   
-  if (unaff_EDX == 0) {
+  if (param_2 == 0) {
     param_1 = 0;
   }
-  else if (unaff_EDX != 0) {
-    set_doserrno(param_1,param_1);
-    uVar2 = extraout_EDX;
-    if (extraout_EDX == 0x7b) {
+  else if (param_2 != 0) {
+    set_doserrno(param_1);
+    if (param_1 == 0x7b) {
       iVar1 = 1;
     }
-    else if (extraout_EDX == 0xce) {
+    else if (param_1 == 0xce) {
       iVar1 = 9;
     }
-    else if (extraout_EDX == 0xb7) {
+    else if (param_1 == 0xb7) {
       iVar1 = 7;
     }
     else {
-      if (0x13 < extraout_EDX) {
-        uVar2 = 0x13;
+      if (0x13 < param_1) {
+        param_1 = 0x13;
       }
-      iVar1 = *(int *)(&DAT_0043636d + uVar2) >> 0x18;
+      iVar1 = *(int *)(&DAT_0043636d + param_1) >> 0x18;
     }
-    set_errno(iVar1,uVar2);
-    return CONCAT44(unaff_EDX,0xffffffff);
+    set_errno(iVar1);
+    return 0xffffffff;
   }
-  return CONCAT44(unaff_EDX,param_1);
+  return param_1;
 }
 
 
 /* ==== 0041e721 dosretax ==== */
 
-ulonglong __watcall dosretax(uint param_1,int unaff_EDX)
+undefined4 __watcall dosretax(uint param_1,int param_2)
 
 {
   int iVar1;
-  uint extraout_EDX;
-  uint uVar2;
   
-  if (unaff_EDX != 0) {
-    set_doserrno(param_1,param_1);
-    uVar2 = extraout_EDX;
-    if (extraout_EDX == 0x7b) {
+  if (param_2 != 0) {
+    set_doserrno(param_1);
+    if (param_1 == 0x7b) {
       iVar1 = 1;
     }
-    else if (extraout_EDX == 0xce) {
+    else if (param_1 == 0xce) {
       iVar1 = 9;
     }
-    else if (extraout_EDX == 0xb7) {
+    else if (param_1 == 0xb7) {
       iVar1 = 7;
     }
     else {
-      if (0x13 < extraout_EDX) {
-        uVar2 = 0x13;
+      if (0x13 < param_1) {
+        param_1 = 0x13;
       }
-      iVar1 = *(int *)(&DAT_0043636d + uVar2) >> 0x18;
+      iVar1 = *(int *)(&DAT_0043636d + param_1) >> 0x18;
     }
-    set_errno(iVar1,uVar2);
-    return CONCAT44(unaff_EDX,0xffffffff);
+    set_errno(iVar1);
+    return 0xffffffff;
   }
-  return (ulonglong)param_1;
+  return param_1;
 }
 
 
 /* ==== 0041e725 set_errno_dos ==== */
 
-undefined8 __watcall set_errno_dos(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall set_errno_dos(uint param_1)
 
 {
   int iVar1;
-  uint extraout_EDX;
-  uint uVar2;
   
-  set_doserrno(param_1,param_1);
-  uVar2 = extraout_EDX;
-  if (extraout_EDX == 0x7b) {
+  set_doserrno(param_1);
+  if (param_1 == 0x7b) {
     iVar1 = 1;
   }
-  else if (extraout_EDX == 0xce) {
+  else if (param_1 == 0xce) {
     iVar1 = 9;
   }
-  else if (extraout_EDX == 0xb7) {
+  else if (param_1 == 0xb7) {
     iVar1 = 7;
   }
   else {
-    if (0x13 < extraout_EDX) {
-      uVar2 = 0x13;
+    if (0x13 < param_1) {
+      param_1 = 0x13;
     }
-    iVar1 = *(int *)(&DAT_0043636d + uVar2) >> 0x18;
+    iVar1 = *(int *)(&DAT_0043636d + param_1) >> 0x18;
   }
-  set_errno(iVar1,uVar2);
-  return CONCAT44(unaff_EDX,0xffffffff);
+  set_errno(iVar1);
+  return 0xffffffff;
 }
 
 
 /* ==== 0041e776 set_errno_nt ==== */
 
-undefined8 __watcall set_errno_nt(undefined4 param_1,undefined4 unaff_EDX_00)
+undefined4 __watcall set_errno_nt(void)
 
 {
   DWORD DVar1;
-  undefined4 unaff_EDX;
-  undefined8 set_errno_dos_result;
+  undefined4 set_errno_dos_result;
   
   DVar1 = GetLastError();
-  set_errno_dos_result = set_errno_dos(DVar1,unaff_EDX);
-  return CONCAT44(unaff_EDX_00,(int)set_errno_dos_result);
+  set_errno_dos_result = set_errno_dos(DVar1);
+  return set_errno_dos_result;
 }
 
 

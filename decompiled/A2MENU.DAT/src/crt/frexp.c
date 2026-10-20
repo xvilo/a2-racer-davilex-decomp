@@ -3,23 +3,19 @@
 
 /* ==== 004230b4 frexp ==== */
 
-double __watcall frexp(double _X,int *_Y)
+void __watcall
+frexp(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
+     uint param_6,int *param_7)
 
 {
-  uint uVar1;
-  int iVar2;
-  int *in_stack_0000000c;
-  undefined2 uStack_12;
+  int iVar1;
   
-  iVar2 = 0;
-  uStack_12 = (ushort)((ulonglong)_X >> 0x30);
-  if ((((ulonglong)_X & 0x7fffffff00000000) != 0) || (_X._0_4_ != 0)) {
-    uVar1 = (uint)uStack_12;
-    uStack_12 = uStack_12 & 0x800f | 0x3fe0;
-    iVar2 = ((int)(uVar1 & 0x7ff0) >> 4) + -0x3fe;
+  iVar1 = 0;
+  if (((param_6 & 0x7fffffff) != 0) || (param_5 != 0)) {
+    iVar1 = ((int)(param_6 >> 0x10 & 0x7ff0) >> 4) + -0x3fe;
   }
-  *in_stack_0000000c = iVar2;
-  return SUB108((float10)(double)CONCAT26(uStack_12,SUB86(_X,0)),0);
+  *param_7 = iVar1;
+  return;
 }
 
 

@@ -3,20 +3,20 @@
 
 /* ==== 0040d7bc strnicmp ==== */
 
-int __watcall strnicmp(char *_Str1,char *_Str,size_t _MaxCount)
+undefined4 __watcall strnicmp(byte *param_1,undefined1 *param_2,int param_3)
 
 {
   byte bVar2;
   uint uVar1;
   
   while( true ) {
-    if (_MaxCount == 0) {
+    if (param_3 == 0) {
       return 0;
     }
-    bVar2 = *_Str1;
-    uVar1 = (uint)CONCAT11(*_Str,bVar2);
+    bVar2 = *param_1;
+    uVar1 = (uint)CONCAT11(*param_2,bVar2);
     if ((0x40 < bVar2) && (bVar2 < 0x5b)) {
-      uVar1 = (uint)CONCAT11(*_Str,bVar2 + 0x20);
+      uVar1 = (uint)CONCAT11(*param_2,bVar2 + 0x20);
     }
     bVar2 = (byte)(uVar1 >> 8);
     if ((0x40 < bVar2) && (bVar2 < 0x5b)) {
@@ -27,9 +27,9 @@ int __watcall strnicmp(char *_Str1,char *_Str,size_t _MaxCount)
     if (bVar2 == 0) {
       return 0;
     }
-    _Str1 = _Str1 + 1;
-    _Str = _Str + 1;
-    _MaxCount = _MaxCount - 1;
+    param_1 = param_1 + 1;
+    param_2 = param_2 + 1;
+    param_3 = param_3 + -1;
   }
   return (uVar1 & 0xff) - (uint)bVar2;
 }

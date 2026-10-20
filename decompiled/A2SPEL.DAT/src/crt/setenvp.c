@@ -5,65 +5,62 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall setenvp(undefined4 param_1,uint unaff_EDX_00)
+undefined4 * __watcall setenvp(void)
 
 {
   char cVar1;
-  int iVar2;
-  uint uVar3;
+  undefined4 *in_EAX;
+  uint uVar2;
+  char *pcVar3;
   char *pcVar4;
   int i;
-  uint unaff_EDX;
-  char *pcVar5;
-  size_t _Size;
-  undefined8 buffer;
+  int iVar5;
+  int j;
   
   pcVar4 = Envptr;
   if (environ == 0) {
     i = 0;
-    unaff_EDX = unaff_EDX_00 & 0xffffff00;
-    pcVar5 = Envptr;
-    while (*pcVar5 != '\0') {
+    pcVar3 = Envptr;
+    while (*pcVar3 != '\0') {
       do {
-        cVar1 = *pcVar5;
-        unaff_EDX = (uint)CONCAT21((short)(unaff_EDX >> 0x10),cVar1) << 8;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar3;
+        pcVar3 = pcVar3 + 1;
       } while (cVar1 != '\0');
       i = i + 1;
     }
-    uVar3 = (int)pcVar5 - (int)Envptr;
-    if (uVar3 == 0) {
-      uVar3 = 1;
+    uVar2 = (int)pcVar3 - (int)Envptr;
+    if (uVar2 == 0) {
+      uVar2 = 1;
     }
-    buffer = nmalloc(uVar3,unaff_EDX);
-    pcVar5 = (char *)buffer;
-    if (pcVar5 != (char *)0x0) {
-      buffer = nmalloc(i * 5 + 4,pcVar5);
-      if ((int)buffer == 0) {
-        nfree((uint)((ulonglong)buffer >> 0x20));
+    pcVar3 = (char *)nmalloc(uVar2);
+    in_EAX = (undefined4 *)0x0;
+    if (pcVar3 != (char *)0x0) {
+      i = nmalloc(i * 5 + 4);
+      if (i == 0) {
+        in_EAX = (undefined4 *)nfree((undefined4 *)pcVar3);
       }
       else {
-        _Size = 0;
-        i = 0;
-        environ = (int)buffer;
-        while (iVar2 = environ, *pcVar4 != '\0') {
-          *(char **)(i + environ) = pcVar5;
+        j = 0;
+        iVar5 = 0;
+        environ = i;
+        while (i = environ, *pcVar4 != '\0') {
+          *(char **)(iVar5 + environ) = pcVar3;
           do {
             cVar1 = *pcVar4;
             pcVar4 = pcVar4 + 1;
-            *pcVar5 = cVar1;
-            pcVar5 = pcVar5 + 1;
+            *pcVar3 = cVar1;
+            pcVar3 = pcVar3 + 1;
           } while (cVar1 != '\0');
-          i = i + 4;
-          _Size = _Size + 1;
+          iVar5 = iVar5 + 4;
+          j = j + 1;
         }
-        *(undefined4 *)(i + environ) = 0;
-        _env_mask = (void *)(iVar2 + i + 4);
-        memset(_env_mask,0,_Size);
+        *(undefined4 *)(iVar5 + environ) = 0;
+        _env_mask = (undefined4 *)(i + iVar5 + 4);
+        in_EAX = memset(_env_mask,0,j);
       }
     }
   }
-  return;
+  return in_EAX;
 }
 
 

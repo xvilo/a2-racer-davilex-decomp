@@ -1,203 +1,203 @@
-address	name	size	thunk	callers	callees	status
-00401010	read_game_ini_int	19	false	1	1	ok
-00401023	build_infio_path	148	false	1	1	ok
-004010b7	run_module	176	false	1	3	ok
-00401167	WinMain	668	false	0	16	ok
-00401403	launcher_window_proc	131	false	0	6	ok
-00401486	getcwd	121	false	1	4	ok
-004014ff	spawnv	14	false	1	1	ok
-0040150d	get_errno_ptr	10	false	1	1	ok
-00401522	wstart2	15	false	0	1	ok
-004015ab	set_errno_dos	81	false	3	2	ok
-004015fc	set_errno_nt	15	false	3	2	ok
-0040160b	nmalloc	239	false	8	4	ok
-004016ff	set_errno	14	false	6	1	ok
-00401714	set_EINVAL	16	false	0	1	ok
-00401724	set_doserrno	14	false	3	1	ok
-00401732	write_comspec_switch	12	false	1	0	ok
-0040173e	path_exists	18	false	1	1	ok
-00401750	spawnve	787	false	2	19	ok
-00401a6f	get_first_thread_data	5	false	14	0	ok
-00401a74	crt_nop_hook_1	1	false	13	0	ok
-00401a7f	NTInit	295	false	1	8	ok
-00401ba6	NTMainInit	70	false	1	6	ok
-00401bec	exit_2	31	false	2	4	ok
-00401c0b	WinMain_1	234	false	1	9	ok
-00401cfc	MemAllocator	163	false	1	0	ok
-00401da4	MemFree	272	false	1	0	ok
-00401eaf	LinkUpNewMHeap	116	false	1	0	ok
-00401f23	CreateNewNHeap	144	false	1	4	ok
-00401fb3	ExpandDGROUP	17	false	1	2	ok
-00401fc4	AdjustAmount	74	false	1	0	ok
-0040200e	nmemneed	3	false	1	0	ok
-00402011	setenvp	184	false	1	3	ok
-004020c9	access	50	false	1	3	ok
-004020fd	alloca_stack_check	16	false	1	1	ok
-0040210d	check_stack_overflow	47	false	1	3	ok
-0040213c	probe_stack_pages	32	false	1	0	ok
-0040215c	stpcpy	15	false	2	0	ok
-0040216b	build_environment_block	274	false	1	6	ok
-0040227d	build_command_line	65	false	2	1	ok
-004022be	string_length	25	false	2	0	ok
-004022d7	stackavail	47	false	2	1	ok
-00402306	nfree	142	false	9	2	ok
-00402394	copy_path_component	82	false	1	3	ok
-004023e6	split_spawn_path	219	false	1	3	ok
-004024c1	crt_nop_hook_2	1	false	1	0	ok
-004024c2	pickup	20	false	1	0	ok
-004024d6	makepath	491	false	1	4	ok
-004026c1	stricmp	71	false	1	0	ok
-00402708	dospawn	318	false	1	10	ok
-00402846	getenv	97	false	1	1	ok
-004028a7	spawnl	30	false	1	1	ok
-004028e9	raise_sigill_handler	35	false	0	1	ok
-0040291e	CtrlHandlerIsNeeded	63	false	3	1	ok
-0040295d	StartCtrlHandler	44	false	1	1	ok
-00402989	KillCtrlHandler	55	false	3	1	ok
-004029c0	sigabort	5	false	0	0	ok
-004029c5	raise	151	false	1	5	ok
-004029fe	sigfpe_handler	71	false	1	1	ok
-00402a45	signal	135	false	0	6	ok
-00402b2a	SigInit	45	false	1	1	ok
-00402b57	crt_nop_hook_3	1	false	1	0	ok
-00402f28	NewExceptionHandler	62	false	1	1	ok
-00402f66	DoneExceptionHandler	79	false	2	3	ok
-00402fb5	NTAtMaxFiles	69	false	0	0	ok
-00402ffa	NTAddFileHandle	121	false	1	2	ok
-00403073	NTAddSpecificFileHandle	156	false	0	3	ok
-0040310f	NTRemoveFileHandle	44	false	1	1	ok
-0040313b	NTInitFileHandles	55	false	1	2	ok
-00403172	NTGetFakeHandle	18	false	0	0	ok
-00403184	crt_nop_hook_4	1	false	1	0	ok
-00403185	CloseSemaphore	44	false	1	1	ok
-004031b1	AccessIOB	10	false	0	1	ok
-004031bb	ReleaseIOB	10	false	0	1	ok
-004031c5	AccessFileH	13	false	0	1	ok
-004031d2	ReleaseFileH	16	false	0	1	ok
-004031e2	InitAccessH	5	true	0	0	ok
-004031e7	FiniAccessH	28	false	0	2	ok
-00403203	AccessNHeap	7	false	0	1	ok
-0040320a	ReleaseNHeap	10	false	0	1	ok
-00403214	AccessFHeap	7	false	0	1	ok
-0040321b	ReleaseFHeap	10	false	0	1	ok
-00403225	AccessTDList	7	false	0	1	ok
-0040322c	ReleaseTDList	7	false	0	1	ok
-00403233	AccessFList	5	false	0	0	ok
-00403238	AccessSemaphore	93	false	6	5	ok
-00403295	ReleaseFList	5	false	0	0	ok
-0040329a	ReleaseSemaphore	37	false	6	1	ok
-004032bf	MultipleThread	32	false	0	2	ok
-004032df	InitThreadData	63	false	2	2	ok
-0040331e	NTThreadInit	76	false	1	1	ok
-0040336a	NTAddThread	77	false	1	4	ok
-004033b7	NTRemoveThread	77	false	2	4	ok
-00403404	ThreadExit	10	false	0	1	ok
-0040340e	NTThreadFini	32	false	1	1	ok
-0040342e	InitMultipleThread	281	false	1	3	ok
-00403547	FiniSema4s	107	false	1	3	ok
-004035b3	strdup	69	false	2	1	ok
-004035f8	InitRtns	75	false	2	1	ok
-00403643	FiniRtns	79	false	1	1	ok
-00403692	RegisterThreadDataSize	21	false	0	0	ok
-004036b0	memset	24	false	5	1	ok
-004036c8	init_amblksiz	11	false	1	0	ok
-004036d3	crt_nop_hook_5	1	false	2	0	ok
-004036d4	exit	24	false	1	2	ok
-004036ec	exit_1	37	false	1	2	ok
-00403712	heapenable	33	false	0	1	ok
-00403733	heapmin	61	false	1	2	ok
-00403747	ReturnMemToSystem	94	false	1	1	ok
-004037a5	ReleaseMiniHeap	42	false	1	1	ok
-004037f8	exit_with_msg	55	false	1	2	ok
-0040382f	wcpp_2_fatal_runtime_error	29	false	3	2	ok
-0040384c	strcpy_inline	31	false	1	0	ok
-0040386b	mbsnccnt	62	false	1	1	ok
-004038a9	mbsnbcnt	49	false	4	1	ok
-004038da	mbsninc	25	false	1	1	ok
-004038f3	mbsninc_1	69	false	0	0	ok
-00403938	mbscat	81	false	0	0	ok
-00403989	mbscpy	31	false	0	0	ok
-004039a8	mbsdup	65	false	0	1	ok
-004039e9	mbsncat	93	false	0	2	ok
-00403a46	mbsnbcat	242	false	0	1	ok
-00403b38	mbsncpy	31	false	1	2	ok
-00403b57	mbsnbcpy	180	false	1	2	ok
-00403c0b	mbptov	62	false	2	0	ok
-00403c49	mbvtop	26	false	0	0	ok
-00403c63	mbvtop_1	52	false	1	0	ok
-00403c97	checkIsDBCS	49	false	0	1	ok
-00403cc8	mbgetcode	109	false	2	0	ok
-00403d35	mbsnextc	82	false	0	0	ok
-00403d87	mbsinc	70	false	0	0	ok
-00403dcd	mbsdec	134	false	1	0	ok
-00403e53	strnicmp	83	false	1	0	ok
-00403eac	terminate	18	false	1	1	ok
-00403ebe	control87	83	false	1	0	ok
-00403f11	save_8087	5	false	0	0	ok
-00403f16	rest_8087	4	false	0	0	ok
-00403f1a	init_8087	49	false	1	1	ok
-00403f55	chk8087	74	false	0	1	ok
-00403f9f	NTRealKey	44	false	0	0	ok
-00403fcb	initConsoleHandles	105	false	0	2	ok
-0040404a	IOMode	85	false	0	1	ok
-0040409f	SetIOMode	21	false	0	0	ok
-004040b4	nrealloc	122	false	2	4	ok
-0040412e	GetThreadData	55	false	1	3	ok
-00404165	AddThreadData	97	false	2	4	ok
-004041c6	RemoveThreadData	74	false	1	2	ok
-00404210	FreeThreadDataList	41	false	0	1	ok
-00404239	calloc	24	false	2	2	ok
-00404251	FiniThreadProcessing	5	true	1	0	ok
-00404260	STOSB	49	false	1	1	ok
-00404297	fill_dwords	108	false	1	0	ok
-00404303	EnterWVIDEO	21	false	1	0	ok
-00404329	strncat	63	false	2	0	ok
-00404368	strncpy	37	false	1	0	ok
-0040438e	init_80x87	39	false	1	0	ok
-004043b5	isatty	65	false	1	2	ok
-004043f6	msize	9	false	1	0	ok
-004043ff	expand	73	false	1	2	ok
-00404439	HeapManager_expand	399	false	1	1	ok
-004045d7	crt_return_zero	3	false	1	0	ok
-004045e1	end_thread	7	false	0	1	ok
-004045e8	initthread	7	false	1	1	ok
-004045ef	RegisterThreadData	63	false	0	0	ok
-004046da	CBeginThread	212	false	0	9	ok
-004047ae	CEndThread	39	false	1	4	ok
-004047fd	utoa	74	false	1	0	ok
-00404847	itoa	27	false	1	1	ok
-004048dc	ExitThread	6	true	1	0	ok
-004048e2	CreateThread	6	true	1	0	ok
-004048e8	CreateEventA	6	true	1	0	ok
-004048ee	GetCurrentThread	6	true	1	0	ok
-004048f4	SetEvent	6	true	0	0	ok
-004048fa	GetFileType	6	true	1	0	ok
-00404900	CreateFileA	6	true	1	0	ok
-00404906	GetCPInfo	6	true	1	0	ok
-0040490c	VirtualFree	6	true	1	0	ok
-00404912	TlsFree	6	true	1	0	ok
-00404918	TlsSetValue	6	true	3	0	ok
-0040491e	TlsAlloc	6	true	1	0	ok
-00404924	TlsGetValue	6	true	3	0	ok
-0040492a	ReleaseMutex	6	true	1	0	ok
-00404930	CreateMutexA	6	true	2	0	ok
-00404936	GetCurrentThreadId	6	true	3	0	ok
-0040493c	GetStdHandle	6	true	1	0	ok
-00404942	SetStdHandle	6	true	1	0	ok
-00404948	WriteFile	6	true	1	0	ok
-00404966	SetConsoleCtrlHandler	6	true	2	0	ok
-0040496c	CloseHandle	6	true	4	0	ok
-00404972	WaitForSingleObject	6	true	3	0	ok
-00404978	GetExitCodeProcess	6	true	1	0	ok
-0040497e	Sleep	6	true	1	0	ok
-00404984	CreateProcessA	6	true	1	0	ok
-0040498a	GetFileAttributesA	6	true	1	0	ok
-00404990	VirtualAlloc	6	true	1	0	ok
-00404996	GetModuleHandleA	6	true	2	0	ok
-0040499c	GetVersion	6	true	1	0	ok
-004049a2	GetCommandLineA	6	true	2	0	ok
-004049a8	GetModuleFileNameA	6	true	1	0	ok
-004049ae	GetEnvironmentStrings	6	true	1	0	ok
-004049b4	ExitProcess	6	true	2	0	ok
-004049ba	GetLastError	6	true	2	0	ok
-004049c0	GetCurrentDirectoryA	6	true	1	0	ok
+address	name	size	thunk	callers	callees	status	convention	prototype
+00401010	read_game_ini_int	19	false	1	1	ok	__watcall2	int __watcall read_game_ini_int(char * section, char * key)
+00401023	build_infio_path	148	false	1	1	ok	__watcall1	void __watcall build_infio_path(char * filename)
+004010b7	run_module	176	false	1	3	ok	__watcall2	int __watcall run_module(char * module, char * arguments)
+00401167	WinMain	668	false	0	16	ok	__stdcall	int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+00401403	launcher_window_proc	131	false	0	6	ok	__stdcall	long __stdcall launcher_window_proc(HWND hwnd, uint message, uint wparam, long lparam)
+00401486	getcwd	121	false	1	4	ok	__watcall2	void __watcall getcwd(undefined4 * param_1, uint param_2)
+004014ff	spawnv	14	false	1	1	ok	__watcall3	uint __watcall spawnv(undefined4 param_1, byte * param_2, int * param_3)
+0040150d	get_errno_ptr	10	false	1	1	ok	__watcall0	int * __watcall get_errno_ptr(void)
+00401522	wstart2	15	false	0	1	ok	__watcall0	undefined4 __watcall wstart2(void)
+004015ab	set_errno_dos	81	false	3	2	ok	__watcall1	undefined4 __watcall set_errno_dos(uint param_1)
+004015fc	set_errno_nt	15	false	3	2	ok	__watcall0	undefined4 __watcall set_errno_nt(void)
+0040160b	nmalloc	239	false	8	4	ok	__watcall1	undefined4 __watcall nmalloc(uint param_1)
+004016ff	set_errno	14	false	6	1	ok	__watcall1	void __watcall set_errno(undefined4 param_1)
+00401714	set_EINVAL	16	false	0	1	ok	__watcall0	undefined4 __watcall set_EINVAL(void)
+00401724	set_doserrno	14	false	3	1	ok	__watcall1	void __watcall set_doserrno(undefined4 param_1)
+00401732	write_comspec_switch	12	false	1	0	ok	__watcall1	void __watcall write_comspec_switch(char * param_1)
+0040173e	path_exists	18	false	1	1	ok	__watcall1	int __watcall path_exists(char * file_name)
+00401750	spawnve	787	false	2	19	ok	__watcall4	uint __watcall spawnve(undefined4 param_1, byte * param_2, int * param_3, int * param_4)
+00401a6f	get_first_thread_data	5	false	14	0	ok	__watcall0	void * __watcall get_first_thread_data(void)
+00401a74	crt_nop_hook_1	1	false	13	0	ok	__watcall0	void __watcall crt_nop_hook_1(void)
+00401a7f	NTInit	295	false	1	8	ok	__watcall3	void __watcall NTInit(int param_1, undefined4 * param_2, HMODULE module_val)
+00401ba6	NTMainInit	70	false	1	6	ok	__watcall2	void __watcall NTMainInit(undefined4 param_1, undefined4 * param_2)
+00401bec	exit_2	31	false	2	4	ok	__watcall1	undefined4 __watcall exit_2(UINT exit_code)
+00401c0b	WinMain_1	234	false	1	9	ok	__watcall0	undefined4 __watcall WinMain_1(void)
+00401cfc	MemAllocator	163	false	1	0	ok	__watcall3	undefined4 __watcall MemAllocator(uint param_1, undefined4 param_2, int param_3)
+00401da4	MemFree	272	false	1	0	ok	__watcall3	void __watcall MemFree(undefined4 * param_1, undefined4 param_2, int param_3)
+00401eaf	LinkUpNewMHeap	116	false	1	0	ok	__watcall1	int * __watcall LinkUpNewMHeap(int * param_1)
+00401f23	CreateNewNHeap	144	false	1	4	ok	__watcall0	undefined4 __watcall CreateNewNHeap(void)
+00401fb3	ExpandDGROUP	17	false	1	2	ok	__watcall1	undefined4 __watcall ExpandDGROUP(undefined4 param_1)
+00401fc4	AdjustAmount	74	false	1	0	ok	__watcall1	undefined4 __watcall AdjustAmount(uint * param_1)
+0040200e	nmemneed	3	false	1	0	ok	__watcall0	undefined4 __watcall nmemneed(void)
+00402011	setenvp	184	false	1	3	ok	__watcall0	undefined4 * __watcall setenvp(void)
+004020c9	access	50	false	1	3	ok	__watcall2	undefined4 __watcall access(LPCSTR file_name, uint param_2)
+004020fd	alloca_stack_check	16	false	1	1	ok	__watcall4	undefined4 __watcall alloca_stack_check(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined1 * param_5)
+0040210d	check_stack_overflow	47	false	1	3	ok	__watcall3	void __watcall check_stack_overflow(undefined1 * param_1, undefined4 param_2, undefined4 param_3)
+0040213c	probe_stack_pages	32	false	1	0	ok	__watcall4	undefined4 __watcall probe_stack_pages(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, int param_5)
+0040215c	stpcpy	15	false	2	0	ok	__watcall2	char * __watcall stpcpy(char * param_1, char * param_2)
+0040216b	build_environment_block	274	false	1	6	ok	__watcall4	uint __watcall build_environment_block(int * param_1, int * param_2, undefined4 * param_3, undefined4 * param_4, undefined4 * param_5, int * param_6, int param_7)
+0040227d	build_command_line	65	false	2	1	ok	__watcall4	void __watcall build_command_line(char * param_1, int * param_2, char * param_3, int param_4)
+004022be	string_length	25	false	2	0	ok	__watcall1	int __watcall string_length(char * param_1)
+004022d7	stackavail	47	false	2	1	ok	__watcall0	undefined1 * __watcall stackavail(void)
+00402306	nfree	142	false	9	2	ok	__watcall1	undefined4 __watcall nfree(undefined4 * param_1)
+00402394	copy_path_component	82	false	1	3	ok	__watcall4	byte * __watcall copy_path_component(undefined4 * param_1, byte * param_2, byte * param_3, int param_4)
+004023e6	split_spawn_path	219	false	1	3	ok	__watcall4	void __watcall split_spawn_path(byte * param_1, byte * param_2, undefined4 * param_3, undefined4 * param_4, undefined4 * param_5, undefined4 * param_6)
+004024c1	crt_nop_hook_2	1	false	1	0	ok	__watcall0	void __watcall crt_nop_hook_2(void)
+004024c2	pickup	20	false	1	0	ok	__watcall2	int __watcall pickup(int param_1, int * param_2)
+004024d6	makepath	491	false	1	4	ok	__watcall4	void __watcall makepath(byte * param_1, byte * param_2, byte * param_3, byte * param_4, byte * param_5)
+004026c1	stricmp	71	false	1	0	ok	__watcall2	int __watcall stricmp(byte * param_1, byte * param_2)
+00402708	dospawn	318	false	1	10	ok	__watcall0	DWORD __watcall dospawn(void)
+00402846	getenv	97	false	1	1	ok	__watcall1	undefined4 __watcall getenv(char * param_1)
+004028a7	spawnl	30	false	1	1	ok	__watcall0	undefined4 __watcall spawnl(...)
+004028e9	raise_sigill_handler	35	false	0	1	ok	__watcall4	undefined4 __watcall raise_sigill_handler(undefined4 param_1, int param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+0040291e	CtrlHandlerIsNeeded	63	false	3	1	ok	__watcall0	undefined4 __watcall CtrlHandlerIsNeeded(void)
+0040295d	StartCtrlHandler	44	false	1	1	ok	__watcall0	void __watcall StartCtrlHandler(void)
+00402989	KillCtrlHandler	55	false	3	1	ok	__watcall0	void __watcall KillCtrlHandler(void)
+004029c0	sigabort	5	false	0	0	ok	__watcall4	undefined4 __watcall sigabort(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+004029c5	raise	151	false	1	5	ok	__watcall1	void __watcall raise(int param_1)
+004029fe	sigfpe_handler	71	false	1	1	ok	__watcall1	void __watcall sigfpe_handler(undefined4 param_1)
+00402a45	signal	135	false	0	6	ok	__watcall2	undefined4 __watcall signal(int param_1, int param_2)
+00402b2a	SigInit	45	false	1	1	ok	__watcall0	uint __watcall SigInit(void)
+00402b57	crt_nop_hook_3	1	false	1	0	ok	__watcall0	void __watcall crt_nop_hook_3(void)
+00402f28	NewExceptionHandler	62	false	1	1	ok	__watcall1	void __watcall NewExceptionHandler(undefined4 param_1)
+00402f66	DoneExceptionHandler	79	false	2	3	ok	__watcall0	void __watcall DoneExceptionHandler(void)
+00402fb5	NTAtMaxFiles	69	false	0	0	ok	__watcall0	undefined4 __watcall NTAtMaxFiles(void)
+00402ffa	NTAddFileHandle	121	false	1	2	ok	__watcall1	int __watcall NTAddFileHandle(int param_1)
+00403073	NTAddSpecificFileHandle	156	false	0	3	ok	__watcall2	undefined4 __watcall NTAddSpecificFileHandle(HANDLE handle, int param_2)
+0040310f	NTRemoveFileHandle	44	false	1	1	ok	__watcall1	undefined4 __watcall NTRemoveFileHandle(undefined4 param_1)
+0040313b	NTInitFileHandles	55	false	1	2	ok	__watcall0	void __watcall NTInitFileHandles(void)
+00403172	NTGetFakeHandle	18	false	0	0	ok	__watcall0	int __watcall NTGetFakeHandle(void)
+00403184	crt_nop_hook_4	1	false	1	0	ok	__watcall0	void __watcall crt_nop_hook_4(void)
+00403185	CloseSemaphore	44	false	1	1	ok	__watcall1	void __watcall CloseSemaphore(undefined4 * param_1)
+004031b1	AccessIOB	10	false	0	1	ok	__watcall0	DWORD __watcall AccessIOB(void)
+004031bb	ReleaseIOB	10	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseIOB(void)
+004031c5	AccessFileH	13	false	0	1	ok	__watcall1	DWORD __watcall AccessFileH(uint param_1)
+004031d2	ReleaseFileH	16	false	0	1	ok	__watcall1	undefined4 * __watcall ReleaseFileH(uint param_1)
+004031e2	InitAccessH	5	true	0	0	ok	__watcall1	int __watcall InitAccessH(int param_1)
+004031e7	FiniAccessH	28	false	0	2	ok	__watcall1	undefined4 __watcall FiniAccessH(uint param_1)
+00403203	AccessNHeap	7	false	0	1	ok	__watcall0	DWORD __watcall AccessNHeap(void)
+0040320a	ReleaseNHeap	10	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseNHeap(void)
+00403214	AccessFHeap	7	false	0	1	ok	__watcall0	DWORD __watcall AccessFHeap(void)
+0040321b	ReleaseFHeap	10	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseFHeap(void)
+00403225	AccessTDList	7	false	0	1	ok	__watcall0	DWORD __watcall AccessTDList(void)
+0040322c	ReleaseTDList	7	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseTDList(void)
+00403233	AccessFList	5	false	0	0	ok	__watcall4	DWORD __watcall AccessFList(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+00403238	AccessSemaphore	93	false	6	5	ok	__watcall1	DWORD __watcall AccessSemaphore(undefined4 * param_1)
+00403295	ReleaseFList	5	false	0	0	ok	__watcall4	undefined * __watcall ReleaseFList(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0040329a	ReleaseSemaphore	37	false	6	1	ok	__watcall1	undefined4 * __watcall ReleaseSemaphore(undefined4 * param_1)
+004032bf	MultipleThread	32	false	0	2	ok	__watcall0	LPVOID __watcall MultipleThread(void)
+004032df	InitThreadData	63	false	2	2	ok	__watcall1	undefined4 * __watcall InitThreadData(undefined4 * param_1)
+0040331e	NTThreadInit	76	false	1	1	ok	__watcall0	uint __watcall NTThreadInit(void)
+0040336a	NTAddThread	77	false	1	4	ok	__watcall1	undefined4 __watcall NTAddThread(undefined4 * param_1)
+004033b7	NTRemoveThread	77	false	2	4	ok	__watcall1	int __watcall NTRemoveThread(int param_1)
+00403404	ThreadExit	10	false	0	1	ok	__watcall4	int __watcall ThreadExit(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0040340e	NTThreadFini	32	false	1	1	ok	__watcall0	BOOL __watcall NTThreadFini(void)
+0040342e	InitMultipleThread	281	false	1	3	ok	__watcall0	void __watcall InitMultipleThread(void)
+00403547	FiniSema4s	107	false	1	3	ok	__watcall0	BOOL __watcall FiniSema4s(void)
+004035b3	strdup	69	false	2	1	ok	__watcall1	char * __watcall strdup(char * param_1)
+004035f8	InitRtns	75	false	2	1	ok	__watcall1	undefined4 __watcall InitRtns(undefined4 param_1)
+00403643	FiniRtns	79	false	1	1	ok	__watcall2	void __watcall FiniRtns(undefined4 param_1, undefined4 param_2)
+00403692	RegisterThreadDataSize	21	false	0	0	ok	__watcall1	int __watcall RegisterThreadDataSize(int param_1)
+004036b0	memset	24	false	5	1	ok	__watcall3	undefined4 * __watcall memset(undefined4 * param_1, undefined4 param_2, undefined4 param_3)
+004036c8	init_amblksiz	11	false	1	0	ok	__watcall0	void __watcall init_amblksiz(void)
+004036d3	crt_nop_hook_5	1	false	2	0	ok	__watcall0	void __watcall crt_nop_hook_5(void)
+004036d4	exit	24	false	1	2	ok	__watcall1	noreturn void __watcall exit(undefined4 param_1)
+004036ec	exit_1	37	false	1	2	ok	__watcall1	undefined4 __watcall exit_1(undefined4 param_1)
+00403712	heapenable	33	false	0	1	ok	__watcall1	undefined4 __watcall heapenable(undefined4 param_1)
+00403733	heapmin	61	false	1	2	ok	__watcall0	void __watcall heapmin(void)
+00403747	ReturnMemToSystem	94	false	1	1	ok	__watcall1	undefined4 __watcall ReturnMemToSystem(LPVOID address)
+004037a5	ReleaseMiniHeap	42	false	1	1	ok	__watcall1	void __watcall ReleaseMiniHeap(LPVOID address)
+004037f8	exit_with_msg	55	false	1	2	ok	__watcall2	undefined4 __watcall exit_with_msg(char * buffer, UINT exit_code)
+0040382f	wcpp_2_fatal_runtime_error	29	false	3	2	ok	__watcall2	int __watcall wcpp_2_fatal_runtime_error(char * buffer, UINT exit_code)
+0040384c	strcpy_inline	31	false	1	0	ok	__watcall2	char * __watcall strcpy_inline(char * param_1, char * param_2)
+0040386b	mbsnccnt	62	false	1	1	ok	__watcall2	int __watcall mbsnccnt(byte * param_1, int param_2)
+004038a9	mbsnbcnt	49	false	4	1	ok	__watcall2	int __watcall mbsnbcnt(byte * param_1, int param_2)
+004038da	mbsninc	25	false	1	1	ok	__watcall2	byte * __watcall mbsninc(byte * param_1, int param_2)
+004038f3	mbsninc_1	69	false	0	0	ok	__watcall2	byte * __watcall mbsninc_1(byte * param_1, int param_2)
+00403938	mbscat	81	false	0	0	ok	__watcall2	char * __watcall mbscat(char * param_1, char * param_2)
+00403989	mbscpy	31	false	0	0	ok	__watcall2	char * __watcall mbscpy(char * param_1, char * param_2)
+004039a8	mbsdup	65	false	0	1	ok	__watcall1	char * __watcall mbsdup(char * param_1)
+004039e9	mbsncat	93	false	0	2	ok	__watcall3	byte * __watcall mbsncat(byte * param_1, byte * param_2, int param_3)
+00403a46	mbsnbcat	242	false	0	1	ok	__watcall3	byte * __watcall mbsnbcat(byte * param_1, byte * param_2, uint param_3)
+00403b38	mbsncpy	31	false	1	2	ok	__watcall3	void __watcall mbsncpy(char * param_1, byte * param_2, int param_3)
+00403b57	mbsnbcpy	180	false	1	2	ok	__watcall3	void __watcall mbsnbcpy(char * param_1, char * param_2, int param_3)
+00403c0b	mbptov	62	false	2	0	ok	__watcall1	uint __watcall mbptov(byte * param_1)
+00403c49	mbvtop	26	false	0	0	ok	__watcall2	char * __watcall mbvtop(undefined4 param_1, char * param_2)
+00403c63	mbvtop_1	52	false	1	0	ok	__watcall1	undefined * __watcall mbvtop_1(undefined4 param_1)
+00403c97	checkIsDBCS	49	false	0	1	ok	__watcall0	BOOL __watcall checkIsDBCS(void)
+00403cc8	mbgetcode	109	false	2	0	ok	__watcall2	byte * __watcall mbgetcode(byte * param_1, uint * param_2)
+00403d35	mbsnextc	82	false	0	0	ok	__watcall1	uint __watcall mbsnextc(byte * param_1)
+00403d87	mbsinc	70	false	0	0	ok	__watcall1	byte * __watcall mbsinc(byte * param_1)
+00403dcd	mbsdec	134	false	1	0	ok	__watcall2	byte * __watcall mbsdec(byte * param_1, byte * param_2)
+00403e53	strnicmp	83	false	1	0	ok	__watcall3	undefined4 __watcall strnicmp(byte * param_1, undefined1 * param_2, int param_3)
+00403eac	terminate	18	false	1	1	ok	__watcall0	noreturn void __watcall terminate(void)
+00403ebe	control87	83	false	1	0	ok	__watcall4	void __watcall control87(uint param_1, uint param_2, undefined4 param_3, undefined4 param_4)
+00403f11	save_8087	5	false	0	0	ok	__watcall1	undefined2 * __watcall save_8087(undefined2 * param_1)
+00403f16	rest_8087	4	false	0	0	ok	__watcall1	undefined4 __watcall rest_8087(undefined4 param_1)
+00403f1a	init_8087	49	false	1	1	ok	__watcall0	uint __watcall init_8087(void)
+00403f55	chk8087	74	false	0	1	ok	__watcall0	uint __watcall chk8087(void)
+00403f9f	NTRealKey	44	false	0	0	ok	__watcall1	undefined4 __watcall NTRealKey(short * param_1)
+00403fcb	initConsoleHandles	105	false	0	2	ok	__watcall0	undefined4 __watcall initConsoleHandles(void)
+0040404a	IOMode	85	false	0	1	ok	__watcall1	undefined4 __watcall IOMode(uint param_1)
+0040409f	SetIOMode	21	false	0	0	ok	__watcall2	undefined * __watcall SetIOMode(int param_1, uint param_2)
+004040b4	nrealloc	122	false	2	4	ok	__watcall2	undefined4 * __watcall nrealloc(undefined4 * param_1, uint param_2)
+0040412e	GetThreadData	55	false	1	3	ok	__watcall0	LPVOID __watcall GetThreadData(void)
+00404165	AddThreadData	97	false	2	4	ok	__watcall2	undefined4 __watcall AddThreadData(undefined4 param_1, int param_2)
+004041c6	RemoveThreadData	74	false	1	2	ok	__watcall1	void __watcall RemoveThreadData(undefined4 param_1)
+00404210	FreeThreadDataList	41	false	0	1	ok	__watcall0	void __watcall FreeThreadDataList(void)
+00404239	calloc	24	false	2	2	ok	__watcall2	undefined4 * __watcall calloc(int param_1, int param_2)
+00404251	FiniThreadProcessing	5	true	1	0	ok	__watcall0	void __watcall FiniThreadProcessing(void)
+00404260	STOSB	49	false	1	1	ok	__watcall4	void __watcall STOSB(undefined4 * param_1, uint param_2, undefined4 param_3, uint param_4)
+00404297	fill_dwords	108	false	1	0	ok	__watcall4	undefined4 * __watcall fill_dwords(undefined4 * param_1, undefined4 param_2, undefined4 param_3, uint param_4)
+00404303	EnterWVIDEO	21	false	1	0	ok	__watcall2	undefined4 __watcall EnterWVIDEO(undefined4 param_1, undefined4 param_2)
+00404329	strncat	63	false	2	0	ok	__watcall3	void __watcall strncat(char * param_1, char * param_2, int param_3)
+00404368	strncpy	37	false	1	0	ok	__watcall3	void __watcall strncpy(char * param_1, char * param_2, int param_3)
+0040438e	init_80x87	39	false	1	0	ok	__watcall0	uint __watcall init_80x87(void)
+004043b5	isatty	65	false	1	2	ok	__watcall1	undefined4 __watcall isatty(undefined4 param_1)
+004043f6	msize	9	false	1	0	ok	__watcall1	int __watcall msize(int param_1)
+004043ff	expand	73	false	1	2	ok	__watcall2	uint __watcall expand(uint param_1, uint param_2)
+00404439	HeapManager_expand	399	false	1	1	ok	__watcall4	undefined4 __watcall HeapManager_expand(undefined4 param_1, uint param_2, uint param_3, uint * param_4)
+004045d7	crt_return_zero	3	false	1	0	ok	__watcall0	int __watcall crt_return_zero(void)
+004045e1	end_thread	7	false	0	1	ok	__watcall0	void __watcall end_thread(void)
+004045e8	initthread	7	false	1	1	ok	__watcall0	undefined4 __watcall initthread(void)
+004045ef	RegisterThreadData	63	false	0	0	ok	__watcall3	undefined4 * __watcall RegisterThreadData(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3)
+004046da	CBeginThread	212	false	0	9	ok	__watcall4	DWORD __watcall CBeginThread(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
+004047ae	CEndThread	39	false	1	4	ok	__watcall0	undefined4 __watcall CEndThread(void)
+004047fd	utoa	74	false	1	0	ok	__watcall3	void __watcall utoa(uint param_1, char * param_2, uint param_3)
+00404847	itoa	27	false	1	1	ok	__watcall3	void __watcall itoa(uint param_1, char * param_2, uint param_3)
+004048dc	ExitThread	6	true	1	0	ok	__stdcall	noreturn void __stdcall ExitThread(DWORD dwExitCode)
+004048e2	CreateThread	6	true	1	0	ok	__stdcall	HANDLE __stdcall CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId)
+004048e8	CreateEventA	6	true	1	0	ok	__stdcall	HANDLE __stdcall CreateEventA(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCSTR lpName)
+004048ee	GetCurrentThread	6	true	1	0	ok	__stdcall	HANDLE __stdcall GetCurrentThread(void)
+004048f4	SetEvent	6	true	0	0	ok	__stdcall	BOOL __stdcall SetEvent(HANDLE hEvent)
+004048fa	GetFileType	6	true	1	0	ok	__stdcall	DWORD __stdcall GetFileType(HANDLE hFile)
+00404900	CreateFileA	6	true	1	0	ok	__stdcall	HANDLE __stdcall CreateFileA(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+00404906	GetCPInfo	6	true	1	0	ok	__stdcall	BOOL __stdcall GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo)
+0040490c	VirtualFree	6	true	1	0	ok	__stdcall	BOOL __stdcall VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType)
+00404912	TlsFree	6	true	1	0	ok	__stdcall	BOOL __stdcall TlsFree(DWORD dwTlsIndex)
+00404918	TlsSetValue	6	true	3	0	ok	__stdcall	BOOL __stdcall TlsSetValue(DWORD dwTlsIndex, LPVOID lpTlsValue)
+0040491e	TlsAlloc	6	true	1	0	ok	__stdcall	DWORD __stdcall TlsAlloc(void)
+00404924	TlsGetValue	6	true	3	0	ok	__stdcall	LPVOID __stdcall TlsGetValue(DWORD dwTlsIndex)
+0040492a	ReleaseMutex	6	true	1	0	ok	__stdcall	BOOL __stdcall ReleaseMutex(HANDLE hMutex)
+00404930	CreateMutexA	6	true	2	0	ok	__stdcall	HANDLE __stdcall CreateMutexA(LPSECURITY_ATTRIBUTES lpMutexAttributes, BOOL bInitialOwner, LPCSTR lpName)
+00404936	GetCurrentThreadId	6	true	3	0	ok	__stdcall	DWORD __stdcall GetCurrentThreadId(void)
+0040493c	GetStdHandle	6	true	1	0	ok	__stdcall	HANDLE __stdcall GetStdHandle(DWORD nStdHandle)
+00404942	SetStdHandle	6	true	1	0	ok	__stdcall	BOOL __stdcall SetStdHandle(DWORD nStdHandle, HANDLE hHandle)
+00404948	WriteFile	6	true	1	0	ok	__stdcall	BOOL __stdcall WriteFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped)
+00404966	SetConsoleCtrlHandler	6	true	2	0	ok	__stdcall	BOOL __stdcall SetConsoleCtrlHandler(PHANDLER_ROUTINE HandlerRoutine, BOOL Add)
+0040496c	CloseHandle	6	true	4	0	ok	__stdcall	BOOL __stdcall CloseHandle(HANDLE hObject)
+00404972	WaitForSingleObject	6	true	3	0	ok	__stdcall	DWORD __stdcall WaitForSingleObject(HANDLE hHandle, DWORD dwMilliseconds)
+00404978	GetExitCodeProcess	6	true	1	0	ok	__stdcall	BOOL __stdcall GetExitCodeProcess(HANDLE hProcess, LPDWORD lpExitCode)
+0040497e	Sleep	6	true	1	0	ok	__stdcall	void __stdcall Sleep(DWORD dwMilliseconds)
+00404984	CreateProcessA	6	true	1	0	ok	__stdcall	BOOL __stdcall CreateProcessA(LPCSTR lpApplicationName, LPSTR lpCommandLine, LPSECURITY_ATTRIBUTES lpProcessAttributes, LPSECURITY_ATTRIBUTES lpThreadAttributes, BOOL bInheritHandles, DWORD dwCreationFlags, LPVOID lpEnvironment, LPCSTR lpCurrentDirectory, LPSTARTUPINFOA lpStartupInfo, LPPROCESS_INFORMATION lpProcessInformation)
+0040498a	GetFileAttributesA	6	true	1	0	ok	__stdcall	DWORD __stdcall GetFileAttributesA(LPCSTR lpFileName)
+00404990	VirtualAlloc	6	true	1	0	ok	__stdcall	LPVOID __stdcall VirtualAlloc(LPVOID lpAddress, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect)
+00404996	GetModuleHandleA	6	true	2	0	ok	__stdcall	HMODULE __stdcall GetModuleHandleA(LPCSTR lpModuleName)
+0040499c	GetVersion	6	true	1	0	ok	__stdcall	DWORD __stdcall GetVersion(void)
+004049a2	GetCommandLineA	6	true	2	0	ok	__stdcall	LPSTR __stdcall GetCommandLineA(void)
+004049a8	GetModuleFileNameA	6	true	1	0	ok	__stdcall	DWORD __stdcall GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD nSize)
+004049ae	GetEnvironmentStrings	6	true	1	0	ok	__stdcall	LPCH __stdcall GetEnvironmentStrings(void)
+004049b4	ExitProcess	6	true	2	0	ok	__stdcall	noreturn void __stdcall ExitProcess(UINT uExitCode)
+004049ba	GetLastError	6	true	2	0	ok	__stdcall	DWORD __stdcall GetLastError(void)
+004049c0	GetCurrentDirectoryA	6	true	1	0	ok	__stdcall	DWORD __stdcall GetCurrentDirectoryA(DWORD nBufferLength, LPSTR lpBuffer)

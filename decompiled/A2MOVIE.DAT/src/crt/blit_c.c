@@ -3,17 +3,13 @@
 
 /* ==== 0040d80f c_blt_sprite ==== */
 
-undefined8 __watcall
-c_blt_sprite(int param_1,undefined4 unaff_EDX,int unaff_EBX,char *unaff_ECX,int param_5,int param_6,
-            int param_7,int param_8)
+void __watcall
+c_blt_sprite(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+            undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8)
 
 {
-  undefined8 blt_sprite_result;
-  
-  blt_sprite_result =
-       blt_sprite(param_1,unaff_EDX,unaff_EBX,unaff_ECX,param_1,unaff_EDX,unaff_EBX,(int)unaff_ECX,
-                  param_5,param_6);
-  return blt_sprite_result;
+  blt_sprite(param_1,param_2,param_3,param_4);
+  return;
 }
 
 

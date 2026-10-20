@@ -3,13 +3,12 @@
 
 /* ==== 004037f8 exit_with_msg ==== */
 
-void __watcall exit_with_msg(char *buffer,UINT unaff_EDX_00)
+undefined4 __watcall exit_with_msg(char *buffer,UINT exit_code)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined4 unaff_ECX;
-  undefined4 unaff_EDX;
+  undefined4 exit_2_result;
   DWORD nNumberOfBytesToWrite;
   DWORD local_14;
   
@@ -20,8 +19,8 @@ void __watcall exit_with_msg(char *buffer,UINT unaff_EDX_00)
   }
   WriteFile(*(HANDLE *)(FileHandleIDs + 8),buffer,nNumberOfBytesToWrite,&local_14,(LPOVERLAPPED)0x0)
   ;
-  exit_2(unaff_EDX_00,unaff_EDX,nNumberOfBytesToWrite,unaff_ECX);
-  return;
+  exit_2_result = exit_2(exit_code);
+  return exit_2_result;
 }
 
 

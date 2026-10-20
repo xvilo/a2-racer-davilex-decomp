@@ -3,26 +3,26 @@
 
 /* ==== 0040e979 filelength ==== */
 
-long __watcall filelength(int _FileHandle)
+DWORD __watcall filelength(undefined4 param_1)
 
 {
-  long lseek_result;
-  int _FileHandle_00;
-  int _FileHandle_01;
-  long _Offset;
+  DWORD DVar1;
+  undefined4 extraout_ECX;
+  undefined4 extraout_ECX_00;
+  undefined4 extraout_EDX;
   
   (*(code *)AccessFileH_1)();
-  lseek_result = lseek(_FileHandle_00,0,1);
-  if (lseek_result == -1) {
+  DVar1 = lseek(extraout_ECX,0,1);
+  if (DVar1 == 0xffffffff) {
     (*(code *)ReleaseFileH_1)();
-    lseek_result = -1;
+    DVar1 = 0xffffffff;
   }
   else {
-    lseek_result = lseek(_FileHandle_00,0,2);
+    DVar1 = lseek(extraout_ECX,0,2);
     (*(code *)ReleaseFileH_1)();
-    lseek(_FileHandle_01,_Offset,0);
+    lseek(extraout_ECX_00,extraout_EDX,0);
   }
-  return lseek_result;
+  return DVar1;
 }
 
 

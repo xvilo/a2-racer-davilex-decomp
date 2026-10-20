@@ -3,7 +3,7 @@
 
 /* ==== 004212c9 realloc ==== */
 
-void * __watcall realloc(void *_Memory,size_t _NewSize)
+undefined4 * __watcall realloc(undefined4 *param_1,uint param_2)
 
 {
   undefined4 *puVar1;
@@ -14,23 +14,23 @@ void * __watcall realloc(void *_Memory,size_t _NewSize)
   byte bVar4;
   
   bVar4 = 0;
-  if (_Memory == (void *)0x0) {
-    puVar1 = malloc(_NewSize);
+  if (param_1 == (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)malloc(param_2);
   }
-  else if (_NewSize == 0) {
-    free(_Memory);
+  else if (param_2 == 0) {
+    free(param_1);
     puVar1 = (undefined4 *)0x0;
   }
   else {
-    i = nmsize((int)_Memory);
-    puVar1 = (undefined4 *)nexpand((uint)_Memory,_NewSize);
+    i = nmsize((int)param_1);
+    puVar1 = (undefined4 *)nexpand((uint)param_1,param_2);
     if (puVar1 == (undefined4 *)0x0) {
-      puVar1 = malloc(_NewSize);
+      puVar1 = (undefined4 *)malloc(param_2);
       if (puVar1 == (undefined4 *)0x0) {
-        nexpand((uint)_Memory,i);
+        nexpand((uint)param_1,i);
       }
       else {
-        puVar2 = _Memory;
+        puVar2 = param_1;
         puVar3 = puVar1;
         for (j = i >> 2; j != 0; j = j - 1) {
           *puVar3 = *puVar2;
@@ -42,7 +42,7 @@ void * __watcall realloc(void *_Memory,size_t _NewSize)
           puVar2 = (undefined4 *)((int)puVar2 + (uint)bVar4 * -2 + 1);
           puVar3 = (undefined4 *)((int)puVar3 + (uint)bVar4 * -2 + 1);
         }
-        free(_Memory);
+        free(param_1);
       }
     }
   }

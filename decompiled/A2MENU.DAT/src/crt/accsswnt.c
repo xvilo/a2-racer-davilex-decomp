@@ -3,23 +3,22 @@
 
 /* ==== 0041a88d access_1 ==== */
 
-longlong __watcall access_1(LPCSTR file_name,uint unaff_EDX_00)
+undefined4 __watcall access_1(LPCSTR file_name,uint param_2)
 
 {
   DWORD DVar1;
-  uint unaff_EDX;
-  longlong lVar2;
+  undefined4 uVar2;
   
   DVar1 = GetFileAttributesA(file_name);
   if (DVar1 == 0xffffffff) {
-    lVar2 = set_errno_nt(0xffffffff,unaff_EDX);
-    return lVar2;
+    uVar2 = set_errno_nt();
+    return uVar2;
   }
-  if (((unaff_EDX_00 & 2) != 0) && ((DVar1 & 1) != 0)) {
-    lVar2 = set_errno_dos(5,unaff_EDX);
-    return lVar2;
+  if (((param_2 & 2) != 0) && ((DVar1 & 1) != 0)) {
+    uVar2 = set_errno_dos(5);
+    return uVar2;
   }
-  return (ulonglong)unaff_EDX << 0x20;
+  return 0;
 }
 
 

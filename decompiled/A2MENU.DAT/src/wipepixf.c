@@ -9,8 +9,6 @@ wipe_draw_pixel_grid(int param_1,int param_2,int param_3,int param_4,int param_5
 {
   int j;
   IDirectDrawSurface *pIVar1;
-  int extraout_ECX;
-  int extraout_ECX_00;
   int i;
   int iVar2;
   int iVar3;
@@ -20,47 +18,53 @@ wipe_draw_pixel_grid(int param_1,int param_2,int param_3,int param_4,int param_5
   int local_30;
   uchar *local_2c;
   int local_28;
+  int local_24;
+  int local_20;
+  int local_1c;
   uchar *local_18;
   int local_14;
+  uchar *local_10;
   
+  local_24 = param_3;
   if (called_true_handle_wipe == 0) {
     fatal_exit(s__wipe_draw_pixel_grid__illegal_c_004317c0);
-    param_4 = extraout_ECX;
   }
   local_18 = get_surface_ptr_3(xvga_screen,&local_30);
   if ((param_1 == 0) ||
      ((pIVar1 = xvga_back_screen, 1 < (uint)param_1 && (pIVar1 = xvga_buffer_screen, param_1 != 2)))
      ) {
     fatal_exit(s__wipe_draw_pixel_grid__illegal_f_004317f8);
-    param_4 = extraout_ECX_00;
   }
   else {
     local_38 = get_surface_ptr_3(pIVar1,&local_34);
   }
   local_18 = local_18 + local_30 * param_4;
+  local_1c = param_2 << 4;
   local_38 = local_38 + local_34 * param_4;
+  local_20 = local_24 + param_5;
   local_28 = param_6 + param_4;
-  for (local_3c = param_4; local_14 = param_3, local_3c < local_28; local_3c = local_3c + 4) {
-    for (; local_14 < param_3 + param_5; local_14 = local_14 + 4) {
+  for (local_3c = param_4; local_3c < local_28; local_3c = local_3c + 4) {
+    for (local_14 = local_24; local_14 < local_20; local_14 = local_14 + 4) {
       i = 0;
-      j = param_2 << 4;
+      local_10 = local_38 + local_14;
+      j = local_1c;
       do {
         iVar2 = local_30 * i;
         iVar3 = local_34 * i;
         if ((&raster)[j] != '\0') {
           local_2c = local_18 + iVar2 + local_14;
-          *local_2c = local_38[iVar3 + local_14];
+          *local_2c = local_10[iVar3];
         }
         if ((&DAT_00436334)[j] != '\0') {
           local_2c = local_18 + iVar2 + local_14;
-          local_2c[1] = local_38[iVar3 + 1 + local_14];
+          local_2c[1] = local_10[iVar3 + 1];
         }
         if ((&DAT_00436338)[j] != '\0') {
           local_2c = local_18 + iVar2 + local_14;
-          local_2c[2] = local_38[iVar3 + 2 + local_14];
+          local_2c[2] = local_10[iVar3 + 2];
         }
         if ((&DAT_0043633c)[j] != '\0') {
-          local_18[iVar2 + local_14 + 3] = local_38[iVar3 + local_14 + 3];
+          local_18[iVar2 + local_14 + 3] = local_10[iVar3 + 3];
         }
         i = i + 1;
         j = j + 1;

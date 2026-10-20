@@ -3,15 +3,15 @@
 
 /* ==== 00414878 expand ==== */
 
-uint __watcall expand(uint param_1,uint unaff_EDX)
+uint __watcall expand(uint param_1,uint param_2)
 
 {
   int heap_manager_expand;
-  short in_DS;
+  ushort in_DS;
   uint uStack_10;
   
   (*(code *)AccessNHeap_1)();
-  heap_manager_expand = HeapManager_expand(in_DS,param_1,unaff_EDX,&uStack_10);
+  heap_manager_expand = HeapManager_expand((uint)in_DS,param_1,param_2,&uStack_10);
   if (heap_manager_expand == 0) {
     (*(code *)ReleaseNHeap_1)();
   }
@@ -25,7 +25,7 @@ uint __watcall expand(uint param_1,uint unaff_EDX)
 
 /* ==== 004148b2 HeapManager_expand ==== */
 
-undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_EBX,uint *unaff_ECX)
+undefined4 __watcall HeapManager_expand(undefined4 param_1,uint param_2,uint param_3,uint *param_4)
 
 {
   uint *puVar1;
@@ -38,20 +38,20 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
   uint unaff_ESI;
   short in_DS;
   
-  uVar3 = unaff_EBX + 7 & 0xfffffffc;
-  if (uVar3 < unaff_EBX) {
+  uVar3 = param_3 + 7 & 0xfffffffc;
+  if (uVar3 < param_3) {
     uVar3 = 0xffffffff;
   }
   if (uVar3 < 0xc) {
     uVar3 = 0xc;
   }
-  puVar1 = (uint *)(unaff_EDX - 4);
+  puVar1 = (uint *)(param_2 - 4);
   uVar5 = *puVar1 & 0xfffffffe;
   if (uVar5 < uVar3) {
     uVar3 = uVar3 - uVar5;
     puVar6 = (uint *)((int)puVar1 + uVar5);
     while( true ) {
-      *unaff_ECX = uVar3;
+      *param_4 = uVar3;
       uVar5 = *puVar6;
       if (uVar5 == 0xffffffff) break;
       if ((uVar5 & 1) != 0) {
@@ -60,25 +60,25 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
       uVar3 = puVar6[2];
       uVar2 = puVar6[1];
       uVar4 = nheapbeg;
-      if (in_DS == param_1) {
+      if (in_DS == (short)param_1) {
         for (; (unaff_ESI = uVar4, *(uint *)(uVar4 + 8) != 0 &&
-               ((unaff_EDX < uVar4 || (*(uint *)(uVar4 + 8) <= unaff_EDX))));
+               ((param_2 < uVar4 || (*(uint *)(uVar4 + 8) <= param_2))));
             uVar4 = *(uint *)(uVar4 + 8)) {
         }
       }
       if (puVar6 == *(uint **)(unaff_ESI + 0xc)) {
         *(uint *)(unaff_ESI + 0xc) = (*(uint **)(unaff_ESI + 0xc))[1];
       }
-      if (*unaff_ECX <= uVar5) {
-        uVar4 = uVar5 - *unaff_ECX;
+      if (*param_4 <= uVar5) {
+        uVar4 = uVar5 - *param_4;
         if (0xb < uVar4) {
-          puVar6 = (uint *)((int)puVar6 + *unaff_ECX);
+          puVar6 = (uint *)((int)puVar6 + *param_4);
           *puVar6 = uVar4;
           puVar6[1] = uVar2;
           puVar6[2] = uVar3;
           *(uint **)(uVar2 + 8) = puVar6;
           *(uint **)(uVar3 + 4) = puVar6;
-          *puVar1 = *puVar1 + *unaff_ECX;
+          *puVar1 = *puVar1 + *param_4;
           fheap_clean = 0;
           return 0;
         }
@@ -88,8 +88,8 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
       *puVar1 = *puVar1 + uVar5;
       *(int *)(unaff_ESI + 0x1c) = *(int *)(unaff_ESI + 0x1c) + -1;
       fheap_clean = 0;
-      if (*unaff_ECX <= uVar5) goto LAB_00414a36;
-      uVar3 = *unaff_ECX - uVar5;
+      if (*param_4 <= uVar5) goto LAB_00414a36;
+      uVar3 = *param_4 - uVar5;
       puVar6 = (uint *)((int)puVar6 + uVar5);
     }
     uVar7 = 2;
@@ -99,14 +99,14 @@ undefined4 __watcall HeapManager_expand(short param_1,uint unaff_EDX,uint unaff_
       *puVar1 = uVar3 | 1;
       *(uint *)((int)puVar1 + uVar3) = uVar5 - uVar3 | 1;
       uVar5 = nheapbeg;
-      if (in_DS == param_1) {
+      if (in_DS == (short)param_1) {
         for (; (unaff_ESI = uVar5, *(uint *)(uVar5 + 8) != 0 &&
-               ((unaff_EDX < uVar5 || (*(uint *)(uVar5 + 8) <= unaff_EDX))));
+               ((param_2 < uVar5 || (*(uint *)(uVar5 + 8) <= param_2))));
             uVar5 = *(uint *)(uVar5 + 8)) {
         }
       }
       *(int *)(unaff_ESI + 0x18) = *(int *)(unaff_ESI + 0x18) + 1;
-      nfree((uint)((uint *)((int)puVar1 + uVar3) + 1));
+      nfree((uint *)((int)puVar1 + uVar3) + 1);
     }
 LAB_00414a36:
     uVar7 = 0;

@@ -3,96 +3,102 @@
 
 /* ==== 00414d61 cvt ==== */
 
-undefined8 __watcall
-cvt(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 param_4,double x_val,
-   int param_6,int *param_7,undefined4 *param_8,int param_9,char *param_10)
+void __watcall
+cvt(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
+   uint param_6,int param_7,int *param_8,undefined4 *param_9,int param_10,char *param_11)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  char *pcVar4;
-  char *pcVar5;
-  double modf_result;
-  undefined2 extraout_ST0h;
-  undefined8 nan_inf;
+  int iVar2;
+  int scale;
+  char *pcVar3;
+  float10 in_ST1;
   char local_44 [18];
   undefined2 uStack_32;
   undefined2 local_30;
   short sStack_2e;
   undefined2 local_2c;
   undefined2 uStack_2a;
+  double local_28;
   int local_20;
-  undefined1 local_1c;
+  char local_1c;
   
+  *param_9 = 0;
   *param_8 = 0;
-  *param_7 = 0;
-  nan_inf = Nan_Inf(x_val._0_4_,param_10,param_6,param_7,x_val._0_4_,(uint)x_val._4_4_,
-                    (undefined4 *)param_10);
-  pcVar2 = (char *)((ulonglong)nan_inf >> 0x20);
-  if ((int)nan_inf == 0) {
+  iVar2 = Nan_Inf(param_5,param_11,param_7,param_8,param_5,param_6,(undefined4 *)param_11);
+  if (iVar2 == 0) {
     local_30 = 0;
     sStack_2e = 0;
     local_2c = 0;
     uStack_2a = 0;
-    if ((((ulonglong)x_val & 0x7fffffff00000000) != 0) || (x_val._0_4_ != (double *)0x0)) {
-      if (x_val < 0.0) {
-        x_val = -x_val;
-        *param_8 = 0xffffffff;
+    if (((param_6 & 0x7fffffff) != 0) || (param_5 != 0)) {
+      if (_param_5 < 0.0) {
+        _param_5 = -_param_5;
+        *param_9 = 0xffffffff;
       }
-      frexp(x_val,x_val._4_4_);
-      iVar3 = *param_7;
-      if (iVar3 < 0) {
-        iVar3 = -iVar3;
+      frexp(param_6,param_5,param_7,param_8,param_5,param_6,param_8);
+      iVar2 = *param_8;
+      if (iVar2 < 0) {
+        iVar2 = -iVar2;
       }
-      iVar3 = (iVar3 * 3 + 5) / 10;
-      if (*param_7 < 0) {
-        iVar3 = -iVar3;
+      iVar2 = (iVar2 * 3 + 5) / 10;
+      if (*param_8 < 0) {
+        iVar2 = -iVar2;
       }
-      *param_7 = iVar3;
-      if (param_9 == 0x46) {
-        param_6 = param_6 + iVar3;
+      *param_8 = iVar2;
+      if (param_10 == 0x46) {
+        param_7 = param_7 + iVar2;
       }
-      if (-1 < param_6) {
-        if (0x10 < param_6) {
-          param_6 = 0x10;
+      if (-1 < param_7) {
+        if (0x10 < param_7) {
+          param_7 = 0x10;
         }
-        local_1c = 0;
-        modf_result = modf(x_val,x_val._0_4_);
-        if (((float10)0 == (float10)CONCAT28(extraout_ST0h,modf_result)) && (iVar3 < param_6)) {
-          local_1c = 1;
+        local_1c = '\0';
+        modf(param_5,iVar2,param_7,param_8,param_5,param_6,&local_28);
+        if (((float10)0 == in_ST1) && (iVar2 < param_7)) {
+          local_1c = '\x01';
+          param_7 = iVar2;
         }
-        iVar3 = Scale(*param_7);
-        if (iVar3 != 0) {
-          *param_7 = *param_7 + iVar3;
-          iVar3 = Scale(*param_7);
-          if (0 < iVar3) {
-            *param_7 = *param_7 + 1;
+        scale = Scale(*param_8,iVar2,param_7,param_8,param_5,param_6,param_7,(uint *)&local_30);
+        if (scale != 0) {
+          *param_8 = *param_8 + scale;
+          if ((param_10 == 0x46) || (local_1c != '\0')) {
+            param_7 = param_7 + scale;
+          }
+          if (param_7 < 1) {
+            param_7 = 1;
+          }
+          else if (0x10 < param_7) {
+            param_7 = 0x10;
+          }
+          iVar2 = Scale(*param_8,iVar2,param_7,param_8,param_5,param_6,param_7,(uint *)&local_30);
+          if (0 < iVar2) {
+            *param_8 = *param_8 + 1;
           }
         }
       }
       local_20 = (int)sStack_2e;
       if ((int)(CONCAT22(local_30,uStack_32) | CONCAT22(sStack_2e,local_30) |
                 CONCAT22(local_2c,sStack_2e) | CONCAT22(uStack_2a,local_2c)) >> 0x10 == 0) {
+        *param_9 = 0;
         *param_8 = 0;
-        *param_7 = 0;
       }
     }
-    pcVar4 = local_44;
-    Bin2String(&local_30,(int)local_44);
-    pcVar5 = param_10;
+    pcVar3 = local_44;
+    Bin2String((int *)&local_30,(int)local_44);
     do {
-      cVar1 = *pcVar4;
-      *pcVar5 = cVar1;
-      pcVar2 = param_10;
-      if (cVar1 == '\0') break;
-      cVar1 = pcVar4[1];
-      pcVar4 = pcVar4 + 2;
-      pcVar5[1] = cVar1;
-      pcVar5 = pcVar5 + 2;
+      cVar1 = *pcVar3;
+      *param_11 = cVar1;
+      if (cVar1 == '\0') {
+        return;
+      }
+      cVar1 = pcVar3[1];
+      pcVar3 = pcVar3 + 2;
+      param_11[1] = cVar1;
+      param_11 = param_11 + 2;
     } while (cVar1 != '\0');
   }
-  return CONCAT44(unaff_EDX,pcVar2);
+  return;
 }
 
 

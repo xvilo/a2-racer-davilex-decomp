@@ -24,16 +24,18 @@ undefined4 __watcall SingleThread(void)
 
 /* ==== 0041a652 NullExitRtn ==== */
 
-void __watcall NullExitRtn(void)
+undefined4 __watcall NullExitRtn(void)
 
 {
-  return;
+  undefined4 in_EAX;
+  
+  return in_EAX;
 }
 
 
 /* ==== 0041a653 DefInitAccessH ==== */
 
-undefined8 __watcall DefInitAccessH(int param_1,size_t unaff_EDX)
+int __watcall DefInitAccessH(int param_1)
 
 {
   int iVar1;
@@ -45,10 +47,10 @@ undefined8 __watcall DefInitAccessH(int param_1,size_t unaff_EDX)
   while( true ) {
     if (topFileID * 4 <= iVar1) {
       FileHandleIDs = realloc(FileHandleIDs,(topFileID + 1) * 4);
-      *(int *)((int)FileHandleIDs + topFileID * 4) = param_1;
+      FileHandleIDs[topFileID] = param_1;
       topFileID = topFileID + 1;
       (*(code *)ReleaseFList_1)();
-      return CONCAT44(unaff_EDX,topFileID + -1);
+      return topFileID + -1;
     }
     if (*(int *)((int)FileHandleIDs + iVar1) == 0) break;
     iVar1 = iVar1 + 4;
@@ -56,23 +58,24 @@ undefined8 __watcall DefInitAccessH(int param_1,size_t unaff_EDX)
   }
   *(int *)((int)FileHandleIDs + iVar1) = param_1;
   (*(code *)ReleaseFList_1)();
-  return CONCAT44(unaff_EDX,iVar2);
+  return iVar2;
 }
 
 
 /* ==== 0041a658 DefFiniAccessH ==== */
 
-void __watcall DefFiniAccessH(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall DefFiniAccessH(undefined4 param_1)
 
 {
+  undefined4 uVar1;
   int extraout_EDX;
   
-  (*(code *)AccessFList_1)(unaff_EDX);
+  (*(code *)AccessFList_1)();
   if ((0 < extraout_EDX) && (extraout_EDX < topFileID)) {
     *(undefined4 *)(FileHandleIDs + extraout_EDX * 4) = 0;
   }
-  (*(code *)ReleaseFList_1)();
-  return;
+  uVar1 = (*(code *)ReleaseFList_1)();
+  return uVar1;
 }
 
 
@@ -80,37 +83,28 @@ void __watcall DefFiniAccessH(undefined4 param_1,undefined4 unaff_EDX)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined4 __watcall NTInit(int param_1,void *unaff_EDX_02,HMODULE unaff_EBX,size_t unaff_ECX)
+void __watcall NTInit(int param_1,undefined4 *param_2,HMODULE module)
 
 {
   LPSTR pCVar1;
   DWORD DVar2;
-  undefined4 uVar3;
-  undefined4 unaff_EDX;
-  undefined4 unaff_EDX_03;
-  undefined4 unaff_EDX_04;
-  undefined8 uVar4;
   CHAR local_10c [260];
   
   Is_DLL = param_1;
-  uVar4 = InitThreadData(unaff_EDX_02,(size_t)unaff_EDX_02,unaff_EBX,unaff_ECX);
-  FirstThreadData = (int)uVar4;
-  if (FirstThreadData == 0) {
+  FirstThreadData = InitThreadData(param_2);
+  if (FirstThreadData == (undefined4 *)0x0) {
     if (param_1 == 0) {
                     /* WARNING: Subroutine does not return */
       ExitProcess(1);
     }
-    uVar3 = 0;
   }
   else {
-    NTInitFileHandles(FirstThreadData,(int)((ulonglong)uVar4 >> 0x20));
+    NTInitFileHandles();
     Envptr = GetEnvironmentStrings();
     GetModuleFileNameA((HMODULE)0x0,local_10c,0x104);
-    uVar4 = strdup_1(local_10c,unaff_EDX);
-    _LpPgmName = (undefined4)uVar4;
+    _LpPgmName = strdup_1(local_10c);
     pCVar1 = GetCommandLineA();
-    uVar4 = strdup_1(pCVar1,unaff_EDX_03);
-    _LpCmdLine = (char *)uVar4;
+    _LpCmdLine = strdup_1(pCVar1);
     if (*_LpCmdLine != '\"') {
       do {
         if (((&IsTable)[(byte)(*_LpCmdLine + 1)] & 2) != 0) goto LAB_0041a709;
@@ -128,49 +122,46 @@ undefined4 __watcall NTInit(int param_1,void *unaff_EDX_02,HMODULE unaff_EBX,siz
 LAB_0041a709:
     } while (((&IsTable)[(byte)(*_LpCmdLine + 1)] & 2) != 0);
     if (param_1 != 0) {
-      GetModuleFileNameA(unaff_EBX,local_10c,0x104);
-      uVar4 = strdup_1(local_10c,unaff_EDX_04);
-      _LpDllName = (undefined4)uVar4;
+      GetModuleFileNameA(module,local_10c,0x104);
+      _LpDllName = strdup_1(local_10c);
     }
     DVar2 = GetVersion();
     osmajor = (undefined1)(DVar2 >> 0x18);
     osbuild = (undefined2)DVar2;
     osminor = (byte)(DVar2 >> 0x10) & 0xf;
-    uVar3 = 1;
   }
-  return uVar3;
+  return;
 }
 
 
 /* ==== 0041a784 NTMainInit ==== */
 
-void __watcall NTMainInit(undefined4 param_1,void *unaff_EDX)
+void __watcall NTMainInit(undefined4 param_1,undefined4 *param_2)
 
 {
   undefined4 uVar1;
-  HMODULE unaff_EBX;
+  HMODULE module;
   undefined4 *puVar2;
-  size_t unaff_ECX;
   int in_FS_OFFSET;
   
-  unaff_EBX = GetModuleHandleA((LPCSTR)0x0);
-  NTInit(0,unaff_EDX,unaff_EBX,unaff_ECX);
-  NewExceptionHandler(param_1,unaff_EDX);
+  module = GetModuleHandleA((LPCSTR)0x0);
+  NTInit(0,param_2,module);
+  NewExceptionHandler(param_1);
   (*(code *)sig_init_rtn)();
   uVar1 = *(undefined4 *)(in_FS_OFFSET + 8);
   puVar2 = (undefined4 *)(*(code *)GetThreadPtr)();
   *puVar2 = uVar1;
-  InitRtns();
+  InitRtns(0xff);
   return;
 }
 
 
 /* ==== 0041a7ca exit_2 ==== */
 
-void __watcall exit_2(UINT exit_code,undefined4 param_2)
+undefined4 __watcall exit_2(UINT exit_code)
 
 {
-  DoneExceptionHandler(exit_code,param_2);
+  DoneExceptionHandler();
   FiniRtns(0,0xff);
   (*(code *)ThreadExitRtn)();
                     /* WARNING: Subroutine does not return */

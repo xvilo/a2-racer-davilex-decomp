@@ -3,62 +3,56 @@
 
 /* ==== 0041e785 malloc ==== */
 
-void * __watcall malloc(size_t _Size)
+undefined4 __watcall malloc(uint param_1)
 
 {
   bool bVar1;
-  uint uVar2;
-  uint *mem_allocator;
-  int iVar3;
+  undefined4 uVar2;
+  uint uVar3;
+  int mem_allocator;
+  int iVar4;
   undefined4 extraout_EDX;
-  undefined4 unaff_EDX;
-  void *extraout_EDX_00;
-  uint uVar4;
-  undefined8 expand_dgroup;
+  uint uVar5;
+  ushort in_DS;
   
-  if ((_Size == 0) || (0xffffffd4 < _Size)) {
-    return (void *)0x0;
+  if ((param_1 == 0) || (0xffffffd4 < param_1)) {
+    uVar2 = 0;
   }
-  bVar1 = false;
-  uVar4 = _Size + 3 & 0xfffffffc;
-  (*(code *)AccessNHeap_1)();
-  unaff_EDX = extraout_EDX;
-  do {
-    uVar2 = uVar4;
-    if (uVar4 < 0xc) {
-      uVar2 = 0xc;
-    }
-    if ((uVar2 <= LargestSizeB4MiniHeapRover) || (iVar3 = MiniHeapRover, MiniHeapRover == 0)) {
-      LargestSizeB4MiniHeapRover = 0;
-      iVar3 = nheapbeg;
-    }
-    for (; iVar3 != 0; iVar3 = *(int *)(iVar3 + 8)) {
-      MiniHeapRover = iVar3;
-      mem_allocator = MemAllocator();
-      if (mem_allocator != (uint *)0x0) goto LAB_0041e855;
-      if (LargestSizeB4MiniHeapRover < *(uint *)(iVar3 + 0x14)) {
-        LargestSizeB4MiniHeapRover = *(uint *)(iVar3 + 0x14);
+  else {
+    bVar1 = false;
+    uVar5 = param_1 + 3 & 0xfffffffc;
+    (*(code *)AccessNHeap_1)();
+    while( true ) {
+      while( true ) {
+        uVar3 = uVar5;
+        if (uVar5 < 0xc) {
+          uVar3 = 0xc;
+        }
+        if ((uVar3 <= LargestSizeB4MiniHeapRover) || (iVar4 = MiniHeapRover, MiniHeapRover == 0)) {
+          LargestSizeB4MiniHeapRover = 0;
+          iVar4 = nheapbeg;
+        }
+        for (; iVar4 != 0; iVar4 = *(int *)(iVar4 + 8)) {
+          MiniHeapRover = iVar4;
+          mem_allocator = MemAllocator(param_1,(uint)in_DS,iVar4);
+          if (mem_allocator != 0) goto LAB_0041e855;
+          if (LargestSizeB4MiniHeapRover < *(uint *)(iVar4 + 0x14)) {
+            LargestSizeB4MiniHeapRover = *(uint *)(iVar4 + 0x14);
+          }
+        }
+        if ((bVar1) || (iVar4 = ExpandDGROUP(param_1), iVar4 == 0)) break;
+        bVar1 = true;
       }
-      unaff_EDX = 0;
-    }
-    if (bVar1) goto LAB_0041e837;
-    expand_dgroup = ExpandDGROUP(_Size,unaff_EDX);
-    unaff_EDX = (undefined4)((ulonglong)expand_dgroup >> 0x20);
-    if ((int)expand_dgroup == 0) {
-LAB_0041e837:
-      iVar3 = nmemneed();
-      if (iVar3 == 0) {
-LAB_0041e855:
-        nheap_clean = 0;
-        (*(code *)ReleaseNHeap_1)();
-        return extraout_EDX_00;
-      }
+      iVar4 = nmemneed();
+      if (iVar4 == 0) break;
       bVar1 = false;
     }
-    else {
-      bVar1 = true;
-    }
-  } while( true );
+LAB_0041e855:
+    nheap_clean = 0;
+    (*(code *)ReleaseNHeap_1)();
+    uVar2 = extraout_EDX;
+  }
+  return uVar2;
 }
 
 

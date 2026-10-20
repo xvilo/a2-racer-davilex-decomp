@@ -3,29 +3,33 @@
 
 /* ==== 0042cd7f ftell ==== */
 
-long __watcall ftell(FILE *_File)
+int __watcall ftell(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  long lVar1;
-  FILE *_File_00;
+  int iVar1;
+  undefined4 extraout_ECX;
+  int extraout_EDX;
+  int iVar2;
   
-  lVar1 = tell(_File->_file);
-  if (lVar1 != -1) {
-    (*(code *)AccessFileH_1)();
-    if (((_File_00->_flag & 0x80) != 0) && ((_File_00->_flag & 0x1000) != 0)) {
-      fflush(_File_00);
+  iVar1 = tell(*(undefined4 *)(param_1 + 0x10));
+  if (iVar1 != -1) {
+    (*(code *)AccessFileH_1)(param_2,param_3);
+    iVar2 = extraout_EDX;
+    if (((*(byte *)(extraout_EDX + 0xc) & 0x80) != 0) &&
+       ((*(byte *)(extraout_EDX + 0xd) & 0x10) != 0)) {
+      fflush(extraout_EDX,extraout_EDX,iVar1,extraout_ECX);
     }
-    if (_File_00->_cnt != 0) {
-      if ((_File_00->_flag & 0x1000) == 0) {
-        lVar1 = lVar1 - _File_00->_cnt;
+    if (*(int *)(iVar2 + 4) != 0) {
+      if ((*(byte *)(iVar2 + 0xd) & 0x10) == 0) {
+        iVar1 = iVar1 - *(int *)(iVar2 + 4);
       }
       else {
-        lVar1 = lVar1 + _File_00->_cnt;
+        iVar1 = iVar1 + *(int *)(iVar2 + 4);
       }
     }
     (*(code *)ReleaseFileH_1)();
   }
-  return lVar1;
+  return iVar1;
 }
 
 

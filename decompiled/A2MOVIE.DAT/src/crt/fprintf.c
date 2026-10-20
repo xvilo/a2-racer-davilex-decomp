@@ -3,13 +3,14 @@
 
 /* ==== 004068c0 fprintf ==== */
 
-int __cdecl fprintf(FILE *_File,char *_Format,...)
+void __cdecl fprintf(FILE *_File,char *_Format,...)
 
 {
-  int fprtf_result;
+  undefined1 *local_c;
   
-  fprtf_result = fprtf((int)_File);
-  return fprtf_result;
+  local_c = &stack0x0000000c;
+  fprtf(&_File->_ptr,_Format,(int *)&local_c);
+  return;
 }
 
 

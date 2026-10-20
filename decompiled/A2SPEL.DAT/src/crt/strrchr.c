@@ -3,24 +3,21 @@
 
 /* ==== 0042f496 strrchr ==== */
 
-char * __watcall strrchr(char *_Str,int _Ch)
+char * __watcall strrchr(char *param_1,undefined4 param_2)
 
 {
   char cVar1;
-  uint uVar2;
-  char *pcVar3;
+  char *pcVar2;
   
-  uVar2 = _Ch & 0xff;
-  pcVar3 = (char *)0x0;
+  pcVar2 = (char *)0x0;
   do {
-    if ((char)uVar2 == *_Str) {
-      pcVar3 = _Str;
+    if ((char)param_2 == *param_1) {
+      pcVar2 = param_1;
     }
-    cVar1 = *_Str;
-    uVar2 = (uint)CONCAT11(cVar1,(char)uVar2);
-    _Str = _Str + 1;
+    cVar1 = *param_1;
+    param_1 = param_1 + 1;
   } while (cVar1 != '\0');
-  return pcVar3;
+  return pcVar2;
 }
 
 

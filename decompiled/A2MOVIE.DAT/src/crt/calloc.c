@@ -3,16 +3,16 @@
 
 /* ==== 00413228 calloc ==== */
 
-void * __watcall calloc(size_t _Count,size_t _Size)
+undefined4 * __watcall calloc(int param_1,int param_2)
 
 {
-  void *memset_result;
-  undefined8 buffer;
+  undefined4 *buffer;
+  undefined4 *memset_result;
   
-  buffer = nmalloc(_Count * _Size,_Size);
-  memset_result = (void *)0x0;
-  if ((void *)buffer != (void *)0x0) {
-    memset_result = memset((void *)buffer,0,_Count * _Size);
+  buffer = (undefined4 *)nmalloc(param_1 * param_2);
+  memset_result = (undefined4 *)0x0;
+  if (buffer != (undefined4 *)0x0) {
+    memset_result = memset(buffer,0,param_1 * param_2);
   }
   return memset_result;
 }

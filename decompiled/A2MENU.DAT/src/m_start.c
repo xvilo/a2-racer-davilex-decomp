@@ -8,13 +8,11 @@ void __watcall mst_draw_selected_slot_info(int param_1)
 {
   int iVar1;
   char *pcVar2;
-  int extraout_EDX;
   int iVar3;
   
   iVar1 = *(int *)(*(int *)(xvga_anims + 0x44) + 0xc);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mst_draw_selected_slot_i_00427560,s_m_start_cpp_00427554,0x106,1,5);
-    iVar1 = extraout_EDX;
   }
   iVar3 = param_1 * 8;
   set_mem_image(1,iVar1,*(int *)(mst_slot_list + iVar3),*(int *)(&DAT_00433064 + iVar3),2);
@@ -171,7 +169,6 @@ void __watcall mst_open_screen(int param_1)
 
 {
   int use_mst_menu_cfg_anims_result;
-  int extraout_ECX;
   
   debugmsg(s__s__d___mst_open_screen____initi_0042781a,s_m_start_cpp_0042780e,0x19b);
   load_pcx_file_1(2,s_NSPEL_1_PCX_00427843,0x1f);
@@ -185,7 +182,7 @@ void __watcall mst_open_screen(int param_1)
   handle_wipe(2,3,600);
   show_mouse();
   debugmsg(s__s__d___mst_open_screen____initi_0042789e,s_m_start_cpp_00427892,0x1a9);
-  mst_print_slot(extraout_ECX);
+  mst_print_slot(param_1);
   debugmsg(s__s__d___mst_open_screen____initi_004278d6,s_m_start_cpp_004278ca,0x1ab);
   activate_form((fform_t *)mst_form);
   return;
@@ -219,14 +216,9 @@ int __watcall menu_start(int param_1)
   bool bVar1;
   bool bVar2;
   int iVar3;
-  char *slot_naam_string_result;
-  uint handle_form_result;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_ECX_02;
-  int extraout_ECX_03;
   int iVar4;
+  char *arg2;
+  uint handle_form_result;
   char local_3c [32];
   int local_1c;
   
@@ -250,24 +242,23 @@ LAB_00405647:
   if (param_1 != 0) {
     snd_play(&local_1c,s_MNS_00_wav_00427959);
   }
-  iVar3 = get_last_saved_slot();
-  iVar3 = slot_check_index(iVar3,s_m_start_cpp_00427964,0x1d2);
-  if ((&slot_list)[iVar3 * 0x13c] == '\0') {
+  iVar4 = get_last_saved_slot();
+  iVar4 = slot_check_index(iVar4,s_m_start_cpp_00427964,0x1d2);
+  if ((&slot_list)[iVar4 * 0x13c] == '\0') {
     snd_wait(&local_1c);
     snd_play(&local_1c,s_MNS_01_wav_00427970);
-    iVar3 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_0042797b);
-    if (iVar3 != 0) {
+    iVar4 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_0042797b);
+    if (iVar4 != 0) {
       snd_stop(&local_1c);
-      create_slot(extraout_ECX,local_3c);
-      mst_print_slot(extraout_ECX);
-      set_active_slot(extraout_ECX);
+      create_slot(iVar3,local_3c);
+      mst_print_slot(iVar3);
+      set_active_slot(iVar3);
       goto LAB_00405089;
     }
     snd_stop(&local_1c);
   }
   debugmsg(s__s__d___activate_form_004279ba,s_m_start_cpp_004279ae,0x1e0);
   activate_form((fform_t *)mst_form);
-  iVar3 = extraout_ECX_00;
   while (bVar1) {
     handle_form_result = handle_form();
     if (handle_form_result < 3) {
@@ -288,11 +279,11 @@ LAB_00405647:
           snd_wait(&local_1c);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
           snd_play(&local_1c,s_MNS_02_wav_00427a88);
-          iVar3 = slot_check_index(iVar3,s_m_start_cpp_00427a93,0x227);
-          slot_naam_string_result = slot_naam_string(iVar3);
-          iVar3 = req_vraag(s_Wil_je_deze_speler___s__verwijde_00427a9f,slot_naam_string_result);
-          if (iVar3 != 0) {
-            clear_slot(extraout_ECX_03);
+          iVar4 = slot_check_index(iVar3,s_m_start_cpp_00427a93,0x227);
+          arg2 = slot_naam_string(iVar4);
+          iVar4 = req_vraag(s_Wil_je_deze_speler___s__verwijde_00427a9f,arg2);
+          if (iVar4 != 0) {
+            clear_slot(iVar3);
           }
           snd_stop(&local_1c);
           snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
@@ -310,21 +301,18 @@ LAB_00405810:
         snd_wait(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
         snd_play(&local_1c,s_MNS_01_wav_00427a14);
-        iVar3 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_00427a1f);
-        if (iVar3 == 0) {
+        iVar4 = req_input(local_3c,0x20,s_Vul_je_naam_in_en_wordt_lid_van_d_00427a1f);
+        if (iVar4 == 0) {
           snd_stop(&local_1c);
-          iVar3 = extraout_ECX_01;
           goto LAB_004058a7;
         }
         snd_stop(&local_1c);
         snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
-        create_slot(extraout_ECX_01,local_3c);
-        mst_print_slot(extraout_ECX_01);
-        iVar3 = extraout_ECX_01;
+        create_slot(iVar3,local_3c);
+        mst_print_slot(iVar3);
       }
       set_active_slot(iVar3);
       debugmsg(s_MSTART_SET_ACTIVE_SLOT__d<*_d_00427a52,active_slot,iVar3);
-      iVar3 = extraout_ECX_02;
 LAB_0040575a:
       bVar1 = false;
 LAB_00405760:

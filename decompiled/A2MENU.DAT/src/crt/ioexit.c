@@ -3,26 +3,27 @@
 
 /* ==== 00420c84 full_io_exit ==== */
 
-void __watcall full_io_exit(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall full_io_exit(void)
 
 {
-  undefined8 docloseall_result;
+  undefined4 purgefp_result;
   
-  docloseall_result = docloseall(0,unaff_EDX);
-  purgefp((int)docloseall_result,(void *)((ulonglong)docloseall_result >> 0x20));
-  return;
+  docloseall(0);
+  purgefp_result = purgefp();
+  return purgefp_result;
 }
 
 
 /* ==== 00420c90 fcloseall ==== */
 
-int __watcall fcloseall(void)
+int __watcall
+fcloseall(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
   undefined4 *puVar1;
   undefined *puVar2;
   undefined4 *puVar3;
-  int unaff_EDX;
+  int iVar4;
   int i;
   
   i = 0;
@@ -33,17 +34,17 @@ LAB_00420ce2:
   }
   puVar1 = (undefined4 *)*puVar3;
   puVar2 = (undefined *)puVar3[1];
-  unaff_EDX = 1;
+  iVar4 = 1;
   puVar3 = puVar1;
   if (((puVar2[0xd] & 0x40) == 0) && ((puVar2[0xd] & 8) == 0)) goto code_r0x00420ccd;
   goto LAB_00420cda;
 code_r0x00420ccd:
   if ((undefined *)0x43602d < puVar2) {
     if (puVar2 < &DAT_0043602e) {
-      unaff_EDX = 0;
+      iVar4 = 0;
     }
 LAB_00420cda:
-    shutdown_stream((int)puVar2,unaff_EDX);
+    shutdown_stream((int)puVar2,iVar4);
     i = i + 1;
   }
   goto LAB_00420ce2;
@@ -52,35 +53,32 @@ LAB_00420cda:
 
 /* ==== 00420c95 docloseall ==== */
 
-undefined8 __watcall docloseall(int param_1,undefined4 unaff_EDX_00)
+void __watcall docloseall(int param_1)
 
 {
   undefined4 *puVar1;
   undefined *puVar2;
   undefined4 *puVar3;
-  int unaff_EDX;
-  int i;
+  int iVar4;
   
-  i = 0;
   puVar3 = OpenStreams;
 LAB_00420ce2:
   if (puVar3 == (undefined4 *)0x0) {
-    return CONCAT44(unaff_EDX_00,i);
+    return;
   }
   puVar1 = (undefined4 *)*puVar3;
   puVar2 = (undefined *)puVar3[1];
-  unaff_EDX = 1;
+  iVar4 = 1;
   puVar3 = puVar1;
   if (((puVar2[0xd] & 0x40) == 0) && ((puVar2[0xd] & 8) == 0)) goto code_r0x00420ccd;
   goto LAB_00420cda;
 code_r0x00420ccd:
   if (&iob + param_1 * 0x1a <= puVar2) {
     if (puVar2 < &DAT_0043602e) {
-      unaff_EDX = 0;
+      iVar4 = 0;
     }
 LAB_00420cda:
-    shutdown_stream((int)puVar2,unaff_EDX);
-    i = i + 1;
+    shutdown_stream((int)puVar2,iVar4);
   }
   goto LAB_00420ce2;
 }

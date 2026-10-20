@@ -3,44 +3,41 @@
 
 /* ==== 0043c80a rterrmsg ==== */
 
-void __watcall rterrmsg(int param_1,uint unaff_EDX,undefined4 param_3,FILE *unaff_ECX)
+uint __watcall rterrmsg(int param_1,undefined4 param_2)
 
 {
-  FILE *_File;
-  longlong std_stream;
+  undefined4 *std_stream;
+  uint fputc_result;
   
-  std_stream = get_std_stream(2,unaff_EDX);
-  _File = (FILE *)std_stream;
-  fputs(*(char **)(&Msgs + param_1 * 4),_File);
-  fputs(s_in_00456a31,_File);
-  fputs((char *)unaff_EDX,_File);
-  fputc(10,_File);
-  return;
+  std_stream = (undefined4 *)get_std_stream(2);
+  fputs(*(undefined4 *)(&Msgs + param_1 * 4),std_stream);
+  fputs(s_in_00456a31,std_stream);
+  fputs(param_2,std_stream);
+  fputc_result = fputc(10,std_stream);
+  return fputc_result;
 }
 
 
 /* ==== 0043c852 matherr ==== */
 
-float10 __watcall matherr(int *param_1,undefined4 unaff_EDX_00,undefined4 unaff_EBX)
+int __watcall matherr(int *param_1)
 
 {
   int iVar1;
-  FILE *unaff_ECX;
-  undefined4 unaff_EDX;
-  undefined8 rterrmsg_result;
+  uint rterrmsg_result;
   
-  iVar1 = (*(code *)RWD_matherr)(unaff_EDX_00,unaff_EBX);
+  iVar1 = (*(code *)RWD_matherr)();
   if (iVar1 == 0) {
-    rterrmsg_result = rterrmsg(*param_1,param_1[1],param_1,unaff_ECX);
-    unaff_EDX = (undefined4)((ulonglong)rterrmsg_result >> 0x20);
+    iVar1 = param_1[1];
+    rterrmsg_result = rterrmsg(*param_1,iVar1);
     if (*param_1 == 1) {
-      set_EDOM((int)rterrmsg_result,unaff_EDX);
+      iVar1 = set_EDOM(rterrmsg_result,iVar1);
     }
     else {
-      set_ERANGE((int)rterrmsg_result,unaff_EDX);
+      iVar1 = set_ERANGE();
     }
   }
-  return (float10)*(double *)(param_1 + 6);
+  return iVar1;
 }
 
 

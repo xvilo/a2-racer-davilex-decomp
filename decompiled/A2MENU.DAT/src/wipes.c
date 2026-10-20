@@ -17,23 +17,16 @@ void __watcall
 handle_wipe_1(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,int param_7)
 
 {
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  
   if ((((param_3 < 0) || (param_4 < 0)) || (param_5 < 0)) || (param_6 < 0)) {
     fatal_exit(s__s__d_____handle_wipe__incorrect_0042f12e,s_wipes_cpp_0042f124,0x21,param_3,param_4
                ,param_5,param_6);
-    param_6 = extraout_ECX;
   }
   if ((xvga_screen_xsize < param_3 + param_5) || (xvga_screen_ysize < param_4 + param_6)) {
     fatal_exit(s__s__d_____handle_wipe__incorrect_0042f184,s_wipes_cpp_0042f17a,0x2b,param_5,param_6
               );
-    param_6 = extraout_ECX_00;
   }
   if (param_5 % 4 != 0) {
     fatal_exit(s__s__d_____handle_wipe__incorrect_0042f1d4,s_wipes_cpp_0042f1ca,0x30,param_5);
-    param_6 = extraout_ECX_01;
   }
   called_true_handle_wipe = 1;
   switch(param_2) {

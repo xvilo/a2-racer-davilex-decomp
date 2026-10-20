@@ -3,52 +3,50 @@
 
 /* ==== 00431ca7 file_putc ==== */
 
-void __watcall file_putc(int param_1,int ch,int unaff_EBX)
+uint __watcall file_putc(undefined4 *param_1,uint param_2)
 
 {
-  fputc(ch,*(FILE **)param_1);
-  *(int *)(param_1 + 0x10) = *(int *)(param_1 + 0x10) + 1;
-  return;
+  uint fputc_result;
+  
+  fputc_result = fputc(param_2,*param_1);
+  param_1[4] = param_1[4] + 1;
+  return fputc_result;
 }
 
 
 /* ==== 00431cb8 fprtf ==== */
 
-undefined4 __watcall fprtf(int param_1,undefined4 param_2,int *unaff_EBX)
+undefined4 __watcall fprtf(undefined4 *param_1,undefined4 param_2,int *param_3)
 
 {
   uint uVar1;
-  undefined4 prtf_result;
   byte *extraout_EDX;
-  byte *extraout_EDX_00;
-  byte *unaff_EDX;
-  undefined4 extraout_EDX_01;
-  bool bVar2;
+  undefined4 extraout_EDX_00;
+  undefined4 uVar2;
+  bool bVar3;
   
   (*(code *)AccessFileH_1)();
-  uVar1 = *(uint *)(param_1 + 0xc);
-  *(byte *)(param_1 + 0xc) = *(byte *)(param_1 + 0xc) & 0xcf;
-  unaff_EDX = extraout_EDX;
-  if (*(int *)(param_1 + 8) == 0) {
+  uVar1 = param_1[3];
+  *(byte *)(param_1 + 3) = *(byte *)(param_1 + 3) & 0xcf;
+  if (param_1[2] == 0) {
     ioalloc(param_1);
-    unaff_EDX = extraout_EDX_00;
   }
-  bVar2 = (*(byte *)(param_1 + 0xd) & 4) != 0;
-  if (bVar2) {
-    *(byte *)(param_1 + 0xd) = *(byte *)(param_1 + 0xd) & 0xfa | 1;
+  bVar3 = (*(byte *)((int)param_1 + 0xd) & 4) != 0;
+  if (bVar3) {
+    *(byte *)((int)param_1 + 0xd) = *(byte *)((int)param_1 + 0xd) & 0xfa | 1;
   }
-  prtf_result = prtf(param_1,unaff_EDX,unaff_EBX,file_putc);
-  if (bVar2) {
-    *(byte *)(param_1 + 0xd) = *(byte *)(param_1 + 0xd) & 0xfa | 4;
-    flush(param_1,prtf_result);
+  prtf(param_1,extraout_EDX,param_3,file_putc);
+  if (bVar3) {
+    *(byte *)((int)param_1 + 0xd) = *(byte *)((int)param_1 + 0xd) & 0xfa | 4;
+    flush(param_1);
   }
   (*(code *)ReleaseFileH_1)();
-  prtf_result = extraout_EDX_01;
-  if ((*(byte *)(param_1 + 0xc) & 0x20) != 0) {
-    prtf_result = 0xffffffff;
+  uVar2 = extraout_EDX_00;
+  if ((*(byte *)(param_1 + 3) & 0x20) != 0) {
+    uVar2 = 0xffffffff;
   }
-  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) | uVar1 & 0x30;
-  return prtf_result;
+  param_1[3] = param_1[3] | uVar1 & 0x30;
+  return uVar2;
 }
 
 

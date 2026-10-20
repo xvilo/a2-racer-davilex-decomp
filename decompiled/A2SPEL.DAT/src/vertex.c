@@ -3,7 +3,7 @@
 
 /* ==== 00425cfc alloc_vertices ==== */
 
-longlong __watcall alloc_vertices(int param_1,uint param_2)
+undefined4 __watcall alloc_vertices(int param_1)
 
 {
   int i;
@@ -14,7 +14,7 @@ longlong __watcall alloc_vertices(int param_1,uint param_2)
     weg_points = LocalAlloc(0x40,param_1 * 0x21);
     if (weg_points == (HLOCAL)0x0) {
       debugmsg(s__s__d____not_enough_memory_for_v_0044f914);
-      return CONCAT44(param_2,2000);
+      return 2000;
     }
     debugmsg(s__d_vertices_initialized_0044f93e,param_1);
     DAT_004767d0 = 1;
@@ -25,13 +25,13 @@ longlong __watcall alloc_vertices(int param_1,uint param_2)
       iVar1 = iVar1 + 0x21;
     }
   }
-  return (ulonglong)param_2 << 0x20;
+  return 0;
 }
 
 
 /* ==== 00425d7a free_vertices ==== */
 
-longlong __watcall free_vertices(undefined4 param_1,uint param_2)
+void __watcall free_vertices(void)
 
 {
   HLOCAL pvVar1;
@@ -40,19 +40,19 @@ longlong __watcall free_vertices(undefined4 param_1,uint param_2)
     pvVar1 = LocalFree(weg_points);
     if (pvVar1 != (HLOCAL)0x0) {
       debugmsg(s__s__d____error_freeing_triangles_0044f958);
-      return CONCAT44(param_2,2000);
+      return;
     }
     debugmsg(s_Vertex_array_freed_0044f97c);
     vertex_capacity = 0;
     DAT_004767d0 = 0;
   }
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 00425dcf find_free_vertices ==== */
 
-longlong __watcall find_free_vertices(undefined4 param_1,uint param_2)
+int __watcall find_free_vertices(void)
 
 {
   int iVar1;
@@ -63,31 +63,30 @@ longlong __watcall find_free_vertices(undefined4 param_1,uint param_2)
   while( true ) {
     if (vertex_capacity * 0x21 <= iVar1) {
       fatal_exit(s__s__d____no_more_free_vertices_0044f99b,s_vertex_cpp_0044f990,0x5b);
-      return (ulonglong)param_2 << 0x20;
+      return 0;
     }
     if (*(char *)(weg_points + 0x20 + iVar1) == '\0') break;
     iVar1 = iVar1 + 0x21;
     i = i + 1;
   }
-  return CONCAT44(param_2,i);
+  return i;
 }
 
 
 /* ==== 00425e1a get_new_vertices ==== */
 
-undefined8 __watcall get_new_vertices(undefined4 param_1,undefined4 param_2)
+int __watcall get_new_vertices(void)
 
 {
-  uint uVar1;
-  longlong free_vertices_val;
+  int free_vertices_val;
   
-  uVar1 = DAT_004767d4;
-  if ((int)DAT_004767d4 < vertex_capacity) {
+  if (DAT_004767d4 < vertex_capacity) {
+    free_vertices_val = DAT_004767d4;
     DAT_004767d4 = DAT_004767d4 + 1;
-    return CONCAT44(param_2,uVar1);
+    return free_vertices_val;
   }
-  free_vertices_val = find_free_vertices(param_1,DAT_004767d4);
-  return CONCAT44(param_2,(int)free_vertices_val);
+  free_vertices_val = find_free_vertices();
+  return free_vertices_val;
 }
 
 

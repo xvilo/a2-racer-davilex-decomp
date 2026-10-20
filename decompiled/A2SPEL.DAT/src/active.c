@@ -3,38 +3,32 @@
 
 /* ==== 00412fa8 init_active_opponent_list ==== */
 
-undefined8 __watcall init_active_opponent_list(uint param_1,undefined4 param_2)
+void __watcall init_active_opponent_list(uint param_1)
 
 {
   HLOCAL pvVar1;
-  uint uVar2;
   
-  if (active_list_initialized == 0) {
-LAB_00412ff8:
-    active_opponent_list = LocalAlloc(0x40,param_1 << 2);
-    nearby_opponent_list = LocalAlloc(0x40,param_1 << 2);
-    if (active_opponent_list != (HLOCAL)0x0) {
-      uVar2 = 0;
-      active_list_initialized = 1;
-      DAT_00475ad0 = param_1;
-      goto LAB_00413037;
-    }
-  }
-  else {
+  if (active_list_initialized != 0) {
     if (param_1 == DAT_00475ad0) {
-      uVar2 = param_1 ^ DAT_00475ad0;
-      goto LAB_00413037;
+      return;
     }
     pvVar1 = LocalFree(active_opponent_list);
-    if ((pvVar1 == (HLOCAL)0x0) && (pvVar1 = LocalFree(nearby_opponent_list), pvVar1 == (HLOCAL)0x0)
-       ) {
-      active_list_initialized = 0;
-      goto LAB_00412ff8;
+    if (pvVar1 != (HLOCAL)0x0) {
+      return;
     }
+    pvVar1 = LocalFree(nearby_opponent_list);
+    if (pvVar1 != (HLOCAL)0x0) {
+      return;
+    }
+    active_list_initialized = 0;
   }
-  uVar2 = 2000;
-LAB_00413037:
-  return CONCAT44(param_2,uVar2);
+  active_opponent_list = LocalAlloc(0x40,param_1 << 2);
+  nearby_opponent_list = LocalAlloc(0x40,param_1 << 2);
+  if (active_opponent_list != (HLOCAL)0x0) {
+    active_list_initialized = 1;
+    DAT_00475ad0 = param_1;
+  }
+  return;
 }
 
 
@@ -47,55 +41,55 @@ void __watcall update_active_opponent_list(int param_1,int param_2)
   int *opponent_chunk;
   int iVar2;
   int iVar3;
-  int k;
+  int opponent_index;
   uint uVar4;
   int iVar5;
   int j;
   int i;
   
-  opponent_chunk = get_opponent_chunk(s_active_cpp_00446834,0x55);
+  opponent_chunk = get_opponent_chunk(s_active_cpp_00446834,0x55,0);
   i = 0;
   j = 0;
   iVar1 = *opponent_chunk;
   if (active_list_initialized == 0) {
     fatal_exit(s__s__d____PLEASE__use_the__init_a_0044684a,s_active_cpp_0044683f,0x59);
   }
-  k = 0;
+  opponent_index = 0;
   iVar5 = 0;
   iVar2 = 0;
   do {
-    *(int *)(active_opponent_list + iVar2) = k;
+    *(int *)(active_opponent_list + iVar2) = opponent_index;
     i = i + 1;
     j = j + 1;
     iVar2 = iVar2 + 4;
-    *(int *)(iVar5 + nearby_opponent_list) = k;
-    k = k + 1;
+    *(int *)(iVar5 + nearby_opponent_list) = opponent_index;
+    opponent_index = opponent_index + 1;
     iVar5 = iVar5 + 4;
-  } while (k < 6);
-  iVar2 = k * 0x100;
+  } while (opponent_index < 6);
+  iVar2 = opponent_index * 0x100;
   iVar5 = i * 4;
   do {
-    if (DAT_00475ad0 <= k) {
+    if (DAT_00475ad0 <= opponent_index) {
       active_opponent_count = i;
       nearby_opponent_count = j;
       return;
     }
     if (*(int *)((int)opponent_data->local_corners + iVar2 + 0x60) != 0) {
-      opponent_chunk = get_opponent_chunk(s_active_cpp_00446893,0x67);
+      opponent_chunk = get_opponent_chunk(s_active_cpp_00446893,0x67,opponent_index);
       uVar4 = *opponent_chunk - iVar1 >> 0x1f;
       iVar3 = (*opponent_chunk - iVar1 ^ uVar4) - uVar4;
       if (iVar3 < param_1) {
-        *(int *)(active_opponent_list + iVar5) = k;
+        *(int *)(active_opponent_list + iVar5) = opponent_index;
         i = i + 1;
         iVar5 = iVar5 + 4;
       }
       else if (param_2 <= iVar3) goto LAB_00413133;
-      *(int *)(j * 4 + nearby_opponent_list) = k;
+      *(int *)(j * 4 + nearby_opponent_list) = opponent_index;
       j = j + 1;
     }
 LAB_00413133:
     iVar2 = iVar2 + 0x100;
-    k = k + 1;
+    opponent_index = opponent_index + 1;
   } while( true );
 }
 

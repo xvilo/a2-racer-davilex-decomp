@@ -3,87 +3,97 @@
 
 /* ==== 00402394 copy_path_component ==== */
 
-byte * __watcall copy_path_component(int param_1,byte *dest)
+byte * __watcall copy_path_component(undefined4 *param_1,byte *param_2,byte *param_3,int param_4)
 
 {
   int iVar1;
   int mbsnbcnt_result;
-  int unaff_ECX;
-  uint unaff_EDX;
-  byte *unaff_EBX;
+  uint uVar2;
   
-  if (param_1 == 0) {
-    return dest;
+  if (param_1 == (undefined4 *)0x0) {
+    return param_2;
   }
-  *(byte **)param_1 = dest;
-  unaff_EDX = unaff_ECX - (int)unaff_EBX;
-  if (0x106 < unaff_EDX) {
-    unaff_EDX = 0x106;
+  *param_1 = param_2;
+  uVar2 = param_4 - (int)param_3;
+  if (0x106 < uVar2) {
+    uVar2 = 0x106;
   }
-  iVar1 = mbsnccnt(unaff_EBX,unaff_EDX);
-  mbsncpy((char *)dest,unaff_EBX,iVar1);
-  mbsnbcnt_result = mbsnbcnt(dest,iVar1);
-  dest[mbsnbcnt_result] = 0;
-  iVar1 = mbsnbcnt(dest,iVar1);
-  return dest + iVar1 + 1;
+  iVar1 = mbsnccnt(param_3,uVar2);
+  mbsncpy((char *)param_2,param_3,iVar1);
+  mbsnbcnt_result = mbsnbcnt(param_2,iVar1);
+  param_2[mbsnbcnt_result] = 0;
+  iVar1 = mbsnbcnt(param_2,iVar1);
+  return param_2 + iVar1 + 1;
 }
 
 
 /* ==== 004023e6 split_spawn_path ==== */
 
-void __watcall split_spawn_path(byte *param_1,byte *param_2)
+void __watcall
+split_spawn_path(byte *param_1,byte *param_2,undefined4 *param_3,undefined4 *param_4,
+                undefined4 *param_5,undefined4 *param_6)
 
 {
   byte bVar1;
+  uint mbptov_result;
   uint uVar2;
-  byte *dest;
-  int unaff_ECX;
-  undefined4 *unaff_EBX;
-  undefined8 mbptov_result;
-  int in_stack_00000004;
-  int in_stack_00000008;
+  byte *pbVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  byte *pbVar6;
   
-  dest = param_2;
   if ((*param_1 == 0) || (param_1[1] != 0x3a)) {
-    if (unaff_EBX != (undefined4 *)0x0) {
-      *unaff_EBX = param_2;
+    pbVar6 = param_1;
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = param_2;
       *param_2 = 0;
-      dest = param_2 + 1;
+      param_2 = param_2 + 1;
     }
   }
   else {
-    if (unaff_EBX != (undefined4 *)0x0) {
-      *unaff_EBX = param_2;
+    pbVar3 = param_2;
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = param_2;
       bVar1 = *param_1;
       param_2[1] = 0x3a;
       param_2[2] = 0;
-      dest = param_2 + 3;
+      pbVar3 = param_2 + 3;
       *param_2 = bVar1;
     }
-    param_2 = (byte *)0x2;
     param_1 = mbsninc(param_1,2);
+    pbVar6 = param_1;
+    param_2 = pbVar3;
   }
-  while( true ) {
-    mbptov_result = mbptov(param_1,param_2);
-    param_2 = (byte *)mbptov_result;
-    if (param_2 == (byte *)0x0) break;
-    if (param_2 == (byte *)0x2e) {
-      param_1 = param_1 + 1;
-    }
-    else {
+  do {
+    pbVar4 = pbVar6;
+    pbVar6 = pbVar4;
+    pbVar3 = (byte *)0x0;
+    do {
+      while( true ) {
+        pbVar5 = pbVar6;
+        mbptov_result = mbptov(pbVar5);
+        if (mbptov_result == 0) {
+          pbVar6 = copy_path_component(param_4,param_2,param_1,(int)pbVar4);
+          if (pbVar3 == (byte *)0x0) {
+            pbVar3 = pbVar5;
+          }
+          pbVar6 = copy_path_component(param_5,pbVar6,pbVar4,(int)pbVar3);
+          copy_path_component(param_6,pbVar6,pbVar3,(int)pbVar5);
+          return;
+        }
+        if (mbptov_result != 0x2e) break;
+        pbVar6 = pbVar5 + 1;
+        pbVar3 = pbVar5;
+      }
       if (IsDBCS == 0) {
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00405b35)[*param_1] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*pbVar5] & 1);
       }
-      param_1 = param_1 + uVar2 + 1;
-    }
-  }
-  dest = copy_path_component(unaff_ECX,dest);
-  dest = copy_path_component(in_stack_00000004,dest);
-  copy_path_component(in_stack_00000008,dest);
-  return;
+      pbVar6 = pbVar5 + uVar2 + 1;
+    } while ((mbptov_result != 0x5c) && (mbptov_result != 0x2f));
+  } while( true );
 }
 
 
@@ -98,14 +108,14 @@ void __watcall crt_nop_hook_2(void)
 
 /* ==== 004024c2 pickup ==== */
 
-int __watcall pickup(int param_1,int *unaff_EDX)
+int __watcall pickup(int param_1,int *param_2)
 
 {
   if ((param_1 == 0x5c) || (param_1 == 0x2f)) {
-    if (*unaff_EDX == 0) {
-      *unaff_EDX = param_1;
+    if (*param_2 == 0) {
+      *param_2 = param_1;
     }
-    param_1 = *unaff_EDX;
+    param_1 = *param_2;
   }
   return param_1;
 }
@@ -113,42 +123,37 @@ int __watcall pickup(int param_1,int *unaff_EDX)
 
 /* ==== 004024d6 makepath ==== */
 
-void __watcall
-makepath(byte *param_1,byte *unaff_EDX_00,byte *unaff_EBX,byte *unaff_ECX,byte *param_5)
+void __watcall makepath(byte *param_1,byte *param_2,byte *param_3,byte *param_4,byte *param_5)
 
 {
   byte bVar1;
-  int pickup_result;
   uint uVar2;
-  int *piVar3;
-  byte *unaff_EDX;
+  int pickup_result;
+  byte *pbVar3;
   byte *pbVar4;
   byte *pbVar5;
-  undefined8 uVar6;
   uint local_10;
   
   local_10 = 0;
-  unaff_EDX = param_1;
-  if ((unaff_EDX_00 != (byte *)0x0) && (*unaff_EDX_00 != 0)) {
-    *param_1 = *unaff_EDX_00;
+  pbVar4 = param_1;
+  if ((param_2 != (byte *)0x0) && (*param_2 != 0)) {
+    *param_1 = *param_2;
     param_1[1] = 0x3a;
-    unaff_EDX = param_1 + 2;
+    pbVar4 = param_1 + 2;
   }
-  *unaff_EDX = 0;
-  if ((unaff_EBX != (byte *)0x0) && (*unaff_EBX != 0)) {
+  *pbVar4 = 0;
+  if ((param_3 != (byte *)0x0) && (*param_3 != 0)) {
     do {
-      uVar6 = mbptov(unaff_EBX,&local_10);
-      piVar3 = (int *)((ulonglong)uVar6 >> 0x20);
-      pickup_result = pickup((int)uVar6,piVar3);
-      uVar6 = mbvtop_1(pickup_result,piVar3);
-      pbVar4 = (byte *)uVar6;
-      pbVar5 = unaff_EDX;
+      uVar2 = mbptov(param_3);
+      pickup_result = pickup(uVar2,(int *)&local_10);
+      pbVar3 = mbvtop_1(pickup_result);
+      pbVar5 = pbVar4;
       do {
-        bVar1 = *pbVar4;
+        bVar1 = *pbVar3;
         *pbVar5 = bVar1;
         if (bVar1 == 0) break;
-        bVar1 = pbVar4[1];
-        pbVar4 = pbVar4 + 2;
+        bVar1 = pbVar3[1];
+        pbVar3 = pbVar3 + 2;
         pbVar5[1] = bVar1;
         pbVar5 = pbVar5 + 2;
       } while (bVar1 != 0);
@@ -156,81 +161,79 @@ makepath(byte *param_1,byte *unaff_EDX_00,byte *unaff_EBX,byte *unaff_ECX,byte *
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_EDX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*pbVar4] & 1);
       }
-      unaff_EDX = unaff_EDX + uVar2 + 1;
+      pbVar4 = pbVar4 + uVar2 + 1;
       uVar2 = 0;
       if (IsDBCS != 0) {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_EBX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*param_3] & 1);
       }
-      unaff_EBX = unaff_EBX + uVar2 + 1;
-    } while (*unaff_EBX != 0);
+      param_3 = param_3 + uVar2 + 1;
+    } while (*param_3 != 0);
     if (local_10 == 0) {
       local_10 = 0x5c;
     }
-    pbVar5 = mbsdec(param_1,unaff_EDX);
+    pbVar5 = mbsdec(param_1,pbVar4);
     if (*pbVar5 == local_10) {
-      unaff_EDX = unaff_EDX + -1;
+      pbVar4 = pbVar4 + -1;
     }
     else {
-      *unaff_EDX = (byte)local_10;
+      *pbVar4 = (byte)local_10;
     }
   }
   if (local_10 == 0) {
     local_10 = 0x5c;
   }
-  if (unaff_ECX == (byte *)0x0) {
-    if (*unaff_EDX == local_10) {
-      unaff_EDX = unaff_EDX + 1;
+  if (param_4 == (byte *)0x0) {
+    if (*pbVar4 == local_10) {
+      pbVar4 = pbVar4 + 1;
     }
   }
   else {
-    uVar6 = mbptov(unaff_ECX,&local_10);
-    uVar2 = pickup((int)uVar6,(int *)((ulonglong)uVar6 >> 0x20));
-    if ((uVar2 != local_10) && (*unaff_EDX == local_10)) {
-      unaff_EDX = unaff_EDX + 1;
+    uVar2 = mbptov(param_4);
+    uVar2 = pickup(uVar2,(int *)&local_10);
+    if ((uVar2 != local_10) && (*pbVar4 == local_10)) {
+      pbVar4 = pbVar4 + 1;
     }
     do {
-      uVar6 = mbptov(unaff_ECX,&local_10);
-      piVar3 = (int *)((ulonglong)uVar6 >> 0x20);
-      pickup_result = pickup((int)uVar6,piVar3);
-      uVar6 = mbvtop_1(pickup_result,piVar3);
-      pbVar4 = (byte *)uVar6;
-      pbVar5 = unaff_EDX;
+      uVar2 = mbptov(param_4);
+      pickup_result = pickup(uVar2,(int *)&local_10);
+      pbVar3 = mbvtop_1(pickup_result);
+      pbVar5 = pbVar4;
       do {
-        bVar1 = *pbVar4;
+        bVar1 = *pbVar3;
         *pbVar5 = bVar1;
         if (bVar1 == 0) break;
-        bVar1 = pbVar4[1];
-        pbVar4 = pbVar4 + 2;
+        bVar1 = pbVar3[1];
+        pbVar3 = pbVar3 + 2;
         pbVar5[1] = bVar1;
         pbVar5 = pbVar5 + 2;
       } while (bVar1 != 0);
       uVar2 = 0;
       if (IsDBCS != 0) {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_EDX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*pbVar4] & 1);
       }
-      unaff_EDX = unaff_EDX + uVar2 + 1;
+      pbVar4 = pbVar4 + uVar2 + 1;
       if (IsDBCS == 0) {
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&DAT_00405b35)[*unaff_ECX] & 1);
+        uVar2 = (uint)((&DAT_00405b35)[*param_4] & 1);
       }
-      unaff_ECX = unaff_ECX + uVar2 + 1;
-    } while (*unaff_ECX != 0);
+      param_4 = param_4 + uVar2 + 1;
+    } while (*param_4 != 0);
   }
   if ((param_5 != (byte *)0x0) && (*param_5 != 0)) {
     if (*param_5 != 0x2e) {
-      *unaff_EDX = 0x2e;
-      unaff_EDX = unaff_EDX + 1;
+      *pbVar4 = 0x2e;
+      pbVar4 = pbVar4 + 1;
     }
     for (; *param_5 != 0; param_5 = param_5 + 1) {
-      *unaff_EDX = *param_5;
-      unaff_EDX = unaff_EDX + 1;
+      *pbVar4 = *param_5;
+      pbVar4 = pbVar4 + 1;
     }
   }
-  *unaff_EDX = 0;
+  *pbVar4 = 0;
   return;
 }
 

@@ -3,49 +3,51 @@
 
 /* ==== 0040b5b0 xvga_init_fileio ==== */
 
-int __watcall xvga_init_fileio(char *filename,char *filename_2)
+int __watcall xvga_init_fileio(char *filename_2,char *param_2)
 
 {
-  int i;
-  int extraout_ECX;
+  int fileio_index;
+  int iVar1;
   int extraout_EDX;
   int j;
-  int fileio_index;
   fileio_t *fileio_2;
   fileio_t *fileio_3;
-  char *format;
-  char *pcVar1;
-  undefined4 uVar2;
+  char *pcVar2;
+  char *pcVar3;
+  undefined4 uVar4;
   fileio_t local_38 [20];
   undefined4 local_24;
+  char *filename;
+  undefined4 i;
   short asStack_18 [2];
   fileio_t fileio;
   
+  filename = param_2;
   if (init_fileio_ok == 0) {
     debugmsg(s_init_fileio_0041debc);
-    res_fp = (__iobuf *)fopen(filename,s_rb_0041dec9);
-    if ((FILE *)res_fp == (FILE *)0x0) {
-      uVar2 = 0x29;
-      pcVar1 = s_fileio_cpp_0041decc;
-      format = s__s__d____could_not_open_<_s>_0041ded7;
+    res_fp = (__iobuf *)fopen(filename_2,(byte *)s_rb_0041dec9);
+    if (res_fp == (__iobuf *)0x0) {
+      uVar4 = 0x29;
+      pcVar3 = s_fileio_cpp_0041decc;
+      pcVar2 = s__s__d____could_not_open_<_s>_0041ded7;
     }
     else {
-      fread(asStack_18,2,1,(FILE *)res_fp);
-      i = (int)asStack_18[0];
-      if (i < 1) {
-        fatal_exit(s__s__d____could_not_open_<_s>_0041deff,s_fileio_cpp_0041def4,0x34,filename);
+      fread((char *)asStack_18,2,1,(int *)res_fp);
+      fileio_index = (int)asStack_18[0];
+      if (fileio_index < 1) {
+        fatal_exit(s__s__d____could_not_open_<_s>_0041deff,s_fileio_cpp_0041def4,0x34,filename_2);
         return 0x3e9;
       }
-      max_xvga_rc_files = i;
-      xvga_rc_files = LocalAlloc(0x40,i * 0x1c);
+      max_xvga_rc_files = fileio_index;
+      xvga_rc_files = LocalAlloc(0x40,fileio_index * 0x1c);
       if (xvga_rc_files == (fileio_t *)0x0) {
         fatal_exit(s__s__d____error_not_enough_memory_0041df27,s_fileio_cpp_0041df1c,0x40);
         return 2000;
       }
       fileio_index = 0;
       for (i = 0; i < max_xvga_rc_files; i = i + 1) {
-        fread(local_38,0x14,1,(FILE *)res_fp);
-        fread(&local_24,1,4,(FILE *)res_fp);
+        fread((char *)local_38,0x14,1,(int *)res_fp);
+        fread((char *)&local_24,1,4,(int *)res_fp);
         fileio_3 = xvga_rc_files + fileio_index;
         fileio_2 = local_38;
         do {
@@ -65,18 +67,19 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
         }
         fileio_index = fileio_index + 0x1c;
       }
-      fclose((FILE *)res_fp);
-      data_fp = (__iobuf *)fopen(filename_2,s_rb_0041df9a);
-      if ((FILE *)data_fp != (FILE *)0x0) {
-        i = 0x1c;
-        file_end_pos = filelength(((FILE *)data_fp)->_file);
+      fclose((int)res_fp);
+      data_fp = (__iobuf *)fopen(filename,(byte *)s_rb_0041df9a);
+      if (data_fp != (__iobuf *)0x0) {
+        iVar1 = 0x1c;
+        file_end_pos = filelength(*(undefined4 *)(data_fp + 0x10));
         fileio_index = 0;
         for (j = 0; j < max_xvga_rc_files + -1; j = j + 1) {
           *(int *)(xvga_rc_files + fileio_index + 0x18) =
-               *(int *)(xvga_rc_files + i + 0x14) - *(int *)(xvga_rc_files + fileio_index + 0x14);
+               *(int *)(xvga_rc_files + iVar1 + 0x14) -
+               *(int *)(xvga_rc_files + fileio_index + 0x14);
+          iVar1 = iVar1 + 0x1c;
           debugmsg(s__s_is__d_bytes_0041dfc5,xvga_rc_files + fileio_index,
                    *(undefined4 *)(xvga_rc_files + fileio_index + 0x18));
-          i = extraout_ECX;
           fileio_index = extraout_EDX;
         }
         *(long *)(xvga_rc_files + fileio_index + 0x18) =
@@ -85,90 +88,82 @@ int __watcall xvga_init_fileio(char *filename,char *filename_2)
         debugmsg(s_fileio_done_0041dfd5);
         goto LAB_0040b81a;
       }
-      uVar2 = 0x5a;
-      pcVar1 = s_fileio_cpp_0041df9d;
-      format = s__s__d____could_not_open_<_s>_0041dfa8;
-      filename = filename_2;
+      uVar4 = 0x5a;
+      pcVar3 = s_fileio_cpp_0041df9d;
+      pcVar2 = s__s__d____could_not_open_<_s>_0041dfa8;
+      filename_2 = filename;
     }
-    fatal_exit(format,pcVar1,uVar2,filename);
-    i = 1000;
+    fatal_exit(pcVar2,pcVar3,uVar4,filename_2);
+    fileio_index = 1000;
   }
   else {
     debugmsg(s__s__d____warning___double_call_t_0041de7b,s_fileio_cpp_0041de70,0x21);
 LAB_0040b81a:
-    i = 0;
+    fileio_index = 0;
   }
-  return i;
+  return fileio_index;
 }
 
 
 /* ==== 0040b825 xvga_src_fseek ==== */
 
-int __watcall xvga_src_fseek(__iobuf *file,int param_2,int origin)
+int __watcall xvga_src_fseek(__iobuf *file,int param_2,int move_method)
 
 {
-  int fseek_result;
-  __iobuf *extraout_ECX;
-  FILE *extraout_ECX_00;
-  long _Offset;
+  int iVar1;
   int extraout_EDX;
-  long extraout_EDX_00;
-  char *pcVar1;
-  undefined4 uVar2;
-  FILE *_File;
-  char *format;
+  char *pcVar2;
+  char *pcVar3;
+  undefined4 uVar4;
   
   if (file == (__iobuf *)0x0) {
     fatal_exit(s__s__d____null_ptr_assignment___0041dfed,s_fileio_cpp_0041dfe2,0x76);
-    file = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if (init_fileio_ok == 0) {
-    uVar2 = 0x7d;
-    pcVar1 = s_fileio_cpp_0041e00c;
-    format = s__s__d____direct_fseek_1_0041e017;
+    uVar4 = 0x7d;
+    pcVar3 = s_fileio_cpp_0041e00c;
+    pcVar2 = s__s__d____direct_fseek_1_0041e017;
   }
   else {
     if (*(int *)(file + 0x10) == *(int *)(data_fp + 0x10)) {
-      _Offset = file_begin_pos + param_2;
-      if (origin == 0) {
-        if ((file_end_pos < _Offset) || (_Offset < file_begin_pos)) {
-          uVar2 = 0x8e;
-          pcVar1 = s_fileio_cpp_0041e058;
-          format = s__s__d____fseeking_past_end_or_be_0041e063;
+      iVar1 = file_begin_pos + param_2;
+      if (move_method == 0) {
+        if ((file_end_pos < iVar1) || (iVar1 < file_begin_pos)) {
+          uVar4 = 0x8e;
+          pcVar3 = s_fileio_cpp_0041e058;
+          pcVar2 = s__s__d____fseeking_past_end_or_be_0041e063;
 LAB_0040b8b1:
-          fatal_exit(format,pcVar1,uVar2);
+          fatal_exit(pcVar2,pcVar3,uVar4);
           return 0x3e9;
         }
       }
-      else if (1 < (uint)origin) {
-        if (origin != 2) {
-          uVar2 = 0x9d;
-          pcVar1 = s_fileio_cpp_0041e0c7;
-          format = s__s__d____illegal_fseek_cmd__0041e0d2;
+      else if (1 < (uint)move_method) {
+        if (move_method != 2) {
+          uVar4 = 0x9d;
+          pcVar3 = s_fileio_cpp_0041e0c7;
+          pcVar2 = s__s__d____illegal_fseek_cmd__0041e0d2;
           goto LAB_0040b8b1;
         }
-        _Offset = file_end_pos + param_2;
-        if (file_end_pos < _Offset) {
+        iVar1 = file_end_pos + param_2;
+        if (file_end_pos < iVar1) {
           fatal_exit(s__s__d____fseeking_past_end_file__0041e09b,s_fileio_cpp_0041e090,0x96,
                      file_begin_pos,file_end_pos,param_2);
           return 0x3e9;
         }
       }
-      origin = 0;
-      _File = (FILE *)data_fp;
+      move_method = 0;
+      file = data_fp;
       goto LAB_0040b861;
     }
-    uVar2 = 0x84;
-    pcVar1 = s_fileio_cpp_0041e032;
-    format = s__s__d____direct_fseek_2_0041e03d;
+    uVar4 = 0x84;
+    pcVar3 = s_fileio_cpp_0041e032;
+    pcVar2 = s__s__d____direct_fseek_2_0041e03d;
   }
-  debugmsg(format,pcVar1,uVar2);
-  _File = extraout_ECX_00;
-  _Offset = extraout_EDX_00;
+  debugmsg(pcVar2,pcVar3,uVar4);
+  iVar1 = extraout_EDX;
 LAB_0040b861:
-  fseek_result = fseek(_File,_Offset,origin);
-  return fseek_result;
+  iVar1 = fseek(file,iVar1,move_method);
+  return iVar1;
 }
 
 
@@ -177,63 +172,61 @@ LAB_0040b861:
 ulong __watcall xvga_src_filelength(__iobuf *file)
 
 {
-  ulong filelength_result;
-  __iobuf *extraout_EDX;
-  int _FileHandle;
+  DWORD DVar1;
+  int iVar2;
   
   if (file == (__iobuf *)0x0) {
     fatal_exit(s__s__d____null_ptr_assignment___0041e0fa,s_fileio_cpp_0041e0ef,0xa7);
-    file = extraout_EDX;
   }
   if (init_fileio_ok == 0) {
-    _FileHandle = *(int *)(file + 0x10);
+    iVar2 = *(int *)(file + 0x10);
   }
   else {
-    _FileHandle = *(int *)(file + 0x10);
-    if (_FileHandle == *(int *)(data_fp + 0x10)) {
+    iVar2 = *(int *)(file + 0x10);
+    if (iVar2 == *(int *)(data_fp + 0x10)) {
       if (init_fileio_ok == 0) {
         fatal_exit(s__s__d____attempt_at_reading_unop_0041e124,s_fileio_cpp_0041e119,0xb4);
       }
       return file_end_pos - file_begin_pos;
     }
   }
-  filelength_result = filelength(_FileHandle);
-  return filelength_result;
+  DVar1 = filelength(iVar2);
+  return DVar1;
 }
 
 
 /* ==== 0040b99e xvga_src_fopen ==== */
 
-__iobuf * __watcall xvga_src_fopen(char *param_1)
+__iobuf * __watcall xvga_src_fopen(char *filename)
 
 {
-  FILE *pFVar1;
-  int iVar2;
+  __iobuf *p_Var1;
+  int cmp;
   int i;
   int fileio_index;
+  char *pcVar2;
   char *pcVar3;
-  undefined4 uVar4;
-  char *format;
+  undefined4 fseek_result;
   
   if (init_fileio_ok == 0) {
-    pFVar1 = fopen(param_1,s_rb_0041e155);
-    if (pFVar1 != (FILE *)0x0) {
-      uVar4 = 0xd0;
+    p_Var1 = (__iobuf *)fopen(filename,(byte *)s_rb_0041e155);
+    if (p_Var1 != (__iobuf *)0x0) {
+      fseek_result = 0xd0;
       pcVar3 = s_fileio_cpp_0041e185;
-      format = s__s__d____file_open_succeeded___s_0041e190;
-LAB_0040b9ee:
-      debugmsg(format,pcVar3,uVar4,param_1);
-      return (__iobuf *)pFVar1;
+      pcVar2 = s__s__d____file_open_succeeded___s_0041e190;
+override_prt_40b9ee_895bd7c3:
+      debugmsg(pcVar2,pcVar3,fseek_result,filename);
+      return p_Var1;
     }
-    uVar4 = 0xcd;
+    fseek_result = 0xcd;
     pcVar3 = s_fileio_cpp_0041e158;
-    format = s__s__d____file_open_failed___s__0041e163;
+    pcVar2 = s__s__d____file_open_failed___s__0041e163;
   }
   else {
     fileio_index = 0;
     for (i = 0; i < max_xvga_rc_files; i = i + 1) {
-      iVar2 = stricmp((char *)(xvga_rc_files + fileio_index),param_1);
-      if (iVar2 == 0) {
+      cmp = stricmp((byte *)(xvga_rc_files + fileio_index),(byte *)filename);
+      if (cmp == 0) {
         file_begin_pos = *(long *)(xvga_rc_files + fileio_index + 0x14);
         file_end_pos = file_begin_pos + *(int *)(xvga_rc_files + fileio_index + 0x18);
         break;
@@ -242,23 +235,23 @@ LAB_0040b9ee:
     }
     fileio_index = (int)(short)max_xvga_rc_files;
     if (i != fileio_index) {
-      iVar2 = fseek((FILE *)data_fp,file_begin_pos,0);
-      debugmsg(s__s__d____file_open_succeeded___s_0041e220,s_fileio_cpp_0041e215,0xff,param_1,i,
-               fileio_index,file_begin_pos,*(undefined4 *)(data_fp + 0x10),iVar2);
+      fseek_result = fseek(data_fp,file_begin_pos,0);
+      debugmsg(s__s__d____file_open_succeeded___s_0041e220,s_fileio_cpp_0041e215,0xff,filename,i,
+               fileio_index,file_begin_pos,*(undefined4 *)(data_fp + 0x10),fseek_result);
       return data_fp;
     }
-    pFVar1 = fopen(param_1,s_rb_0041e1b5);
-    if (pFVar1 != (FILE *)0x0) {
-      uVar4 = 0xf9;
+    p_Var1 = (__iobuf *)fopen(filename,(byte *)s_rb_0041e1b5);
+    if (p_Var1 != (__iobuf *)0x0) {
+      fseek_result = 0xf9;
       pcVar3 = s_fileio_cpp_0041e1e5;
-      format = s__s__d____file_open_succeeded___s_0041e1f0;
-      goto LAB_0040b9ee;
+      pcVar2 = s__s__d____file_open_succeeded___s_0041e1f0;
+      goto override_prt_40b9ee_895bd7c3;
     }
-    uVar4 = 0xf6;
+    fseek_result = 0xf6;
     pcVar3 = s_fileio_cpp_0041e1b8;
-    format = s__s__d____file_open_failed___s__0041e1c3;
+    pcVar2 = s__s__d____file_open_failed___s__0041e1c3;
   }
-  debugmsg(format,pcVar3,uVar4,param_1);
+  debugmsg(pcVar2,pcVar3,fseek_result,filename);
   return (__iobuf *)0x0;
 }
 
@@ -268,33 +261,33 @@ LAB_0040b9ee:
 void __watcall xvga_src_fclose(__iobuf *file)
 
 {
-  FILE *extraout_EDX;
-  char *format;
+  __iobuf *extraout_EDX;
   char *pcVar1;
-  undefined4 uVar2;
+  char *arg2;
+  undefined4 arg3;
   
   if (file == (__iobuf *)0x0) {
-    uVar2 = 0x109;
-    pcVar1 = s_fileio_cpp_0041e258;
-    format = s__s__d____null_ptr_assignment___0041e263;
-LAB_0040bae3:
-    fatal_exit(format,pcVar1,uVar2);
+    arg3 = 0x109;
+    arg2 = s_fileio_cpp_0041e258;
+    pcVar1 = s__s__d____null_ptr_assignment___0041e263;
+override_prt_40bae3_5aff0b4b:
+    fatal_exit(pcVar1,arg2,arg3);
     return;
   }
   if (init_fileio_ok == 0) {
     debugmsg(s__s__d____file_close_0041e28d,s_fileio_cpp_0041e282,0x10f);
-    file = (__iobuf *)extraout_EDX;
+    file = extraout_EDX;
   }
   else if (*(int *)(file + 0x10) == *(int *)(data_fp + 0x10)) {
     if (init_fileio_ok != 0) {
       return;
     }
-    uVar2 = 0x116;
-    pcVar1 = s_fileio_cpp_0041e2a4;
-    format = s__s__d____unopened_resource_file_a_0041e2af;
-    goto LAB_0040bae3;
+    arg3 = 0x116;
+    arg2 = s_fileio_cpp_0041e2a4;
+    pcVar1 = s__s__d____unopened_resource_file_a_0041e2af;
+    goto override_prt_40bae3_5aff0b4b;
   }
-  fclose((FILE *)file);
+  fclose((int)file);
   return;
 }
 
@@ -312,7 +305,7 @@ void __watcall xvga_exit_fileio(void)
       fatal_exit(s__s__d____failure_to_free_file_li_0041e2e3,s_fileio_cpp_0041e2d8,0x126);
       return;
     }
-    fclose((FILE *)data_fp);
+    fclose((int)data_fp);
     init_fileio_ok = 0;
   }
   return;

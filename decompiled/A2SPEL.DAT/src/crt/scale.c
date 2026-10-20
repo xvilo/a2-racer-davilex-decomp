@@ -3,60 +3,69 @@
 
 /* ==== 0043e8d7 Scale ==== */
 
-void __watcall Scale(int param_1)
+int __watcall
+Scale(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,
+     undefined4 param_6,int param_7,uint *param_8)
 
 {
+  int cmp_big_int;
+  uint *puVar1;
   float10 in_ST0;
-  double in_stack_00000004;
-  int in_stack_0000000c;
-  uint *in_stack_00000010;
   
-  if (param_1 != in_stack_0000000c) {
-    Scale10V(param_1,in_stack_00000004._4_4_);
-    in_stack_00000004 = (double)in_ST0;
+  cmp_big_int = param_7;
+  puVar1 = param_8;
+  if (param_1 != param_7) {
+    Scale10V(param_1,param_6,param_8,param_7,param_5,param_6,param_7 - param_1);
+    _param_5 = (double)in_ST0;
   }
-  Rnd2Int(&stack0x00000004,in_stack_00000010);
-  CmpBigInt();
-  return;
+  Rnd2Int(&param_5);
+  cmp_big_int = CmpBigInt(cmp_big_int,puVar1,puVar1);
+  return cmp_big_int;
 }
 
 
 /* ==== 0043e918 Scale10V ==== */
 
-undefined8 __watcall Scale10V(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall
+Scale10V(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+        undefined4 param_5,undefined4 param_6,int param_7)
 
 {
   short *psVar1;
-  uint uVar2;
-  uint in_stack_0000000c;
+  int iVar2;
+  int iVar3;
+  undefined8 local_1c;
   
   psVar1 = &BigPow10Table;
-  if ((int)in_stack_0000000c < 0) {
-    uVar2 = -in_stack_0000000c;
-    if (in_stack_0000000c == 0xfffffecc || (int)uVar2 < 0x134) goto LAB_0043e9d3;
+  if (param_7 < 0) {
+    iVar2 = -param_7;
+    if (param_7 == -0x134 || iVar2 < 0x134) goto LAB_0043e9c5;
     if ((chipbug & 1) != 0) {
-      psVar1 = (short *)fdiv_m64(&BigPow10Table,uVar2);
+      psVar1 = (short *)fdiv_m64(&BigPow10Table,iVar2,param_3,param_7,DAT_0045767a,DAT_0045767e);
     }
   }
   else {
-    uVar2 = in_stack_0000000c;
-    if ((int)in_stack_0000000c < 0x135) goto LAB_0043e9d3;
+    iVar2 = param_7;
+    if (param_7 < 0x135) goto LAB_0043e9c5;
   }
-  uVar2 = uVar2 - 0xd8;
-LAB_0043e9d3:
+  iVar2 = iVar2 + -0xd8;
+LAB_0043e9c5:
+  local_1c = 1.0;
   while( true ) {
-    if ((int)*psVar1 <= (int)uVar2) {
-      uVar2 = uVar2 - (int)*psVar1;
+    iVar3 = (int)*psVar1;
+    if (iVar3 <= iVar2) {
+      local_1c = local_1c * *(double *)(psVar1 + 1);
+      iVar2 = iVar2 - iVar3;
     }
-    if (uVar2 == 0) break;
+    if (iVar2 == 0) break;
     if (*psVar1 != 1) {
       psVar1 = psVar1 + 5;
     }
   }
-  if (((int)in_stack_0000000c < 0) && ((chipbug & 1) != 0)) {
-    fdiv_m64(psVar1,0);
+  if ((param_7 < 0) && ((chipbug & 1) != 0)) {
+    fdiv_m64(psVar1,0,iVar3,param_7,(undefined4)local_1c,local_1c._4_4_);
   }
-  return CONCAT44(unaff_EDX,param_1);
+  return;
 }
 
 

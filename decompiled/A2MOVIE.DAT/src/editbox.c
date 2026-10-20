@@ -93,8 +93,6 @@ void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
 {
   int control_type;
   HWND hWnd;
-  int extraout_ECX;
-  char *extraout_EDX;
   UINT Msg;
   WPARAM wParam;
   
@@ -103,8 +101,6 @@ void __watcall get_edit_box_text(int param_1,char *param_2,int param_3)
     control_type = get_control_type(param_1);
     if (control_type != 3) {
       fatal_exit(s__s__d_____get_edit_box_text__con_0041e85f,s_editbox_cpp_0041e853,0x52,param_1);
-      param_1 = extraout_ECX;
-      param_2 = extraout_EDX;
     }
   }
   wParam = 0;
@@ -162,16 +158,11 @@ void __watcall draw_help_editbox(fform_t *fform)
 void __watcall destroy_edit_box(fform_t *fform)
 
 {
-  fform_t *extraout_EDX;
-  fform_t *extraout_EDX_00;
-  
   if (init_edit_box_ok == '\0') {
     fatal_exit(s__s__d_____destroy_edit_box__edit_0041e8a7,s_editbox_cpp_0041e89b,0x84);
-    fform = extraout_EDX;
   }
   if (*(int *)(fform + 0x18) == 0) {
     fatal_exit(s__s__d_____destroy_edit_box__no_v_0041e900,s_editbox_cpp_0041e8f4,0x89);
-    fform = extraout_EDX_00;
   }
   DestroyWindow(*(HWND *)(fform + 0x18));
   return;
@@ -320,7 +311,7 @@ long EditWindowProc(void *param_1,uint param_2,uint param_3,long param_4)
 {
   SHORT SVar1;
   long set_windows_edit_box_colors_result;
-  char *found;
+  byte *found;
   HWND pHVar2;
   byte bVar3;
   bool bVar4;
@@ -382,8 +373,8 @@ LAB_004113e6:
       goto LAB_004113e6;
     }
   }
-  found = strstr(&allowed_edit_keys,(char *)&local_10);
-  if (found == (char *)0x0) {
+  found = strstr(&allowed_edit_keys,(byte *)&local_10);
+  if (found == (byte *)0x0) {
     return 0;
   }
 LAB_00411476:

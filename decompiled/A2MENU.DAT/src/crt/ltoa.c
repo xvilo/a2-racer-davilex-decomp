@@ -3,49 +3,43 @@
 
 /* ==== 00420d86 ultoa ==== */
 
-char * __watcall ultoa(ulong _Val,char *_Dstbuf,int _Radix)
+void __watcall ultoa(uint param_1,char *param_2,uint param_3)
 
 {
   char cVar1;
   uint uVar2;
   char *pcVar3;
-  char *pcVar4;
-  char local_37 [35];
+  char local_37 [39];
   
   pcVar3 = local_37;
   do {
-    uVar2 = _Val / (uint)_Radix;
-    *pcVar3 = "0123456789abcdefghijklmnopqrstuvwxyz"[_Val % (uint)_Radix];
+    uVar2 = param_1 / param_3;
+    *pcVar3 = "0123456789abcdefghijklmnopqrstuvwxyz"[param_1 % param_3];
     pcVar3 = pcVar3 + 1;
-    _Val = uVar2;
-    pcVar4 = _Dstbuf;
+    param_1 = uVar2;
   } while (uVar2 != 0);
   do {
     pcVar3 = pcVar3 + -1;
     cVar1 = *pcVar3;
-    *pcVar4 = cVar1;
-    pcVar4 = pcVar4 + 1;
+    *param_2 = cVar1;
+    param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  return _Dstbuf;
+  return;
 }
 
 
 /* ==== 00420dd0 ltoa_1 ==== */
 
-undefined1 * __watcall
-ltoa_1(int val,undefined1 *unaff_EDX,int unaff_EBX,ulong unaff_ECX,int param_5)
+void __watcall ltoa_1(uint param_1,char *param_2,uint param_3)
 
 {
-  char *_Dstbuf;
-  
-  _Dstbuf = unaff_EDX;
-  if ((unaff_EBX == 10) && (val < 0)) {
-    val = -val;
-    *unaff_EDX = 0x2d;
-    _Dstbuf = unaff_EDX + 1;
+  if ((param_3 == 10) && ((int)param_1 < 0)) {
+    param_1 = -param_1;
+    *param_2 = '-';
+    param_2 = param_2 + 1;
   }
-  ultoa(val,_Dstbuf,unaff_EBX);
-  return unaff_EDX;
+  ultoa(param_1,param_2,param_3);
+  return;
 }
 
 

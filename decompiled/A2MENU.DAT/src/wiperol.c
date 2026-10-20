@@ -6,52 +6,52 @@
 void __watcall wipe_vrollbarup(int param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
+  uchar *surface_ptr;
   uchar *surface_ptr_2;
   uchar *surface_ptr_3;
-  uchar *surface_ptr;
   int iVar1;
-  int iVar2;
   int i;
-  int iVar3;
+  int iVar2;
   int local_30;
   int local_2c;
+  int local_28;
   
   if (called_true_handle_wipe == 0) {
     fatal_exit(s__wipe_vrollbarup__illegal_call___00431758);
   }
   hide_mouse();
   blt_scr_2_scr(0,1,0,0,xvga_screen_xsize,xvga_screen_ysize,0);
-  surface_ptr_2 = get_surface_ptr(xvga_screen);
-  surface_ptr_3 = get_surface_ptr(xvga_back_screen);
-  surface_ptr = get_surface_ptr(xvga_buffer_screen);
+  surface_ptr = get_surface_ptr(xvga_screen);
+  surface_ptr_2 = get_surface_ptr(xvga_back_screen);
+  surface_ptr_3 = get_surface_ptr(xvga_buffer_screen);
   local_30 = param_4 + 0x3d;
   local_2c = param_4 + 0x3c;
-  iVar2 = param_4;
+  local_28 = param_4;
   do {
-    i = iVar2 + 0x3c;
+    i = local_28 + 0x3c;
     if (local_30 < param_4 + 1) {
-      copyblock_tosurface(surface_ptr,surface_ptr_2,param_1,iVar2 + 0x3d,param_3,3,param_1,
-                          iVar2 + 0x3d);
+      copyblock_tosurface(surface_ptr_3,surface_ptr,param_1,local_28 + 0x3d,param_3,3,param_1,
+                          local_28 + 0x3d);
     }
-    iVar3 = 0;
+    iVar2 = 0;
     do {
-      iVar1 = local_2c + *(int *)((int)&roll_tabledraw + iVar3);
+      iVar1 = local_2c + *(int *)((int)&roll_tabledraw + iVar2);
       if (((iVar1 <= param_4) && (i <= param_4)) && (-1 < i)) {
-        copyblock_tosurface(surface_ptr_3,surface_ptr_2,param_1,iVar1,param_3,1,param_1,i);
+        copyblock_tosurface(surface_ptr_2,surface_ptr,param_1,iVar1,param_3,1,param_1,i);
       }
-      iVar3 = iVar3 + 4;
+      iVar2 = iVar2 + 4;
       i = i + -1;
-    } while (iVar3 != 0xf0);
+    } while (iVar2 != 0xf0);
     local_30 = local_30 + -3;
-    iVar2 = iVar2 + -3;
+    local_28 = local_28 + -3;
     local_2c = local_2c + -3;
     if (param_5 == 0) {
       Sleep(0);
     }
-  } while (param_2 + -0x40 < iVar2);
-  reset_surface_ptr_1(xvga_screen,surface_ptr_2);
-  reset_surface_ptr_1(xvga_back_screen,surface_ptr_3);
-  reset_surface_ptr_1(xvga_buffer_screen,surface_ptr);
+  } while (param_2 + -0x40 < local_28);
+  reset_surface_ptr_1(xvga_screen,surface_ptr);
+  reset_surface_ptr_1(xvga_back_screen,surface_ptr_2);
+  reset_surface_ptr_1(xvga_buffer_screen,surface_ptr_3);
   show_mouse();
   return;
 }

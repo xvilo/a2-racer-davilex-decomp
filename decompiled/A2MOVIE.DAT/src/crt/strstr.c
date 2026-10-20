@@ -6,109 +6,108 @@
 /* WARNING: Instruction at (ram,0x004140aa) overlaps instruction at (ram,0x004140a8)
     */
 
-char * __watcall strstr(char *_Str,char *_SubStr)
+byte * __watcall strstr(byte *param_1,byte *param_2)
 
 {
-  char cVar1;
+  byte bVar1;
   int iVar2;
-  char *pcVar3;
+  byte *pbVar3;
   uint i;
-  char *pcVar4;
-  char *pcVar5;
+  byte *pbVar4;
+  byte *pbVar5;
   byte *pbVar6;
-  char *pcVar7;
-  char *pcVar8;
-  byte *pbVar9;
+  byte *pbVar7;
+  byte *pbVar8;
+  bool bVar9;
   bool bVar10;
-  bool bVar11;
   
-  if (*_SubStr != '\0') {
-    if (_SubStr[1] == '\0') {
+  if (*param_2 != 0) {
+    if (param_2[1] == 0) {
       do {
-        if (*_Str == *_SubStr) {
-          return _Str;
+        if (*param_1 == *param_2) {
+          return param_1;
         }
-        if (*_Str == '\0') break;
-        cVar1 = _Str[1];
-        if (cVar1 == *_SubStr) {
-          return _Str + 1;
+        if (*param_1 == 0) break;
+        bVar1 = param_1[1];
+        if (bVar1 == *param_2) {
+          return param_1 + 1;
         }
-        _Str = _Str + 2;
-      } while (cVar1 != '\0');
-      _Str = (char *)0x0;
+        param_1 = param_1 + 2;
+      } while (bVar1 != 0);
+      param_1 = (byte *)0x0;
     }
     else {
-      pcVar3 = (char *)0xffffffff;
-      bVar10 = true;
-      pcVar5 = _Str;
+      pbVar3 = (byte *)0xffffffff;
+      bVar9 = true;
+      pbVar5 = param_1;
       do {
-        pcVar7 = pcVar5;
-        if (pcVar3 == (char *)0x0) break;
-        pcVar3 = pcVar3 + -1;
-        pcVar7 = pcVar5 + 1;
-        bVar10 = *pcVar5 == '\0';
-        pcVar5 = pcVar7;
-      } while (!bVar10);
-      if (!bVar10) {
-        pcVar7 = pcVar3;
+        pbVar7 = pbVar5;
+        if (pbVar3 == (byte *)0x0) break;
+        pbVar3 = pbVar3 + -1;
+        pbVar7 = pbVar5 + 1;
+        bVar9 = *pbVar5 == 0;
+        pbVar5 = pbVar7;
+      } while (!bVar9);
+      if (!bVar9) {
+        pbVar7 = pbVar3;
       }
       i = 0xffffffff;
-      pcVar5 = _SubStr;
+      pbVar5 = param_2;
       do {
         if (i == 0) break;
         i = i - 1;
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
-      } while (cVar1 != '\0');
-      pcVar3 = (char *)(~i - 1);
-      pcVar5 = _Str;
+        bVar1 = *pbVar5;
+        pbVar5 = pbVar5 + 1;
+      } while (bVar1 != 0);
+      pbVar3 = (byte *)(~i - 1);
+      pbVar5 = param_1;
       do {
-        pcVar4 = pcVar7 + (-1 - (int)pcVar5);
-        bVar10 = pcVar4 == pcVar3;
-        if (pcVar4 < pcVar3) {
-          return (char *)0x0;
+        pbVar4 = pbVar7 + (-1 - (int)pbVar5);
+        bVar9 = pbVar4 == pbVar3;
+        if (pbVar4 < pbVar3) {
+          return (byte *)0x0;
         }
-        if (pcVar4 == (char *)0x0) {
+        if (pbVar4 == (byte *)0x0) {
 LAB_004140a8_2:
-          pcVar5 = pcVar4;
+          pbVar5 = pbVar4;
         }
         else {
           do {
-            pcVar8 = pcVar5;
-            if (pcVar4 == (char *)0x0) break;
-            pcVar4 = pcVar4 + -1;
-            pcVar8 = pcVar5 + 1;
-            bVar10 = *_SubStr == *pcVar5;
-            pcVar5 = pcVar8;
-          } while (!bVar10);
-          pcVar5 = pcVar8;
-          if (!bVar10) goto LAB_004140a8_2;
+            pbVar6 = pbVar5;
+            if (pbVar4 == (byte *)0x0) break;
+            pbVar4 = pbVar4 + -1;
+            pbVar6 = pbVar5 + 1;
+            bVar9 = *param_2 == *pbVar5;
+            pbVar5 = pbVar6;
+          } while (!bVar9);
+          pbVar5 = pbVar6;
+          if (!bVar9) goto LAB_004140a8_2;
         }
-        _Str = pcVar5 + -1;
-        if ((byte *)_Str == (byte *)0x0) {
-          return (char *)0x0;
+        param_1 = pbVar5 + -1;
+        if (param_1 == (byte *)0x0) {
+          return (byte *)0x0;
         }
-        bVar10 = false;
+        bVar9 = false;
         iVar2 = 0;
-        bVar11 = true;
-        pcVar4 = pcVar3;
-        pbVar6 = (byte *)_Str;
-        pbVar9 = (byte *)_SubStr;
+        bVar10 = true;
+        pbVar4 = pbVar3;
+        pbVar6 = param_1;
+        pbVar8 = param_2;
         do {
-          if (pcVar4 == (char *)0x0) break;
-          pcVar4 = pcVar4 + -1;
-          bVar10 = *pbVar6 < *pbVar9;
-          bVar11 = *pbVar6 == *pbVar9;
+          if (pbVar4 == (byte *)0x0) break;
+          pbVar4 = pbVar4 + -1;
+          bVar9 = *pbVar6 < *pbVar8;
+          bVar10 = *pbVar6 == *pbVar8;
           pbVar6 = pbVar6 + 1;
-          pbVar9 = pbVar9 + 1;
-        } while (bVar11);
-        if (!bVar11) {
-          iVar2 = (1 - (uint)bVar10) - (uint)(bVar10 != 0);
+          pbVar8 = pbVar8 + 1;
+        } while (bVar10);
+        if (!bVar10) {
+          iVar2 = (1 - (uint)bVar9) - (uint)(bVar9 != 0);
         }
       } while (iVar2 != 0);
     }
   }
-  return _Str;
+  return param_1;
 }
 
 

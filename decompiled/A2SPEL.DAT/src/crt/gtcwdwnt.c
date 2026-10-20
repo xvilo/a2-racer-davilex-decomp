@@ -3,56 +3,47 @@
 
 /* ==== 0042d9d3 getcwd ==== */
 
-char * __watcall getcwd(char *_DstBuf,int _SizeInBytes)
+void __watcall getcwd(undefined4 *param_1,uint param_2)
 
 {
   DWORD DVar1;
   undefined4 uVar2;
   uint i;
-  undefined4 unaff_EDX;
-  undefined4 unaff_EDX_00;
-  char *pcVar3;
-  char *pcVar4;
-  byte bVar5;
-  undefined8 buffer;
+  CHAR *pCVar3;
+  byte bVar4;
   CHAR aCStack_114 [260];
   
-  bVar5 = 0;
+  bVar4 = 0;
   DVar1 = GetCurrentDirectoryA(0x104,aCStack_114);
   if (DVar1 == 0) {
-    set_errno_nt(0,unaff_EDX);
+    set_errno_nt();
+    return;
+  }
+  if (param_1 == (undefined4 *)0x0) {
+    param_1 = (undefined4 *)nmalloc(DVar1 + 1);
+    if (param_1 != (undefined4 *)0x0) {
+LAB_0042da24:
+      pCVar3 = aCStack_114;
+      for (i = DVar1 + 1 >> 2; i != 0; i = i - 1) {
+        *param_1 = *(undefined4 *)pCVar3;
+        pCVar3 = (CHAR *)((int)pCVar3 + ((uint)bVar4 * -2 + 1) * 4);
+        param_1 = param_1 + (uint)bVar4 * -2 + 1;
+      }
+      for (i = DVar1 + 1 & 3; i != 0; i = i - 1) {
+        *(CHAR *)param_1 = *pCVar3;
+        pCVar3 = (CHAR *)((int)pCVar3 + (uint)bVar4 * -2 + 1);
+        param_1 = (undefined4 *)((int)param_1 + (uint)bVar4 * -2 + 1);
+      }
+      return;
+    }
+    uVar2 = 5;
   }
   else {
-    if (_DstBuf == (char *)0x0) {
-      buffer = nmalloc(DVar1 + 1,unaff_EDX);
-      unaff_EDX_00 = (undefined4)((ulonglong)buffer >> 0x20);
-      _DstBuf = (char *)buffer;
-      if (_DstBuf != (char *)0x0) {
-LAB_0042da24:
-        pcVar3 = aCStack_114;
-        pcVar4 = _DstBuf;
-        for (i = DVar1 + 1 >> 2; i != 0; i = i - 1) {
-          *(undefined4 *)pcVar4 = *(undefined4 *)pcVar3;
-          pcVar3 = pcVar3 + (uint)bVar5 * -8 + 4;
-          pcVar4 = pcVar4 + (uint)bVar5 * -8 + 4;
-        }
-        for (i = DVar1 + 1 & 3; i != 0; i = i - 1) {
-          *pcVar4 = *pcVar3;
-          pcVar3 = pcVar3 + (uint)bVar5 * -2 + 1;
-          pcVar4 = pcVar4 + (uint)bVar5 * -2 + 1;
-        }
-        return _DstBuf;
-      }
-      uVar2 = 5;
-    }
-    else {
-      if (DVar1 <= (uint)_SizeInBytes) goto LAB_0042da24;
-      uVar2 = 0xe;
-      unaff_EDX_00 = unaff_EDX;
-    }
-    set_errno(uVar2,unaff_EDX_00);
+    if (DVar1 <= param_2) goto LAB_0042da24;
+    uVar2 = 0xe;
   }
-  return (char *)0x0;
+  set_errno(uVar2);
+  return;
 }
 
 

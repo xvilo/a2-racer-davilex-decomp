@@ -6,32 +6,32 @@
 int __watcall read_pcx_8_to_16_line(short *param_1,__iobuf *file,int param_3)
 
 {
-  byte bVar4;
-  int iVar1;
-  uint uVar2;
-  short *psVar3;
+  byte bVar3;
+  uint uVar1;
+  int translate_pixel_result;
+  short *psVar2;
   int j;
   int i;
   
   i = 0;
   do {
-    iVar1 = fgetc((FILE *)file);
-    uVar2 = CONCAT11((char)iVar1,(char)iVar1) & 0xffffffc0;
-    psVar3 = param_1 + i;
-    bVar4 = (byte)(uVar2 >> 8);
-    if ((char)uVar2 == -0x40) {
-      uVar2 = fgetc((FILE *)file);
-      iVar1 = translate_pixel(uVar2 & 0xff,8);
-      for (j = 0; j < (int)(uint)(bVar4 & 0x3f); j = j + 1) {
+    uVar1 = fgetc(file);
+    uVar1 = CONCAT11((char)uVar1,(char)uVar1) & 0xffffffc0;
+    psVar2 = param_1 + i;
+    bVar3 = (byte)(uVar1 >> 8);
+    if ((char)uVar1 == -0x40) {
+      uVar1 = fgetc(file);
+      translate_pixel_result = translate_pixel(uVar1 & 0xff,8);
+      for (j = 0; j < (int)(uint)(bVar3 & 0x3f); j = j + 1) {
         i = i + 1;
-        *psVar3 = (short)iVar1;
-        psVar3 = psVar3 + 1;
+        *psVar2 = (short)translate_pixel_result;
+        psVar2 = psVar2 + 1;
       }
     }
     else {
-      iVar1 = translate_pixel((uint)bVar4,8);
+      translate_pixel_result = translate_pixel((uint)bVar3,8);
       i = i + 1;
-      *psVar3 = (short)iVar1;
+      *psVar2 = (short)translate_pixel_result;
     }
   } while (i < param_3);
   return i;
@@ -40,13 +40,13 @@ int __watcall read_pcx_8_to_16_line(short *param_1,__iobuf *file,int param_3)
 
 /* ==== 00417ba5 read_pcx_8_to_24_line ==== */
 
-int __watcall read_pcx_8_to_24_line(pf_24_t *pf_24_2,__iobuf *file,int param_3)
+int __watcall read_pcx_8_to_24_line(pf_24_t *pf_24,__iobuf *file,int param_3)
 
 {
   byte bVar2;
-  int j;
   uint uVar1;
-  pf_24_t *pf_24;
+  pf_24_t *pf_24_2;
+  int j;
   int i;
   byte bVar3;
   undefined4 local_14;
@@ -54,26 +54,26 @@ int __watcall read_pcx_8_to_24_line(pf_24_t *pf_24_2,__iobuf *file,int param_3)
   bVar3 = 0;
   i = 0;
   do {
-    j = fgetc((FILE *)file);
-    uVar1 = CONCAT11((char)j,(char)j) & 0xffffffc0;
+    uVar1 = fgetc(file);
+    uVar1 = CONCAT11((char)uVar1,(char)uVar1) & 0xffffffc0;
     bVar2 = (byte)(uVar1 >> 8);
     if ((char)uVar1 == -0x40) {
-      uVar1 = fgetc((FILE *)file);
+      uVar1 = fgetc(file);
       local_14 = translate_pixel(uVar1 & 0xff,8);
-      pf_24 = pf_24_2 + i * 3;
+      pf_24_2 = pf_24 + i * 3;
       for (j = 0; j < (int)(uint)(bVar2 & 0x3f); j = j + 1) {
         i = i + 1;
-        *(undefined2 *)pf_24 = (undefined2)local_14;
-        pf_24[(uint)bVar3 * -4 + 2] = *(pf_24_t *)((int)&local_14 + (uint)bVar3 * -4 + 2);
-        pf_24 = pf_24 + 3;
+        *(undefined2 *)pf_24_2 = (undefined2)local_14;
+        pf_24_2[(uint)bVar3 * -4 + 2] = *(pf_24_t *)((int)&local_14 + (uint)bVar3 * -4 + 2);
+        pf_24_2 = pf_24_2 + 3;
       }
     }
     else {
       local_14 = translate_pixel((uint)bVar2,8);
       j = i * 3;
       i = i + 1;
-      *(undefined2 *)(pf_24_2 + j) = (undefined2)local_14;
-      (pf_24_2 + j)[(uint)bVar3 * -4 + 2] = *(pf_24_t *)((int)&local_14 + (uint)bVar3 * -4 + 2);
+      *(undefined2 *)(pf_24 + j) = (undefined2)local_14;
+      (pf_24 + j)[(uint)bVar3 * -4 + 2] = *(pf_24_t *)((int)&local_14 + (uint)bVar3 * -4 + 2);
     }
   } while (i < param_3);
   return i;
@@ -86,27 +86,26 @@ int __watcall read_pcx_line(uchar *param_1,__iobuf *file,int param_3)
 
 {
   byte bVar2;
-  int ch;
   uint uVar1;
   int i;
-  uint _Size;
-  byte *_Dst;
+  uint uVar3;
+  byte *pbVar4;
   
   i = 0;
   do {
-    ch = fgetc((FILE *)file);
-    uVar1 = CONCAT11((char)ch,(char)ch) & 0xffffffc0;
-    _Dst = param_1 + i;
+    uVar1 = fgetc(file);
+    uVar1 = CONCAT11((char)uVar1,(char)uVar1) & 0xffffffc0;
+    pbVar4 = param_1 + i;
     bVar2 = (byte)(uVar1 >> 8);
     if ((char)uVar1 == -0x40) {
-      _Size = (uint)(bVar2 & 0x3f);
-      uVar1 = fgetc((FILE *)file);
-      i = i + _Size;
-      memset(_Dst,uVar1 & 0xff,_Size);
+      uVar3 = (uint)(bVar2 & 0x3f);
+      uVar1 = fgetc(file);
+      i = i + uVar3;
+      memset((undefined4 *)pbVar4,uVar1 & 0xff,uVar3);
     }
     else {
       i = i + 1;
-      *_Dst = bVar2;
+      *pbVar4 = bVar2;
     }
   } while (i < param_3);
   return i;
@@ -118,7 +117,7 @@ int __watcall read_pcx_line(uchar *param_1,__iobuf *file,int param_3)
 void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
 
 {
-  pf_24_t *pf_24_2;
+  pf_24_t *pf_24;
   int k;
   int i;
   int j;
@@ -127,30 +126,30 @@ void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
     param_3 = xvga_screen_ysize;
   }
   if (pf_conversion_mode == 0) {
-    pf_24_2 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
+    pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (k = 0; k < param_3; k = k + 1) {
-      read_pcx_line((uchar *)pf_24_2,file,param_2);
-      pf_24_2 = pf_24_2 + xvga_buffer_screen_pitch;
+      read_pcx_line((uchar *)pf_24,file,param_2);
+      pf_24 = pf_24 + xvga_buffer_screen_pitch;
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
-    pf_24_2 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
+    pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (i = 0; i < param_3; i = i + 1) {
-      read_pcx_8_to_16_line((short *)pf_24_2,file,param_2);
-      pf_24_2 = pf_24_2 + xvga_buffer_screen_pitch;
+      read_pcx_8_to_16_line((short *)pf_24,file,param_2);
+      pf_24 = pf_24 + xvga_buffer_screen_pitch;
     }
   }
   else {
     if (pf_conversion_mode != 2) {
       return;
     }
-    pf_24_2 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
+    pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (j = 0; j < param_3; j = j + 1) {
-      read_pcx_8_to_24_line(pf_24_2,file,param_2);
-      pf_24_2 = pf_24_2 + xvga_buffer_screen_pitch;
+      read_pcx_8_to_24_line(pf_24,file,param_2);
+      pf_24 = pf_24 + xvga_buffer_screen_pitch;
     }
   }
-  reset_surface_ptr_1(xvga_buffer_screen,pf_24_2);
+  reset_surface_ptr_1(xvga_buffer_screen,pf_24);
   return;
 }
 
@@ -162,7 +161,7 @@ void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
 void __watcall unpack_pcx_file_screen_1(int param_1,__iobuf *file,int param_3,int param_4)
 
 {
-  pf_24_t *pf_24_2;
+  pf_24_t *pf_24;
   int i;
   int j;
   int k;
@@ -179,30 +178,30 @@ void __watcall unpack_pcx_file_screen_1(int param_1,__iobuf *file,int param_3,in
   }
   pf_24_index = i;
   if (pf_conversion_mode == 0) {
-    pf_24_2 = (pf_24_t *)get_surface_ptr_1(param_1);
+    pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (i = 0; i < param_4; i = i + 1) {
-      read_pcx_line((uchar *)pf_24_2,file,param_3);
-      pf_24_2 = pf_24_2 + pf_24_index;
+      read_pcx_line((uchar *)pf_24,file,param_3);
+      pf_24 = pf_24 + pf_24_index;
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
-    pf_24_2 = (pf_24_t *)get_surface_ptr_1(param_1);
+    pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (j = 0; j < param_4; j = j + 1) {
-      read_pcx_8_to_16_line((short *)pf_24_2,file,param_3);
-      pf_24_2 = pf_24_2 + pf_24_index;
+      read_pcx_8_to_16_line((short *)pf_24,file,param_3);
+      pf_24 = pf_24 + pf_24_index;
     }
   }
   else {
     if (pf_conversion_mode != 2) {
       return;
     }
-    pf_24_2 = (pf_24_t *)get_surface_ptr_1(param_1);
+    pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (k = 0; k < param_4; k = k + 1) {
-      read_pcx_8_to_24_line(pf_24_2,file,param_3);
-      pf_24_2 = pf_24_2 + pf_24_index;
+      read_pcx_8_to_24_line(pf_24,file,param_3);
+      pf_24 = pf_24 + pf_24_index;
     }
   }
-  reset_surface_ptr(param_1,pf_24_2);
+  reset_surface_ptr(param_1,pf_24);
   return;
 }
 
@@ -216,61 +215,61 @@ unpack_pcx_file_surface
           (IDirectDrawSurface *direct_draw_surface,__iobuf *file,int param_3,int param_4)
 
 {
-  pf_24_t *pf_24_2;
+  pf_24_t *pf_24;
   int pf_24_index;
   int i;
   int j;
   int k;
   
   if (pf_conversion_mode == 0) {
-    pf_24_2 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
+    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
     for (k = 0; k < param_4; k = k + 1) {
-      read_pcx_line((uchar *)pf_24_2,file,param_3);
-      pf_24_2 = pf_24_2 + pf_24_index;
+      read_pcx_line((uchar *)pf_24,file,param_3);
+      pf_24 = pf_24 + pf_24_index;
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
-    pf_24_2 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
+    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
     for (j = 0; j < param_4; j = j + 1) {
-      read_pcx_8_to_16_line((short *)pf_24_2,file,param_3);
-      pf_24_2 = pf_24_2 + pf_24_index;
+      read_pcx_8_to_16_line((short *)pf_24,file,param_3);
+      pf_24 = pf_24 + pf_24_index;
     }
   }
   else {
     if (pf_conversion_mode != 2) {
       return;
     }
-    pf_24_2 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
+    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&pf_24_index);
     for (i = 0; i < param_4; i = i + 1) {
-      read_pcx_8_to_24_line(pf_24_2,file,param_3);
-      pf_24_2 = pf_24_2 + pf_24_index;
+      read_pcx_8_to_24_line(pf_24,file,param_3);
+      pf_24 = pf_24 + pf_24_index;
     }
   }
-  reset_surface_ptr_1(direct_draw_surface,pf_24_2);
+  reset_surface_ptr_1(direct_draw_surface,pf_24);
   return;
 }
 
 
 /* ==== 00417f8b load_pcx_file_palette ==== */
 
-int __watcall load_pcx_file_palette(char *param_1,int param_2)
+int __watcall load_pcx_file_palette(char *filename_val,int param_2)
 
 {
   int iVar1;
-  FILE *_File;
+  __iobuf *file;
   int iVar2;
   int iVar3;
   int iVar4;
   BYTE local_314 [768];
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File == (FILE *)0x0) {
+  file = xvga_src_fopen(filename_val);
+  if (file == (__iobuf *)0x0) {
     iVar2 = 1000;
   }
   else {
-    xvga_src_fseek((__iobuf *)_File,-0x300,2);
-    fread(local_314,0x300,1,_File);
-    if ((_File->_flag & 0x20) != 0) {
+    xvga_src_fseek(file,-0x300,2);
+    fread((char *)local_314,0x300,1,(int *)file);
+    if (((byte)file[0xc] & 0x20) != 0) {
       fatal_exit(s__s__d____error_reading_00448fea,s_rcpcx_cpp_00448fe0,0xfe);
     }
     iVar3 = 0;
@@ -287,7 +286,7 @@ int __watcall load_pcx_file_palette(char *param_1,int param_2)
     if (param_2 != 0) {
       set_xvga_palette(xvga_lib_palette,0,0x100);
     }
-    xvga_src_fclose((__iobuf *)_File);
+    xvga_src_fclose(file);
     iVar2 = 0;
   }
   return iVar2;
@@ -296,26 +295,26 @@ int __watcall load_pcx_file_palette(char *param_1,int param_2)
 
 /* ==== 00418052 get_pcx_info ==== */
 
-int __watcall get_pcx_info(char *param_1,int *param_2,int *param_3)
+int __watcall get_pcx_info(char *filename_val,int *param_2,int *param_3)
 
 {
-  FILE *_File;
+  __iobuf *file;
   int iVar1;
-  undefined1 auStack_90 [4];
+  char acStack_90 [4];
   short local_8c;
   short sStack_8a;
   short local_88;
   short sStack_86;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File == (FILE *)0x0) {
+  file = xvga_src_fopen(filename_val);
+  if (file == (__iobuf *)0x0) {
     iVar1 = 1000;
   }
   else {
-    fread(auStack_90,0x80,1,_File);
+    fread(acStack_90,0x80,1,(int *)file);
     *param_3 = ((int)sStack_86 - (int)sStack_8a) + 1;
     *param_2 = ((int)local_88 - (int)local_8c) + 1;
-    xvga_src_fclose((__iobuf *)_File);
+    xvga_src_fclose(file);
     iVar1 = 0;
   }
   return iVar1;
@@ -324,14 +323,14 @@ int __watcall get_pcx_info(char *param_1,int *param_2,int *param_3)
 
 /* ==== 004180c2 load_pcx_file ==== */
 
-int __watcall load_pcx_file(char *param_1,int param_2)
+int __watcall load_pcx_file(char *filename_val,int param_2)
 
 {
   int iVar1;
-  FILE *_File;
+  __iobuf *file;
   int iVar2;
   long lVar3;
-  char *dd_error_string_result;
+  char *arg4;
   int iVar4;
   int iVar5;
   int unaff_EBP;
@@ -350,15 +349,15 @@ int __watcall load_pcx_file(char *param_1,int param_2)
   int local_1c;
   int local_18;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File == (FILE *)0x0) {
+  file = xvga_src_fopen(filename_val);
+  if (file == (__iobuf *)0x0) {
     iVar5 = 1000;
   }
   else {
     if ((param_2 & 2U) != 0) {
-      xvga_src_fseek((__iobuf *)_File,-0x300,2);
-      fread(local_3b4,0x300,1,_File);
-      if ((_File->_flag & 0x20) != 0) {
+      xvga_src_fseek(file,-0x300,2);
+      fread((char *)local_3b4,0x300,1,(int *)file);
+      if (((byte)file[0xc] & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_0044900d,s_rcpcx_cpp_00449003,0x138);
       }
       iVar2 = 0;
@@ -373,15 +372,15 @@ int __watcall load_pcx_file(char *param_1,int param_2)
         iVar5 = iVar4;
       } while (iVar4 != 0x400);
     }
-    xvga_src_fseek((__iobuf *)_File,0,0);
-    fread(&local_b4,0x80,1,_File);
-    if ((_File->_flag & 0x20) == 0) {
+    xvga_src_fseek(file,0,0);
+    fread(&local_b4,0x80,1,(int *)file);
+    if (((byte)file[0xc] & 0x20) == 0) {
       if ((((param_2 & 1U) != 0) && (local_b4 == '\n')) && (local_b3 == '\x05')) {
         unaff_EBP = ((local_ac >> 0x10) - (local_b0 >> 0x10)) + 1;
         if (xvga_screen_ysize < unaff_EBP) {
           unaff_EBP = xvga_screen_ysize;
         }
-        unpack_pcx_file_screen_1(2,(__iobuf *)_File,local_74 >> 0x10,unaff_EBP);
+        unpack_pcx_file_screen_1(2,file,local_74 >> 0x10,unaff_EBP);
       }
       if ((param_2 & 6U) == 6) {
         set_xvga_palette(xvga_lib_palette,0,0x100);
@@ -402,18 +401,17 @@ int __watcall load_pcx_file(char *param_1,int param_2)
           lVar3 = (**(code **)(*(int *)xvga_screen + 0x14))
                             (xvga_screen,&local_24,xvga_buffer_screen,&local_34,0,0);
           if (lVar3 != 0) {
-            dd_error_string_result = dd_error_string(lVar3);
-            fatal_exit(s__s__d____blitting_error___s___00449030,s_rcpcx_cpp_00449026,0x166,
-                       dd_error_string_result);
+            arg4 = dd_error_string(lVar3);
+            fatal_exit(s__s__d____blitting_error___s___00449030,s_rcpcx_cpp_00449026,0x166,arg4);
           }
         }
       }
-      xvga_src_fclose((__iobuf *)_File);
+      xvga_src_fclose(file);
       iVar5 = 0;
     }
     else {
       iVar5 = 0x3e9;
-      fclose(_File);
+      fclose((int)file);
     }
   }
   return iVar5;
@@ -422,31 +420,34 @@ int __watcall load_pcx_file(char *param_1,int param_2)
 
 /* ==== 004182e7 load_pcx_file_1 ==== */
 
-int __watcall load_pcx_file_1(int param_1,char *param_2,int param_3)
+int __watcall load_pcx_file_1(int param_1,char *filename_val,int param_3)
 
 {
   int iVar1;
-  FILE *_File;
+  __iobuf *file;
   int iVar2;
   int iVar3;
-  int extraout_ECX;
   int iVar4;
   BYTE local_394 [768];
   char local_94;
   char local_93;
   short local_90;
+  short sStack_8e;
   short local_8c;
+  short sStack_8a;
   int local_54;
+  uint local_14;
   
-  _File = (FILE *)xvga_src_fopen(param_2);
-  if (_File == (FILE *)0x0) {
+  local_14 = param_3;
+  file = xvga_src_fopen(filename_val);
+  if (file == (__iobuf *)0x0) {
     iVar2 = 1000;
   }
   else {
-    if ((param_3 & 2U) != 0) {
-      xvga_src_fseek((__iobuf *)_File,-0x300,2);
-      fread(local_394,0x300,1,_File);
-      if ((_File->_flag & 0x20) != 0) {
+    if ((local_14 & 2) != 0) {
+      xvga_src_fseek(file,-0x300,2);
+      fread((char *)local_394,0x300,1,(int *)file);
+      if (((byte)file[0xc] & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_00449059,s_rcpcx_cpp_0044904f,0x187);
       }
       iVar3 = 0;
@@ -461,21 +462,25 @@ int __watcall load_pcx_file_1(int param_1,char *param_2,int param_3)
         iVar2 = iVar4;
       } while (iVar4 != 0x400);
     }
-    xvga_src_fseek((__iobuf *)_File,0,0);
-    fread(&local_94,0x80,1,_File);
-    if ((_File->_flag & 0x20) == 0) {
-      if ((((param_3 & 1U) != 0) && (local_94 == '\n')) && (local_93 == '\x05')) {
+    xvga_src_fseek(file,0,0);
+    fread(&local_94,0x80,1,(int *)file);
+    if (((byte)file[0xc] & 0x20) == 0) {
+      if ((((local_14 & 1) != 0) && (local_94 == '\n')) && (local_93 == '\x05')) {
+        iVar2 = ((int)sStack_8a - (int)sStack_8e) + 1;
+        if (xvga_screen_ysize < iVar2) {
+          iVar2 = xvga_screen_ysize;
+        }
         debugmsg(s_bpl__d__width__d_00449072,local_54 >> 0x10,((int)local_8c - (int)local_90) + 1);
-        unpack_pcx_file_screen_1(param_1,(__iobuf *)_File,local_54 >> 0x10,extraout_ECX);
+        unpack_pcx_file_screen_1(param_1,file,local_54 >> 0x10,iVar2);
       }
-      if ((param_3 & 6U) == 6) {
+      if ((local_14 & 6) == 6) {
         set_xvga_palette(xvga_lib_palette,0,0x100);
       }
-      xvga_src_fclose((__iobuf *)_File);
+      xvga_src_fclose(file);
       iVar2 = 0;
     }
     else {
-      fclose(_File);
+      fclose((int)file);
       iVar2 = 0x3e9;
     }
   }
@@ -485,11 +490,11 @@ int __watcall load_pcx_file_1(int param_1,char *param_2,int param_3)
 
 /* ==== 004184a2 load_pcx_file_surface ==== */
 
-IDirectDrawSurface * __watcall load_pcx_file_surface(char *param_1,int *param_2,int *param_3)
+IDirectDrawSurface * __watcall load_pcx_file_surface(char *filename_val,int *param_2,int *param_3)
 
 {
   int iVar1;
-  FILE *_File;
+  __iobuf *file;
   int iVar2;
   int iVar3;
   IDirectDrawSurface *direct_draw_surface;
@@ -504,12 +509,12 @@ IDirectDrawSurface * __watcall load_pcx_file_surface(char *param_1,int *param_2,
   int local_54;
   IDirectDrawSurface *direct_draw_surface_2;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File != (FILE *)0x0) {
+  file = xvga_src_fopen(filename_val);
+  if (file != (__iobuf *)0x0) {
     if (pf_conversion_mode != 0) {
-      xvga_src_fseek((__iobuf *)_File,-0x300,2);
-      fread(local_394,0x300,1,_File);
-      if ((_File->_flag & 0x20) != 0) {
+      xvga_src_fseek(file,-0x300,2);
+      fread((char *)local_394,0x300,1,(int *)file);
+      if (((byte)file[0xc] & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_0044908e,s_rcpcx_cpp_00449084,0x1c3);
       }
       iVar2 = 0;
@@ -524,10 +529,10 @@ IDirectDrawSurface * __watcall load_pcx_file_surface(char *param_1,int *param_2,
         iVar3 = iVar4;
       } while (iVar4 != 0x400);
     }
-    xvga_src_fseek((__iobuf *)_File,0,0);
-    fread(&local_94,0x80,1,_File);
+    xvga_src_fseek(file,0,0);
+    fread(&local_94,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__004490b1,s_rcpcx_cpp_004490a7,0x1ce);
-    if ((_File->_flag & 0x20) == 0) {
+    if (((byte)file[0xc] & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__004490d4,s_rcpcx_cpp_004490ca,0x1d4);
       if ((local_94 == '\n') && (local_93 == '\x05')) {
         *param_2 = ((int)sStack_8c - (int)sStack_90) + 1;
@@ -537,13 +542,13 @@ IDirectDrawSurface * __watcall load_pcx_file_surface(char *param_1,int *param_2,
         direct_draw_surface = create_surface(*param_2,*param_3);
         direct_draw_surface_2 = direct_draw_surface;
         debugmsg(s_creation_succesfull_0044910e);
-        unpack_pcx_file_surface(direct_draw_surface,(__iobuf *)_File,local_54 >> 0x10,*param_3);
+        unpack_pcx_file_surface(direct_draw_surface,file,local_54 >> 0x10,*param_3);
       }
       debugmsg(s__s__d____closing_0044912d,s_rcpcx_cpp_00449123,0x1df,*param_2,*param_3);
-      xvga_src_fclose((__iobuf *)_File);
+      xvga_src_fclose(file);
       return direct_draw_surface_2;
     }
-    xvga_src_fclose((__iobuf *)_File);
+    xvga_src_fclose(file);
   }
   return (IDirectDrawSurface *)0x0;
 }
@@ -553,13 +558,14 @@ IDirectDrawSurface * __watcall load_pcx_file_surface(char *param_1,int *param_2,
 
 IDirectDrawSurface * __watcall
 load_pcx_file_surface_1
-          (char *param_1,int *param_2,int *param_3,int param_4,_DDPIXELFORMAT *ddpixelformat)
+          (char *filename_val,int *param_2,int *param_3,int param_4,_DDPIXELFORMAT *ddpixelformat)
 
 {
   int iVar1;
-  FILE *_File;
+  __iobuf *file;
   int iVar2;
   int iVar3;
+  IDirectDrawSurface *direct_draw_surface;
   int iVar4;
   BYTE local_394 [768];
   char local_94;
@@ -569,14 +575,16 @@ load_pcx_file_surface_1
   short sStack_8c;
   short sStack_8a;
   int local_54;
-  IDirectDrawSurface *direct_draw_surface;
+  int local_14;
+  IDirectDrawSurface *direct_draw_surface_2;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File != (FILE *)0x0) {
+  local_14 = param_4;
+  file = xvga_src_fopen(filename_val);
+  if (file != (__iobuf *)0x0) {
     if (pf_conversion_mode != 0) {
-      xvga_src_fseek((__iobuf *)_File,-0x300,2);
-      fread(local_394,0x300,1,_File);
-      if ((_File->_flag & 0x20) != 0) {
+      xvga_src_fseek(file,-0x300,2);
+      fread((char *)local_394,0x300,1,(int *)file);
+      if (((byte)file[0xc] & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_0044914b,s_rcpcx_cpp_00449141,0x1f9);
       }
       iVar2 = 0;
@@ -591,25 +599,26 @@ load_pcx_file_surface_1
         iVar3 = iVar4;
       } while (iVar4 != 0x400);
     }
-    xvga_src_fseek((__iobuf *)_File,0,0);
-    fread(&local_94,0x80,1,_File);
+    xvga_src_fseek(file,0,0);
+    fread(&local_94,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__0044916e,s_rcpcx_cpp_00449164,0x206);
-    if ((_File->_flag & 0x20) == 0) {
+    if (((byte)file[0xc] & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__00449191,s_rcpcx_cpp_00449187,0x20c);
       if ((local_94 == '\n') && (local_93 == '\x05')) {
         *param_2 = ((int)sStack_8c - (int)sStack_90) + 1;
         iVar3 = ((int)sStack_8a - (int)local_8e) + 1;
         *param_3 = iVar3;
         debugmsg(s_creating_surface__d__d_004491b3,*param_2,iVar3);
-        direct_draw_surface = create_surface_4(*param_2,*param_3,param_4,ddpixelformat);
+        direct_draw_surface = create_surface_4(*param_2,*param_3,local_14,ddpixelformat);
+        direct_draw_surface_2 = direct_draw_surface;
         debugmsg(s_creation_succesfull_004491cb);
-        unpack_pcx_file_surface(direct_draw_surface,(__iobuf *)_File,local_54 >> 0x10,*param_3);
+        unpack_pcx_file_surface(direct_draw_surface,file,local_54 >> 0x10,*param_3);
       }
       debugmsg(s__s__d____closing_004491ea,s_rcpcx_cpp_004491e0,0x217);
-      xvga_src_fclose((__iobuf *)_File);
-      return direct_draw_surface;
+      xvga_src_fclose(file);
+      return direct_draw_surface_2;
     }
-    xvga_src_fclose((__iobuf *)_File);
+    xvga_src_fclose(file);
   }
   return (IDirectDrawSurface *)0x0;
 }
@@ -618,11 +627,11 @@ load_pcx_file_surface_1
 /* ==== 0041888c load_pcx_file_surface_2 ==== */
 
 IDirectDrawSurface * __watcall
-load_pcx_file_surface_2(char *param_1,int *param_2,int *param_3,int param_4)
+load_pcx_file_surface_2(char *filename_val,int *param_2,int *param_3,int param_4)
 
 {
   int iVar1;
-  FILE *_File;
+  __iobuf *file;
   int iVar2;
   int iVar3;
   IDirectDrawSurface *direct_draw_surface;
@@ -636,13 +645,15 @@ load_pcx_file_surface_2(char *param_1,int *param_2,int *param_3,int param_4)
   short sStack_8a;
   int local_54;
   IDirectDrawSurface *direct_draw_surface_2;
+  int local_10;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File != (FILE *)0x0) {
+  local_10 = param_4;
+  file = xvga_src_fopen(filename_val);
+  if (file != (__iobuf *)0x0) {
     if (pf_conversion_mode != 0) {
-      xvga_src_fseek((__iobuf *)_File,-0x300,2);
-      fread(local_394,0x300,1,_File);
-      if ((_File->_flag & 0x20) != 0) {
+      xvga_src_fseek(file,-0x300,2);
+      fread((char *)local_394,0x300,1,(int *)file);
+      if (((byte)file[0xc] & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_00449208,s_rcpcx_cpp_004491fe,0x231);
       }
       iVar2 = 0;
@@ -657,26 +668,26 @@ load_pcx_file_surface_2(char *param_1,int *param_2,int *param_3,int param_4)
         iVar3 = iVar4;
       } while (iVar4 != 0x400);
     }
-    xvga_src_fseek((__iobuf *)_File,0,0);
-    fread(&local_94,0x80,1,_File);
+    xvga_src_fseek(file,0,0);
+    fread(&local_94,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__0044922b,s_rcpcx_cpp_00449221,0x23d);
-    if ((_File->_flag & 0x20) == 0) {
+    if (((byte)file[0xc] & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__0044924e,s_rcpcx_cpp_00449244,0x243);
       if ((local_94 == '\n') && (local_93 == '\x05')) {
         *param_2 = ((int)sStack_8c - (int)sStack_90) + 1;
         iVar3 = ((int)sStack_8a - (int)local_8e) + 1;
         *param_3 = iVar3;
         debugmsg(s_creating_surface__d__d_00449270,*param_2,iVar3);
-        direct_draw_surface = create_surface_1(*param_2,*param_3,param_4);
+        direct_draw_surface = create_surface_1(*param_2,*param_3,local_10);
         direct_draw_surface_2 = direct_draw_surface;
         debugmsg(s_creation_succesfull_00449288);
-        unpack_pcx_file_surface(direct_draw_surface,(__iobuf *)_File,local_54 >> 0x10,*param_3);
+        unpack_pcx_file_surface(direct_draw_surface,file,local_54 >> 0x10,*param_3);
       }
       debugmsg(s__s__d____closing_004492a7,s_rcpcx_cpp_0044929d,0x24e,*param_2,*param_3);
-      xvga_src_fclose((__iobuf *)_File);
+      xvga_src_fclose(file);
       return direct_draw_surface_2;
     }
-    xvga_src_fclose((__iobuf *)_File);
+    xvga_src_fclose(file);
   }
   return (IDirectDrawSurface *)0x0;
 }
@@ -685,16 +696,15 @@ load_pcx_file_surface_2(char *param_1,int *param_2,int *param_3,int param_4)
 /* ==== 00418a87 load_pcx_file_surface_3 ==== */
 
 int __watcall
-load_pcx_file_surface_3(char *param_1,IDirectDrawSurface *direct_draw_surface_3,int param_3)
+load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surface_3,int param_3)
 
 {
   int iVar1;
-  FILE *_File;
+  __iobuf *file;
   int iVar2;
   IDirectDrawSurface *direct_draw_surface;
   long lVar3;
-  char *dd_error_string_result;
-  int extraout_ECX;
+  char *arg4;
   int iVar4;
   int iVar5;
   BYTE local_3bc [768];
@@ -717,15 +727,15 @@ load_pcx_file_surface_3(char *param_1,IDirectDrawSurface *direct_draw_surface_3,
   int local_18;
   IDirectDrawSurface *direct_draw_surface_2;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File == (FILE *)0x0) {
+  file = xvga_src_fopen(filename_val);
+  if (file == (__iobuf *)0x0) {
     iVar4 = 1000;
   }
   else {
     if (pf_conversion_mode != 0) {
-      xvga_src_fseek((__iobuf *)_File,-0x300,2);
-      fread(local_3bc,0x300,1,_File);
-      if ((_File->_flag & 0x20) != 0) {
+      xvga_src_fseek(file,-0x300,2);
+      fread((char *)local_3bc,0x300,1,(int *)file);
+      if (((byte)file[0xc] & 0x20) != 0) {
         fatal_exit(s__s__d____error_reading_004492c5,s_rcpcx_cpp_004492bb,0x26b);
       }
       iVar2 = 0;
@@ -740,10 +750,10 @@ load_pcx_file_surface_3(char *param_1,IDirectDrawSurface *direct_draw_surface_3,
         iVar4 = iVar5;
       } while (iVar5 != 0x400);
     }
-    xvga_src_fseek((__iobuf *)_File,0,0);
-    fread(&local_bc,0x80,1,_File);
+    xvga_src_fseek(file,0,0);
+    fread(&local_bc,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__004492e8,s_rcpcx_cpp_004492de,0x276);
-    if ((_File->_flag & 0x20) == 0) {
+    if (((byte)file[0xc] & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__0044930b,s_rcpcx_cpp_00449301,0x27c);
       get_surface_info(direct_draw_surface_3,&local_1c,&local_18);
       if ((local_bc == '\n') && (local_bb == '\x05')) {
@@ -751,31 +761,31 @@ load_pcx_file_surface_3(char *param_1,IDirectDrawSurface *direct_draw_surface_3,
         local_28 = 0;
         local_2c = (int *)0x0;
         local_38 = 0;
-        local_20 = ((int)sStack_b2 - (int)local_b6) + 1;
+        iVar4 = ((int)sStack_b2 - (int)local_b6) + 1;
         local_3c = 0;
         local_30 = local_18;
         local_34 = local_1c;
-        direct_draw_surface = create_surface(local_24,local_20);
+        local_20 = iVar4;
+        direct_draw_surface = create_surface(local_24,iVar4);
         direct_draw_surface_2 = direct_draw_surface;
         debugmsg(s_creation_succesfull_0044932d);
-        unpack_pcx_file_surface(direct_draw_surface,(__iobuf *)_File,local_7c >> 0x10,extraout_ECX);
+        unpack_pcx_file_surface(direct_draw_surface,file,local_7c >> 0x10,iVar4);
         debugmsg(s_blitting_to_destination_00449342);
         lVar3 = (**(code **)(*(int *)direct_draw_surface_3 + 0x14))
                           (direct_draw_surface_3,&local_3c,direct_draw_surface,&local_2c,0,0);
         if (lVar3 != 0) {
-          dd_error_string_result = dd_error_string(lVar3);
-          fatal_exit(s__s__d____blitting_error___s__00449365,s_rcpcx_cpp_0044935b,0x294,
-                     dd_error_string_result);
+          arg4 = dd_error_string(lVar3);
+          fatal_exit(s__s__d____blitting_error___s__00449365,s_rcpcx_cpp_0044935b,0x294,arg4);
         }
         debugmsg(s_Release_buffer_surface_00449384);
         (**(code **)(*local_2c + 8))(local_2c);
       }
       debugmsg(s__s__d____closing_004493a6,s_rcpcx_cpp_0044939c,0x29a);
       iVar4 = 0;
-      xvga_src_fclose((__iobuf *)_File);
+      xvga_src_fclose(file);
     }
     else {
-      xvga_src_fclose((__iobuf *)_File);
+      xvga_src_fclose(file);
       iVar4 = 0;
     }
   }
@@ -787,17 +797,15 @@ load_pcx_file_surface_3(char *param_1,IDirectDrawSurface *direct_draw_surface_3,
 
 int __watcall
 load_pcx_file_surface_4
-          (char *param_1,IDirectDrawSurface *direct_draw_surface_2,int param_3,int param_4,
+          (char *filename_val,IDirectDrawSurface *direct_draw_surface_3,int param_3,int param_4,
           int param_5)
 
 {
-  FILE *_File;
+  __iobuf *file;
   int iVar1;
   IDirectDrawSurface *direct_draw_surface;
   long lVar2;
-  char *dd_error_string_result;
-  int extraout_ECX;
-  int *piVar3;
+  char *arg4;
   char local_c0;
   char local_bf;
   short sStack_bc;
@@ -809,43 +817,56 @@ load_pcx_file_surface_4
   undefined4 local_3c;
   int local_38;
   int local_34;
+  int local_30;
+  int local_2c;
+  int *local_28;
+  int local_24;
   int local_20;
   int local_1c;
+  int local_18;
+  __iobuf *src_fopen;
+  IDirectDrawSurface *direct_draw_surface_2;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File == (FILE *)0x0) {
+  local_18 = param_4;
+  file = xvga_src_fopen(filename_val);
+  if (file == (__iobuf *)0x0) {
     iVar1 = 1000;
   }
   else {
-    fread(&local_c0,0x80,1,_File);
+    src_fopen = file;
+    fread(&local_c0,0x80,1,(int *)file);
     debugmsg(s__s__d____header_read__004493c4,s_rcpcx_cpp_004493ba,0x2b2);
-    if ((_File->_flag & 0x20) == 0) {
+    if (((byte)file[0xc] & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__004493e7,s_rcpcx_cpp_004493dd,0x2b8);
-      get_surface_info(direct_draw_surface_2,&local_20,&local_1c);
+      get_surface_info(direct_draw_surface_3,&local_20,&local_1c);
       if ((local_c0 == '\n') && (local_bf == '\x05')) {
-        local_34 = ((int)sStack_b6 - (int)local_ba) + 1;
+        iVar1 = ((int)sStack_b6 - (int)local_ba) + 1;
         local_38 = ((int)sStack_b8 - (int)sStack_bc) + 1;
         local_3c = 0;
         local_40 = 0;
-        piVar3 = (int *)(param_3 + local_38);
-        direct_draw_surface = create_surface(local_38,local_34);
+        local_28 = (int *)(param_3 + local_38);
+        local_2c = local_18;
+        local_24 = local_18 + iVar1;
+        local_34 = iVar1;
+        local_30 = param_3;
+        direct_draw_surface = create_surface(local_38,iVar1);
+        direct_draw_surface_2 = direct_draw_surface;
         debugmsg(s_creation_succesfull_00449409);
-        unpack_pcx_file_surface(direct_draw_surface,(__iobuf *)_File,local_80 >> 0x10,extraout_ECX);
+        unpack_pcx_file_surface(direct_draw_surface,file,local_80 >> 0x10,iVar1);
         debugmsg(s_blitting_to_destination_0044941e);
-        lVar2 = (**(code **)(*(int *)direct_draw_surface_2 + 0x14))
-                          (direct_draw_surface_2,&stack0xffffffd0,direct_draw_surface,&local_40,0,0)
-        ;
+        lVar2 = (**(code **)(*(int *)direct_draw_surface_3 + 0x14))
+                          (direct_draw_surface_3,&local_30,direct_draw_surface,&local_40,0,0);
         if (lVar2 != 0) {
-          dd_error_string_result = dd_error_string(lVar2);
-          fatal_exit(s__s__d____blitting_error___s__00449441,s_rcpcx_cpp_00449437,0x2d0,
-                     dd_error_string_result);
+          arg4 = dd_error_string(lVar2);
+          fatal_exit(s__s__d____blitting_error___s__00449441,s_rcpcx_cpp_00449437,0x2d0,arg4);
         }
         debugmsg(s_Release_buffer_surface_00449460);
-        (**(code **)(*piVar3 + 8))(piVar3);
+        (**(code **)(*local_28 + 8))(local_28);
       }
       debugmsg(s__s__d____closing_00449482,s_rcpcx_cpp_00449478,0x2d6);
+      file = src_fopen;
     }
-    xvga_src_fclose((__iobuf *)_File);
+    xvga_src_fclose(file);
     iVar1 = 0;
   }
   return iVar1;

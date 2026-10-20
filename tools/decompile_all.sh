@@ -57,10 +57,15 @@ for m in "${modules[@]}"; do
 		-import "$bin" -loader PeLoader -scriptPath "$ROOT/tools" \
 		-preScript ApplyWatcom.java pre "$names" "$ROOT/symbols/structs.tsv" \
 		-postScript ApplyWatcom.java post "$names" "$coverage" \
+		-postScript InferSignatures.java \
 		-postScript AutoNameVariables.java \
 		-postScript ExportDecompiled.java "$out" "$names" \
 		> "$ROOT/build/logs/$m.ghidra.log" 2>&1
-	grep -h -E 'ApplyWatcom.java>|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
+	grep -h -E 'ApplyWatcom.java>|InferSignatures:|AutoNameVariables:|ExportDecompiled:' "$ROOT/build/logs/$m.ghidra.log" | sed 's/^INFO  //'
+	if grep -q 'SCRIPT ERROR' "$ROOT/build/logs/$m.ghidra.log"; then
+		grep -B2 'SCRIPT ERROR' "$ROOT/build/logs/$m.ghidra.log" >&2
+		exit 1
+	fi
 	# One file per original source file (A2MENU's debug info names them; see the script).
 	python3 -I "$ROOT/tools/split_sources.py" "$out" "$ROOT/build/watcom/A2MENU.DAT/globals.tsv" \
 		"$ROOT/symbols/A2MENU.DAT.modules.tsv" "$names"

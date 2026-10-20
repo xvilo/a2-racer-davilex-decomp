@@ -3,21 +3,20 @@
 
 /* ==== 0040a4a0 access ==== */
 
-int __watcall access(char *_Filename,int _AccessMode)
+undefined4 __watcall access(LPCSTR file_name,uint param_2)
 
 {
   DWORD DVar1;
-  undefined4 unaff_EDX;
-  undefined8 uVar2;
+  undefined4 uVar2;
   
-  DVar1 = GetFileAttributesA(_Filename);
+  DVar1 = GetFileAttributesA(file_name);
   if (DVar1 == 0xffffffff) {
-    uVar2 = set_errno_nt(0xffffffff,unaff_EDX);
-    return (int)uVar2;
+    uVar2 = set_errno_nt();
+    return uVar2;
   }
-  if (((_AccessMode & 2U) != 0) && ((DVar1 & 1) != 0)) {
-    uVar2 = set_errno_dos(5,unaff_EDX);
-    return (int)uVar2;
+  if (((param_2 & 2) != 0) && ((DVar1 & 1) != 0)) {
+    uVar2 = set_errno_dos(5);
+    return uVar2;
   }
   return 0;
 }

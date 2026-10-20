@@ -19,34 +19,17 @@ void __watcall get_clipping_limit(int *param_1,int *param_2,int *param_3,int *pa
 void __watcall set_clipping_limit(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_ECX_02;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
-  int extraout_EDX_02;
-  
   if ((param_1 < 0) || (param_3 < param_1)) {
     fatal_exit(s__s__d____illegal_clipping_limit_t_00451399,s_clipblit_cpp_0045138c,0x19);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if ((param_2 < 0) || (param_4 < param_2)) {
     fatal_exit(s__s__d____illegal_clipping_limit_t_004513ce,s_clipblit_cpp_004513c1,0x1c);
-    param_4 = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
   }
   if (xvga_screen_xsize < param_3) {
     fatal_exit(s__s__d____illegal_clipping_limit_b_00451403,s_clipblit_cpp_004513f6,0x1f);
-    param_4 = extraout_ECX_01;
-    param_2 = extraout_EDX_01;
   }
   if (xvga_screen_ysize < param_4) {
     fatal_exit(s__s__d____illegal_clipping_limit_b_0045143b,s_clipblit_cpp_0045142e,0x22);
-    param_4 = extraout_ECX_02;
-    param_2 = extraout_EDX_02;
   }
   clip_tx = param_1;
   clip_ty = param_2;
@@ -66,9 +49,9 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
 
 {
   long lVar1;
-  char *format;
   char *pcVar2;
-  undefined4 uVar3;
+  char *arg2;
+  undefined4 arg3;
   int local_1c;
   int local_18;
   int local_14;
@@ -101,9 +84,9 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
             return;
           }
           param_1 = (int)dd_error_string(lVar1);
-          uVar3 = 0x59;
-          pcVar2 = s_clipblit_cpp_00451466;
-          format = s__s__d____blitting_error___s___00451473;
+          arg3 = 0x59;
+          arg2 = s_clipblit_cpp_00451466;
+          pcVar2 = s__s__d____blitting_error___s___00451473;
         }
         else {
           lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
@@ -112,9 +95,9 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
             return;
           }
           param_1 = (int)dd_error_string(lVar1);
-          uVar3 = 0x5d;
-          pcVar2 = s_clipblit_cpp_00451492;
-          format = s__s__d____blitting_error___s___0045149f;
+          arg3 = 0x5d;
+          arg2 = s_clipblit_cpp_00451492;
+          pcVar2 = s__s__d____blitting_error___s___0045149f;
         }
       }
       else if ((uint)param_2 < 2) {
@@ -125,9 +108,9 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
             return;
           }
           param_1 = (int)dd_error_string(lVar1);
-          uVar3 = 0x65;
-          pcVar2 = s_clipblit_cpp_004514be;
-          format = s__s__d____blitting_error___s___004514cb;
+          arg3 = 0x65;
+          arg2 = s_clipblit_cpp_004514be;
+          pcVar2 = s__s__d____blitting_error___s___004514cb;
         }
         else {
           lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x1c))
@@ -136,9 +119,9 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
             return;
           }
           param_1 = (int)dd_error_string(lVar1);
-          uVar3 = 0x69;
-          pcVar2 = s_clipblit_cpp_004514ea;
-          format = s__s__d____blitting_error___s___004514f7;
+          arg3 = 0x69;
+          arg2 = s_clipblit_cpp_004514ea;
+          pcVar2 = s__s__d____blitting_error___s___004514f7;
         }
       }
       else if (param_2 == 2) {
@@ -149,9 +132,9 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
             return;
           }
           param_1 = (int)dd_error_string(lVar1);
-          uVar3 = 0x70;
-          pcVar2 = s_clipblit_cpp_00451516;
-          format = s__s__d____blitting_error___s___00451523;
+          arg3 = 0x70;
+          arg2 = s_clipblit_cpp_00451516;
+          pcVar2 = s__s__d____blitting_error___s___00451523;
         }
         else {
           lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x1c))
@@ -160,17 +143,17 @@ blt_scr_2_scr(int param_1,int param_2,int param_3,int param_4,int param_5,int pa
             return;
           }
           param_1 = (int)dd_error_string(lVar1);
-          uVar3 = 0x74;
-          pcVar2 = s_clipblit_cpp_00451542;
-          format = s__s__d____blitting_error___s___0045154f;
+          arg3 = 0x74;
+          arg2 = s_clipblit_cpp_00451542;
+          pcVar2 = s__s__d____blitting_error___s___0045154f;
         }
       }
       else {
-        uVar3 = 0x79;
-        pcVar2 = s_clipblit_cpp_0045156e;
-        format = s__s__d____unidentified_focus_erro_0045157b;
+        arg3 = 0x79;
+        arg2 = s_clipblit_cpp_0045156e;
+        pcVar2 = s__s__d____unidentified_focus_erro_0045157b;
       }
-      fatal_exit(format,pcVar2,uVar3,param_1);
+      fatal_exit(pcVar2,arg2,arg3,param_1);
     }
   }
   return;
@@ -188,10 +171,6 @@ set_char(int param_1,char *param_2,int param_3,int param_4,int param_5,int param
 {
   int iVar1;
   IDirectDrawSurface *direct_draw_surface;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  char *extraout_EDX;
-  char *extraout_EDX_00;
   uchar *unaff_ESI;
   int local_14;
   int local_10;
@@ -210,8 +189,6 @@ set_char(int param_1,char *param_2,int param_3,int param_4,int param_5,int param
   }
   else {
     fatal_exit(s__s__d____unidentified_focus_erro_004515b2,s_clipblit_cpp_004515a5,0x94,param_1);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if (param_7 == 0) {
     local_10 = 0;
@@ -221,8 +198,6 @@ set_char(int param_1,char *param_2,int param_3,int param_4,int param_5,int param
     local_10 = 0;
     if (clip_limit_set == 0) {
       fatal_exit(s__s__d____no_clipping_limit_set_004515e9,s_clipblit_cpp_004515dc,0x9d);
-      param_4 = extraout_ECX_00;
-      param_2 = extraout_EDX_00;
     }
     if (param_3 + param_5 < clip_tx) {
       return;
@@ -265,7 +240,7 @@ set_char(int param_1,char *param_2,int param_3,int param_4,int param_5,int param
       }
     }
   }
-  c_blt_sprite((int)unaff_ESI,param_2,param_3,param_4,iVar1,param_6,local_10,local_14);
+  c_blt_sprite(unaff_ESI,param_2,param_3,param_4,iVar1,param_6,local_10,local_14);
   direct_draw_surface = xvga_screen;
   if (((param_1 == 0) || (direct_draw_surface = xvga_back_screen, (uint)param_1 < 2)) ||
      (direct_draw_surface = xvga_buffer_screen, param_1 == 2)) {
@@ -285,8 +260,6 @@ blt_char(char *param_1,char *param_2,int param_3,int param_4,int param_5,int par
 
 {
   int iVar1;
-  int extraout_ECX;
-  char *extraout_EDX;
   int local_10;
   
   if (param_7 == 0) {
@@ -297,8 +270,6 @@ blt_char(char *param_1,char *param_2,int param_3,int param_4,int param_5,int par
     local_10 = 0;
     if (clip_limit_set == 0) {
       fatal_exit(s__s__d____no_clipping_limit_set_0045164e,s_clipblit_cpp_00451641,0x115);
-      param_4 = extraout_ECX;
-      param_2 = extraout_EDX;
     }
     if (param_3 + param_5 < clip_tx) {
       return;
@@ -341,7 +312,7 @@ blt_char(char *param_1,char *param_2,int param_3,int param_4,int param_5,int par
       }
     }
   }
-  c_blt_sprite((int)param_1,param_2,param_3,param_4,iVar1,param_6,local_10,xvga_screen_xsize);
+  c_blt_sprite(param_1,param_2,param_3,param_4,iVar1,param_6,local_10,xvga_screen_xsize);
   return;
 }
 
@@ -358,16 +329,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   int iVar2;
   long lVar3;
   char *dd_error_string_result;
-  int extraout_ECX;
   int iVar4;
-  int extraout_EDX;
   int iVar5;
-  int unaff_EDX;
-  char *format;
-  char *pcVar6;
-  undefined4 uVar7;
-  undefined4 uVar8;
-  undefined4 uVar9;
+  int iVar6;
+  char *pcVar7;
+  char *arg2;
+  undefined4 arg3;
+  undefined4 arg11;
+  undefined4 arg12;
   int local_48;
   int local_44;
   int local_40;
@@ -385,10 +354,10 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   int local_10;
   
   if ((param_2 < 0) || (max_mem_image_ptr < param_2)) {
-    fatal_exit(s__s__d____illegal_array_index__d_0045167c,s_clipblit_cpp_0045166f);
+    fatal_exit(s__s__d____illegal_array_index__d_0045167c,s_clipblit_cpp_0045166f,0x180,param_2);
   }
   if (*(int *)(xvga_mem_images + param_2 * 0x20 + 0x1c) == 0) {
-    fatal_exit(s__s__d____blt_with_unallocated_me_004516ab,s_clipblit_cpp_0045169e);
+    fatal_exit(s__s__d____blt_with_unallocated_me_004516ab,s_clipblit_cpp_0045169e,0x183,param_2);
   }
   if (*(int *)(xvga_mem_images + param_2 * 0x20 + 0x18) == 4) {
     if (param_1 == 0) {
@@ -404,7 +373,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       local_28 = xvga_buffer_screen_pitch;
     }
     else {
-      fatal_exit(s__s__d____unidentified_focus_erro_004516e5,s_clipblit_cpp_004516d8);
+      fatal_exit(s__s__d____unidentified_focus_erro_004516e5,s_clipblit_cpp_004516d8,0x196,param_1);
     }
     iVar2 = *(int *)(xvga_mem_images + param_2 * 0x20 + 8);
     iVar4 = *(int *)(xvga_mem_images + param_2 * 0x20 + 0xc);
@@ -413,7 +382,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       param_4 = param_4 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x14);
     }
     mem_image_index = param_2 * 0x20;
-    unaff_EDX = *(int *)(xvga_mem_images + mem_image_index);
+    iVar6 = *(int *)(xvga_mem_images + mem_image_index);
     if ((param_5 & 1U) == 0) {
       iVar1 = iVar2;
       iVar5 = 0;
@@ -421,9 +390,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     else {
       local_24 = 0;
       if (clip_limit_set == 0) {
-        fatal_exit(s__s__d____no_clipping_limit_set_0045171c);
-        iVar4 = extraout_ECX;
-        iVar2 = extraout_EDX;
+        fatal_exit(s__s__d____no_clipping_limit_set_0045171c,s_clipblit_cpp_0045170f,0x1ab);
       }
       if (param_3 + iVar2 < clip_tx) {
         return;
@@ -439,7 +406,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       }
       if (param_4 < clip_ty) {
         iVar4 = iVar4 - (clip_ty - param_4);
-        unaff_EDX = unaff_EDX + iVar2 * (clip_ty - param_4);
+        iVar6 = iVar6 + iVar2 * (clip_ty - param_4);
         param_4 = clip_ty;
         if (iVar4 < 1) {
           return;
@@ -451,7 +418,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       if (param_3 < clip_tx) {
         local_24 = clip_tx - param_3;
         iVar2 = iVar2 - local_24;
-        unaff_EDX = unaff_EDX + local_24;
+        iVar6 = iVar6 + local_24;
         param_3 = clip_tx;
         if (iVar2 < 1) {
           return;
@@ -468,14 +435,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
         }
       }
     }
-    c_blt_sprite((int)local_20,unaff_EDX,param_3,param_4,iVar1,iVar4,iVar5,local_28);
+    c_blt_sprite(local_20,iVar6,param_3,param_4,iVar1,iVar4,iVar5,local_28);
     direct_draw_surface = xvga_screen;
     if (((param_1 == 0) || (direct_draw_surface = xvga_back_screen, (uint)param_1 < 2)) ||
        (direct_draw_surface = xvga_buffer_screen, param_1 == 2)) {
       reset_surface_ptr_1(direct_draw_surface,local_20);
     }
     else {
-      fatal_exit(s__s__d____unidentified_focus_erro_0045174a,s_clipblit_cpp_0045173d);
+      fatal_exit(s__s__d____unidentified_focus_erro_0045174a,s_clipblit_cpp_0045173d,0x217,param_1);
     }
     return;
   }
@@ -488,7 +455,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
     param_4 = param_4 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x14);
   }
   if (clip_limit_set == 0) {
-    fatal_exit(s__s__d____no_clipping_limit_set_00451781);
+    fatal_exit(s__s__d____no_clipping_limit_set_00451781,s_clipblit_cpp_00451774,0x22a);
   }
   if (local_14 + param_3 < clip_tx) {
     return;
@@ -533,7 +500,7 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
   local_3c = param_4;
   iVar2 = (**(code **)(**(int **)(xvga_mem_images + local_2c + 4) + 0x60))();
   if (iVar2 != 0) {
-    debugmsg(s__s__d____had_to_restore__d_004517af,s_clipblit_cpp_004517a2,0x265);
+    debugmsg(s__s__d____had_to_restore__d_004517af,s_clipblit_cpp_004517a2,0x265,param_2);
     (**(code **)(**(int **)(xvga_mem_images + mem_image_index + 4) + 0x6c))();
   }
   if (param_1 == 0) {
@@ -555,11 +522,11 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       return;
     }
     dd_error_string_result = dd_error_string(lVar3);
-    uVar9 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
-    uVar8 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
-    uVar7 = 0x272;
-    pcVar6 = s_clipblit_cpp_00451840;
-    format = s__s__d____set_mem_image___d__to_s_0045184d;
+    arg12 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
+    arg11 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
+    arg3 = 0x272;
+    arg2 = s_clipblit_cpp_00451840;
+    pcVar7 = s__s__d____set_mem_image___d__to_s_0045184d;
   }
   else if ((uint)param_1 < 2) {
     iVar2 = (**(code **)(*(int *)xvga_back_screen + 0x60))();
@@ -580,11 +547,11 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       return;
     }
     dd_error_string_result = dd_error_string(lVar3);
-    uVar9 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
-    uVar8 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
-    uVar7 = 0x280;
-    pcVar6 = s_clipblit_cpp_0045192b;
-    format = s__s__d____set_mem_image___d__to_b_00451938;
+    arg12 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
+    arg11 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
+    arg3 = 0x280;
+    arg2 = s_clipblit_cpp_0045192b;
+    pcVar7 = s__s__d____set_mem_image___d__to_b_00451938;
   }
   else {
     if (param_1 != 2) {
@@ -608,14 +575,14 @@ void __watcall set_mem_image(int param_1,int param_2,int param_3,int param_4,int
       return;
     }
     dd_error_string_result = dd_error_string(lVar3);
-    uVar9 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
-    uVar8 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
-    uVar7 = 0x28b;
-    pcVar6 = s_clipblit_cpp_00451a1f;
-    format = s__s__d____set_mem_image___d__to_b_00451a2c;
+    arg12 = *(undefined4 *)(xvga_mem_images + iVar2 + 0xc);
+    arg11 = *(undefined4 *)(xvga_mem_images + iVar2 + 8);
+    arg3 = 0x28b;
+    arg2 = s_clipblit_cpp_00451a1f;
+    pcVar7 = s__s__d____set_mem_image___d__to_b_00451a2c;
   }
-  fatal_exit(format,pcVar6,uVar7,param_2,param_3,param_4,local_34,mem_image_index,local_38,local_3c,
-             uVar8,uVar9,dd_error_string_result);
+  fatal_exit(pcVar7,arg2,arg3,param_2,param_3,param_4,local_34,mem_image_index,local_38,local_3c,
+             arg11,arg12,dd_error_string_result);
   return;
 }
 
@@ -627,22 +594,17 @@ blt_mem_image(char *param_1,int param_2,int param_3,int param_4,int param_5,int 
 
 {
   int iVar1;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_EDX;
   int iVar2;
   int iVar3;
+  undefined4 unaff_ESI;
   int iVar4;
-  int unaff_EDX;
+  int iVar5;
   
   if ((param_2 < 0) || (max_mem_image_ptr < param_2)) {
-    fatal_exit(s__s__d____illegal_array_index__d_00451aa0,s_clipblit_cpp_00451a93,0x298);
-    param_4 = extraout_ECX;
+    fatal_exit(s__s__d____illegal_array_index__d_00451aa0,s_clipblit_cpp_00451a93,0x298,unaff_ESI);
   }
   if (*(int *)(xvga_mem_images + param_2 * 0x20 + 0x1c) == 0) {
-    fatal_exit(s__s__d____blt_with_unallocated_me_00451acf,s_clipblit_cpp_00451ac2,0x29b);
-    param_4 = extraout_ECX_00;
+    fatal_exit(s__s__d____blt_with_unallocated_me_00451acf,s_clipblit_cpp_00451ac2,0x29b,unaff_ESI);
   }
   iVar2 = *(int *)(xvga_mem_images + param_2 * 0x20 + 8);
   iVar4 = *(int *)(xvga_mem_images + param_2 * 0x20 + 0xc);
@@ -650,7 +612,7 @@ blt_mem_image(char *param_1,int param_2,int param_3,int param_4,int param_5,int 
     param_3 = param_3 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x10);
     param_4 = param_4 - *(int *)(xvga_mem_images + param_2 * 0x20 + 0x14);
   }
-  unaff_EDX = *(int *)(xvga_mem_images + param_2 * 0x20);
+  iVar5 = *(int *)(xvga_mem_images + param_2 * 0x20);
   if ((param_6 & 1U) == 0) {
     iVar3 = 0;
     iVar1 = iVar2;
@@ -659,8 +621,6 @@ blt_mem_image(char *param_1,int param_2,int param_3,int param_4,int param_5,int 
     iVar3 = 0;
     if (clip_limit_set == 0) {
       fatal_exit(s__s__d____no_clipping_limit_set_00451b09,s_clipblit_cpp_00451afc,0x2af);
-      param_4 = extraout_ECX_01;
-      iVar2 = extraout_EDX;
     }
     if (param_3 + iVar2 < clip_tx) {
       return;
@@ -676,7 +636,7 @@ blt_mem_image(char *param_1,int param_2,int param_3,int param_4,int param_5,int 
     }
     if (param_4 < clip_ty) {
       iVar4 = iVar4 - (clip_ty - param_4);
-      unaff_EDX = unaff_EDX + iVar2 * (clip_ty - param_4);
+      iVar5 = iVar5 + iVar2 * (clip_ty - param_4);
       param_4 = clip_ty;
       if (iVar4 < 1) {
         return;
@@ -688,7 +648,7 @@ blt_mem_image(char *param_1,int param_2,int param_3,int param_4,int param_5,int 
     if (param_3 < clip_tx) {
       iVar3 = clip_tx - param_3;
       iVar2 = iVar2 - iVar3;
-      unaff_EDX = unaff_EDX + iVar3;
+      iVar5 = iVar5 + iVar3;
       param_3 = clip_tx;
       if (iVar2 < 1) {
         return;
@@ -703,7 +663,7 @@ blt_mem_image(char *param_1,int param_2,int param_3,int param_4,int param_5,int 
       }
     }
   }
-  c_blt_sprite((int)param_1,unaff_EDX,param_3,param_4,iVar1,iVar4,iVar3,param_5);
+  c_blt_sprite(param_1,iVar5,param_3,param_4,iVar1,iVar4,iVar3,param_5);
   return;
 }
 

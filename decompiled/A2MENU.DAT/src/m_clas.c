@@ -14,7 +14,7 @@ int __watcall mdc_compare_score(void *param_1,void *param_2)
   if (*(int *)param_1 < *(int *)param_2) {
     return -1;
   }
-  cmp = strncmp(*(char **)((int)param_1 + 4),*(char **)((int)param_2 + 4),0x20);
+  cmp = strncmp(*(byte **)((int)param_1 + 4),*(byte **)((int)param_2 + 4),0x20);
   return cmp;
 }
 
@@ -27,7 +27,7 @@ void __watcall mdc_create_huidige_stand(void)
 
 {
   int slot_check_index_result;
-  size_t _NumOfElements;
+  int *extraout_EDX;
   
   debugmsg(s__s__d___mdc_create_huidige_stand_00428cbf,s_m_clas_cpp_00428cb4,0x85);
   slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428ce5,0x86);
@@ -58,7 +58,7 @@ void __watcall mdc_create_huidige_stand(void)
   DAT_00437f65 = 0;
   _DAT_00437f61 = PTR_s_Brian_Jakuar_00435a28;
   debugmsg(s_Done_initializing_current_score_t_00428d32);
-  qsort(&mdc_stand_list,_NumOfElements,9,mdc_compare_score);
+  qsort((int *)&mdc_stand_list,extraout_EDX,(int *)0x9,mdc_compare_score);
   return;
 }
 
@@ -68,48 +68,46 @@ void __watcall mdc_create_huidige_stand(void)
 void __watcall mdc_display_huidige_stand(int param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  ulong uVar2;
-  ulong uVar3;
+  int *piVar1;
+  int *piVar2;
+  int *piVar3;
   int iVar4;
   ulong uVar5;
+  ulong uVar6;
+  int iVar7;
+  ulong uVar8;
   int i;
   
   if (param_3 == 0) {
-    uVar3 = 0xafaff;
-    uVar5 = 0xa0fff;
+    uVar6 = 0xafaff;
+    uVar8 = 0xa0fff;
   }
   else {
-    uVar3 = 0;
-    uVar5 = 0;
+    uVar6 = 0;
+    uVar8 = 0;
   }
-  iVar4 = param_2 + 0x9b;
+  iVar7 = param_2 + 0x9b;
   xvga_select_font(2);
   i = 0;
-  iVar1 = 0;
+  iVar4 = 0;
   do {
-    uVar2 = uVar3;
-    if ((&DAT_00437f38)[iVar1] != '\0') {
-      uVar2 = uVar5;
+    uVar5 = uVar6;
+    if ((&DAT_00437f38)[iVar4] != '\0') {
+      uVar5 = uVar8;
     }
-    xvga_set_font_colors(2,uVar2,uVar2);
+    xvga_set_font_colors(2,uVar5,uVar5);
     i = i + 1;
-    win_print_xy(1,param_1 + 0x2c,iVar4,s__d_00428d79,i);
-    win_print_xy(1,param_1 + 0x52,iVar4,s__s_00428d7c,*(undefined4 *)(&DAT_00437f34 + extraout_ECX))
-    ;
-    win_print_xy(1,param_1 + 0x1e4,iVar4,s___2_2du__2_2dm__2_2ds_00428d7f,
-                 *(int *)(&mdc_stand_list + extraout_ECX_00) / 0xe10,
+    win_print_xy(1,param_1 + 0x2c,iVar7,s__d_00428d79,i);
+    win_print_xy(1,param_1 + 0x52,iVar7,s__s_00428d7c,*(undefined4 *)(&DAT_00437f34 + iVar4));
+    piVar1 = (int *)(&mdc_stand_list + iVar4);
+    piVar2 = (int *)(&mdc_stand_list + iVar4);
+    piVar3 = (int *)(&mdc_stand_list + iVar4);
+    iVar4 = iVar4 + 9;
+    win_print_xy(1,param_1 + 0x1e4,iVar7,s___2_2du__2_2dm__2_2ds_00428d7f,*piVar3 / 0xe10,
                  (int)((longlong)
-                       ((ulonglong)
-                        (uint)((int)((longlong)*(int *)(&mdc_stand_list + extraout_ECX_00) / 0x3c)
-                              >> 0x1f) << 0x20 |
-                       (longlong)*(int *)(&mdc_stand_list + extraout_ECX_00) / 0x3c & 0xffffffffU) %
-                      0x3c),*(int *)(&mdc_stand_list + extraout_ECX_00) % 0x3c);
-    iVar4 = iVar4 + 0x19;
-    iVar1 = extraout_ECX_01;
+                       ((ulonglong)(uint)((int)((longlong)*piVar2 / 0x3c) >> 0x1f) << 0x20 |
+                       (longlong)*piVar2 / 0x3c & 0xffffffffU) % 0x3c),*piVar1 % 0x3c);
+    iVar7 = iVar7 + 0x19;
   } while (i < 6);
   return;
 }

@@ -3,11 +3,11 @@
 
 /* ==== 0040f38c release_radar ==== */
 
-void __watcall release_radar(undefined4 param_1,undefined4 param_2)
+void __watcall release_radar(void)
 
 {
   if (radar_surface != (int *)0x0) {
-    (**(code **)(*radar_surface + 8))(radar_surface,param_2);
+    (**(code **)(*radar_surface + 8))(radar_surface);
     radar_surface = (int *)0x0;
   }
   return;
@@ -164,10 +164,10 @@ void __watcall draw_radar(void)
 
 {
   long lVar1;
-  char *dd_error_string_result;
-  char *format;
+  char *arg4;
   char *pcVar2;
-  undefined4 uVar3;
+  char *arg2;
+  undefined4 arg3;
   
   if (DAT_00458c24 == 0) {
     return;
@@ -184,22 +184,22 @@ void __watcall draw_radar(void)
     lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
                       (xvga_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      uVar3 = 0xf5;
-      pcVar2 = s_radar_cpp_00445783;
-      format = s__s__d____draw_radar_blitting_err_0044578d;
-      goto LAB_0040f85a;
+      arg4 = dd_error_string(lVar1);
+      arg3 = 0xf5;
+      arg2 = s_radar_cpp_00445783;
+      pcVar2 = s__s__d____draw_radar_blitting_err_0044578d;
+      goto override_prt_40f85a_f69790bb;
     }
   }
   else if ((uint)radar_enabled < 2) {
     lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
                       (xvga_back_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      uVar3 = 0xfb;
-      pcVar2 = s_radar_cpp_004457b1;
-      format = s__s__d____draw_radar_blitting_err_004457bb;
-      goto LAB_0040f85a;
+      arg4 = dd_error_string(lVar1);
+      arg3 = 0xfb;
+      arg2 = s_radar_cpp_004457b1;
+      pcVar2 = s__s__d____draw_radar_blitting_err_004457bb;
+      goto override_prt_40f85a_f69790bb;
     }
   }
   else {
@@ -209,12 +209,12 @@ void __watcall draw_radar(void)
     lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0x14))
                       (xvga_buffer_screen,&DAT_00475184,radar_surface,&DAT_00475174,0x8000,0);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      uVar3 = 0x101;
-      pcVar2 = s_radar_cpp_004457df;
-      format = s__s__d____draw_radar_blitting_err_004457e9;
-LAB_0040f85a:
-      fatal_exit(format,pcVar2,uVar3,dd_error_string_result);
+      arg4 = dd_error_string(lVar1);
+      arg3 = 0x101;
+      arg2 = s_radar_cpp_004457df;
+      pcVar2 = s__s__d____draw_radar_blitting_err_004457e9;
+override_prt_40f85a_f69790bb:
+      fatal_exit(pcVar2,arg2,arg3,arg4);
       return;
     }
   }
@@ -271,16 +271,20 @@ void __watcall clear_radar_surface(undefined4 *param_1,int param_2)
 void __watcall draw_radar_contents_1(void)
 
 {
+  int iVar1;
   int *opponent_chunk;
-  uchar *surface_ptr_3_2;
-  undefined4 uVar1;
-  opponent_t *opponent;
-  uint uVar2;
-  int opponent_index;
-  int i;
-  float10 chp;
-  int local_40 [3];
   uchar *surface_ptr_3;
+  undefined4 uVar2;
+  int chp;
+  uint chp_2;
+  int opponent_index;
+  float *pfVar3;
+  int i;
+  float10 fVar4;
+  float10 fVar5;
+  float10 fVar6;
+  int local_40 [3];
+  uchar *surface_ptr_3_2;
   int k;
   uchar *surface_ptr_3_3;
   int j;
@@ -289,85 +293,94 @@ void __watcall draw_radar_contents_1(void)
   int local_1c;
   
   i = player_heading;
-  opponent_chunk = get_opponent_chunk(s_radar_cpp_0044580d,0x13c);
+  opponent_chunk = get_opponent_chunk(s_radar_cpp_0044580d,0x13c,racers[player_index].opponent);
   j = *opponent_chunk;
-  surface_ptr_3_2 = get_surface_ptr_3(radar_surface,local_40);
-  surface_ptr_3 = surface_ptr_3_2;
-  clear_radar_surface(surface_ptr_3_2,local_40[0]);
+  surface_ptr_3 = get_surface_ptr_3(radar_surface,local_40);
+  surface_ptr_3_2 = surface_ptr_3;
+  clear_radar_surface((undefined4 *)surface_ptr_3,local_40[0]);
   local_40[0] = local_40[0] / 2;
   if (radar_scale == 0) {
-    *(int *)(surface_ptr_3_2 + radar_center_y * local_40[0] * 2 + radar_center_x * 2) =
+    *(int *)(surface_ptr_3 + radar_center_y * local_40[0] * 2 + radar_center_x * 2) =
          radar_dot_color;
-    *(int *)(surface_ptr_3_2 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2) =
+    *(int *)(surface_ptr_3 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2) =
          radar_dot_color;
   }
   else if (radar_scale == 1) {
-    *(int *)(surface_ptr_3_2 + radar_center_y * local_40[0] * 2 + radar_center_x * 2) =
+    *(int *)(surface_ptr_3 + radar_center_y * local_40[0] * 2 + radar_center_x * 2) =
          radar_dot_color;
-    *(int *)(surface_ptr_3_2 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2) =
+    *(int *)(surface_ptr_3 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2) =
          radar_dot_color;
-    *(int *)(surface_ptr_3_2 + radar_center_y * local_40[0] * 2 + radar_center_x * 2 + 4) =
+    *(int *)(surface_ptr_3 + radar_center_y * local_40[0] * 2 + radar_center_x * 2 + 4) =
          radar_dot_color;
-    *(int *)(surface_ptr_3_2 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2 + 4) =
+    *(int *)(surface_ptr_3 + (radar_center_y + 1) * local_40[0] * 2 + radar_center_x * 2 + 4) =
          radar_dot_color;
-    *(int *)(surface_ptr_3_2 + (radar_center_y + 2) * local_40[0] * 2 + radar_center_x * 2) =
+    *(int *)(surface_ptr_3 + (radar_center_y + 2) * local_40[0] * 2 + radar_center_x * 2) =
          radar_dot_color;
-    *(int *)(surface_ptr_3_2 + local_40[0] * (radar_center_y + 3) * 2 + radar_center_x * 2) =
+    *(int *)(surface_ptr_3 + local_40[0] * (radar_center_y + 3) * 2 + radar_center_x * 2) =
          radar_dot_color;
     opponent_index = radar_dot_color;
-    *(int *)(surface_ptr_3_2 + (radar_center_y + 2) * local_40[0] * 2 + radar_center_x * 2 + 4) =
+    *(int *)(surface_ptr_3 + (radar_center_y + 2) * local_40[0] * 2 + radar_center_x * 2 + 4) =
          radar_dot_color;
-    *(int *)(surface_ptr_3_2 + (radar_center_y + 3) * local_40[0] * 2 + radar_center_x * 2 + 4) =
+    *(int *)(surface_ptr_3 + (radar_center_y + 3) * local_40[0] * 2 + radar_center_x * 2 + 4) =
          opponent_index;
   }
   k = 0;
   j = j + -10;
   local_24 = (-i & 0x3ffU) << 2;
-  surface_ptr_3_3 = surface_ptr_3_2;
+  surface_ptr_3_3 = surface_ptr_3;
   do {
     if ((-1 < j) && (j < weg_lane_chunks + -1)) {
       i = 0;
       do {
         opponent_index = get_map_occupant(j,i);
         if ((opponent_index != -1) && (opponent_index != 0)) {
-          opponent = opponent_data + opponent_index;
+          fVar4 = (float10)opponent_data[opponent_index].x - (float10)player_x;
           CHP();
-          CHP();
-          CHP();
+          fVar4 = fVar4 / (float10)12.0;
           chp = CHP();
-          local_20 = (int)ROUND(chp);
-          uVar2 = opponent->field_e4;
-          chp = CHP();
-          local_1c = (int)ROUND(chp);
-          uVar1 = DAT_004751b4;
-          if ((2 < uVar2) &&
-             ((uVar1 = DAT_004751c0, 3 < uVar2 && (uVar1 = DAT_004751b4, uVar2 == 4)))) {
-            uVar1 = DAT_004751bc;
+          iVar1 = local_24;
+          opponent_index = cos_table;
+          fVar5 = ((float10)*(float *)(chp + 0xc) - (float10)player_z) / (float10)12.0;
+          pfVar3 = (float *)(sin_table + local_24);
+          CHP();
+          fVar6 = (float10)radar_center_x +
+                  (fVar4 * (float10)*pfVar3 - fVar5 * (float10)*(float *)(opponent_index + iVar1));
+          CHP();
+          local_20 = (int)ROUND(fVar6);
+          fVar4 = (float10)radar_height -
+                  ((float10)radar_center_y +
+                  fVar5 * (float10)*pfVar3 + fVar4 * (float10)*(float *)(opponent_index + iVar1));
+          chp_2 = CHP();
+          local_1c = (int)ROUND(fVar4);
+          uVar2 = DAT_004751b4;
+          if ((2 < chp_2) &&
+             ((uVar2 = DAT_004751c0, 3 < chp_2 && (uVar2 = DAT_004751b4, chp_2 == 4)))) {
+            uVar2 = DAT_004751bc;
           }
           if ((((0 < local_20) && (local_20 < radar_width + -4)) && (0 < local_1c)) &&
              (local_1c < radar_height + -4)) {
             opponent_index = local_1c + 1;
             if (radar_scale == 0) {
-              *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar1;
+              *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar2;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * opponent_index * 2 + local_20 * 2) =
-                   uVar1;
+                   uVar2;
             }
             else if (radar_scale == 1) {
-              *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar1;
+              *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + local_20 * 2) = uVar2;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * opponent_index * 2 + local_20 * 2) =
-                   uVar1;
+                   uVar2;
               *(undefined4 *)(surface_ptr_3_3 + local_1c * local_40[0] * 2 + 4 + local_20 * 2) =
-                   uVar1;
+                   uVar2;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * opponent_index * 2 + 4 + local_20 * 2)
-                   = uVar1;
+                   = uVar2;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * (local_1c + 2) * 2 + local_20 * 2) =
-                   uVar1;
+                   uVar2;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * (local_1c + 3) * 2 + local_20 * 2) =
-                   uVar1;
+                   uVar2;
               *(undefined4 *)(surface_ptr_3_3 + local_40[0] * (local_1c + 2) * 2 + 4 + local_20 * 2)
-                   = uVar1;
+                   = uVar2;
               *(undefined4 *)(surface_ptr_3_3 + (local_1c + 3) * local_40[0] * 2 + 4 + local_20 * 2)
-                   = uVar1;
+                   = uVar2;
             }
           }
         }
@@ -377,7 +390,7 @@ void __watcall draw_radar_contents_1(void)
     j = j + 1;
     k = k + 1;
   } while (k < 0x14);
-  reset_surface_ptr_1(radar_surface,surface_ptr_3);
+  reset_surface_ptr_1(radar_surface,surface_ptr_3_2);
   return;
 }
 
@@ -387,13 +400,18 @@ void __watcall draw_radar_contents_1(void)
 void __watcall draw_radar_contents_2(void)
 
 {
-  undefined2 uVar1;
+  int iVar1;
+  undefined2 uVar2;
   int *opponent_chunk;
   uchar *surface_ptr_3;
-  uint uVar2;
+  float *chp;
+  uint chp_2;
   int opponent_index;
+  float *pfVar3;
   int k;
-  float10 chp;
+  float10 fVar4;
+  float10 fVar5;
+  float10 fVar6;
   int local_48 [5];
   uchar *surface_ptr_3_2;
   int i;
@@ -405,12 +423,12 @@ void __watcall draw_radar_contents_2(void)
   opponent_t *opponent;
   
   k = player_heading;
-  opponent_chunk = get_opponent_chunk(s_radar_cpp_0044581f,0x1a7);
+  opponent_chunk = get_opponent_chunk(s_radar_cpp_0044581f,0x1a7,racers[player_index].opponent);
   j = *opponent_chunk;
   surface_ptr_3 = get_surface_ptr_3(radar_surface,local_48);
   surface_ptr_3_2 = surface_ptr_3;
   surface_ptr_3_3 = surface_ptr_3;
-  clear_radar_surface(surface_ptr_3,local_48[0]);
+  clear_radar_surface((undefined4 *)surface_ptr_3,local_48[0]);
   if (radar_scale == 0) {
     *(undefined2 *)(surface_ptr_3 + radar_center_y * local_48[0] + radar_center_x) =
          (undefined2)radar_background_color;
@@ -445,38 +463,46 @@ void __watcall draw_radar_contents_2(void)
         opponent_index = get_map_occupant(j,k);
         opponent = opponent_data;
         if ((opponent_index != -1) && (opponent_index != 0)) {
+          fVar4 = (float10)opponent_data[opponent_index].x - (float10)player_x;
           CHP();
+          fVar4 = fVar4 / (float10)12.0;
           CHP();
-          CHP();
-          chp = CHP();
-          local_20 = (int)ROUND(chp);
-          uVar2 = opponent[opponent_index].field_e4;
-          chp = CHP();
-          local_1c = (int)ROUND(chp);
-          uVar1 = radar_background_color._2_2_;
-          if ((2 < uVar2) &&
-             ((uVar1 = DAT_004751ac, 3 < uVar2 && (uVar1 = radar_background_color._2_2_, uVar2 == 4)
+          iVar1 = local_24;
+          fVar5 = ((float10)opponent[opponent_index].z - (float10)player_z) / (float10)12.0;
+          pfVar3 = (float *)(sin_table + local_24);
+          opponent_index = CHP();
+          fVar6 = (float10)radar_center_x +
+                  (fVar4 * (float10)*pfVar3 - fVar5 * (float10)*(float *)(opponent_index + iVar1));
+          chp = (float *)CHP();
+          local_20 = (int)ROUND(fVar6);
+          fVar4 = (float10)radar_height -
+                  ((float10)radar_center_y + fVar5 * (float10)*pfVar3 + fVar4 * (float10)*chp);
+          chp_2 = CHP();
+          local_1c = (int)ROUND(fVar4);
+          uVar2 = radar_background_color._2_2_;
+          if ((2 < chp_2) &&
+             ((uVar2 = DAT_004751ac, 3 < chp_2 && (uVar2 = radar_background_color._2_2_, chp_2 == 4)
               ))) {
-            uVar1 = DAT_004751aa;
+            uVar2 = DAT_004751aa;
           }
           if ((((0 < local_20) && (local_20 < radar_width + -4)) && (0 < local_1c)) &&
              (local_1c < radar_height + -4)) {
             opponent_index = local_1c + 1;
             if (radar_scale == 0) {
-              *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + local_20) = uVar1;
-              *(undefined2 *)(surface_ptr_3_3 + opponent_index * local_48[0] + local_20) = uVar1;
+              *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + local_20) = uVar2;
+              *(undefined2 *)(surface_ptr_3_3 + opponent_index * local_48[0] + local_20) = uVar2;
             }
             else if (radar_scale == 1) {
-              *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + local_20) = uVar1;
-              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * opponent_index + local_20) = uVar1;
-              *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + 2 + local_20) = uVar1;
-              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * opponent_index + 2 + local_20) = uVar1
+              *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + local_20) = uVar2;
+              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * opponent_index + local_20) = uVar2;
+              *(undefined2 *)(surface_ptr_3_3 + local_1c * local_48[0] + 2 + local_20) = uVar2;
+              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * opponent_index + 2 + local_20) = uVar2
               ;
-              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * (local_1c + 2) + local_20) = uVar1;
-              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * (local_1c + 3) + local_20) = uVar1;
-              *(undefined2 *)(surface_ptr_3_3 + (local_1c + 2) * local_48[0] + 2 + local_20) = uVar1
+              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * (local_1c + 2) + local_20) = uVar2;
+              *(undefined2 *)(surface_ptr_3_3 + local_48[0] * (local_1c + 3) + local_20) = uVar2;
+              *(undefined2 *)(surface_ptr_3_3 + (local_1c + 2) * local_48[0] + 2 + local_20) = uVar2
               ;
-              *(undefined2 *)(surface_ptr_3_3 + (local_1c + 3) * local_48[0] + 2 + local_20) = uVar1
+              *(undefined2 *)(surface_ptr_3_3 + (local_1c + 3) * local_48[0] + 2 + local_20) = uVar2
               ;
             }
           }

@@ -3,13 +3,13 @@
 
 /* ==== 004232df get_std_stream ==== */
 
-longlong __watcall get_std_stream(uint param_1,uint unaff_EDX)
+undefined4 __watcall get_std_stream(uint param_1)
 
 {
   if (3 < param_1) {
-    return (ulonglong)unaff_EDX << 0x20;
+    return 0;
   }
-  return CONCAT44(unaff_EDX,&iob + param_1 * 0x1a);
+  return &iob + param_1 * 0x1a;
 }
 
 

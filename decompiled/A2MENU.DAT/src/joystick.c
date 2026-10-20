@@ -257,13 +257,8 @@ void __watcall handle_joystick(void)
 void __watcall set_joystick_keys(int param_1,int param_2,int param_3)
 
 {
-  int extraout_ECX;
-  int extraout_EDX;
-  
   if ((param_1 == 0) || (2 < (uint)param_1)) {
     fatal_exit(s__set_joystick_keys__invalid_joys_0042e333,param_1);
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   switch(param_2) {
   case 0:

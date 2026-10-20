@@ -3,31 +3,33 @@
 
 /* ==== 004399d7 InitFiles ==== */
 
-void __watcall InitFiles(void)
+undefined4 * __watcall InitFiles(void)
 
 {
-  int unaff_EDX;
+  undefined4 in_EAX;
   undefined4 *puVar1;
+  undefined4 *buffer;
   undefined *puVar2;
-  undefined8 buffer;
   
-  DAT_0045995d = DAT_0045995d & 0xf8 | 4;
-  for (puVar2 = &iob; unaff_EDX = *(int *)(puVar2 + 0xc), unaff_EDX != 0; puVar2 = puVar2 + 0x1a) {
-    buffer = nmalloc(8,unaff_EDX);
-    puVar1 = (undefined4 *)buffer;
-    if (puVar1 == (undefined4 *)0x0) {
-      buffer = nmalloc(8,(int)((ulonglong)buffer >> 0x20));
-      puVar1 = (undefined4 *)buffer;
-      if (puVar1 == (undefined4 *)0x0) {
-        fatal_runtime_error(s_Not_enough_memory_to_allocate_fi_00456484);
+  puVar1 = (undefined4 *)
+           (CONCAT22((short)((uint)in_EAX >> 0x10),CONCAT11(DAT_0045995d,(char)in_EAX)) & 0xfffff8ff
+           );
+  DAT_0045995d = (byte)((uint)puVar1 >> 8) | 4;
+  for (puVar2 = &iob; *(int *)(puVar2 + 0xc) != 0; puVar2 = puVar2 + 0x1a) {
+    buffer = (undefined4 *)nmalloc(8);
+    if (buffer == (undefined4 *)0x0) {
+      buffer = (undefined4 *)nmalloc(8);
+      if (buffer == (undefined4 *)0x0) {
+        fatal_runtime_error(s_Not_enough_memory_to_allocate_fi_00456484,1);
       }
     }
-    puVar1[1] = puVar2;
-    *puVar1 = OpenStreams;
-    OpenStreams = puVar1;
+    puVar1 = OpenStreams;
+    buffer[1] = puVar2;
+    *buffer = OpenStreams;
+    OpenStreams = buffer;
   }
-  ClosedStreams = unaff_EDX;
-  return;
+  ClosedStreams = *(int *)(puVar2 + 0xc);
+  return puVar1;
 }
 
 

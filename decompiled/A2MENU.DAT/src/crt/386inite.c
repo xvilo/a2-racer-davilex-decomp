@@ -3,10 +3,12 @@
 
 /* ==== 0041a487 fini_387_emulator ==== */
 
-void __watcall fini_387_emulator(void)
+undefined4 __watcall fini_387_emulator(void)
 
 {
-  return;
+  undefined4 in_EAX;
+  
+  return in_EAX;
 }
 
 

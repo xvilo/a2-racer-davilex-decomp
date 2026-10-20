@@ -3,15 +3,14 @@
 
 /* ==== 004131a8 collide_racer_with_road_edge ==== */
 
-undefined8 __watcall collide_racer_with_road_edge(int opponent_index,undefined4 param_2)
+undefined4 __watcall collide_racer_with_road_edge(int opponent_index)
 
 {
   float fVar1;
   float fVar2;
   bool bVar3;
-  undefined4 uVar4;
+  int iVar4;
   int iVar5;
-  int iVar6;
   int weg_section_idx;
   float afStack_98 [10];
   float afStack_70 [14];
@@ -29,18 +28,18 @@ undefined8 __watcall collide_racer_with_road_edge(int opponent_index,undefined4 
   bVar3 = false;
   local_20 = opponent_index * 0x100;
   local_30 = weg_sections[weg_section_idx].heading;
-  iVar6 = 0;
+  iVar5 = 0;
   do {
     local_38 = weg_sections[weg_section_idx].point * 0x21;
-    *(float *)((int)afStack_70 + iVar6) =
-         *(float *)((int)opponent_data->world_corners + iVar6 + local_20) -
+    *(float *)((int)afStack_70 + iVar5) =
+         *(float *)((int)opponent_data->world_corners + iVar5 + local_20) -
          *(float *)(weg_points + local_38);
-    iVar5 = iVar6 + 0xc;
-    *(float *)((int)afStack_70 + iVar6 + 8) =
-         *(float *)((int)opponent_data->world_corners + iVar6 + local_20 + 8) -
+    iVar4 = iVar5 + 0xc;
+    *(float *)((int)afStack_70 + iVar5 + 8) =
+         *(float *)((int)opponent_data->world_corners + iVar5 + local_20 + 8) -
          *(float *)(weg_sections[weg_section_idx].point * 0x21 + weg_points + 8);
-    iVar6 = iVar5;
-  } while (iVar5 != 0x30);
+    iVar5 = iVar4;
+  } while (iVar4 != 0x30);
   fVar1 = *(float *)(sin_table + (local_30 & 0x3ff) * 4);
   local_28 = fVar1;
   fVar2 = *(float *)(cos_table + (local_30 & 0x3ff) * 4);
@@ -51,12 +50,12 @@ undefined8 __watcall collide_racer_with_road_edge(int opponent_index,undefined4 
   if (local_2c != 0.0) {
     weg_section_idx = 0;
     do {
-      iVar6 = weg_section_idx + 0xc;
+      iVar5 = weg_section_idx + 0xc;
       *(float *)((int)afStack_98 + weg_section_idx) =
            ABS(-fVar2 * *(float *)((int)afStack_70 + weg_section_idx) +
                fVar1 * *(float *)((int)afStack_70 + weg_section_idx + 8));
-      weg_section_idx = iVar6;
-    } while (iVar6 != 0x30);
+      weg_section_idx = iVar5;
+    } while (iVar5 != 0x30);
     if (opponent_data[opponent_index].direction == 1) {
       local_1c = -local_1c;
       local_2c = -local_2c;
@@ -82,13 +81,10 @@ undefined8 __watcall collide_racer_with_road_edge(int opponent_index,undefined4 
       if (4.0 < fVar1) {
         play_bump3_sound();
       }
-      uVar4 = 1;
-      goto LAB_004133c1;
+      return 1;
     }
   }
-  uVar4 = 0;
-LAB_004133c1:
-  return CONCAT44(param_2,uVar4);
+  return 0;
 }
 
 
@@ -103,7 +99,7 @@ int __watcall no_collision_check(void)
 
 /* ==== 004133d1 collide_player_with_track_ends ==== */
 
-undefined8 __watcall collide_player_with_track_ends(undefined4 param_1,undefined4 param_2)
+void __watcall collide_player_with_track_ends(void)
 
 {
   float fVar1;
@@ -112,7 +108,6 @@ undefined8 __watcall collide_player_with_track_ends(undefined4 param_1,undefined
   int iVar4;
   int iVar5;
   int weg_section_idx;
-  undefined4 uVar6;
   float local_94 [12];
   float afStack_64 [15];
   uint local_28;
@@ -181,72 +176,63 @@ undefined8 __watcall collide_player_with_track_ends(undefined4 param_1,undefined
         if (4.0 < fVar1) {
           play_bump3_sound();
         }
-        uVar6 = 1;
-        goto LAB_004133c8;
       }
     }
   }
-  uVar6 = 0;
-LAB_004133c8:
-  return CONCAT44(param_2,uVar6);
+  return;
 }
 
 
 /* ==== 004135c4 alloc_pionnen ==== */
 
-undefined8 __watcall alloc_pionnen(int param_1,undefined4 param_2)
+undefined4 __watcall alloc_pionnen(int param_1)
 
 {
-  undefined4 uVar1;
-  int iVar2;
+  int iVar1;
   int i;
-  int extraout_EDX;
+  undefined4 *puVar2;
   undefined4 *puVar3;
-  SIZE_T uBytes;
-  undefined4 *puVar4;
+  byte bVar4;
   
+  bVar4 = 0;
   if (0 < param_1) {
     debugmsg(s_Allocating__d_pion_objects____004468d4,param_1);
-    uBytes = (param_1 * 0xc - extraout_EDX) * 4;
-    pionnen = LocalAlloc(0x40,uBytes);
+    pionnen = LocalAlloc(0x40,param_1 * 0x2c);
     if (pionnen == (HLOCAL)0x0) {
-      uVar1 = 2000;
-      goto LAB_00413a56;
+      return 2000;
     }
-    iVar2 = 0;
-    while (iVar2 < (int)uBytes) {
-      puVar4 = (undefined4 *)((int)pionnen + iVar2);
-      iVar2 = iVar2 + 0x2c;
-      puVar3 = &DAT_00459188;
+    iVar1 = 0;
+    while (iVar1 < param_1 * 0x2c) {
+      puVar3 = (undefined4 *)((int)pionnen + iVar1);
+      iVar1 = iVar1 + 0x2c;
+      puVar2 = &DAT_00459188;
       for (i = 0xb; i != 0; i = i + -1) {
-        *puVar4 = *puVar3;
-        puVar3 = puVar3 + 1;
-        puVar4 = puVar4 + 1;
+        *puVar3 = *puVar2;
+        puVar2 = puVar2 + (uint)bVar4 * -2 + 1;
+        puVar3 = puVar3 + (uint)bVar4 * -2 + 1;
       }
     }
     pion_count = param_1;
     debugmsg(s_OK__004468f2);
   }
-  uVar1 = 0;
-LAB_00413a56:
-  return CONCAT44(param_2,uVar1);
+  return 0;
 }
 
 
 /* ==== 00413646 place_pion_left ==== */
 
-int __watcall place_pion_left(float weg_section_idx,float param_2)
+void __watcall place_pion_left(float weg_section_idx,float param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  int iVar5;
+  int iVar4;
+  float fVar5;
   weg_section_t *weg_section;
   float *pfVar6;
-  float fVar7;
-  undefined8 pion_object;
+  int i;
+  float10 in_ST0;
   
   if (((int)weg_section_idx < 0) || (weg_chunk_count < (int)weg_section_idx)) {
     fatal_exit(s__s__d____Chunk_value_out_of_boun_00446900,s_pion_cpp_004468f7,0x60);
@@ -254,39 +240,41 @@ int __watcall place_pion_left(float weg_section_idx,float param_2)
   if (((int)param_2 < 0) || (0xb < (int)param_2)) {
     fatal_exit(s__s__d____Lane_value_out_of_bound_0044692e,s_pion_cpp_00446925,99);
   }
-  fVar7 = 0.0;
-  for (iVar5 = 0; (iVar5 < pion_count * 0x2c && (*(int *)(pionnen + 0x18 + iVar5) != 0));
-      iVar5 = iVar5 + 0x2c) {
-    fVar7 = (float)((int)fVar7 + 1);
+  i = 0;
+  for (iVar4 = 0; (iVar4 < pion_count * 0x2c && (*(int *)(pionnen + 0x18 + iVar4) != 0));
+      iVar4 = iVar4 + 0x2c) {
+    i = i + 1;
   }
-  if (fVar7 == (float)pion_count) {
+  if (i == pion_count) {
     fatal_exit(s__s__d____No_more_free_pion_objec_0044695b,s_pion_cpp_00446952,0x6a);
   }
-  pfVar6 = (float *)(pionnen + (int)fVar7 * 0x2c);
+  pfVar6 = (float *)(pionnen + i * 0x2c);
   pfVar6[8] = weg_section_idx;
   pfVar6[9] = param_2;
-  fVar4 = *(float *)(&lane_offsets + (int)param_2 * 4);
-  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar4 +
+  fVar3 = *(float *)(&lane_offsets + (int)param_2 * 4);
+  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar3 +
             *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21)) -
             *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * 40.0;
-  fVar1 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
-  fVar2 = *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21 + 8);
-  fVar3 = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38);
+  fVar5 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
+  fVar1 = *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21 + 8);
+  fVar2 = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38);
   pfVar6[6] = 1.4013e-45;
   pfVar6[7] = 0.0;
-  pfVar6[2] = fVar3 * 40.0 + fVar1 * fVar4 + fVar2;
+  pfVar6[2] = fVar2 * 40.0 + fVar5 * fVar3 + fVar1;
   weg_section = weg_sections + (int)weg_section_idx;
-  road_height_at(*pfVar6,pfVar6[2]);
+  iVar4 = 0x100 - weg_section->heading;
+  road_height_at(weg_section_idx,pfVar6,i,weg_section,*pfVar6,pfVar6[2]);
   CHP();
-  pion_object = load_pion_object(0x13,pfVar6,fVar7,(float)weg_section,(int)*pfVar6);
-  *(int *)((int)((ulonglong)pion_object >> 0x20) + 0x28) = (int)pion_object;
-  return (int)fVar7;
+  fVar5 = (float)load_pion_object(0x13,pfVar6,i,weg_section,*pfVar6,pfVar6[2],(int)ROUND(in_ST0),
+                                  iVar4);
+  pfVar6[10] = fVar5;
+  return;
 }
 
 
 /* ==== 004137dc place_pion_right ==== */
 
-int __watcall place_pion_right(float weg_section_idx,float param_2)
+void __watcall place_pion_right(float weg_section_idx,float param_2)
 
 {
   float fVar1;
@@ -296,8 +284,8 @@ int __watcall place_pion_right(float weg_section_idx,float param_2)
   int iVar5;
   weg_section_t *weg_section;
   float *pfVar6;
-  float fVar7;
-  undefined8 pion_object;
+  int i;
+  float10 in_ST0;
   
   if (((int)weg_section_idx < 0) || (weg_chunk_count < (int)weg_section_idx)) {
     fatal_exit(s__s__d____Chunk_value_out_of_boun_00446991,s_pion_cpp_00446988,0x8e);
@@ -305,33 +293,35 @@ int __watcall place_pion_right(float weg_section_idx,float param_2)
   if (((int)param_2 < 0) || (0xb < (int)param_2)) {
     fatal_exit(s__s__d____Lane_value_out_of_bound_004469bf,s_pion_cpp_004469b6,0x91);
   }
-  fVar7 = 0.0;
+  i = 0;
   for (iVar5 = 0; (iVar5 < pion_count * 0x2c && (*(int *)(pionnen + 0x18 + iVar5) != 0));
       iVar5 = iVar5 + 0x2c) {
-    fVar7 = (float)((int)fVar7 + 1);
+    i = i + 1;
   }
-  if (fVar7 == (float)pion_count) {
+  if (i == pion_count) {
     fatal_exit(s__s__d____No_more_free_pion_objec_004469ec,s_pion_cpp_004469e3,0x98);
   }
-  pfVar6 = (float *)(pionnen + (int)fVar7 * 0x2c);
+  pfVar6 = (float *)(pionnen + i * 0x2c);
   pfVar6[8] = weg_section_idx;
   pfVar6[9] = param_2;
-  fVar4 = *(float *)(&lane_offsets + (int)param_2 * 4);
-  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar4 +
+  fVar3 = *(float *)(&lane_offsets + (int)param_2 * 4);
+  *pfVar6 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar3 +
             *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21)) -
             *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * 40.0;
-  fVar1 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
-  fVar2 = *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21 + 8);
-  fVar3 = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38);
+  fVar4 = *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38);
+  fVar1 = *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21 + 8);
+  fVar2 = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38);
   pfVar6[6] = 1.4013e-45;
   pfVar6[7] = 0.0;
-  pfVar6[2] = fVar3 * 40.0 + fVar1 * fVar4 + fVar2;
+  pfVar6[2] = fVar2 * 40.0 + fVar4 * fVar3 + fVar1;
   weg_section = weg_sections + (int)weg_section_idx;
-  road_height_at(*pfVar6,pfVar6[2]);
+  iVar5 = 0x100 - weg_section->heading;
+  road_height_at(weg_section_idx,pfVar6,i,weg_section,*pfVar6,pfVar6[2]);
   CHP();
-  pion_object = load_pion_object(0x14,pfVar6,fVar7,(float)weg_section,(int)*pfVar6);
-  *(int *)((int)((ulonglong)pion_object >> 0x20) + 0x28) = (int)pion_object;
-  return (int)fVar7;
+  fVar4 = (float)load_pion_object(0x14,pfVar6,i,weg_section,*pfVar6,pfVar6[2],(int)ROUND(in_ST0),
+                                  iVar5);
+  pfVar6[10] = fVar4;
+  return;
 }
 
 
@@ -419,13 +409,13 @@ void __watcall collide_with_pionnen(void)
 
 /* ==== 00413da4 init_pionnen ==== */
 
-void __watcall init_pionnen(undefined4 param_1,undefined4 param_2)
+void __watcall init_pionnen(void)
 
 {
-  undefined8 pionnen_val;
+  int pionnen_val;
   
-  pionnen_val = alloc_pionnen(0x3c,param_2);
-  if ((int)pionnen_val != 0) {
+  pionnen_val = alloc_pionnen(0x3c);
+  if (pionnen_val != 0) {
     fatal_exit(s__s__d____Initpion_failed__00446ac0,s_pion_cpp_00446ab7,0x130);
   }
   return;
@@ -437,51 +427,51 @@ void __watcall init_pionnen(undefined4 param_1,undefined4 param_2)
 void __watcall place_pion_group(int chunk)
 
 {
+  float weg_section_idx;
+  uint random;
   int i;
-  int random;
   float fVar1;
-  int weg_section_idx;
   
   if (*(int *)(&track_info + track_index * 0x10) == 1) {
-    i = chunk + -1;
+    weg_section_idx = (float)(chunk + -1);
     fVar1 = 0.0;
-    if (i < 0) {
-      i = 0;
+    if ((int)weg_section_idx < 0) {
+      weg_section_idx = 0.0;
     }
   }
   else {
-    i = chunk + 1;
+    weg_section_idx = (float)(chunk + 1);
     fVar1 = 1.4013e-44;
-    if (weg_section_count <= i) {
-      i = weg_section_count + -1;
+    if (weg_section_count <= (int)weg_section_idx) {
+      weg_section_idx = (float)(weg_section_count + -1);
     }
   }
-  place_pion_right(i,fVar1);
+  place_pion_right(weg_section_idx,fVar1);
   i = 0;
   do {
     if (*(int *)(&track_info + track_index * 0x10) == 1) {
       random = rand();
-      weg_section_idx = chunk + i;
+      weg_section_idx = (float)(chunk + i);
       fVar1 = 0.0;
-      if (random % 2 != 0) {
+      if ((int)random % 2 != 0) {
         fVar1 = 1.4013e-45;
       }
     }
     else {
       random = rand();
-      weg_section_idx = chunk - i;
-      if (random % 2 == 0) {
+      weg_section_idx = (float)(chunk - i);
+      if ((int)random % 2 == 0) {
         fVar1 = 1.4013e-44;
       }
       else {
         fVar1 = 1.26117e-44;
       }
     }
-    if (weg_section_idx < 0) {
-      weg_section_idx = 0;
+    if ((int)weg_section_idx < 0) {
+      weg_section_idx = 0.0;
     }
-    if (weg_section_count <= weg_section_idx) {
-      weg_section_idx = weg_section_count + -1;
+    if (weg_section_count <= (int)weg_section_idx) {
+      weg_section_idx = (float)(weg_section_count + -1);
     }
     i = i + 1;
     place_pion_left(weg_section_idx,fVar1);
@@ -514,38 +504,34 @@ void __watcall update_pionnen(void)
 
 /* ==== 00413ece load_pion_object ==== */
 
-undefined8 __watcall
-load_pion_object(int param_1,undefined4 param_2,float param_3,float param_4,int param_5)
+int __watcall
+load_pion_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5,
+                float param_6,int param_7,undefined4 param_8)
 
 {
   int object;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  undefined8 uVar1;
-  float in_stack_00000008;
-  int in_stack_0000000c;
+  int iVar1;
   
-  uVar1 = get_new_object3d(param_1,param_2);
-  object = (int)uVar1;
+  object = get_new_object3d(param_1);
   racers[object].in_use = '\x01';
-  uVar1 = init_anim3d(1,(int)((ulonglong)uVar1 >> 0x20));
-  racers[object].anim = (int)uVar1;
+  iVar1 = init_anim3d(1);
+  racers[object].anim = iVar1;
   racers[object].frame = 0;
   racers[object].needs_update = 1;
+  iVar1 = param_1 * 0x10;
   racers[object].field_36 = '\0';
   debugmsg(s_starting_static_object___d__00446adb,object);
-  if (*(int *)(&static_object_mesh_ids + extraout_ECX) == -1) {
+  if (*(int *)(&static_object_mesh_ids + iVar1) == -1) {
     debugmsg(s_static_object___d__mesh_not_yet_l_00446af8,object);
-    load_object_mesh(object,*(char **)((int)&PTR_s_sky_d3d_00457c58 + extraout_ECX_00));
-    *(undefined4 *)(&static_object_mesh_ids + extraout_ECX_00) =
+    load_object_mesh(object,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
+    *(undefined4 *)(&static_object_mesh_ids + iVar1) =
          *(undefined4 *)(*(int *)(racers[object].anim * 9 + anims3d + 4) + racers[object].frame * 4)
     ;
   }
   else {
     debugmsg(s_static_object___d__allready_load_00446b2c,object);
     *(undefined4 *)(*(int *)(anims3d + racers[object].anim * 9 + 4) + racers[object].frame * 4) =
-         *(undefined4 *)(&static_object_mesh_ids + extraout_ECX_01);
+         *(undefined4 *)(&static_object_mesh_ids + iVar1);
   }
   debugmsg(s_done_loading_static_object_00446b5a);
   if ((&static_object_texture_ids)[param_1 * 4] == -1) {
@@ -558,17 +544,17 @@ load_pion_object(int param_1,undefined4 param_2,float param_3,float param_4,int 
   debugmsg(s_setting_static_object_handle_00446bf4);
   *(undefined **)&racers[object].field_0x20 = &DAT_004140f4;
   debugmsg(s_setting_static_object_position_00446c12);
-  racers[object].field_08 = (float)param_5;
-  racers[object].field_0c = (float)in_stack_0000000c + 0.1;
-  racers[object].field_10 = in_stack_00000008;
+  racers[object].field_08 = param_5;
+  racers[object].field_0c = (float)param_7 + 0.1;
+  racers[object].field_10 = param_6;
   racers[object].field_3f = 0;
   racers[object].field_3b = 0;
   racers[object].field_43 = 0;
   racers[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00446c32);
-  build_object_execute_buffer();
+  build_object_execute_buffer(object);
   debugmsg(s_done_creating_execute_buffer_obj_00446c52);
-  return CONCAT44(param_2,object);
+  return object;
 }
 
 

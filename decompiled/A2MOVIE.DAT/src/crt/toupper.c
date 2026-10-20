@@ -3,13 +3,13 @@
 
 /* ==== 00410176 toupper ==== */
 
-int __watcall toupper(int _C)
+int __watcall toupper(int param_1)
 
 {
-  if ((0x60 < _C) && (_C < 0x7b)) {
-    _C = _C + -0x20;
+  if ((0x60 < param_1) && (param_1 < 0x7b)) {
+    param_1 = param_1 + -0x20;
   }
-  return _C;
+  return param_1;
 }
 
 

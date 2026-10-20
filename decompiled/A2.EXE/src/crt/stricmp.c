@@ -3,15 +3,15 @@
 
 /* ==== 004026c1 stricmp ==== */
 
-int __watcall stricmp(char *_Str1,char *_Str2)
+int __watcall stricmp(byte *param_1,byte *param_2)
 
 {
   byte bVar1;
   byte bVar2;
   
   while( true ) {
-    bVar1 = *_Str1;
-    bVar2 = *_Str2;
+    bVar1 = *param_1;
+    bVar2 = *param_2;
     if ((0x40 < bVar1) && (bVar1 < 0x5b)) {
       bVar1 = bVar1 + 0x20;
     }
@@ -19,8 +19,8 @@ int __watcall stricmp(char *_Str1,char *_Str2)
       bVar2 = bVar2 + 0x20;
     }
     if ((bVar1 != bVar2) || (bVar2 == 0)) break;
-    _Str1 = _Str1 + 1;
-    _Str2 = _Str2 + 1;
+    param_1 = param_1 + 1;
+    param_2 = param_2 + 1;
   }
   return (uint)bVar1 - (uint)bVar2;
 }

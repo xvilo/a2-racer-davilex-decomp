@@ -3,33 +3,33 @@
 
 /* ==== 004110d4 read_track_object_count ==== */
 
-undefined8 __watcall read_track_object_count(int param_1,size_t param_2)
+undefined4 __watcall read_track_object_count(int param_1)
 
 {
-  FILE *_File;
+  __iobuf *file;
   undefined4 local_14;
   
-  _File = (FILE *)xvga_src_fopen((&PTR_s_ETAPPE1_OMP_004590c8)[param_1]);
-  if (_File == (FILE *)0x0) {
+  file = xvga_src_fopen((&PTR_s_ETAPPE1_OMP_004590c8)[param_1]);
+  if (file == (__iobuf *)0x0) {
     fatal_exit(s__s__d___Could_not_open_resource_f_0044603c,s_mkstobj_cpp_00446030,0x43,
                (&PTR_s_ETAPPE1_OMP_004590c8)[param_1]);
   }
-  fread(&local_14,1,4,_File);
-  xvga_src_fclose((__iobuf *)_File);
-  return CONCAT44(param_2,local_14);
+  fread((char *)&local_14,1,4,(int *)file);
+  xvga_src_fclose(file);
+  return local_14;
 }
 
 
 /* ==== 00411131 init_static_objects ==== */
 
-longlong __watcall init_static_objects(int param_1,uint param_2)
+void __watcall init_static_objects(int param_1)
 
 {
   int iVar1;
-  FILE *_File;
-  int i;
-  float10 chp;
-  int local_34;
+  __iobuf *file;
+  int arg4;
+  float10 fVar2;
+  float weg_section_idx;
   int local_30;
   int local_2c;
   int local_28;
@@ -38,28 +38,31 @@ longlong __watcall init_static_objects(int param_1,uint param_2)
   int local_1c;
   
   if ((param_1 < 0) || (5 < param_1)) {
-    fatal_exit(s__s__d___Illegal_level___d__given_00446070,s_mkstobj_cpp_00446064,0x55);
+    fatal_exit(s__s__d___Illegal_level___d__given_00446070,s_mkstobj_cpp_00446064,0x55,param_1);
   }
-  _File = (FILE *)xvga_src_fopen((&PTR_s_ETAPPE1_OMP_004590c8)[param_1]);
-  if (_File == (FILE *)0x0) {
-    fatal_exit(s__s__d___Could_not_open_resource_f_004460ac,s_mkstobj_cpp_004460a0,0x5c);
+  file = xvga_src_fopen((&PTR_s_ETAPPE1_OMP_004590c8)[param_1]);
+  if (file == (__iobuf *)0x0) {
+    fatal_exit(s__s__d___Could_not_open_resource_f_004460ac,s_mkstobj_cpp_004460a0,0x5c,
+               (&PTR_s_ETAPPE1_OMP_004590c8)[param_1]);
   }
-  fread(&local_20,1,4,_File);
-  debugmsg(s_count___d_004460d4);
-  for (i = 0; i < local_20; i = i + 1) {
-    fread(&local_34,1,0x14,_File);
-    if ((((-1 < local_28) && (local_28 < 0x30)) && (-1 < local_34)) &&
+  fread((char *)&local_20,1,4,(int *)file);
+  debugmsg(s_count___d_004460d4,local_20);
+  for (arg4 = 0; arg4 < local_20; arg4 = arg4 + 1) {
+    fread((char *)&weg_section_idx,1,0x14,(int *)file);
+    if ((((-1 < local_28) && (local_28 < 0x30)) && (-1 < (int)weg_section_idx)) &&
        ((-1 < local_2c && (-1 < local_30)))) {
-      debugmsg(s__s__d____i__d__ID__d__chunk__d__p_004460eb,s_mkstobj_cpp_004460df,0x6d,i,local_28,
-               local_34,local_2c,local_30,(double)local_24);
+      debugmsg(s__s__d____i__d__ID__d__chunk__d__p_004460eb,s_mkstobj_cpp_004460df,0x6d,arg4,
+               local_28,weg_section_idx,local_2c,local_30,SUB84((double)local_24,0),
+               (int)((ulonglong)(double)local_24 >> 0x20));
       iVar1 = local_2c;
-      chp = CHP();
-      local_1c = (int)ROUND(chp);
-      place_static_object_on_road(local_28,local_34,iVar1);
+      fVar2 = (float10)local_24;
+      CHP();
+      local_1c = (int)ROUND(fVar2);
+      place_static_object_on_road(local_28,weg_section_idx,iVar1,local_30,local_1c);
     }
   }
-  xvga_src_fclose((__iobuf *)_File);
-  return (ulonglong)param_2 << 0x20;
+  xvga_src_fclose(file);
+  return;
 }
 
 

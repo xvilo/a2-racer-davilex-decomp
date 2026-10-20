@@ -3,26 +3,26 @@
 
 /* ==== 0040d838 mbsnccnt ==== */
 
-int __watcall mbsnccnt(byte *param_1,int unaff_EDX)
+int __watcall mbsnccnt(byte *param_1,int param_2)
 
 {
   byte *pbVar1;
   uint local_14;
   
   if (IsDBCS != 0) {
-    pbVar1 = param_1 + unaff_EDX;
-    unaff_EDX = 0;
+    pbVar1 = param_1 + param_2;
+    param_2 = 0;
     while ((param_1 = mbgetcode(param_1,&local_14), local_14 != 0 && (param_1 <= pbVar1))) {
-      unaff_EDX = unaff_EDX + 1;
+      param_2 = param_2 + 1;
     }
   }
-  return unaff_EDX;
+  return param_2;
 }
 
 
 /* ==== 0040d876 mbsnbcnt ==== */
 
-int __watcall mbsnbcnt(byte *param_1,int unaff_EDX)
+int __watcall mbsnbcnt(byte *param_1,int param_2)
 
 {
   byte *mbgetcode_result;
@@ -31,43 +31,43 @@ int __watcall mbsnbcnt(byte *param_1,int unaff_EDX)
   mbgetcode_result = param_1;
   if (IsDBCS != 0) {
     do {
-      unaff_EDX = unaff_EDX + -1;
-      if (unaff_EDX == -1) break;
+      param_2 = param_2 + -1;
+      if (param_2 == -1) break;
       mbgetcode_result = mbgetcode(mbgetcode_result,&local_c);
     } while (local_c != 0);
-    unaff_EDX = (int)mbgetcode_result - (int)param_1;
+    param_2 = (int)mbgetcode_result - (int)param_1;
   }
-  return unaff_EDX;
+  return param_2;
 }
 
 
 /* ==== 0040d8a7 mbsninc ==== */
 
-byte * __watcall mbsninc(byte *param_1,int unaff_EDX)
+byte * __watcall mbsninc(byte *param_1,int param_2)
 
 {
   int mbsnbcnt_result;
   
   if (IsDBCS != 0) {
-    mbsnbcnt_result = mbsnbcnt(param_1,unaff_EDX);
+    mbsnbcnt_result = mbsnbcnt(param_1,param_2);
     return param_1 + mbsnbcnt_result;
   }
-  return param_1 + unaff_EDX;
+  return param_1 + param_2;
 }
 
 
 /* ==== 0040d8c0 mbsninc_1 ==== */
 
-byte * __watcall mbsninc_1(byte *param_1,int unaff_EDX)
+byte * __watcall mbsninc_1(byte *param_1,int param_2)
 
 {
   bool bVar1;
   
   if (IsDBCS == 0) {
-    param_1 = param_1 + unaff_EDX;
+    param_1 = param_1 + param_2;
   }
   else {
-    for (; 0 < unaff_EDX; unaff_EDX = unaff_EDX + -1) {
+    for (; 0 < param_2; param_2 = param_2 + -1) {
       if (IsDBCS == 0) {
         bVar1 = true;
       }

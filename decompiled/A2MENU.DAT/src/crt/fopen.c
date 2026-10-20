@@ -5,7 +5,7 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined8 __watcall open_flags(byte *param_1,undefined4 unaff_EDX)
+uint __watcall open_flags(byte *param_1)
 
 {
   byte bVar1;
@@ -19,36 +19,28 @@ undefined8 __watcall open_flags(byte *param_1,undefined4 unaff_EDX)
   tolower_1_result = tolower_1((uint)*param_1);
   uVar2 = tolower_1_result & 0xff;
   if (((uVar2 != 0x72) && (uVar2 != 0x77)) && (uVar2 != 0x61)) {
-    set_errno(9,0);
-    uVar4 = 0;
-    goto LAB_00413205;
+    set_errno(9);
+    return 0;
   }
   bVar1 = param_1[1];
   uVar2 = 3;
   if (bVar1 == 0x2b) {
     uVar3 = 0x43;
-    if (param_1[2] == 0x62) {
-LAB_004131a9:
-      uVar4 = uVar3;
-    }
-    else {
+    if (param_1[2] != 0x62) {
       uVar4 = uVar2;
-      if (param_1[2] != 0x74) {
-        bVar5 = ram0x004361e9 == 0x200;
+      if (param_1[2] == 0x74) goto LAB_004131e7;
+      bVar5 = ram0x004361e9 == 0x200;
 LAB_004131a7:
-        if (bVar5) goto LAB_004131a9;
-      }
+      if (!bVar5) goto LAB_004131e7;
     }
+    uVar4 = uVar3;
   }
   else {
     uVar3 = 0x40;
     if (bVar1 == 0x62) {
       uVar4 = uVar3;
-      if (param_1[2] == 0x2b) {
-        uVar3 = 0x43;
-LAB_004131e5:
-        uVar4 = uVar3;
-      }
+      if (param_1[2] != 0x2b) goto LAB_004131e7;
+      uVar3 = 0x43;
     }
     else {
       if (bVar1 == 0x74) {
@@ -56,9 +48,11 @@ LAB_004131e5:
         uVar3 = uVar2;
         goto LAB_004131a7;
       }
-      if (ram0x004361e9 == 0x200) goto LAB_004131e5;
+      if (ram0x004361e9 != 0x200) goto LAB_004131e7;
     }
+    uVar4 = uVar3;
   }
+LAB_004131e7:
   if ((tolower_1_result & 0xff) == 0x77) {
     uVar4 = uVar4 | 2;
   }
@@ -68,14 +62,14 @@ LAB_004131e5:
   else {
     uVar4 = uVar4 | 1;
   }
-LAB_00413205:
-  return CONCAT44(unaff_EDX,uVar4);
+  return uVar4;
 }
 
 
 /* ==== 0041320d doopen ==== */
 
-int __watcall doopen(char *filename,byte unaff_DL,uint unaff_EBX,int unaff_ECX,int param_5)
+undefined4 __watcall
+doopen(char *filename,undefined4 param_2,uint param_3,int share_flag,int param_5)
 
 {
   undefined1 uVar1;
@@ -83,79 +77,73 @@ int __watcall doopen(char *filename,byte unaff_DL,uint unaff_EBX,int unaff_ECX,i
   ushort uVar3;
   uint tolower_1_result;
   int sopen_result;
-  FILE *_File;
-  int extraout_EDX;
-  undefined4 uVar4;
+  undefined4 arg4;
   
   *(byte *)(param_5 + 0xc) = *(byte *)(param_5 + 0xc) & 0xfc;
-  *(uint *)(param_5 + 0xc) = *(uint *)(param_5 + 0xc) | unaff_EBX;
-  tolower_1_result = tolower_1((uint)unaff_DL);
+  *(uint *)(param_5 + 0xc) = *(uint *)(param_5 + 0xc) | param_3;
+  tolower_1_result = tolower_1((uint)(byte)param_2);
   if ((tolower_1_result & 0xff) == 0x72) {
     uVar1 = 0;
-    if ((unaff_EBX & 2) != 0) {
+    if ((param_3 & 2) != 0) {
       uVar1 = 2;
     }
-    if ((unaff_EBX & 0x40) == 0) {
+    if ((param_3 & 0x40) == 0) {
       uVar3 = CONCAT11(1,uVar1);
     }
     else {
       uVar3 = CONCAT11(2,uVar1);
     }
-    uVar4 = 0;
+    arg4 = 0;
   }
   else {
-    bVar2 = ((unaff_EBX & 1) != 0) + 0x21;
-    if ((unaff_EBX & 0x80) == 0) {
+    bVar2 = ((param_3 & 1) != 0) + 0x21;
+    if ((param_3 & 0x80) == 0) {
       bVar2 = bVar2 | 0x40;
     }
     else {
       bVar2 = bVar2 | 0x10;
     }
-    if ((unaff_EBX & 0x40) == 0) {
+    if ((param_3 & 0x40) == 0) {
       uVar3 = CONCAT11(1,bVar2);
     }
     else {
       uVar3 = CONCAT11(2,bVar2);
     }
-    uVar4 = 0x180;
+    arg4 = 0x180;
   }
-  sopen_result = sopen(filename,(uint)uVar3,unaff_ECX,uVar4);
-  _File->_file = sopen_result;
-  if (_File->_file == -1) {
-    freefp((int)_File);
+  sopen_result = sopen(filename,(uint)uVar3,share_flag,arg4);
+  *(int *)(param_5 + 0x10) = sopen_result;
+  if (*(int *)(param_5 + 0x10) == -1) {
+    freefp(param_5);
     return 0;
   }
-  _File->_cnt = 0;
-  _File->_base = (char *)0x0;
-  _File->_charbuf = 0;
-  sopen_result = extraout_EDX;
-  if ((unaff_EBX & 0x80) != 0) {
-    sopen_result = 0;
-    fseek(_File,0,2);
+  *(undefined4 *)(param_5 + 4) = 0;
+  *(undefined4 *)(param_5 + 8) = 0;
+  *(undefined4 *)(param_5 + 0x14) = 0;
+  if ((param_3 & 0x80) != 0) {
+    fseek(param_5,0,2);
   }
-  chktty((int)_File,sopen_result);
-  return (int)_File;
+  chktty(param_5);
+  return param_5;
 }
 
 
 /* ==== 004132d1 fsopen ==== */
 
-int __watcall fsopen(char *filename,byte *unaff_EDX,int unaff_EBX)
+undefined4 __watcall fsopen(char *filename,byte *param_2,int share_flag)
 
 {
-  int doopen_result;
-  undefined8 flags;
-  undefined8 allocfp_result;
+  uint flags;
+  int allocfp_result;
+  undefined4 doopen_result;
   
-  flags = open_flags(unaff_EDX,unaff_EDX);
+  flags = open_flags(param_2);
   doopen_result = 0;
-  if ((uint)flags != 0) {
-    allocfp_result = allocfp(0,(size_t)((ulonglong)flags >> 0x20));
+  if (flags != 0) {
+    allocfp_result = allocfp();
     doopen_result = 0;
-    if ((int)allocfp_result != 0) {
-      doopen_result =
-           doopen(filename,*(byte *)((ulonglong)allocfp_result >> 0x20),(uint)flags,unaff_EBX,
-                  (int)allocfp_result);
+    if (allocfp_result != 0) {
+      doopen_result = doopen(filename,(uint)*param_2,flags,share_flag,allocfp_result);
     }
   }
   return doopen_result;
@@ -164,45 +152,44 @@ int __watcall fsopen(char *filename,byte *unaff_EDX,int unaff_EBX)
 
 /* ==== 0041330a fopen ==== */
 
-FILE * __watcall fopen(char *_Filename,char *_Mode)
+undefined4 __watcall fopen(char *filename,byte *param_2)
 
 {
-  FILE *pFVar1;
+  undefined4 file;
   
-  pFVar1 = (FILE *)fsopen(_Filename,(byte *)_Mode,0);
-  return pFVar1;
+  file = fsopen(filename,param_2,0);
+  return file;
 }
 
 
 /* ==== 00413314 close_file ==== */
 
-longlong __watcall
-close_file(int param_1,uint unaff_EDX_00,undefined4 unaff_EBX,undefined4 unaff_ECX)
+int __watcall close_file(int param_1)
 
 {
   undefined4 *puVar1;
-  undefined4 *unaff_EDX;
+  undefined4 *puVar2;
   
-  (*(code *)AccessIOB_1)(unaff_EDX_00,unaff_ECX,unaff_EBX);
+  (*(code *)AccessIOB_1)();
   puVar1 = OpenStreams;
   do {
     if (puVar1 == (undefined4 *)0x0) {
       puVar1 = &ClosedStreams;
       do {
-        unaff_EDX = puVar1;
-        puVar1 = (undefined4 *)*unaff_EDX;
+        puVar2 = puVar1;
+        puVar1 = (undefined4 *)*puVar2;
         if (puVar1 == (undefined4 *)0x0) {
-          set_errno(4,unaff_EDX);
+          set_errno(4);
           (*(code *)ReleaseIOB_1)();
-          return (ulonglong)unaff_EDX_00 << 0x20;
+          return 0;
         }
       } while (param_1 != puVar1[1]);
-      *unaff_EDX = *puVar1;
+      *puVar2 = *puVar1;
       *puVar1 = OpenStreams;
       OpenStreams = puVar1;
 LAB_00413341:
       (*(code *)ReleaseIOB_1)();
-      return CONCAT44(unaff_EDX_00,param_1);
+      return param_1;
     }
     if (param_1 == puVar1[1]) {
       if ((*(byte *)(puVar1[1] + 0xc) & 3) != 0) {
@@ -217,42 +204,34 @@ LAB_00413341:
 
 /* ==== 0041338e freopen ==== */
 
-FILE * __watcall freopen(char *_Filename,char *_Mode,FILE *_File)
+undefined4 __watcall freopen(char *filename,byte *param_2,int param_3)
 
 {
-  int iVar1;
-  FILE *pFVar2;
-  undefined4 extraout_ECX;
-  undefined4 extraout_ECX_00;
-  undefined4 unaff_ECX;
-  uint extraout_EDX;
-  uint extraout_EDX_00;
-  uint unaff_EDX_00;
-  undefined8 flags;
-  longlong close_file_result;
+  uint flags;
+  int close_file_result;
+  undefined4 doopen_result;
+  byte *extraout_EDX;
+  byte *extraout_EDX_00;
+  byte *pbVar1;
   
-  flags = open_flags((byte *)_Mode,_Mode);
-  pFVar2 = (FILE *)0x0;
-  if ((uint)flags != 0) {
+  flags = open_flags(param_2);
+  doopen_result = 0;
+  if (flags != 0) {
     (*(code *)AccessFileH_1)();
-    unaff_ECX = extraout_ECX;
-    unaff_EDX_00 = extraout_EDX;
+    pbVar1 = extraout_EDX;
     if (WindowsRemoveWindowedHandle != (code *)0x0) {
       (*WindowsRemoveWindowedHandle)();
-      unaff_ECX = extraout_ECX_00;
-      unaff_EDX_00 = extraout_EDX_00;
+      pbVar1 = extraout_EDX_00;
     }
-    close_file_result = close_file((int)_File,unaff_EDX_00,_File,unaff_ECX);
-    iVar1 = (int)close_file_result;
-    pFVar2 = (FILE *)0x0;
-    if (iVar1 != 0) {
-      *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0x4000;
-      pFVar2 = (FILE *)doopen(_Filename,*(byte *)((ulonglong)close_file_result >> 0x20),(uint)flags,
-                              0,iVar1);
+    close_file_result = close_file(param_3);
+    doopen_result = 0;
+    if (close_file_result != 0) {
+      *(uint *)(close_file_result + 0xc) = *(uint *)(close_file_result + 0xc) & 0x4000;
+      doopen_result = doopen(filename,(uint)*pbVar1,flags,0,close_file_result);
     }
     (*(code *)ReleaseFileH_1)();
   }
-  return pFVar2;
+  return doopen_result;
 }
 
 

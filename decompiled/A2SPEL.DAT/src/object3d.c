@@ -12,21 +12,20 @@ void __watcall object3d_nop(void)
 
 /* ==== 004238d8 alloc_objects3d ==== */
 
-undefined8 __watcall alloc_objects3d(int param_1,undefined4 param_2)
+undefined4 __watcall alloc_objects3d(int param_1)
 
 {
-  undefined4 uVar1;
+  long lVar1;
+  char *arg4;
   int iVar2;
   int i;
-  undefined8 uVar3;
   racer_object_t *racer_object;
   racer_object_t *racer_object_2;
   
   if (objects3d_initialized == 0) {
     racers = LocalAlloc(0x40,param_1 * 0x4b);
     if (racers == (racer_object_t *)0x0) {
-      uVar1 = 2000;
-      goto LAB_00423a5e;
+      return 2000;
     }
     iVar2 = 0;
     object_count = param_1;
@@ -52,72 +51,66 @@ undefined8 __watcall alloc_objects3d(int param_1,undefined4 param_2)
       *(undefined4 *)((int)&racers->field_3b + iVar2) =
            *(undefined4 *)((int)&racer_object->field_3f + iVar2);
       *(undefined4 *)((int)&racers->needs_update + iVar2) = 0xffffffff;
-      uVar3 = (**(code **)(*d3d_device + 0x3c))(d3d_device,(int)&racers->field_24 + iVar2);
-      if ((int)uVar3 != 0) {
-        uVar3 = d3d_error_string((int)uVar3,(int)((ulonglong)uVar3 >> 0x20));
-        fatal_exit(s__s__d____D3DError_Creating_matri_0044dd75,s_object3d_cpp_0044dd68,0x47,
-                   (int)uVar3);
+      lVar1 = (**(code **)(*d3d_device + 0x3c))(d3d_device,(int)&racers->field_24 + iVar2);
+      if (lVar1 != 0) {
+        arg4 = d3d_error_string(lVar1);
+        fatal_exit(s__s__d____D3DError_Creating_matri_0044dd75,s_object3d_cpp_0044dd68,0x47,arg4);
       }
       iVar2 = iVar2 + 0x4b;
     }
     objects3d_initialized = 1;
     debugmsg(s__d_objects_initialized_ok_0044dd9e,param_1);
   }
-  uVar1 = 0;
-LAB_00423a5e:
-  return CONCAT44(param_2,uVar1);
+  return 0;
 }
 
 
 /* ==== 00423a64 find_free_object3d ==== */
 
-longlong __watcall find_free_object3d(undefined4 param_1,uint param_2)
+int __watcall find_free_object3d(undefined4 param_1)
 
 {
   int iVar1;
-  int i;
+  int arg2;
   
   if (objects3d_initialized == 0) {
     fatal_exit(s__s__d____get_free_object3d___ple_0044ddc6,s_object3d_cpp_0044ddb9,0x58);
   }
-  i = 0;
+  arg2 = 0;
   iVar1 = 0;
   while( true ) {
     if (object_count * 0x4b <= iVar1) {
       fatal_exit(s__s__d____no_more_free_objects_0044de44,s_object3d_cpp_0044de37,99);
-      return (ulonglong)param_2 << 0x20;
+      return 0;
     }
     if ((&racers->in_use)[iVar1] == '\0') break;
     iVar1 = iVar1 + 0x4b;
-    i = i + 1;
+    arg2 = arg2 + 1;
   }
-  debugmsg(s_object__d_returned_in_get_free_o_0044de08,i,0);
-  return CONCAT44(param_2,i);
+  debugmsg(s_object__d_returned_in_get_free_o_0044de08,arg2,0);
+  return arg2;
 }
 
 
 /* ==== 00423aeb get_new_object3d ==== */
 
-undefined8 __watcall get_new_object3d(undefined4 param_1,undefined4 param_2)
+undefined4 __watcall get_new_object3d(undefined4 param_1)
 
 {
-  uint extraout_EDX;
-  uint uVar1;
-  undefined4 extraout_EDX_00;
-  longlong free_object3d;
+  int free_object3d;
+  undefined4 extraout_EDX;
   
-  uVar1 = DAT_00476780;
+  free_object3d = DAT_00476780;
   if (objects3d_initialized == 0) {
     fatal_exit(s__s__d____get_new_object3d___plea_0044de71,s_object3d_cpp_0044de64,0x6d);
-    uVar1 = extraout_EDX;
   }
-  if ((int)DAT_00476780 < object_count) {
+  if (DAT_00476780 < object_count) {
     DAT_00476780 = DAT_00476780 + 1;
-    debugmsg(s_object__d_returned_in_get_new_ob_0044deb2,uVar1);
-    return CONCAT44(param_2,extraout_EDX_00);
+    debugmsg(s_object__d_returned_in_get_new_ob_0044deb2,free_object3d);
+    return extraout_EDX;
   }
-  free_object3d = find_free_object3d(DAT_00476780,uVar1);
-  return CONCAT44(param_2,(int)free_object3d);
+  free_object3d = find_free_object3d(DAT_00476780);
+  return free_object3d;
 }
 
 
@@ -126,23 +119,20 @@ undefined8 __watcall get_new_object3d(undefined4 param_1,undefined4 param_2)
 void __watcall set_object3d_matrix(int racer_object_index,undefined4 param_2)
 
 {
-  undefined4 extraout_ECX;
-  undefined4 extraout_ECX_00;
-  undefined8 uVar1;
+  long lVar1;
+  char *arg4;
   
   if (objects3d_initialized == 0) {
     fatal_exit(s__s__d____set_object3d_matrix___p_0044e151,s_object3d_cpp_0044e144,0xb1);
-    param_2 = extraout_ECX;
   }
   if ((racer_object_index < 0) || (object_count <= racer_object_index)) {
     fatal_exit(s__s__d____error_illegal_object_in_0044e1a2,s_object3d_cpp_0044e195,0xb5,
                racer_object_index,object_count);
-    param_2 = extraout_ECX_00;
   }
-  uVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,racers[racer_object_index].field_24,param_2);
-  if ((int)uVar1 != 0) {
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Setting_matrix_0044e1e0,s_object3d_cpp_0044e1d3,0xb8,(int)uVar1);
+  lVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,racers[racer_object_index].field_24,param_2);
+  if (lVar1 != 0) {
+    arg4 = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError_Setting_matrix_0044e1e0,s_object3d_cpp_0044e1d3,0xb8,arg4);
   }
   return;
 }
@@ -150,11 +140,13 @@ void __watcall set_object3d_matrix(int racer_object_index,undefined4 param_2)
 
 /* ==== 00423f75 check_objects3d_visibility ==== */
 
-void __watcall check_objects3d_visibility(int param_1,int param_2)
+void __watcall check_objects3d_visibility(void)
 
 {
+  int in_EAX;
   int unaff_ECX;
   int i;
+  int unaff_EDX;
   int unaff_EBX;
   int iVar1;
   
@@ -166,9 +158,9 @@ void __watcall check_objects3d_visibility(int param_1,int param_2)
     if ((&racers->in_use)[iVar1] == '\0') {
       (&racers->visible)[iVar1] = '\0';
     }
-    else if ((((*(float *)((int)&racers->field_08 + iVar1) < (float)param_1) ||
+    else if ((((*(float *)((int)&racers->field_08 + iVar1) < (float)in_EAX) ||
               ((float)unaff_EBX < *(float *)((int)&racers->field_08 + iVar1))) ||
-             (*(float *)((int)&racers->field_10 + iVar1) < (float)param_2)) ||
+             (*(float *)((int)&racers->field_10 + iVar1) < (float)unaff_EDX)) ||
             ((float)unaff_ECX < *(float *)((int)&racers->field_10 + iVar1))) {
       (&racers->visible)[iVar1] = '\0';
     }
@@ -188,8 +180,7 @@ void __watcall execute_object_buffers(void)
 {
   int iVar1;
   int i;
-  int extraout_ECX;
-  int extraout_ECX_00;
+  int arg4;
   int iVar2;
   int iVar3;
   
@@ -200,11 +191,9 @@ void __watcall execute_object_buffers(void)
            iVar2 = DAT_00476784 % *(int *)((int)&racers->needs_update + iVar3), DAT_00476784 = iVar1
            , iVar2 == 0)) && (*(int *)(&racers->field_0x20 + iVar3) != 0)) {
       iVar1 = (**(code **)(&racers->field_0x20 + iVar3))();
-      i = extraout_ECX;
+      i = arg4;
       if (iVar1 != 0) {
-        fatal_exit(s__s__d____Error_Execute_objectfun_0044e4aa,s_object3d_cpp_0044e49d,0x116,
-                   extraout_ECX);
-        i = extraout_ECX_00;
+        fatal_exit(s__s__d____Error_Execute_objectfun_0044e4aa,s_object3d_cpp_0044e49d,0x116,arg4);
       }
     }
     iVar3 = iVar3 + 0x4b;

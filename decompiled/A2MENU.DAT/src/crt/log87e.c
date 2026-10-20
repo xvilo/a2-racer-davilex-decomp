@@ -3,22 +3,22 @@
 
 /* ==== 0042277a log87_err ==== */
 
-undefined8 __watcall
-log87_err(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 param_4,int param_5,
+undefined4 __watcall
+log87_err(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,int param_5,
          uint param_6,uint param_7)
 
 {
   uint uVar1;
   
   uVar1 = param_7 & 0x1f;
-  if (((uVar1 == 8) || ((param_6 & 0x7fffffff) != 0)) || (param_5 != 0)) {
+  if (((uVar1 == 8) || (param_3 = param_5, (param_6 & 0x7fffffff) != 0)) || (param_5 != 0)) {
     uVar1 = uVar1 | 0x1040;
   }
   else {
     uVar1 = uVar1 | 0x1080;
   }
-  math1err(uVar1,&param_5);
-  return CONCAT44(unaff_EDX,param_1);
+  math1err(uVar1,&param_5,param_3,param_4);
+  return param_1;
 }
 
 

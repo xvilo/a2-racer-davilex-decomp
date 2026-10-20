@@ -21,37 +21,31 @@ int __cdecl open(char *_Filename,int _OpenFlag,...)
 int __cdecl sopen(char *_Filename,int _OpenFlag,int _ShareFlag,...)
 
 {
-  undefined4 in_EAX;
-  int file_handle;
+  int iVar1;
   DWORD dwCreationDisposition;
   HANDLE file;
   int isatty_result;
-  undefined4 in_EDX;
   uint extraout_EDX;
-  undefined4 extraout_EDX_00;
-  undefined4 extraout_EDX_01;
-  undefined4 unaff_EDX_00;
-  uint unaff_EDX;
+  uint uVar2;
   DWORD dwFlagsAndAttributes;
-  uint uVar1;
+  uint uVar3;
   DWORD unaff_EDI;
-  undefined8 uVar2;
   uint in_stack_00000010;
   DWORD share_mode;
   DWORD desired_access;
   uint local_1c;
   
-  uVar2 = NTAtMaxFiles(in_EAX,in_EDX);
-  if ((int)uVar2 != 0) {
-    set_errno(0xb,(int)((ulonglong)uVar2 >> 0x20));
+  iVar1 = NTAtMaxFiles();
+  if (iVar1 != 0) {
+    set_errno(0xb);
     return -1;
   }
-  uVar1 = _OpenFlag & 7;
-  GetNTAccessAttr(uVar1,&desired_access,&local_1c);
+  uVar3 = _OpenFlag & 7;
+  GetNTAccessAttr(uVar3,&desired_access,&local_1c);
   GetNTShareAttr(_ShareFlag,&share_mode);
   dwFlagsAndAttributes = 0x80;
   if ((WindowsNewWindow == (code *)0x0) ||
-     (file_handle = stricmp(_Filename,s_con_0041e308), file_handle != 0)) {
+     (iVar1 = stricmp((byte *)_Filename,(byte *)s_con_0041e308), iVar1 != 0)) {
     if ((_OpenFlag & 0x20U) == 0) {
       if ((_OpenFlag & 0x40U) != 0) goto LAB_0040c14d;
 LAB_0040c160:
@@ -80,50 +74,48 @@ LAB_0040c14d:
                        dwCreationDisposition,dwFlagsAndAttributes,(HANDLE)0x0);
     if (file == (HANDLE)0xffffffff) {
       file = (HANDLE)0xffffffff;
-      unaff_EDX_00 = extraout_EDX_00;
       if ((_OpenFlag & 0x20U) != 0) {
         file = CreateFileA(_Filename,desired_access,share_mode,(LPSECURITY_ATTRIBUTES)0x0,unaff_EDI,
                            dwFlagsAndAttributes,(HANDLE)0x0);
-        unaff_EDX_00 = extraout_EDX_01;
       }
       if (file == (HANDLE)0xffffffff) {
-        uVar2 = set_errno_nt(0xffffffff,unaff_EDX_00);
-        return (int)uVar2;
+        iVar1 = set_errno_nt();
+        return iVar1;
       }
     }
-    file_handle = (*(code *)InitAccessH_1)();
-    isatty_result = isatty(file_handle);
-    unaff_EDX = 0;
+    iVar1 = (*(code *)InitAccessH_1)();
+    isatty_result = isatty(iVar1);
+    uVar2 = 0;
     if (isatty_result != 0) {
-      unaff_EDX = 0x2000;
+      uVar2 = 0x2000;
     }
   }
   else {
-    NTGetFakeHandle(0,s_con_0041e308);
-    file_handle = (*(code *)InitAccessH_1)();
-    (*WindowsNewWindow)(0,file_handle,0xffffffff);
-    unaff_EDX = extraout_EDX;
+    NTGetFakeHandle();
+    iVar1 = (*(code *)InitAccessH_1)();
+    (*WindowsNewWindow)(0,iVar1,0xffffffff);
+    uVar2 = extraout_EDX;
   }
-  if (uVar1 == 2) {
-    unaff_EDX = unaff_EDX | 3;
+  if (uVar3 == 2) {
+    uVar2 = uVar2 | 3;
   }
-  else if (uVar1 == 0) {
-    unaff_EDX = unaff_EDX | 1;
+  else if (uVar3 == 0) {
+    uVar2 = uVar2 | 1;
   }
-  else if (uVar1 == 1) {
-    unaff_EDX = unaff_EDX | 2;
+  else if (uVar3 == 1) {
+    uVar2 = uVar2 | 2;
   }
   if ((_OpenFlag & 0x10U) != 0) {
-    unaff_EDX = unaff_EDX | 0x80;
+    uVar2 = uVar2 | 0x80;
   }
   if ((_OpenFlag & 0x300U) == 0) {
     if (ram0x0041fe71 != 0x200) goto LAB_0040c20b;
   }
   else if ((_OpenFlag & 0x200U) == 0) goto LAB_0040c20b;
-  unaff_EDX = unaff_EDX | 0x40;
+  uVar2 = uVar2 | 0x40;
 LAB_0040c20b:
-  SetIOMode(file_handle,unaff_EDX);
-  return file_handle;
+  SetIOMode(iVar1,uVar2);
+  return iVar1;
 }
 
 

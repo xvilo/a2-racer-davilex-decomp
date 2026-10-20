@@ -3,14 +3,16 @@
 
 /* ==== 004065b9 wcpp_2_pure_error ==== */
 
-void __watcall wcpp_2_pure_error(void)
+int __watcall wcpp_2_pure_error(void)
 
 {
+  int in_EAX;
+  
   if (wint_pure_error_flag == 0) {
     wint_pure_error_flag = 1;
-    wcpp_2_fatal_runtime_error(s_pure_virtual_function_called__0041b83c);
+    in_EAX = wcpp_2_fatal_runtime_error(s_pure_virtual_function_called__0041b83c,1);
   }
-  return;
+  return in_EAX;
 }
 
 

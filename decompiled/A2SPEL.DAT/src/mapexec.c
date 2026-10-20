@@ -3,16 +3,15 @@
 
 /* ==== 00425e78 point_side_of_line_2 ==== */
 
-undefined4 __watcall point_side_of_line_2(int *param_1,int param_2)
+undefined4 __watcall point_side_of_line_2(int *param_1,int param_2,int param_3)
 
 {
   int iVar1;
-  int unaff_EBX;
   
   iVar1 = param_1[3];
   param_1[2] = param_1[2] - *param_1;
   param_1[3] = iVar1 - param_1[1];
-  iVar1 = (param_2 - *param_1) * (iVar1 - param_1[1]) - param_1[2] * (unaff_EBX - param_1[1]);
+  iVar1 = (param_2 - *param_1) * (iVar1 - param_1[1]) - param_1[2] * (param_3 - param_1[1]);
   if (0 < iVar1) {
     return 1;
   }
@@ -26,50 +25,49 @@ undefined4 __watcall point_side_of_line_2(int *param_1,int param_2)
 /* ==== 00425ec4 set_view_quad ==== */
 
 void __watcall
-set_view_quad(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+set_view_quad(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+             undefined4 param_5,undefined4 param_6)
 
 {
-  undefined4 in_stack_00000004;
-  undefined4 in_stack_00000008;
-  
   DAT_00477024 = param_3;
   DAT_0047702c = param_1;
   DAT_00477028 = param_4;
   DAT_00477030 = param_2;
   DAT_0047703c = param_3;
-  DAT_00477034 = in_stack_00000004;
+  DAT_00477034 = param_5;
   DAT_00477040 = param_4;
-  DAT_00477038 = in_stack_00000008;
+  DAT_00477038 = param_6;
   return;
 }
 
 
 /* ==== 00425efc point_in_view_quad ==== */
 
-undefined4 __watcall point_in_view_quad(void)
+undefined4 __watcall point_in_view_quad(int param_1,int param_2)
 
 {
-  int in_EAX;
-  int point_side_of_line_2_result_2;
+  int point_side_of_line_2_result;
   undefined4 uVar1;
   byte bVar2;
-  int point_side_of_line_2_result [1532];
+  int point_side_of_line_2_result_2 [1532];
   
   bVar2 = 0;
-  point_side_of_line_2_result[0x5f7] = DAT_00477034;
-  point_side_of_line_2_result[0x5f8] = DAT_00477038;
-  point_side_of_line_2_result[0x5f9] = DAT_0047703c;
-  point_side_of_line_2_result[0x5fa] = DAT_00477040;
-  point_side_of_line_2_result[0x5fb] =
-       point_side_of_line_2(point_side_of_line_2_result + 0x5f7,in_EAX);
-  point_side_of_line_2_result[0x5f7] = DAT_00477024;
-  point_side_of_line_2_result[(uint)bVar2 * -2 + 0x5f8] = (&DAT_00477028)[(uint)bVar2 * -2];
-  point_side_of_line_2_result[(uint)bVar2 * -2 + (uint)bVar2 * -2 + 0x5f9] =
+  point_side_of_line_2_result_2[0x5f7] = DAT_00477034;
+  point_side_of_line_2_result_2[0x5f8] = DAT_00477038;
+  point_side_of_line_2_result_2[0x5f9] = DAT_0047703c;
+  point_side_of_line_2_result_2[0x5fa] = DAT_00477040;
+  point_side_of_line_2_result_2[0x5fb] =
+       point_side_of_line_2(point_side_of_line_2_result_2 + 0x5f7,param_1,param_2);
+  point_side_of_line_2_result_2[0x5f7] = DAT_00477024;
+  point_side_of_line_2_result_2[(uint)bVar2 * -2 + 0x5f8] = (&DAT_00477028)[(uint)bVar2 * -2];
+  point_side_of_line_2_result_2[(uint)bVar2 * -2 + (uint)bVar2 * -2 + 0x5f9] =
        (&DAT_0047702c)[(uint)bVar2 * -2 + (uint)bVar2 * -2];
-  (point_side_of_line_2_result + (uint)bVar2 * -2 + (uint)bVar2 * -2 + 0x5f9)[(uint)bVar2 * -2 + 1]
-       = (&DAT_0047702c + (uint)bVar2 * -2 + (uint)bVar2 * -2)[(uint)bVar2 * -2 + 1];
-  point_side_of_line_2_result_2 = point_side_of_line_2(point_side_of_line_2_result + 0x5f7,in_EAX);
-  if ((point_side_of_line_2_result[0x5fb] < 0) && (point_side_of_line_2_result_2 < 0)) {
+  (point_side_of_line_2_result_2 + (uint)bVar2 * -2 + (uint)bVar2 * -2 + 0x5f9)
+  [(uint)bVar2 * -2 + 1] =
+       (&DAT_0047702c + (uint)bVar2 * -2 + (uint)bVar2 * -2)[(uint)bVar2 * -2 + 1];
+  point_side_of_line_2_result =
+       point_side_of_line_2(point_side_of_line_2_result_2 + 0x5f7,param_1,param_2);
+  if ((point_side_of_line_2_result_2[0x5fb] < 0) && (point_side_of_line_2_result < 0)) {
     uVar1 = 1;
   }
   else {
@@ -130,70 +128,65 @@ int __watcall tile_always_hidden(void)
 
 /* ==== 00426137 build_map_execute_buffers ==== */
 
-void __watcall build_map_execute_buffers(undefined4 param_1)
+void __watcall build_map_execute_buffers(void)
 
 {
-  float fVar1;
+  int iVar1;
   undefined4 build_tile_execute_buffer_result;
   float unaff_ECX;
-  float extraout_ECX;
-  float fVar2;
-  float extraout_EDX;
-  int extraout_EDX_00;
-  float fVar3;
-  int i;
-  int k;
+  int unaff_EDX;
+  int extraout_EDX;
+  int arg2;
   int j;
-  undefined8 debug_weg_position_result;
-  float local_1c;
+  int i;
+  int local_1c;
   
-  fVar3 = DAT_00476fe0;
-  fVar2 = (float)grass_texture;
-  i = 0;
-  local_1c = 0.0;
-  if (DAT_00476fe0 != 0.0) {
+  iVar1 = DAT_00476fe0;
+  arg2 = 0;
+  local_1c = 0;
+  if (DAT_00476fe0 != 0) {
     if (DAT_00476fe4 == 0) {
-      fVar2 = -NAN;
-      DAT_00476fe8 = create_material(3,0xffffffff);
+      unaff_EDX = -1;
+      DAT_00476fe8 = create_material(3,-1);
     }
     else {
       DAT_00476fe8 = default_material;
       if (default_material == -1) {
         fatal_exit(s__s__d____error_xvga_material_has_0044fa2e,s_mapexec_cpp_0044fa22,0xe7);
-        unaff_ECX = extraout_ECX;
-        fVar2 = extraout_EDX;
       }
       else {
-        set_material_texture(default_material,(int *)grass_texture);
+        unaff_EDX = grass_texture;
+        set_material_texture(default_material,grass_texture);
       }
     }
-    for (j = 0; j < DAT_00476ffc; j = j + 1) {
-      for (k = 0; k < DAT_00476ff8; k = k + 1) {
-        debug_weg_position_result =
-             debug_weg_position(tile_size * k,fVar2,fVar3,unaff_ECX,(float)(tile_size * k) * 30.0);
-        fVar2 = DAT_00476ff4;
-        fVar1 = tile_scale;
-        if ((int)debug_weg_position_result == 0) {
-          fVar3 = (float)((int)local_1c + 1);
-          *(undefined4 *)((int)DAT_00476ff4 + (DAT_00476ff8 * j + k) * 8) = 0;
-          local_1c = fVar3;
+    for (i = 0; i < DAT_00476ffc; i = i + 1) {
+      for (j = 0; j < DAT_00476ff8; j = j + 1) {
+        iVar1 = debug_weg_position(tile_size * j,unaff_EDX,iVar1,unaff_ECX,
+                                   (float)(tile_size * j) * 30.0,(float)((int)tile_scale * i) * 30.0
+                                   ,DAT_004596d4);
+        unaff_EDX = DAT_00476ff4;
+        if (iVar1 == 0) {
+          iVar1 = local_1c + 1;
+          *(undefined4 *)(DAT_00476ff4 + (DAT_00476ff8 * i + j) * 8) = 0;
+          local_1c = iVar1;
         }
         else {
+          unaff_ECX = tile_scale;
           build_tile_execute_buffer_result =
-               build_tile_execute_buffer(k * tile_size,j * (int)tile_scale);
-          fVar3 = DAT_00476ff4;
-          *(undefined4 *)((int)DAT_00476ff4 + 4 + (DAT_00476ff8 * j + k) * 8) =
+               build_tile_execute_buffer
+                         (j * tile_size,i * (int)tile_scale,tile_size,(int)tile_scale);
+          iVar1 = DAT_00476ff4;
+          *(undefined4 *)(DAT_00476ff4 + 4 + (DAT_00476ff8 * i + j) * 8) =
                build_tile_execute_buffer_result;
-          fVar2 = DAT_00476ff4;
-          i = i + 1;
-          *(undefined4 *)((int)DAT_00476ff4 + (DAT_00476ff8 * j + k) * 8) = 1;
-          unaff_ECX = fVar1;
+          unaff_EDX = DAT_00476ff4;
+          arg2 = arg2 + 1;
+          *(undefined4 *)(DAT_00476ff4 + (DAT_00476ff8 * i + j) * 8) = 1;
         }
       }
     }
-    debugmsg(s_selected__d_0044fa66,i);
+    debugmsg(s_selected__d_0044fa66,arg2);
     debugmsg(s_discarded__d_0044fa74,local_1c);
-    debugmsg(s_total__d_0044fa82,i + extraout_EDX_00);
+    debugmsg(s_total__d_0044fa82,arg2 + extraout_EDX);
     debugmsg(s_mapsize__dx_d____d_0044fa90,DAT_00476ff8,DAT_00476ffc,DAT_00476ff8 * DAT_00476ffc);
     view_min_x = 0;
     view_max_x = DAT_004596d8;
@@ -215,7 +208,7 @@ void __watcall update_visible_tiles(int x,int z)
   undefined4 unaff_EBX;
   int iVar2;
   int iVar3;
-  float10 chp;
+  float10 fVar4;
   int local_20;
   int local_1c;
   int local_18;
@@ -293,17 +286,19 @@ switchD_00426ca4_default:
   _DAT_0047701c = local_14 / tile_size;
   DAT_004596f8 = local_20 / tile_size;
   _DAT_00477020 = local_1c / (int)tile_scale;
-  iVar2 = local_18 / (int)tile_scale;
-  chp = CHP();
-  view_min_x = (int)ROUND(chp);
-  chp = CHP();
-  view_max_x = (int)ROUND(chp);
-  chp = CHP();
-  view_min_z = (int)ROUND(chp);
-  chp = CHP();
-  view_max_z = (int)ROUND(chp);
-  DAT_004596fc = iVar2;
-  check_objects3d_visibility(view_min_x,view_min_z);
+  fVar4 = (float10)local_14 * (float10)30.0;
+  CHP();
+  view_min_x = (int)ROUND(fVar4);
+  fVar4 = (float10)local_20 * (float10)30.0;
+  CHP();
+  view_max_x = (int)ROUND(fVar4);
+  fVar4 = (float10)local_1c * (float10)30.0;
+  CHP();
+  view_min_z = (int)ROUND(fVar4);
+  fVar4 = (float10)local_18 * (float10)30.0;
+  DAT_004596fc = CHP();
+  view_max_z = (int)ROUND(fVar4);
+  check_objects3d_visibility();
   tile_always_hidden();
   return;
 }
@@ -311,55 +306,60 @@ switchD_00426ca4_default:
 
 /* ==== 00426ea7 return_zero_float ==== */
 
-float10 __watcall return_zero_float(void)
+void __watcall
+return_zero_float(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6)
 
 {
-  return (float10)0;
+  return;
 }
 
 
 /* ==== 00426eac road_height_at ==== */
 
-float10 __watcall road_height_at(float param_1,float param_2)
+float __watcall
+road_height_at(float weg_section_idx,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+              float param_5,float param_6)
 
 {
-  int in_EAX;
-  float local_c;
+  float fVar1;
   
-  if (in_EAX == -1) {
+  if (weg_section_idx == -NAN) {
     debugmsg(s_chunk_error_0044fd04);
-    local_c = 0.0;
+    fVar1 = weg_section_idx;
   }
   else {
-    local_c = -((weg_sections[in_EAX].plane_c * param_2 + weg_sections[in_EAX].plane_a * param_1 +
-                weg_sections[in_EAX].plane_d) / weg_sections[in_EAX].plane_b);
-    debugmsg(s___d__5_2f___5_2f__5_2f__0044fd11);
+    fVar1 = -((weg_sections[(int)weg_section_idx].plane_c * param_6 +
+               weg_sections[(int)weg_section_idx].plane_a * param_5 +
+              weg_sections[(int)weg_section_idx].plane_d) /
+             weg_sections[(int)weg_section_idx].plane_b);
+    debugmsg(s___d__5_2f___5_2f__5_2f__0044fd11,weg_section_idx,SUB84((double)fVar1,0),
+             (int)((ulonglong)(double)fVar1 >> 0x20),SUB84((double)param_5,0),
+             (int)((ulonglong)(double)param_5 >> 0x20),SUB84((double)param_6,0),
+             (int)((ulonglong)(double)param_6 >> 0x20));
   }
-  return (float10)local_c;
+  return fVar1;
 }
 
 
 /* ==== 00426f39 build_tile_execute_buffer ==== */
 
-undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
+undefined4 __watcall
+build_tile_execute_buffer(int param_1,undefined4 param_2,int param_3,int param_4)
 
 {
+  long lVar1;
+  char *d3d_error_string_result;
   int m;
-  int *piVar1;
-  int unaff_ECX;
+  int *piVar2;
   int n;
-  short sVar2;
-  int iVar3;
-  int unaff_EBX;
+  short sVar3;
   int k;
-  size_t _Size;
-  int *piVar4;
-  byte bVar5;
-  undefined8 uVar6;
-  char *pcStack_a0;
-  int *piStack_9c;
+  int iVar4;
+  int *piVar5;
+  byte bVar6;
   undefined4 uStack_64;
-  int *dst;
+  int *piStack_5c;
   int *piStack_58;
   int j;
   int *local_50;
@@ -373,63 +373,62 @@ undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
   int iStack_30;
   int i;
   int *piStack_28;
+  undefined4 local_24;
+  int local_1c;
   
-  bVar5 = 0;
-  i = unaff_EBX * unaff_ECX * 4;
-  local_34 = unaff_EBX * unaff_ECX * 2;
+  bVar6 = 0;
+  i = param_3 * param_4 * 4;
+  local_34 = param_3 * param_4 * 2;
+  local_24 = param_2;
+  local_1c = param_3;
   if (max_vertex_count < i) {
-    piStack_9c = (int *)0x426f83;
-    fatal_exit(s__s__d____Too_many_vertices___d____0044fd36);
+    fatal_exit(s__s__d____Too_many_vertices___d____0044fd36,s_mapexec_cpp_0044fd2a,0x2d1,i,
+               max_vertex_count);
   }
-  _Size = i * 0x20 + 0x88 + local_34 * 8;
-  if (max_buffer_size < (int)_Size) {
-    fatal_exit(s__s__d____Execbuffer_too_large____0044fd72);
+  iVar4 = i * 0x20 + 0x88 + local_34 * 8;
+  if (max_buffer_size < iVar4) {
+    fatal_exit(s__s__d____Execbuffer_too_large____0044fd72,s_mapexec_cpp_0044fd66,0x2de,iVar4);
   }
   memset(&j,0,0x14);
   local_50 = (int *)0x1;
   j = 0x14;
-  local_48 = (int *)_Size;
-  uVar6 = (**(code **)(*d3d_device + 0x18))();
-  if ((int)uVar6 != 0) {
-    d3d_error_string((int)uVar6,(int)((ulonglong)uVar6 >> 0x20));
-    piStack_9c = (int *)0x2e7;
-    pcStack_a0 = s_mapexec_cpp_0044fd9e;
-    fatal_exit(s__s__d___D3DError_Create_Execbuff_0044fdaa);
+  local_48 = (int *)iVar4;
+  lVar1 = (**(code **)(*d3d_device + 0x18))();
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_Create_Execbuff_0044fdaa,s_mapexec_cpp_0044fd9e,0x2e7,
+               d3d_error_string_result);
   }
-  piStack_9c = local_50;
-  pcStack_a0 = (char *)0x42702d;
-  uVar6 = (**(code **)(*local_50 + 0x10))();
-  if ((int)uVar6 != 0) {
-    pcStack_a0 = (char *)0x427036;
-    uVar6 = d3d_error_string((int)uVar6,(int)((ulonglong)uVar6 >> 0x20));
-    pcStack_a0 = (char *)uVar6;
-    fatal_exit(s__s__d___D3DError_Lock_Execbuffer_0044fde0,s_mapexec_cpp_0044fdd4,0x2eb);
+  lVar1 = (**(code **)(*local_50 + 0x10))();
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_Lock_Execbuffer_0044fde0,s_mapexec_cpp_0044fdd4,0x2eb,
+               d3d_error_string_result);
   }
-  piStack_28 = dst;
-  pcStack_a0 = (char *)0x427063;
-  memset(dst,0,_Size);
-  iStack_30 = iStack_3c + unaff_ECX;
+  piStack_28 = piStack_5c;
+  memset(piStack_5c,0,iVar4);
+  iStack_30 = iStack_3c + param_4;
   local_40 = local_34 + param_1;
   for (j = param_1; j < local_40; j = j + 1) {
     for (i = iStack_3c; i < iStack_30; i = i + 1) {
       k = 0;
-      iVar3 = *(int *)((i * DAT_004596e0 + j) * 0x1c + 0x18 + DAT_00476fec) << 5;
+      iVar4 = *(int *)((i * DAT_004596e0 + j) * 0x1c + 0x18 + DAT_00476fec) << 5;
       do {
         m = *(int *)((i * DAT_004596e0 + j) * 0x1c + DAT_00476fec + 4 + k * 4) * 0x21;
-        *(undefined4 *)(weg_points + 0x18 + m) = *(undefined4 *)((int)&tile_u_coords + iVar3);
-        *(undefined4 *)(weg_points + 0x1c + m) = *(undefined4 *)((int)&tile_v_coords + iVar3);
-        iVar3 = iVar3 + 4;
-        piVar1 = (int *)(weg_points + m);
-        piVar4 = piStack_28;
+        *(undefined4 *)(weg_points + 0x18 + m) = *(undefined4 *)((int)&tile_u_coords + iVar4);
+        *(undefined4 *)(weg_points + 0x1c + m) = *(undefined4 *)((int)&tile_v_coords + iVar4);
+        iVar4 = iVar4 + 4;
+        piVar2 = (int *)(weg_points + m);
+        piVar5 = piStack_28;
         for (n = 8; n != 0; n = n + -1) {
-          *piVar4 = *piVar1;
-          piVar1 = piVar1 + (uint)bVar5 * -2 + 1;
-          piVar4 = piVar4 + (uint)bVar5 * -2 + 1;
+          *piVar5 = *piVar2;
+          piVar2 = piVar2 + (uint)bVar6 * -2 + 1;
+          piVar5 = piVar5 + (uint)bVar6 * -2 + 1;
         }
         for (m = 0; m != 0; m = m + -1) {
-          *(char *)piVar4 = (char)*piVar1;
-          piVar1 = (int *)((int)piVar1 + (uint)bVar5 * -2 + 1);
-          piVar4 = (int *)((int)piVar4 + (uint)bVar5 * -2 + 1);
+          *(char *)piVar5 = (char)*piVar2;
+          piVar2 = (int *)((int)piVar2 + (uint)bVar6 * -2 + 1);
+          piVar5 = (int *)((int)piVar5 + (uint)bVar6 * -2 + 1);
         }
         piStack_28 = piStack_28 + 8;
         k = k + 1;
@@ -440,9 +439,9 @@ undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
   *(undefined1 *)((int)piStack_28 + 1) = 0xc;
   local_48 = piStack_28;
   *(undefined2 *)((int)piStack_28 + 2) = 2;
-  iVar3 = DAT_004764bc;
+  iVar4 = DAT_004764bc;
   piStack_28[2] = DAT_004764bc;
-  piStack_28[3] = iVar3;
+  piStack_28[3] = iVar4;
   piStack_28[1] = DAT_004764b8;
   piStack_28[5] = DAT_004764cc;
   piStack_28[6] = DAT_004764c8;
@@ -469,7 +468,7 @@ undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
   *(undefined2 *)((int)piStack_28 + 0x4e) = 0;
   piStack_28[0x15] = 0;
   piStack_28[0x14] = iStack_44;
-  piVar1 = piStack_28 + 0x19;
+  piVar2 = piStack_28 + 0x19;
   if (DAT_00476fe4 == 0) {
     *(undefined1 *)(piStack_28 + 0x16) = 8;
     *(undefined1 *)((int)piStack_28 + 0x59) = 8;
@@ -484,48 +483,48 @@ undefined4 __watcall build_tile_execute_buffer(int param_1,undefined4 param_2)
     *(undefined1 *)(piStack_28 + 0x17) = 1;
     piStack_28[0x18] = *(int *)(texture_table + grass_texture * 0xc);
   }
-  if (((uint)piVar1 & 7) == 0) {
-    *(undefined1 *)piVar1 = 3;
+  if (((uint)piVar2 & 7) == 0) {
+    *(undefined1 *)piVar2 = 3;
     *(undefined1 *)((int)piStack_28 + 0x65) = 8;
     *(undefined2 *)((int)piStack_28 + 0x66) = 0;
-    piVar1 = piStack_28 + 0x1a;
+    piVar2 = piStack_28 + 0x1a;
   }
-  piStack_28 = piVar1;
+  piStack_28 = piVar2;
   *(undefined1 *)piStack_28 = 3;
   j = 0;
   *(undefined1 *)((int)piStack_28 + 1) = 8;
   *(undefined2 *)((int)piStack_28 + 2) = uStack_4c;
   iStack_38 = local_34 * 4;
-  iVar3 = 0;
-  piVar1 = piStack_28 + 1;
+  iVar4 = 0;
+  piVar2 = piStack_28 + 1;
   for (; j < local_34; j = j + 1) {
-    k = iVar3;
-    for (i = 0; i < unaff_ECX; i = i + 1) {
-      sVar2 = (short)k;
-      *(short *)(piVar1 + 1) = sVar2;
-      *(short *)((int)piVar1 + 2) = sVar2 + 1;
-      *(short *)piVar1 = (short)piVar1[1] + 2;
-      *(undefined2 *)((int)piVar1 + 6) = 0x700;
-      *(short *)(piVar1 + 3) = sVar2;
-      *(short *)((int)piVar1 + 10) = sVar2 + 2;
-      *(undefined2 *)((int)piVar1 + 0xe) = 0x700;
-      *(short *)(piVar1 + 2) = (short)piVar1[3] + 3;
+    k = iVar4;
+    for (i = 0; i < param_4; i = i + 1) {
+      sVar3 = (short)k;
+      *(short *)(piVar2 + 1) = sVar3;
+      *(short *)((int)piVar2 + 2) = sVar3 + 1;
+      *(short *)piVar2 = (short)piVar2[1] + 2;
+      *(undefined2 *)((int)piVar2 + 6) = 0x700;
+      *(short *)(piVar2 + 3) = sVar3;
+      *(short *)((int)piVar2 + 10) = sVar3 + 2;
+      *(undefined2 *)((int)piVar2 + 0xe) = 0x700;
+      *(short *)(piVar2 + 2) = (short)piVar2[3] + 3;
       k = k + iStack_38;
-      piVar1 = piVar1 + 4;
+      piVar2 = piVar2 + 4;
     }
-    iVar3 = iVar3 + 4;
+    iVar4 = iVar4 + 4;
   }
-  *(undefined1 *)piVar1 = 0xb;
-  *(undefined1 *)((int)piVar1 + 1) = 0;
-  *(undefined2 *)((int)piVar1 + 2) = 0;
+  *(undefined1 *)piVar2 = 0xb;
+  *(undefined1 *)((int)piVar2 + 1) = 0;
+  *(undefined2 *)((int)piVar2 + 2) = 0;
   piStack_28 = piStack_28 + 1;
   (**(code **)(*piStack_58 + 0x14))();
-  memset(&pcStack_a0,0,0x30);
-  pcStack_a0 = (char *)0x30;
-  uVar6 = (**(code **)(*dst + 0x18))(dst,&pcStack_a0);
-  if ((int)uVar6 != 0) {
-    uVar6 = d3d_error_string((int)uVar6,(int)((ulonglong)uVar6 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Set_ExecData___0044fe14,s_mapexec_cpp_0044fe08,0x34b,(int)uVar6);
+  memset((undefined4 *)&stack0xffffff60,0,0x30);
+  lVar1 = (**(code **)(*piStack_5c + 0x18))(piStack_5c,&stack0xffffff60);
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError_Set_ExecData___0044fe14,s_mapexec_cpp_0044fe08,0x34b,
+               d3d_error_string_result);
   }
   return uStack_64;
 }

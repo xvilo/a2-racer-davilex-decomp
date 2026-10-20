@@ -15,11 +15,8 @@ int __watcall check_areabutton_hotkey(fform_t *fform,int param_2)
 void __watcall destroy_areabutton(fform_t *fform)
 
 {
-  fform_t *extraout_EDX;
-  
   if (*(int *)(fform + 0x18) == 0) {
     fatal_exit(s__s__d_____destroy_areabutton__no_0041ef51,s_areabuts_cpp_0041ef44,0x2b);
-    fform = extraout_EDX;
   }
   DestroyWindow(*(HWND *)(fform + 0x18));
   return;

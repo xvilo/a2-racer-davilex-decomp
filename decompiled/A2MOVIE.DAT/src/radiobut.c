@@ -15,11 +15,8 @@ int __watcall check_radiobutton_hotkey(fform_t *fform,int param_2)
 void __watcall destroy_radiobutton(fform_t *fform)
 
 {
-  fform_t *extraout_EDX;
-  
   if (*(int *)(fform + 0x18) == 0) {
     fatal_exit(s__s__d_____destroy_radiobutton__n_0041f13d,s_radiobut_cpp_0041f130,0x3e);
-    fform = extraout_EDX;
   }
   DestroyWindow(*(HWND *)(fform + 0x18));
   return;
@@ -131,37 +128,35 @@ void __watcall draw_help_radiobutton(fform_t *fform)
 void __watcall draw_radiobutton(tagDRAWITEMSTRUCT *drawitemstruct)
 
 {
-  uint uVar1;
-  int iVar2;
-  int *control_pointer;
+  int iVar1;
+  uint uVar2;
   int iVar3;
+  int *control_pointer;
   int iVar4;
   int control_image_index;
   int iVar5;
   int control_x;
-  int extraout_ECX;
   int iVar6;
   
-  iVar2 = get_control_index(drawitemstruct->hwndItem);
+  iVar3 = get_control_index(drawitemstruct->hwndItem);
   control_pointer = get_control_pointer(drawitemstruct->hwndItem);
-  iVar3 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
-  iVar4 = control_pointer[2] / 2;
-  if (iVar2 == -1) {
+  iVar4 = control_pointer[1] - (control_pointer[1] >> 0x1f) >> 1;
+  iVar1 = control_pointer[2];
+  if (iVar3 == -1) {
     fatal_exit(s__s__d_____draw_radiobutton__no_v_0041f216,s_radiobut_cpp_0041f209,0xc4);
-    iVar4 = extraout_ECX;
   }
   hide_mouse();
-  uVar1 = drawitemstruct->itemState;
-  if (uVar1 < 0x10) {
-    if (uVar1 != 4) goto LAB_00412b6e;
-    set_control_state(iVar2,2);
+  uVar2 = drawitemstruct->itemState;
+  if (uVar2 < 0x10) {
+    if (uVar2 != 4) goto LAB_00412b6e;
+    set_control_state(iVar3,2);
     control_image_index = 4;
 LAB_00412b22:
     iVar5 = *control_pointer;
   }
   else {
-    if (uVar1 < 0x11) {
-      set_control_state(iVar2,1);
+    if (uVar2 < 0x11) {
+      set_control_state(iVar3,1);
       if (*(int *)((int)control_pointer + 0xd) == 4) {
         control_image_index = 3;
       }
@@ -170,19 +165,19 @@ LAB_00412b22:
       }
       goto LAB_00412b22;
     }
-    if (uVar1 == 0x11) {
-      set_control_state(iVar2,4);
+    if (uVar2 == 0x11) {
+      set_control_state(iVar3,4);
       *(undefined4 *)((int)control_pointer + 0xd) = 4;
       control_image_index = get_control_image_index(*control_pointer,3);
       iVar6 = 1;
-      iVar5 = get_control_y(iVar2);
-      control_x = get_control_x(iVar2);
-      set_mem_image(0,control_image_index,control_x + iVar3,iVar4 + iVar5,iVar6);
-      unselect_radiobutton(iVar2);
+      iVar5 = get_control_y(iVar3);
+      control_x = get_control_x(iVar3);
+      set_mem_image(0,control_image_index,control_x + iVar4,iVar1 / 2 + iVar5,iVar6);
+      unselect_radiobutton(iVar3);
       goto LAB_00412b84;
     }
 LAB_00412b6e:
-    set_control_state(iVar2,0);
+    set_control_state(iVar3,0);
     if (*(int *)((int)control_pointer + 0xd) == 4) {
       control_image_index = 2;
       goto LAB_00412b22;
@@ -192,9 +187,9 @@ LAB_00412b6e:
   }
   control_image_index = get_control_image_index(iVar5,control_image_index);
   control_x = 1;
-  iVar5 = get_control_y(iVar2);
-  iVar2 = get_control_x(iVar2);
-  set_mem_image(0,control_image_index,iVar2 + iVar3,iVar4 + iVar5,control_x);
+  iVar5 = get_control_y(iVar3);
+  iVar3 = get_control_x(iVar3);
+  set_mem_image(0,control_image_index,iVar3 + iVar4,iVar1 / 2 + iVar5,control_x);
 LAB_00412b84:
   show_mouse();
   return;

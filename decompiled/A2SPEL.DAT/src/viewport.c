@@ -14,30 +14,21 @@ void __watcall d3d_store_screen_size(void)
 
 /* ==== 0041bc89 change_viewport_size ==== */
 
-void __watcall change_viewport_size(int param_1,int param_2)
+void __watcall change_viewport_size(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int unaff_ECX;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int unaff_EBX;
-  
-  if ((param_1 + unaff_EBX < 0) || (xvga_screen_xsize < param_1 + unaff_EBX)) {
-    fatal_exit(s__s__d____error_illegal_x_size_of_0044b415,s_viewport_cpp_0044b408,0x5e,param_1);
-    unaff_ECX = extraout_ECX;
-    param_2 = extraout_EDX;
+  if ((param_1 + param_3 < 0) || (xvga_screen_xsize < param_1 + param_3)) {
+    fatal_exit(s__s__d____error_illegal_x_size_of_0044b415,s_viewport_cpp_0044b408,0x5e,param_1,
+               param_3,xvga_screen_xsize);
   }
-  if ((param_2 + unaff_ECX < 0) || (xvga_screen_ysize < param_2 + unaff_ECX)) {
-    fatal_exit(s__s__d____error_illegal_x_size_of_0044b462,s_viewport_cpp_0044b455,0x61,param_1);
-    unaff_ECX = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
+  if ((param_2 + param_4 < 0) || (xvga_screen_ysize < param_2 + param_4)) {
+    fatal_exit(s__s__d____error_illegal_x_size_of_0044b462,s_viewport_cpp_0044b455,0x61,param_1,
+               param_3,xvga_screen_xsize);
   }
   DAT_004764d0 = param_1;
   viewport_x = param_2;
-  viewport_width = unaff_EBX;
-  viewport_height = unaff_ECX;
+  viewport_width = param_3;
+  viewport_height = param_4;
   DAT_004764e4 = 1;
   return;
 }
@@ -48,11 +39,13 @@ void __watcall change_viewport_size(int param_1,int param_2)
 void __watcall set_background(void)
 
 {
+  undefined4 in_EAX;
+  long lVar1;
+  char *arg4;
   char *filename;
-  undefined8 uVar1;
   
-  debugmsg(s_setbkg__adding_texture_<_s>_0044b531);
-  background_texture = (int *)load_texture(filename,(int)filename);
+  debugmsg(s_setbkg__adding_texture_<_s>_0044b531,in_EAX);
+  background_texture = load_texture(filename,(int)filename);
   if (background_material == -1) {
     debugmsg(s_setbkg__making_material_texture___0044b54e,background_texture);
     background_material = create_material(0,background_texture);
@@ -64,12 +57,11 @@ void __watcall set_background(void)
   }
   if (DAT_004764e0 != 0) {
     debugmsg(s_setbkg__setting_bkg_material_in_v_0044b5ad);
-    uVar1 = (**(code **)(*d3d_object + 0x20))
+    lVar1 = (**(code **)(*d3d_object + 0x20))
                       (d3d_object,*(undefined4 *)(background_material * 0xc + 4 + materials));
-    if ((int)uVar1 != 0) {
-      uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-      fatal_exit(s__s__d____Could_not_set_backgroun_0044b5e4,s_viewport_cpp_0044b5d7,0x92,(int)uVar1
-                );
+    if (lVar1 != 0) {
+      arg4 = d3d_error_string(lVar1);
+      fatal_exit(s__s__d____Could_not_set_backgroun_0044b5e4,s_viewport_cpp_0044b5d7,0x92,arg4);
     }
   }
   return;
@@ -78,11 +70,13 @@ void __watcall set_background(void)
 
 /* ==== 0041bede init_viewport ==== */
 
-longlong __watcall init_viewport(undefined4 param_1,uint param_2)
+void __watcall init_viewport(void)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  undefined4 viewport;
+  long lVar2;
+  char *arg4;
   
   if ((DAT_004764e0 == 0) &&
      ((DAT_004764e8 != 0 ||
@@ -105,88 +99,53 @@ longlong __watcall init_viewport(undefined4 param_1,uint param_2)
         (iVar1 = (**(code **)(*d3d_device + 0x40))(d3d_device,DAT_004764bc,&DAT_00459618),
         iVar1 == 0)))))))) {
     if (DAT_004764e4 == 0) {
-      change_viewport_size(0,0);
+      change_viewport_size(0,0,xvga_screen_xsize,xvga_screen_ysize);
     }
-    create_viewport();
+    viewport = create_viewport();
     init_render_state_defaults();
-    apply_render_states();
+    apply_render_states(viewport);
     create_frame_execute_buffer();
-    if ((background_material != -1) && (background_texture != -1)) {
-      uVar2 = (**(code **)(*d3d_object + 0x20))
-                        (d3d_object,*(undefined4 *)(materials + 4 + background_material * 0xc));
-      if ((int)uVar2 != 0) {
-        uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-        fatal_exit(s__s__d____Could_not_set_backgroun_0044b69f,s_viewport_cpp_0044b692,0xde,
-                   (int)uVar2);
-      }
+    if (((background_material != -1) && (background_texture != -1)) &&
+       (lVar2 = (**(code **)(*d3d_object + 0x20))
+                          (d3d_object,*(undefined4 *)(materials + 4 + background_material * 0xc)),
+       lVar2 != 0)) {
+      arg4 = d3d_error_string(lVar2);
+      fatal_exit(s__s__d____Could_not_set_backgroun_0044b69f,s_viewport_cpp_0044b692,0xde,arg4);
     }
     DAT_004764e0 = 1;
   }
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 0041c0d4 create_viewport ==== */
 
-longlong __watcall create_viewport(void)
+undefined4 __watcall create_viewport(void)
 
 {
-  undefined8 uVar1;
-  int *piStack_60;
-  int *piStack_5c;
-  int *piStack_58;
-  undefined4 *puStack_54;
-  int iStack_50;
-  float fStack_4c;
-  float fStack_48;
-  float fStack_44;
-  float fStack_40;
-  undefined4 uStack_3c;
-  undefined4 uStack_38;
-  int iStack_34;
-  undefined4 uStack_30;
-  uint uStack_28;
+  long lVar1;
+  char *d3d_error_string_result;
   
-  iStack_50 = 0;
-  puStack_54 = &d3d_object;
-  piStack_58 = direct3d;
-  piStack_5c = (int *)0x41c0ed;
-  uVar1 = (**(code **)(*direct3d + 0x1c))();
-  if ((int)uVar1 != 0) {
-    piStack_5c = (int *)0x41c0f6;
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    piStack_5c = (int *)uVar1;
-    piStack_60 = (int *)0xef;
-    fatal_exit(s__s__d____D3DError_Creating_viewp_0044b6dd,s_viewport_cpp_0044b6d0);
+  lVar1 = (**(code **)(*direct3d + 0x1c))();
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError_Creating_viewp_0044b6dd,s_viewport_cpp_0044b6d0,0xef,
+               d3d_error_string_result);
   }
-  piStack_5c = d3d_object;
-  piStack_60 = d3d_device;
-  uVar1 = (**(code **)(*d3d_device + 0x24))();
-  if ((int)uVar1 != 0) {
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    fatal_exit(s__s__d___D3DError_Creating_viewpo_0044b715,s_viewport_cpp_0044b708,0xf4,(int)uVar1);
+  lVar1 = (**(code **)(*d3d_device + 0x24))();
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_Creating_viewpo_0044b715,s_viewport_cpp_0044b708,0xf4,
+               d3d_error_string_result);
   }
-  memset(&piStack_60,0,0x2c);
-  piStack_5c = (int *)DAT_004764d0;
-  piStack_58 = (int *)viewport_x;
-  puStack_54 = (undefined4 *)viewport_width;
-  iStack_50 = viewport_height;
-  fStack_4c = (float)(uint)viewport_height;
-  fStack_44 = (float)(uint)viewport_width / (fStack_4c * 2.0);
-  uStack_30 = 0;
-  iStack_34 = viewport_height;
-  fStack_40 = (float)(uint)viewport_height / (fStack_4c * 2.0);
-  piStack_60 = (int *)0x2c;
-  uStack_3c = 0xbf800000;
-  uStack_38 = 0x3f800000;
-  fStack_48 = fStack_4c;
-  uVar1 = (**(code **)(*d3d_object + 0x14))(d3d_object,&piStack_60);
-  if ((int)uVar1 != 0) {
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    fatal_exit(s__s__d___D3DError_Creating_viewpo_0044b74c,s_viewport_cpp_0044b73f,0x10d,(int)uVar1)
-    ;
+  memset((undefined4 *)&stack0xffffffa0,0,0x2c);
+  lVar1 = (**(code **)(*d3d_object + 0x14))(d3d_object,&stack0xffffffa0);
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_Creating_viewpo_0044b74c,s_viewport_cpp_0044b73f,0x10d,
+               d3d_error_string_result);
   }
-  return (ulonglong)uStack_28 << 0x20;
+  return 0;
 }
 
 

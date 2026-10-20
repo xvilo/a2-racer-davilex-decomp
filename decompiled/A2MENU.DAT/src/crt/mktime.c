@@ -3,63 +3,66 @@
 
 /* ==== 0041a4ed mktime ==== */
 
-time_t __watcall mktime(tm *_Tm)
+undefined4 __watcall mktime(int *param_1)
 
 {
-  undefined4 unaff_EDX;
-  int iVar1;
-  undefined *puVar2;
-  int i;
-  uint unaff_EDX_00;
   int j;
-  longlong leapyear_result;
+  undefined4 *brktime_result;
+  int *piVar1;
+  int iVar2;
+  uint uVar3;
+  undefined *puVar4;
+  undefined4 uVar5;
+  int i;
+  uint uVar6;
   
-  iVar1 = (int)(CONCAT44(_Tm->tm_mon >> 0x1f,_Tm->tm_mon) % 0xc);
-  puVar2 = &diyr;
-  if (-0xb048160 < _Tm->tm_year) {
-    i = _Tm->tm_year + _Tm->tm_mon / 0xc;
-    for (; iVar1 < 0; iVar1 = iVar1 + 0xc) {
+  iVar2 = (int)(CONCAT44(param_1[4] >> 0x1f,param_1[4]) % 0xc);
+  puVar4 = &diyr;
+  if (-0xb048160 < param_1[5]) {
+    i = param_1[5] + param_1[4] / 0xc;
+    for (; iVar2 < 0; iVar2 = iVar2 + 0xc) {
       i = i + -1;
     }
     if (-1 < i) {
-      leapyear_result = leapyear(i + 0x76c,_Tm->tm_mon % 0xc);
-      if ((int)leapyear_result != 0) {
-        puVar2 = &dilyr;
+      j = leapyear(i + 0x76c);
+      if (j != 0) {
+        puVar4 = &dilyr;
       }
-      iVar1 = _Tm->tm_mday + (int)*(short *)(puVar2 + iVar1 * 2) + i * 0x16d + (i + 3 >> 2);
-      j = iVar1 + -1;
+      iVar2 = param_1[3] + (int)*(short *)(puVar4 + iVar2 * 2) + i * 0x16d + (i + 3 >> 2);
+      j = iVar2 + -1;
       if (i != 0) {
-        j = iVar1 + -2;
+        j = iVar2 + -2;
       }
-      for (unaff_EDX_00 = _Tm->tm_sec + (_Tm->tm_min + _Tm->tm_hour * 0x3c) * 0x3c;
-          (int)unaff_EDX_00 < 0; unaff_EDX_00 = unaff_EDX_00 + 0x15180) {
+      for (uVar6 = *param_1 + (param_1[1] + param_1[2] * 0x3c) * 0x3c; (int)uVar6 < 0;
+          uVar6 = uVar6 + 0x15180) {
         j = j + -1;
       }
-      brktime(j,unaff_EDX_00,0,&_Tm->tm_sec);
-      tzset();
-      iVar1 = unaff_EDX_00 + timezone;
-      if (_Tm->tm_isdst < 0) {
-        isindst(&_Tm->tm_sec,timezone);
+      uVar5 = 0;
+      piVar1 = param_1;
+      uVar3 = uVar6;
+      brktime_result = brktime(j,uVar6,0,param_1);
+      tzset(brktime_result,uVar3,uVar5,piVar1);
+      iVar2 = uVar6 + timezone;
+      if (param_1[8] < 0) {
+        isindst(param_1);
       }
-      if (0 < _Tm->tm_isdst) {
-        iVar1 = iVar1 - dst_adjust;
+      if (0 < param_1[8]) {
+        iVar2 = iVar2 - dst_adjust;
       }
-      for (; iVar1 < 0; iVar1 = iVar1 + 0x15180) {
+      for (; iVar2 < 0; iVar2 = iVar2 + 0x15180) {
         j = j + -1;
       }
       if (0x63dd < j) {
         if (j != 0x63de) {
-          iVar1 = iVar1 + (j + -0x63df) * 0x15180;
-          goto LAB_0041a63a;
+          return iVar2 + (j + -0x63df) * 0x15180;
         }
-        iVar1 = iVar1 + -0x15180;
-        if ((0 < timezone) && (-1 < iVar1)) goto LAB_0041a63a;
+        if ((0 < timezone) && (-1 < iVar2 + -0x15180)) {
+          return iVar2 + -0x15180;
+        }
       }
     }
   }
-  iVar1 = -1;
-LAB_0041a63a:
-  return CONCAT44(unaff_EDX,iVar1);
+  return 0xffffffff;
 }
 
 

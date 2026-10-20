@@ -3,53 +3,48 @@
 
 /* ==== 0041c809 allocfp ==== */
 
-undefined8 __watcall allocfp(undefined4 param_1,size_t unaff_EDX)
+undefined4 __watcall allocfp(void)
 
 {
   undefined4 *buffer;
-  undefined4 uVar1;
-  char *_Dst;
+  char *pcVar1;
   undefined4 extraout_ECX;
-  undefined4 unaff_EDX_00;
   uint uVar2;
   
   (*(code *)AccessIOB_1)();
   if (ClosedStreams == (undefined4 *)0x0) {
-    for (_Dst = &iob; _Dst < tmpfnext; _Dst = _Dst + 0x1a) {
-      if ((_Dst[0xc] & 3U) == 0) {
-        buffer = malloc(8);
+    for (pcVar1 = &iob; pcVar1 < tmpfnext; pcVar1 = pcVar1 + 0x1a) {
+      if ((pcVar1[0xc] & 3U) == 0) {
+        buffer = (undefined4 *)malloc(8);
         if (buffer == (undefined4 *)0x0) goto LAB_0041c8a9;
         uVar2 = 3;
         goto LAB_0041c87e;
       }
     }
     uVar2 = 0x4003;
-    buffer = malloc(0x22);
+    buffer = (undefined4 *)malloc(0x22);
     if (buffer == (undefined4 *)0x0) {
 LAB_0041c8a9:
-      set_errno(5,unaff_EDX_00);
+      set_errno(5);
       (*(code *)ReleaseIOB_1)();
-      uVar1 = 0;
-      goto LAB_0041c8bb;
+      return 0;
     }
-    _Dst = (char *)(buffer + 2);
+    pcVar1 = (char *)(buffer + 2);
   }
   else {
-    _Dst = (char *)ClosedStreams[1];
-    uVar2 = (uint)((ushort)*(undefined4 *)(_Dst + 0xc) & 0x4003 | 3);
+    pcVar1 = (char *)ClosedStreams[1];
+    uVar2 = (uint)((ushort)*(undefined4 *)(pcVar1 + 0xc) & 0x4003 | 3);
     buffer = ClosedStreams;
     ClosedStreams = (undefined4 *)*ClosedStreams;
   }
 LAB_0041c87e:
-  memset(_Dst,0,0x1a);
-  *(uint *)(_Dst + 0xc) = uVar2;
-  buffer[1] = _Dst;
+  memset((undefined4 *)pcVar1,0,0x1a);
+  *(uint *)(pcVar1 + 0xc) = uVar2;
+  buffer[1] = pcVar1;
   *buffer = OpenStreams;
   OpenStreams = buffer;
   (*(code *)ReleaseIOB_1)();
-  uVar1 = extraout_ECX;
-LAB_0041c8bb:
-  return CONCAT44(unaff_EDX,uVar1);
+  return extraout_ECX;
 }
 
 
@@ -79,17 +74,18 @@ void __watcall freefp(int param_1)
 
 /* ==== 0041c8fa purgefp ==== */
 
-void __watcall purgefp(undefined4 param_1,void *unaff_EDX)
+undefined4 __watcall purgefp(void)
 
 {
   undefined4 *puVar1;
+  undefined4 in_EAX;
   
   while (ClosedStreams != (undefined4 *)0x0) {
     puVar1 = (undefined4 *)*ClosedStreams;
-    free(ClosedStreams);
+    in_EAX = free(ClosedStreams);
     ClosedStreams = puVar1;
   }
-  return;
+  return in_EAX;
 }
 
 

@@ -15,11 +15,8 @@ int __watcall check_animbutton_hotkey(fform_t *fform,int param_2)
 void __watcall destroy_animbutton(fform_t *fform)
 
 {
-  fform_t *extraout_EDX;
-  
   if (*(int *)(fform + 0x18) == 0) {
     fatal_exit(s__s__d_____destroy_animbutton__no_004572f5,s_animbuts_cpp_004572e8,0x3e);
-    fform = extraout_EDX;
   }
   DestroyWindow(*(HWND *)(fform + 0x18));
   return;

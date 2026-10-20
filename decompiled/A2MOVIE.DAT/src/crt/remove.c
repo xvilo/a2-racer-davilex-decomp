@@ -3,19 +3,18 @@
 
 /* ==== 0040d538 remove ==== */
 
-int __watcall remove(char *_Filename)
+void __watcall remove(void)
 
 {
+  LPCSTR in_EAX;
   BOOL BVar1;
-  undefined4 unaff_EDX_00;
-  undefined8 uVar2;
   
-  BVar1 = DeleteFileA(_Filename);
+  BVar1 = DeleteFileA(in_EAX);
   if (BVar1 == 0) {
-    uVar2 = set_errno_nt(0,unaff_EDX_00);
-    return (int)uVar2;
+    set_errno_nt();
+    return;
   }
-  return 0;
+  return;
 }
 
 

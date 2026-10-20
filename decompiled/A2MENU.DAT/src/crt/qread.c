@@ -3,7 +3,7 @@
 
 /* ==== 0041cbab qread ==== */
 
-DWORD __watcall qread(int param_1,undefined4 param_2,DWORD unaff_EBX)
+DWORD __watcall qread(int param_1,undefined4 param_2,DWORD number_of_bytes_to_read)
 
 {
   BOOL BVar1;
@@ -24,12 +24,11 @@ DWORD __watcall qread(int param_1,undefined4 param_2,DWORD unaff_EBX)
       return extraout_EDX_00;
     }
   }
-  BVar1 = ReadFile(*(HANDLE *)(FileHandleIDs + param_1 * 4),lpBuffer,unaff_EBX,&DStack_c,
-                   (LPOVERLAPPED)0x0);
+  BVar1 = ReadFile(*(HANDLE *)(FileHandleIDs + param_1 * 4),lpBuffer,number_of_bytes_to_read,
+                   &DStack_c,(LPOVERLAPPED)0x0);
   if (BVar1 == 0) {
-    uVar2 = (*(code *)ReleaseFileH_1)();
-    uVar2 = set_errno_nt((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    DStack_c = (DWORD)uVar2;
+    (*(code *)ReleaseFileH_1)();
+    DStack_c = set_errno_nt();
   }
   else {
     (*(code *)ReleaseFileH_1)();

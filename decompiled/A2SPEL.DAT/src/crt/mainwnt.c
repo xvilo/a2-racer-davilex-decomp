@@ -3,27 +3,27 @@
 
 /* ==== 00430c97 fill_dwords ==== */
 
-undefined4 * __watcall fill_dwords(uint param_1,undefined4 param_2)
+undefined4 * __watcall
+fill_dwords(undefined4 *param_1,undefined4 param_2,undefined4 param_3,uint param_4)
 
 {
   undefined4 *puVar1;
-  uint unaff_ECX;
   int iVar2;
   uint uVar3;
   
-  puVar1 = (undefined4 *)param_1;
-  if (unaff_ECX != 0) {
+  puVar1 = param_1;
+  if (param_4 != 0) {
     do {
-      if ((param_1 & 0x1f) == 0) break;
-      *(undefined4 *)param_1 = param_2;
-      param_1 = param_1 + 4;
-      unaff_ECX = unaff_ECX - 1;
-    } while (unaff_ECX != 0);
-    if (unaff_ECX >> 2 != 0) {
-      iVar2 = (unaff_ECX >> 2) - 1;
+      if (((uint)param_1 & 0x1f) == 0) break;
+      *param_1 = param_2;
+      param_1 = param_1 + 1;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+    if (param_4 >> 2 != 0) {
+      iVar2 = (param_4 >> 2) - 1;
       if (iVar2 != 0) {
         do {
-          puVar1 = (undefined4 *)param_1;
+          puVar1 = param_1;
           *puVar1 = param_2;
           puVar1[1] = param_2;
           puVar1[2] = param_2;
@@ -34,29 +34,29 @@ undefined4 * __watcall fill_dwords(uint param_1,undefined4 param_2)
           iVar2 = iVar2 + -2;
           puVar1[6] = param_2;
           puVar1[7] = param_2;
-          param_1 = (uint)(puVar1 + 8);
+          param_1 = puVar1 + 8;
         } while (iVar2 != 0);
         puVar1 = puVar1 + 4;
 LAB_00430cd6:
-        param_1 = (uint)(puVar1 + 4);
+        param_1 = puVar1 + 4;
       }
-      *(undefined4 *)param_1 = param_2;
-      *(undefined4 *)(param_1 + 4) = param_2;
-      *(undefined4 *)(param_1 + 8) = param_2;
-      *(undefined4 *)(param_1 + 0xc) = param_2;
-      param_1 = param_1 + 0x10;
+      *param_1 = param_2;
+      param_1[1] = param_2;
+      param_1[2] = param_2;
+      param_1[3] = param_2;
+      param_1 = param_1 + 4;
     }
-    uVar3 = unaff_ECX & 3;
-    puVar1 = (undefined4 *)param_1;
+    uVar3 = param_4 & 3;
+    puVar1 = param_1;
     if (uVar3 != 0) {
-      *(undefined4 *)param_1 = param_2;
-      puVar1 = (undefined4 *)(param_1 + 4);
+      *param_1 = param_2;
+      puVar1 = param_1 + 1;
       if (uVar3 != 1) {
         *puVar1 = param_2;
-        puVar1 = (undefined4 *)(param_1 + 8);
+        puVar1 = param_1 + 2;
         if (uVar3 != 2) {
           *puVar1 = param_2;
-          puVar1 = (undefined4 *)(param_1 + 0xc);
+          puVar1 = param_1 + 3;
         }
       }
     }
@@ -67,11 +67,13 @@ LAB_00430cd6:
 
 /* ==== 00430d04 atan2_software ==== */
 
-undefined4 __watcall atan2_software(undefined4 param_1,undefined4 param_2)
+undefined4 __watcall atan2_software(void)
 
 {
-  fpatan_emulated(param_1,param_2);
-  return param_1;
+  undefined4 in_EAX;
+  
+  fpatan_emulated();
+  return in_EAX;
 }
 
 
@@ -95,23 +97,25 @@ void __watcall crt_nop_hook_2(void)
 
 /* ==== 00430e3a NTAddFileHandle ==== */
 
-undefined8 __watcall NTAddFileHandle(int param_1,undefined4 unaff_EDX)
+int __watcall NTAddFileHandle(int param_1)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  uVar1 = NTAddFileHandle(param_1,unaff_EDX);
-  return uVar1;
+  iVar1 = NTAddFileHandle(param_1);
+  return iVar1;
 }
 
 
 /* ==== 00430e3f NTRemoveFileHandle ==== */
 
-void __watcall NTRemoveFileHandle(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall NTRemoveFileHandle(undefined4 param_1)
 
 {
-  NTRemoveFileHandle(param_1,unaff_EDX);
-  return;
+  undefined4 uVar1;
+  
+  uVar1 = NTRemoveFileHandle(param_1);
+  return uVar1;
 }
 
 
@@ -119,32 +123,28 @@ void __watcall NTRemoveFileHandle(undefined4 param_1,undefined4 unaff_EDX)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined4 __watcall NTInit(int param_1,void *unaff_EDX,HMODULE unaff_EBX,size_t unaff_ECX)
+void __watcall NTInit(int param_1,undefined4 *param_2,HMODULE module)
 
 {
-  LPSTR _Src;
-  DWORD DVar1;
-  undefined4 uVar2;
-  undefined8 init_thread_data;
+  LPSTR pCVar1;
+  DWORD DVar2;
   CHAR local_10c [260];
   
   Is_DLL = param_1;
-  init_thread_data = InitThreadData(unaff_EDX,(size_t)unaff_EDX,unaff_EBX,unaff_ECX);
-  FirstThreadData = (int)init_thread_data;
-  if (FirstThreadData == 0) {
+  FirstThreadData = InitThreadData(param_2);
+  if (FirstThreadData == (undefined4 *)0x0) {
     if (param_1 == 0) {
                     /* WARNING: Subroutine does not return */
       ExitProcess(1);
     }
-    uVar2 = 0;
   }
   else {
-    NTInitFileHandles(FirstThreadData,(int)((ulonglong)init_thread_data >> 0x20));
+    NTInitFileHandles();
     Envptr = GetEnvironmentStrings();
     GetModuleFileNameA((HMODULE)0x0,local_10c,0x104);
     _LpPgmName = strdup(local_10c);
-    _Src = GetCommandLineA();
-    _LpCmdLine = strdup(_Src);
+    pCVar1 = GetCommandLineA();
+    _LpCmdLine = strdup(pCVar1);
     if (*_LpCmdLine != '\"') {
       do {
         if (((&IsTable)[(byte)(*_LpCmdLine + 1)] & 2) != 0) goto LAB_00430ef0;
@@ -162,48 +162,46 @@ undefined4 __watcall NTInit(int param_1,void *unaff_EDX,HMODULE unaff_EBX,size_t
 LAB_00430ef0:
     } while (((&IsTable)[(byte)(*_LpCmdLine + 1)] & 2) != 0);
     if (param_1 != 0) {
-      GetModuleFileNameA(unaff_EBX,local_10c,0x104);
+      GetModuleFileNameA(module,local_10c,0x104);
       _LpDllName = strdup(local_10c);
     }
-    DVar1 = GetVersion();
-    osmajor = (undefined1)(DVar1 >> 0x18);
-    osbuild = (undefined2)DVar1;
-    osminor = (byte)(DVar1 >> 0x10) & 0xf;
-    uVar2 = 1;
+    DVar2 = GetVersion();
+    osmajor = (undefined1)(DVar2 >> 0x18);
+    osbuild = (undefined2)DVar2;
+    osminor = (byte)(DVar2 >> 0x10) & 0xf;
   }
-  return uVar2;
+  return;
 }
 
 
 /* ==== 00430f6b NTMainInit ==== */
 
-void __watcall NTMainInit(undefined4 param_1,void *unaff_EDX)
+void __watcall NTMainInit(undefined4 param_1,undefined4 *param_2)
 
 {
   undefined4 uVar1;
-  HMODULE unaff_EBX;
+  HMODULE module;
   undefined4 *puVar2;
-  size_t unaff_ECX;
   int in_FS_OFFSET;
   
-  unaff_EBX = GetModuleHandleA((LPCSTR)0x0);
-  NTInit(0,unaff_EDX,unaff_EBX,unaff_ECX);
-  NewExceptionHandler(param_1,unaff_EDX);
+  module = GetModuleHandleA((LPCSTR)0x0);
+  NTInit(0,param_2,module);
+  NewExceptionHandler(param_1);
   (*(code *)sig_init_rtn)();
   uVar1 = *(undefined4 *)(in_FS_OFFSET + 8);
   puVar2 = (undefined4 *)(*(code *)GetThreadPtr)();
   *puVar2 = uVar1;
-  InitRtns();
+  InitRtns(0xff);
   return;
 }
 
 
 /* ==== 00430fb1 exit_2 ==== */
 
-void __watcall exit_2(UINT exit_code,undefined4 param_2)
+undefined4 __watcall exit_2(UINT exit_code)
 
 {
-  DoneExceptionHandler(exit_code,param_2);
+  DoneExceptionHandler();
   FiniRtns(0,0xff);
   (*(code *)ThreadExitRtn)();
                     /* WARNING: Subroutine does not return */

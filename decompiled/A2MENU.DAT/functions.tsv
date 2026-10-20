@@ -1,993 +1,993 @@
-address	name	size	thunk	callers	callees	status
-00401010	main_init_settings	107	false	1	3	ok
-0040107b	main_init_sound	413	false	1	2	ok
-00401218	WinMain	685	false	0	27	ok
-004014c8	win_open_menu	513	false	1	12	ok
-004016c9	win_close_menu	237	false	1	10	ok
-004017b6	win_handle_menu	171	false	1	7	ok
-00401864	file_exist	56	false	11	3	ok
-0040189c	file_size	175	false	0	7	ok
-0040194b	file_read	165	false	4	6	ok
-004019f0	file_write	168	false	4	6	ok
-00401a98	file_delete	5	true	8	0	ok
-00401aa0	load_tmp_optie	94	false	2	6	ok
-00401afe	init_optie	181	false	2	4	ok
-00401bb3	save_optie	5	false	3	0	ok
-00401bb8	save_tmp_optie	71	false	1	3	ok
-00401c00	load_tmp_bedien	94	false	2	6	ok
-00401c5e	init_bedien	210	false	2	5	ok
-00401d30	save_bedien	25	false	3	1	ok
-00401d49	save_tmp_bedien	71	false	1	3	ok
-00401d90	slot_check_index	34	false	29	1	ok
-00401db2	slot_check_level	34	false	8	1	ok
-00401dd4	create_slot	1171	false	2	4	ok
-00402267	clear_slot	922	false	3	3	ok
-00402601	reset_slot	888	false	1	3	ok
-00402979	load_tmp_slotdbase	101	false	2	6	ok
-004029de	init_slotdbase	342	false	2	6	ok
-00402b34	save_slotdbase	28	false	4	1	ok
-00402b50	save_tmp_slotdbase	79	false	1	3	ok
-00402b9f	get_last_saved_slot	167	false	3	2	ok
-00402c46	set_active_slot	219	false	2	3	ok
-00402d21	update_active_slot_optie	173	false	1	3	ok
-00402dce	update_active_slot_bediening	176	false	1	3	ok
-00402e7e	slot_naam_string	112	false	7	1	ok
-00402eee	slot_level_string	118	false	4	1	ok
-00402f64	slot_tijd_string	285	false	5	3	ok
-00403081	slot_count_total_tijd	139	false	7	2	ok
-00403124	slot_count_total_tijd_speler	491	false	1	2	ok
-00403310	check_score_index	34	false	5	1	ok
-00403332	check_score_level	34	false	5	1	ok
-00403354	load_tmp_scoredbase	101	false	2	6	ok
-004033b9	init_scoredbase	178	false	2	6	ok
-0040346b	save_scoredbase	28	false	2	1	ok
-00403487	save_tmp_scoredbase	79	false	1	3	ok
-004034d6	get_last_entered_hiscore	58	false	3	1	ok
-00403510	get_last_entered_levelscore	88	false	2	2	ok
-00403568	compare_score	58	false	0	1	ok
-004035a2	add_new_hiscore	382	false	3	5	ok
-00403720	add_new_levelscore	468	false	1	6	ok
-004038f4	load_infio	850	false	1	6	ok
-00403c46	save_infio	853	false	2	3	ok
-00403f9b	init_infio	356	false	2	4	ok
-00404100	make_bmp_screen_shot	1	false	11	0	ok
-00404101	wait_escape_pressed	21	false	16	2	ok
-00404116	wait_enter_pressed	21	false	20	2	ok
-0040412b	wait_cursor_up_pressed	21	false	4	2	ok
-00404140	wait_cursor_down_pressed	21	false	4	2	ok
-00404155	mm_wait_snd	65	false	0	3	ok
-00404196	mm_draw_info_text	340	false	1	5	ok
-004042ea	mm_display_info	212	false	2	7	ok
-004043be	mm_af_image	66	false	2	1	ok
-00404400	mm_animate_buttons	356	false	1	6	ok
-00404564	mm_animate_map	172	false	1	7	ok
-00404610	mm_open_screen	276	false	2	14	ok
-00404724	mm_close_screen	116	false	2	8	ok
-00404798	mm_handle_tmp_hiscore	327	false	1	7	ok
-004048df	mm_handle_opnieuw_spel	355	false	1	9	ok
-00404a74	menu_main	1180	false	1	26	ok
-00404f10	mst_draw_selected_slot_info	384	false	2	9	ok
-00405090	mst_draw_slot_info	600	false	2	11	ok
-004052e8	mst_reselect_slot	151	false	1	6	ok
-0040537f	mst_print_slot	170	false	2	7	ok
-00405429	mst_handle_intro	176	false	1	10	ok
-004054d9	mst_open_screen	191	false	1	11	ok
-00405598	mst_close_screen	85	false	1	8	ok
-004055ed	menu_start	1225	false	1	28	ok
-00405ab8	mc_af_image	66	false	7	1	ok
-00405afa	mc_clear_text_bar	63	false	1	4	ok
-00405b39	mc_print_text_bar	213	false	1	9	ok
-00405c0e	scan_2_ckey	39	false	2	0	ok
-00405c35	load_ckey	50	false	2	0	ok
-00405c67	save_ckey	47	false	1	0	ok
-00405c96	print_keys	278	false	2	8	ok
-00405dac	clear_keys	126	false	1	4	ok
-00405e2a	clear_all_ckey	45	false	1	0	ok
-00405e57	ckey_defined	40	false	1	0	ok
-00405e7f	ckey_new_define	51	false	1	0	ok
-00405eb2	mb_read_key	116	false	1	2	ok
-00405f26	mc_animate_open_textbox	103	false	1	6	ok
-00405f8d	mc_animate_close_textbox	95	false	1	5	ok
-00405fec	config_keys	527	false	1	17	ok
-004061fb	display_keys	159	false	2	5	ok
-0040629a	display_joystick	132	false	2	4	ok
-0040631e	display_stuur	69	false	2	0	ok
-00406363	mc_display_controls	149	false	2	3	ok
-004063f8	mc_animate_buttons	153	false	1	5	ok
-00406491	mc_open_screen	150	false	1	13	ok
-00406527	mc_close_screen	38	false	1	6	ok
-0040654d	menu_bedien	843	false	1	29	ok
-00406898	mo_af_image	66	false	7	1	ok
-004068f2	mc_active_form	63	false	1	3	ok
-00406919	mc_display_geluid	496	false	1	2	ok
-00406b09	mc_display_horizon	258	false	1	2	ok
-00406c0b	mc_display_detail	263	false	1	2	ok
-00406d12	mc_display_dashbord	258	false	1	2	ok
-00406e14	mc_display_inhoud	156	false	1	7	ok
-00406eb0	mc_display_snd_setting	306	false	2	5	ok
-00406fe2	mc_display_tableau	153	false	1	6	ok
-0040707b	mo_animate_buttons	153	false	1	5	ok
-00407114	mo_open_screen	119	false	1	11	ok
-0040718b	mo_close_screen	38	false	1	6	ok
-00407242	menu_opties	342	false	1	12	ok
-00407880	ms_af_image	66	false	1	1	ok
-004078dc	ms_get_current_display	52	false	1	0	ok
-00407910	ms_print_score	287	false	1	3	ok
-00407a2f	ms_print_hiscore	332	false	1	3	ok
-00407b7b	ms_display_score	440	false	2	9	ok
-00407d33	ms_open_screen	143	false	1	11	ok
-00407dc2	ms_close_screen	38	false	1	6	ok
-00407de8	menu_score	230	false	2	11	ok
-00407ed0	mds_af_image	66	false	0	1	ok
-00407f2c	mds_get_current_display	52	false	1	0	ok
-00407f60	mds_print_score	302	false	1	4	ok
-0040808e	mds_print_hiscore	306	false	1	4	ok
-004081c0	mds_display_score	338	false	1	7	ok
-00408312	mds_open_screen	154	false	1	11	ok
-004083ac	mds_close_screen	75	false	1	8	ok
-004083f7	menu_display_score	98	false	1	8	ok
-0040845c	mns_draw_selected_slot_info	369	false	2	10	ok
-004085cd	mns_draw_slot_info	551	false	2	12	ok
-004087f4	mns_reselect_slot	88	false	1	6	ok
-0040884c	mns_print_slot	108	false	2	7	ok
-004088b8	mns_open_screen	136	false	1	10	ok
-00408940	mns_close_screen	48	false	1	6	ok
-00408970	menu_nieuwesplr	1036	false	1	29	ok
-00408d7c	mdt_display_stand	1073	false	1	5	ok
-004091ad	mdt_display_score	150	false	1	5	ok
-00409243	mdt_open_screen	151	false	1	11	ok
-004092da	mdt_close_screen	75	false	1	8	ok
-00409325	menu_display_stand	93	false	1	7	ok
-00409384	mdc_compare_score	47	false	0	1	ok
-004093b3	mdc_create_huidige_stand	443	false	1	5	ok
-0040956e	mdc_display_huidige_stand	314	false	1	3	ok
-004096a8	mdc_display_score	145	false	1	6	ok
-00409739	mdc_open_screen	190	false	1	12	ok
-004097f7	mdc_close_screen	75	false	1	8	ok
-00409842	menu_display_classe	92	false	1	7	ok
-004098a0	init_anims	99	false	0	5	ok
-00409903	init_anims_1	71	false	1	4	ok
-0040994a	use_mm_menu_cfg_anims	132	false	1	6	ok
-004099ce	free_mm_menu_cfg_anims	67	false	1	4	ok
-00409a11	use_mc_menu_cfg_anims	132	false	1	6	ok
-00409a95	free_mc_menu_cfg_anims	48	false	1	2	ok
-00409ac5	use_mo_menu_cfg_anims	132	false	1	6	ok
-00409b49	free_mo_menu_cfg_anims	48	false	1	2	ok
-00409b79	use_ms_menu_cfg_anims	132	false	1	6	ok
-00409bfd	free_ms_menu_cfg_anims	48	false	1	2	ok
-00409c2d	use_reqwarn_cfg_anims	132	false	1	6	ok
-00409cb1	free_reqwarn_cfg_anims	48	false	0	2	ok
-00409ce1	use_reqvraag_cfg_anims	132	false	1	6	ok
-00409d65	free_reqvraag_cfg_anims	48	false	0	2	ok
-00409d95	use_reqinput_cfg_anims	132	false	1	6	ok
-00409e19	free_reqinput_cfg_anims	48	false	0	2	ok
-00409e49	use_mst_menu_cfg_anims	132	false	1	6	ok
-00409ecd	free_mst_menu_cfg_anims	48	false	1	2	ok
-00409efd	use_mds_menu_cfg_anims	132	false	1	6	ok
-00409f81	free_mds_menu_cfg_anims	48	false	1	2	ok
-00409fb1	use_mdt_menu_cfg_anims	132	false	1	6	ok
-0040a035	free_mdt_menu_cfg_anims	48	false	1	2	ok
-0040a065	use_mdc_menu_cfg_anims	132	false	1	6	ok
-0040a0e9	free_mdc_menu_cfg_anims	48	false	1	2	ok
-0040a119	use_mns_menu_cfg_anims	132	false	1	6	ok
-0040a19d	free_mns_menu_cfg_anims	48	false	1	2	ok
-0040a1d0	reqw_open	230	false	1	12	ok
-0040a2b6	reqw_close	82	false	1	8	ok
-0040a308	req_warning	155	false	1	9	ok
-0040a3a4	reqv_stop_snd	93	false	0	3	ok
-0040a401	reqv_wait_snd	50	false	1	3	ok
-0040a433	reqv_open	236	false	1	12	ok
-0040a51f	reqv_close	82	false	1	8	ok
-0040a571	req_vraag	228	false	3	11	ok
-0040a658	reqi_stop_snd	93	false	0	3	ok
-0040a6b5	reqi_wait_snd	50	false	1	3	ok
-0040a6e7	reqi_open	278	false	1	13	ok
-0040a7fd	reqi_close	97	false	1	9	ok
-0040a85e	req_input	447	false	2	15	ok
-0040aa20	txt_get_word	83	false	1	0	ok
-0040aa73	txt_check_newline	48	false	1	0	ok
-0040aaa3	txt_crop_word	32	false	1	0	ok
-0040aac3	win_printwrapped	405	false	4	8	ok
-0040ac58	win_bprintf	273	false	9	4	ok
-0040ad6c	reset_infio	1292	false	2	2	ok
-0040b288	handle_game	1697	false	1	18	ok
-0040b92c	movie_play_outtro	1	false	2	0	ok
-0040b930	snd_valid_buffer	21	false	5	0	ok
-0040b945	snd_stop	100	false	12	4	ok
-0040b9a9	snd_play	107	false	12	3	ok
-0040ba14	snd_play_looping	110	false	3	3	ok
-0040ba82	snd_wait	86	false	9	5	ok
-0040bad8	snd_fade_out	119	false	1	6	ok
-0040bb4f	snd_set_volume	64	false	8	3	ok
-0040bb8f	snd_get_volume	55	false	0	3	ok
-0040bbc8	set_ini_filename	201	false	3	2	ok
-0040bc91	write_ini_string_setting	49	false	0	2	ok
-0040bcc2	write_ini_value_setting	81	false	1	3	ok
-0040bd13	read_ini_value_setting	52	false	2	2	ok
-0040bd47	read_ini_string_setting	55	false	0	2	ok
-0040bd80	set_debugmsg_state	12	false	1	0	ok
-0040bd8c	debugmsg	147	false	124	5	ok
-0040be1f	message	84	false	0	2	ok
-0040be73	exit_xvga_lib	270	false	2	7	ok
-0040bf81	fatal_exit	157	false	284	7	ok
-0040c026	fatal_exit_tail	7	false	2	0	ok
-0040c02d	xvga_flip_page	117	false	3	2	ok
-0040c125	set_xvga_vars	180	false	1	1	ok
-0040c168	get_xvga_vars	63	false	0	1	ok
-0040c195	dd_error_string	744	false	51	0	ok
-0040c47d	get_surface_ptr	92	false	8	3	ok
-0040c4d9	get_surface_ptr_1	206	false	2	3	ok
-0040c5a7	get_surface_ptr_2	214	false	0	3	ok
-0040c67d	get_surface_ptr_3	100	false	5	3	ok
-0040c6e1	reset_surface_ptr	149	false	2	2	ok
-0040c776	reset_surface_ptr_1	50	false	12	2	ok
-0040c7a8	create_surface	128	false	5	3	ok
-0040c828	create_surface_1	123	false	2	3	ok
-0040c8a3	create_surface_2	121	false	0	3	ok
-0040c91c	create_surface_3	143	false	0	3	ok
-0040c9ab	create_surface_4	141	false	1	3	ok
-0040ca38	create_surface_5	158	false	0	3	ok
-0040cad6	get_surface_info	104	false	2	3	ok
-0040cb3e	xvga_check_lock_ability	167	false	1	2	ok
-0040cbe5	do_screen_update	75	false	3	2	ok
-0040cc30	do_store_screen	66	false	0	2	ok
-0040cc72	do_back_screen_update	75	false	1	2	ok
-0040ccbd	clear_screen	62	false	15	3	ok
-0040ccfb	init_lib_surfaces	780	false	2	13	ok
-0040d007	exit_lib_surfaces	144	false	1	2	ok
-0040d097	init_xvga_lib	690	false	1	20	ok
-0040d349	set_xvga_resolution	298	false	0	8	ok
-0040d473	reset_xvga_resolution	51	false	0	2	ok
-0040d4a8	ds_error_string	160	false	42	0	ok
-0040d548	xvga_init_sound_info	105	false	1	2	ok
-0040d5b1	get_new_sound_info	32	false	1	0	ok
-0040d5d1	enum_sound_info_callback	279	false	0	4	ok
-0040d6e8	xvga_get_sound_info	32	false	2	2	ok
-0040d708	set_output_format	281	false	1	4	ok
-0040d821	set_3d_output_format	278	false	1	3	ok
-0040d937	create_sound_buffer	192	false	1	3	ok
-0040d9f7	create_3d_sound_buffer	240	false	1	3	ok
-0040dae7	duplicate_sound_buffer	65	false	3	2	ok
-0040db28	sound_buffer_busy	151	false	15	2	ok
-0040dbbf	stop_sound_buffer	265	false	5	2	ok
-0040dcc8	stop_all_sound_buffers	55	false	1	1	ok
-0040dcff	delete_all_sound_buffers	114	false	1	1	ok
-0040dd71	search_sound_buffer	79	false	3	2	ok
-0040ddc0	get_free_buffer	65	false	0	1	ok
-0040de01	get_free_buffer_1	83	false	5	1	ok
-0040de54	delete_sound_buffer	189	false	3	3	ok
-0040df11	xvga_exit_sound	82	false	1	2	ok
-0040df63	xvga_init_sound	770	false	1	8	ok
-0040e265	xvga_init_sound_1	900	false	0	8	ok
-0040e5e9	set_sound_buffer_freq	169	false	0	2	ok
-0040e692	get_sound_buffer_freq	132	false	0	2	ok
-0040e716	set_sound_buffer_vol	169	false	3	2	ok
-0040e7bf	get_sound_buffer_vol	126	false	2	2	ok
-0040e83d	set_sound_buffer_pan	213	false	0	2	ok
-0040e912	get_sound_buffer_pan	167	false	0	2	ok
-0040e9b9	load_sound_buffer_data	270	false	1	4	ok
-0040eac7	load_wave_file	365	false	5	7	ok
-0040ec34	play_sound_buffer	159	false	0	2	ok
-0040ecd3	play_sound_buffer_1	480	false	3	9	ok
-0040eeb3	play_sound_buffer_2	496	false	0	10	ok
-0040f0a3	load_sound_buffer	404	false	0	8	ok
-0040f237	set_3dsound_buffer_pos	180	false	0	2	ok
-0040f2eb	set_3dsound_buffer_pos_1	171	false	0	2	ok
-0040f396	set_3dsound_buffer_velocity	171	false	0	2	ok
-0040f441	set_3dsound_buffer_velocity_1	177	false	0	2	ok
-0040f4f2	get_3dsound_buffer_pos	197	false	0	2	ok
-0040f5b7	get_3dsound_buffer_pos_1	165	false	0	2	ok
-0040f65c	set_3dlistener_pos	76	false	0	2	ok
-0040f6a8	set_3dlistener_velocity	63	false	0	1	ok
-0040f6e7	set_3dlistener_pos_1	73	false	0	2	ok
-0040f730	set_3dlistener_velocity_1	61	false	0	1	ok
-0040f76d	get_3dlistener_pos	53	false	0	1	ok
-0040f7a2	get_3dlistener_velocity	64	false	0	1	ok
-0040f7e2	get_3dlistener_pos_1	92	false	0	2	ok
-0040f83e	get_3dlistener_velocity_1	60	false	0	1	ok
-0040f87a	set_3dlistener_orientation	79	false	0	2	ok
-0040f8c9	set_3dlistener_orientation_1	88	false	0	2	ok
-0040f921	set_3dlistener_dopplerfactor	112	false	0	2	ok
-0040f991	set_3dlistener_distancefactor	98	false	0	1	ok
-0040f9f3	set_3dlistener_rollofffactor	105	false	0	1	ok
-0040fa5c	execute_ds3d_settings	58	false	0	2	ok
-0040fa96	play_3dsound_buffer	496	false	0	6	ok
-0040fc86	load_3dsound_buffer	135	false	0	3	ok
-0040fd0d	stop_3dsound_buffer	249	false	0	2	ok
-0040fe06	strupr_1	37	false	1	0	ok
-0040fe2b	time	47	false	2	2	ok
-0040fe5a	initrandnext	10	false	2	1	ok
-0040fe64	rand	36	false	1	1	ok
-0040fe88	srand	16	false	2	1	ok
-0040fe98	xvga_locate_cdrom	169	false	1	5	ok
-0040ff41	file_path	162	false	15	5	ok
-0040ffe4	xvga_init_fileio	629	false	1	7	ok
-00410259	xvga_src_fseek	263	false	8	3	ok
-00410360	xvga_src_filelength	114	false	0	2	ok
-004103d2	xvga_src_fopen	302	false	10	4	ok
-00410500	xvga_src_fclose	117	false	10	3	ok
-00410575	xvga_exit_fileio	79	false	1	3	ok
-004105c4	init_controls	270	false	1	3	ok
-004106d2	clear_control_list	23	false	1	0	ok
-004106e9	add_control_to_list	112	false	1	1	ok
-0041075c	get_mouse_type	35	false	1	1	ok
-0041077f	set_mouse_type	73	false	1	1	ok
-004107c8	init_mouse	105	false	1	2	ok
-00410831	release_mouse	29	false	0	0	ok
-0041084e	hide_mouse	40	false	54	1	ok
-00410876	get_mouse_on	27	false	1	0	ok
-00410891	mouse_on	51	false	3	1	ok
-004108c4	show_mouse	42	false	46	1	ok
-004108ee	mouse_off	57	false	4	2	ok
-00410927	set_mouse_anim	298	false	0	1	ok
-00410a51	get_mouse_anim	124	false	0	1	ok
-00410acd	set_mouse_pos	48	false	0	2	ok
-00410afd	get_mouse_pos	113	false	1	3	ok
-00410b6e	set_mouse_hotspot	49	false	0	1	ok
-00410b9f	get_mouse_hotspot	52	false	0	1	ok
-00410bd3	draw_mouse	227	false	1	3	ok
-00410cb6	handle_mouse	146	false	2	4	ok
-00410d48	exit_help	33	false	1	0	ok
-00410d69	init_help	283	false	1	6	ok
-00410e84	draw_grid	475	false	4	2	ok
-0041105f	play_help	285	false	4	13	ok
-0041117c	check_help_keys	71	false	1	2	ok
-004111c3	get_free_help_key	36	false	1	0	ok
-004111e7	clear_help_keys	24	false	1	0	ok
-004111ff	set_help_key	49	false	1	2	ok
-00411230	strstr	190	false	2	0	ok
-004112f0	get_mem_xsize	117	false	0	1	ok
-00411365	get_mem_ysize	119	false	0	1	ok
-004113dc	get_mem_mx	79	false	0	1	ok
-0041142b	get_mem_my	79	false	0	1	ok
-0041147a	free_sprites	39	false	1	1	ok
-004114a1	alloc_sprites	161	false	0	2	ok
-00411542	set_sprite_image	94	false	0	1	ok
-004115a0	get_sprite_image	96	false	0	1	ok
-00411600	alloc_mem_images	119	false	0	1	ok
-00411677	alloc_mem_images_1	157	false	1	2	ok
-00411714	free_mem_images	105	false	0	2	ok
-0041177d	alloc_mem_image	473	false	2	5	ok
-00411956	free_mem_image	175	false	3	2	ok
-00411a05	lock_mem_image	81	false	0	2	ok
-00411a56	lock_mem_image_1	85	false	2	2	ok
-00411aab	unlock_mem_image	69	false	2	2	ok
-00411af0	use_mem_images	879	false	12	11	ok
-00411e5f	disable_mem_images	36	false	13	1	ok
-00411e83	disable_all_mem_images	34	false	2	1	ok
-00411ea5	show_mem_images	185	false	0	4	ok
-00411f5e	init_mem_images	899	false	2	11	ok
-004122e2	wstart2	15	false	0	1	ok
-00412360	get_string_width	120	false	2	2	ok
-004123d8	get_string_height	107	false	2	2	ok
-00412443	win_print_xy	1329	false	12	11	ok
-00412974	win_print_xy_1	1275	false	0	11	ok
-00412e6f	xvga_load_select_font	65	false	0	4	ok
-00412eb0	xvga_load_font	144	false	2	2	ok
-00412f40	xvga_select_font	98	false	21	1	ok
-00412fa2	xvga_set_font_colors	56	false	17	1	ok
-00412fda	xvga_set_font_bkmode	104	false	3	1	ok
-00413042	xvga_free_font	115	false	1	2	ok
-004130b5	xvga_release_fonts	70	false	0	1	ok
-004130fb	xvga_get_active_font	29	false	1	0	ok
-00413118	get_free_font_index	36	false	1	0	ok
-0041313c	open_flags	209	false	2	2	ok
-0041320d	doopen	196	false	2	5	ok
-004132d1	fsopen	57	false	1	3	ok
-0041330a	fopen	10	false	10	1	ok
-00413314	close_file	122	false	1	3	ok
-0041338e	freopen	104	false	0	4	ok
-004133f6	fclose	63	false	13	2	ok
-00413435	shutdown_stream	21	false	2	2	ok
-0041344a	hex	12	false	1	0	ok
-00413456	MkTmpFile	101	false	1	2	ok
-004134bb	doclose	171	false	2	9	ok
-00413566	update_buffer	66	false	1	0	ok
-004135a8	fseek	244	false	6	6	ok
-0041369c	get_errno_ptr	10	false	3	1	ok
-004136a6	get_doserrno_ptr	10	false	0	1	ok
-004136b0	strerror	23	false	3	0	ok
-004136c7	ftell	81	false	2	3	ok
-00413718	fread	511	false	15	5	ok
-00413917	fwrite	486	false	1	7	ok
-00413afd	remove	5	true	1	0	ok
-00413b04	get_number_of_joysticks_supported	12	false	0	1	ok
-00413b10	get_attached_joysticks	242	false	2	2	ok
-00413c02	calibrate_joysticks	830	false	0	4	ok
-00413f40	clear_joystick_key_down_state	73	false	2	0	ok
-00413f89	check_joystick_movement	348	false	1	1	ok
-004140e5	handle_joystick	193	false	0	3	ok
-004141c8	set_joystick_keys	84	false	0	1	ok
-0041421c	set_joystick_sensibility	60	false	0	1	ok
-00414258	get_joystick_position	560	false	0	2	ok
-00414488	check_joystick_keys	62	false	1	0	ok
-004144c6	strncpy	37	false	5	0	ok
-004144eb	buf_putc	31	false	0	0	ok
-0041450a	vbprintf	41	false	7	1	ok
-00414533	bprintf	39	false	1	1	ok
-0041455a	strncmp	41	false	2	0	ok
-00414583	byteswap	38	false	1	0	ok
-004145a9	med3	88	false	1	0	ok
-00414601	qsort	1081	false	3	2	ok
-00414a3c	keyispressed	79	false	13	1	ok
-00414a8b	keyispressed_1	107	false	0	3	ok
-00414af8	handle_win_msg	71	false	21	3	ok
-00414b3f	handle_quit_msg	74	false	1	5	ok
-00414b89	WindowProc	270	false	0	8	ok
-00414c98	get_clipping_limit	32	false	0	0	ok
-00414cb8	set_clipping_limit	151	false	2	1	ok
-00414d4f	blt_scr_2_scr	553	false	25	2	ok
-00414f78	set_char	480	false	0	4	ok
-00415158	blt_char	272	false	0	2	ok
-00415268	set_mem_image	1698	false	39	6	ok
-0041590a	blt_mem_image	375	false	0	2	ok
-00415a84	init_animations	130	false	2	1	ok
-00415b06	alloc_animations	104	false	1	1	ok
-00415b70	read_pcx_8_to_16_line	129	false	3	2	ok
-00415bf1	read_pcx_8_to_24_line	150	false	3	2	ok
-00415c87	read_pcx_line	83	false	3	2	ok
-00415cda	unpack_pcx_file_screen	239	false	0	5	ok
-00415dc9	unpack_pcx_file_screen_1	307	false	2	6	ok
-00415efc	unpack_pcx_file_surface	219	false	5	5	ok
-00415fd7	load_pcx_file_palette	199	false	0	6	ok
-0041609e	get_pcx_info	112	false	0	3	ok
-0041610e	load_pcx_file	549	false	1	10	ok
-00416333	load_pcx_file_1	443	false	10	9	ok
-004164ee	load_pcx_file_surface	495	false	0	8	ok
-004166dd	load_pcx_file_surface_1	507	false	0	8	ok
-004168d8	load_pcx_file_surface_2	507	false	0	8	ok
-00416ad3	load_pcx_file_surface_3	653	false	0	10	ok
-00416d60	load_pcx_file_surface_4	482	false	0	9	ok
-00416f44	reset_anim_base	43	false	29	0	ok
-00416f6f	add_anim_base	84	false	2	0	ok
-00416fc3	add_array_to_anim_base	29	false	13	1	ok
-00416fe0	add_demi_array_to_anim_base	90	false	0	1	ok
-0041703c	handle_wipe	27	false	16	1	ok
-0041707c	handle_wipe_1	395	false	1	10	ok
-00417207	copyblock_tosurface	276	false	2	0	ok
-0041731c	dispatch_form_message	107	false	1	2	ok
-00417387	set_next_control_focus	54	false	6	2	ok
-004173bd	set_previous_control_focus	52	false	6	2	ok
-00417404	set_control_state	275	false	13	4	ok
-00417517	enable_control	135	false	0	2	ok
-0041759e	disable_control	123	false	0	1	ok
-00417619	get_control_focus	17	false	3	2	ok
-0041762a	focus_control	133	false	21	2	ok
-004176af	get_control_image_index	63	false	15	1	ok
-004176ee	check_control_position	169	false	6	1	ok
-00417797	get_previous_control_index	104	false	1	1	ok
-004177ff	get_next_control_index	119	false	1	1	ok
-00417876	get_numberofcontrols_inform	6	false	3	0	ok
-0041787c	get_old_control_state	78	false	1	1	ok
-004178ca	get_control_type	78	false	3	1	ok
-00417918	get_control_state	78	false	3	1	ok
-00417966	get_control_hwnd	78	false	2	1	ok
-004179b4	get_control_x	77	false	10	1	ok
-00417a01	get_control_y	78	false	10	1	ok
-00417a4f	get_control_index	74	false	18	1	ok
-00417a99	get_control_pointer	64	false	9	1	ok
-00417ad9	get_control_pointer_1	67	false	4	1	ok
-00417b1c	call_help_function	184	false	1	1	ok
-00417bd4	destroy_form	118	false	15	1	ok
-00417c4a	activate_form	172	false	16	2	ok
-00417cf6	draw_form_animfocus_buttons	72	false	1	1	ok
-00417d3e	check_form_key_pressed	336	false	6	5	ok
-00417e8e	handle_form	123	false	12	4	ok
-00417f09	wait_form_key_released	33	false	20	2	ok
-00417f2c	init_edit_box	13	false	1	1	ok
-00417f39	clear_edit_keys_allowed	5	false	1	0	ok
-00417f3e	set_edit_keys_allowed	85	false	0	1	ok
-00417f93	get_edit_box_text	73	false	1	4	ok
-00417fdc	set_edit_box_colors	89	false	0	2	ok
-00418035	draw_help_editbox	62	false	0	3	ok
-00418073	destroy_edit_box	79	false	0	2	ok
-004180c2	create_edit_box	640	false	0	10	ok
-00418342	set_windows_edit_box_colors	101	false	1	4	ok
-004183a7	EditWindowProc	331	false	0	10	ok
-004184f2	getcwd	121	false	1	4	ok
-00418590	utoa	74	false	1	0	ok
-004185da	itoa_1	27	false	5	1	ok
-004185f5	wcpp_2_pure_error	37	false	0	1	ok
-0041861a	mem_putc	19	false	0	0	ok
-0041862d	vsprintf	21	false	5	1	ok
-00418642	fprintf	33	false	1	1	ok
-00418664	xvga_init_input	302	false	0	3	ok
-00418792	xvga_input_setup	150	false	0	2	ok
-00418828	get_key_state	97	false	0	2	ok
-00418889	xvga_exit_input	115	false	1	0	ok
-004188fc	xvga_init_timer	148	false	0	3	ok
-00418990	xvga_get_free_timer	104	false	1	1	ok
-004189f8	xvga_set_timer	166	false	0	4	ok
-00418a9e	xvga_unset_timer	110	false	1	1	ok
-00418b0c	xvga_kill_timers	71	false	1	1	ok
-00418b53	xvga_handle_timers	66	false	1	0	ok
-00418b95	null_exit_rtn	1	false	2	0	ok
-00418b96	exit	24	false	3	2	ok
-00418bae	exit_1	37	false	1	2	ok
-00418be0	memset	24	false	28	1	ok
-00418bf8	xvga_palette_ignore	6	false	0	0	ok
-00418bfe	init_xvga_palette	201	false	1	5	ok
-00418cc7	exit_xvga_palette	35	false	1	0	ok
-00418cea	attach_xvga_palette	249	false	1	2	ok
-00418de3	set_xvga_palette	169	false	5	2	ok
-00418e8c	get_xvga_palette	172	false	0	2	ok
-00418f38	set_xvga_palette_flag	219	false	0	2	ok
-00419014	set_conversion_mode	6	false	0	0	ok
-0041901a	get_conversion_mode	6	false	0	0	ok
-00419020	set_hdc_pixel	125	false	0	3	ok
-0041909d	set_hdc_pixel_1	56	false	1	2	ok
-004190d5	get_hdc_pixel	124	false	0	3	ok
-00419151	get_hdc_pixel_1	43	false	1	1	ok
-0041917c	get_color_format	145	false	1	3	ok
-0041920d	set_surface_color_key	70	false	0	3	ok
-00419253	translate_pixel	309	false	6	1	ok
-00419388	translate_pixel_1	416	false	2	1	ok
-00419528	get_xvga_pixel_format	313	false	1	3	ok
-00419664	xvga_get_first_cdrom	84	false	1	1	ok
-004196d4	xvga_init_drive_info	351	false	1	5	ok
-00419833	xvga_get_system_info	536	false	1	7	ok
-00419a4b	search_screen_mode_index	60	false	1	0	ok
-00419a87	test_screen_modes_available	32	false	0	0	ok
-00419aa7	xvga_init_dd_info	105	false	1	2	ok
-00419b10	get_new_dd_info	32	false	1	0	ok
-00419b30	enum_dd_device	343	false	0	5	ok
-00419c87	xvga_get_dd_info	32	false	1	2	ok
-00419ca7	xvga_get_dd_guid	166	false	1	1	ok
-00419d4d	mode_available_callback_func	76	false	0	2	ok
-00419d99	xvga_get_screen_mode_info	88	false	1	3	ok
-00419df1	xvga_test_mode_available	51	false	2	1	ok
-00419e24	stricmp_1	71	false	5	0	ok
-00419e6b	strrchr	26	false	2	0	ok
-00419e88	init_smacker	158	false	2	4	ok
-00419f26	set_smack_palette	143	false	2	2	ok
-00419fb5	play_check_smacker	100	false	2	3	ok
-0041a019	do_play_smacker	223	false	0	8	ok
-0041a0f8	do_play_scale_smacker	246	false	1	9	ok
-0041a1ee	check_smacker_keys	133	false	1	1	ok
-0041a273	play_smacker	382	false	0	5	ok
-0041a3f1	get_free_smacker_key	38	false	1	0	ok
-0041a417	clear_smacker_keys	26	false	1	0	ok
-0041a431	set_smacker_key	84	false	1	2	ok
-0041a487	fini_387_emulator	1	false	1	0	ok
-0041a488	getctime	101	false	1	1	ok
-0041a4ed	mktime	340	false	2	4	ok
-0041a641	threadid	12	false	0	1	ok
-0041a64d	SingleThread	5	false	17	0	ok
-0041a652	NullExitRtn	1	false	35	0	ok
-0041a653	DefInitAccessH	5	true	1	0	ok
-0041a658	DefFiniAccessH	5	true	1	0	ok
-0041a65d	NTInit	295	false	1	8	ok
-0041a784	NTMainInit	70	false	1	6	ok
-0041a7ca	exit_2	31	false	2	4	ok
-0041a7e9	mem_putc_1	19	false	0	0	ok
-0041a7fc	sprintf	48	false	2	1	ok
-0041a82c	getenv	97	false	2	1	ok
-0041a88d	access_1	50	false	1	3	ok
-0041a8bf	copypart	54	false	1	3	ok
-0041a8f5	splitpath	217	false	1	2	ok
-0041a9ce	pickup	20	false	1	0	ok
-0041a9e2	makepath	491	false	1	4	ok
-0041abcd	filelength	89	false	2	2	ok
-0041ac28	check_button_hotkey	22	false	0	0	ok
-0041ac3e	draw_focus_anim_button	160	false	0	5	ok
-0041acde	destroy_button	44	false	0	2	ok
-0041ad0a	create_button	345	false	0	7	ok
-0041ae63	draw_help_button	140	false	0	7	ok
-0041aeef	draw_button	243	false	1	10	ok
-0041afe2	ButtonWindowProc	322	false	0	8	ok
-0041b124	check_togglebutton_hotkey	22	false	0	0	ok
-0041b13a	get_togglebutton_togglestate	82	false	0	4	ok
-0041b18c	set_togglebutton_togglestate	142	false	2	4	ok
-0041b21a	destroy_togglebutton	44	false	0	2	ok
-0041b246	create_togglebutton	220	false	0	8	ok
-0041b322	draw_help_togglebutton	100	false	0	5	ok
-0041b386	draw_togglebutton	308	false	1	11	ok
-0041b4ba	ToggleButtonWindowProc	316	false	0	8	ok
-0041b5f8	check_areabutton_hotkey	22	false	0	0	ok
-0041b60e	destroy_areabutton	44	false	0	2	ok
-0041b63a	create_areabutton	356	false	0	8	ok
-0041b79e	draw_help_areabutton	62	false	0	3	ok
-0041b7dc	draw_areabutton	65	false	0	6	ok
-0041b81d	AreaButtonWindowProc	256	false	0	10	ok
-0041b920	check_animbutton_hotkey	22	false	0	0	ok
-0041b936	destroy_animbutton	44	false	0	2	ok
-0041b962	create_animbutton	234	false	0	7	ok
-0041ba4c	draw_animation_animbutton	236	false	1	6	ok
-0041bb38	draw_help_animbutton	237	false	0	6	ok
-0041bc3c	draw_animbutton	491	false	1	13	ok
-0041be27	AnimButtonWindowProc	356	false	0	10	ok
-0041bf8c	check_radiobutton_hotkey	22	false	0	0	ok
-0041bfa2	destroy_radiobutton	44	false	0	2	ok
-0041bfce	create_radiobutton	266	false	0	7	ok
-0041c0d8	unselect_radiobutton	160	false	1	5	ok
-0041c178	draw_help_radiobutton	93	false	0	5	ok
-0041c1d5	draw_radiobutton	326	false	1	11	ok
-0041c31b	RadioButtonWindowProc	310	false	0	8	ok
-0041c451	free	142	false	13	2	ok
-0041c4df	rewind	23	false	1	1	ok
-0041c4f6	WinMain_1	234	false	1	9	ok
-0041c5e8	tolower_1	14	false	2	0	ok
-0041c5f6	set_EDOM	5	false	1	0	ok
-0041c5fb	set_errno	14	false	17	1	ok
-0041c609	set_ERANGE	7	false	2	1	ok
-0041c610	set_EINVAL	16	false	0	1	ok
-0041c620	set_doserrno	14	false	1	1	ok
-0041c62e	open	36	false	0	1	ok
-0041c652	sopen	439	false	2	11	ok
-0041c809	allocfp	184	false	1	4	ok
-0041c8c1	freefp	57	false	2	0	ok
-0041c8fa	purgefp	30	false	1	1	ok
-0041c918	chktty	49	false	2	1	ok
-0041c94a	getpid	10	false	1	1	ok
-0041c954	flush	234	false	7	4	ok
-0041ca3e	lseek_1	58	false	4	3	ok
-0041ca78	close	111	false	1	3	ok
-0041cae7	tell	61	false	2	3	ok
-0041cb24	fflush	16	false	1	1	ok
-0041cb34	ioalloc	119	false	6	2	ok
-0041cbab	qread	116	false	2	3	ok
-0041cc1f	fgetc	158	false	3	3	ok
-0041ccbd	filbuf	47	false	1	1	ok
-0041ccec	fill_buffer	172	false	2	4	ok
-0041cd98	qwrite	166	false	2	6	ok
-0041ce3e	fputc	195	false	4	4	ok
-0041cf01	unlink	25	false	0	2	ok
-0041cf1a	prtf	927	false	4	2	ok
-0041d2b9	getprintspecs	318	false	1	1	ok
-0041d3f7	evalflags	95	false	1	0	ok
-0041d456	far_strlen	36	false	1	0	ok
-0041d47a	far_other_strlen	35	false	1	0	ok
-0041d49d	fmt4hex	94	false	1	1	ok
-0041d4fb	FixedPoint_Format	245	false	1	1	ok
-0041d5f0	float_format	7	false	1	1	ok
-0041d5f7	formstring	1257	false	1	9	ok
-0041dae0	zupstr	24	false	1	1	ok
-0041daf8	c_blt_sprite	41	false	4	1	ok
-0041db24	wipe_vrollbarup	426	false	1	8	ok
-0041dcce	wipe_vrollbardown	390	false	1	8	ok
-0041de54	wipe_draw_pixel_grid	500	false	1	3	ok
-0041e048	wipe_pixelfade_full	106	false	1	5	ok
-0041e0b4	wipe_scroll_in_left	269	false	1	5	ok
-0041e1c1	wipe_scroll_in_right	276	false	1	5	ok
-0041e2d5	wipe_scroll_in_top	267	false	1	4	ok
-0041e3e0	wipe_scroll_in_bottom	257	false	1	4	ok
-0041e4e4	wipe_luxaflex_horizontal	268	false	1	5	ok
-0041e5f0	wipe_luxaflex_verticale	298	false	1	5	ok
-0041e71a	dosret0	7	false	0	0	ok
-0041e721	dosretax	4	false	0	0	ok
-0041e725	set_errno_dos	81	false	2	2	ok
-0041e776	set_errno_nt	15	false	8	2	ok
-0041e785	malloc	239	false	9	4	ok
-0041e874	wcpp_2_fatal_runtime_error	29	false	1	2	ok
-0041e891	file_putc	17	false	0	1	ok
-0041e8a2	fprtf	145	false	1	4	ok
-0041e940	STOSB	49	false	1	1	ok
-0041e977	STOSD	108	false	1	0	ok
-0041e9e3	strnicmp_1	83	false	2	0	ok
-0041ea36	setEFGfmt	27	false	1	0	ok
-0041ea51	save_8087	5	false	0	0	ok
-0041ea56	rest_8087	4	false	0	0	ok
-0041ea5a	init_8087	49	false	1	1	ok
-0041ea8b	fpreset	10	false	0	0	ok
-0041ea95	chk8087	74	false	0	1	ok
-0041eae0	leapyear	59	false	4	0	ok
-0041eb1b	calc_yday	229	false	1	2	ok
-0041ec00	check_order	52	false	1	1	ok
-0041ec34	isindst	707	false	1	3	ok
-0041eef7	time_less	48	false	1	0	ok
-0041ef27	brktime	277	false	2	1	ok
-0041f03c	gmtime	30	false	1	1	ok
-0041f05a	gmtime_1	23	false	0	2	ok
-0041f071	CacheOSTZ	84	false	0	0	ok
-0041f0c5	tryOSTimeZone	246	false	0	1	ok
-0041f1bb	tzset	18	false	1	1	ok
-0041f1cd	parse_tz	261	false	0	2	ok
-0041f204	parse_time	36	false	2	0	ok
-0041f228	parse_offset	297	false	1	1	ok
-0041f351	parse_rule	260	false	1	1	ok
-0041f547	parse_rule_tail	35	false	0	1	ok
-0041f57c	CtrlHandlerIsNeeded	63	false	3	1	ok
-0041f5bb	StartCtrlHandler	44	false	1	1	ok
-0041f5e7	KillCtrlHandler	55	false	3	1	ok
-0041f61e	sigabort	5	false	0	0	ok
-0041f623	raise	151	false	1	5	ok
-0041f65c	sigfpe_handler	71	false	1	1	ok
-0041f6a3	signal	135	false	0	6	ok
-0041f788	SigInit	45	false	1	1	ok
-0041f7b5	SigFini	1	false	1	0	ok
-0041fb86	NewExceptionHandler	62	false	1	1	ok
-0041fbc4	DoneExceptionHandler	79	false	2	3	ok
-0041fc13	NTAtMaxFiles	69	false	1	0	ok
-0041fc58	NTAddFileHandle	121	false	1	2	ok
-0041fcd1	NTAddSpecificFileHandle	156	false	0	3	ok
-0041fd6d	NTRemoveFileHandle	44	false	1	1	ok
-0041fd99	NTInitFileHandles	55	false	1	2	ok
-0041fdd0	NTGetFakeHandle	18	false	1	0	ok
-0041fde2	nullSema4Rtn	1	false	1	0	ok
-0041fde3	CloseSemaphore	44	false	1	1	ok
-0041fe0f	AccessIOB	10	false	0	1	ok
-0041fe19	ReleaseIOB	10	false	0	1	ok
-0041fe23	AccessFileH	13	false	0	1	ok
-0041fe30	ReleaseFileH	16	false	0	1	ok
-0041fe40	InitAccessH	5	true	0	0	ok
-0041fe45	FiniAccessH	28	false	0	2	ok
-0041fe61	AccessNHeap	7	false	0	1	ok
-0041fe68	ReleaseNHeap	10	false	0	1	ok
-0041fe72	AccessFHeap	7	false	0	1	ok
-0041fe79	ReleaseFHeap	10	false	0	1	ok
-0041fe83	AccessTDList	7	false	0	1	ok
-0041fe8a	ReleaseTDList	7	false	0	1	ok
-0041fe91	AccessFList	5	false	0	0	ok
-0041fe96	AccessSemaphore	93	false	6	5	ok
-0041fef3	ReleaseFList	5	false	0	0	ok
-0041fef8	ReleaseSemaphore	37	false	6	1	ok
-0041ff1d	MultipleThread	32	false	0	2	ok
-0041ff3d	InitThreadData	63	false	2	2	ok
-0041ff7c	NTThreadInit	76	false	1	1	ok
-0041ffc8	NTAddThread	77	false	1	4	ok
-00420015	NTRemoveThread	77	false	2	4	ok
-00420062	ThreadExit	10	false	0	1	ok
-0042006c	NTThreadFini	32	false	1	1	ok
-0042008c	InitMultipleThread	281	false	1	3	ok
-004201a5	FiniSema4s	107	false	0	3	ok
-00420210	strdup_1	69	false	2	1	ok
-00420256	InitRtns	75	false	2	1	ok
-004202a1	FiniRtns	79	false	1	1	ok
-004202f0	mbsnccnt	62	false	1	1	ok
-0042032e	mbsnbcnt	49	false	4	1	ok
-0042035f	mbsninc	25	false	0	1	ok
-00420378	mbsninc_1	69	false	0	0	ok
-004203bd	mbscat	81	false	0	0	ok
-0042040e	mbscpy	31	false	0	0	ok
-0042042d	mbsdup	65	false	0	1	ok
-0042046e	mbsncat	93	false	0	2	ok
-004204cb	mbsnbcat	242	false	0	1	ok
-004205bd	mbsncpy	31	false	1	2	ok
-004205dc	mbsnbcpy	180	false	1	2	ok
-00420690	mbptov	62	false	2	0	ok
-004206ce	mbvtop	26	false	0	0	ok
-004206e8	mbvtop_1	52	false	1	0	ok
-0042071c	checkIsDBCS	49	false	0	1	ok
-0042074d	mbgetcode	109	false	2	0	ok
-004207ba	mbsnextc	82	false	0	0	ok
-0042080c	mbsinc	70	false	0	0	ok
-00420852	mbsdec	134	false	1	0	ok
-004208d8	MemAllocator	163	false	1	0	ok
-00420980	MemFree	272	false	1	0	ok
-00420a8b	RegisterThreadDataSize	21	false	0	0	ok
-00420aa0	stackavail	47	false	1	1	ok
-00420acf	CommonInit	11	false	1	0	ok
-00420ada	GetNTCreateAttr	45	false	0	0	ok
-00420b07	GetNTAccessAttr	44	false	1	0	ok
-00420b33	GetNTShareAttr	47	false	1	0	ok
-00420b62	isatty	65	false	3	2	ok
-00420ba3	IOMode	85	false	1	1	ok
-00420bf8	SetIOMode	21	false	2	0	ok
-00420c0d	InitFiles	119	false	0	2	ok
-00420c84	full_io_exit	12	false	0	2	ok
-00420c90	fcloseall	5	false	0	0	ok
-00420c95	docloseall	88	false	1	1	ok
-00420ced	flushall	5	false	1	0	ok
-00420cf2	flushall_1	59	false	1	2	ok
-00420d2d	getche	34	false	1	2	ok
-00420d4f	no_support_loaded	18	false	1	1	ok
-00420d86	ultoa	74	false	2	0	ok
-00420dd0	ltoa_1	27	false	1	1	ok
-00420deb	toupper_1	14	false	1	0	ok
-00420dfc	blt_sprite	91	false	1	0	ok
-00420e57	LinkUpNewMHeap	116	false	1	0	ok
-00420ecb	CreateNewNHeap	144	false	1	4	ok
-00420f5b	ExpandDGROUP	17	false	1	2	ok
-00420f6c	AdjustAmount	74	false	1	0	ok
-00420fb6	nmemneed	3	false	1	0	ok
-00420fb9	EnterWVIDEO	21	false	2	0	ok
-00420fdf	exit_with_msg	55	false	2	2	ok
-00421016	fatal_runtime_error	29	false	4	2	ok
-00421033	EFG_Format	234	false	0	2	ok
-0042111d	forcedecpt	95	false	1	0	ok
-0042117c	cnvs2d	14	false	0	1	ok
-0042118a	do_nothing	1	false	0	0	ok
-0042118c	init_80x87	39	false	1	0	ok
-004211b3	abort	6	false	0	1	ok
-004211b9	terminate	18	false	2	1	ok
-004211cb	control87	83	false	1	0	ok
-0042121e	NTRealKey	44	false	1	0	ok
-0042124a	initConsoleHandles	105	false	2	2	ok
-004212b3	NTConsoleInput	11	false	1	1	ok
-004212be	NTConsoleOutput	11	false	1	1	ok
-004212c9	realloc	122	false	2	4	ok
-00421343	GetThreadData	55	false	1	3	ok
-0042137a	AddThreadData	97	false	2	4	ok
-004213db	RemoveThreadData	74	false	1	2	ok
-00421425	FreeThreadDataList	41	false	0	1	ok
-0042144e	calloc	24	false	2	2	ok
-00421466	FiniThreadProcessing	5	true	1	0	ok
-0042146b	setenvp	184	false	0	3	ok
-00421523	strncat	63	false	2	0	ok
-00421562	do_getch	267	false	1	2	ok
-0042166d	getch	118	false	1	5	ok
-004216e3	putch	98	false	1	3	ok
-00421745	heapenable	33	false	0	1	ok
-00421766	nheapshrink	61	false	1	2	ok
-0042177a	ReturnMemToSystem	94	false	1	1	ok
-004217d8	ReleaseMiniHeap	42	false	1	1	ok
-0042182b	SetMaxPrec	6	false	0	0	ok
-00421831	DoEFormat	163	false	1	0	ok
-004218d4	DoFFormat	99	false	1	0	ok
-00421937	AdjField	113	false	1	1	ok
-004219a8	FtoS	570	false	1	10	ok
-00421be2	strtod	499	false	1	3	ok
-00421dd5	nmsize	9	false	1	0	ok
-00421dde	nexpand	73	false	1	2	ok
-00421e18	HeapManager_expand	399	false	1	1	ok
-00421fb6	CInitThread	3	false	1	0	ok
-00421fb9	beginthread	7	false	0	1	ok
-00421fc0	endthread	7	false	0	1	ok
-00421fc7	initthread	7	false	1	1	ok
-00421fce	RegisterThreadData	63	false	0	0	ok
-0042200d	Nan_Inf	146	false	2	0	ok
-004220a0	IF_LOG	2	false	1	0	ok
-004220a2	IF_LOG_tail	65	false	2	1	ok
-004220e3	IF_LOG2	4	true	1	1	ok
-004220e7	IF_LOG10	4	true	2	1	ok
-004220eb	log	12	false	0	1	ok
-004220f7	log10	12	false	0	1	ok
-00422103	log2	12	false	0	1	ok
-0042210f	floor	60	false	1	1	ok
-0042214c	CHP	29	false	2	0	ok
-00422169	Scale	65	false	1	3	ok
-004221aa	Scale10V	285	false	3	1	ok
-004222c7	cvt	477	false	1	5	ok
-00422534	ZBuf2F	75	false	1	1	ok
-0042257f	normalize_mantissa_64	81	false	1	0	ok
-0042267c	CBeginThread	212	false	1	9	ok
-00422750	CEndThread	39	false	1	4	ok
-0042277a	log87_err	60	false	1	1	ok
-004227b6	modf	25	false	2	1	ok
-004227d0	CmpBigInt	58	false	1	1	ok
-0042280a	Rnd2Int	107	false	1	0	ok
-00422875	Bin2String	106	false	1	0	ok
-004228df	bin2string_inline_table	167	false	1	1	ok
-00422994	bin2string_inline_table_2	2	false	1	0	ok
-00422998	fdiv_main_routine	279	false	2	0	ok
-00422f4b	fdivp_sti_st	19	false	2	1	ok
-00422f5e	fdivrp_sti_st	19	false	2	1	ok
-00422f84	fdiv_m32	76	false	0	1	ok
-00422fd0	fdiv_m64	76	false	1	1	ok
-0042301c	fdiv_m32r	76	false	0	1	ok
-00423068	fdiv_m64r	76	false	0	1	ok
-004230b4	frexp	111	false	1	0	ok
-00423123	math1err	10	false	1	1	ok
-0042312d	math2err	219	false	1	1	ok
-00423208	verify_pentium_fdiv_bug	85	false	0	0	ok
-0042325d	set_matherr	6	false	0	0	ok
-00423263	rterrmsg	72	false	1	3	ok
-004232ab	matherr	47	false	1	4	ok
-004232da	matherr_1	5	true	1	1	ok
-004232df	get_std_stream	31	false	1	0	ok
-004232fe	fputs	141	false	1	4	ok
-0042338b	matherr_2	3	false	1	0	ok
-004243a8	Sleep	6	true	0	0	ok
-004243ae	EndPaint	6	true	0	0	ok
-004243b4	BeginPaint	6	true	0	0	ok
-004243ba	GetSystemInfo	6	true	0	0	ok
-004243c0	GlobalMemoryStatus	6	true	0	0	ok
-004243c6	GetUserNameA	6	true	0	0	ok
-004243cc	GetComputerNameA	6	true	0	0	ok
-004243d2	GetDriveTypeA	6	true	0	0	ok
-004243d8	GetPixel	6	true	0	0	ok
-004243de	SetPixel	6	true	0	0	ok
-004243e4	KillTimer	6	true	0	0	ok
-004243ea	SetTimer	6	true	0	0	ok
-004243f0	CallWindowProcA	6	true	0	0	ok
-004243f6	GetKeyState	6	true	0	0	ok
-004243fc	InvalidateRect	6	true	0	0	ok
-00424402	GetWindowLongA	6	true	0	0	ok
-00424408	SetWindowLongA	6	true	0	0	ok
-0042440e	DestroyWindow	6	true	0	0	ok
-00424414	CreateSolidBrush	6	true	0	0	ok
-0042441a	SendMessageA	6	true	0	0	ok
-00424420	EnableWindow	6	true	0	0	ok
-00424426	DefWindowProcA	6	true	0	0	ok
-0042442c	PostQuitMessage	6	true	0	0	ok
-00424432	DispatchMessageA	6	true	0	0	ok
-00424438	TranslateMessage	6	true	0	0	ok
-0042443e	PeekMessageA	6	true	0	0	ok
-00424444	GetAsyncKeyState	6	true	0	0	ok
-0042444a	joyGetDevCapsA	6	true	0	0	ok
-00424450	joyGetPosEx	6	true	0	0	ok
-00424456	joyGetNumDevs	6	true	0	0	ok
-0042445c	DeleteObject	6	true	0	0	ok
-00424462	CreateFontA	6	true	0	0	ok
-00424468	TextOutA	6	true	0	0	ok
-0042446e	ExtTextOutA	6	true	0	0	ok
-00424474	SetRect	6	true	0	0	ok
-0042447a	lstrlenA	6	true	0	0	ok
-00424480	SetBkMode	6	true	0	0	ok
-00424486	SetBkColor	6	true	0	0	ok
-0042448c	SetTextColor	6	true	0	0	ok
-00424492	GetTextExtentPoint32A	6	true	0	0	ok
-00424498	SelectObject	6	true	0	0	ok
-0042449e	SetFocus	6	true	0	0	ok
-004244a4	GetFocus	6	true	0	0	ok
-004244aa	SetCursor	6	true	0	0	ok
-004244b0	GetCursorPos	6	true	0	0	ok
-004244b6	SetCursorPos	6	true	0	0	ok
-004244bc	ShowCursor	6	true	0	0	ok
-004244c2	LoadCursorA	6	true	0	0	ok
-004244c8	LocalFree	6	true	0	0	ok
-004244ce	LocalReAlloc	6	true	0	0	ok
-004244d4	LocalAlloc	6	true	0	0	ok
-004244da	UpdateWindow	6	true	0	0	ok
-004244e0	CreateWindowExA	6	true	0	0	ok
-004244e6	GetSystemMetrics	6	true	0	0	ok
-004244ec	RegisterClassA	6	true	0	0	ok
-004244f2	LoadIconA	6	true	0	0	ok
-004244f8	MessageBoxExA	6	true	0	0	ok
-004244fe	ShowWindow	6	true	0	0	ok
-00424504	PostMessageA	6	true	0	0	ok
-0042450a	MessageBoxA	6	true	0	0	ok
-00424510	OutputDebugStringA	6	true	0	0	ok
-00424516	GetPrivateProfileStringA	6	true	0	0	ok
-0042451c	GetPrivateProfileIntA	6	true	0	0	ok
-00424522	WritePrivateProfileStringA	6	true	0	0	ok
-00424528	GetTickCount	6	true	0	0	ok
-0042452e	ExitThread	6	true	1	0	ok
-00424534	CreateThread	6	true	1	0	ok
-0042453a	CreateEventA	6	true	1	0	ok
-00424540	GetCurrentThread	6	true	1	0	ok
-00424546	SetEvent	6	true	0	0	ok
-0042454c	VirtualFree	6	true	1	0	ok
-00424552	WriteConsoleA	6	true	1	0	ok
-00424558	SetConsoleMode	6	true	1	0	ok
-0042455e	GetConsoleMode	6	true	1	0	ok
-00424564	ReadConsoleInputA	6	true	1	0	ok
-0042456a	VirtualAlloc	6	true	1	0	ok
-00424570	GetFileType	6	true	1	0	ok
-00424576	GetCPInfo	6	true	1	0	ok
-0042457c	TlsFree	6	true	1	0	ok
-00424582	TlsSetValue	6	true	3	0	ok
-00424588	TlsAlloc	6	true	1	0	ok
-0042458e	TlsGetValue	6	true	3	0	ok
-00424594	ReleaseMutex	6	true	1	0	ok
-0042459a	WaitForSingleObject	6	true	2	0	ok
-004245a0	CreateMutexA	6	true	2	0	ok
-004245a6	GetCurrentThreadId	6	true	3	0	ok
-004245ac	GetStdHandle	6	true	1	0	ok
-004245b2	SetStdHandle	6	true	1	0	ok
-004245b8	GetProcAddress	6	true	0	0	ok
-004245be	LoadLibraryA	6	true	0	0	ok
-004245c4	GetActiveWindow	6	true	0	0	ok
-004245ca	wsprintfA	6	true	0	0	ok
-004245d0	SetConsoleCtrlHandler	6	true	2	0	ok
-004245d6	GetTimeZoneInformation	6	true	1	0	ok
-004245dc	SmackClose	6	true	0	0	ok
-004245e2	SmackOpen	6	true	0	0	ok
-004245e8	SmackDoFrame	6	true	0	0	ok
-004245ee	SmackToBuffer	6	true	0	0	ok
-004245f4	SmackWait	6	true	0	0	ok
-004245fa	SmackNextFrame	6	true	0	0	ok
-00424600	SmackColorRemap	6	true	0	0	ok
-00424606	SmackSoundUseDirectSound	6	true	0	0	ok
-0042460c	GetLastError	6	true	1	0	ok
-00424612	DeleteFileA	6	true	1	0	ok
-00424618	WriteFile	6	true	2	0	ok
-0042461e	ReadFile	6	true	1	0	ok
-00424624	CloseHandle	6	true	4	0	ok
-0042462a	SetFilePointer	6	true	3	0	ok
-00424630	GetCurrentProcessId	6	true	1	0	ok
-00424636	CreateFileA	6	true	2	0	ok
-0042463c	GetFileAttributesA	6	true	1	0	ok
-00424642	GetModuleHandleA	6	true	2	0	ok
-00424648	GetVersion	6	true	1	0	ok
-0042464e	GetCommandLineA	6	true	2	0	ok
-00424654	GetModuleFileNameA	6	true	1	0	ok
-0042465a	GetEnvironmentStrings	6	true	1	0	ok
-00424660	ExitProcess	6	true	2	0	ok
-00424666	GetLocalTime	6	true	1	0	ok
-0042466c	DirectDrawEnumerateA	6	true	1	0	ok
-00424672	DirectInputCreateA	6	true	1	0	ok
-00424678	GetCurrentDirectoryA	6	true	1	0	ok
-0042467e	DirectSoundCreate	6	true	2	0	ok
-00424684	DirectSoundEnumerateA	6	true	1	0	ok
-0042468a	DirectDrawCreate	6	true	1	0	ok
+address	name	size	thunk	callers	callees	status	convention	prototype
+00401010	main_init_settings	107	false	1	3	ok	__watcall0	void __watcall main_init_settings(void)
+0040107b	main_init_sound	413	false	1	2	ok	__watcall0	void __watcall main_init_sound(void)
+00401218	WinMain	685	false	0	27	ok	__stdcall	int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+004014c8	win_open_menu	513	false	1	12	ok	__watcall0	int __watcall win_open_menu(void)
+004016c9	win_close_menu	237	false	1	10	ok	__watcall0	int __watcall win_close_menu(void)
+004017b6	win_handle_menu	171	false	1	7	ok	__watcall1	int __watcall win_handle_menu(int param_1)
+00401864	file_exist	56	false	11	3	ok	__watcall1	int __watcall file_exist(char * filename)
+0040189c	file_size	175	false	0	7	ok	__watcall1	int __watcall file_size(char * filename)
+0040194b	file_read	165	false	4	6	ok	__watcall3	int __watcall file_read(void * param_1, int param_2, char * filename)
+004019f0	file_write	168	false	4	6	ok	__watcall3	int __watcall file_write(void * param_1, int param_2, char * filename)
+00401a98	file_delete	5	true	8	0	ok	__watcall0	void __watcall file_delete(void)
+00401aa0	load_tmp_optie	94	false	2	6	ok	__watcall1	void __watcall load_tmp_optie(char * filename)
+00401afe	init_optie	181	false	2	4	ok	__watcall0	void __watcall init_optie(void)
+00401bb3	save_optie	5	false	3	0	ok	__watcall0	void __watcall save_optie(void)
+00401bb8	save_tmp_optie	71	false	1	3	ok	__watcall1	void __watcall save_tmp_optie(char * filename)
+00401c00	load_tmp_bedien	94	false	2	6	ok	__watcall1	void __watcall load_tmp_bedien(char * filename)
+00401c5e	init_bedien	210	false	2	5	ok	__watcall0	void __watcall init_bedien(void)
+00401d30	save_bedien	25	false	3	1	ok	__watcall0	void __watcall save_bedien(void)
+00401d49	save_tmp_bedien	71	false	1	3	ok	__watcall1	void __watcall save_tmp_bedien(char * filename)
+00401d90	slot_check_index	34	false	29	1	ok	__watcall3	int __watcall slot_check_index(int param_1, char * param_2, int param_3)
+00401db2	slot_check_level	34	false	8	1	ok	__watcall3	int __watcall slot_check_level(int param_1, char * param_2, int param_3)
+00401dd4	create_slot	1171	false	2	4	ok	__watcall2	void __watcall create_slot(int param_1, char * param_2)
+00402267	clear_slot	922	false	3	3	ok	__watcall1	void __watcall clear_slot(int param_1)
+00402601	reset_slot	888	false	1	3	ok	__watcall1	void __watcall reset_slot(int param_1)
+00402979	load_tmp_slotdbase	101	false	2	6	ok	__watcall1	void __watcall load_tmp_slotdbase(char * filename)
+004029de	init_slotdbase	342	false	2	6	ok	__watcall0	void __watcall init_slotdbase(void)
+00402b34	save_slotdbase	28	false	4	1	ok	__watcall0	void __watcall save_slotdbase(void)
+00402b50	save_tmp_slotdbase	79	false	1	3	ok	__watcall1	void __watcall save_tmp_slotdbase(char * filename)
+00402b9f	get_last_saved_slot	167	false	3	2	ok	__watcall0	int __watcall get_last_saved_slot(void)
+00402c46	set_active_slot	219	false	2	3	ok	__watcall1	void __watcall set_active_slot(int param_1)
+00402d21	update_active_slot_optie	173	false	1	3	ok	__watcall0	void __watcall update_active_slot_optie(void)
+00402dce	update_active_slot_bediening	176	false	1	3	ok	__watcall0	void __watcall update_active_slot_bediening(void)
+00402e7e	slot_naam_string	112	false	7	1	ok	__watcall1	char * __watcall slot_naam_string(int param_1)
+00402eee	slot_level_string	118	false	4	1	ok	__watcall1	char * __watcall slot_level_string(int param_1)
+00402f64	slot_tijd_string	285	false	5	3	ok	__watcall1	char * __watcall slot_tijd_string(int param_1)
+00403081	slot_count_total_tijd	139	false	7	2	ok	__watcall2	int __watcall slot_count_total_tijd(int param_1, int param_2)
+00403124	slot_count_total_tijd_speler	491	false	1	2	ok	__watcall2	int __watcall slot_count_total_tijd_speler(int param_1, int param_2)
+00403310	check_score_index	34	false	5	1	ok	__watcall3	int __watcall check_score_index(int param_1, char * param_2, int param_3)
+00403332	check_score_level	34	false	5	1	ok	__watcall3	int __watcall check_score_level(int param_1, char * param_2, int param_3)
+00403354	load_tmp_scoredbase	101	false	2	6	ok	__watcall1	void __watcall load_tmp_scoredbase(char * filename)
+004033b9	init_scoredbase	178	false	2	6	ok	__watcall0	void __watcall init_scoredbase(void)
+0040346b	save_scoredbase	28	false	2	1	ok	__watcall0	void __watcall save_scoredbase(void)
+00403487	save_tmp_scoredbase	79	false	1	3	ok	__watcall1	void __watcall save_tmp_scoredbase(char * filename)
+004034d6	get_last_entered_hiscore	58	false	3	1	ok	__watcall0	int __watcall get_last_entered_hiscore(void)
+00403510	get_last_entered_levelscore	88	false	2	2	ok	__watcall1	int __watcall get_last_entered_levelscore(int param_1)
+00403568	compare_score	58	false	0	1	ok	__watcall2	int __watcall compare_score(void * param_1, void * param_2)
+004035a2	add_new_hiscore	382	false	3	5	ok	__watcall4	int __watcall add_new_hiscore(char * param_1, int param_2, int param_3, int param_4)
+00403720	add_new_levelscore	468	false	1	6	ok	__watcall4	int __watcall add_new_levelscore(char * param_1, int param_2, int param_3, int param_4)
+004038f4	load_infio	850	false	1	6	ok	__watcall0	void __watcall load_infio(void)
+00403c46	save_infio	853	false	2	3	ok	__watcall0	void __watcall save_infio(void)
+00403f9b	init_infio	356	false	2	4	ok	__watcall0	void __watcall init_infio(void)
+00404100	make_bmp_screen_shot	1	false	11	0	ok	__watcall0	void __watcall make_bmp_screen_shot(void)
+00404101	wait_escape_pressed	21	false	16	2	ok	__watcall0	void __watcall wait_escape_pressed(void)
+00404116	wait_enter_pressed	21	false	20	2	ok	__watcall0	void __watcall wait_enter_pressed(void)
+0040412b	wait_cursor_up_pressed	21	false	4	2	ok	__watcall0	void __watcall wait_cursor_up_pressed(void)
+00404140	wait_cursor_down_pressed	21	false	4	2	ok	__watcall0	void __watcall wait_cursor_down_pressed(void)
+00404155	mm_wait_snd	65	false	0	3	ok	__watcall1	void __watcall mm_wait_snd(int * param_1)
+00404196	mm_draw_info_text	340	false	1	5	ok	__watcall2	void __watcall mm_draw_info_text(int param_1, int param_2)
+004042ea	mm_display_info	212	false	2	7	ok	__watcall0	void __watcall mm_display_info(void)
+004043be	mm_af_image	66	false	2	1	ok	__watcall4	int __watcall mm_af_image(int param_1, int param_2, char * param_3, int param_4)
+00404400	mm_animate_buttons	356	false	1	6	ok	__watcall0	void __watcall mm_animate_buttons(void)
+00404564	mm_animate_map	172	false	1	7	ok	__watcall1	void __watcall mm_animate_map(int param_1)
+00404610	mm_open_screen	276	false	2	14	ok	__watcall1	int __watcall mm_open_screen(int param_1)
+00404724	mm_close_screen	116	false	2	8	ok	__watcall1	void __watcall mm_close_screen(int param_1)
+00404798	mm_handle_tmp_hiscore	327	false	1	7	ok	__watcall0	void __watcall mm_handle_tmp_hiscore(void)
+004048df	mm_handle_opnieuw_spel	355	false	1	9	ok	__watcall0	void __watcall mm_handle_opnieuw_spel(void)
+00404a74	menu_main	1180	false	1	26	ok	__watcall1	int __watcall menu_main(int param_1)
+00404f10	mst_draw_selected_slot_info	384	false	2	9	ok	__watcall1	void __watcall mst_draw_selected_slot_info(int param_1)
+00405090	mst_draw_slot_info	600	false	2	11	ok	__watcall1	void __watcall mst_draw_slot_info(int param_1)
+004052e8	mst_reselect_slot	151	false	1	6	ok	__watcall2	void __watcall mst_reselect_slot(int param_1, int param_2)
+0040537f	mst_print_slot	170	false	2	7	ok	__watcall1	void __watcall mst_print_slot(int param_1)
+00405429	mst_handle_intro	176	false	1	10	ok	__watcall1	void __watcall mst_handle_intro(int param_1)
+004054d9	mst_open_screen	191	false	1	11	ok	__watcall1	void __watcall mst_open_screen(int param_1)
+00405598	mst_close_screen	85	false	1	8	ok	__watcall0	void __watcall mst_close_screen(void)
+004055ed	menu_start	1225	false	1	28	ok	__watcall1	int __watcall menu_start(int param_1)
+00405ab8	mc_af_image	66	false	7	1	ok	__watcall4	int __watcall mc_af_image(int param_1, int param_2, char * param_3, int param_4)
+00405afa	mc_clear_text_bar	63	false	1	4	ok	__watcall0	void __watcall mc_clear_text_bar(void)
+00405b39	mc_print_text_bar	213	false	1	9	ok	__watcall_varargs	void __cdecl mc_print_text_bar(char * param_1, ...)
+00405c0e	scan_2_ckey	39	false	2	0	ok	__watcall1	int __watcall scan_2_ckey(int param_1)
+00405c35	load_ckey	50	false	2	0	ok	__watcall0	void __watcall load_ckey(void)
+00405c67	save_ckey	47	false	1	0	ok	__watcall0	void __watcall save_ckey(void)
+00405c96	print_keys	278	false	2	8	ok	__watcall0	void __watcall print_keys(void)
+00405dac	clear_keys	126	false	1	4	ok	__watcall0	void __watcall clear_keys(void)
+00405e2a	clear_all_ckey	45	false	1	0	ok	__watcall0	void __watcall clear_all_ckey(void)
+00405e57	ckey_defined	40	false	1	0	ok	__watcall1	int __watcall ckey_defined(int param_1)
+00405e7f	ckey_new_define	51	false	1	0	ok	__watcall1	int __watcall ckey_new_define(int param_1)
+00405eb2	mb_read_key	116	false	1	2	ok	__watcall0	int __watcall mb_read_key(void)
+00405f26	mc_animate_open_textbox	103	false	1	6	ok	__watcall0	void __watcall mc_animate_open_textbox(void)
+00405f8d	mc_animate_close_textbox	95	false	1	5	ok	__watcall0	void __watcall mc_animate_close_textbox(void)
+00405fec	config_keys	527	false	1	17	ok	__watcall0	int __watcall config_keys(void)
+004061fb	display_keys	159	false	2	5	ok	__watcall0	void __watcall display_keys(void)
+0040629a	display_joystick	132	false	2	4	ok	__watcall0	void __watcall display_joystick(void)
+0040631e	display_stuur	69	false	2	0	ok	__watcall0	void __watcall display_stuur(void)
+00406363	mc_display_controls	149	false	2	3	ok	__watcall0	void __watcall mc_display_controls(void)
+004063f8	mc_animate_buttons	153	false	1	5	ok	__watcall0	void __watcall mc_animate_buttons(void)
+00406491	mc_open_screen	150	false	1	13	ok	__watcall0	int __watcall mc_open_screen(void)
+00406527	mc_close_screen	38	false	1	6	ok	__watcall0	void __watcall mc_close_screen(void)
+0040654d	menu_bedien	843	false	1	29	ok	__watcall0	int __watcall menu_bedien(void)
+00406898	mo_af_image	66	false	7	1	ok	__watcall4	int __watcall mo_af_image(int param_1, int param_2, char * param_3, int param_4)
+004068f2	mc_active_form	63	false	1	3	ok	__watcall0	void __watcall mc_active_form(void)
+00406919	mc_display_geluid	496	false	1	2	ok	__watcall0	void __watcall mc_display_geluid(void)
+00406b09	mc_display_horizon	258	false	1	2	ok	__watcall0	void __watcall mc_display_horizon(void)
+00406c0b	mc_display_detail	263	false	1	2	ok	__watcall0	void __watcall mc_display_detail(void)
+00406d12	mc_display_dashbord	258	false	1	2	ok	__watcall0	void __watcall mc_display_dashbord(void)
+00406e14	mc_display_inhoud	156	false	1	7	ok	__watcall0	void __watcall mc_display_inhoud(void)
+00406eb0	mc_display_snd_setting	306	false	2	5	ok	__watcall0	void __watcall mc_display_snd_setting(void)
+00406fe2	mc_display_tableau	153	false	1	6	ok	__watcall0	void __watcall mc_display_tableau(void)
+0040707b	mo_animate_buttons	153	false	1	5	ok	__watcall0	void __watcall mo_animate_buttons(void)
+00407114	mo_open_screen	119	false	1	11	ok	__watcall0	int __watcall mo_open_screen(void)
+0040718b	mo_close_screen	38	false	1	6	ok	__watcall0	void __watcall mo_close_screen(void)
+00407242	menu_opties	342	false	1	12	ok	__watcall2	int __watcall menu_opties(int * param_1, char * param_2)
+00407880	ms_af_image	66	false	1	1	ok	__watcall4	int __watcall ms_af_image(int param_1, int param_2, char * param_3, int param_4)
+004078dc	ms_get_current_display	52	false	1	0	ok	__watcall1	int __watcall ms_get_current_display(int param_1)
+00407910	ms_print_score	287	false	1	3	ok	__watcall4	void __watcall ms_print_score(single_score_t * single_score_4, int param_2, int param_3, int param_4)
+00407a2f	ms_print_hiscore	332	false	1	3	ok	__watcall4	void __watcall ms_print_hiscore(single_score_t * single_score_3, int param_2, int param_3, int param_4)
+00407b7b	ms_display_score	440	false	2	9	ok	__watcall1	void __watcall ms_display_score(int param_1)
+00407d33	ms_open_screen	143	false	1	11	ok	__watcall1	void __watcall ms_open_screen(int param_1)
+00407dc2	ms_close_screen	38	false	1	6	ok	__watcall0	void __watcall ms_close_screen(void)
+00407de8	menu_score	230	false	2	11	ok	__watcall1	int __watcall menu_score(int param_1)
+00407ed0	mds_af_image	66	false	0	1	ok	__watcall4	int __watcall mds_af_image(int param_1, int param_2, char * param_3, int param_4)
+00407f2c	mds_get_current_display	52	false	1	0	ok	__watcall1	int __watcall mds_get_current_display(int param_1)
+00407f60	mds_print_score	302	false	1	4	ok	__watcall4	void __watcall mds_print_score(single_score_t * single_score_4, int param_2, int param_3, int param_4)
+0040808e	mds_print_hiscore	306	false	1	4	ok	__watcall4	void __watcall mds_print_hiscore(single_score_t * single_score_4, int param_2, int param_3, int param_4)
+004081c0	mds_display_score	338	false	1	7	ok	__watcall1	void __watcall mds_display_score(int param_1)
+00408312	mds_open_screen	154	false	1	11	ok	__watcall1	void __watcall mds_open_screen(int param_1)
+004083ac	mds_close_screen	75	false	1	8	ok	__watcall0	void __watcall mds_close_screen(void)
+004083f7	menu_display_score	98	false	1	8	ok	__watcall1	void __watcall menu_display_score(int param_1)
+0040845c	mns_draw_selected_slot_info	369	false	2	10	ok	__watcall1	void __watcall mns_draw_selected_slot_info(int param_1)
+004085cd	mns_draw_slot_info	551	false	2	12	ok	__watcall1	void __watcall mns_draw_slot_info(int param_1)
+004087f4	mns_reselect_slot	88	false	1	6	ok	__watcall2	void __watcall mns_reselect_slot(int param_1, int param_2)
+0040884c	mns_print_slot	108	false	2	7	ok	__watcall1	void __watcall mns_print_slot(int param_1)
+004088b8	mns_open_screen	136	false	1	10	ok	__watcall1	void __watcall mns_open_screen(int param_1)
+00408940	mns_close_screen	48	false	1	6	ok	__watcall0	void __watcall mns_close_screen(void)
+00408970	menu_nieuwesplr	1036	false	1	29	ok	__watcall0	int __watcall menu_nieuwesplr(void)
+00408d7c	mdt_display_stand	1073	false	1	5	ok	__watcall4	void __watcall mdt_display_stand(int param_1, int param_2, int param_3, int param_4)
+004091ad	mdt_display_score	150	false	1	5	ok	__watcall1	void __watcall mdt_display_score(int param_1)
+00409243	mdt_open_screen	151	false	1	11	ok	__watcall1	void __watcall mdt_open_screen(int param_1)
+004092da	mdt_close_screen	75	false	1	8	ok	__watcall0	void __watcall mdt_close_screen(void)
+00409325	menu_display_stand	93	false	1	7	ok	__watcall1	void __watcall menu_display_stand(int param_1)
+00409384	mdc_compare_score	47	false	0	1	ok	__watcall2	int __watcall mdc_compare_score(void * param_1, void * param_2)
+004093b3	mdc_create_huidige_stand	443	false	1	5	ok	__watcall0	void __watcall mdc_create_huidige_stand(void)
+0040956e	mdc_display_huidige_stand	314	false	1	3	ok	__watcall3	void __watcall mdc_display_huidige_stand(int param_1, int param_2, int param_3)
+004096a8	mdc_display_score	145	false	1	6	ok	__watcall0	void __watcall mdc_display_score(void)
+00409739	mdc_open_screen	190	false	1	12	ok	__watcall0	void __watcall mdc_open_screen(void)
+004097f7	mdc_close_screen	75	false	1	8	ok	__watcall0	void __watcall mdc_close_screen(void)
+00409842	menu_display_classe	92	false	1	7	ok	__watcall0	void __watcall menu_display_classe(void)
+004098a0	init_anims	99	false	0	5	ok	__watcall0	int __watcall init_anims(void)
+00409903	init_anims_1	71	false	1	4	ok	__watcall1	int __watcall init_anims_1(int param_1)
+0040994a	use_mm_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mm_menu_cfg_anims(void)
+004099ce	free_mm_menu_cfg_anims	67	false	1	4	ok	__watcall0	int __watcall free_mm_menu_cfg_anims(void)
+00409a11	use_mc_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mc_menu_cfg_anims(void)
+00409a95	free_mc_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_mc_menu_cfg_anims(void)
+00409ac5	use_mo_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mo_menu_cfg_anims(void)
+00409b49	free_mo_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_mo_menu_cfg_anims(void)
+00409b79	use_ms_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_ms_menu_cfg_anims(void)
+00409bfd	free_ms_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_ms_menu_cfg_anims(void)
+00409c2d	use_reqwarn_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_reqwarn_cfg_anims(void)
+00409cb1	free_reqwarn_cfg_anims	48	false	0	2	ok	__watcall0	int __watcall free_reqwarn_cfg_anims(void)
+00409ce1	use_reqvraag_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_reqvraag_cfg_anims(void)
+00409d65	free_reqvraag_cfg_anims	48	false	0	2	ok	__watcall0	int __watcall free_reqvraag_cfg_anims(void)
+00409d95	use_reqinput_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_reqinput_cfg_anims(void)
+00409e19	free_reqinput_cfg_anims	48	false	0	2	ok	__watcall0	int __watcall free_reqinput_cfg_anims(void)
+00409e49	use_mst_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mst_menu_cfg_anims(void)
+00409ecd	free_mst_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_mst_menu_cfg_anims(void)
+00409efd	use_mds_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mds_menu_cfg_anims(void)
+00409f81	free_mds_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_mds_menu_cfg_anims(void)
+00409fb1	use_mdt_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mdt_menu_cfg_anims(void)
+0040a035	free_mdt_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_mdt_menu_cfg_anims(void)
+0040a065	use_mdc_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mdc_menu_cfg_anims(void)
+0040a0e9	free_mdc_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_mdc_menu_cfg_anims(void)
+0040a119	use_mns_menu_cfg_anims	132	false	1	6	ok	__watcall0	int __watcall use_mns_menu_cfg_anims(void)
+0040a19d	free_mns_menu_cfg_anims	48	false	1	2	ok	__watcall0	int __watcall free_mns_menu_cfg_anims(void)
+0040a1d0	reqw_open	230	false	1	12	ok	__watcall1	void __watcall reqw_open(char * param_1)
+0040a2b6	reqw_close	82	false	1	8	ok	__watcall0	void __watcall reqw_close(void)
+0040a308	req_warning	155	false	1	9	ok	__watcall_varargs	int __cdecl req_warning(char * param_1, ...)
+0040a3a4	reqv_stop_snd	93	false	0	3	ok	__watcall1	void __watcall reqv_stop_snd(int * param_1)
+0040a401	reqv_wait_snd	50	false	1	3	ok	__watcall1	void __watcall reqv_wait_snd(int * param_1)
+0040a433	reqv_open	236	false	1	12	ok	__watcall1	void __watcall reqv_open(char * param_1)
+0040a51f	reqv_close	82	false	1	8	ok	__watcall0	void __watcall reqv_close(void)
+0040a571	req_vraag	228	false	3	11	ok	__watcall_varargs	int __cdecl req_vraag(char * param_1, ...)
+0040a658	reqi_stop_snd	93	false	0	3	ok	__watcall1	void __watcall reqi_stop_snd(int * param_1)
+0040a6b5	reqi_wait_snd	50	false	1	3	ok	__watcall1	void __watcall reqi_wait_snd(int * param_1)
+0040a6e7	reqi_open	278	false	1	13	ok	__watcall1	void __watcall reqi_open(char * param_1)
+0040a7fd	reqi_close	97	false	1	9	ok	__watcall0	void __watcall reqi_close(void)
+0040a85e	req_input	447	false	2	15	ok	__watcall_varargs	int __cdecl req_input(char * param_1, int param_2, char * param_3, ...)
+0040aa20	txt_get_word	83	false	1	0	ok	__watcall2	int __watcall txt_get_word(char * param_1, char * param_2)
+0040aa73	txt_check_newline	48	false	1	0	ok	__watcall1	int __watcall txt_check_newline(char * param_1)
+0040aaa3	txt_crop_word	32	false	1	0	ok	__watcall1	char * __watcall txt_crop_word(char * param_1)
+0040aac3	win_printwrapped	405	false	4	8	ok	__watcall_varargs	void __cdecl win_printwrapped(int param_1, int param_2, int param_3, int param_4, char * param_5, ...)
+0040ac58	win_bprintf	273	false	9	4	ok	__watcall_varargs	void __cdecl win_bprintf(int param_1, int param_2, int param_3, int param_4, char * param_5, ...)
+0040ad6c	reset_infio	1292	false	2	2	ok	__watcall0	void __watcall reset_infio(void)
+0040b288	handle_game	1697	false	1	18	ok	__watcall0	int __watcall handle_game(void)
+0040b92c	movie_play_outtro	1	false	2	0	ok	__watcall0	void __watcall movie_play_outtro(void)
+0040b930	snd_valid_buffer	21	false	5	0	ok	__watcall1	int __watcall snd_valid_buffer(int param_1)
+0040b945	snd_stop	100	false	12	4	ok	__watcall1	void __watcall snd_stop(int * param_1)
+0040b9a9	snd_play	107	false	12	3	ok	__watcall2	void __watcall snd_play(int * param_1, char * filename)
+0040ba14	snd_play_looping	110	false	3	3	ok	__watcall2	void __watcall snd_play_looping(int * param_1, char * filename)
+0040ba82	snd_wait	86	false	9	5	ok	__watcall1	void __watcall snd_wait(int * param_1)
+0040bad8	snd_fade_out	119	false	1	6	ok	__watcall1	int __watcall snd_fade_out(int * param_1)
+0040bb4f	snd_set_volume	64	false	8	3	ok	__watcall2	int __watcall snd_set_volume(int * param_1, int param_2)
+0040bb8f	snd_get_volume	55	false	0	3	ok	__watcall1	int __watcall snd_get_volume(int * param_1)
+0040bbc8	set_ini_filename	201	false	3	2	ok	__watcall1	void __watcall set_ini_filename(char * param_1)
+0040bc91	write_ini_string_setting	49	false	0	2	ok	__watcall3	void __watcall write_ini_string_setting(char * param_1, char * param_2, char * param_3)
+0040bcc2	write_ini_value_setting	81	false	1	3	ok	__watcall3	void __watcall write_ini_value_setting(char * param_1, char * param_2, int param_3)
+0040bd13	read_ini_value_setting	52	false	2	2	ok	__watcall2	uint __watcall read_ini_value_setting(char * param_1, char * param_2)
+0040bd47	read_ini_string_setting	55	false	0	2	ok	__watcall4	void __watcall read_ini_string_setting(char * param_1, char * param_2, char * param_3, int param_4)
+0040bd80	set_debugmsg_state	12	false	1	0	ok	__watcall2	void __watcall set_debugmsg_state(int param_1, int param_2)
+0040bd8c	debugmsg	147	false	124	5	ok	__watcall_varargs	void __cdecl debugmsg(char * param_1, ...)
+0040be1f	message	84	false	0	2	ok	__watcall_varargs	int __cdecl message(char * param_1, ...)
+0040be73	exit_xvga_lib	270	false	2	7	ok	__watcall0	void __watcall exit_xvga_lib(void)
+0040bf81	fatal_exit	157	false	284	7	ok	__watcall_varargs	int __cdecl fatal_exit(char * param_1, ...)
+0040c026	fatal_exit_tail	7	false	2	0	ok	__watcall0	undefined4 __watcall fatal_exit_tail(void)
+0040c02d	xvga_flip_page	117	false	3	2	ok	__watcall0	void __watcall xvga_flip_page(void)
+0040c125	set_xvga_vars	180	false	1	1	ok	__watcall3	int __watcall set_xvga_vars(int param_1, int param_2, int param_3)
+0040c168	get_xvga_vars	63	false	0	1	ok	__watcall1	int __watcall get_xvga_vars(int param_1)
+0040c195	dd_error_string	744	false	51	0	ok	__watcall1	char * __watcall dd_error_string(long param_1)
+0040c47d	get_surface_ptr	92	false	8	3	ok	__watcall1	uchar * __watcall get_surface_ptr(IDirectDrawSurface * direct_draw_surface)
+0040c4d9	get_surface_ptr_1	206	false	2	3	ok	__watcall1	uchar * __watcall get_surface_ptr_1(int param_1)
+0040c5a7	get_surface_ptr_2	214	false	0	3	ok	__watcall2	uchar * __watcall get_surface_ptr_2(int param_1, int * param_2)
+0040c67d	get_surface_ptr_3	100	false	5	3	ok	__watcall2	uchar * __watcall get_surface_ptr_3(IDirectDrawSurface * direct_draw_surface, int * param_2)
+0040c6e1	reset_surface_ptr	149	false	2	2	ok	__watcall2	void __watcall reset_surface_ptr(int param_1, void * param_2)
+0040c776	reset_surface_ptr_1	50	false	12	2	ok	__watcall2	void __watcall reset_surface_ptr_1(IDirectDrawSurface * direct_draw_surface, void * param_2)
+0040c7a8	create_surface	128	false	5	3	ok	__watcall2	IDirectDrawSurface * __watcall create_surface(int param_1, int param_2)
+0040c828	create_surface_1	123	false	2	3	ok	__watcall3	IDirectDrawSurface * __watcall create_surface_1(int param_1, int param_2, int param_3)
+0040c8a3	create_surface_2	121	false	0	3	ok	__watcall4	IDirectDrawSurface * __watcall create_surface_2(int param_1, int param_2, int param_3, int param_4)
+0040c91c	create_surface_3	143	false	0	3	ok	__watcall4	IDirectDrawSurface * __watcall create_surface_3(int param_1, int param_2, int param_3, int param_4, int param_5)
+0040c9ab	create_surface_4	141	false	1	3	ok	__watcall4	IDirectDrawSurface * __watcall create_surface_4(int param_1, int param_2, int param_3, _DDPIXELFORMAT * ddpixelformat)
+0040ca38	create_surface_5	158	false	0	3	ok	__watcall4	IDirectDrawSurface * __watcall create_surface_5(int param_1, int param_2, int param_3, _DDPIXELFORMAT * ddpixelformat, int param_5)
+0040cad6	get_surface_info	104	false	2	3	ok	__watcall3	void __watcall get_surface_info(IDirectDrawSurface * direct_draw_surface, int * param_2, int * param_3)
+0040cb3e	xvga_check_lock_ability	167	false	1	2	ok	__watcall1	int __watcall xvga_check_lock_ability(int param_1)
+0040cbe5	do_screen_update	75	false	3	2	ok	__watcall0	void __watcall do_screen_update(void)
+0040cc30	do_store_screen	66	false	0	2	ok	__watcall0	void __watcall do_store_screen(void)
+0040cc72	do_back_screen_update	75	false	1	2	ok	__watcall0	void __watcall do_back_screen_update(void)
+0040ccbd	clear_screen	62	false	15	3	ok	__watcall2	void __watcall clear_screen(int param_1, int param_2)
+0040ccfb	init_lib_surfaces	780	false	2	13	ok	__watcall0	void __watcall init_lib_surfaces(void)
+0040d007	exit_lib_surfaces	144	false	1	2	ok	__watcall0	void __watcall exit_lib_surfaces(void)
+0040d097	init_xvga_lib	690	false	1	20	ok	__watcall4	int __watcall init_xvga_lib(void * param_1, int param_2, char * param_3, char * param_4)
+0040d349	set_xvga_resolution	298	false	0	8	ok	__watcall1	int __watcall set_xvga_resolution(int param_1)
+0040d473	reset_xvga_resolution	51	false	0	2	ok	__watcall0	int __watcall reset_xvga_resolution(void)
+0040d4a8	ds_error_string	160	false	42	0	ok	__watcall1	char * __watcall ds_error_string(long param_1)
+0040d548	xvga_init_sound_info	105	false	1	2	ok	__watcall1	int __watcall xvga_init_sound_info(int param_1)
+0040d5b1	get_new_sound_info	32	false	1	0	ok	__watcall0	int __watcall get_new_sound_info(void)
+0040d5d1	enum_sound_info_callback	279	false	0	4	ok	__stdcall	int __stdcall enum_sound_info_callback(_GUID * guid, char * param_2, char * param_3, void * param_4)
+0040d6e8	xvga_get_sound_info	32	false	2	2	ok	__watcall0	int __watcall xvga_get_sound_info(void)
+0040d708	set_output_format	281	false	1	4	ok	__watcall4	int __watcall set_output_format(int param_1, int param_2, int param_3, int param_4)
+0040d821	set_3d_output_format	278	false	1	3	ok	__watcall4	int __watcall set_3d_output_format(int param_1, int param_2, int param_3, int param_4)
+0040d937	create_sound_buffer	192	false	1	3	ok	__watcall4	IDirectSoundBuffer * __watcall create_sound_buffer(int param_1, int param_2, int param_3, int param_4, int param_5)
+0040d9f7	create_3d_sound_buffer	240	false	1	3	ok	__watcall4	int __watcall create_3d_sound_buffer(IDirectSoundBuffer * * direct_sound_buffer, IDirectSound3DBuffer * * direct_sound3_d_buffer, int param_3, int param_4, int param_5, int param_6, int param_7)
+0040dae7	duplicate_sound_buffer	65	false	3	2	ok	__watcall1	IDirectSoundBuffer * __watcall duplicate_sound_buffer(IDirectSoundBuffer * direct_sound_buffer)
+0040db28	sound_buffer_busy	151	false	15	2	ok	__watcall1	int __watcall sound_buffer_busy(int param_1)
+0040dbbf	stop_sound_buffer	265	false	5	2	ok	__watcall1	int __watcall stop_sound_buffer(int param_1)
+0040dcc8	stop_all_sound_buffers	55	false	1	1	ok	__watcall0	int __watcall stop_all_sound_buffers(void)
+0040dcff	delete_all_sound_buffers	114	false	1	1	ok	__watcall0	int __watcall delete_all_sound_buffers(void)
+0040dd71	search_sound_buffer	79	false	3	2	ok	__watcall4	int __watcall search_sound_buffer(char * param_1, int param_2, int param_3, int param_4)
+0040ddc0	get_free_buffer	65	false	0	1	ok	__watcall0	int __watcall get_free_buffer(void)
+0040de01	get_free_buffer_1	83	false	5	1	ok	__watcall1	int __watcall get_free_buffer_1(int param_1)
+0040de54	delete_sound_buffer	189	false	3	3	ok	__watcall1	int __watcall delete_sound_buffer(int param_1)
+0040df11	xvga_exit_sound	82	false	1	2	ok	__watcall0	void __watcall xvga_exit_sound(void)
+0040df63	xvga_init_sound	770	false	1	8	ok	__watcall2	int __watcall xvga_init_sound(int param_1, int param_2)
+0040e265	xvga_init_sound_1	900	false	0	8	ok	__watcall3	int __watcall xvga_init_sound_1(int param_1, int param_2, int param_3)
+0040e5e9	set_sound_buffer_freq	169	false	0	2	ok	__watcall2	int __watcall set_sound_buffer_freq(int param_1, int param_2)
+0040e692	get_sound_buffer_freq	132	false	0	2	ok	__watcall1	int __watcall get_sound_buffer_freq(int param_1)
+0040e716	set_sound_buffer_vol	169	false	3	2	ok	__watcall2	int __watcall set_sound_buffer_vol(int param_1, int param_2)
+0040e7bf	get_sound_buffer_vol	126	false	2	2	ok	__watcall1	int __watcall get_sound_buffer_vol(int param_1)
+0040e83d	set_sound_buffer_pan	213	false	0	2	ok	__watcall2	int __watcall set_sound_buffer_pan(int param_1, int param_2)
+0040e912	get_sound_buffer_pan	167	false	0	2	ok	__watcall1	int __watcall get_sound_buffer_pan(int param_1)
+0040e9b9	load_sound_buffer_data	270	false	1	4	ok	__watcall4	int __watcall load_sound_buffer_data(int param_1, __iobuf * file, int param_3, int param_4)
+0040eac7	load_wave_file	365	false	5	7	ok	__watcall2	int __watcall load_wave_file(char * filename, int param_2)
+0040ec34	play_sound_buffer	159	false	0	2	ok	__watcall2	int __watcall play_sound_buffer(int param_1, int param_2)
+0040ecd3	play_sound_buffer_1	480	false	3	9	ok	__watcall2	int __watcall play_sound_buffer_1(char * filename, int param_2)
+0040eeb3	play_sound_buffer_2	496	false	0	10	ok	__watcall3	int __watcall play_sound_buffer_2(char * filename, int param_2, int param_3)
+0040f0a3	load_sound_buffer	404	false	0	8	ok	__watcall2	int __watcall load_sound_buffer(char * filename, int param_2)
+0040f237	set_3dsound_buffer_pos	180	false	0	2	ok	__watcall4	int __watcall set_3dsound_buffer_pos(int param_1, float param_2, float param_3, float param_4)
+0040f2eb	set_3dsound_buffer_pos_1	171	false	0	2	ok	__watcall2	int __watcall set_3dsound_buffer_pos_1(int param_1, _D3DVECTOR * d3_dvector)
+0040f396	set_3dsound_buffer_velocity	171	false	0	2	ok	__watcall2	int __watcall set_3dsound_buffer_velocity(int param_1, _D3DVECTOR * d3_dvector)
+0040f441	set_3dsound_buffer_velocity_1	177	false	0	2	ok	__watcall4	int __watcall set_3dsound_buffer_velocity_1(int param_1, float param_2, float param_3, float param_4)
+0040f4f2	get_3dsound_buffer_pos	197	false	0	2	ok	__watcall4	int __watcall get_3dsound_buffer_pos(int param_1, float * param_2, float * param_3, float * param_4)
+0040f5b7	get_3dsound_buffer_pos_1	165	false	0	2	ok	__watcall2	int __watcall get_3dsound_buffer_pos_1(int param_1, _D3DVECTOR * d3_dvector)
+0040f65c	set_3dlistener_pos	76	false	0	2	ok	__stdcall	int __stdcall set_3dlistener_pos(float param_1, float param_2, float param_3)
+0040f6a8	set_3dlistener_velocity	63	false	0	1	ok	__watcall3	int __watcall set_3dlistener_velocity(float param_1, float param_2, float param_3)
+0040f6e7	set_3dlistener_pos_1	73	false	0	2	ok	__watcall1	int __watcall set_3dlistener_pos_1(_D3DVECTOR * d3_dvector)
+0040f730	set_3dlistener_velocity_1	61	false	0	1	ok	__watcall1	int __watcall set_3dlistener_velocity_1(_D3DVECTOR * d3_dvector)
+0040f76d	get_3dlistener_pos	53	false	0	1	ok	__watcall1	int __watcall get_3dlistener_pos(_D3DVECTOR * d3_dvector)
+0040f7a2	get_3dlistener_velocity	64	false	0	1	ok	__watcall1	int __watcall get_3dlistener_velocity(_D3DVECTOR * d3_dvector)
+0040f7e2	get_3dlistener_pos_1	92	false	0	2	ok	__watcall3	int __watcall get_3dlistener_pos_1(float * param_1, float * param_2, float * param_3)
+0040f83e	get_3dlistener_velocity_1	60	false	0	1	ok	__watcall3	int __watcall get_3dlistener_velocity_1(float * param_1, float * param_2, float * param_3)
+0040f87a	set_3dlistener_orientation	79	false	0	2	ok	__watcall2	int __watcall set_3dlistener_orientation(_D3DVECTOR * d3_dvector, _D3DVECTOR * d3_dvector_2)
+0040f8c9	set_3dlistener_orientation_1	88	false	0	2	ok	__watcall4	int __watcall set_3dlistener_orientation_1(float param_1, float param_2, float param_3, float param_4, float param_5, float param_6)
+0040f921	set_3dlistener_dopplerfactor	112	false	0	2	ok	__stdcall	int __stdcall set_3dlistener_dopplerfactor(float param_1)
+0040f991	set_3dlistener_distancefactor	98	false	0	1	ok	__watcall1	int __watcall set_3dlistener_distancefactor(float param_1)
+0040f9f3	set_3dlistener_rollofffactor	105	false	0	1	ok	__watcall1	int __watcall set_3dlistener_rollofffactor(float param_1)
+0040fa5c	execute_ds3d_settings	58	false	0	2	ok	__watcall0	void __watcall execute_ds3d_settings(void)
+0040fa96	play_3dsound_buffer	496	false	0	6	ok	__watcall4	int __watcall play_3dsound_buffer(char * filename, int param_2, float param_3, float param_4, float param_5)
+0040fc86	load_3dsound_buffer	135	false	0	3	ok	__watcall4	int __watcall load_3dsound_buffer(char * filename, int param_2, float param_3, float param_4, float param_5)
+0040fd0d	stop_3dsound_buffer	249	false	0	2	ok	__watcall1	int __watcall stop_3dsound_buffer(int param_1)
+0040fe06	strupr_1	37	false	1	0	ok	__watcall1	void __watcall strupr_1(char * param_1)
+0040fe2b	time	47	false	2	2	ok	__watcall1	void __watcall time(undefined4 * param_1)
+0040fe5a	initrandnext	10	false	2	1	ok	__watcall0	int __watcall initrandnext(void)
+0040fe64	rand	36	false	1	1	ok	__watcall0	uint __watcall rand(void)
+0040fe88	srand	16	false	2	1	ok	__watcall1	void __watcall srand(undefined4 param_1)
+0040fe98	xvga_locate_cdrom	169	false	1	5	ok	__watcall2	void __watcall xvga_locate_cdrom(char * param_1, char * param_2)
+0040ff41	file_path	162	false	15	5	ok	__watcall2	char * __watcall file_path(char * filename, char * param_2)
+0040ffe4	xvga_init_fileio	629	false	1	7	ok	__watcall2	int __watcall xvga_init_fileio(char * filename_2, char * param_2)
+00410259	xvga_src_fseek	263	false	8	3	ok	__watcall3	int __watcall xvga_src_fseek(__iobuf * file, int param_2, int move_method)
+00410360	xvga_src_filelength	114	false	0	2	ok	__watcall1	ulong __watcall xvga_src_filelength(__iobuf * file)
+004103d2	xvga_src_fopen	302	false	10	4	ok	__watcall1	__iobuf * __watcall xvga_src_fopen(char * filename)
+00410500	xvga_src_fclose	117	false	10	3	ok	__watcall1	void __watcall xvga_src_fclose(__iobuf * file)
+00410575	xvga_exit_fileio	79	false	1	3	ok	__watcall0	void __watcall xvga_exit_fileio(void)
+004105c4	init_controls	270	false	1	3	ok	__watcall0	void __watcall init_controls(void)
+004106d2	clear_control_list	23	false	1	0	ok	__watcall0	void __watcall clear_control_list(void)
+004106e9	add_control_to_list	112	false	1	1	ok	__watcall4	void __watcall add_control_to_list(int param_1, void * param_2, void * param_3, void * param_4, void * param_5, void * param_6, void * param_7)
+0041075c	get_mouse_type	35	false	1	1	ok	__watcall0	int __watcall get_mouse_type(void)
+0041077f	set_mouse_type	73	false	1	1	ok	__watcall1	void __watcall set_mouse_type(int param_1)
+004107c8	init_mouse	105	false	1	2	ok	__watcall0	int __watcall init_mouse(void)
+00410831	release_mouse	29	false	0	0	ok	__watcall0	int __watcall release_mouse(void)
+0041084e	hide_mouse	40	false	54	1	ok	__watcall0	void __watcall hide_mouse(void)
+00410876	get_mouse_on	27	false	1	0	ok	__watcall0	int __watcall get_mouse_on(void)
+00410891	mouse_on	51	false	3	1	ok	__watcall0	void __watcall mouse_on(void)
+004108c4	show_mouse	42	false	46	1	ok	__watcall0	void __watcall show_mouse(void)
+004108ee	mouse_off	57	false	4	2	ok	__watcall0	void __watcall mouse_off(void)
+00410927	set_mouse_anim	298	false	0	1	ok	__watcall3	void __watcall set_mouse_anim(int param_1, int param_2, char param_3)
+00410a51	get_mouse_anim	124	false	0	1	ok	__watcall3	void __watcall get_mouse_anim(int * param_1, int * param_2, char * param_3)
+00410acd	set_mouse_pos	48	false	0	2	ok	__watcall2	void __watcall set_mouse_pos(int param_1, int param_2)
+00410afd	get_mouse_pos	113	false	1	3	ok	__watcall3	void __watcall get_mouse_pos(int * param_1, int * param_2, int * param_3)
+00410b6e	set_mouse_hotspot	49	false	0	1	ok	__watcall2	void __watcall set_mouse_hotspot(int param_1, int param_2)
+00410b9f	get_mouse_hotspot	52	false	0	1	ok	__watcall2	void __watcall get_mouse_hotspot(int * param_1, int * param_2)
+00410bd3	draw_mouse	227	false	1	3	ok	__watcall0	void __watcall draw_mouse(void)
+00410cb6	handle_mouse	146	false	2	4	ok	__watcall0	int __watcall handle_mouse(void)
+00410d48	exit_help	33	false	1	0	ok	__watcall0	void __watcall exit_help(void)
+00410d69	init_help	283	false	1	6	ok	__watcall0	void __watcall init_help(void)
+00410e84	draw_grid	475	false	4	2	ok	__watcall1	void __watcall draw_grid(int param_1)
+0041105f	play_help	285	false	4	13	ok	__watcall2	void __watcall play_help(help_t * help, int param_2)
+0041117c	check_help_keys	71	false	1	2	ok	__watcall0	int __watcall check_help_keys(void)
+004111c3	get_free_help_key	36	false	1	0	ok	__watcall0	int __watcall get_free_help_key(void)
+004111e7	clear_help_keys	24	false	1	0	ok	__watcall0	void __watcall clear_help_keys(void)
+004111ff	set_help_key	49	false	1	2	ok	__watcall1	void __watcall set_help_key(int param_1)
+00411230	strstr	190	false	2	0	ok	__watcall2	byte * __watcall strstr(byte * param_1, byte * param_2)
+004112f0	get_mem_xsize	117	false	0	1	ok	__watcall3	int * __watcall get_mem_xsize(char * param_1, int param_2, int param_3)
+00411365	get_mem_ysize	119	false	0	1	ok	__watcall3	int * __watcall get_mem_ysize(char * param_1, int param_2, int param_3)
+004113dc	get_mem_mx	79	false	0	1	ok	__watcall3	int * __watcall get_mem_mx(char * param_1, int param_2, int param_3)
+0041142b	get_mem_my	79	false	0	1	ok	__watcall3	int * __watcall get_mem_my(char * param_1, int param_2, int param_3)
+0041147a	free_sprites	39	false	1	1	ok	__watcall0	void __watcall free_sprites(void)
+004114a1	alloc_sprites	161	false	0	2	ok	__watcall1	int __watcall alloc_sprites(int param_1)
+00411542	set_sprite_image	94	false	0	1	ok	__watcall2	void __watcall set_sprite_image(int param_1, int param_2)
+004115a0	get_sprite_image	96	false	0	1	ok	__watcall1	int __watcall get_sprite_image(int param_1)
+00411600	alloc_mem_images	119	false	0	1	ok	__watcall1	int __watcall alloc_mem_images(int param_1)
+00411677	alloc_mem_images_1	157	false	1	2	ok	__watcall2	int __watcall alloc_mem_images_1(int param_1, int param_2)
+00411714	free_mem_images	105	false	0	2	ok	__watcall0	int __watcall free_mem_images(void)
+0041177d	alloc_mem_image	473	false	2	5	ok	__watcall1	int __watcall alloc_mem_image(int param_1)
+00411956	free_mem_image	175	false	3	2	ok	__watcall1	int __watcall free_mem_image(int param_1)
+00411a05	lock_mem_image	81	false	0	2	ok	__watcall1	int __watcall lock_mem_image(int param_1)
+00411a56	lock_mem_image_1	85	false	2	2	ok	__watcall2	int __watcall lock_mem_image_1(int param_1, int * param_2)
+00411aab	unlock_mem_image	69	false	2	2	ok	__watcall1	int __watcall unlock_mem_image(int param_1)
+00411af0	use_mem_images	879	false	12	11	ok	__watcall3	int __watcall use_mem_images(char * filename, char * filename_2, long * param_3)
+00411e5f	disable_mem_images	36	false	13	1	ok	__watcall1	int __watcall disable_mem_images(long * param_1)
+00411e83	disable_all_mem_images	34	false	2	1	ok	__watcall0	int __watcall disable_all_mem_images(void)
+00411ea5	show_mem_images	185	false	0	4	ok	__watcall0	int __watcall show_mem_images(void)
+00411f5e	init_mem_images	899	false	2	11	ok	__watcall2	int __watcall init_mem_images(char * filename, int param_2)
+004122e2	wstart2	15	false	0	1	ok	__watcall0	undefined4 __watcall wstart2(void)
+00412360	get_string_width	120	false	2	2	ok	__watcall2	int __watcall get_string_width(char * param_1, int param_2)
+004123d8	get_string_height	107	false	2	2	ok	__watcall2	int __watcall get_string_height(char * param_1, int param_2)
+00412443	win_print_xy	1329	false	12	11	ok	__watcall_varargs	int __cdecl win_print_xy(int param_1, int param_2, int param_3, char * param_4, ...)
+00412974	win_print_xy_1	1275	false	0	11	ok	__watcall_varargs	int __cdecl win_print_xy_1(int param_1, int param_2, int param_3, ulong param_4, ulong param_5, char * param_6, ...)
+00412e6f	xvga_load_select_font	65	false	0	4	ok	__watcall4	int __watcall xvga_load_select_font(char * param_1, int param_2, int param_3, int param_4)
+00412eb0	xvga_load_font	144	false	2	2	ok	__watcall4	int __watcall xvga_load_font(int param_1, char * param_2, int param_3, int param_4, int param_5)
+00412f40	xvga_select_font	98	false	21	1	ok	__watcall1	int __watcall xvga_select_font(int param_1)
+00412fa2	xvga_set_font_colors	56	false	17	1	ok	__watcall3	void __watcall xvga_set_font_colors(int param_1, ulong param_2, ulong param_3)
+00412fda	xvga_set_font_bkmode	104	false	3	1	ok	__watcall2	void __watcall xvga_set_font_bkmode(int param_1, int param_2)
+00413042	xvga_free_font	115	false	1	2	ok	__watcall1	void __watcall xvga_free_font(int param_1)
+004130b5	xvga_release_fonts	70	false	0	1	ok	__watcall0	void __watcall xvga_release_fonts(void)
+004130fb	xvga_get_active_font	29	false	1	0	ok	__watcall0	void * __watcall xvga_get_active_font(void)
+00413118	get_free_font_index	36	false	1	0	ok	__watcall0	int __watcall get_free_font_index(void)
+0041313c	open_flags	209	false	2	2	ok	__watcall1	uint __watcall open_flags(byte * param_1)
+0041320d	doopen	196	false	2	5	ok	__watcall4	undefined4 __watcall doopen(char * filename, undefined4 param_2, uint param_3, int share_flag, int param_5)
+004132d1	fsopen	57	false	1	3	ok	__watcall3	undefined4 __watcall fsopen(char * filename, byte * param_2, int share_flag)
+0041330a	fopen	10	false	10	1	ok	__watcall2	undefined4 __watcall fopen(char * filename, byte * param_2)
+00413314	close_file	122	false	1	3	ok	__watcall1	int __watcall close_file(int param_1)
+0041338e	freopen	104	false	0	4	ok	__watcall3	undefined4 __watcall freopen(char * filename, byte * param_2, int param_3)
+004133f6	fclose	63	false	13	2	ok	__watcall1	undefined4 __watcall fclose(int param_1)
+00413435	shutdown_stream	21	false	2	2	ok	__watcall2	uint __watcall shutdown_stream(int param_1, int param_2)
+0041344a	hex	12	false	1	0	ok	__watcall1	int __watcall hex(int param_1)
+00413456	MkTmpFile	101	false	1	2	ok	__watcall2	void __watcall MkTmpFile(undefined1 * param_1, uint param_2)
+004134bb	doclose	171	false	2	9	ok	__watcall2	uint __watcall doclose(int param_1, int param_2)
+00413566	update_buffer	66	false	1	0	ok	__watcall2	undefined4 __watcall update_buffer(int param_1, int * param_2)
+004135a8	fseek	244	false	6	6	ok	__watcall3	undefined4 __watcall fseek(undefined4 param_1, int param_2, DWORD move_method)
+0041369c	get_errno_ptr	10	false	3	1	ok	__watcall0	int __watcall get_errno_ptr(void)
+004136a6	get_doserrno_ptr	10	false	0	1	ok	__watcall0	int __watcall get_doserrno_ptr(void)
+004136b0	strerror	23	false	3	0	ok	__watcall1	char * __watcall strerror(int param_1)
+004136c7	ftell	81	false	2	3	ok	__watcall4	int __watcall ftell(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+00413718	fread	511	false	15	5	ok	__watcall4	uint __watcall fread(char * param_1, uint param_2, int param_3, int * param_4)
+00413917	fwrite	486	false	1	7	ok	__watcall4	undefined4 __watcall fwrite(byte * param_1, undefined4 param_2, int param_3, int * param_4)
+00413afd	remove	5	true	1	0	ok	__watcall0	void __watcall remove(void)
+00413b04	get_number_of_joysticks_supported	12	false	0	1	ok	__watcall0	int __watcall get_number_of_joysticks_supported(void)
+00413b10	get_attached_joysticks	242	false	2	2	ok	__watcall0	int __watcall get_attached_joysticks(void)
+00413c02	calibrate_joysticks	830	false	0	4	ok	__watcall0	void __watcall calibrate_joysticks(void)
+00413f40	clear_joystick_key_down_state	73	false	2	0	ok	__watcall1	void __watcall clear_joystick_key_down_state(int param_1)
+00413f89	check_joystick_movement	348	false	1	1	ok	__watcall4	void __watcall check_joystick_movement(int param_1, int param_2, int param_3, int param_4)
+004140e5	handle_joystick	193	false	0	3	ok	__watcall0	void __watcall handle_joystick(void)
+004141c8	set_joystick_keys	84	false	0	1	ok	__watcall3	void __watcall set_joystick_keys(int param_1, int param_2, int param_3)
+0041421c	set_joystick_sensibility	60	false	0	1	ok	__watcall2	void __watcall set_joystick_sensibility(double param_1)
+00414258	get_joystick_position	560	false	0	2	ok	__watcall4	int __watcall get_joystick_position(int param_1, int param_2, int param_3, int * param_4, int * param_5, int * param_6)
+00414488	check_joystick_keys	62	false	1	0	ok	__watcall1	int __watcall check_joystick_keys(int param_1)
+004144c6	strncpy	37	false	5	0	ok	__watcall3	void __watcall strncpy(char * param_1, char * param_2, int param_3)
+004144eb	buf_putc	31	false	0	0	ok	__watcall2	undefined4 * __watcall buf_putc(undefined4 * param_1, undefined4 param_2)
+0041450a	vbprintf	41	false	7	1	ok	__watcall4	int __watcall vbprintf(int param_1, int param_2, byte * param_3, int * param_4)
+00414533	bprintf	39	false	1	1	ok	__watcall0	void __watcall bprintf(void)
+0041455a	strncmp	41	false	2	0	ok	__watcall3	undefined4 __watcall strncmp(byte * param_1, byte * param_2, int param_3)
+00414583	byteswap	38	false	1	0	ok	__watcall4	void __watcall byteswap(undefined4 param_1, undefined4 param_2, undefined4 param_3, uint param_4)
+004145a9	med3	88	false	1	0	ok	__watcall4	undefined4 __watcall med3(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined * param_4)
+00414601	qsort	1081	false	3	2	ok	__watcall4	void __watcall qsort(int * param_1, int * param_2, int * param_3, undefined * param_4)
+00414a3c	keyispressed	79	false	13	1	ok	__watcall1	int __watcall keyispressed(int param_1)
+00414a8b	keyispressed_1	107	false	0	3	ok	__watcall2	int __watcall keyispressed_1(int param_1, int param_2)
+00414af8	handle_win_msg	71	false	21	3	ok	__watcall0	int __watcall handle_win_msg(void)
+00414b3f	handle_quit_msg	74	false	1	5	ok	__watcall0	int __watcall handle_quit_msg(void)
+00414b89	WindowProc	270	false	0	8	ok	__stdcall	long __stdcall WindowProc(void * param_1, uint param_2, uint param_3, long param_4)
+00414c98	get_clipping_limit	32	false	0	0	ok	__watcall4	void __watcall get_clipping_limit(int * param_1, int * param_2, int * param_3, int * param_4)
+00414cb8	set_clipping_limit	151	false	2	1	ok	__watcall4	void __watcall set_clipping_limit(int param_1, int param_2, int param_3, int param_4)
+00414d4f	blt_scr_2_scr	553	false	25	2	ok	__watcall4	void __watcall blt_scr_2_scr(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6, int param_7)
+00414f78	set_char	480	false	0	4	ok	__watcall4	void __watcall set_char(int param_1, char * param_2, int param_3, int param_4, int param_5, int param_6, int param_7)
+00415158	blt_char	272	false	0	2	ok	__watcall4	void __watcall blt_char(char * param_1, char * param_2, int param_3, int param_4, int param_5, int param_6, int param_7)
+00415268	set_mem_image	1698	false	39	6	ok	__watcall4	void __watcall set_mem_image(int param_1, int param_2, int param_3, int param_4, int param_5)
+0041590a	blt_mem_image	375	false	0	2	ok	__watcall4	void __watcall blt_mem_image(char * param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+00415a84	init_animations	130	false	2	1	ok	__watcall1	int __watcall init_animations(anim_t * anim)
+00415b06	alloc_animations	104	false	1	1	ok	__watcall1	int __watcall alloc_animations(int param_1)
+00415b70	read_pcx_8_to_16_line	129	false	3	2	ok	__watcall3	int __watcall read_pcx_8_to_16_line(short * param_1, __iobuf * file, int param_3)
+00415bf1	read_pcx_8_to_24_line	150	false	3	2	ok	__watcall3	int __watcall read_pcx_8_to_24_line(pf_24_t * pf_24_2, __iobuf * file, int param_3)
+00415c87	read_pcx_line	83	false	3	2	ok	__watcall3	int __watcall read_pcx_line(uchar * param_1, __iobuf * file, int param_3)
+00415cda	unpack_pcx_file_screen	239	false	0	5	ok	__watcall3	void __watcall unpack_pcx_file_screen(__iobuf * file, int param_2, int param_3)
+00415dc9	unpack_pcx_file_screen_1	307	false	2	6	ok	__watcall4	void __watcall unpack_pcx_file_screen_1(int param_1, __iobuf * file, int param_3, int param_4)
+00415efc	unpack_pcx_file_surface	219	false	5	5	ok	__watcall4	void __watcall unpack_pcx_file_surface(IDirectDrawSurface * direct_draw_surface, __iobuf * file, int param_3, int param_4)
+00415fd7	load_pcx_file_palette	199	false	0	6	ok	__watcall2	int __watcall load_pcx_file_palette(char * filename, int param_2)
+0041609e	get_pcx_info	112	false	0	3	ok	__watcall3	int __watcall get_pcx_info(char * filename, int * param_2, int * param_3)
+0041610e	load_pcx_file	549	false	1	10	ok	__watcall2	int __watcall load_pcx_file(char * filename, int param_2)
+00416333	load_pcx_file_1	443	false	10	9	ok	__watcall3	int __watcall load_pcx_file_1(int param_1, char * filename, int param_3)
+004164ee	load_pcx_file_surface	495	false	0	8	ok	__watcall3	IDirectDrawSurface * __watcall load_pcx_file_surface(char * filename, int * param_2, int * param_3)
+004166dd	load_pcx_file_surface_1	507	false	0	8	ok	__watcall4	IDirectDrawSurface * __watcall load_pcx_file_surface_1(char * filename, int * param_2, int * param_3, int param_4, _DDPIXELFORMAT * ddpixelformat)
+004168d8	load_pcx_file_surface_2	507	false	0	8	ok	__watcall4	IDirectDrawSurface * __watcall load_pcx_file_surface_2(char * filename, int * param_2, int * param_3, int param_4)
+00416ad3	load_pcx_file_surface_3	653	false	0	10	ok	__watcall3	int __watcall load_pcx_file_surface_3(char * filename, IDirectDrawSurface * direct_draw_surface_3, int param_3)
+00416d60	load_pcx_file_surface_4	482	false	0	9	ok	__watcall4	int __watcall load_pcx_file_surface_4(char * filename, IDirectDrawSurface * direct_draw_surface_2, int param_3, int param_4, int param_5)
+00416f44	reset_anim_base	43	false	29	0	ok	__watcall0	void __watcall reset_anim_base(void)
+00416f6f	add_anim_base	84	false	2	0	ok	__watcall1	void __watcall add_anim_base(anim_t * anim)
+00416fc3	add_array_to_anim_base	29	false	13	1	ok	__watcall2	void __watcall add_array_to_anim_base(anim_t * anim, long * param_2)
+00416fe0	add_demi_array_to_anim_base	90	false	0	1	ok	__watcall2	void __watcall add_demi_array_to_anim_base(anim_t * anim, long * param_2)
+0041703c	handle_wipe	27	false	16	1	ok	__watcall3	void __watcall handle_wipe(int param_1, int param_2, int param_3)
+0041707c	handle_wipe_1	395	false	1	10	ok	__watcall4	void __watcall handle_wipe_1(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6, int param_7)
+00417207	copyblock_tosurface	276	false	2	0	ok	__watcall4	void __watcall copyblock_tosurface(uchar * param_1, uchar * param_2, int param_3, int param_4, int param_5, int param_6, int param_7, int param_8)
+0041731c	dispatch_form_message	107	false	1	2	ok	__watcall4	long __watcall dispatch_form_message(void * param_1, uint param_2, uint param_3, long param_4)
+00417387	set_next_control_focus	54	false	6	2	ok	__watcall1	void __watcall set_next_control_focus(void * param_1)
+004173bd	set_previous_control_focus	52	false	6	2	ok	__watcall1	void __watcall set_previous_control_focus(void * param_1)
+00417404	set_control_state	275	false	13	4	ok	__watcall2	void __watcall set_control_state(int param_1, int param_2)
+00417517	enable_control	135	false	0	2	ok	__watcall1	void __watcall enable_control(int param_1)
+0041759e	disable_control	123	false	0	1	ok	__watcall1	void __watcall disable_control(int param_1)
+00417619	get_control_focus	17	false	3	2	ok	__watcall0	int __watcall get_control_focus(void)
+0041762a	focus_control	133	false	21	2	ok	__watcall1	void __watcall focus_control(int param_1)
+004176af	get_control_image_index	63	false	15	1	ok	__watcall2	int __watcall get_control_image_index(int param_1, int param_2)
+004176ee	check_control_position	169	false	6	1	ok	__watcall4	void __watcall check_control_position(int param_1, int param_2, int param_3, int param_4, int param_5)
+00417797	get_previous_control_index	104	false	1	1	ok	__watcall2	int __watcall get_previous_control_index(int param_1, int param_2)
+004177ff	get_next_control_index	119	false	1	1	ok	__watcall2	int __watcall get_next_control_index(int param_1, int param_2)
+00417876	get_numberofcontrols_inform	6	false	3	0	ok	__watcall0	int __watcall get_numberofcontrols_inform(void)
+0041787c	get_old_control_state	78	false	1	1	ok	__watcall1	int __watcall get_old_control_state(int param_1)
+004178ca	get_control_type	78	false	3	1	ok	__watcall1	int __watcall get_control_type(int param_1)
+00417918	get_control_state	78	false	3	1	ok	__watcall1	int __watcall get_control_state(int param_1)
+00417966	get_control_hwnd	78	false	2	1	ok	__watcall1	void * __watcall get_control_hwnd(int param_1)
+004179b4	get_control_x	77	false	10	1	ok	__watcall1	int __watcall get_control_x(int param_1)
+00417a01	get_control_y	78	false	10	1	ok	__watcall1	int __watcall get_control_y(int param_1)
+00417a4f	get_control_index	74	false	18	1	ok	__watcall1	int __watcall get_control_index(void * param_1)
+00417a99	get_control_pointer	64	false	9	1	ok	__watcall1	void * __watcall get_control_pointer(void * param_1)
+00417ad9	get_control_pointer_1	67	false	4	1	ok	__watcall1	void * __watcall get_control_pointer_1(int param_1)
+00417b1c	call_help_function	184	false	1	1	ok	__watcall1	void __watcall call_help_function(int param_1)
+00417bd4	destroy_form	118	false	15	1	ok	__watcall0	void __watcall destroy_form(void)
+00417c4a	activate_form	172	false	16	2	ok	__watcall1	void __watcall activate_form(fform_t * fform)
+00417cf6	draw_form_animfocus_buttons	72	false	1	1	ok	__watcall0	int __watcall draw_form_animfocus_buttons(void)
+00417d3e	check_form_key_pressed	336	false	6	5	ok	__watcall1	void __watcall check_form_key_pressed(int param_1)
+00417e8e	handle_form	123	false	12	4	ok	__watcall0	int __watcall handle_form(void)
+00417f09	wait_form_key_released	33	false	20	2	ok	__watcall0	void __watcall wait_form_key_released(void)
+00417f2c	init_edit_box	13	false	1	1	ok	__watcall0	void __watcall init_edit_box(void)
+00417f39	clear_edit_keys_allowed	5	false	1	0	ok	__watcall0	void __watcall clear_edit_keys_allowed(void)
+00417f3e	set_edit_keys_allowed	85	false	0	1	ok	__watcall1	void __watcall set_edit_keys_allowed(char * param_1)
+00417f93	get_edit_box_text	73	false	1	4	ok	__watcall3	void __watcall get_edit_box_text(int param_1, char * param_2, int param_3)
+00417fdc	set_edit_box_colors	89	false	0	2	ok	__watcall4	void __watcall set_edit_box_colors(fedit_box_t * fedit_box, ulong param_2, ulong param_3, ulong param_4, ulong param_5)
+00418035	draw_help_editbox	62	false	0	3	ok	__watcall1	void __watcall draw_help_editbox(fform_t * fform)
+00418073	destroy_edit_box	79	false	0	2	ok	__watcall1	void __watcall destroy_edit_box(fform_t * fform)
+004180c2	create_edit_box	640	false	0	10	ok	__watcall2	void __watcall create_edit_box(fform_t * fform, int param_2)
+00418342	set_windows_edit_box_colors	101	false	1	4	ok	__watcall2	long __watcall set_windows_edit_box_colors(void * param_1, void * param_2)
+004183a7	EditWindowProc	331	false	0	10	ok	__stdcall	long __stdcall EditWindowProc(void * param_1, uint param_2, uint param_3, long param_4)
+004184f2	getcwd	121	false	1	4	ok	__watcall2	void __watcall getcwd(undefined4 * param_1, uint param_2)
+00418590	utoa	74	false	1	0	ok	__watcall3	void __watcall utoa(uint param_1, char * param_2, uint param_3)
+004185da	itoa_1	27	false	5	1	ok	__watcall3	void __watcall itoa_1(uint param_1, char * param_2, uint param_3)
+004185f5	wcpp_2_pure_error	37	false	0	1	ok	__watcall0	int __watcall wcpp_2_pure_error(void)
+0041861a	mem_putc	19	false	0	0	ok	__watcall2	int * __watcall mem_putc(int * param_1, undefined4 param_2)
+0041862d	vsprintf	21	false	5	1	ok	__watcall3	void __watcall vsprintf(int param_1, byte * param_2, int * param_3)
+00418642	fprintf	33	false	1	1	ok	__watcall_varargs	void __cdecl fprintf(FILE * _File, char * _Format, ...)
+00418664	xvga_init_input	302	false	0	3	ok	__watcall2	int __watcall xvga_init_input(void * param_1, int param_2)
+00418792	xvga_input_setup	150	false	0	2	ok	__watcall1	void __watcall xvga_input_setup(int param_1)
+00418828	get_key_state	97	false	0	2	ok	__watcall1	int __watcall get_key_state(int param_1)
+00418889	xvga_exit_input	115	false	1	0	ok	__watcall0	void __watcall xvga_exit_input(void)
+004188fc	xvga_init_timer	148	false	0	3	ok	__watcall1	int __watcall xvga_init_timer(int param_1)
+00418990	xvga_get_free_timer	104	false	1	1	ok	__watcall0	int __watcall xvga_get_free_timer(void)
+004189f8	xvga_set_timer	166	false	0	4	ok	__watcall3	int __watcall xvga_set_timer(void * param_1, int param_2, int param_3)
+00418a9e	xvga_unset_timer	110	false	1	1	ok	__watcall1	int __watcall xvga_unset_timer(int param_1)
+00418b0c	xvga_kill_timers	71	false	1	1	ok	__watcall0	int __watcall xvga_kill_timers(void)
+00418b53	xvga_handle_timers	66	false	1	0	ok	__watcall1	int __watcall xvga_handle_timers(int param_1)
+00418b95	null_exit_rtn	1	false	2	0	ok	__watcall0	undefined4 __watcall null_exit_rtn(void)
+00418b96	exit	24	false	3	2	ok	__watcall1	noreturn void __watcall exit(undefined4 param_1)
+00418bae	exit_1	37	false	1	2	ok	__watcall1	undefined4 __watcall exit_1(undefined4 param_1)
+00418be0	memset	24	false	28	1	ok	__watcall3	undefined4 * __watcall memset(undefined4 * param_1, undefined4 param_2, undefined4 param_3)
+00418bf8	xvga_palette_ignore	6	false	0	0	ok	__watcall0	int __watcall xvga_palette_ignore(void)
+00418bfe	init_xvga_palette	201	false	1	5	ok	__watcall0	int __watcall init_xvga_palette(void)
+00418cc7	exit_xvga_palette	35	false	1	0	ok	__watcall0	void __watcall exit_xvga_palette(void)
+00418cea	attach_xvga_palette	249	false	1	2	ok	__watcall1	void __watcall attach_xvga_palette(int param_1)
+00418de3	set_xvga_palette	169	false	5	2	ok	__watcall3	int __watcall set_xvga_palette(tagPALETTEENTRY * paletteentry, int param_2, int param_3)
+00418e8c	get_xvga_palette	172	false	0	2	ok	__watcall3	int __watcall get_xvga_palette(tagPALETTEENTRY * paletteentry, int param_2, int param_3)
+00418f38	set_xvga_palette_flag	219	false	0	2	ok	__watcall4	void __watcall set_xvga_palette_flag(tagPALETTEENTRY * paletteentry, int paletteentry_index, int param_3, int param_4, int param_5)
+00419014	set_conversion_mode	6	false	0	0	ok	__watcall1	void __watcall set_conversion_mode(int param_1)
+0041901a	get_conversion_mode	6	false	0	0	ok	__watcall0	int __watcall get_conversion_mode(void)
+00419020	set_hdc_pixel	125	false	0	3	ok	__watcall4	void __watcall set_hdc_pixel(int param_1, int param_2, int param_3, ulong param_4)
+0041909d	set_hdc_pixel_1	56	false	1	2	ok	__watcall4	void __watcall set_hdc_pixel_1(IDirectDrawSurface * direct_draw_surface, int param_2, int param_3, ulong param_4)
+004190d5	get_hdc_pixel	124	false	0	3	ok	__watcall3	ulong __watcall get_hdc_pixel(int param_1, int param_2, int param_3)
+00419151	get_hdc_pixel_1	43	false	1	1	ok	__watcall3	ulong __watcall get_hdc_pixel_1(IDirectDrawSurface * direct_draw_surface, int param_2, int param_3)
+0041917c	get_color_format	145	false	1	3	ok	__watcall2	ulong __watcall get_color_format(IDirectDrawSurface * direct_draw_surface, ulong param_2)
+0041920d	set_surface_color_key	70	false	0	3	ok	__watcall2	void __watcall set_surface_color_key(IDirectDrawSurface * direct_draw_surface, ulong param_2)
+00419253	translate_pixel	309	false	6	1	ok	__watcall2	int __watcall translate_pixel(int paletteentry_index, int param_2)
+00419388	translate_pixel_1	416	false	2	1	ok	__watcall3	void __watcall translate_pixel_1(int paletteentry_index, int param_2, void * param_3)
+00419528	get_xvga_pixel_format	313	false	1	3	ok	__watcall0	void __watcall get_xvga_pixel_format(void)
+00419664	xvga_get_first_cdrom	84	false	1	1	ok	__watcall0	int __watcall xvga_get_first_cdrom(void)
+004196d4	xvga_init_drive_info	351	false	1	5	ok	__watcall1	int __watcall xvga_init_drive_info(int param_1)
+00419833	xvga_get_system_info	536	false	1	7	ok	__watcall0	int __watcall xvga_get_system_info(void)
+00419a4b	search_screen_mode_index	60	false	1	0	ok	__watcall3	int __watcall search_screen_mode_index(int param_1, int param_2, int param_3)
+00419a87	test_screen_modes_available	32	false	0	0	ok	__watcall0	int __watcall test_screen_modes_available(void)
+00419aa7	xvga_init_dd_info	105	false	1	2	ok	__watcall1	int __watcall xvga_init_dd_info(int param_1)
+00419b10	get_new_dd_info	32	false	1	0	ok	__watcall0	int __watcall get_new_dd_info(void)
+00419b30	enum_dd_device	343	false	0	5	ok	__stdcall	int __stdcall enum_dd_device(_GUID * guid, char * param_2, char * param_3, void * param_4)
+00419c87	xvga_get_dd_info	32	false	1	2	ok	__watcall0	int __watcall xvga_get_dd_info(void)
+00419ca7	xvga_get_dd_guid	166	false	1	1	ok	__watcall1	_GUID * __watcall xvga_get_dd_guid(int param_1)
+00419d4d	mode_available_callback_func	76	false	0	2	ok	__stdcall	long __stdcall mode_available_callback_func(_DDSURFACEDESC * ddsurfacedesc, void * param_2)
+00419d99	xvga_get_screen_mode_info	88	false	1	3	ok	__watcall0	int __watcall xvga_get_screen_mode_info(void)
+00419df1	xvga_test_mode_available	51	false	2	1	ok	__watcall1	int __watcall xvga_test_mode_available(int param_1)
+00419e24	stricmp_1	71	false	5	0	ok	__watcall2	int __watcall stricmp_1(byte * param_1, byte * param_2)
+00419e6b	strrchr	26	false	2	0	ok	__watcall2	char * __watcall strrchr(char * param_1, undefined4 param_2)
+00419e88	init_smacker	158	false	2	4	ok	__watcall1	int __watcall init_smacker(void * param_1)
+00419f26	set_smack_palette	143	false	2	2	ok	__watcall1	void __watcall set_smack_palette(int param_1)
+00419fb5	play_check_smacker	100	false	2	3	ok	__watcall0	void __watcall play_check_smacker(void)
+0041a019	do_play_smacker	223	false	0	8	ok	__watcall3	void __watcall do_play_smacker(int param_1, int param_2, int param_3)
+0041a0f8	do_play_scale_smacker	246	false	1	9	ok	__watcall4	void __watcall do_play_scale_smacker(int param_1, int param_2, int param_3, int param_4, int param_5)
+0041a1ee	check_smacker_keys	133	false	1	1	ok	__watcall0	void __watcall check_smacker_keys(void)
+0041a273	play_smacker	382	false	0	5	ok	__watcall4	int __watcall play_smacker(char * param_1, int param_2, int param_3, int param_4, int param_5, char param_6, int param_7)
+0041a3f1	get_free_smacker_key	38	false	1	0	ok	__watcall0	int __watcall get_free_smacker_key(void)
+0041a417	clear_smacker_keys	26	false	1	0	ok	__watcall0	void __watcall clear_smacker_keys(void)
+0041a431	set_smacker_key	84	false	1	2	ok	__watcall2	void __watcall set_smacker_key(int param_1, int param_2)
+0041a487	fini_387_emulator	1	false	1	0	ok	__watcall0	undefined4 __watcall fini_387_emulator(void)
+0041a488	getctime	101	false	1	1	ok	__watcall1	uint __watcall getctime(uint * param_1)
+0041a4ed	mktime	340	false	2	4	ok	__watcall1	undefined4 __watcall mktime(int * param_1)
+0041a641	threadid	12	false	0	1	ok	__watcall0	int __watcall threadid(void)
+0041a64d	SingleThread	5	false	17	0	ok	__watcall0	undefined4 __watcall SingleThread(void)
+0041a652	NullExitRtn	1	false	35	0	ok	__watcall0	undefined4 __watcall NullExitRtn(void)
+0041a653	DefInitAccessH	5	true	1	0	ok	__watcall1	int __watcall DefInitAccessH(int param_1)
+0041a658	DefFiniAccessH	5	true	1	0	ok	__watcall1	undefined4 __watcall DefFiniAccessH(undefined4 param_1)
+0041a65d	NTInit	295	false	1	8	ok	__watcall3	void __watcall NTInit(int param_1, undefined4 * param_2, HMODULE module)
+0041a784	NTMainInit	70	false	1	6	ok	__watcall2	void __watcall NTMainInit(undefined4 param_1, undefined4 * param_2)
+0041a7ca	exit_2	31	false	2	4	ok	__watcall1	undefined4 __watcall exit_2(UINT exit_code)
+0041a7e9	mem_putc_1	19	false	0	0	ok	__watcall2	int * __watcall mem_putc_1(int * param_1, undefined4 param_2)
+0041a7fc	sprintf	48	false	2	1	ok	__watcall_varargs	void __cdecl sprintf(char * _Dest, char * _Format, ...)
+0041a82c	getenv	97	false	2	1	ok	__watcall1	undefined4 __watcall getenv(char * param_1)
+0041a88d	access_1	50	false	1	3	ok	__watcall2	undefined4 __watcall access_1(LPCSTR file_name, uint param_2)
+0041a8bf	copypart	54	false	1	3	ok	__watcall4	int __watcall copypart(byte * param_1, byte * param_2, int param_3, int param_4)
+0041a8f5	splitpath	217	false	1	2	ok	__watcall4	void __watcall splitpath(byte * param_1, byte * param_2, byte * param_3, byte * param_4, byte * param_5)
+0041a9ce	pickup	20	false	1	0	ok	__watcall2	int __watcall pickup(int param_1, int * param_2)
+0041a9e2	makepath	491	false	1	4	ok	__watcall4	void __watcall makepath(byte * param_1, byte * param_2, byte * param_3, byte * param_4, byte * param_5)
+0041abcd	filelength	89	false	2	2	ok	__watcall1	DWORD __watcall filelength(undefined4 param_1)
+0041ac28	check_button_hotkey	22	false	0	0	ok	__watcall2	int __watcall check_button_hotkey(fform_t * fform, int param_2)
+0041ac3e	draw_focus_anim_button	160	false	0	5	ok	__watcall1	void __watcall draw_focus_anim_button(fform_t * fform)
+0041acde	destroy_button	44	false	0	2	ok	__watcall1	void __watcall destroy_button(fform_t * fform)
+0041ad0a	create_button	345	false	0	7	ok	__watcall2	void __watcall create_button(fform_t * fform, int param_2)
+0041ae63	draw_help_button	140	false	0	7	ok	__watcall1	void __watcall draw_help_button(fform_t * fform)
+0041aeef	draw_button	243	false	1	10	ok	__watcall1	void __watcall draw_button(tagDRAWITEMSTRUCT * drawitemstruct)
+0041afe2	ButtonWindowProc	322	false	0	8	ok	__stdcall	long __stdcall ButtonWindowProc(void * param_1, uint param_2, uint param_3, long drawitemstruct)
+0041b124	check_togglebutton_hotkey	22	false	0	0	ok	__watcall2	int __watcall check_togglebutton_hotkey(fform_t * fform, int param_2)
+0041b13a	get_togglebutton_togglestate	82	false	0	4	ok	__watcall1	int __watcall get_togglebutton_togglestate(int param_1)
+0041b18c	set_togglebutton_togglestate	142	false	2	4	ok	__watcall2	void __watcall set_togglebutton_togglestate(int param_1, int param_2)
+0041b21a	destroy_togglebutton	44	false	0	2	ok	__watcall1	void __watcall destroy_togglebutton(fform_t * fform)
+0041b246	create_togglebutton	220	false	0	8	ok	__watcall2	void __watcall create_togglebutton(fform_t * fform, int param_2)
+0041b322	draw_help_togglebutton	100	false	0	5	ok	__watcall1	void __watcall draw_help_togglebutton(fform_t * fform)
+0041b386	draw_togglebutton	308	false	1	11	ok	__watcall1	void __watcall draw_togglebutton(tagDRAWITEMSTRUCT * drawitemstruct)
+0041b4ba	ToggleButtonWindowProc	316	false	0	8	ok	__stdcall	long __stdcall ToggleButtonWindowProc(void * param_1, uint param_2, uint param_3, long drawitemstruct)
+0041b5f8	check_areabutton_hotkey	22	false	0	0	ok	__watcall2	int __watcall check_areabutton_hotkey(fform_t * fform, int param_2)
+0041b60e	destroy_areabutton	44	false	0	2	ok	__watcall1	void __watcall destroy_areabutton(fform_t * fform)
+0041b63a	create_areabutton	356	false	0	8	ok	__watcall2	void __watcall create_areabutton(fform_t * fform, int param_2)
+0041b79e	draw_help_areabutton	62	false	0	3	ok	__watcall1	void __watcall draw_help_areabutton(fform_t * fform)
+0041b7dc	draw_areabutton	65	false	0	6	ok	__watcall1	void __watcall draw_areabutton(tagDRAWITEMSTRUCT * drawitemstruct)
+0041b81d	AreaButtonWindowProc	256	false	0	10	ok	__stdcall	long __stdcall AreaButtonWindowProc(void * param_1, uint param_2, uint param_3, long param_4)
+0041b920	check_animbutton_hotkey	22	false	0	0	ok	__watcall2	int __watcall check_animbutton_hotkey(fform_t * fform, int param_2)
+0041b936	destroy_animbutton	44	false	0	2	ok	__watcall1	void __watcall destroy_animbutton(fform_t * fform)
+0041b962	create_animbutton	234	false	0	7	ok	__watcall2	void __watcall create_animbutton(fform_t * fform, int param_2)
+0041ba4c	draw_animation_animbutton	236	false	1	6	ok	__watcall4	void __watcall draw_animation_animbutton(int param_1, int param_2, int param_3, int param_4)
+0041bb38	draw_help_animbutton	237	false	0	6	ok	__watcall1	void __watcall draw_help_animbutton(fform_t * fform)
+0041bc3c	draw_animbutton	491	false	1	13	ok	__watcall1	void __watcall draw_animbutton(tagDRAWITEMSTRUCT * drawitemstruct)
+0041be27	AnimButtonWindowProc	356	false	0	10	ok	__stdcall	long __stdcall AnimButtonWindowProc(void * param_1, uint param_2, uint param_3, long drawitemstruct)
+0041bf8c	check_radiobutton_hotkey	22	false	0	0	ok	__watcall2	int __watcall check_radiobutton_hotkey(fform_t * fform, int param_2)
+0041bfa2	destroy_radiobutton	44	false	0	2	ok	__watcall1	void __watcall destroy_radiobutton(fform_t * fform)
+0041bfce	create_radiobutton	266	false	0	7	ok	__watcall2	void __watcall create_radiobutton(fform_t * fform, int param_2)
+0041c0d8	unselect_radiobutton	160	false	1	5	ok	__watcall1	void __watcall unselect_radiobutton(int param_1)
+0041c178	draw_help_radiobutton	93	false	0	5	ok	__watcall1	void __watcall draw_help_radiobutton(fform_t * fform)
+0041c1d5	draw_radiobutton	326	false	1	11	ok	__watcall1	void __watcall draw_radiobutton(tagDRAWITEMSTRUCT * drawitemstruct)
+0041c31b	RadioButtonWindowProc	310	false	0	8	ok	__stdcall	long __stdcall RadioButtonWindowProc(void * param_1, uint param_2, uint param_3, long drawitemstruct)
+0041c451	free	142	false	13	2	ok	__watcall1	undefined4 __watcall free(undefined4 * param_1)
+0041c4df	rewind	23	false	1	1	ok	__watcall1	void __watcall rewind(int param_1)
+0041c4f6	WinMain_1	234	false	1	9	ok	__watcall0	undefined4 __watcall WinMain_1(void)
+0041c5e8	tolower_1	14	false	2	0	ok	__watcall1	int __watcall tolower_1(int param_1)
+0041c5f6	set_EDOM	5	false	1	0	ok	__watcall2	int __watcall set_EDOM(undefined4 param_1, undefined4 param_2)
+0041c5fb	set_errno	14	false	17	1	ok	__watcall1	int __watcall set_errno(undefined4 param_1)
+0041c609	set_ERANGE	7	false	2	1	ok	__watcall0	int __watcall set_ERANGE(void)
+0041c610	set_EINVAL	16	false	0	1	ok	__watcall0	undefined4 __watcall set_EINVAL(void)
+0041c620	set_doserrno	14	false	1	1	ok	__watcall1	void __watcall set_doserrno(undefined4 param_1)
+0041c62e	open	36	false	0	1	ok	__watcall_varargs	int __cdecl open(char * _Filename, int _OpenFlag, ...)
+0041c652	sopen	439	false	2	11	ok	__watcall_varargs	int __cdecl sopen(char * _Filename, int _OpenFlag, int _ShareFlag, ...)
+0041c809	allocfp	184	false	1	4	ok	__watcall0	undefined4 __watcall allocfp(void)
+0041c8c1	freefp	57	false	2	0	ok	__watcall1	void __watcall freefp(int param_1)
+0041c8fa	purgefp	30	false	1	1	ok	__watcall0	undefined4 __watcall purgefp(void)
+0041c918	chktty	49	false	2	1	ok	__watcall1	void __watcall chktty(int param_1)
+0041c94a	getpid	10	false	1	1	ok	__watcall0	DWORD __watcall getpid(void)
+0041c954	flush	234	false	7	4	ok	__watcall1	int __watcall flush(undefined4 param_1)
+0041ca3e	lseek_1	58	false	4	3	ok	__watcall3	DWORD __watcall lseek_1(undefined4 param_1, undefined4 param_2, DWORD move_method)
+0041ca78	close	111	false	1	3	ok	__watcall1	undefined4 __watcall close(int param_1)
+0041cae7	tell	61	false	2	3	ok	__watcall1	undefined4 __watcall tell(undefined4 param_1)
+0041cb24	fflush	16	false	1	1	ok	__watcall4	void __watcall fflush(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0041cb34	ioalloc	119	false	6	2	ok	__watcall1	void __watcall ioalloc(undefined4 * param_1)
+0041cbab	qread	116	false	2	3	ok	__watcall3	DWORD __watcall qread(int param_1, undefined4 param_2, DWORD number_of_bytes_to_read)
+0041cc1f	fgetc	158	false	3	3	ok	__watcall1	uint __watcall fgetc(undefined4 param_1)
+0041ccbd	filbuf	47	false	1	1	ok	__watcall1	undefined4 __watcall filbuf(undefined4 * param_1)
+0041ccec	fill_buffer	172	false	2	4	ok	__watcall1	undefined4 __watcall fill_buffer(undefined4 * param_1)
+0041cd98	qwrite	166	false	2	6	ok	__watcall3	undefined4 __watcall qwrite(uint param_1, LPCVOID buffer, DWORD number_of_bytes_to_write)
+0041ce3e	fputc	195	false	4	4	ok	__watcall2	uint __watcall fputc(uint param_1, undefined4 param_2)
+0041cf01	unlink	25	false	0	2	ok	__watcall0	void __watcall unlink(void)
+0041cf1a	prtf	927	false	4	2	ok	__watcall4	undefined4 __watcall prtf(undefined4 param_1, byte * param_2, int * param_3, undefined * param_4)
+0041d2b9	getprintspecs	318	false	1	1	ok	__watcall3	byte * __watcall getprintspecs(char * param_1, int * param_2, int param_3)
+0041d3f7	evalflags	95	false	1	0	ok	__watcall2	char * __watcall evalflags(char * param_1, int param_2)
+0041d456	far_strlen	36	false	1	0	ok	__watcall3	int __watcall far_strlen(char * param_1, undefined4 param_2, int param_3)
+0041d47a	far_other_strlen	35	false	1	0	ok	__watcall3	int __watcall far_other_strlen(short * param_1, undefined4 param_2, int param_3)
+0041d49d	fmt4hex	94	false	1	1	ok	__watcall3	void __watcall fmt4hex(uint param_1, char * param_2, int param_3)
+0041d4fb	FixedPoint_Format	245	false	1	1	ok	__watcall3	void __watcall FixedPoint_Format(byte * param_1, uint param_2, int param_3)
+0041d5f0	float_format	7	false	1	1	ok	__watcall0	undefined4 __watcall float_format(void)
+0041d5f7	formstring	1257	false	1	9	ok	__watcall4	void __watcall formstring(ushort * param_1, int * param_2, int param_3, ushort * param_4)
+0041dae0	zupstr	24	false	1	1	ok	__watcall1	void __watcall zupstr(byte * param_1)
+0041daf8	c_blt_sprite	41	false	4	1	ok	__watcall4	void __watcall c_blt_sprite(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, undefined4 param_8)
+0041db24	wipe_vrollbarup	426	false	1	8	ok	__watcall4	void __watcall wipe_vrollbarup(int param_1, int param_2, int param_3, int param_4, int param_5)
+0041dcce	wipe_vrollbardown	390	false	1	8	ok	__watcall4	void __watcall wipe_vrollbardown(int param_1, int param_2, int param_3, int param_4, int param_5)
+0041de54	wipe_draw_pixel_grid	500	false	1	3	ok	__watcall4	void __watcall wipe_draw_pixel_grid(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e048	wipe_pixelfade_full	106	false	1	5	ok	__watcall4	void __watcall wipe_pixelfade_full(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e0b4	wipe_scroll_in_left	269	false	1	5	ok	__watcall4	void __watcall wipe_scroll_in_left(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e1c1	wipe_scroll_in_right	276	false	1	5	ok	__watcall4	void __watcall wipe_scroll_in_right(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e2d5	wipe_scroll_in_top	267	false	1	4	ok	__watcall4	void __watcall wipe_scroll_in_top(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e3e0	wipe_scroll_in_bottom	257	false	1	4	ok	__watcall4	void __watcall wipe_scroll_in_bottom(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e4e4	wipe_luxaflex_horizontal	268	false	1	5	ok	__watcall4	void __watcall wipe_luxaflex_horizontal(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e5f0	wipe_luxaflex_verticale	298	false	1	5	ok	__watcall4	void __watcall wipe_luxaflex_verticale(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+0041e71a	dosret0	7	false	0	0	ok	__watcall2	uint __watcall dosret0(uint param_1, int param_2)
+0041e721	dosretax	4	false	0	0	ok	__watcall2	undefined4 __watcall dosretax(uint param_1, int param_2)
+0041e725	set_errno_dos	81	false	2	2	ok	__watcall1	undefined4 __watcall set_errno_dos(uint param_1)
+0041e776	set_errno_nt	15	false	8	2	ok	__watcall0	undefined4 __watcall set_errno_nt(void)
+0041e785	malloc	239	false	9	4	ok	__watcall1	undefined4 __watcall malloc(uint param_1)
+0041e874	wcpp_2_fatal_runtime_error	29	false	1	2	ok	__watcall2	int __watcall wcpp_2_fatal_runtime_error(char * buffer, UINT exit_code)
+0041e891	file_putc	17	false	0	1	ok	__watcall2	uint __watcall file_putc(undefined4 * param_1, uint param_2)
+0041e8a2	fprtf	145	false	1	4	ok	__watcall3	undefined4 __watcall fprtf(undefined4 * param_1, undefined4 param_2, int * param_3)
+0041e940	STOSB	49	false	1	1	ok	__watcall4	void __watcall STOSB(undefined4 * param_1, uint param_2, undefined4 param_3, uint param_4)
+0041e977	STOSD	108	false	1	0	ok	__watcall4	undefined4 * __watcall STOSD(undefined4 * param_1, undefined4 param_2, undefined4 param_3, uint param_4)
+0041e9e3	strnicmp_1	83	false	2	0	ok	__watcall3	undefined4 __watcall strnicmp_1(byte * param_1, undefined1 * param_2, int param_3)
+0041ea36	setEFGfmt	27	false	1	0	ok	__watcall0	undefined4 __watcall setEFGfmt(void)
+0041ea51	save_8087	5	false	0	0	ok	__watcall1	undefined2 * __watcall save_8087(undefined2 * param_1)
+0041ea56	rest_8087	4	false	0	0	ok	__watcall1	undefined4 __watcall rest_8087(undefined4 param_1)
+0041ea5a	init_8087	49	false	1	1	ok	__watcall0	uint __watcall init_8087(void)
+0041ea8b	fpreset	10	false	0	0	ok	__watcall0	undefined4 __watcall fpreset(void)
+0041ea95	chk8087	74	false	0	1	ok	__watcall0	uint __watcall chk8087(void)
+0041eae0	leapyear	59	false	4	0	ok	__watcall1	undefined4 __watcall leapyear(uint param_1)
+0041eb1b	calc_yday	229	false	1	2	ok	__watcall2	int __watcall calc_yday(int param_1, int param_2)
+0041ec00	check_order	52	false	1	1	ok	__watcall3	undefined4 __watcall check_order(int param_1, int param_2, int param_3)
+0041ec34	isindst	707	false	1	3	ok	__watcall1	void __watcall isindst(int * param_1)
+0041eef7	time_less	48	false	1	0	ok	__watcall2	undefined4 __watcall time_less(int * param_1, int * param_2)
+0041ef27	brktime	277	false	2	1	ok	__watcall4	undefined4 * __watcall brktime(int param_1, uint param_2, int param_3, undefined4 * param_4)
+0041f03c	gmtime	30	false	1	1	ok	__watcall2	undefined4 * __watcall gmtime(uint * param_1, undefined4 * param_2)
+0041f05a	gmtime_1	23	false	0	2	ok	__watcall1	undefined4 * __watcall gmtime_1(uint * param_1)
+0041f071	CacheOSTZ	84	false	0	0	ok	__watcall1	uint __watcall CacheOSTZ(int param_1)
+0041f0c5	tryOSTimeZone	246	false	0	1	ok	__watcall0	undefined1 * __watcall tryOSTimeZone(void)
+0041f1bb	tzset	18	false	1	1	ok	__watcall4	void __watcall tzset(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0041f1cd	parse_tz	261	false	0	2	ok	__watcall1	uint __watcall parse_tz(byte * param_1)
+0041f204	parse_time	36	false	2	0	ok	__watcall2	byte * __watcall parse_time(byte * param_1, int * param_2)
+0041f228	parse_offset	297	false	1	1	ok	__watcall3	byte * __watcall parse_offset(byte * param_1, byte * param_2, int * param_3)
+0041f351	parse_rule	260	false	1	1	ok	__watcall2	byte * __watcall parse_rule(byte * param_1, int * param_2)
+0041f547	parse_rule_tail	35	false	0	1	ok	__watcall4	undefined4 __watcall parse_rule_tail(undefined4 param_1, int param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+0041f57c	CtrlHandlerIsNeeded	63	false	3	1	ok	__watcall0	undefined4 __watcall CtrlHandlerIsNeeded(void)
+0041f5bb	StartCtrlHandler	44	false	1	1	ok	__watcall0	void __watcall StartCtrlHandler(void)
+0041f5e7	KillCtrlHandler	55	false	3	1	ok	__watcall0	void __watcall KillCtrlHandler(void)
+0041f61e	sigabort	5	false	0	0	ok	__watcall4	undefined4 __watcall sigabort(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0041f623	raise	151	false	1	5	ok	__watcall1	void __watcall raise(int param_1)
+0041f65c	sigfpe_handler	71	false	1	1	ok	__watcall1	void __watcall sigfpe_handler(undefined4 param_1)
+0041f6a3	signal	135	false	0	6	ok	__watcall2	undefined4 __watcall signal(int param_1, int param_2)
+0041f788	SigInit	45	false	1	1	ok	__watcall0	uint __watcall SigInit(void)
+0041f7b5	SigFini	1	false	1	0	ok	__watcall0	undefined4 __watcall SigFini(void)
+0041fb86	NewExceptionHandler	62	false	1	1	ok	__watcall1	void __watcall NewExceptionHandler(undefined4 param_1)
+0041fbc4	DoneExceptionHandler	79	false	2	3	ok	__watcall0	void __watcall DoneExceptionHandler(void)
+0041fc13	NTAtMaxFiles	69	false	1	0	ok	__watcall0	undefined4 __watcall NTAtMaxFiles(void)
+0041fc58	NTAddFileHandle	121	false	1	2	ok	__watcall1	int __watcall NTAddFileHandle(int param_1)
+0041fcd1	NTAddSpecificFileHandle	156	false	0	3	ok	__watcall2	undefined4 __watcall NTAddSpecificFileHandle(HANDLE handle, int param_2)
+0041fd6d	NTRemoveFileHandle	44	false	1	1	ok	__watcall1	undefined4 __watcall NTRemoveFileHandle(undefined4 param_1)
+0041fd99	NTInitFileHandles	55	false	1	2	ok	__watcall0	void __watcall NTInitFileHandles(void)
+0041fdd0	NTGetFakeHandle	18	false	1	0	ok	__watcall0	void __watcall NTGetFakeHandle(void)
+0041fde2	nullSema4Rtn	1	false	1	0	ok	__watcall0	undefined4 __watcall nullSema4Rtn(void)
+0041fde3	CloseSemaphore	44	false	1	1	ok	__watcall1	void __watcall CloseSemaphore(undefined4 * param_1)
+0041fe0f	AccessIOB	10	false	0	1	ok	__watcall0	DWORD __watcall AccessIOB(void)
+0041fe19	ReleaseIOB	10	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseIOB(void)
+0041fe23	AccessFileH	13	false	0	1	ok	__watcall1	DWORD __watcall AccessFileH(uint param_1)
+0041fe30	ReleaseFileH	16	false	0	1	ok	__watcall1	undefined4 * __watcall ReleaseFileH(uint param_1)
+0041fe40	InitAccessH	5	true	0	0	ok	__watcall1	int __watcall InitAccessH(int param_1)
+0041fe45	FiniAccessH	28	false	0	2	ok	__watcall1	undefined4 __watcall FiniAccessH(uint param_1)
+0041fe61	AccessNHeap	7	false	0	1	ok	__watcall0	DWORD __watcall AccessNHeap(void)
+0041fe68	ReleaseNHeap	10	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseNHeap(void)
+0041fe72	AccessFHeap	7	false	0	1	ok	__watcall0	DWORD __watcall AccessFHeap(void)
+0041fe79	ReleaseFHeap	10	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseFHeap(void)
+0041fe83	AccessTDList	7	false	0	1	ok	__watcall0	DWORD __watcall AccessTDList(void)
+0041fe8a	ReleaseTDList	7	false	0	1	ok	__watcall0	undefined4 * __watcall ReleaseTDList(void)
+0041fe91	AccessFList	5	false	0	0	ok	__watcall4	DWORD __watcall AccessFList(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0041fe96	AccessSemaphore	93	false	6	5	ok	__watcall1	DWORD __watcall AccessSemaphore(undefined4 * param_1)
+0041fef3	ReleaseFList	5	false	0	0	ok	__watcall4	undefined * __watcall ReleaseFList(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0041fef8	ReleaseSemaphore	37	false	6	1	ok	__watcall1	undefined4 * __watcall ReleaseSemaphore(undefined4 * param_1)
+0041ff1d	MultipleThread	32	false	0	2	ok	__watcall0	LPVOID __watcall MultipleThread(void)
+0041ff3d	InitThreadData	63	false	2	2	ok	__watcall1	undefined4 * __watcall InitThreadData(undefined4 * param_1)
+0041ff7c	NTThreadInit	76	false	1	1	ok	__watcall0	uint __watcall NTThreadInit(void)
+0041ffc8	NTAddThread	77	false	1	4	ok	__watcall1	undefined4 __watcall NTAddThread(undefined4 * param_1)
+00420015	NTRemoveThread	77	false	2	4	ok	__watcall1	int __watcall NTRemoveThread(int param_1)
+00420062	ThreadExit	10	false	0	1	ok	__watcall4	int __watcall ThreadExit(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+0042006c	NTThreadFini	32	false	1	1	ok	__watcall0	BOOL __watcall NTThreadFini(void)
+0042008c	InitMultipleThread	281	false	1	3	ok	__watcall0	void __watcall InitMultipleThread(void)
+004201a5	FiniSema4s	107	false	0	3	ok	__watcall0	BOOL __watcall FiniSema4s(void)
+00420210	strdup_1	69	false	2	1	ok	__watcall1	char * __watcall strdup_1(char * param_1)
+00420256	InitRtns	75	false	2	1	ok	__watcall1	undefined4 __watcall InitRtns(undefined4 param_1)
+004202a1	FiniRtns	79	false	1	1	ok	__watcall2	void __watcall FiniRtns(undefined4 param_1, undefined4 param_2)
+004202f0	mbsnccnt	62	false	1	1	ok	__watcall2	int __watcall mbsnccnt(byte * param_1, int param_2)
+0042032e	mbsnbcnt	49	false	4	1	ok	__watcall2	int __watcall mbsnbcnt(byte * param_1, int param_2)
+0042035f	mbsninc	25	false	0	1	ok	__watcall2	byte * __watcall mbsninc(byte * param_1, int param_2)
+00420378	mbsninc_1	69	false	0	0	ok	__watcall2	byte * __watcall mbsninc_1(byte * param_1, int param_2)
+004203bd	mbscat	81	false	0	0	ok	__watcall2	char * __watcall mbscat(char * param_1, char * param_2)
+0042040e	mbscpy	31	false	0	0	ok	__watcall2	char * __watcall mbscpy(char * param_1, char * param_2)
+0042042d	mbsdup	65	false	0	1	ok	__watcall1	char * __watcall mbsdup(char * param_1)
+0042046e	mbsncat	93	false	0	2	ok	__watcall3	byte * __watcall mbsncat(byte * param_1, byte * param_2, int param_3)
+004204cb	mbsnbcat	242	false	0	1	ok	__watcall3	byte * __watcall mbsnbcat(byte * param_1, byte * param_2, uint param_3)
+004205bd	mbsncpy	31	false	1	2	ok	__watcall3	void __watcall mbsncpy(char * param_1, byte * param_2, int param_3)
+004205dc	mbsnbcpy	180	false	1	2	ok	__watcall3	void __watcall mbsnbcpy(char * param_1, char * param_2, int param_3)
+00420690	mbptov	62	false	2	0	ok	__watcall1	uint __watcall mbptov(byte * param_1)
+004206ce	mbvtop	26	false	0	0	ok	__watcall2	char * __watcall mbvtop(undefined4 param_1, char * param_2)
+004206e8	mbvtop_1	52	false	1	0	ok	__watcall1	undefined * __watcall mbvtop_1(undefined4 param_1)
+0042071c	checkIsDBCS	49	false	0	1	ok	__watcall0	BOOL __watcall checkIsDBCS(void)
+0042074d	mbgetcode	109	false	2	0	ok	__watcall2	byte * __watcall mbgetcode(byte * param_1, uint * param_2)
+004207ba	mbsnextc	82	false	0	0	ok	__watcall1	uint __watcall mbsnextc(byte * param_1)
+0042080c	mbsinc	70	false	0	0	ok	__watcall1	byte * __watcall mbsinc(byte * param_1)
+00420852	mbsdec	134	false	1	0	ok	__watcall2	byte * __watcall mbsdec(byte * param_1, byte * param_2)
+004208d8	MemAllocator	163	false	1	0	ok	__watcall3	undefined4 __watcall MemAllocator(uint param_1, undefined4 param_2, int param_3)
+00420980	MemFree	272	false	1	0	ok	__watcall3	void __watcall MemFree(undefined4 * param_1, undefined4 param_2, int param_3)
+00420a8b	RegisterThreadDataSize	21	false	0	0	ok	__watcall1	int __watcall RegisterThreadDataSize(int param_1)
+00420aa0	stackavail	47	false	1	1	ok	__watcall0	undefined1 * __watcall stackavail(void)
+00420acf	CommonInit	11	false	1	0	ok	__watcall0	void __watcall CommonInit(void)
+00420ada	GetNTCreateAttr	45	false	0	0	ok	__watcall3	uint __watcall GetNTCreateAttr(uint param_1, undefined4 * param_2, byte * param_3)
+00420b07	GetNTAccessAttr	44	false	1	0	ok	__watcall3	void __watcall GetNTAccessAttr(int param_1, undefined4 * param_2, undefined4 * param_3)
+00420b33	GetNTShareAttr	47	false	1	0	ok	__watcall2	void __watcall GetNTShareAttr(int param_1, undefined4 * param_2)
+00420b62	isatty	65	false	3	2	ok	__watcall1	undefined4 __watcall isatty(undefined4 param_1)
+00420ba3	IOMode	85	false	1	1	ok	__watcall1	undefined4 __watcall IOMode(uint param_1)
+00420bf8	SetIOMode	21	false	2	0	ok	__watcall2	void __watcall SetIOMode(int param_1, uint param_2)
+00420c0d	InitFiles	119	false	0	2	ok	__watcall0	undefined4 * __watcall InitFiles(void)
+00420c84	full_io_exit	12	false	0	2	ok	__watcall0	undefined4 __watcall full_io_exit(void)
+00420c90	fcloseall	5	false	0	0	ok	__watcall4	int __watcall fcloseall(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+00420c95	docloseall	88	false	1	1	ok	__watcall1	void __watcall docloseall(int param_1)
+00420ced	flushall	5	false	1	0	ok	__watcall4	void __watcall flushall(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+00420cf2	flushall_1	59	false	1	2	ok	__watcall1	void __watcall flushall_1(undefined4 param_1)
+00420d2d	getche	34	false	1	2	ok	__watcall0	uint __watcall getche(void)
+00420d4f	no_support_loaded	18	false	1	1	ok	__watcall0	int __watcall no_support_loaded(void)
+00420d86	ultoa	74	false	2	0	ok	__watcall3	void __watcall ultoa(uint param_1, char * param_2, uint param_3)
+00420dd0	ltoa_1	27	false	1	1	ok	__watcall3	void __watcall ltoa_1(uint param_1, char * param_2, uint param_3)
+00420deb	toupper_1	14	false	1	0	ok	__watcall1	int __watcall toupper_1(int param_1)
+00420dfc	blt_sprite	91	false	1	0	ok	__watcall4	undefined4 __watcall blt_sprite(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+00420e57	LinkUpNewMHeap	116	false	1	0	ok	__watcall1	int * __watcall LinkUpNewMHeap(int * param_1)
+00420ecb	CreateNewNHeap	144	false	1	4	ok	__watcall0	undefined4 __watcall CreateNewNHeap(void)
+00420f5b	ExpandDGROUP	17	false	1	2	ok	__watcall1	undefined4 __watcall ExpandDGROUP(undefined4 param_1)
+00420f6c	AdjustAmount	74	false	1	0	ok	__watcall1	undefined4 __watcall AdjustAmount(uint * param_1)
+00420fb6	nmemneed	3	false	1	0	ok	__watcall0	undefined4 __watcall nmemneed(void)
+00420fb9	EnterWVIDEO	21	false	2	0	ok	__watcall2	undefined4 __watcall EnterWVIDEO(undefined4 param_1, undefined4 param_2)
+00420fdf	exit_with_msg	55	false	2	2	ok	__watcall2	undefined4 __watcall exit_with_msg(char * buffer, UINT exit_code)
+00421016	fatal_runtime_error	29	false	4	2	ok	__watcall2	int __watcall fatal_runtime_error(char * buffer, UINT exit_code)
+00421033	EFG_Format	234	false	0	2	ok	__watcall3	char * __watcall EFG_Format(char * param_1, int * param_2, int param_3)
+0042111d	forcedecpt	95	false	1	0	ok	__watcall2	void __watcall forcedecpt(char * param_1, int param_2)
+0042117c	cnvs2d	14	false	0	1	ok	__watcall4	byte * __watcall cnvs2d(byte * param_1, double * param_2, undefined4 param_3, uint param_4)
+0042118a	do_nothing	1	false	0	0	ok	__watcall0	undefined4 __watcall do_nothing(void)
+0042118c	init_80x87	39	false	1	0	ok	__watcall0	uint __watcall init_80x87(void)
+004211b3	abort	6	false	0	1	ok	__watcall2	noreturn int __watcall abort(undefined4 param_1, undefined4 param_2)
+004211b9	terminate	18	false	2	1	ok	__watcall0	noreturn void __watcall terminate(void)
+004211cb	control87	83	false	1	0	ok	__watcall4	void __watcall control87(uint param_1, uint param_2, undefined4 param_3, undefined4 param_4)
+0042121e	NTRealKey	44	false	1	0	ok	__watcall1	undefined4 __watcall NTRealKey(short * param_1)
+0042124a	initConsoleHandles	105	false	2	2	ok	__watcall0	void __watcall initConsoleHandles(void)
+004212b3	NTConsoleInput	11	false	1	1	ok	__watcall0	undefined4 __watcall NTConsoleInput(void)
+004212be	NTConsoleOutput	11	false	1	1	ok	__watcall0	undefined4 __watcall NTConsoleOutput(void)
+004212c9	realloc	122	false	2	4	ok	__watcall2	undefined4 * __watcall realloc(undefined4 * param_1, uint param_2)
+00421343	GetThreadData	55	false	1	3	ok	__watcall0	LPVOID __watcall GetThreadData(void)
+0042137a	AddThreadData	97	false	2	4	ok	__watcall2	undefined4 __watcall AddThreadData(undefined4 param_1, int param_2)
+004213db	RemoveThreadData	74	false	1	2	ok	__watcall1	void __watcall RemoveThreadData(undefined4 param_1)
+00421425	FreeThreadDataList	41	false	0	1	ok	__watcall0	void __watcall FreeThreadDataList(void)
+0042144e	calloc	24	false	2	2	ok	__watcall2	undefined4 * __watcall calloc(int param_1, int param_2)
+00421466	FiniThreadProcessing	5	true	1	0	ok	__watcall0	void __watcall FiniThreadProcessing(void)
+0042146b	setenvp	184	false	0	3	ok	__watcall0	undefined4 * __watcall setenvp(void)
+00421523	strncat	63	false	2	0	ok	__watcall3	void __watcall strncat(char * param_1, char * param_2, int param_3)
+00421562	do_getch	267	false	1	2	ok	__watcall1	uint __watcall do_getch(HANDLE console_input)
+0042166d	getch	118	false	1	5	ok	__watcall0	uint __watcall getch(void)
+004216e3	putch	98	false	1	3	ok	__watcall1	void __watcall putch(undefined4 param_1)
+00421745	heapenable	33	false	0	1	ok	__watcall1	undefined4 __watcall heapenable(undefined4 param_1)
+00421766	nheapshrink	61	false	1	2	ok	__watcall0	void __watcall nheapshrink(void)
+0042177a	ReturnMemToSystem	94	false	1	1	ok	__watcall1	undefined4 __watcall ReturnMemToSystem(LPVOID address)
+004217d8	ReleaseMiniHeap	42	false	1	1	ok	__watcall1	void __watcall ReleaseMiniHeap(LPVOID address)
+0042182b	SetMaxPrec	6	false	0	0	ok	__watcall1	undefined4 __watcall SetMaxPrec(undefined4 param_1)
+00421831	DoEFormat	163	false	1	0	ok	__watcall4	int __watcall DoEFormat(char * param_1, int param_2, int param_3, int param_4)
+004218d4	DoFFormat	99	false	1	0	ok	__watcall4	char * __watcall DoFFormat(char * param_1, char * param_2, int param_3, int param_4)
+00421937	AdjField	113	false	1	1	ok	__watcall4	undefined4 * __watcall AdjField(undefined4 * param_1, int param_2, int param_3, undefined4 param_4)
+004219a8	FtoS	570	false	1	10	ok	__watcall4	void __watcall FtoS(char * param_1, double * param_2, char * param_3, undefined4 param_4, int param_5, int param_6, int param_7, undefined4 param_8, undefined4 param_9)
+00421be2	strtod	499	false	1	3	ok	__watcall4	byte * __watcall strtod(byte * param_1, undefined4 * param_2, undefined4 param_3, uint param_4)
+00421dd5	nmsize	9	false	1	0	ok	__watcall1	int __watcall nmsize(int param_1)
+00421dde	nexpand	73	false	1	2	ok	__watcall2	uint __watcall nexpand(uint param_1, uint param_2)
+00421e18	HeapManager_expand	399	false	1	1	ok	__watcall4	undefined4 __watcall HeapManager_expand(undefined4 param_1, uint param_2, uint param_3, uint * param_4)
+00421fb6	CInitThread	3	false	1	0	ok	__watcall0	undefined4 __watcall CInitThread(void)
+00421fb9	beginthread	7	false	0	1	ok	__watcall4	undefined4 __watcall beginthread(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+00421fc0	endthread	7	false	0	1	ok	__watcall0	undefined4 __watcall endthread(void)
+00421fc7	initthread	7	false	1	1	ok	__watcall0	undefined4 __watcall initthread(void)
+00421fce	RegisterThreadData	63	false	0	0	ok	__watcall3	undefined4 * __watcall RegisterThreadData(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3)
+0042200d	Nan_Inf	146	false	2	0	ok	__watcall4	undefined4 __watcall Nan_Inf(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, int param_5, uint param_6, undefined4 * param_7)
+004220a0	IF_LOG	2	false	1	0	ok	__watcall4	uint __watcall IF_LOG(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
+004220a2	IF_LOG_tail	65	false	2	1	ok	__watcall4	uint __watcall IF_LOG_tail(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
+004220e3	IF_LOG2	4	true	1	1	ok	__watcall4	uint __watcall IF_LOG2(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
+004220e7	IF_LOG10	4	true	2	1	ok	__watcall4	uint __watcall IF_LOG10(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
+004220eb	log	12	false	0	1	ok	__watcall4	uint __watcall log(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+004220f7	log10	12	false	0	1	ok	__watcall4	uint __watcall log10(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+00422103	log2	12	false	0	1	ok	__watcall4	uint __watcall log2(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+0042210f	floor	60	false	1	1	ok	__watcall4	void __watcall floor(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+0042214c	CHP	29	false	2	0	ok	__watcall0	void __watcall CHP(void)
+00422169	Scale	65	false	1	3	ok	__watcall4	int __watcall Scale(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, int param_7, uint * param_8)
+004221aa	Scale10V	285	false	3	1	ok	__watcall4	void __watcall Scale10V(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, int param_7)
+004222c7	cvt	477	false	1	5	ok	__watcall4	void __watcall cvt(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, int param_5, uint param_6, int param_7, int * param_8, undefined4 * param_9, int param_10, char * param_11)
+00422534	ZBuf2F	75	false	1	1	ok	__watcall1	void __watcall ZBuf2F(byte * param_1)
+0042257f	normalize_mantissa_64	81	false	1	0	ok	__watcall2	uint __watcall normalize_mantissa_64(uint param_1, uint param_2)
+0042267c	CBeginThread	212	false	1	9	ok	__watcall4	DWORD __watcall CBeginThread(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
+00422750	CEndThread	39	false	1	4	ok	__watcall0	undefined4 __watcall CEndThread(void)
+0042277a	log87_err	60	false	1	1	ok	__watcall4	undefined4 __watcall log87_err(undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4, int param_5, uint param_6, uint param_7)
+004227b6	modf	25	false	2	1	ok	__watcall4	void __watcall modf(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, double * param_7)
+004227d0	CmpBigInt	58	false	1	1	ok	__watcall3	int __watcall CmpBigInt(undefined4 param_1, uint * param_2, undefined4 param_3)
+0042280a	Rnd2Int	107	false	1	0	ok	__watcall1	void __watcall Rnd2Int(uint * param_1)
+00422875	Bin2String	106	false	1	0	ok	__watcall2	void __watcall Bin2String(int * param_1, int param_2)
+004228df	bin2string_inline_table	167	false	1	1	ok	__watcall4	undefined4 __watcall bin2string_inline_table(undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+00422994	bin2string_inline_table_2	2	false	1	0	ok	__watcall0	undefined4 __watcall bin2string_inline_table_2(void)
+00422998	fdiv_main_routine	279	false	2	0	ok	__watcall0	uint __watcall fdiv_main_routine(void)
+00422f4b	fdivp_sti_st	19	false	2	1	ok	__watcall0	void __watcall fdivp_sti_st(void)
+00422f5e	fdivrp_sti_st	19	false	2	1	ok	__watcall0	void __watcall fdivrp_sti_st(void)
+00422f84	fdiv_m32	76	false	0	1	ok	__watcall4	undefined4 __watcall fdiv_m32(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, uint param_5)
+00422fd0	fdiv_m64	76	false	1	1	ok	__watcall4	undefined4 __watcall fdiv_m64(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, uint param_6)
+0042301c	fdiv_m32r	76	false	0	1	ok	__watcall4	undefined4 __watcall fdiv_m32r(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, uint param_5)
+00423068	fdiv_m64r	76	false	0	1	ok	__watcall4	undefined4 __watcall fdiv_m64r(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, uint param_6)
+004230b4	frexp	111	false	1	0	ok	__watcall4	void __watcall frexp(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, int param_5, uint param_6, int * param_7)
+00423123	math1err	10	false	1	1	ok	__watcall4	void __watcall math1err(uint param_1, undefined4 * param_2, undefined4 param_3, undefined4 param_4)
+0042312d	math2err	219	false	1	1	ok	__watcall4	int __watcall math2err(uint param_1, undefined4 * param_2, undefined4 * param_3, undefined4 param_4)
+00423208	verify_pentium_fdiv_bug	85	false	0	0	ok	__watcall0	uint __watcall verify_pentium_fdiv_bug(void)
+0042325d	set_matherr	6	false	0	0	ok	__watcall1	undefined * __watcall set_matherr(undefined * param_1)
+00423263	rterrmsg	72	false	1	3	ok	__watcall2	uint __watcall rterrmsg(int param_1, undefined4 param_2)
+004232ab	matherr	47	false	1	4	ok	__watcall1	int __watcall matherr(int * param_1)
+004232da	matherr_1	5	true	1	1	ok	__watcall0	undefined4 __watcall matherr_1(void)
+004232df	get_std_stream	31	false	1	0	ok	__watcall1	undefined4 __watcall get_std_stream(uint param_1)
+004232fe	fputs	141	false	1	4	ok	__watcall2	void __watcall fputs(undefined4 param_1, undefined4 * param_2)
+0042338b	matherr_2	3	false	1	0	ok	__watcall0	undefined4 __watcall matherr_2(void)
+004243a8	Sleep	6	true	0	0	ok	__stdcall	void __stdcall Sleep(DWORD dwMilliseconds)
+004243ae	EndPaint	6	true	0	0	ok	__stdcall	BOOL __stdcall EndPaint(HWND hWnd, PAINTSTRUCT * lpPaint)
+004243b4	BeginPaint	6	true	0	0	ok	__stdcall	HDC __stdcall BeginPaint(HWND hWnd, LPPAINTSTRUCT lpPaint)
+004243ba	GetSystemInfo	6	true	0	0	ok	__stdcall	void __stdcall GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
+004243c0	GlobalMemoryStatus	6	true	0	0	ok	__stdcall	void __stdcall GlobalMemoryStatus(LPMEMORYSTATUS lpBuffer)
+004243c6	GetUserNameA	6	true	0	0	ok	__stdcall	BOOL __stdcall GetUserNameA(LPSTR lpBuffer, LPDWORD pcbBuffer)
+004243cc	GetComputerNameA	6	true	0	0	ok	__stdcall	BOOL __stdcall GetComputerNameA(LPSTR lpBuffer, LPDWORD nSize)
+004243d2	GetDriveTypeA	6	true	0	0	ok	__stdcall	UINT __stdcall GetDriveTypeA(LPCSTR lpRootPathName)
+004243d8	GetPixel	6	true	0	0	ok	__stdcall	COLORREF __stdcall GetPixel(HDC hdc, int x, int y)
+004243de	SetPixel	6	true	0	0	ok	__stdcall	COLORREF __stdcall SetPixel(HDC hdc, int x, int y, COLORREF color)
+004243e4	KillTimer	6	true	0	0	ok	__stdcall	BOOL __stdcall KillTimer(HWND hWnd, UINT_PTR uIDEvent)
+004243ea	SetTimer	6	true	0	0	ok	__stdcall	UINT_PTR __stdcall SetTimer(HWND hWnd, UINT_PTR nIDEvent, UINT uElapse, TIMERPROC lpTimerFunc)
+004243f0	CallWindowProcA	6	true	0	0	ok	__stdcall	LRESULT __stdcall CallWindowProcA(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+004243f6	GetKeyState	6	true	0	0	ok	__stdcall	SHORT __stdcall GetKeyState(int nVirtKey)
+004243fc	InvalidateRect	6	true	0	0	ok	__stdcall	BOOL __stdcall InvalidateRect(HWND hWnd, RECT * lpRect, BOOL bErase)
+00424402	GetWindowLongA	6	true	0	0	ok	__stdcall	LONG __stdcall GetWindowLongA(HWND hWnd, int nIndex)
+00424408	SetWindowLongA	6	true	0	0	ok	__stdcall	LONG __stdcall SetWindowLongA(HWND hWnd, int nIndex, LONG dwNewLong)
+0042440e	DestroyWindow	6	true	0	0	ok	__stdcall	BOOL __stdcall DestroyWindow(HWND hWnd)
+00424414	CreateSolidBrush	6	true	0	0	ok	__stdcall	HBRUSH __stdcall CreateSolidBrush(COLORREF color)
+0042441a	SendMessageA	6	true	0	0	ok	__stdcall	LRESULT __stdcall SendMessageA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+00424420	EnableWindow	6	true	0	0	ok	__stdcall	BOOL __stdcall EnableWindow(HWND hWnd, BOOL bEnable)
+00424426	DefWindowProcA	6	true	0	0	ok	__stdcall	LRESULT __stdcall DefWindowProcA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+0042442c	PostQuitMessage	6	true	0	0	ok	__stdcall	void __stdcall PostQuitMessage(int nExitCode)
+00424432	DispatchMessageA	6	true	0	0	ok	__stdcall	LRESULT __stdcall DispatchMessageA(MSG * lpMsg)
+00424438	TranslateMessage	6	true	0	0	ok	__stdcall	BOOL __stdcall TranslateMessage(MSG * lpMsg)
+0042443e	PeekMessageA	6	true	0	0	ok	__stdcall	BOOL __stdcall PeekMessageA(LPMSG lpMsg, HWND hWnd, UINT wMsgFilterMin, UINT wMsgFilterMax, UINT wRemoveMsg)
+00424444	GetAsyncKeyState	6	true	0	0	ok	__stdcall	SHORT __stdcall GetAsyncKeyState(int vKey)
+0042444a	joyGetDevCapsA	6	true	0	0	ok	__stdcall	MMRESULT __stdcall joyGetDevCapsA(UINT_PTR uJoyID, LPJOYCAPSA pjc, UINT cbjc)
+00424450	joyGetPosEx	6	true	0	0	ok	__stdcall	MMRESULT __stdcall joyGetPosEx(UINT uJoyID, LPJOYINFOEX pji)
+00424456	joyGetNumDevs	6	true	0	0	ok	__stdcall	UINT __stdcall joyGetNumDevs(void)
+0042445c	DeleteObject	6	true	0	0	ok	__stdcall	BOOL __stdcall DeleteObject(HGDIOBJ ho)
+00424462	CreateFontA	6	true	0	0	ok	__stdcall	HFONT __stdcall CreateFontA(int cHeight, int cWidth, int cEscapement, int cOrientation, int cWeight, DWORD bItalic, DWORD bUnderline, DWORD bStrikeOut, DWORD iCharSet, DWORD iOutPrecision, DWORD iClipPrecision, DWORD iQuality, DWORD iPitchAndFamily, LPCSTR pszFaceName)
+00424468	TextOutA	6	true	0	0	ok	__stdcall	BOOL __stdcall TextOutA(HDC hdc, int x, int y, LPCSTR lpString, int c)
+0042446e	ExtTextOutA	6	true	0	0	ok	__stdcall	BOOL __stdcall ExtTextOutA(HDC hdc, int x, int y, UINT options, RECT * lprect, LPCSTR lpString, UINT c, INT * lpDx)
+00424474	SetRect	6	true	0	0	ok	__stdcall	BOOL __stdcall SetRect(LPRECT lprc, int xLeft, int yTop, int xRight, int yBottom)
+0042447a	lstrlenA	6	true	0	0	ok	__stdcall	int __stdcall lstrlenA(LPCSTR lpString)
+00424480	SetBkMode	6	true	0	0	ok	__stdcall	int __stdcall SetBkMode(HDC hdc, int mode)
+00424486	SetBkColor	6	true	0	0	ok	__stdcall	COLORREF __stdcall SetBkColor(HDC hdc, COLORREF color)
+0042448c	SetTextColor	6	true	0	0	ok	__stdcall	COLORREF __stdcall SetTextColor(HDC hdc, COLORREF color)
+00424492	GetTextExtentPoint32A	6	true	0	0	ok	__stdcall	BOOL __stdcall GetTextExtentPoint32A(HDC hdc, LPCSTR lpString, int c, LPSIZE psizl)
+00424498	SelectObject	6	true	0	0	ok	__stdcall	HGDIOBJ __stdcall SelectObject(HDC hdc, HGDIOBJ h)
+0042449e	SetFocus	6	true	0	0	ok	__stdcall	HWND __stdcall SetFocus(HWND hWnd)
+004244a4	GetFocus	6	true	0	0	ok	__stdcall	HWND __stdcall GetFocus(void)
+004244aa	SetCursor	6	true	0	0	ok	__stdcall	HCURSOR __stdcall SetCursor(HCURSOR hCursor)
+004244b0	GetCursorPos	6	true	0	0	ok	__stdcall	BOOL __stdcall GetCursorPos(LPPOINT lpPoint)
+004244b6	SetCursorPos	6	true	0	0	ok	__stdcall	BOOL __stdcall SetCursorPos(int X, int Y)
+004244bc	ShowCursor	6	true	0	0	ok	__stdcall	int __stdcall ShowCursor(BOOL bShow)
+004244c2	LoadCursorA	6	true	0	0	ok	__stdcall	HCURSOR __stdcall LoadCursorA(HINSTANCE hInstance, LPCSTR lpCursorName)
+004244c8	LocalFree	6	true	0	0	ok	__stdcall	HLOCAL __stdcall LocalFree(HLOCAL hMem)
+004244ce	LocalReAlloc	6	true	0	0	ok	__stdcall	HLOCAL __stdcall LocalReAlloc(HLOCAL hMem, SIZE_T uBytes, UINT uFlags)
+004244d4	LocalAlloc	6	true	0	0	ok	__stdcall	HLOCAL __stdcall LocalAlloc(UINT uFlags, SIZE_T uBytes)
+004244da	UpdateWindow	6	true	0	0	ok	__stdcall	BOOL __stdcall UpdateWindow(HWND hWnd)
+004244e0	CreateWindowExA	6	true	0	0	ok	__stdcall	HWND __stdcall CreateWindowExA(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam)
+004244e6	GetSystemMetrics	6	true	0	0	ok	__stdcall	int __stdcall GetSystemMetrics(int nIndex)
+004244ec	RegisterClassA	6	true	0	0	ok	__stdcall	ATOM __stdcall RegisterClassA(WNDCLASSA * lpWndClass)
+004244f2	LoadIconA	6	true	0	0	ok	__stdcall	HICON __stdcall LoadIconA(HINSTANCE hInstance, LPCSTR lpIconName)
+004244f8	MessageBoxExA	6	true	0	0	ok	__stdcall	int __stdcall MessageBoxExA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType, WORD wLanguageId)
+004244fe	ShowWindow	6	true	0	0	ok	__stdcall	BOOL __stdcall ShowWindow(HWND hWnd, int nCmdShow)
+00424504	PostMessageA	6	true	0	0	ok	__stdcall	BOOL __stdcall PostMessageA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+0042450a	MessageBoxA	6	true	0	0	ok	__stdcall	int __stdcall MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType)
+00424510	OutputDebugStringA	6	true	0	0	ok	__stdcall	void __stdcall OutputDebugStringA(LPCSTR lpOutputString)
+00424516	GetPrivateProfileStringA	6	true	0	0	ok	__stdcall	DWORD __stdcall GetPrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpDefault, LPSTR lpReturnedString, DWORD nSize, LPCSTR lpFileName)
+0042451c	GetPrivateProfileIntA	6	true	0	0	ok	__stdcall	UINT __stdcall GetPrivateProfileIntA(LPCSTR lpAppName, LPCSTR lpKeyName, INT nDefault, LPCSTR lpFileName)
+00424522	WritePrivateProfileStringA	6	true	0	0	ok	__stdcall	BOOL __stdcall WritePrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpString, LPCSTR lpFileName)
+00424528	GetTickCount	6	true	0	0	ok	__stdcall	DWORD __stdcall GetTickCount(void)
+0042452e	ExitThread	6	true	1	0	ok	__stdcall	noreturn void __stdcall ExitThread(DWORD dwExitCode)
+00424534	CreateThread	6	true	1	0	ok	__stdcall	HANDLE __stdcall CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId)
+0042453a	CreateEventA	6	true	1	0	ok	__stdcall	HANDLE __stdcall CreateEventA(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCSTR lpName)
+00424540	GetCurrentThread	6	true	1	0	ok	__stdcall	HANDLE __stdcall GetCurrentThread(void)
+00424546	SetEvent	6	true	0	0	ok	__stdcall	BOOL __stdcall SetEvent(HANDLE hEvent)
+0042454c	VirtualFree	6	true	1	0	ok	__stdcall	BOOL __stdcall VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType)
+00424552	WriteConsoleA	6	true	1	0	ok	__stdcall	BOOL __stdcall WriteConsoleA(HANDLE hConsoleOutput, void * lpBuffer, DWORD nNumberOfCharsToWrite, LPDWORD lpNumberOfCharsWritten, LPVOID lpReserved)
+00424558	SetConsoleMode	6	true	1	0	ok	__stdcall	BOOL __stdcall SetConsoleMode(HANDLE hConsoleHandle, DWORD dwMode)
+0042455e	GetConsoleMode	6	true	1	0	ok	__stdcall	BOOL __stdcall GetConsoleMode(HANDLE hConsoleHandle, LPDWORD lpMode)
+00424564	ReadConsoleInputA	6	true	1	0	ok	__stdcall	BOOL __stdcall ReadConsoleInputA(HANDLE hConsoleInput, PINPUT_RECORD lpBuffer, DWORD nLength, LPDWORD lpNumberOfEventsRead)
+0042456a	VirtualAlloc	6	true	1	0	ok	__stdcall	LPVOID __stdcall VirtualAlloc(LPVOID lpAddress, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect)
+00424570	GetFileType	6	true	1	0	ok	__stdcall	DWORD __stdcall GetFileType(HANDLE hFile)
+00424576	GetCPInfo	6	true	1	0	ok	__stdcall	BOOL __stdcall GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo)
+0042457c	TlsFree	6	true	1	0	ok	__stdcall	BOOL __stdcall TlsFree(DWORD dwTlsIndex)
+00424582	TlsSetValue	6	true	3	0	ok	__stdcall	BOOL __stdcall TlsSetValue(DWORD dwTlsIndex, LPVOID lpTlsValue)
+00424588	TlsAlloc	6	true	1	0	ok	__stdcall	DWORD __stdcall TlsAlloc(void)
+0042458e	TlsGetValue	6	true	3	0	ok	__stdcall	LPVOID __stdcall TlsGetValue(DWORD dwTlsIndex)
+00424594	ReleaseMutex	6	true	1	0	ok	__stdcall	BOOL __stdcall ReleaseMutex(HANDLE hMutex)
+0042459a	WaitForSingleObject	6	true	2	0	ok	__stdcall	DWORD __stdcall WaitForSingleObject(HANDLE hHandle, DWORD dwMilliseconds)
+004245a0	CreateMutexA	6	true	2	0	ok	__stdcall	HANDLE __stdcall CreateMutexA(LPSECURITY_ATTRIBUTES lpMutexAttributes, BOOL bInitialOwner, LPCSTR lpName)
+004245a6	GetCurrentThreadId	6	true	3	0	ok	__stdcall	DWORD __stdcall GetCurrentThreadId(void)
+004245ac	GetStdHandle	6	true	1	0	ok	__stdcall	HANDLE __stdcall GetStdHandle(DWORD nStdHandle)
+004245b2	SetStdHandle	6	true	1	0	ok	__stdcall	BOOL __stdcall SetStdHandle(DWORD nStdHandle, HANDLE hHandle)
+004245b8	GetProcAddress	6	true	0	0	ok	__stdcall	FARPROC __stdcall GetProcAddress(HMODULE hModule, LPCSTR lpProcName)
+004245be	LoadLibraryA	6	true	0	0	ok	__stdcall	HMODULE __stdcall LoadLibraryA(LPCSTR lpLibFileName)
+004245c4	GetActiveWindow	6	true	0	0	ok	__stdcall	HWND __stdcall GetActiveWindow(void)
+004245ca	wsprintfA	6	true	0	0	ok	__cdecl	int __cdecl wsprintfA(LPSTR param_1, LPCSTR param_2, ...)
+004245d0	SetConsoleCtrlHandler	6	true	2	0	ok	__stdcall	BOOL __stdcall SetConsoleCtrlHandler(PHANDLER_ROUTINE HandlerRoutine, BOOL Add)
+004245d6	GetTimeZoneInformation	6	true	1	0	ok	__stdcall	DWORD __stdcall GetTimeZoneInformation(LPTIME_ZONE_INFORMATION lpTimeZoneInformation)
+004245dc	SmackClose	6	true	0	0	ok	__stdcall	undefined __stdcall SmackClose(void)
+004245e2	SmackOpen	6	true	0	0	ok	__stdcall	undefined __stdcall SmackOpen(void)
+004245e8	SmackDoFrame	6	true	0	0	ok	__stdcall	undefined __stdcall SmackDoFrame(void)
+004245ee	SmackToBuffer	6	true	0	0	ok	__stdcall	undefined __stdcall SmackToBuffer(void)
+004245f4	SmackWait	6	true	0	0	ok	__stdcall	undefined __stdcall SmackWait(void)
+004245fa	SmackNextFrame	6	true	0	0	ok	__stdcall	undefined __stdcall SmackNextFrame(void)
+00424600	SmackColorRemap	6	true	0	0	ok	__stdcall	undefined __stdcall SmackColorRemap(void)
+00424606	SmackSoundUseDirectSound	6	true	0	0	ok	__stdcall	undefined __stdcall SmackSoundUseDirectSound(void)
+0042460c	GetLastError	6	true	1	0	ok	__stdcall	DWORD __stdcall GetLastError(void)
+00424612	DeleteFileA	6	true	1	0	ok	__stdcall	BOOL __stdcall DeleteFileA(LPCSTR lpFileName)
+00424618	WriteFile	6	true	2	0	ok	__stdcall	BOOL __stdcall WriteFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped)
+0042461e	ReadFile	6	true	1	0	ok	__stdcall	BOOL __stdcall ReadFile(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, LPOVERLAPPED lpOverlapped)
+00424624	CloseHandle	6	true	4	0	ok	__stdcall	BOOL __stdcall CloseHandle(HANDLE hObject)
+0042462a	SetFilePointer	6	true	3	0	ok	__stdcall	DWORD __stdcall SetFilePointer(HANDLE hFile, LONG lDistanceToMove, PLONG lpDistanceToMoveHigh, DWORD dwMoveMethod)
+00424630	GetCurrentProcessId	6	true	1	0	ok	__stdcall	DWORD __stdcall GetCurrentProcessId(void)
+00424636	CreateFileA	6	true	2	0	ok	__stdcall	HANDLE __stdcall CreateFileA(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+0042463c	GetFileAttributesA	6	true	1	0	ok	__stdcall	DWORD __stdcall GetFileAttributesA(LPCSTR lpFileName)
+00424642	GetModuleHandleA	6	true	2	0	ok	__stdcall	HMODULE __stdcall GetModuleHandleA(LPCSTR lpModuleName)
+00424648	GetVersion	6	true	1	0	ok	__stdcall	DWORD __stdcall GetVersion(void)
+0042464e	GetCommandLineA	6	true	2	0	ok	__stdcall	LPSTR __stdcall GetCommandLineA(void)
+00424654	GetModuleFileNameA	6	true	1	0	ok	__stdcall	DWORD __stdcall GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD nSize)
+0042465a	GetEnvironmentStrings	6	true	1	0	ok	__stdcall	LPCH __stdcall GetEnvironmentStrings(void)
+00424660	ExitProcess	6	true	2	0	ok	__stdcall	noreturn void __stdcall ExitProcess(UINT uExitCode)
+00424666	GetLocalTime	6	true	1	0	ok	__stdcall	void __stdcall GetLocalTime(LPSYSTEMTIME lpSystemTime)
+0042466c	DirectDrawEnumerateA	6	true	1	0	ok	__stdcall	undefined __stdcall DirectDrawEnumerateA(void)
+00424672	DirectInputCreateA	6	true	1	0	ok	__stdcall	undefined __stdcall DirectInputCreateA(void)
+00424678	GetCurrentDirectoryA	6	true	1	0	ok	__stdcall	DWORD __stdcall GetCurrentDirectoryA(DWORD nBufferLength, LPSTR lpBuffer)
+0042467e	DirectSoundCreate	6	true	2	0	ok	__stdcall	undefined __stdcall DirectSoundCreate(void)
+00424684	DirectSoundEnumerateA	6	true	1	0	ok	__stdcall	undefined __stdcall DirectSoundEnumerateA(void)
+0042468a	DirectDrawCreate	6	true	1	0	ok	__stdcall	undefined __stdcall DirectDrawCreate(void)

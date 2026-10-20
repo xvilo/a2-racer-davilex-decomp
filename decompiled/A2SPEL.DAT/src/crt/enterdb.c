@@ -3,7 +3,7 @@
 
 /* ==== 00431a29 EnterWVIDEO ==== */
 
-undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined2 unaff_DX)
+undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined4 param_2)
 
 {
   code *pcVar1;
@@ -11,7 +11,7 @@ undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined2 unaff_DX)
   
   if (WD_Present != '\0') {
     pcVar1 = (code *)swi(3);
-    uVar2 = (*pcVar1)(unaff_DX);
+    uVar2 = (*pcVar1)((undefined2)param_2);
     return uVar2;
   }
   return 0;

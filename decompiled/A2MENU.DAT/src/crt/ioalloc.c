@@ -3,41 +3,40 @@
 
 /* ==== 0041cb34 ioalloc ==== */
 
-void __watcall ioalloc(int param_1,size_t unaff_EDX)
+void __watcall ioalloc(undefined4 *param_1)
 
 {
-  void *buffer;
+  int buffer;
   byte bVar1;
-  undefined4 *extraout_EDX;
   
-  chktty(param_1,param_1);
-  if (extraout_EDX[5] == 0) {
-    if ((*(byte *)((int)extraout_EDX + 0xd) & 2) == 0) {
-      if ((*(byte *)((int)extraout_EDX + 0xd) & 4) == 0) {
-        extraout_EDX[5] = 0x1000;
+  chktty((int)param_1);
+  if (param_1[5] == 0) {
+    if ((*(byte *)((int)param_1 + 0xd) & 2) == 0) {
+      if ((*(byte *)((int)param_1 + 0xd) & 4) == 0) {
+        param_1[5] = 0x1000;
       }
       else {
-        extraout_EDX[5] = 1;
+        param_1[5] = 1;
       }
     }
     else {
-      extraout_EDX[5] = 0x86;
+      param_1[5] = 0x86;
     }
   }
-  buffer = malloc(extraout_EDX[5]);
-  extraout_EDX[2] = buffer;
-  if (buffer == (void *)0x0) {
-    extraout_EDX[5] = 1;
-    bVar1 = *(byte *)((int)extraout_EDX + 0xd) & 0xf8;
-    *(byte *)((int)extraout_EDX + 0xd) = bVar1;
-    extraout_EDX[2] = extraout_EDX + 6;
-    *(byte *)((int)extraout_EDX + 0xd) = bVar1 | 4;
+  buffer = malloc(param_1[5]);
+  param_1[2] = buffer;
+  if (buffer == 0) {
+    param_1[5] = 1;
+    bVar1 = *(byte *)((int)param_1 + 0xd) & 0xf8;
+    *(byte *)((int)param_1 + 0xd) = bVar1;
+    param_1[2] = param_1 + 6;
+    *(byte *)((int)param_1 + 0xd) = bVar1 | 4;
   }
   else {
-    *(byte *)(extraout_EDX + 3) = *(byte *)(extraout_EDX + 3) | 8;
+    *(byte *)(param_1 + 3) = *(byte *)(param_1 + 3) | 8;
   }
-  extraout_EDX[1] = 0;
-  *extraout_EDX = extraout_EDX[2];
+  param_1[1] = 0;
+  *param_1 = param_1[2];
   return;
 }
 

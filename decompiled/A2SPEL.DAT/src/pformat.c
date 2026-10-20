@@ -19,7 +19,7 @@ void __watcall set_hdc_pixel(int param_1,int param_2,int param_3,ulong param_4)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   IDirectDrawSurface *unaff_ESI;
   IDirectDrawSurface *pIVar2;
   IDirectDrawSurface *hdc;
@@ -33,9 +33,8 @@ void __watcall set_hdc_pixel(int param_1,int param_2,int param_3,ulong param_4)
   hdc = pIVar2;
   lVar1 = (**(code **)(*(int *)pIVar2 + 0x44))(pIVar2,auStack_10);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____error_getting_hdc_of_sc_00448794,s_pformat_cpp_00448788,0x42,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____error_getting_hdc_of_sc_00448794,s_pformat_cpp_00448788,0x42,arg4);
   }
   SetPixel((HDC)hdc,param_2,param_3,param_4);
   (**(code **)(*(int *)pIVar2 + 0x68))(pIVar2,hdc);
@@ -50,16 +49,15 @@ set_hdc_pixel_1(IDirectDrawSurface *direct_draw_surface,int param_2,int param_3,
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   IDirectDrawSurface *hdc;
   undefined1 auStack_10 [4];
   
   hdc = direct_draw_surface;
   lVar1 = (**(code **)(*(int *)direct_draw_surface + 0x44))(direct_draw_surface,auStack_10);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____error_getting_hdc_of_sc_004487cc,s_pformat_cpp_004487c0,0x4f,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____error_getting_hdc_of_sc_004487cc,s_pformat_cpp_004487c0,0x4f,arg4);
   }
   SetPixel((HDC)hdc,param_2,param_3,param_4);
   (**(code **)(*(int *)direct_draw_surface + 0x68))(direct_draw_surface,hdc);
@@ -73,7 +71,7 @@ ulong __watcall get_hdc_pixel(int param_1,int param_2,int param_3)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   COLORREF CVar2;
   IDirectDrawSurface *unaff_ESI;
   IDirectDrawSurface *pIVar3;
@@ -88,9 +86,8 @@ ulong __watcall get_hdc_pixel(int param_1,int param_2,int param_3)
   hdc = pIVar3;
   lVar1 = (**(code **)(*(int *)pIVar3 + 0x44))(pIVar3,auStack_10);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____error_getting_hdc_of_sc_00448804,s_pformat_cpp_004487f8,0x69,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____error_getting_hdc_of_sc_00448804,s_pformat_cpp_004487f8,0x69,arg4);
   }
   CVar2 = GetPixel((HDC)hdc,param_2,param_3);
   (**(code **)(*(int *)pIVar3 + 0x68))(pIVar3,hdc);
@@ -160,7 +157,7 @@ void __watcall set_surface_color_key(IDirectDrawSurface *direct_draw_surface,ulo
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   ulong color_format;
   ulong color_format_2;
   
@@ -168,9 +165,8 @@ void __watcall set_surface_color_key(IDirectDrawSurface *direct_draw_surface,ulo
   color_format_2 = color_format;
   lVar1 = (**(code **)(*(int *)direct_draw_surface + 0x74))(direct_draw_surface,8,&color_format);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____could_not_set_color_key_00448874,s_pformat_cpp_00448868,0xa6,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____could_not_set_color_key_00448874,s_pformat_cpp_00448868,0xa6,arg4);
   }
   return;
 }
@@ -182,16 +178,9 @@ int __watcall translate_pixel(int paletteentry_index,int param_2)
 
 {
   tagPALETTEENTRY *paletteentry;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  uint extraout_EDX;
-  int extraout_EDX_00;
   
   if (get_xvga_pixel_format_ok == 0) {
     fatal_exit(s__s__d____error_please_use_get_xv_004488a8,s_pformat_cpp_0044889c,0xb6);
-    paletteentry_index = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if ((uint)param_2 < 0x10) {
     if (param_2 == 8) {
@@ -214,28 +203,27 @@ int __watcall translate_pixel(int paletteentry_index,int param_2)
       }
     }
   }
-  else if ((uint)param_2 < 0x11) {
-    if (xvga_screen_bpp == 8) {
-      fatal_exit(s_not_yet_supported_004488e0);
-      return extraout_ECX_00;
+  else {
+    if ((uint)param_2 < 0x11) {
+      if (xvga_screen_bpp == 8) {
+        fatal_exit(s_not_yet_supported_004488e0);
+        return paletteentry_index;
+      }
+    }
+    else {
+      if (param_2 != 0x18) {
+        return 0;
+      }
+      fatal_exit(s_not_yet_supported_004488f3);
+      if (xvga_screen_bpp == 8) {
+        return paletteentry_index;
+      }
     }
     if (xvga_screen_bpp == 0x10) {
       return paletteentry_index;
     }
     if (xvga_screen_bpp == 0x18) {
       return paletteentry_index;
-    }
-  }
-  else if (param_2 == 0x18) {
-    fatal_exit(s_not_yet_supported_004488f3);
-    if (xvga_screen_bpp == 8) {
-      return extraout_ECX_01;
-    }
-    if (xvga_screen_bpp == 0x10) {
-      return extraout_ECX_01;
-    }
-    if (xvga_screen_bpp == extraout_EDX_00) {
-      return extraout_ECX_01;
     }
   }
   return 0;
@@ -252,15 +240,13 @@ void __watcall translate_pixel_1(int paletteentry_index,int param_2,void *param_
   short sVar3;
   tagPALETTEENTRY *paletteentry;
   uint uVar4;
-  uint extraout_ECX;
   uint uVar5;
-  char *format;
+  char *pcVar6;
   BYTE local_14;
   char local_10;
   
   if (get_xvga_pixel_format_ok == 0) {
     fatal_exit(s__s__d____error_please_use_get_xv_00448912,s_pformat_cpp_00448906,0xf1);
-    param_2 = extraout_ECX;
   }
   if ((uint)param_2 < 0x10) {
     if (param_2 != 8) {
@@ -314,15 +300,15 @@ LAB_004172b3:
         local_14 = (char)((int)uVar4 >> bVar2) << ((byte)xvga_screen_b_shift & 0x1f);
         goto LAB_004172b3;
       }
-      format = s_not_yet_supported_0044894a;
+      pcVar6 = s_not_yet_supported_0044894a;
     }
     else {
       if (param_2 != 0x18) {
         return;
       }
-      format = s_not_yet_supported_0044895d;
+      pcVar6 = s_not_yet_supported_0044895d;
     }
-    fatal_exit(format);
+    fatal_exit(pcVar6);
   }
   return;
 }
@@ -336,16 +322,15 @@ void __watcall get_xvga_pixel_format(void)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   uint uVar2;
   
-  memset(&xvga_pixel_format,0,0x20);
+  memset((undefined4 *)&xvga_pixel_format,0,0x20);
   _xvga_pixel_format = 0x20;
   lVar1 = (**(code **)(*(int *)xvga_screen + 0x54))(xvga_screen,&xvga_pixel_format);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____unable_to_get_pixelform_0044897c,s_pformat_cpp_00448970,0x144,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____unable_to_get_pixelform_0044897c,s_pformat_cpp_00448970,0x144,arg4);
   }
   if ((DAT_004760e0 & 0x20) != 0) {
     get_xvga_pixel_format_ok = 1;

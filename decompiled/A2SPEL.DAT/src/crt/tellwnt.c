@@ -3,17 +3,17 @@
 
 /* ==== 004319c3 tell ==== */
 
-long __watcall tell(int _FileHandle)
+undefined4 __watcall tell(undefined4 param_1)
 
 {
   DWORD DVar1;
   HANDLE hFile;
-  long extraout_EDX;
+  undefined4 extraout_EDX;
   
   (*(code *)AccessFileH_1)();
   DVar1 = SetFilePointer(hFile,0,(PLONG)0x0,1);
   if (DVar1 == 0xffffffff) {
-    set_errno_nt(0xffffffff,0xffffffff);
+    set_errno_nt();
   }
   (*(code *)ReleaseFileH_1)();
   return extraout_EDX;

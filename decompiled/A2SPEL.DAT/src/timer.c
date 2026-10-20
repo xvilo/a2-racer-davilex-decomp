@@ -60,27 +60,27 @@ int __watcall xvga_get_free_timer(void)
 int __watcall xvga_set_timer(void *param_1,int param_2,int param_3)
 
 {
-  int free_timer;
+  int arg2;
   UINT_PTR UVar1;
   int xvga_timer_index;
   
   if (xvga_timer_init_ok == 0) {
     fatal_exit(s__s__d____trying_to_reference_uni_0045240e,s_timer_cpp_00452404,0x41);
   }
-  free_timer = xvga_get_free_timer();
-  if (free_timer == -1) {
+  arg2 = xvga_get_free_timer();
+  if (arg2 == -1) {
     fatal_exit(s__s__d____out_of_timer_place_hold_00452459,s_timer_cpp_0045244f,0x45,xvga_max_timers
               );
   }
   UVar1 = SetTimer(xvga_hwnd,param_3,param_2,(TIMERPROC)0x0);
-  xvga_timer_index = free_timer * 0xc;
+  xvga_timer_index = arg2 * 0xc;
   *(UINT_PTR *)(xvga_timer_ptr + xvga_timer_index) = UVar1;
   if (UVar1 == 0) {
     return 10000;
   }
   *(int *)(xvga_timer_ptr + xvga_timer_index + 4) = param_2;
   *(void **)(xvga_timer_ptr + xvga_timer_index + 8) = param_1;
-  debugmsg(s_timer_set____d_00452486,free_timer);
+  debugmsg(s_timer_set____d_00452486,arg2);
   return 0;
 }
 

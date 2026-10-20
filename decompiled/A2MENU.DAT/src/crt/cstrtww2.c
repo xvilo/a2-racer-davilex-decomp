@@ -3,12 +3,14 @@
 
 /* ==== 004122e2 wstart2 ==== */
 
-void __watcall wstart2(void)
+undefined4 __watcall wstart2(void)
 
 {
+  undefined4 win_main_1;
+  
   WinMainProc = WinMain;
-  WinMain_1();
-  return;
+  win_main_1 = WinMain_1();
+  return win_main_1;
 }
 
 

@@ -3,107 +3,93 @@
 
 /* ==== 0042f31d fgetc ==== */
 
-int __watcall fgetc(FILE *_File)
+uint __watcall fgetc(undefined4 param_1)
 
 {
-  undefined4 *unaff_EDX;
-  int extraout_EDX;
-  undefined4 *unaff_EDX_00;
   int iVar1;
-  int iVar2;
-  undefined8 uVar3;
+  undefined4 *extraout_EDX;
+  uint uVar2;
   
   (*(code *)AccessFileH_1)();
-  if ((*(byte *)(unaff_EDX + 3) & 1) == 0) {
-    set_errno(4,unaff_EDX);
-    *(byte *)(extraout_EDX + 0xc) = *(byte *)(extraout_EDX + 0xc) | 0x20;
-    uVar3 = CONCAT44(extraout_EDX,0xffffffff);
+  if ((*(byte *)(extraout_EDX + 3) & 1) == 0) {
+    set_errno(4);
+    *(byte *)(extraout_EDX + 3) = *(byte *)(extraout_EDX + 3) | 0x20;
+    uVar2 = 0xffffffff;
   }
   else {
-    iVar2 = unaff_EDX[1] + -1;
-    unaff_EDX[1] = iVar2;
-    if (iVar2 < 0) {
-      uVar3 = filbuf(unaff_EDX,unaff_EDX,iVar2);
+    iVar1 = extraout_EDX[1];
+    extraout_EDX[1] = iVar1 + -1;
+    if (iVar1 + -1 < 0) {
+      uVar2 = filbuf(extraout_EDX);
     }
     else {
-      uVar3 = CONCAT44(unaff_EDX,(uint)*(byte *)*unaff_EDX);
-      *unaff_EDX = (byte *)*unaff_EDX + 1;
+      uVar2 = (uint)*(byte *)*extraout_EDX;
+      *extraout_EDX = (byte *)*extraout_EDX + 1;
     }
   }
-  unaff_EDX_00 = (undefined4 *)((ulonglong)uVar3 >> 0x20);
-  iVar2 = (int)uVar3;
-  if ((*(byte *)(unaff_EDX_00 + 3) & 0x40) == 0) {
-    if (iVar2 == 0xd) {
-      iVar2 = unaff_EDX_00[1];
-      unaff_EDX_00[1] = iVar2 + -1;
-      if (iVar2 + -1 < 0) {
-        uVar3 = filbuf(unaff_EDX_00,unaff_EDX_00,0xd);
+  if ((*(byte *)(extraout_EDX + 3) & 0x40) == 0) {
+    if (uVar2 == 0xd) {
+      iVar1 = extraout_EDX[1];
+      extraout_EDX[1] = iVar1 + -1;
+      if (iVar1 + -1 < 0) {
+        uVar2 = filbuf(extraout_EDX);
       }
       else {
-        uVar3 = CONCAT44(unaff_EDX_00,(uint)*(byte *)*unaff_EDX_00);
-        *unaff_EDX_00 = (byte *)*unaff_EDX_00 + 1;
+        uVar2 = (uint)*(byte *)*extraout_EDX;
+        *extraout_EDX = (byte *)*extraout_EDX + 1;
       }
     }
-    iVar1 = (int)((ulonglong)uVar3 >> 0x20);
-    iVar2 = (int)uVar3;
-    if (iVar2 == 0x1a) {
-      iVar2 = -1;
-      *(byte *)(iVar1 + 0xc) = *(byte *)(iVar1 + 0xc) | 0x10;
+    if (uVar2 == 0x1a) {
+      uVar2 = 0xffffffff;
+      *(byte *)(extraout_EDX + 3) = *(byte *)(extraout_EDX + 3) | 0x10;
     }
   }
   (*(code *)ReleaseFileH_1)();
-  return iVar2;
+  return uVar2;
 }
 
 
 /* ==== 0042f3bb filbuf ==== */
 
-undefined8 __watcall filbuf(undefined4 *param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+undefined4 __watcall filbuf(undefined4 *param_1)
 
 {
   byte *pbVar1;
-  undefined4 *puVar2;
-  undefined8 fill_buffer_result;
+  int fill_buffer_result;
   
-  fill_buffer_result = fill_buffer(param_1,param_1,unaff_EBX);
-  puVar2 = (undefined4 *)((ulonglong)fill_buffer_result >> 0x20);
-  if ((int)fill_buffer_result == 0) {
-    return CONCAT44(unaff_EDX,0xffffffff);
+  fill_buffer_result = fill_buffer(param_1);
+  if (fill_buffer_result == 0) {
+    return 0xffffffff;
   }
-  pbVar1 = (byte *)*puVar2;
-  puVar2[1] = puVar2[1] + -1;
-  *puVar2 = pbVar1 + 1;
-  return CONCAT44(unaff_EDX,(uint)*pbVar1);
+  pbVar1 = (byte *)*param_1;
+  param_1[1] = param_1[1] + -1;
+  *param_1 = pbVar1 + 1;
+  return (uint)*pbVar1;
 }
 
 
 /* ==== 0042f3ea fill_buffer ==== */
 
-undefined8 __watcall fill_buffer(undefined4 *param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+undefined4 __watcall fill_buffer(undefined4 *param_1)
 
 {
   uint uVar1;
-  int getche_result;
-  undefined4 extraout_EDX;
-  undefined4 unaff_EDX_00;
   DWORD DVar2;
   
-  unaff_EDX_00 = unaff_EDX;
   if (param_1[2] == 0) {
-    ioalloc((int)param_1);
-    unaff_EDX_00 = extraout_EDX;
+    ioalloc(param_1);
   }
   if (((*(byte *)((int)param_1 + 0xd) & 0x20) != 0) && ((*(byte *)((int)param_1 + 0xd) & 6) != 0)) {
-    flushall_1(0x2000,unaff_EDX_00,unaff_EBX,param_1);
+    flushall_1(0x2000);
   }
   *param_1 = param_1[2];
   uVar1 = param_1[3];
   *(byte *)(param_1 + 3) = *(byte *)(param_1 + 3) & 0xfb;
   if (((uVar1 & 0x2400) == 0x2400) && (param_1[4] == 0)) {
     param_1[1] = 0;
-    getche_result = getche();
-    if (getche_result != -1) {
-      *(char *)*param_1 = (char)getche_result;
+    uVar1 = getche();
+    if (uVar1 != 0xffffffff) {
+      *(char *)*param_1 = (char)uVar1;
       param_1[1] = 1;
     }
   }
@@ -126,7 +112,7 @@ undefined8 __watcall fill_buffer(undefined4 *param_1,undefined4 unaff_EDX,undefi
       *(byte *)(param_1 + 3) = *(byte *)(param_1 + 3) | 0x20;
     }
   }
-  return CONCAT44(unaff_EDX,param_1[1]);
+  return param_1[1];
 }
 
 

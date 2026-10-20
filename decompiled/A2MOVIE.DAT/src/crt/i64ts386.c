@@ -3,43 +3,39 @@
 
 /* ==== 0041526a CmpBigInt ==== */
 
-int __watcall CmpBigInt(void)
+int __watcall CmpBigInt(undefined4 param_1,uint *param_2,undefined4 param_3)
 
 {
   uint uVar1;
   uint uVar2;
-  uint uVar3;
   int i;
-  uint *puVar4;
+  int unaff_ECX;
   int unaff_EDI;
-  uint *puVar5;
-  bool bVar6;
-  undefined8 bin2string_inline_table_result;
+  uint *puVar3;
+  bool bVar4;
   
-  bin2string_inline_table_result = bin2string_inline_table();
-  puVar4 = (uint *)((ulonglong)bin2string_inline_table_result >> 0x20);
-  puVar5 = (uint *)(unaff_EDI + ((int)bin2string_inline_table_result + 1) * 8);
-  uVar2 = *puVar4;
-  uVar3 = puVar4[1];
+  i = bin2string_inline_table(param_1,param_2,param_3,unaff_ECX);
+  puVar3 = (uint *)(unaff_EDI + (i + 1) * 8);
+  uVar2 = param_2[1];
   i = 0;
   while( true ) {
-    bVar6 = uVar3 < *puVar5;
-    if (uVar3 == *puVar5) {
-      bVar6 = uVar2 < puVar5[1];
+    bVar4 = uVar2 < *puVar3;
+    if (uVar2 == *puVar3) {
+      bVar4 = *param_2 < puVar3[1];
     }
-    if (bVar6) break;
-    puVar5 = puVar5 + 2;
+    if (bVar4) break;
+    puVar3 = puVar3 + 2;
     i = i + 1;
   }
   while( true ) {
-    uVar1 = puVar5[-2];
-    bVar6 = uVar3 < uVar1;
-    if (uVar3 == uVar1) {
-      bVar6 = uVar2 < puVar5[-1];
+    uVar1 = puVar3[-2];
+    bVar4 = uVar2 < uVar1;
+    if (uVar2 == uVar1) {
+      bVar4 = *param_2 < puVar3[-1];
     }
-    if (!bVar6) break;
+    if (!bVar4) break;
     i = i + -1;
-    puVar5 = puVar5 + -2;
+    puVar3 = puVar3 + -2;
   }
   return i;
 }
@@ -47,13 +43,14 @@ int __watcall CmpBigInt(void)
 
 /* ==== 004152a4 Rnd2Int ==== */
 
-void __watcall Rnd2Int(uint *param_1,uint *param_2)
+void __watcall Rnd2Int(uint *param_1)
 
 {
   uint uVar1;
   uint uVar2;
   uint i;
   uint uVar3;
+  uint *unaff_EDX;
   uint uVar4;
   int j;
   int iVar5;
@@ -92,15 +89,15 @@ void __watcall Rnd2Int(uint *param_1,uint *param_2)
       } while (j != 0);
     }
   }
-  *param_2 = i;
-  param_2[1] = uVar4;
+  *unaff_EDX = i;
+  unaff_EDX[1] = uVar4;
   return;
 }
 
 
 /* ==== 0041530f Bin2String ==== */
 
-uint __watcall Bin2String(int *param_1,int param_2)
+void __watcall Bin2String(int *param_1,int param_2)
 
 {
   ulonglong uVar1;
@@ -143,21 +140,21 @@ LAB_00415339:
     sVar8 = (short)uVar9 + 0x3030;
     puVar10[-1] = (char)(sVar4 + 0x3030);
     if (unaff_EBX == 1) {
-      return uStack_14;
+      return;
     }
     puVar10[-2] = (char)((ushort)(sVar4 + 0x3030) >> 8);
     if (unaff_EBX == 2) {
-      return uStack_14;
+      return;
     }
     puVar10[-3] = (char)sVar8;
     if (unaff_EBX == 3) {
-      return uStack_14;
+      return;
     }
     puVar10[-4] = (char)((ushort)sVar8 >> 8);
     unaff_EBX = unaff_EBX + -4;
     puVar10 = puVar10 + -4;
     if (unaff_EBX == 0) {
-      return uStack_14;
+      return;
     }
   } while( true );
 }

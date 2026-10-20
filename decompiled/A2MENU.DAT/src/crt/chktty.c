@@ -3,14 +3,14 @@
 
 /* ==== 0041c918 chktty ==== */
 
-void __watcall chktty(int param_1,int unaff_EDX)
+void __watcall chktty(int param_1)
 
 {
   byte bVar1;
   int isatty_result;
   
   if ((*(byte *)(param_1 + 0xd) & 0x20) == 0) {
-    isatty_result = isatty(*(int *)(param_1 + 0x10));
+    isatty_result = isatty(*(undefined4 *)(param_1 + 0x10));
     if (isatty_result != 0) {
       bVar1 = *(byte *)(param_1 + 0xd);
       *(byte *)(param_1 + 0xd) = bVar1 | 0x20;

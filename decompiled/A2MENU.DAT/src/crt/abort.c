@@ -3,12 +3,14 @@
 
 /* ==== 004211b3 abort ==== */
 
-void __watcall abort(void)
+int __watcall abort(undefined4 param_1,undefined4 param_2)
 
 {
+  int fatal_runtime_error_result;
+  
   (*(code *)abort_1)();
-  fatal_runtime_error(s_ABNORMAL_TERMINATION_00431e54);
-  return;
+  fatal_runtime_error_result = fatal_runtime_error(s_ABNORMAL_TERMINATION_00431e54,0xff);
+  return fatal_runtime_error_result;
 }
 
 
@@ -17,7 +19,7 @@ void __watcall abort(void)
 void __watcall terminate(void)
 
 {
-  fatal_runtime_error(s_ABNORMAL_TERMINATION_00431e54);
+  fatal_runtime_error(s_ABNORMAL_TERMINATION_00431e54,0xff);
   return;
 }
 

@@ -3,56 +3,62 @@
 
 /* ==== 00421af0 init_math3d ==== */
 
-undefined8 __watcall init_math3d(undefined4 param_1,undefined4 param_2)
+void __watcall init_math3d(void)
 
 {
-  int iVar1;
-  int extraout_EDX;
-  float10 fsin_reduced_result;
-  float10 fcos_reduced_result;
-  longlong height_map;
-  int i;
+  HLOCAL pvVar1;
+  undefined4 fsin_reduced_result;
   int iVar2;
+  int iVar3;
+  float10 fVar4;
+  float10 fVar5;
+  int i;
   
   cos_table = LocalAlloc(0x40,0x1000);
   if (cos_table == (HLOCAL)0x0) {
     fatal_exit(s__s__d____error_allocating_cos_si_0044d307,s_math3d_cpp_0044d2fc,0x38);
   }
-  sin_table = LocalAlloc(0x40,0x1000);
-  if (sin_table == (HLOCAL)0x0) {
-    fatal_exit(s__s__d____error_allocating_cos_si_0044d33c,s_math3d_cpp_0044d331,0x3c);
+  pvVar1 = LocalAlloc(0x40,0x1000);
+  sin_table = pvVar1;
+  if (pvVar1 == (HLOCAL)0x0) {
+    pvVar1 = (HLOCAL)fatal_exit(s__s__d____error_allocating_cos_si_0044d33c,s_math3d_cpp_0044d331,
+                                0x3c);
   }
+  iVar3 = 0;
   i = 0;
   do {
-    fsin_reduced_result = (float10)fsin_reduced();
-    fcos_reduced_result = (float10)fcos_reduced();
+    fVar4 = (float10)i * (float10)0.0009765625 * (float10)2.0 * (float10)3.141596;
+    fVar5 = fVar4;
+    fsin_reduced_result = fsin_reduced(pvVar1);
+    fcos_reduced(fsin_reduced_result);
     i = i + 1;
-    *(float *)(extraout_EDX + (int)cos_table) = (float)fsin_reduced_result;
-    *(float *)(extraout_EDX + (int)sin_table) = (float)fcos_reduced_result;
+    *(float *)(iVar3 + (int)cos_table) = (float)fVar4;
+    pvVar1 = sin_table;
+    *(float *)(iVar3 + (int)sin_table) = (float)fVar5;
+    iVar3 = iVar3 + 4;
   } while (i < 0x400);
   DAT_004765a4 = 1;
-  iVar2 = 0;
+  iVar3 = 0;
   do {
-    iVar1 = iVar2 + 0x2c;
-    *(undefined4 *)((int)&DAT_004765a8 + iVar2) = 0xffffffff;
-    iVar2 = iVar1;
-  } while (iVar1 != 0x1b8);
-  height_map = alloc_height_map(0x14,extraout_EDX + 4);
-  return CONCAT44(param_2,(int)height_map);
+    iVar2 = iVar3 + 0x2c;
+    *(undefined4 *)((int)&DAT_004765a8 + iVar3) = 0xffffffff;
+    iVar3 = iVar2;
+  } while (iVar2 != 0x1b8);
+  alloc_height_map(0x14);
+  return;
 }
 
 
 /* ==== 00421bd3 compute_height_map_row ==== */
 
-longlong __watcall compute_height_map_row(int param_1,uint param_2)
+void __watcall compute_height_map_row(int param_1)
 
 {
   uint j;
   int iVar1;
   int iVar2;
   uint i;
-  int iVar3;
-  float10 chp;
+  float10 fVar3;
   float local_64;
   float local_60;
   float local_5c;
@@ -82,7 +88,6 @@ longlong __watcall compute_height_map_row(int param_1,uint param_2)
   normalize_vector(local_58);
   cross_product(&local_64,&local_40,local_58);
   normalize_vector(&local_64);
-  iVar3 = (param_1 + 10) * 0x2000;
   local_3c = local_28;
   i = 0;
   local_38 = 0x41200000;
@@ -102,10 +107,10 @@ longlong __watcall compute_height_map_row(int param_1,uint param_2)
     local_30 = local_44;
     local_2c = local_48;
     normalize_vector(local_58 + 3);
+    fVar3 = (float10)local_48 * (float10)256.0;
     iVar2 = (i & 0x3ff) * 4;
-    iVar1 = DAT_00476768 + iVar3;
-    chp = CHP();
-    local_28 = (float)(int)ROUND(chp);
+    iVar1 = CHP();
+    local_28 = (float)(int)ROUND(fVar3);
     *(float *)(iVar1 + iVar2) = local_28;
     local_58[3] = *(float *)(iVar2 + sin_table) * 10.0;
     local_44 = *(float *)(iVar2 + cos_table) * 10.0;
@@ -114,14 +119,14 @@ longlong __watcall compute_height_map_row(int param_1,uint param_2)
     local_30 = local_44;
     local_2c = local_48;
     normalize_vector(local_58 + 3);
+    fVar3 = (float10)local_48 * (float10)256.0;
     j = j + 1;
-    iVar1 = DAT_00476768 + iVar3;
-    chp = CHP();
-    local_28 = (float)(int)ROUND(chp);
+    iVar1 = CHP();
+    local_28 = (float)(int)ROUND(fVar3);
     i = i + 1;
     *(float *)(iVar2 + iVar1 + 0x1000) = local_28;
   } while ((int)i < 0x400);
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
@@ -129,78 +134,82 @@ longlong __watcall compute_height_map_row(int param_1,uint param_2)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-longlong __watcall alloc_height_map(int param_1,uint param_2)
+undefined4 __watcall alloc_height_map(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  longlong height_map_row;
+  int i;
   
   DAT_00476768 = LocalAlloc(0x40,param_1 << 0xd);
   if (DAT_00476768 == (HLOCAL)0x0) {
     fatal_exit(s__s__d____error_allocating_height_0044d395,s_math3d_cpp_0044d38a,0x81);
   }
-  iVar2 = -(param_1 / 2);
-  iVar1 = iVar2 + param_1;
-  while (iVar2 < iVar1) {
-    height_map_row = compute_height_map_row(iVar2,iVar2);
-    iVar2 = (int)((ulonglong)height_map_row >> 0x20) + 1;
+  i = -(param_1 / 2);
+  iVar1 = i + param_1;
+  for (; i < iVar1; i = i + 1) {
+    compute_height_map_row(i);
   }
   _DAT_0047676c = param_1;
-  return (ulonglong)param_2 << 0x20;
+  return 0;
 }
 
 
 /* ==== 00421e3c alloc_atan_table ==== */
 
-undefined8 __watcall alloc_atan_table(undefined4 param_1,undefined4 param_2)
+int __watcall alloc_atan_table(void)
 
 {
   int iVar1;
   
-  iVar1 = DAT_00476760;
   if (DAT_00476760 + 1 < 0xb) {
+    iVar1 = DAT_00476760;
     DAT_00476760 = DAT_00476760 + 1;
-    return CONCAT44(param_2,iVar1);
+    return iVar1;
   }
   fatal_exit(s__s__d____too_many_atan_tables_in_0044d3c9,s_math3d_cpp_0044d3be,0x91,DAT_00476760);
-  return CONCAT44(param_2,0xffffffff);
+  return -1;
 }
 
 
 /* ==== 00421fbd atan_lookup ==== */
 
-undefined8 __watcall atan_lookup(int param_1,undefined4 param_2)
+undefined4 __watcall
+atan_lookup(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5)
 
 {
   uint uVar1;
   int iVar2;
-  int extraout_ECX;
-  int extraout_ECX_00;
   int iVar3;
-  float10 chp;
+  float10 fVar4;
   int local_1c;
   
   if ((param_1 < 0) || (9 < param_1)) {
     fatal_exit(s__s__d____illegal_atan_table_inde_0044d48c,s_math3d_cpp_0044d481,0xc6,param_1,10);
-    param_1 = extraout_ECX;
   }
   iVar3 = param_1 * 0x2c;
   uVar1 = (&DAT_004765a8)[param_1 * 0xb];
   if (uVar1 != 0) {
     if (uVar1 < 3) {
-      chp = CHP();
-      local_1c = (int)ROUND(chp);
+      if (*(float *)(&DAT_004765b4 + iVar3) == 1.0) {
+        fVar4 = (float10)param_5 - (float10)*(float *)(&DAT_004765b8 + iVar3);
+      }
+      else {
+        fVar4 = ((float10)param_5 - (float10)*(float *)(&DAT_004765b8 + iVar3)) /
+                (float10)*(float *)(&DAT_004765b4 + iVar3);
+      }
+      CHP();
+      local_1c = (int)ROUND(fVar4);
       goto LAB_004220c6;
     }
     if (uVar1 < 5) {
+      fVar4 = (float10)param_5 + (float10)0.5;
       iVar2 = *(int *)(&DAT_004765c0 + iVar3);
-      chp = CHP();
+      CHP();
       if (iVar2 == 1) {
-        local_1c = (int)ROUND(chp) - *(int *)(&DAT_004765c4 + iVar3);
+        local_1c = (int)ROUND(fVar4) - *(int *)(&DAT_004765c4 + iVar3);
       }
       else {
-        local_1c = ((int)ROUND(chp) - *(int *)(&DAT_004765c4 + iVar3)) /
+        local_1c = ((int)ROUND(fVar4) - *(int *)(&DAT_004765c4 + iVar3)) /
                    *(int *)(&DAT_004765c0 + iVar3);
       }
       goto LAB_004220c6;
@@ -208,7 +217,6 @@ undefined8 __watcall atan_lookup(int param_1,undefined4 param_2)
   }
   fatal_exit(s__s__d____illegal_atan_table__d_t_0044d4c6,s_math3d_cpp_0044d4bb,0xdd,param_1,
              (&DAT_004765a8)[param_1 * 0xb]);
-  param_1 = extraout_ECX_00;
 LAB_004220c6:
   if (local_1c < 0) {
     local_1c = 0;
@@ -216,123 +224,123 @@ LAB_004220c6:
   if (*(int *)(&DAT_004765b0 + param_1 * 0x2c) <= local_1c) {
     local_1c = *(int *)(&DAT_004765b0 + param_1 * 0x2c) + -1;
   }
-  return CONCAT44(param_2,*(undefined4 *)(*(int *)(&DAT_004765ac + param_1 * 0x2c) + local_1c * 4));
+  return *(undefined4 *)(*(int *)(&DAT_004765ac + param_1 * 0x2c) + local_1c * 4);
 }
 
 
 /* ==== 0042211d init_atan_table ==== */
 
-int __watcall init_atan_table(int param_1,int param_2,float param_3)
+int __watcall
+init_atan_table(uint param_1,int param_2,int param_3,int param_4,float param_5,float param_6)
 
 {
   double dVar1;
-  float fVar2;
-  int iVar3;
+  int iVar2;
+  int atan_table;
+  int arg4;
+  HLOCAL pvVar3;
   int iVar4;
-  HLOCAL pvVar5;
-  int unaff_ECX;
-  int iVar6;
-  int extraout_ECX;
-  int extraout_EDX;
-  int iVar7;
-  int extraout_EDX_00;
-  float10 chp;
-  undefined8 atan_table;
-  float in_stack_00000004;
+  int iVar5;
+  float10 fVar6;
   int local_34;
   undefined4 uStack_30;
   int i;
   int j;
   
-  atan_table = alloc_atan_table(param_1,param_2);
-  iVar3 = (int)atan_table;
-  iVar4 = ((int)param_3 - param_2) / unaff_ECX;
-  if (iVar4 < 1) {
-    fatal_exit(s__s__d____illegal_table_size_resu_0044d522,s_math3d_cpp_0044d517,0xf6,iVar4);
+  atan_table = alloc_atan_table();
+  arg4 = (param_3 - param_2) / param_4;
+  if (arg4 < 1) {
+    fatal_exit(s__s__d____illegal_table_size_resu_0044d522,s_math3d_cpp_0044d517,0xf6,arg4);
   }
-  pvVar5 = LocalAlloc(0x40,iVar4 << 2);
-  *(HLOCAL *)(&DAT_004765ac + iVar3 * 0x2c) = pvVar5;
-  if (pvVar5 == (HLOCAL)0x0) {
-    fatal_exit(s__s__d____error_allocating_hoek_t_0044d557,s_math3d_cpp_0044d54c,0xf9,iVar4);
+  pvVar3 = LocalAlloc(0x40,arg4 << 2);
+  *(HLOCAL *)(&DAT_004765ac + atan_table * 0x2c) = pvVar3;
+  if (pvVar3 == (HLOCAL)0x0) {
+    fatal_exit(s__s__d____error_allocating_hoek_t_0044d557,s_math3d_cpp_0044d54c,0xf9,arg4);
   }
   if (DAT_004765a4 == 0) {
     fatal_exit(s__s__d____call_init_math_tables_b_0044d58c,s_math3d_cpp_0044d581,0xfc);
   }
-  iVar6 = iVar3 * 0x2c;
-  *(int *)(&DAT_004765b0 + iVar6) = iVar4;
-  *(int *)(&DAT_004765c4 + iVar6) = param_2;
-  *(float *)(&DAT_004765c8 + iVar6) = param_3;
-  (&DAT_004765a8)[iVar3 * 0xb] = param_1;
-  *(int *)(&DAT_004765c0 + iVar6) = unaff_ECX;
+  iVar4 = atan_table * 0x2c;
+  *(int *)(&DAT_004765b0 + iVar4) = arg4;
+  *(int *)(&DAT_004765c4 + iVar4) = param_2;
+  *(int *)(&DAT_004765c8 + iVar4) = param_3;
+  (&DAT_004765a8)[atan_table * 0xb] = param_1;
+  *(int *)(&DAT_004765c0 + iVar4) = param_4;
   debugmsg(s_type____d_0044d5c7,param_1);
-  if (2 < (uint)param_1) {
-    if ((uint)param_1 < 4) {
-      iVar6 = 0;
+  if (2 < param_1) {
+    if (param_1 < 4) {
+      iVar5 = 0;
       i = 0;
-      *(float *)(&DAT_004765d0 + extraout_ECX) = in_stack_00000004;
-      for (; i < iVar4; i = i + 1) {
-        fVar2 = (float)param_2 + (float)unaff_ECX * (float)i;
-        atan2_checked(CONCAT22((short)((uint)in_stack_00000004 >> 0x10),
-                               (ushort)(0.0 < fVar2) << 8 | (ushort)NAN(fVar2) << 10 |
-                               (ushort)(fVar2 == 0.0) << 0xe),iVar6);
-        iVar6 = *(int *)(&DAT_004765ac + extraout_ECX);
-        chp = CHP();
-        in_stack_00000004 = (float)(int)ROUND(chp);
-        *(float *)(extraout_EDX + iVar6) = in_stack_00000004;
-        iVar6 = extraout_EDX + 4;
+      *(float *)(&DAT_004765d0 + iVar4) = param_5;
+      for (; i < arg4; i = i + 1) {
+        fVar6 = (float10)param_5;
+        atan2_checked();
+        fVar6 = -((((float10)1.570798 - fVar6) * (float10)param_6) / (float10)1.570798 +
+                 (float10)param_6) + (float10)0.5;
+        iVar2 = *(int *)(&DAT_004765ac + iVar4);
+        CHP();
+        *(int *)(iVar5 + iVar2) = (int)ROUND(fVar6);
+        iVar5 = iVar5 + 4;
       }
-      return iVar3;
+      return atan_table;
     }
     if (param_1 == 4) {
-      dVar1 = (double)in_stack_00000004;
+      dVar1 = (double)param_5;
       uStack_30 = (undefined4)((ulonglong)dVar1 >> 0x20);
       local_34 = SUB84(dVar1,0);
-      *(float *)(&DAT_004765cc + extraout_ECX) = in_stack_00000004;
+      *(float *)(&DAT_004765cc + iVar4) = param_5;
       if ((((ulonglong)dVar1 & 0x7fffffff00000000) == 0) && (local_34 == 0)) {
         fatal_exit(s__s__d____illegal_atan_x_distance_0044d5dd,s_math3d_cpp_0044d5d2,0x116,0,
                    uStack_30);
       }
-      iVar6 = 0;
-      iVar7 = 0;
+      iVar4 = 0;
       j = 0;
-      while (j < iVar4) {
-        fVar2 = (float)param_2 + (float)unaff_ECX * (float)j;
-        atan2_checked(CONCAT22((short)((uint)iVar6 >> 0x10),
-                               (ushort)(0.0 < fVar2) << 8 | (ushort)NAN(fVar2) << 10 |
-                               (ushort)(fVar2 == 0.0) << 0xe),iVar7);
-        iVar7 = *(int *)(&DAT_004765ac + iVar3 * 0x2c);
+      while (j < arg4) {
+        fVar6 = (float10)((float)param_2 + (float)param_4 * (float)j);
+        atan2_checked();
+        iVar5 = *(int *)(&DAT_004765ac + atan_table * 0x2c);
+        fVar6 = -((((float10)1.570798 - fVar6) * (float10)param_6) / (float10)1.570798 +
+                 (float10)param_6) + (float10)0.5;
         j = j + 1;
-        chp = CHP();
-        iVar6 = (int)ROUND(chp);
-        *(int *)(extraout_EDX_00 + iVar7) = iVar6;
-        iVar7 = extraout_EDX_00 + 4;
+        CHP();
+        *(int *)(iVar4 + iVar5) = (int)ROUND(fVar6);
+        iVar4 = iVar4 + 4;
       }
-      return iVar3;
+      return atan_table;
     }
   }
   fatal_exit(s__s__d____illegal_atan_table_type_0044d61c,s_math3d_cpp_0044d611,0x123,param_1);
-  return iVar3;
+  return atan_table;
 }
 
 
 /* ==== 00422637 interpolate_weg_point ==== */
 
-undefined8 __watcall
+int __watcall
 interpolate_weg_point
-          (undefined4 param_1,undefined4 param_2,float param_3,undefined4 param_4,float param_5)
+          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
+          ,float param_6,float param_7,float param_8)
 
 {
-  float10 chp;
-  float in_stack_0000000c;
+  float10 fVar1;
+  undefined4 uStack_1c;
   
-  if ((param_5 == in_stack_0000000c) == 0) {
-    atan2_checked(CONCAT22((short)((uint)param_1 >> 0x10),
-                           (ushort)(param_5 < in_stack_0000000c) << 8 |
-                           (ushort)(NAN(param_5) || NAN(in_stack_0000000c)) << 10 |
-                           (ushort)(param_5 == in_stack_0000000c) << 0xe),param_2);
+  if (param_5 == param_7) {
+    if (param_6 <= param_8) {
+      uStack_1c = 0x3ff921fb;
+    }
+    else {
+      uStack_1c = 0xbff921fb;
+    }
+    fVar1 = (float10)(double)CONCAT44(uStack_1c,0x54411744);
   }
-  chp = CHP();
-  return CONCAT44(param_2,(int)ROUND(chp));
+  else {
+    fVar1 = (float10)param_8 - (float10)param_6;
+    atan2_checked();
+  }
+  fVar1 = ((float10)(float)fVar1 * (float10)1024.0) / (float10)6.283185307;
+  CHP();
+  return (int)ROUND(fVar1);
 }
 
 
@@ -342,25 +350,25 @@ void __watcall normalize_vector(float *v)
 
 {
   float fVar1;
-  float *pfVar2;
+  float fVar2;
+  undefined4 unaff_ECX;
   float10 fVar3;
   float10 fVar4;
   float10 fVar5;
   float10 fVar6;
-  undefined8 sqrt_checked_result;
   
-  fVar1 = v[2];
-  if (((ABS(*v) != 0.0) || (ABS(v[1]) != 0.0)) || (ABS(fVar1) != 0.0)) {
-    fVar3 = (float10)*v;
+  fVar1 = *v;
+  fVar2 = v[2];
+  if (((ABS(fVar1) != 0.0) || (ABS(v[1]) != 0.0)) || (ABS(fVar2) != 0.0)) {
+    fVar3 = (float10)fVar1;
     fVar4 = (float10)v[1];
-    fVar5 = (float10)fVar1;
+    fVar5 = (float10)fVar2;
     fVar6 = fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3;
-    sqrt_checked_result = sqrt_checked(fVar1,v);
-    pfVar2 = (float *)((ulonglong)sqrt_checked_result >> 0x20);
+    sqrt_checked(fVar2,v,(uint)fVar1,unaff_ECX);
     fVar6 = (float10)1 / fVar6;
-    *pfVar2 = (float)(fVar3 * fVar6);
-    pfVar2[1] = (float)(fVar4 * fVar6);
-    pfVar2[2] = (float)(fVar5 * fVar6);
+    *v = (float)(fVar3 * fVar6);
+    v[1] = (float)(fVar4 * fVar6);
+    v[2] = (float)(fVar5 * fVar6);
   }
   return;
 }
@@ -380,13 +388,12 @@ void __watcall cross_product(float *out,float *a,float *b)
 
 /* ==== 00422eac store_vertex_z ==== */
 
-void __watcall store_vertex_z(int param_1)
+void __watcall store_vertex_z(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4)
 
 {
-  int unaff_ECX;
   float10 in_ST0;
   
-  *(float *)(unaff_ECX + 8) = (float)in_ST0;
+  *(float *)(param_4 + 8) = (float)in_ST0;
   return;
 }
 
@@ -409,27 +416,21 @@ void __watcall vertex_edge_vector(float *out,int v1,int v2)
 
 {
   int iVar1;
-  float *extraout_ECX;
-  float *extraout_ECX_00;
-  int extraout_EDX;
-  int extraout_EDX_00;
+  int iVar2;
   
   if ((v1 < 0) || (vertex_capacity < v1)) {
     fatal_exit(s__s__d___illegal_vertex__v1__inde_0044dc1d,s_math3d_cpp_0044dc12,0x284,v1,
                vertex_capacity);
-    out = extraout_ECX;
-    v1 = extraout_EDX;
   }
   if ((v2 < 0) || (vertex_capacity < v2)) {
     fatal_exit(s__s__d___illegal_vertex__v2__inde_0044dc57,s_math3d_cpp_0044dc4c,0x287,v2,
                vertex_capacity);
-    out = extraout_ECX_00;
-    v1 = extraout_EDX_00;
   }
-  iVar1 = v2 * 0x21;
-  *out = *(float *)(v1 * 0x21 + weg_points) - *(float *)(weg_points + iVar1);
-  out[1] = *(float *)(v1 * 0x21 + 4 + weg_points) - *(float *)(weg_points + 4 + iVar1);
-  store_vertex_z(iVar1);
+  iVar1 = v1 * 0x21;
+  iVar2 = v2 * 0x21;
+  *out = *(float *)(iVar1 + weg_points) - *(float *)(weg_points + iVar2);
+  out[1] = *(float *)(iVar1 + 4 + weg_points) - *(float *)(weg_points + 4 + iVar2);
+  store_vertex_z(iVar2,iVar1,weg_points,(int)out);
   return;
 }
 

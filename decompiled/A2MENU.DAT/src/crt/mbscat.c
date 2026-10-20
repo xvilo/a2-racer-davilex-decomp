@@ -3,7 +3,7 @@
 
 /* ==== 004203bd mbscat ==== */
 
-char * __watcall mbscat(char *param_1,char *unaff_EDX)
+char * __watcall mbscat(char *param_1,char *param_2)
 
 {
   char cVar1;
@@ -13,7 +13,7 @@ char * __watcall mbscat(char *param_1,char *unaff_EDX)
   char *pcVar2;
   
   i = 0xffffffff;
-  pcVar2 = unaff_EDX;
+  pcVar2 = param_2;
   do {
     if (i == 0) break;
     i = i - 1;
@@ -30,13 +30,13 @@ char * __watcall mbscat(char *param_1,char *unaff_EDX)
   } while (cVar1 != '\0');
   pcVar2 = param_1 + (~j - 1);
   for (k = ~i >> 2; k != 0; k = k - 1) {
-    *(undefined4 *)pcVar2 = *(undefined4 *)unaff_EDX;
-    unaff_EDX = unaff_EDX + 4;
+    *(undefined4 *)pcVar2 = *(undefined4 *)param_2;
+    param_2 = param_2 + 4;
     pcVar2 = pcVar2 + 4;
   }
   for (i = ~i & 3; i != 0; i = i - 1) {
-    *pcVar2 = *unaff_EDX;
-    unaff_EDX = unaff_EDX + 1;
+    *pcVar2 = *param_2;
+    param_2 = param_2 + 1;
     pcVar2 = pcVar2 + 1;
   }
   return param_1 + (~j - 1);
@@ -45,7 +45,7 @@ char * __watcall mbscat(char *param_1,char *unaff_EDX)
 
 /* ==== 0042040e mbscpy ==== */
 
-char * __watcall mbscpy(char *param_1,char *unaff_EDX)
+char * __watcall mbscpy(char *param_1,char *param_2)
 
 {
   char cVar1;
@@ -54,7 +54,7 @@ char * __watcall mbscpy(char *param_1,char *unaff_EDX)
   char *pcVar2;
   
   j = 0xffffffff;
-  pcVar2 = unaff_EDX;
+  pcVar2 = param_2;
   do {
     if (j == 0) break;
     j = j - 1;
@@ -63,13 +63,13 @@ char * __watcall mbscpy(char *param_1,char *unaff_EDX)
   } while (cVar1 != '\0');
   pcVar2 = param_1;
   for (i = ~j >> 2; i != 0; i = i - 1) {
-    *(undefined4 *)pcVar2 = *(undefined4 *)unaff_EDX;
-    unaff_EDX = unaff_EDX + 4;
+    *(undefined4 *)pcVar2 = *(undefined4 *)param_2;
+    param_2 = param_2 + 4;
     pcVar2 = pcVar2 + 4;
   }
   for (j = ~j & 3; j != 0; j = j - 1) {
-    *pcVar2 = *unaff_EDX;
-    unaff_EDX = unaff_EDX + 1;
+    *pcVar2 = *param_2;
+    param_2 = param_2 + 1;
     pcVar2 = pcVar2 + 1;
   }
   return param_1;
@@ -98,7 +98,7 @@ char * __watcall mbsdup(char *param_1)
     pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
   i = ~i;
-  pcVar2 = malloc(i);
+  pcVar2 = (char *)malloc(i);
   if (pcVar2 != (char *)0x0) {
     pcVar3 = pcVar2;
     for (j = i >> 2; j != 0; j = j - 1) {
@@ -118,7 +118,7 @@ char * __watcall mbsdup(char *param_1)
 
 /* ==== 0042046e mbsncat ==== */
 
-byte * __watcall mbsncat(byte *dest,byte *unaff_EDX,int unaff_EBX)
+byte * __watcall mbsncat(byte *param_1,byte *param_2,int param_3)
 
 {
   byte bVar1;
@@ -130,38 +130,38 @@ byte * __watcall mbsncat(byte *dest,byte *unaff_EDX,int unaff_EBX)
   
   bVar3 = 0;
   if (IsDBCS == 0) {
-    strncat((char *)dest,(char *)unaff_EDX,unaff_EBX);
+    strncat((char *)param_1,(char *)param_2,param_3);
   }
   else {
     i = 0xffffffff;
-    pbVar2 = dest;
+    pbVar2 = param_1;
     do {
       if (i == 0) break;
       i = i - 1;
       bVar1 = *pbVar2;
       pbVar2 = pbVar2 + 1;
     } while (bVar1 != 0);
-    mbsnbcnt_result = mbsnbcnt(dest,unaff_EBX);
-    pbVar2 = dest + (~i - 1);
+    mbsnbcnt_result = mbsnbcnt(param_1,param_3);
+    pbVar2 = param_1 + (~i - 1);
     for (j = mbsnbcnt_result >> 2; j != 0; j = j - 1) {
-      *(undefined4 *)pbVar2 = *(undefined4 *)unaff_EDX;
-      unaff_EDX = unaff_EDX + (uint)bVar3 * -8 + 4;
+      *(undefined4 *)pbVar2 = *(undefined4 *)param_2;
+      param_2 = param_2 + (uint)bVar3 * -8 + 4;
       pbVar2 = pbVar2 + (uint)bVar3 * -8 + 4;
     }
     for (j = mbsnbcnt_result & 3; j != 0; j = j - 1) {
-      *pbVar2 = *unaff_EDX;
-      unaff_EDX = unaff_EDX + (uint)bVar3 * -2 + 1;
+      *pbVar2 = *param_2;
+      param_2 = param_2 + (uint)bVar3 * -2 + 1;
       pbVar2 = pbVar2 + (uint)bVar3 * -2 + 1;
     }
-    (dest + (~i - 1))[mbsnbcnt_result] = 0;
+    (param_1 + (~i - 1))[mbsnbcnt_result] = 0;
   }
-  return dest;
+  return param_1;
 }
 
 
 /* ==== 004204cb mbsnbcat ==== */
 
-byte * __watcall mbsnbcat(byte *dest,byte *unaff_EDX,char *unaff_EBX)
+byte * __watcall mbsnbcat(byte *param_1,byte *param_2,uint param_3)
 
 {
   byte bVar1;
@@ -174,11 +174,11 @@ byte * __watcall mbsnbcat(byte *dest,byte *unaff_EDX,char *unaff_EBX)
   bool bVar6;
   
   if (IsDBCS == 0) {
-    strncat((char *)dest,(char *)unaff_EDX,(size_t)unaff_EBX);
+    strncat((char *)param_1,(char *)param_2,param_3);
   }
   else {
-    pbVar4 = dest;
-    if (*dest != 0) {
+    pbVar4 = param_1;
+    if (*param_1 != 0) {
       do {
         pbVar5 = pbVar4;
         if (*pbVar4 == 0) goto LAB_0042050d;
@@ -190,7 +190,7 @@ byte * __watcall mbsnbcat(byte *dest,byte *unaff_EDX,char *unaff_EBX)
       pbVar5 = (byte *)0x0;
 LAB_0042050d:
       pbVar4 = pbVar5 + -1;
-      for (pbVar2 = dest; pbVar3 = dest, *pbVar2 != 0; pbVar2 = pbVar2 + i + 1) {
+      for (pbVar2 = param_1; pbVar3 = param_1, *pbVar2 != 0; pbVar2 = pbVar2 + i + 1) {
         if (pbVar2 == pbVar4) {
           if (IsDBCS == 0) {
             bVar6 = true;
@@ -208,52 +208,52 @@ LAB_0042050d:
           i = (uint)((&DAT_00436509)[*pbVar2] & 1);
         }
       }
-      dest = pbVar3;
+      param_1 = pbVar3;
       if (pbVar3 != pbVar4) {
-        dest = pbVar5;
+        param_1 = pbVar5;
       }
     }
     i = 0xffffffff;
-    pbVar4 = dest;
+    pbVar4 = param_1;
     do {
       if (i == 0) break;
       i = i - 1;
       bVar1 = *pbVar4;
       pbVar4 = pbVar4 + 1;
     } while (bVar1 != 0);
-    pbVar4 = dest + (~i - 1);
-    for (j = (uint)unaff_EBX >> 2; j != 0; j = j - 1) {
-      *(undefined4 *)pbVar4 = *(undefined4 *)unaff_EDX;
-      unaff_EDX = unaff_EDX + 4;
+    pbVar4 = param_1 + (~i - 1);
+    for (j = param_3 >> 2; j != 0; j = j - 1) {
+      *(undefined4 *)pbVar4 = *(undefined4 *)param_2;
+      param_2 = param_2 + 4;
       pbVar4 = pbVar4 + 4;
     }
-    for (j = (uint)unaff_EBX & 3; j != 0; j = j - 1) {
-      *pbVar4 = *unaff_EDX;
-      unaff_EDX = unaff_EDX + 1;
+    for (j = param_3 & 3; j != 0; j = j - 1) {
+      *pbVar4 = *param_2;
+      param_2 = param_2 + 1;
       pbVar4 = pbVar4 + 1;
     }
-    (dest + (~i - 1))[(int)unaff_EBX] = 0;
+    (param_1 + (~i - 1))[param_3] = 0;
   }
-  return dest;
+  return param_1;
 }
 
 
 /* ==== 004205bd mbsncpy ==== */
 
-char * __watcall mbsncpy(char *dest,byte *unaff_EDX,int unaff_EBX_00)
+void __watcall mbsncpy(char *param_1,byte *param_2,int param_3)
 
 {
-  int unaff_EBX;
+  int mbsnbcnt_result;
   
-  unaff_EBX = mbsnbcnt(unaff_EDX,unaff_EBX_00);
-  mbsnbcpy(dest,(char *)unaff_EDX,unaff_EBX);
-  return dest;
+  mbsnbcnt_result = mbsnbcnt(param_2,param_3);
+  mbsnbcpy(param_1,(char *)param_2,mbsnbcnt_result);
+  return;
 }
 
 
 /* ==== 004205dc mbsnbcpy ==== */
 
-char * __watcall mbsnbcpy(char *dest,char *unaff_EDX,int unaff_EBX)
+void __watcall mbsnbcpy(char *param_1,char *param_2,int param_3)
 
 {
   char cVar1;
@@ -264,11 +264,11 @@ char * __watcall mbsnbcpy(char *dest,char *unaff_EDX,int unaff_EBX)
   char *pcVar4;
   
   if (IsDBCS == 0) {
-    strncpy(dest,unaff_EDX,unaff_EBX);
+    strncpy(param_1,param_2,param_3);
   }
   else {
     i = 0xffffffff;
-    pcVar4 = unaff_EDX;
+    pcVar4 = param_2;
     do {
       if (i == 0) break;
       i = i - 1;
@@ -279,40 +279,40 @@ char * __watcall mbsnbcpy(char *dest,char *unaff_EDX,int unaff_EBX)
     iVar3 = i - 1;
     bVar2 = 0;
     if (IsDBCS != 0) {
-      bVar2 = (&DAT_00436509)[(byte)unaff_EDX[unaff_EBX]] & 1;
+      bVar2 = (&DAT_00436509)[(byte)param_2[param_3]] & 1;
     }
-    if ((bVar2 != 0) && (unaff_EBX < iVar3)) {
-      unaff_EBX = unaff_EBX + -1;
+    if ((bVar2 != 0) && (param_3 < iVar3)) {
+      param_3 = param_3 + -1;
     }
-    pcVar4 = dest;
-    if ((int)i < unaff_EBX) {
+    pcVar4 = param_1;
+    if ((int)i < param_3) {
       for (j = i >> 2; j != 0; j = j - 1) {
-        *(undefined4 *)pcVar4 = *(undefined4 *)unaff_EDX;
-        unaff_EDX = unaff_EDX + 4;
-        pcVar4 = pcVar4 + 4;
+        *(undefined4 *)param_1 = *(undefined4 *)param_2;
+        param_2 = param_2 + 4;
+        param_1 = param_1 + 4;
       }
       for (i = i & 3; i != 0; i = i - 1) {
-        *pcVar4 = *unaff_EDX;
-        unaff_EDX = unaff_EDX + 1;
-        pcVar4 = pcVar4 + 1;
+        *param_1 = *param_2;
+        param_2 = param_2 + 1;
+        param_1 = param_1 + 1;
       }
     }
     else {
       do {
-        cVar1 = *unaff_EDX;
+        cVar1 = *param_2;
         *pcVar4 = cVar1;
         if (cVar1 == '\0') break;
-        cVar1 = unaff_EDX[1];
-        unaff_EDX = unaff_EDX + 2;
+        cVar1 = param_2[1];
+        param_2 = param_2 + 2;
         pcVar4[1] = cVar1;
         pcVar4 = pcVar4 + 2;
       } while (cVar1 != '\0');
-      if (iVar3 != unaff_EBX) {
-        memset(dest + iVar3,0,iVar3 - unaff_EBX);
+      if (iVar3 != param_3) {
+        memset((undefined4 *)(param_1 + iVar3),0,iVar3 - param_3);
       }
     }
   }
-  return dest;
+  return;
 }
 
 

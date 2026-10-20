@@ -37,11 +37,9 @@ int __watcall keyispressed_1(int param_1,int param_2)
 {
   SHORT SVar1;
   int check_joystick_keys_val;
-  uint extraout_EDX;
   
   if ((param_2 < 0) || (3 < param_2)) {
     fatal_exit(s__keyispressed__illegal_device_re_0041d510,param_2);
-    param_2 = extraout_EDX;
   }
   if (((param_2 & 2U) != 0) &&
      (check_joystick_keys_val = check_joystick_keys(param_1), check_joystick_keys_val != 0)) {

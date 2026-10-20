@@ -92,14 +92,14 @@ char * __watcall txt_crop_word(char *param_1)
 
 /* ==== 0040aac3 win_printwrapped ==== */
 
-void __cdecl win_printwrapped(int param_1,int param_2,int param_3,int param_4,char *param_5,...)
+void __cdecl
+win_printwrapped(int param_1,int param_2,int param_3,int param_4,char *param_5,...)
 
 {
   char cVar1;
   int iVar2;
   int txt_check_newline_result;
   uint i;
-  int extraout_EDX;
   int iVar3;
   int iVar4;
   char *pcVar5;
@@ -109,7 +109,7 @@ void __cdecl win_printwrapped(int param_1,int param_2,int param_3,int param_4,ch
   undefined1 *local_2c;
   int local_28;
   int local_24;
-  char *format;
+  char *local_20;
   int local_1c;
   
   bVar6 = 0;
@@ -137,7 +137,7 @@ void __cdecl win_printwrapped(int param_1,int param_2,int param_3,int param_4,ch
     }
     iVar2 = txt_get_word(acStack_16c + iVar3,local_6c);
     txt_check_newline_result = local_24;
-    format = local_6c;
+    local_20 = local_6c;
     iVar3 = iVar3 + iVar2;
     i = 0xffffffff;
     pcVar5 = local_6c;
@@ -157,27 +157,28 @@ LAB_0040abd1:
       iVar4 = local_1c;
       local_1c = get_string_height(s_H_004298c9,1);
       local_1c = iVar4 + local_1c;
-      format = txt_crop_word(local_6c);
+      local_20 = txt_crop_word(local_6c);
       i = 0xffffffff;
-      pcVar5 = format;
+      pcVar5 = local_20;
       do {
         if (i == 0) break;
         i = i - 1;
         cVar1 = *pcVar5;
         pcVar5 = pcVar5 + (uint)bVar6 * -2 + 1;
       } while (cVar1 != '\0');
-      get_string_width(format,~i - 1);
+      iVar2 = get_string_width(local_20,~i - 1);
       iVar4 = param_2;
     }
-    win_print_xy(param_1,iVar4,local_1c,format);
-    iVar4 = iVar4 + extraout_EDX;
+    win_print_xy(param_1,iVar4,local_1c,local_20);
+    iVar4 = iVar4 + iVar2;
   } while( true );
 }
 
 
 /* ==== 0040ac58 win_bprintf ==== */
 
-void __cdecl win_bprintf(int param_1,int param_2,int param_3,int param_4,char *param_5,...)
+void __cdecl
+win_bprintf(int param_1,int param_2,int param_3,int param_4,char *param_5,...)
 
 {
   char cVar1;
@@ -192,7 +193,7 @@ void __cdecl win_bprintf(int param_1,int param_2,int param_3,int param_4,char *p
   local_1c = &stack0x00000018;
   vbprintf((int)local_11c,0x100,(byte *)param_5,(int *)&local_1c);
   local_1c = (undefined1 *)0x0;
-  debugmsg(s_win_bprintf___focus__d__x__d__y__004298cb,param_1,param_2,param_3,param_4);
+  debugmsg(s_win_bprintf___focus__d__x__d__y__004298cb,param_1,param_2,param_3,param_4,local_11c);
   i = 0xffffffff;
   pcVar2 = local_11c;
   do {

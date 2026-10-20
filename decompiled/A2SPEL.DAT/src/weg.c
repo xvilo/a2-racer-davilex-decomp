@@ -3,13 +3,13 @@
 
 /* ==== 0041e07d alloc_weg_chunks ==== */
 
-longlong __watcall alloc_weg_chunks(int param_1,uint param_2)
+void __watcall alloc_weg_chunks(int param_1)
 
 {
   int iVar1;
   
   if (DAT_00476568 != 0) {
-    nfree((uint)weg_sections);
+    nfree(&weg_sections->point);
     debugmsg(s_Freed_weg_chunks__reinitialzing_0044c9e3);
   }
   weg_sections = LocalAlloc(0x40,param_1 * 0x54);
@@ -22,36 +22,32 @@ longlong __watcall alloc_weg_chunks(int param_1,uint param_2)
   weg_chunk_capacity = param_1;
   weg_lane_chunks = 0;
   DAT_00476568 = 1;
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 0041e158 load_weg_data ==== */
 
-undefined4 __watcall load_weg_data(char *param_1,int param_2)
+undefined4 __watcall load_weg_data(char *filename_val,int param_2)
 
 {
   uint uVar1;
-  FILE *pFVar2;
-  undefined4 weg_vertices;
-  int iVar3;
+  __iobuf *p_Var2;
+  int j;
   int build_weg_execute_buffers_result;
-  undefined4 extraout_EAX;
-  FILE *_File;
+  int iVar3;
   int iVar4;
   int i;
-  void *pvVar5;
-  undefined8 new_vertices;
-  undefined1 local_134 [120];
-  undefined1 local_bc [120];
+  char local_134 [120];
+  char local_bc [120];
   int local_44;
   int local_40;
-  size_t element_size;
-  undefined1 local_38 [4];
+  uint local_3c;
+  char local_38 [4];
   int local_34;
   uint ini_value_setting;
-  int local_2c;
-  int local_28;
+  int new_vertices;
+  int new_vertices_2;
   int local_24;
   int local_20;
   int local_1c;
@@ -60,99 +56,97 @@ undefined4 __watcall load_weg_data(char *param_1,int param_2)
   set_ini_filename(s_d3d_lib_0044ca3c);
   ini_value_setting = read_ini_value_setting(s_WEG_0044ca4d,s_COMPLETE_0044ca44);
   init_tiles();
-  pFVar2 = (FILE *)xvga_src_fopen(param_1);
-  if (pFVar2 == (FILE *)0x0) {
-    fatal_exit(s__s__d____could_not_open_weg_data_0044ca59,s_weg_cpp_0044ca51,0x8f,param_1);
+  p_Var2 = xvga_src_fopen(filename_val);
+  if (p_Var2 == (__iobuf *)0x0) {
+    fatal_exit(s__s__d____could_not_open_weg_data_0044ca59,s_weg_cpp_0044ca51,0x8f,filename_val);
   }
-  fread(&local_44,1,4,pFVar2);
-  alloc_weg_chunks(local_44,1);
+  fread((char *)&local_44,1,4,(int *)p_Var2);
+  alloc_weg_chunks(local_44);
   if (local_44 <= param_2) {
     param_2 = ((local_44 + -1) / 2) * 2;
   }
-  weg_vertices = alloc_weg_vertices(local_44,param_2);
-  new_vertices = get_new_vertices(weg_vertices,param_2);
-  i = weg_points;
-  local_28 = (int)new_vertices;
-  iVar4 = local_28 * 0x21;
+  alloc_weg_vertices(local_44,param_2);
+  new_vertices_2 = get_new_vertices();
+  iVar4 = new_vertices_2 * 0x21;
   *(undefined1 *)(weg_points + 0x20 + iVar4) = 1;
-  new_vertices = get_new_vertices(i,(int)((ulonglong)new_vertices >> 0x20));
-  local_2c = (int)new_vertices;
-  local_34 = local_2c * 0x21;
+  new_vertices = get_new_vertices();
+  local_34 = new_vertices * 0x21;
   *(undefined1 *)(weg_points + local_34 + 0x20) = 1;
   *(undefined4 *)(weg_points + 4 + iVar4) = 0;
   *(undefined4 *)(weg_points + local_34 + 4) = 0;
-  debugmsg(s_loading___s____d_chunks_0044ca85,param_1,local_44);
-  fread((void *)(weg_points + iVar4),1,4,_File);
-  fread((void *)(weg_points + iVar4 + 8),1,4,pFVar2);
-  fread(local_38,1,4,pFVar2);
-  fread(&local_40,1,4,pFVar2);
-  fread(&element_size,1,4,pFVar2);
-  fread(local_bc,element_size,4,pFVar2);
+  debugmsg(s_loading___s____d_chunks_0044ca85,filename_val,local_44);
+  fread((char *)(weg_points + iVar4),1,4,(int *)p_Var2);
+  fread((char *)(weg_points + iVar4 + 8),1,4,(int *)p_Var2);
+  fread(local_38,1,4,(int *)p_Var2);
+  fread((char *)&local_40,1,4,(int *)p_Var2);
+  fread((char *)&local_3c,1,4,(int *)p_Var2);
+  fread(local_bc,local_3c,4,(int *)p_Var2);
   local_20 = iVar4;
-  fread(local_134,element_size,4,pFVar2);
+  fread(local_134,local_3c,4,(int *)p_Var2);
   *(float *)(weg_points + 4 + iVar4) = (float)local_40;
   iVar4 = 0;
   local_18 = local_34;
   local_1c = local_34;
   for (i = 0; i < local_44 + -1; i = i + 1) {
-    fread((void *)(weg_points + local_1c),1,4,pFVar2);
-    fread((void *)(weg_points + local_1c + 8),1,4,pFVar2);
-    fread(local_38,1,4,pFVar2);
-    fread(&local_40,1,4,pFVar2);
-    fread(&element_size,1,4,pFVar2);
-    fread(local_bc,element_size,4,pFVar2);
-    fread(local_134,element_size,4,pFVar2);
+    fread((char *)(weg_points + local_1c),1,4,(int *)p_Var2);
+    fread((char *)(weg_points + local_1c + 8),1,4,(int *)p_Var2);
+    fread(local_38,1,4,(int *)p_Var2);
+    fread((char *)&local_40,1,4,(int *)p_Var2);
+    fread((char *)&local_3c,1,4,(int *)p_Var2);
+    fread(local_bc,local_3c,4,(int *)p_Var2);
+    fread(local_134,local_3c,4,(int *)p_Var2);
     *(float *)(weg_points + local_1c + 4) = (float)local_40;
-    if ((pFVar2->_flag & 0x20) != 0) {
-      fatal_exit(s__s__d____error_reading_weg_data_f_0044caa6,s_weg_cpp_0044ca9e,0xb8,param_1);
+    if (((byte)p_Var2[0xc] & 0x20) != 0) {
+      fatal_exit(s__s__d____error_reading_weg_data_f_0044caa6,s_weg_cpp_0044ca9e,0xb8,filename_val);
     }
-    iVar3 = build_weg_sections(local_28,local_2c);
-    *(int *)(weg_chunk_quads + iVar4) = iVar3;
+    j = build_weg_sections(new_vertices_2,new_vertices,local_3c,2);
+    *(int *)(weg_chunk_quads + iVar4) = j;
     *(undefined4 *)(weg_points + local_20) = *(undefined4 *)(local_18 + weg_points);
     *(undefined4 *)(weg_points + local_20 + 4) = *(undefined4 *)(local_18 + weg_points + 4);
     iVar4 = iVar4 + 4;
     *(undefined4 *)(weg_points + local_20 + 8) = *(undefined4 *)(local_18 + weg_points + 8);
   }
-  xvga_src_fclose((__iobuf *)pFVar2);
+  xvga_src_fclose(p_Var2);
   if (default_material == -1) {
     fatal_exit(s__s__d____error_xvga_material_has_0044cad8,s_weg_cpp_0044cad0,0xc9);
   }
   else {
-    set_material_texture(default_material,(int *)road_texture);
+    set_material_texture(default_material,road_texture);
   }
-  pFVar2 = (FILE *)xvga_src_fopen(param_1);
-  if (pFVar2 == (FILE *)0x0) {
-    fatal_exit(s__s__d____could_not_open_weg_data_0044cb18,s_weg_cpp_0044cb10,0xcd,param_1);
+  p_Var2 = xvga_src_fopen(filename_val);
+  if (p_Var2 == (__iobuf *)0x0) {
+    fatal_exit(s__s__d____could_not_open_weg_data_0044cb18,s_weg_cpp_0044cb10,0xcd,filename_val);
   }
-  fread(&local_44,1,4,pFVar2);
-  iVar4 = local_28 * 0x21;
-  fread((void *)(weg_points + iVar4),1,4,pFVar2);
-  fread((void *)(weg_points + iVar4 + 8),1,4,pFVar2);
-  fread(local_38,1,4,pFVar2);
-  fread(&local_40,1,4,pFVar2);
-  fread(&element_size,1,4,pFVar2);
-  fread(local_bc,element_size,4,pFVar2);
-  fread(local_134,element_size,4,pFVar2);
+  fread((char *)&local_44,1,4,(int *)p_Var2);
+  iVar4 = new_vertices_2 * 0x21;
+  fread((char *)(weg_points + iVar4),1,4,(int *)p_Var2);
+  fread((char *)(weg_points + iVar4 + 8),1,4,(int *)p_Var2);
+  fread(local_38,1,4,(int *)p_Var2);
+  fread((char *)&local_40,1,4,(int *)p_Var2);
+  fread((char *)&local_3c,1,4,(int *)p_Var2);
+  fread(local_bc,local_3c,4,(int *)p_Var2);
+  fread(local_134,local_3c,4,(int *)p_Var2);
   debugmsg(s_creating_the_weg_execute_buffers_0044cb44);
   i = 0;
   local_24 = iVar4;
-  for (pvVar5 = (void *)0x0; (int)pvVar5 < local_44 + -1; pvVar5 = (void *)((int)pvVar5 + 1)) {
-    fread((void *)(weg_points + local_24),1,4,pFVar2);
-    fread((void *)(weg_points + local_24 + 8),1,4,pFVar2);
-    fread(local_38,1,4,pFVar2);
-    fread(&local_40,1,4,pFVar2);
-    fread(&element_size,1,4,pFVar2);
-    fread(local_bc,element_size,4,pFVar2);
-    fread(local_134,element_size,4,pFVar2);
+  for (j = 0; j < local_44 + -1; j = j + 1) {
+    fread((char *)(weg_points + local_24),1,4,(int *)p_Var2);
+    fread((char *)(weg_points + local_24 + 8),1,4,(int *)p_Var2);
+    fread(local_38,1,4,(int *)p_Var2);
+    fread((char *)&local_40,1,4,(int *)p_Var2);
+    fread((char *)&local_3c,1,4,(int *)p_Var2);
+    fread(local_bc,local_3c,4,(int *)p_Var2);
+    fread(local_134,local_3c,4,(int *)p_Var2);
     uVar1 = ini_value_setting;
-    compute_weg_normals(pvVar5,(int)pvVar5 + 1);
+    compute_weg_normals(j,j + 1,local_3c);
     if (uVar1 == 0) {
-      build_weg_execute_buffers_result = build_weg_execute_buffers(pvVar5,(int)element_size / 2);
+      build_weg_execute_buffers_result =
+           build_weg_execute_buffers(j,(int)local_3c / 2,local_bc,local_134);
       iVar3 = *(int *)(weg_chunk_quads + i) * 0x38;
       iVar4 = weg_chunks;
     }
     else {
-      build_weg_execute_buffers_result = build_weg_execute_buffers(pvVar5,element_size);
+      build_weg_execute_buffers_result = build_weg_execute_buffers(j,local_3c,local_bc,local_134);
       iVar4 = *(int *)(weg_chunk_quads + i) * 0x38;
       iVar3 = weg_chunks;
     }
@@ -160,10 +154,10 @@ undefined4 __watcall load_weg_data(char *param_1,int param_2)
     i = i + 4;
   }
   debugmsg(s_Finished_creating_the_weg_execut_0044cb66);
-  xvga_src_fclose((__iobuf *)pFVar2);
+  xvga_src_fclose(p_Var2);
   if (DAT_00476fe0 != 0) {
     debugmsg(s_calcing_weg_map_execute_buffers_0044cb91);
-    build_map_execute_buffers(extraout_EAX);
+    build_map_execute_buffers();
     debugmsg(s_calcing_weg_map_execute_buffers_d_0044cbb2);
   }
   return 0;
@@ -172,15 +166,13 @@ undefined4 __watcall load_weg_data(char *param_1,int param_2)
 
 /* ==== 0041e93c alloc_weg_lanes ==== */
 
-void __watcall alloc_weg_lanes(void)
+int __watcall alloc_weg_lanes(int param_1)
 
 {
-  int in_EAX;
-  HLOCAL pvVar1;
-  weg_section_t *weg_section;
-  int iVar2;
+  int *piVar1;
+  HLOCAL pvVar2;
+  int new_vertices;
   int iVar3;
-  undefined8 new_vertices;
   
   if (DAT_00476568 == 0) {
     fatal_exit(s__s__d____error_weg_chunks_not_in_0044cc4b,s_weg_cpp_0044cc43,0x127);
@@ -189,72 +181,63 @@ void __watcall alloc_weg_lanes(void)
     fatal_exit(s_s__d____error_not_enough_weg_chu_0044cc88,s_weg_cpp_0044cc80,299,weg_chunk_capacity
               );
   }
-  pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  weg_sections[weg_lane_chunks].buffer_1 = pvVar1;
-  if (pvVar1 == (HLOCAL)0x0) {
-    fatal_exit(s__s__d____not_enough_memory_for_l_0044ccbf,s_weg_cpp_0044ccb7,0x12f);
+  pvVar2 = LocalAlloc(0x40,param_1 << 2);
+  weg_sections[weg_lane_chunks].buffer_1 = pvVar2;
+  if (pvVar2 == (HLOCAL)0x0) {
+    fatal_exit(s__s__d____not_enough_memory_for_l_0044ccbf,s_weg_cpp_0044ccb7,0x12f,param_1);
   }
-  pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  weg_sections[weg_lane_chunks].buffer_3 = pvVar1;
-  if (pvVar1 == (HLOCAL)0x0) {
-    fatal_exit(s__s__d____not_enough_memory_for_l_0044cd04,s_weg_cpp_0044ccfc,0x133);
+  pvVar2 = LocalAlloc(0x40,param_1 << 2);
+  weg_sections[weg_lane_chunks].buffer_3 = pvVar2;
+  if (pvVar2 == (HLOCAL)0x0) {
+    fatal_exit(s__s__d____not_enough_memory_for_l_0044cd04,s_weg_cpp_0044ccfc,0x133,param_1);
   }
-  pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  weg_sections[weg_lane_chunks].buffer_2 = pvVar1;
-  if (pvVar1 == (HLOCAL)0x0) {
-    fatal_exit(s__s__d____not_enough_memory_for_r_0044cd49,s_weg_cpp_0044cd41,0x137);
+  pvVar2 = LocalAlloc(0x40,param_1 << 2);
+  weg_sections[weg_lane_chunks].buffer_2 = pvVar2;
+  if (pvVar2 == (HLOCAL)0x0) {
+    fatal_exit(s__s__d____not_enough_memory_for_r_0044cd49,s_weg_cpp_0044cd41,0x137,param_1);
   }
-  pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  weg_sections[weg_lane_chunks].buffer_4 = pvVar1;
-  if (pvVar1 == (HLOCAL)0x0) {
-    fatal_exit(s__s__d____not_enough_memory_for_r_0044cd8f,s_weg_cpp_0044cd87,0x13b);
+  pvVar2 = LocalAlloc(0x40,param_1 << 2);
+  weg_sections[weg_lane_chunks].buffer_4 = pvVar2;
+  if (pvVar2 == (HLOCAL)0x0) {
+    fatal_exit(s__s__d____not_enough_memory_for_r_0044cd8f,s_weg_cpp_0044cd87,0x13b,param_1);
   }
-  weg_section = weg_sections;
-  weg_sections[weg_lane_chunks].field_3c = in_EAX;
-  iVar2 = 0;
+  weg_sections[weg_lane_chunks].field_3c = param_1;
+  iVar3 = 0;
   do {
-    new_vertices = get_new_vertices(weg_section,iVar2);
-    iVar2 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)((int)&weg_sections[weg_lane_chunks].point + iVar2) = (int)new_vertices;
-    weg_section = (weg_section_t *)
-                  (*(int *)((int)&weg_sections[weg_lane_chunks].point + iVar2) * 0x21);
-    iVar2 = iVar2 + 4;
-    *(undefined1 *)((int)&weg_points->field_20 + (int)weg_section) = 1;
-  } while (iVar2 != 0xc);
-  for (iVar2 = 0; iVar2 < in_EAX * 4; iVar2 = iVar2 + 4) {
-    new_vertices = get_new_vertices(weg_section,iVar2);
-    iVar2 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)(iVar2 + (int)weg_sections[weg_lane_chunks].buffer_1) = (int)new_vertices;
-    weg_section = (weg_section_t *)
-                  (*(int *)(iVar2 + (int)weg_sections[weg_lane_chunks].buffer_1) * 0x21);
-    *(undefined1 *)((int)&weg_points->field_20 + (int)weg_section) = 1;
-  }
-  for (iVar2 = 0; iVar2 < in_EAX * 4; iVar2 = iVar2 + 4) {
-    new_vertices = get_new_vertices(weg_section,iVar2);
-    iVar2 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)(iVar2 + (int)weg_sections[weg_lane_chunks].buffer_2) = (int)new_vertices;
-    weg_section = (weg_section_t *)
-                  (*(int *)(iVar2 + (int)weg_sections[weg_lane_chunks].buffer_2) * 0x21);
-    *(undefined1 *)((int)&weg_points->field_20 + (int)weg_section) = 1;
-  }
-  iVar2 = 0;
-  do {
-    new_vertices = get_new_vertices(weg_section,iVar2);
-    iVar3 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)((int)&weg_sections[weg_lane_chunks].field_1c + iVar3) = (int)new_vertices;
-    iVar2 = *(int *)((int)&weg_sections[weg_lane_chunks].field_1c + iVar3) * 0x21;
-    *(undefined1 *)((int)&weg_points->field_20 + iVar2) = 1;
-    new_vertices = get_new_vertices(iVar2,iVar3);
-    iVar3 = (int)((ulonglong)new_vertices >> 0x20);
-    *(int *)((int)&weg_sections[weg_lane_chunks].field_0c + iVar3) = (int)new_vertices;
-    weg_section = weg_points;
-    iVar2 = iVar3 + 4;
+    new_vertices = get_new_vertices();
+    *(int *)((int)&weg_sections[weg_lane_chunks].point + iVar3) = new_vertices;
+    piVar1 = (int *)((int)&weg_sections[weg_lane_chunks].point + iVar3);
+    iVar3 = iVar3 + 4;
+    *(undefined1 *)(weg_points + 0x20 + *piVar1 * 0x21) = 1;
+  } while (iVar3 != 0xc);
+  for (iVar3 = 0; iVar3 < param_1 * 4; iVar3 = iVar3 + 4) {
+    new_vertices = get_new_vertices();
+    *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_1) = new_vertices;
     *(undefined1 *)
-     ((int)&weg_points->field_20 +
-     *(int *)((int)&weg_sections[weg_lane_chunks].field_0c + iVar3) * 0x21) = 1;
-  } while (iVar2 != 0x10);
+     (weg_points + 0x20 + *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_1) * 0x21) = 1;
+  }
+  for (iVar3 = 0; iVar3 < param_1 * 4; iVar3 = iVar3 + 4) {
+    new_vertices = get_new_vertices();
+    *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_2) = new_vertices;
+    *(undefined1 *)
+     (weg_points + 0x20 + *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_2) * 0x21) = 1;
+  }
+  iVar3 = 0;
+  do {
+    new_vertices = get_new_vertices();
+    *(int *)((int)&weg_sections[weg_lane_chunks].field_1c + iVar3) = new_vertices;
+    *(undefined1 *)
+     (weg_points + 0x20 + *(int *)((int)&weg_sections[weg_lane_chunks].field_1c + iVar3) * 0x21) = 1
+    ;
+    new_vertices = get_new_vertices();
+    *(int *)((int)&weg_sections[weg_lane_chunks].field_0c + iVar3) = new_vertices;
+    piVar1 = (int *)((int)&weg_sections[weg_lane_chunks].field_0c + iVar3);
+    iVar3 = iVar3 + 4;
+    *(undefined1 *)(*piVar1 * 0x21 + 0x20 + weg_points) = 1;
+  } while (iVar3 != 0x10);
+  iVar3 = weg_lane_chunks;
   weg_lane_chunks = weg_lane_chunks + 1;
-  return;
+  return iVar3;
 }
 
 
@@ -262,14 +245,14 @@ void __watcall alloc_weg_lanes(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined4 __watcall alloc_weg_vertices(int param_1,undefined4 param_2)
+void __watcall alloc_weg_vertices(int param_1,undefined4 param_2)
 
 {
   int iVar1;
   int i;
   
   if (weg_data_loaded != 0) {
-    nfree((uint)weg_chunks);
+    nfree(weg_chunks);
     debugmsg(s_Freed_weg_chunks__reinitialzing_0044cdcd);
   }
   weg_chunks = LocalAlloc(0x40,param_1 * 0x38);
@@ -295,40 +278,40 @@ undefined4 __watcall alloc_weg_vertices(int param_1,undefined4 param_2)
     *(undefined4 *)((int)weg_chunks + iVar1 + 0x14) = 0;
     iVar1 = iVar1 + 0x38;
   }
-  return 0;
+  return;
 }
 
 
 /* ==== 0041ee77 weg_section_index ==== */
 
-undefined8 __watcall weg_section_index(undefined4 param_1,undefined4 param_2)
+int __watcall weg_section_index(void)
 
 {
   int iVar1;
   int i;
   
-  iVar1 = weg_chunk_count;
   if (weg_chunk_count + 1 < weg_section_count) {
+    iVar1 = weg_chunk_count;
     weg_chunk_count = weg_chunk_count + 1;
-    return CONCAT44(param_2,iVar1);
+    return iVar1;
   }
   i = 0;
   iVar1 = 0;
   while( true ) {
     if (weg_section_count * 0x38 <= iVar1) {
-      return CONCAT44(param_2,0xffffffff);
+      return -1;
     }
     if (*(int *)(weg_chunks + 0x14 + iVar1) == 0) break;
     iVar1 = iVar1 + 0x38;
     i = i + 1;
   }
-  return CONCAT44(param_2,i);
+  return i;
 }
 
 
 /* ==== 0041eed1 compute_weg_normals ==== */
 
-void __watcall compute_weg_normals(int param_1,int param_2)
+void __watcall compute_weg_normals(int param_1,int param_2,int param_3)
 
 {
   int iVar1;
@@ -336,7 +319,6 @@ void __watcall compute_weg_normals(int param_1,int param_2)
   int iVar3;
   int iVar4;
   int iVar5;
-  int unaff_EBX;
   int *piVar6;
   float local_54 [3];
   float local_48;
@@ -354,7 +336,7 @@ void __watcall compute_weg_normals(int param_1,int param_2)
   
   local_24 = param_1 << 2;
   local_28 = param_2 << 2;
-  local_1c = (unaff_EBX + -1) * 4;
+  local_1c = (param_3 + -1) * 4;
   local_14 = 0;
   while (local_14 < local_1c) {
     piVar6 = (int *)((int)weg_sections
@@ -406,7 +388,7 @@ void __watcall compute_weg_normals(int param_1,int param_2)
   }
   local_2c = param_1 << 2;
   local_30 = param_2 << 2;
-  local_20 = (unaff_EBX + -1) * 4;
+  local_20 = (param_3 + -1) * 4;
   local_18 = 0;
   while (local_18 < local_20) {
     piVar6 = (int *)((int)weg_sections
@@ -464,26 +446,21 @@ void __watcall compute_weg_normals(int param_1,int param_2)
 
 /* WARNING: Type propagation algorithm not settling */
 
-int __watcall build_weg_sections(int param_1,undefined4 param_2)
+int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4)
 
 {
   float fVar1;
-  int i;
-  float *pfVar2;
+  int iVar2;
   int iVar3;
-  int unaff_ECX;
-  int iVar4;
+  float *pfVar4;
+  int i;
   int j;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  int unaff_EBX;
   int iVar5;
   int iVar6;
   undefined4 *puVar7;
   float *pfVar8;
   undefined4 *puVar9;
   byte bVar10;
-  undefined8 uVar11;
   float afStackY_1054 [1008];
   float local_78;
   float local_74;
@@ -503,35 +480,31 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
   
   bVar10 = 0;
   local_40 = 0;
-  i = param_1;
   if (weg_data_loaded == 0) {
-    i = fatal_exit(s__s__d____error_weg_not_initializ_0044cf3f,s_weg_cpp_0044cf37,0x22d);
-    param_2 = extraout_EDX;
+    fatal_exit(s__s__d____error_weg_not_initializ_0044cf3f,s_weg_cpp_0044cf37,0x22d);
   }
-  uVar11 = weg_section_index(i,param_2);
-  weg_section_idx = (int)uVar11;
+  weg_section_idx = weg_section_index();
   if (weg_section_idx == -1) {
     fatal_exit(s__s__d____error_not_enough_weg_el_0044cf6c,s_weg_cpp_0044cf64,0x231,
                weg_section_count);
-    uVar11 = CONCAT44(extraout_EDX_00,weg_section_idx);
   }
-  weg_section_idx = (int)uVar11;
-  iVar4 = weg_section_idx * 0x38;
-  *(int *)(iVar4 + 0xc + weg_chunks) = param_1;
-  *(int *)(iVar4 + 0x10 + weg_chunks) = (int)((ulonglong)uVar11 >> 0x20);
-  *(int *)(iVar4 + weg_chunks) = unaff_ECX;
-  uVar11 = alloc_weg_lanes();
-  iVar3 = (int)uVar11;
-  *(int *)(iVar4 + 8 + weg_chunks) = iVar3;
-  i = (int)((ulonglong)uVar11 >> 0x20) * 0x21;
-  pfVar2 = (float *)(weg_points + i);
-  iVar5 = param_1 * 0x21;
-  local_6c = *pfVar2 - *(float *)(weg_points + iVar5);
-  local_68 = pfVar2[1] - *(float *)(weg_points + 4 + iVar5);
-  local_64 = pfVar2[2] - *(float *)(weg_points + 8 + iVar5);
-  uVar11 = interpolate_weg_point(i,iVar3,(float)iVar3,iVar4,*(float *)(weg_points + iVar5));
-  i = iVar3 * 0x14 + (int)((ulonglong)uVar11 >> 0x20);
-  (&weg_sections->heading)[i] = (int)uVar11;
+  i = weg_section_idx * 0x38;
+  *(int *)(i + 0xc + weg_chunks) = param_1;
+  *(int *)(i + 0x10 + weg_chunks) = param_2;
+  *(int *)(i + weg_chunks) = param_4;
+  iVar2 = alloc_weg_lanes(param_3);
+  *(int *)(i + 8 + weg_chunks) = iVar2;
+  pfVar4 = (float *)(weg_points + param_2 * 0x21);
+  j = param_1 * 0x21;
+  local_6c = *pfVar4 - *(float *)(weg_points + j);
+  local_68 = pfVar4[1] - *(float *)(weg_points + 4 + j);
+  local_64 = pfVar4[2] - *(float *)(weg_points + 8 + j);
+  iVar6 = iVar2;
+  iVar3 = interpolate_weg_point
+                    (param_2 * 0x21,iVar2,iVar2,i,*(float *)(weg_points + j),
+                     *(float *)(weg_points + 8 + j),*pfVar4,pfVar4[2]);
+  iVar6 = iVar2 * 0x14 + iVar6;
+  (&weg_sections->heading)[iVar6] = iVar3;
   normalize_vector(&stack0xffffff94);
   fVar1 = local_64 * 0.0 + local_6c * 0.0 + local_68;
   local_78 = 0.0 - local_6c * fVar1;
@@ -540,255 +513,255 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
   normalize_vector(&stack0xffffff88);
   cross_product(&stack0xffffffa0,&stack0xffffff88,&stack0xffffff94);
   normalize_vector(&stack0xffffffa0);
-  weg_sections[*(int *)(iVar4 + 8 + weg_chunks)].plane_a = local_78;
-  weg_sections[*(int *)(iVar4 + 8 + weg_chunks)].plane_b = local_74;
-  weg_sections[*(int *)(iVar4 + 8 + weg_chunks)].plane_c = local_70;
-  weg_sections[*(int *)(iVar4 + 8 + weg_chunks)].plane_d =
-       -((&weg_sections->plane_c)[i] * *(float *)(weg_points + 8 + iVar5) +
-        (&weg_sections->plane_a)[i] * *(float *)(weg_points + iVar5) +
-        (&weg_sections->plane_b)[i] * *(float *)(weg_points + 4 + iVar5));
-  if ((&weg_sections->plane_b)[i] == 0.0) {
+  weg_sections[*(int *)(i + 8 + weg_chunks)].plane_a = local_78;
+  weg_sections[*(int *)(i + 8 + weg_chunks)].plane_b = local_74;
+  weg_sections[*(int *)(i + 8 + weg_chunks)].plane_c = local_70;
+  weg_sections[*(int *)(i + 8 + weg_chunks)].plane_d =
+       -((&weg_sections->plane_c)[iVar6] * *(float *)(weg_points + 8 + j) +
+        (&weg_sections->plane_a)[iVar6] * *(float *)(weg_points + j) +
+        (&weg_sections->plane_b)[iVar6] * *(float *)(weg_points + 4 + j));
+  if ((&weg_sections->plane_b)[iVar6] == 0.0) {
     debugmsg(s_error_nul_b_0044cfab);
-    (&weg_sections->plane_b)[i] = 0.1;
+    (&weg_sections->plane_b)[iVar6] = 0.1;
   }
-  iVar6 = weg_section_idx * 0x38;
-  pfVar2 = (float *)(weg_chunks + 0x1c + iVar6);
-  pfVar8 = pfVar2 + (uint)bVar10 * -2 + 1;
-  *pfVar2 = local_60;
+  iVar5 = weg_section_idx * 0x38;
+  pfVar4 = (float *)(weg_chunks + 0x1c + iVar5);
+  pfVar8 = pfVar4 + (uint)bVar10 * -2 + 1;
+  *pfVar4 = local_60;
   *pfVar8 = *(float *)((int)&stack0xffffffa4 + (uint)bVar10 * -8);
   pfVar8[(uint)bVar10 * -2 + 1] =
        *(float *)((int)&stack0xffffffa8 + (uint)bVar10 * -8 + (uint)bVar10 * -8);
-  pfVar2 = (float *)(weg_chunks + 0x28 + iVar6);
-  pfVar8 = pfVar2 + (uint)bVar10 * -2 + 1;
-  *pfVar2 = local_6c;
+  pfVar4 = (float *)(weg_chunks + 0x28 + iVar5);
+  pfVar8 = pfVar4 + (uint)bVar10 * -2 + 1;
+  *pfVar4 = local_6c;
   *pfVar8 = *(float *)((int)&stack0xffffff98 + (uint)bVar10 * -8);
   pfVar8[(uint)bVar10 * -2 + 1] =
        *(float *)((int)&stack0xffffff9c + (uint)bVar10 * -8 + (uint)bVar10 * -8);
-  iVar3 = param_1 * 0x21;
-  i = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].point * 0x21;
-  *(undefined4 *)(weg_points + i) = *(undefined4 *)(weg_points + iVar3);
-  *(undefined4 *)(i + 8 + weg_points) = *(undefined4 *)(iVar3 + 8 + weg_points);
-  *(undefined4 *)(i + 4 + weg_points) = *(undefined4 *)(iVar3 + 4 + weg_points);
-  *(float *)(weg_points + 0xc + i) = local_78;
-  *(float *)(weg_points + 0x10 + i) = local_74;
-  *(float *)(weg_points + 0x14 + i) = local_70;
-  *(undefined4 *)(i + 0x1c + weg_points) = local_40;
-  *(undefined4 *)(i + 0x18 + weg_points) = 0;
-  fVar1 = ((float)unaff_ECX + 2.0) * 30.0;
-  i = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_04;
-  iVar5 = i * 0x21;
-  *(float *)(weg_points + iVar5) = fVar1 * local_60 + *(float *)(weg_points + iVar3);
-  *(float *)(iVar5 + 8 + weg_points) = fVar1 * local_58 + *(float *)(iVar3 + 8 + weg_points);
-  *(undefined4 *)(weg_points + 4 + iVar5) = *(undefined4 *)(weg_points + 4 + iVar3);
-  *(float *)(weg_points + 0xc + iVar5) = local_78;
-  *(float *)(weg_points + 0x10 + iVar5) = local_74;
-  *(float *)(weg_points + 0x14 + iVar5) = local_70;
-  *(undefined4 *)(iVar5 + 0x1c + weg_points) = local_40;
-  *(undefined4 *)(iVar5 + 0x18 + weg_points) = 0x3f800000;
-  iVar5 = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_08;
-  iVar4 = iVar5 * 0x21;
-  *(float *)(weg_points + iVar4) = *(float *)(weg_points + iVar3) - fVar1 * local_60;
-  *(float *)(weg_points + 8 + iVar4) = *(float *)(weg_points + 8 + iVar3) - fVar1 * local_58;
-  *(undefined4 *)(iVar4 + 4 + weg_points) = *(undefined4 *)(iVar3 + 4 + weg_points);
-  *(float *)(weg_points + 0xc + iVar4) = local_78;
-  *(float *)(weg_points + 0x10 + iVar4) = local_74;
-  *(float *)(weg_points + 0x14 + iVar4) = local_70;
-  *(undefined4 *)(weg_points + 0x1c + iVar4) = local_40;
-  *(undefined4 *)(iVar4 + 0x18 + weg_points) = 0x3f800000;
-  iVar4 = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_0c * 0x21;
+  iVar2 = param_1 * 0x21;
+  j = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].point * 0x21;
+  *(undefined4 *)(weg_points + j) = *(undefined4 *)(weg_points + iVar2);
+  *(undefined4 *)(j + 8 + weg_points) = *(undefined4 *)(iVar2 + 8 + weg_points);
+  *(undefined4 *)(j + 4 + weg_points) = *(undefined4 *)(iVar2 + 4 + weg_points);
+  *(float *)(weg_points + 0xc + j) = local_78;
+  *(float *)(weg_points + 0x10 + j) = local_74;
+  *(float *)(weg_points + 0x14 + j) = local_70;
+  *(undefined4 *)(j + 0x1c + weg_points) = local_40;
+  *(undefined4 *)(j + 0x18 + weg_points) = 0;
+  fVar1 = ((float)param_4 + 2.0) * 30.0;
+  j = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_04;
+  iVar6 = j * 0x21;
+  *(float *)(weg_points + iVar6) = fVar1 * local_60 + *(float *)(weg_points + iVar2);
+  *(float *)(iVar6 + 8 + weg_points) = fVar1 * local_58 + *(float *)(iVar2 + 8 + weg_points);
+  *(undefined4 *)(weg_points + 4 + iVar6) = *(undefined4 *)(weg_points + 4 + iVar2);
+  *(float *)(weg_points + 0xc + iVar6) = local_78;
+  *(float *)(weg_points + 0x10 + iVar6) = local_74;
+  *(float *)(weg_points + 0x14 + iVar6) = local_70;
+  *(undefined4 *)(iVar6 + 0x1c + weg_points) = local_40;
+  *(undefined4 *)(iVar6 + 0x18 + weg_points) = 0x3f800000;
+  iVar6 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_08;
+  iVar3 = iVar6 * 0x21;
+  *(float *)(weg_points + iVar3) = *(float *)(weg_points + iVar2) - fVar1 * local_60;
+  *(float *)(weg_points + 8 + iVar3) = *(float *)(weg_points + 8 + iVar2) - fVar1 * local_58;
+  *(undefined4 *)(iVar3 + 4 + weg_points) = *(undefined4 *)(iVar2 + 4 + weg_points);
+  *(float *)(weg_points + 0xc + iVar3) = local_78;
+  *(float *)(weg_points + 0x10 + iVar3) = local_74;
+  *(float *)(weg_points + 0x14 + iVar3) = local_70;
+  *(undefined4 *)(weg_points + 0x1c + iVar3) = local_40;
+  *(undefined4 *)(iVar3 + 0x18 + weg_points) = 0x3f800000;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0c * 0x21;
   puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].field_08 * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  iVar4 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_0x10 * 0x21;
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  iVar3 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0x10 * 0x21;
   puVar7 = (undefined4 *)(weg_sections[weg_section_idx].field_08 * 0x21 + weg_points);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(iVar4 + weg_points) = local_78 * 5.0 + *(float *)(iVar4 + weg_points);
-  *(float *)(iVar4 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar4 + 4 + weg_points);
-  *(float *)(iVar4 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar4 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  iVar4 = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_1c * 0x21;
+  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
+  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
+  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_1c * 0x21;
   puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].field_04 * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  iVar4 = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_20 * 0x21;
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_20 * 0x21;
   puVar7 = (undefined4 *)(weg_sections[weg_section_idx].field_04 * 0x21 + weg_points);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(iVar4 + weg_points) = local_78 * 5.0 + *(float *)(iVar4 + weg_points);
-  *(float *)(iVar4 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar4 + 4 + weg_points);
-  *(float *)(iVar4 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar4 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  iVar4 = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_14 * 0x21;
+  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
+  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
+  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_14 * 0x21;
   puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(iVar4 + weg_points) = *(float *)(iVar3 + weg_points) - local_60 * 5.0;
-  *(float *)(iVar4 + 8 + weg_points) = *(float *)(iVar3 + 8 + weg_points) - local_58 * 5.0;
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  iVar4 = weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_18 * 0x21;
+  *(float *)(iVar3 + weg_points) = *(float *)(iVar2 + weg_points) - local_60 * 5.0;
+  *(float *)(iVar3 + 8 + weg_points) = *(float *)(iVar2 + 8 + weg_points) - local_58 * 5.0;
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_18 * 0x21;
   puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(weg_points + iVar4) = *(float *)(weg_points + iVar3) - local_60 * 5.0;
-  *(float *)(weg_points + 8 + iVar4) = *(float *)(weg_points + 8 + iVar3) - local_58 * 5.0;
-  *(float *)(iVar4 + weg_points) = local_78 * 5.0 + *(float *)(iVar4 + weg_points);
-  *(float *)(iVar4 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar4 + 4 + weg_points);
-  *(float *)(iVar4 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar4 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  iVar4 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_0x24 * 0x21;
+  *(float *)(weg_points + iVar3) = *(float *)(weg_points + iVar2) - local_60 * 5.0;
+  *(float *)(weg_points + 8 + iVar3) = *(float *)(weg_points + 8 + iVar2) - local_58 * 5.0;
+  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
+  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
+  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  iVar3 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0x24 * 0x21;
   puVar7 = (undefined4 *)(weg_sections[weg_section_idx].point * 0x21 + weg_points);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(weg_points + iVar4) = local_60 * 5.0 + *(float *)(weg_points + iVar3);
-  *(float *)(weg_points + 8 + iVar4) = local_58 * 5.0 + *(float *)(weg_points + 8 + iVar3);
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  iVar4 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar6)].field_0x28 * 0x21;
+  *(float *)(weg_points + iVar3) = local_60 * 5.0 + *(float *)(weg_points + iVar2);
+  *(float *)(weg_points + 8 + iVar3) = local_58 * 5.0 + *(float *)(weg_points + 8 + iVar2);
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  iVar3 = *(int *)&weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0x28 * 0x21;
   puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar4);
-  for (j = 8; j != 0; j = j + -1) {
+  puVar9 = (undefined4 *)(weg_points + iVar3);
+  for (i = 8; i != 0; i = i + -1) {
     *puVar9 = *puVar7;
     puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
     puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
   }
-  for (j = 0; j != 0; j = j + -1) {
+  for (i = 0; i != 0; i = i + -1) {
     *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
     puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
     puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
   }
-  *(float *)(iVar4 + weg_points) = local_78 * 5.0 + *(float *)(iVar4 + weg_points);
-  *(float *)(iVar4 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar4 + 4 + weg_points);
-  *(float *)(iVar4 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar4 + 8 + weg_points);
-  *(float *)(weg_points + iVar4) = local_60 * 5.0 + *(float *)(weg_points + iVar3);
-  *(float *)(iVar4 + 8 + weg_points) = local_58 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar4) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar4) = local_5c;
-  *(float *)(iVar4 + weg_points + 0x14) = local_58;
-  i = i * 0x21;
-  local_18 = *(float *)(weg_points + i);
-  local_10 = *(float *)(weg_points + 8 + i);
-  pfVar2 = (float *)(iVar5 * 0x21 + weg_points);
-  iVar5 = 0;
-  local_14 = *pfVar2;
-  local_1c = pfVar2[2];
-  for (i = 0; i < unaff_EBX; i = i + 1) {
-    iVar4 = *(int *)(iVar5 + (int)weg_sections[*(int *)(weg_chunks + iVar6 + 8)].buffer_1);
-    j = iVar4 * 0x21;
-    *(float *)(weg_points + j) = local_14;
-    *(float *)(weg_points + 8 + j) = local_1c;
+  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
+  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
+  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
+  *(float *)(weg_points + iVar3) = local_60 * 5.0 + *(float *)(weg_points + iVar2);
+  *(float *)(iVar3 + 8 + weg_points) = local_58 * 5.0 + *(float *)(iVar2 + 8 + weg_points);
+  *(float *)(weg_points + 0xc + iVar3) = local_60;
+  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
+  *(float *)(iVar3 + weg_points + 0x14) = local_58;
+  j = j * 0x21;
+  local_18 = *(float *)(weg_points + j);
+  local_10 = *(float *)(weg_points + 8 + j);
+  pfVar4 = (float *)(iVar6 * 0x21 + weg_points);
+  iVar6 = 0;
+  local_14 = *pfVar4;
+  local_1c = pfVar4[2];
+  for (j = 0; j < param_3; j = j + 1) {
+    iVar3 = *(int *)(iVar6 + (int)weg_sections[*(int *)(weg_chunks + iVar5 + 8)].buffer_1);
+    i = iVar3 * 0x21;
+    *(float *)(weg_points + i) = local_14;
+    *(float *)(weg_points + 8 + i) = local_1c;
     local_14 = local_14 - local_60 * 60.0;
     local_1c = local_1c - local_58 * 60.0;
-    if (i == 0) {
-      *(undefined4 *)(weg_points + 4 + j) = *(undefined4 *)(iVar3 + 4 + weg_points);
+    if (j == 0) {
+      *(undefined4 *)(weg_points + 4 + i) = *(undefined4 *)(iVar2 + 4 + weg_points);
     }
     else {
-      *(undefined4 *)(weg_points + 4 + j) = 0;
-    }
-    iVar4 = iVar4 * 0x21;
-    *(undefined4 *)(weg_points + 0xc + iVar4) = 0;
-    *(undefined4 *)(weg_points + 0x10 + iVar4) = 0x3f800000;
-    iVar5 = iVar5 + 4;
-    *(undefined4 *)(weg_points + 0x14 + iVar4) = 0;
-  }
-  iVar5 = 0;
-  for (i = 0; i < unaff_EBX; i = i + 1) {
-    iVar3 = *(int *)((int)weg_sections[*(int *)(weg_chunks + weg_section_idx * 0x38 + 8)].buffer_2 +
-                    iVar5);
-    iVar4 = iVar3 * 0x21;
-    *(float *)(weg_points + iVar4) = local_18;
-    *(float *)(weg_points + 8 + iVar4) = local_10;
-    local_18 = local_60 * 60.0 + local_18;
-    local_10 = local_58 * 60.0 + local_10;
-    if (i == 0) {
-      *(undefined4 *)(weg_points + 4 + iVar4) = *(undefined4 *)(weg_points + 4 + param_1 * 0x21);
-    }
-    else {
-      *(undefined4 *)(weg_points + 4 + iVar4) = 0;
+      *(undefined4 *)(weg_points + 4 + i) = 0;
     }
     iVar3 = iVar3 * 0x21;
     *(undefined4 *)(weg_points + 0xc + iVar3) = 0;
     *(undefined4 *)(weg_points + 0x10 + iVar3) = 0x3f800000;
-    iVar5 = iVar5 + 4;
+    iVar6 = iVar6 + 4;
     *(undefined4 *)(weg_points + 0x14 + iVar3) = 0;
+  }
+  iVar6 = 0;
+  for (j = 0; j < param_3; j = j + 1) {
+    iVar2 = *(int *)((int)weg_sections[*(int *)(weg_chunks + weg_section_idx * 0x38 + 8)].buffer_2 +
+                    iVar6);
+    iVar3 = iVar2 * 0x21;
+    *(float *)(weg_points + iVar3) = local_18;
+    *(float *)(weg_points + 8 + iVar3) = local_10;
+    local_18 = local_60 * 60.0 + local_18;
+    local_10 = local_58 * 60.0 + local_10;
+    if (j == 0) {
+      *(undefined4 *)(weg_points + 4 + iVar3) = *(undefined4 *)(weg_points + 4 + param_1 * 0x21);
+    }
+    else {
+      *(undefined4 *)(weg_points + 4 + iVar3) = 0;
+    }
+    iVar2 = iVar2 * 0x21;
+    *(undefined4 *)(weg_points + 0xc + iVar2) = 0;
+    *(undefined4 *)(weg_points + 0x10 + iVar2) = 0x3f800000;
+    iVar6 = iVar6 + 4;
+    *(undefined4 *)(weg_points + 0x14 + iVar2) = 0;
   }
   return weg_section_idx;
 }
@@ -796,69 +769,83 @@ int __watcall build_weg_sections(int param_1,undefined4 param_2)
 
 /* ==== 0041ffce compute_road_height ==== */
 
-longlong __watcall compute_road_height(undefined4 param_1,uint param_2)
+void __watcall compute_road_height(undefined4 param_1)
 
 {
+  bool bVar1;
+  int iVar2;
   int point_in_view_quad_result;
-  int iVar1;
-  int extraout_ECX;
-  float *pfVar2;
+  float *pfVar3;
   int i;
-  int iVar3;
+  int iVar4;
+  float10 fVar5;
+  float10 fVar6;
   int weg_section_idx;
   
-  iVar1 = 1;
+  bVar1 = true;
   if (weg_data_loaded == 0) {
     fatal_exit(s__s__d____error_weg_not_initializ_0044cfe1,s_weg_cpp_0044cfd9,0x371);
-    iVar1 = extraout_ECX;
   }
   i = 0;
-  iVar3 = 0;
+  iVar4 = 0;
   do {
     if (DAT_00476588 + -2 <= i) {
-      return (ulonglong)param_2 << 0x20;
+      return;
     }
-    *(undefined4 *)(weg_chunk_vertex_lists + iVar3) = 0;
-    weg_section_idx = *(int *)(*(int *)(weg_chunk_quads + iVar3) * 0x38 + 8 + weg_chunks);
+    *(undefined4 *)(weg_chunk_vertex_lists + iVar4) = 0;
+    weg_section_idx = *(int *)(*(int *)(weg_chunk_quads + iVar4) * 0x38 + 8 + weg_chunks);
+    pfVar3 = (float *)(weg_sections[weg_section_idx].point * 0x21 + weg_points);
+    fVar5 = (float10)pfVar3[2];
     CHP();
+    fVar6 = (float10)*pfVar3;
     CHP();
-    point_in_view_quad_result = point_in_view_quad();
-    if (point_in_view_quad_result == 0) {
+    iVar2 = point_in_view_quad((int)ROUND(fVar6),(int)ROUND(fVar5));
+    point_in_view_quad_result = weg_points;
+    if (iVar2 == 0) {
+      fVar5 = (float10)*(float *)(weg_points + 8 +
+                                 *(int *)((int)weg_sections[weg_section_idx].buffer_2 + 0x28) * 0x21
+                                 );
+      iVar2 = CHP();
+      fVar6 = (float10)*(float *)(point_in_view_quad_result + iVar2);
       CHP();
+      iVar2 = point_in_view_quad((int)ROUND(fVar6),(int)ROUND(fVar5));
+      point_in_view_quad_result = weg_points;
+      if (iVar2 != 0) goto LAB_004200ee;
+      fVar5 = (float10)*(float *)(weg_points + 8 +
+                                 *(int *)((int)weg_sections[weg_section_idx].buffer_1 + 0x28) * 0x21
+                                 );
+      iVar2 = CHP();
+      fVar6 = (float10)*(float *)(point_in_view_quad_result + iVar2);
       CHP();
-      point_in_view_quad_result = point_in_view_quad();
-      if (point_in_view_quad_result != 0) goto LAB_004200ee;
-      CHP();
-      CHP();
-      point_in_view_quad_result = point_in_view_quad();
+      point_in_view_quad_result = point_in_view_quad((int)ROUND(fVar6),(int)ROUND(fVar5));
       if (point_in_view_quad_result != 0) goto LAB_004200ee;
     }
     else {
 LAB_004200ee:
-      pfVar2 = (float *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-      if (((((((float)view_min_x < *pfVar2) && (*pfVar2 < (float)view_max_x)) &&
-            ((float)view_min_z < pfVar2[2])) && (pfVar2[2] < (float)view_max_z)) ||
-          (((((pfVar2 = (float *)(weg_points + weg_sections[weg_section_idx].field_04 * 0x21),
-              (float)view_min_x < *pfVar2 && (*pfVar2 < (float)view_max_x)) &&
-             (((float)view_min_z < pfVar2[2] && (pfVar2[2] < (float)view_max_z)))) ||
-            (((pfVar2 = (float *)(weg_points + weg_sections[weg_section_idx].field_08 * 0x21),
-              (float)view_min_x < *pfVar2 && (*pfVar2 < (float)view_max_x)) &&
-             (((float)view_min_z < pfVar2[2] && (pfVar2[2] < (float)view_max_z)))))) ||
-           (((((pfVar2 = (float *)(weg_points +
+      pfVar3 = (float *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
+      if (((((((float)view_min_x < *pfVar3) && (*pfVar3 < (float)view_max_x)) &&
+            ((float)view_min_z < pfVar3[2])) && (pfVar3[2] < (float)view_max_z)) ||
+          (((((pfVar3 = (float *)(weg_points + weg_sections[weg_section_idx].field_04 * 0x21),
+              (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
+             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))) ||
+            (((pfVar3 = (float *)(weg_points + weg_sections[weg_section_idx].field_08 * 0x21),
+              (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
+             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))))) ||
+           (((((pfVar3 = (float *)(weg_points +
                                   *(int *)((int)weg_sections[weg_section_idx].buffer_2 + 0x28) *
-                                  0x21), (float)view_min_x < *pfVar2 &&
-               (*pfVar2 < (float)view_max_x)) && ((float)view_min_z < pfVar2[2])) &&
-             (pfVar2[2] < (float)view_max_z)) ||
-            (((pfVar2 = (float *)(weg_points +
+                                  0x21), (float)view_min_x < *pfVar3 &&
+               (*pfVar3 < (float)view_max_x)) && ((float)view_min_z < pfVar3[2])) &&
+             (pfVar3[2] < (float)view_max_z)) ||
+            (((pfVar3 = (float *)(weg_points +
                                  *(int *)((int)weg_sections[weg_section_idx].buffer_1 + 0x28) * 0x21
-                                 ), (float)view_min_x < *pfVar2 && (*pfVar2 < (float)view_max_x)) &&
-             (((float)view_min_z < pfVar2[2] && (pfVar2[2] < (float)view_max_z)))))))))) &&
-         (*(undefined4 *)(weg_chunk_vertex_lists + iVar3) = 1, DAT_00476598 = i, iVar1 != 0)) {
-        iVar1 = 0;
+                                 ), (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
+             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))))))))) &&
+         (*(undefined4 *)(weg_chunk_vertex_lists + iVar4) = 1, DAT_00476598 = i, bVar1)) {
+        bVar1 = false;
         DAT_00476594 = i;
       }
     }
-    iVar3 = iVar3 + 4;
+    iVar4 = iVar4 + 4;
     i = i + 1;
   } while( true );
 }
@@ -866,48 +853,39 @@ LAB_004200ee:
 
 /* ==== 004202c7 debug_weg_position ==== */
 
-undefined8 __watcall
-debug_weg_position(undefined4 param_1,undefined4 param_2,float param_3,float param_4,float param_5)
+undefined4 __watcall
+debug_weg_position(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                  float param_5,float param_6,float param_7)
 
 {
   int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  float *pfVar4;
-  int iVar5;
-  float10 fVar6;
-  undefined8 sqrt_checked_result;
-  float in_stack_00000008;
-  float in_stack_0000000c;
+  int iVar2;
+  float *pfVar3;
+  uint uVar4;
+  float10 fVar5;
   
   if (weg_data_loaded == 0) {
     fatal_exit(s__s__d____error_weg_not_initializ_0044d00e,s_weg_cpp_0044d006,0x3c5);
   }
-  iVar3 = DAT_00476588 + -2;
-  iVar5 = 0;
-  do {
-    if (iVar3 * 4 <= iVar5) {
-      uVar2 = 0;
-LAB_004203a3:
-      return CONCAT44(param_2,uVar2);
+  uVar4 = 0;
+  iVar2 = (DAT_00476588 + -2) * 4;
+  while( true ) {
+    if (iVar2 <= (int)uVar4) {
+      return 0;
     }
-    iVar1 = weg_sections[*(int *)(*(int *)(weg_chunk_quads + iVar5) * 0x38 + 8 + weg_chunks)].point
+    iVar1 = weg_sections[*(int *)(*(int *)(weg_chunk_quads + uVar4) * 0x38 + 8 + weg_chunks)].point
             * 0x21;
-    pfVar4 = (float *)(weg_points + iVar1);
-    fVar6 = ((float10)param_5 - (float10)*pfVar4) * ((float10)param_5 - (float10)*pfVar4) +
-            ((float10)in_stack_00000008 - (float10)pfVar4[2]) *
-            ((float10)in_stack_00000008 - (float10)pfVar4[2]);
-    sqrt_checked_result = sqrt_checked(iVar1,pfVar4);
-    pfVar4 = (float *)((ulonglong)sqrt_checked_result >> 0x20);
-    if (fVar6 < (float10)in_stack_0000000c) {
-      debugmsg(s___5_2f__5_2f______5_2f__5_2f___5_0044d033,(double)param_5,(double)in_stack_00000008
-               ,(double)*pfVar4,(double)pfVar4[2],(double)(float)fVar6,(double)in_stack_0000000c,
-               (float)fVar6,param_2,param_4,param_3);
-      uVar2 = 1;
-      goto LAB_004203a3;
-    }
-    iVar5 = iVar5 + 4;
-  } while( true );
+    pfVar3 = (float *)(weg_points + iVar1);
+    fVar5 = ((float10)param_5 - (float10)*pfVar3) * ((float10)param_5 - (float10)*pfVar3) +
+            ((float10)param_6 - (float10)pfVar3[2]) * ((float10)param_6 - (float10)pfVar3[2]);
+    sqrt_checked(iVar1,pfVar3,uVar4,iVar2);
+    if (fVar5 < (float10)param_7) break;
+    uVar4 = uVar4 + 4;
+  }
+  debugmsg(s___5_2f__5_2f______5_2f__5_2f___5_0044d033,(double)param_5,(double)param_6,
+           (double)*pfVar3,(double)pfVar3[2],(double)(float)fVar5,(double)param_7,(float)fVar5,
+           param_2,param_4,param_3);
+  return 1;
 }
 
 
@@ -916,24 +894,25 @@ LAB_004203a3:
 void __watcall execute_weg_buffer(void)
 
 {
+  long lVar1;
+  char *arg4;
   int i;
-  int iVar1;
   int iVar2;
-  undefined8 uVar3;
+  int iVar3;
   
-  iVar2 = DAT_00476594 << 2;
-  iVar1 = DAT_00476594 * 0x38;
+  iVar3 = DAT_00476594 << 2;
+  iVar2 = DAT_00476594 * 0x38;
   for (i = DAT_00476594; i < DAT_00476598; i = i + 1) {
-    if (*(int *)(iVar2 + weg_chunk_vertex_lists) != 0) {
-      uVar3 = (**(code **)(*d3d_device + 0x20))
-                        (d3d_device,*(undefined4 *)(weg_chunks + 0x34 + iVar1),d3d_object,1);
-      if ((int)uVar3 != 0) {
-        uVar3 = d3d_error_string((int)uVar3,(int)((ulonglong)uVar3 >> 0x20));
-        fatal_exit(s__s__d____D3DError_Execute_ExecBu_0044d066,s_weg_cpp_0044d05e,0x3dd,(int)uVar3);
+    if (*(int *)(iVar3 + weg_chunk_vertex_lists) != 0) {
+      lVar1 = (**(code **)(*d3d_device + 0x20))
+                        (d3d_device,*(undefined4 *)(weg_chunks + 0x34 + iVar2),d3d_object,1);
+      if (lVar1 != 0) {
+        arg4 = d3d_error_string(lVar1);
+        fatal_exit(s__s__d____D3DError_Execute_ExecBu_0044d066,s_weg_cpp_0044d05e,0x3dd,arg4);
       }
     }
-    iVar2 = iVar2 + 4;
-    iVar1 = iVar1 + 0x38;
+    iVar3 = iVar3 + 4;
+    iVar2 = iVar2 + 0x38;
   }
   return;
 }
@@ -941,15 +920,11 @@ void __watcall execute_weg_buffer(void)
 
 /* ==== 00420429 get_road_height ==== */
 
-ulonglong __watcall get_road_height(void)
+undefined4 __watcall get_road_height(undefined4 param_1)
 
 {
-  undefined4 in_EAX;
-  uint unaff_EDX;
-  ulonglong road_height;
-  
-  road_height = compute_road_height(in_EAX,unaff_EDX);
-  return road_height & 0xffffffff00000000;
+  compute_road_height(param_1);
+  return 0;
 }
 
 
@@ -957,45 +932,40 @@ ulonglong __watcall get_road_height(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
+int __watcall
+build_weg_execute_buffers(undefined4 param_1,int param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  int *extraout_ECX;
-  int *piVar1;
-  int *extraout_ECX_00;
-  int k;
+  long lVar1;
+  char *d3d_error_string_result;
   int *piVar2;
-  int extraout_EDX;
-  int extraout_EDX_00;
   int j;
   int *piVar3;
+  int *piVar4;
+  int iVar5;
+  short sVar6;
+  short sVar7;
   int i;
-  short sVar4;
-  short sVar5;
-  size_t _Size;
-  int *piVar6;
-  byte bVar7;
-  undefined8 uVar8;
-  int *piVar9;
-  int **ppiStack_14c;
-  int *piStack_148;
-  int *piStack_144;
+  int *piVar8;
+  byte bVar9;
+  int *piVar10;
+  int **arg4;
   int iStack_118;
   int iStack_114;
   int iStack_110;
   int iStack_100;
   int iStack_fc;
   int local_f0 [2];
-  int *dst;
+  int *piStack_e8;
   int *piStack_e4;
   int *local_e0;
   int *local_dc;
   int *piStack_d8;
-  size_t local_d4;
+  int local_d4;
   undefined4 uStack_d0;
   int local_cc;
   float fStack_c8;
-  int m;
+  int k;
   int **ppiStack_c0;
   int local_bc;
   int local_b8;
@@ -1028,609 +998,597 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   float fStack_4c;
   float fStack_48;
   float fStack_44;
-  int iStack_40;
   int n;
+  int m;
   undefined4 uStack_38;
   undefined4 uStack_34;
   undefined4 uStack_30;
   undefined4 uStack_2c;
   int iStack_28;
   
-  bVar7 = 0;
+  bVar9 = 0;
   local_f0[1] = 0xffffffff;
   local_f0[0] = -1;
-  if ((int)param_2 < 2) {
-    piStack_148 = (int *)0x406;
-    ppiStack_14c = (int **)s_weg_cpp_0044d092;
-    piStack_144 = (int *)param_2;
-    fatal_exit(s__s__d____weg_illegal_side_length_0044d09a);
+  if (param_2 < 2) {
+    fatal_exit(s__s__d____weg_illegal_side_length_0044d09a,s_weg_cpp_0044d092,0x406,param_2);
   }
-  piStack_144 = (int *)(param_2 * 8 + 0x10);
+  local_bc = param_2 * 8 + 0x10;
   local_b8 = param_2 * 4 + 0x10;
-  local_bc = (int)piStack_144;
-  if (max_vertex_count < (int)piStack_144) {
-    piStack_148 = (int *)0x40d;
-    ppiStack_14c = (int **)s_weg_cpp_0044d0cf;
-    fatal_exit(s__s__d____Too_many_vertices___d__i_0044d0d7);
+  if (max_vertex_count < local_bc) {
+    fatal_exit(s__s__d____Too_many_vertices___d__i_0044d0d7,s_weg_cpp_0044d0cf,0x40d,local_bc);
   }
-  _Size = local_bc * 0x20 + 0xa8 + local_b8 * 8;
-  if (max_buffer_size < (int)_Size) {
-    piStack_148 = (int *)0x41a;
-    ppiStack_14c = (int **)s_weg_cpp_0044d0ff;
-    piStack_144 = (int *)_Size;
-    fatal_exit(s__s__d____Execbuffer_too_large____0044d107);
+  i = local_bc * 0x20 + 0xa8 + local_b8 * 8;
+  if (max_buffer_size < i) {
+    fatal_exit(s__s__d____Execbuffer_too_large____0044d107,s_weg_cpp_0044d0ff,0x41a,i);
   }
-  piStack_144 = (int *)0x420503;
   memset(&local_e0,0,0x14);
-  piStack_144 = (int *)0x0;
   local_dc = (int *)0x1;
-  piStack_148 = &local_cc;
-  ppiStack_14c = &local_e0;
+  arg4 = &local_e0;
   local_e0 = (int *)0x14;
-  piVar9 = d3d_device;
-  local_d4 = _Size;
-  uVar8 = (**(code **)(*d3d_device + 0x18))();
-  if ((int)uVar8 != 0) {
-    uVar8 = d3d_error_string((int)uVar8,(int)((ulonglong)uVar8 >> 0x20));
-    fatal_exit(s__s__d___D3DError_Create_Execbuff_0044d13b,s_weg_cpp_0044d133,0x423,(int)uVar8);
+  piVar10 = d3d_device;
+  local_d4 = i;
+  lVar1 = (**(code **)(*d3d_device + 0x18))();
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_Create_Execbuff_0044d13b,s_weg_cpp_0044d133,0x423,
+               d3d_error_string_result);
   }
-  piVar1 = local_f0;
-  piVar3 = local_dc;
-  uVar8 = (**(code **)(*local_dc + 0x10))();
-  if ((int)uVar8 != 0) {
-    uVar8 = d3d_error_string((int)uVar8,(int)((ulonglong)uVar8 >> 0x20));
-    fatal_exit(s__s__d___D3DError_Lock_Execbuffer_0044d16d,s_weg_cpp_0044d165,0x427,(int)uVar8);
+  piVar2 = local_f0;
+  piVar4 = local_dc;
+  lVar1 = (**(code **)(*local_dc + 0x10))();
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_Lock_Execbuffer_0044d16d,s_weg_cpp_0044d165,0x427,
+               d3d_error_string_result);
   }
-  i = 0;
-  local_dc = dst;
-  local_e0 = dst;
-  memset(dst,0,_Size);
+  iVar5 = 0;
+  local_dc = piStack_e8;
+  local_e0 = piStack_e8;
+  memset(piStack_e8,0,i);
   fStack_c8 = 0.0;
   _DAT_0047655c = local_e0;
-  iStack_80 = ((int)ppiStack_14c + 2) * 4;
-  for (iStack_84 = (int)ppiStack_14c << 2; iStack_84 < iStack_80; iStack_84 = iStack_84 + 4) {
-    i = i + 2;
+  iStack_80 = ((int)arg4 + 2) * 4;
+  for (iStack_84 = (int)arg4 << 2; iStack_84 < iStack_80; iStack_84 = iStack_84 + 4) {
+    iVar5 = iVar5 + 2;
     iStack_28 = iStack_84;
-    j = 0;
+    i = 0;
     fStack_44 = 0.0;
     do {
-      k = *(int *)((int)&weg_sections
+      j = *(int *)((int)&weg_sections
                          [*(int *)(*(int *)(weg_chunk_quads + iStack_84) * 0x38 + 8 + weg_chunks)].
-                         point + j) * 0x21;
-      *(float *)(k + 0x18 + weg_points) = fStack_44;
-      *(float *)(k + 0x1c + weg_points) = fStack_c8;
-      piVar2 = (int *)(k + weg_points);
-      iStack_118 = *piVar2;
-      iStack_114 = piVar2[1];
-      iStack_110 = piVar2[2];
+                         point + i) * 0x21;
+      *(float *)(j + 0x18 + weg_points) = fStack_44;
+      *(float *)(j + 0x1c + weg_points) = fStack_c8;
+      piVar3 = (int *)(j + weg_points);
+      iStack_118 = *piVar3;
+      iStack_114 = piVar3[1];
+      iStack_110 = piVar3[2];
       fStack_44 = fStack_44 + 1.0;
-      iStack_100 = piVar2[6];
-      iStack_fc = piVar2[7];
-      piVar2 = &iStack_118;
-      piVar6 = local_e0;
-      for (k = 8; k != 0; k = k + -1) {
-        *piVar6 = *piVar2;
-        piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-        piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+      iStack_100 = piVar3[6];
+      iStack_fc = piVar3[7];
+      piVar3 = &iStack_118;
+      piVar8 = local_e0;
+      for (j = 8; j != 0; j = j + -1) {
+        *piVar8 = *piVar3;
+        piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+        piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
       }
-      for (k = 0; k != 0; k = k + -1) {
-        *(char *)piVar6 = (char)*piVar2;
-        piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-        piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+      for (j = 0; j != 0; j = j + -1) {
+        *(char *)piVar8 = (char)*piVar3;
+        piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+        piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
       }
-      j = j + 4;
+      i = i + 4;
       local_e0 = local_e0 + 8;
-    } while (j != 8);
+    } while (i != 8);
     fStack_c8 = fStack_c8 + 1.0;
   }
   fStack_4c = 0.0;
-  iStack_78 = ((int)ppiStack_14c + 2) * 4;
-  for (iStack_7c = (int)ppiStack_14c << 2; iStack_7c < iStack_78; iStack_7c = iStack_7c + 4) {
-    i = i + 2;
+  iStack_78 = ((int)arg4 + 2) * 4;
+  for (iStack_7c = (int)arg4 << 2; iStack_7c < iStack_78; iStack_7c = iStack_7c + 4) {
+    iVar5 = iVar5 + 2;
     local_b8 = iStack_7c;
-    j = 0;
+    i = 0;
     fStack_48 = 0.0;
     do {
-      k = *(int *)((int)&weg_sections
+      j = *(int *)((int)&weg_sections
                          [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_7c) * 0x38)].
-                         point + j) * 0x21;
-      *(float *)(k + 0x18 + weg_points) = fStack_48;
-      *(float *)(k + 0x1c + weg_points) = fStack_4c;
-      piVar2 = (int *)(k + weg_points);
-      iStack_118 = *piVar2;
-      iStack_114 = piVar2[1];
-      iStack_110 = piVar2[2];
+                         point + i) * 0x21;
+      *(float *)(j + 0x18 + weg_points) = fStack_48;
+      *(float *)(j + 0x1c + weg_points) = fStack_4c;
+      piVar3 = (int *)(j + weg_points);
+      iStack_118 = *piVar3;
+      iStack_114 = piVar3[1];
+      iStack_110 = piVar3[2];
       fStack_48 = fStack_48 + 1.0;
-      iStack_100 = piVar2[6];
-      iStack_fc = piVar2[7];
-      piVar2 = &iStack_118;
-      piVar6 = local_e0;
-      for (k = 8; k != 0; k = k + -1) {
-        *piVar6 = *piVar2;
-        piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-        piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+      iStack_100 = piVar3[6];
+      iStack_fc = piVar3[7];
+      piVar3 = &iStack_118;
+      piVar8 = local_e0;
+      for (j = 8; j != 0; j = j + -1) {
+        *piVar8 = *piVar3;
+        piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+        piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
       }
-      for (k = 0; k != 0; k = k + -1) {
-        *(char *)piVar6 = (char)*piVar2;
-        piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-        piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+      for (j = 0; j != 0; j = j + -1) {
+        *(char *)piVar8 = (char)*piVar3;
+        piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+        piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
       }
-      j = j + 8;
+      i = i + 8;
       local_e0 = local_e0 + 8;
-    } while (j != 0x10);
+    } while (i != 0x10);
     fStack_4c = fStack_4c + 1.0;
   }
-  ppiStack_c0 = ppiStack_14c;
-  local_bc = (int)ppiStack_14c + 1;
-  j = 0;
+  ppiStack_c0 = arg4;
+  local_bc = (int)arg4 + 1;
+  i = 0;
   uStack_2c = 0;
-  m = 0;
-  iStack_b4 = (int)ppiStack_14c * 4;
+  k = 0;
+  iStack_b4 = (int)arg4 * 4;
   do {
-    k = (&weg_sections
-          [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38)].
-          field_0c)[m] * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    j = j + 4;
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    j = (&weg_sections[*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38)].
+          field_0c)[k] * 0x21;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    i = i + 4;
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
-    m = m + 1;
+    k = k + 1;
     local_e0 = local_e0 + 8;
-  } while (m < 2);
+  } while (k < 2);
   iStack_b0 = local_bc * 4;
   iStack_74 = 0;
-  j = 0xc;
+  i = 0xc;
   do {
-    k = *(int *)((int)&weg_sections
+    j = *(int *)((int)&weg_sections
                        [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
                        field_0c + iStack_74) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    j = j + -4;
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    i = i + -4;
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
     iStack_74 = iStack_74 + 4;
     local_e0 = local_e0 + 8;
   } while (iStack_74 != 8);
-  j = 0;
+  i = 0;
   uStack_30 = 0;
-  n = 0;
-  iStack_ac = (int)ppiStack_14c * 4;
+  m = 0;
+  iStack_ac = (int)arg4 * 4;
   do {
-    k = (&weg_sections
-          [*(int *)(*(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38 + 8 + weg_chunks)].
-          field_14)[n] * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    j = (&weg_sections[*(int *)(*(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38 + 8 + weg_chunks)].
+          field_14)[m] * 0x21;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
-    j = j + 4;
-    n = n + 1;
+    i = i + 4;
+    m = m + 1;
     local_e0 = local_e0 + 8;
-  } while (n < 2);
+  } while (m < 2);
   iStack_a8 = local_bc * 4;
   iStack_70 = 0;
-  j = 0xc;
+  i = 0xc;
   do {
-    k = *(int *)((int)&weg_sections
+    j = *(int *)((int)&weg_sections
                        [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
                        field_14 + iStack_70) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    j = j + -4;
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    i = i + -4;
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
     iStack_70 = iStack_70 + 4;
     local_e0 = local_e0 + 8;
   } while (iStack_70 != 8);
   uStack_34 = 0;
-  iStack_40 = 0;
-  j = 0;
-  iStack_a4 = (int)ppiStack_14c * 4;
+  n = 0;
+  i = 0;
+  iStack_a4 = (int)arg4 * 4;
   do {
-    k = (&weg_sections
-          [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38)].
-          field_1c)[iStack_40] * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    j = j + 4;
-    iStack_110 = piVar2[2];
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    j = (&weg_sections[*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38)].
+          field_1c)[n] * 0x21;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    i = i + 4;
+    iStack_110 = piVar3[2];
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
-    iStack_40 = iStack_40 + 1;
+    n = n + 1;
     local_e0 = local_e0 + 8;
-  } while (iStack_40 < 2);
+  } while (n < 2);
   iStack_6c = 0;
   iStack_a0 = local_bc * 4;
-  j = 0xc;
+  i = 0xc;
   do {
-    k = *(int *)((int)&weg_sections
+    j = *(int *)((int)&weg_sections
                        [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
                        field_1c + iStack_6c) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    j = j + -4;
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    i = i + -4;
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
     iStack_6c = iStack_6c + 4;
     local_e0 = local_e0 + 8;
   } while (iStack_6c != 8);
-  j = 0;
+  i = 0;
   uStack_38 = 0;
   local_cc = 0;
-  iStack_9c = (int)ppiStack_14c * 4;
+  iStack_9c = (int)arg4 * 4;
   do {
-    k = *(int *)(&weg_sections
-                  [*(int *)(weg_chunks + 8 +
-                           *(int *)(weg_chunk_quads + (int)ppiStack_14c * 4) * 0x38)].field_0x24 +
-                local_cc * 4) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    j = *(int *)(&weg_sections
+                  [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + (int)arg4 * 4) * 0x38)].
+                  field_0x24 + local_cc * 4) * 0x21;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + i);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + i);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
-    j = j + 4;
+    i = i + 4;
     local_cc = local_cc + 1;
     local_e0 = local_e0 + 8;
   } while (local_cc < 2);
   iStack_68 = 0;
   iStack_98 = local_bc * 4;
-  j = 0xc;
+  i = 0xc;
   do {
-    k = *(int *)(&weg_sections
+    j = *(int *)(&weg_sections
                   [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_bc * 4) * 0x38)].
                   field_0x24 + iStack_68) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    j = j + -4;
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+    *(undefined4 *)(j + 0x18 + weg_points) = *(undefined4 *)(i + 0x4768b8);
+    *(undefined4 *)(j + 0x1c + weg_points) = *(undefined4 *)(i + 0x4768c8);
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    i = i + -4;
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
     iStack_68 = iStack_68 + 4;
     local_e0 = local_e0 + 8;
   } while (iStack_68 != 8);
   iStack_8c = local_bc * 4;
-  iStack_94 = (int)ppiStack_14c << 2;
-  piStack_64 = piVar1;
+  iStack_94 = (int)arg4 << 2;
+  piStack_64 = piVar2;
   iStack_60 = 0;
-  iStack_5c = ((int)piVar9 + -1) * 4;
+  iStack_5c = ((int)piVar10 + -1) * 4;
   while (iStack_60 < iStack_5c) {
-    j = *piStack_64;
-    if ((int)local_d4 < i + 4) {
-      fatal_exit(s__s__d____execute_vertex_overflow_0044d19d,s_weg_cpp_0044d195,0x4f3,i,local_d4);
+    i = *piStack_64;
+    if (local_d4 < iVar5 + 4) {
+      fatal_exit(s__s__d____execute_vertex_overflow_0044d19d,s_weg_cpp_0044d195,0x4f3,iVar5,local_d4
+                );
     }
-    piVar1 = local_e0;
-    k = *(int *)((int)weg_sections
+    piVar2 = local_e0;
+    j = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_94) * 0x38 + 8 + weg_chunks)].
                       buffer_1 + iStack_60 + 4) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&tile_u_coords)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&tile_v_coords)[j * 8];
-    piVar2 = (int *)(weg_points + k);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
-    }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
-    }
-    local_e0 = local_e0 + 8;
-    k = *(int *)((int)weg_sections
-                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_94) * 0x38)].
-                      buffer_1 + iStack_60) * 0x21;
-    i = i + 4;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767dc)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767ec)[j * 8];
-    piVar2 = (int *)(weg_points + k);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    for (k = 8; k != 0; k = k + -1) {
-      *local_e0 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      local_e0 = local_e0 + (uint)bVar7 * -2 + 1;
-    }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)local_e0 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      local_e0 = (int *)((int)local_e0 + (uint)bVar7 * -2 + 1);
-    }
-    local_e0 = piVar1 + 0x10;
-    k = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_60 + 4) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = (&DAT_004767e4)[j * 8];
-    *(undefined4 *)(k + 0x1c + weg_points) = (&DAT_004767f4)[j * 8];
-    piVar2 = (int *)(k + weg_points);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    iStack_100 = piVar2[6];
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = piVar1 + 0x10;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
-    }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
-    }
-    local_e0 = piVar1 + 0x18;
-    k = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_60) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767e0)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767f0)[j * 8];
-    piVar2 = (int *)(weg_points + k);
-    iStack_118 = *piVar2;
-    iStack_114 = piVar2[1];
-    iStack_110 = piVar2[2];
-    iStack_100 = piVar2[6];
-    iStack_60 = iStack_60 + 4;
-    iStack_fc = piVar2[7];
-    piVar2 = &iStack_118;
-    piVar6 = piVar1 + 0x18;
+    *(undefined4 *)(weg_points + 0x18 + j) = (&tile_u_coords)[i * 8];
+    *(undefined4 *)(weg_points + 0x1c + j) = (&tile_v_coords)[i * 8];
+    piVar3 = (int *)(weg_points + j);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = local_e0;
     for (j = 8; j != 0; j = j + -1) {
-      *piVar6 = *piVar2;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-      piVar6 = piVar6 + (uint)bVar7 * -2 + 1;
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
     }
     for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar6 = (char)*piVar2;
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-      piVar6 = (int *)((int)piVar6 + (uint)bVar7 * -2 + 1);
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
     }
-    local_e0 = piVar1 + 0x20;
+    local_e0 = local_e0 + 8;
+    j = *(int *)((int)weg_sections
+                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_94) * 0x38)].
+                      buffer_1 + iStack_60) * 0x21;
+    iVar5 = iVar5 + 4;
+    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767dc)[i * 8];
+    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767ec)[i * 8];
+    piVar3 = (int *)(weg_points + j);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    for (j = 8; j != 0; j = j + -1) {
+      *local_e0 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      local_e0 = local_e0 + (uint)bVar9 * -2 + 1;
+    }
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)local_e0 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      local_e0 = (int *)((int)local_e0 + (uint)bVar9 * -2 + 1);
+    }
+    local_e0 = piVar2 + 0x10;
+    j = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks)].
+                      buffer_1 + iStack_60 + 4) * 0x21;
+    *(undefined4 *)(j + 0x18 + weg_points) = (&DAT_004767e4)[i * 8];
+    *(undefined4 *)(j + 0x1c + weg_points) = (&DAT_004767f4)[i * 8];
+    piVar3 = (int *)(j + weg_points);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    iStack_100 = piVar3[6];
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = piVar2 + 0x10;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+    }
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+    }
+    local_e0 = piVar2 + 0x18;
+    j = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_8c) * 0x38 + 8 + weg_chunks)].
+                      buffer_1 + iStack_60) * 0x21;
+    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767e0)[i * 8];
+    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767f0)[i * 8];
+    piVar3 = (int *)(weg_points + j);
+    iStack_118 = *piVar3;
+    iStack_114 = piVar3[1];
+    iStack_110 = piVar3[2];
+    iStack_100 = piVar3[6];
+    iStack_60 = iStack_60 + 4;
+    iStack_fc = piVar3[7];
+    piVar3 = &iStack_118;
+    piVar8 = piVar2 + 0x18;
+    for (i = 8; i != 0; i = i + -1) {
+      *piVar8 = *piVar3;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+      piVar8 = piVar8 + (uint)bVar9 * -2 + 1;
+    }
+    for (i = 0; i != 0; i = i + -1) {
+      *(char *)piVar8 = (char)*piVar3;
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+      piVar8 = (int *)((int)piVar8 + (uint)bVar9 * -2 + 1);
+    }
+    local_e0 = piVar2 + 0x20;
     piStack_64 = piStack_64 + 1;
   }
   iStack_88 = local_bc << 2;
   iStack_90 = (int)ppiStack_c0 << 2;
-  piStack_58 = piVar3;
-  iStack_50 = ((int)piVar9 + -1) * 4;
+  piStack_58 = piVar4;
+  iStack_50 = ((int)piVar10 + -1) * 4;
   for (iStack_54 = 0; iStack_54 < iStack_50; iStack_54 = iStack_54 + 4) {
-    j = *piStack_58;
-    if ((int)local_d4 < i + 4) {
-      fatal_exit(s__s__d____execute_vertex_overflow_0044d1db,s_weg_cpp_0044d1d3,0x532,i,local_d4);
+    i = *piStack_58;
+    if (local_d4 < iVar5 + 4) {
+      fatal_exit(s__s__d____execute_vertex_overflow_0044d1db,s_weg_cpp_0044d1d3,0x532,iVar5,local_d4
+                );
     }
-    piVar1 = local_e0;
-    k = *(int *)((int)weg_sections
+    piVar2 = local_e0;
+    j = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_90) * 0x38 + 8 + weg_chunks)].
                       buffer_2 + iStack_54) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = (&tile_u_coords)[j * 8];
-    *(undefined4 *)(k + 0x1c + weg_points) = (&tile_v_coords)[j * 8];
-    piVar3 = (int *)(k + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar2 = local_e0;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar2 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar7 * -2 + 1;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-    }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar2 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar7 * -2 + 1);
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-    }
-    local_e0 = local_e0 + 8;
-    k = *(int *)((int)weg_sections
-                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_90) * 0x38)].
-                      buffer_2 + iStack_54 + 4) * 0x21;
-    i = i + 4;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767dc)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767ec)[j * 8];
-    piVar3 = (int *)(weg_points + k);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    for (k = 8; k != 0; k = k + -1) {
-      *local_e0 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar7 * -2 + 1;
-      local_e0 = local_e0 + (uint)bVar7 * -2 + 1;
-    }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)local_e0 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar7 * -2 + 1);
-      local_e0 = (int *)((int)local_e0 + (uint)bVar7 * -2 + 1);
-    }
-    local_e0 = piVar1 + 0x10;
-    k = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_54) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = (&DAT_004767e4)[j * 8];
-    *(undefined4 *)(k + 0x1c + weg_points) = (&DAT_004767f4)[j * 8];
-    piVar3 = (int *)(k + weg_points);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar2 = piVar1 + 0x10;
-    for (k = 8; k != 0; k = k + -1) {
-      *piVar2 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar7 * -2 + 1;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
-    }
-    for (k = 0; k != 0; k = k + -1) {
-      *(char *)piVar2 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar7 * -2 + 1);
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
-    }
-    local_e0 = piVar1 + 0x18;
-    k = *(int *)((int)weg_sections
-                      [*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_54 + 4) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767e0)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767f0)[j * 8];
-    piVar3 = (int *)(weg_points + k);
-    iStack_118 = *piVar3;
-    iStack_114 = piVar3[1];
-    iStack_110 = piVar3[2];
-    iStack_100 = piVar3[6];
-    iStack_fc = piVar3[7];
-    piVar3 = &iStack_118;
-    piVar2 = piVar1 + 0x18;
+    *(undefined4 *)(j + 0x18 + weg_points) = (&tile_u_coords)[i * 8];
+    *(undefined4 *)(j + 0x1c + weg_points) = (&tile_v_coords)[i * 8];
+    piVar4 = (int *)(j + weg_points);
+    iStack_118 = *piVar4;
+    iStack_114 = piVar4[1];
+    iStack_110 = piVar4[2];
+    iStack_100 = piVar4[6];
+    iStack_fc = piVar4[7];
+    piVar4 = &iStack_118;
+    piVar3 = local_e0;
     for (j = 8; j != 0; j = j + -1) {
-      *piVar2 = *piVar3;
-      piVar3 = piVar3 + (uint)bVar7 * -2 + 1;
-      piVar2 = piVar2 + (uint)bVar7 * -2 + 1;
+      *piVar3 = *piVar4;
+      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
     }
     for (j = 0; j != 0; j = j + -1) {
-      *(char *)piVar2 = (char)*piVar3;
-      piVar3 = (int *)((int)piVar3 + (uint)bVar7 * -2 + 1);
-      piVar2 = (int *)((int)piVar2 + (uint)bVar7 * -2 + 1);
+      *(char *)piVar3 = (char)*piVar4;
+      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
     }
-    local_e0 = piVar1 + 0x20;
+    local_e0 = local_e0 + 8;
+    j = *(int *)((int)weg_sections
+                      [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_90) * 0x38)].
+                      buffer_2 + iStack_54 + 4) * 0x21;
+    iVar5 = iVar5 + 4;
+    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767dc)[i * 8];
+    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767ec)[i * 8];
+    piVar4 = (int *)(weg_points + j);
+    iStack_118 = *piVar4;
+    iStack_114 = piVar4[1];
+    iStack_110 = piVar4[2];
+    iStack_100 = piVar4[6];
+    iStack_fc = piVar4[7];
+    piVar4 = &iStack_118;
+    for (j = 8; j != 0; j = j + -1) {
+      *local_e0 = *piVar4;
+      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
+      local_e0 = local_e0 + (uint)bVar9 * -2 + 1;
+    }
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)local_e0 = (char)*piVar4;
+      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
+      local_e0 = (int *)((int)local_e0 + (uint)bVar9 * -2 + 1);
+    }
+    local_e0 = piVar2 + 0x10;
+    j = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks)].
+                      buffer_2 + iStack_54) * 0x21;
+    *(undefined4 *)(j + 0x18 + weg_points) = (&DAT_004767e4)[i * 8];
+    *(undefined4 *)(j + 0x1c + weg_points) = (&DAT_004767f4)[i * 8];
+    piVar4 = (int *)(j + weg_points);
+    iStack_118 = *piVar4;
+    iStack_114 = piVar4[1];
+    iStack_110 = piVar4[2];
+    iStack_100 = piVar4[6];
+    iStack_fc = piVar4[7];
+    piVar4 = &iStack_118;
+    piVar3 = piVar2 + 0x10;
+    for (j = 8; j != 0; j = j + -1) {
+      *piVar3 = *piVar4;
+      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+    }
+    for (j = 0; j != 0; j = j + -1) {
+      *(char *)piVar3 = (char)*piVar4;
+      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+    }
+    local_e0 = piVar2 + 0x18;
+    j = *(int *)((int)weg_sections
+                      [*(int *)(*(int *)(weg_chunk_quads + iStack_88) * 0x38 + 8 + weg_chunks)].
+                      buffer_2 + iStack_54 + 4) * 0x21;
+    *(undefined4 *)(weg_points + 0x18 + j) = (&DAT_004767e0)[i * 8];
+    *(undefined4 *)(weg_points + 0x1c + j) = (&DAT_004767f0)[i * 8];
+    piVar4 = (int *)(weg_points + j);
+    iStack_118 = *piVar4;
+    iStack_114 = piVar4[1];
+    iStack_110 = piVar4[2];
+    iStack_100 = piVar4[6];
+    iStack_fc = piVar4[7];
+    piVar4 = &iStack_118;
+    piVar3 = piVar2 + 0x18;
+    for (i = 8; i != 0; i = i + -1) {
+      *piVar3 = *piVar4;
+      piVar4 = piVar4 + (uint)bVar9 * -2 + 1;
+      piVar3 = piVar3 + (uint)bVar9 * -2 + 1;
+    }
+    for (i = 0; i != 0; i = i + -1) {
+      *(char *)piVar3 = (char)*piVar4;
+      piVar4 = (int *)((int)piVar4 + (uint)bVar9 * -2 + 1);
+      piVar3 = (int *)((int)piVar3 + (uint)bVar9 * -2 + 1);
+    }
+    local_e0 = piVar2 + 0x20;
     piStack_58 = piStack_58 + 1;
   }
   *(undefined1 *)local_e0 = 5;
@@ -1671,14 +1629,14 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   *(undefined2 *)((int)local_e0 + 0x5a) = 1;
   *(undefined1 *)(local_e0 + 0x17) = 1;
   local_e0[0x18] = *(int *)(texture_table + road_texture * 0xc);
-  piVar1 = local_e0 + 0x19;
-  if (((uint)piVar1 & 7) == 0) {
-    *(undefined1 *)piVar1 = 3;
+  piVar2 = local_e0 + 0x19;
+  if (((uint)piVar2 & 7) == 0) {
+    *(undefined1 *)piVar2 = 3;
     *(undefined1 *)((int)local_e0 + 0x65) = 8;
     *(undefined2 *)((int)local_e0 + 0x66) = 0;
-    piVar1 = local_e0 + 0x1a;
+    piVar2 = local_e0 + 0x1a;
   }
-  local_e0 = piVar1;
+  local_e0 = piVar2;
   *(undefined1 *)local_e0 = 3;
   *(undefined1 *)((int)local_e0 + 1) = 8;
   *(undefined2 *)((int)local_e0 + 2) = 4;
@@ -1702,15 +1660,15 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   *(undefined1 *)((int)local_e0 + 0x25) = 8;
   *(undefined2 *)((int)local_e0 + 0x26) = 1;
   *(undefined1 *)(local_e0 + 10) = 1;
-  piVar1 = local_e0 + 0xc;
+  piVar2 = local_e0 + 0xc;
   local_e0[0xb] = *(int *)(texture_table + grass_texture * 0xc);
-  if (((uint)piVar1 & 7) == 0) {
-    *(undefined1 *)piVar1 = 3;
+  if (((uint)piVar2 & 7) == 0) {
+    *(undefined1 *)piVar2 = 3;
     *(undefined1 *)((int)local_e0 + 0x31) = 8;
     *(undefined2 *)((int)local_e0 + 0x32) = 0;
-    piVar1 = local_e0 + 0xd;
+    piVar2 = local_e0 + 0xd;
   }
-  local_e0 = piVar1;
+  local_e0 = piVar2;
   *(undefined1 *)local_e0 = 3;
   *(undefined1 *)((int)local_e0 + 1) = 8;
   *(short *)((int)local_e0 + 2) = (short)uStack_d0 + -4;
@@ -1777,64 +1735,59 @@ int __watcall build_weg_execute_buffers(void *param_1,size_t param_2)
   *(undefined2 *)((int)local_e0 + 0x82) = 0x700;
   *(undefined2 *)((int)local_e0 + 0x7e) = 0x17;
   *(undefined2 *)(local_e0 + 0x20) = 0x14;
-  k = 0x18;
+  j = 0x18;
   *(undefined2 *)(local_e0 + 0x1f) = 0x15;
-  j = (int)piVar9 + -1;
-  sVar5 = 0x1b;
-  piVar1 = local_e0 + 0x21;
+  iVar5 = (int)piVar10 + -1;
+  sVar7 = 0x1b;
+  piVar2 = local_e0 + 0x21;
   local_e0 = local_e0 + 1;
-  for (i = 0; i < j; i = i + 1) {
-    if ((int)local_d4 < k) {
-      fatal_exit(s__s__d____error_creating_weg_eb___0044d219,s_weg_cpp_0044d211,0x623,ppiStack_14c,k
-                 ,local_d4);
-      piVar1 = extraout_ECX;
-      i = extraout_EDX;
+  for (i = 0; i < iVar5; i = i + 1) {
+    if (local_d4 < j) {
+      fatal_exit(s__s__d____error_creating_weg_eb___0044d219,s_weg_cpp_0044d211,0x623,arg4,j,
+                 local_d4);
     }
-    sVar4 = (short)k;
-    *(short *)piVar1 = sVar4;
-    *(undefined2 *)((int)piVar1 + 6) = 0x700;
-    *(short *)(piVar1 + 1) = sVar5;
-    *(short *)((int)piVar1 + 2) = sVar4 + 2;
-    *(undefined2 *)((int)piVar1 + 0xe) = 0x700;
-    *(short *)(piVar1 + 2) = sVar4;
-    *(short *)((int)piVar1 + 10) = sVar5;
-    sVar5 = sVar5 + 4;
-    k = k + 4;
-    *(short *)(piVar1 + 3) = sVar4 + 1;
-    piVar1 = piVar1 + 4;
-  }
-  j = k + 3;
-  for (i = 0; i < (int)piVar9 + -1; i = i + 1) {
-    if ((int)local_d4 < k) {
-      fatal_exit(s__s__d____error_creating_weg_eb___0044d276,s_weg_cpp_0044d26e,0x637,ppiStack_14c,k
-                 ,local_d4);
-      piVar1 = extraout_ECX_00;
-      i = extraout_EDX_00;
-    }
-    sVar5 = (short)k;
-    *(short *)piVar1 = sVar5;
-    *(undefined2 *)((int)piVar1 + 6) = 0x700;
-    *(short *)(piVar1 + 1) = (short)j;
-    *(short *)((int)piVar1 + 2) = sVar5 + 2;
-    *(undefined2 *)((int)piVar1 + 0xe) = 0x700;
-    *(short *)(piVar1 + 2) = sVar5;
-    *(short *)((int)piVar1 + 10) = (short)j;
+    sVar6 = (short)j;
+    *(short *)piVar2 = sVar6;
+    *(undefined2 *)((int)piVar2 + 6) = 0x700;
+    *(short *)(piVar2 + 1) = sVar7;
+    *(short *)((int)piVar2 + 2) = sVar6 + 2;
+    *(undefined2 *)((int)piVar2 + 0xe) = 0x700;
+    *(short *)(piVar2 + 2) = sVar6;
+    *(short *)((int)piVar2 + 10) = sVar7;
+    sVar7 = sVar7 + 4;
     j = j + 4;
-    k = k + 4;
-    *(short *)(piVar1 + 3) = sVar5 + 1;
-    piVar1 = piVar1 + 4;
+    *(short *)(piVar2 + 3) = sVar6 + 1;
+    piVar2 = piVar2 + 4;
   }
-  *(undefined1 *)piVar1 = 0xb;
-  *(undefined1 *)((int)piVar1 + 1) = 0;
-  *(undefined2 *)((int)piVar1 + 2) = 0;
+  iVar5 = j + 3;
+  for (i = 0; i < (int)piVar10 + -1; i = i + 1) {
+    if (local_d4 < j) {
+      fatal_exit(s__s__d____error_creating_weg_eb___0044d276,s_weg_cpp_0044d26e,0x637,arg4,j,
+                 local_d4);
+    }
+    sVar7 = (short)j;
+    *(short *)piVar2 = sVar7;
+    *(undefined2 *)((int)piVar2 + 6) = 0x700;
+    *(short *)(piVar2 + 1) = (short)iVar5;
+    *(short *)((int)piVar2 + 2) = sVar7 + 2;
+    *(undefined2 *)((int)piVar2 + 0xe) = 0x700;
+    *(short *)(piVar2 + 2) = sVar7;
+    *(short *)((int)piVar2 + 10) = (short)iVar5;
+    iVar5 = iVar5 + 4;
+    j = j + 4;
+    *(short *)(piVar2 + 3) = sVar7 + 1;
+    piVar2 = piVar2 + 4;
+  }
+  *(undefined1 *)piVar2 = 0xb;
+  *(undefined1 *)((int)piVar2 + 1) = 0;
+  *(undefined2 *)((int)piVar2 + 2) = 0;
   (**(code **)(*piStack_e4 + 0x14))(piStack_e4);
-  memset(&ppiStack_14c,0,0x30);
-  piStack_144 = piStack_d8;
-  ppiStack_14c = (int **)0x30;
-  uVar8 = (**(code **)(*dst + 0x18))(dst,&ppiStack_14c);
-  if ((int)uVar8 != 0) {
-    uVar8 = d3d_error_string((int)uVar8,(int)((ulonglong)uVar8 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Set_ExecData___0044d2d3,s_weg_cpp_0044d2cb,0x658,(int)uVar8);
+  memset((undefined4 *)&stack0xfffffeb4,0,0x30);
+  lVar1 = (**(code **)(*piStack_e8 + 0x18))(piStack_e8,&stack0xfffffeb4);
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError_Set_ExecData___0044d2d3,s_weg_cpp_0044d2cb,0x658,
+               d3d_error_string_result);
   }
   return local_f0[0];
 }

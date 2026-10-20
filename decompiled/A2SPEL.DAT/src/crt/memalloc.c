@@ -3,40 +3,38 @@
 
 /* ==== 00436bac bpp_to_ddbd_flag ==== */
 
-undefined4 __watcall bpp_to_ddbd_flag(void)
+undefined4 __watcall bpp_to_ddbd_flag(uint param_1)
 
 {
-  uint in_EAX;
-  
-  if (in_EAX < 8) {
-    if (in_EAX < 2) {
-      if (in_EAX == 1) {
+  if (param_1 < 8) {
+    if (param_1 < 2) {
+      if (param_1 == 1) {
         return 0x4000;
       }
     }
     else {
-      if (in_EAX < 3) {
+      if (param_1 < 3) {
         return 0x2000;
       }
-      if (in_EAX == 4) {
+      if (param_1 == 4) {
         return 0x1000;
       }
     }
   }
   else {
-    if (in_EAX < 9) {
+    if (param_1 < 9) {
       return 0x800;
     }
-    if (in_EAX < 0x18) {
-      if (in_EAX == 0x10) {
+    if (param_1 < 0x18) {
+      if (param_1 == 0x10) {
         return 0x400;
       }
     }
     else {
-      if (in_EAX < 0x19) {
+      if (param_1 < 0x19) {
         return 0x200;
       }
-      if (in_EAX == 0x20) {
+      if (param_1 == 0x20) {
         return 0x100;
       }
     }
@@ -47,42 +45,40 @@ undefined4 __watcall bpp_to_ddbd_flag(void)
 
 /* ==== 00436c98 MemAllocator ==== */
 
-uint * __watcall MemAllocator(void)
+undefined4 __watcall MemAllocator(uint param_1,undefined4 param_2,int param_3)
 
 {
   uint uVar1;
-  uint in_EAX;
   uint uVar2;
-  int unaff_EBX;
   uint *puVar3;
   uint uVar4;
   uint *puVar5;
   
-  if (((in_EAX != 0) && (in_EAX < 0xfffffff5)) &&
-     (uVar2 = in_EAX + 0xb & 0xfffffff8, uVar2 = (uVar2 - 0x10 & -(uint)(0xf < uVar2)) + 0x10,
-     uVar2 <= *(uint *)(unaff_EBX + 0x14))) {
-    puVar3 = *(uint **)(unaff_EBX + 0xc);
-    uVar4 = *(uint *)(unaff_EBX + 0x10);
+  if (((param_1 != 0) && (param_1 < 0xfffffff5)) &&
+     (uVar2 = param_1 + 0xb & 0xfffffff8, uVar2 = (uVar2 - 0x10 & -(uint)(0xf < uVar2)) + 0x10,
+     uVar2 <= *(uint *)(param_3 + 0x14))) {
+    puVar3 = *(uint **)(param_3 + 0xc);
+    uVar4 = *(uint *)(param_3 + 0x10);
     if (uVar2 <= uVar4) {
-      puVar3 = *(uint **)(unaff_EBX + 0x28);
+      puVar3 = *(uint **)(param_3 + 0x28);
       uVar4 = 0;
     }
     do {
       uVar1 = *puVar3;
       if (uVar2 <= uVar1) {
-        *(uint *)(unaff_EBX + 0x10) = uVar4;
-        *(int *)(unaff_EBX + 0x18) = *(int *)(unaff_EBX + 0x18) + 1;
+        *(uint *)(param_3 + 0x10) = uVar4;
+        *(int *)(param_3 + 0x18) = *(int *)(param_3 + 0x18) + 1;
         uVar4 = puVar3[2];
         if (uVar1 - uVar2 < 0x10) {
-          *(int *)(unaff_EBX + 0x1c) = *(int *)(unaff_EBX + 0x1c) + -1;
+          *(int *)(param_3 + 0x1c) = *(int *)(param_3 + 0x1c) + -1;
           uVar2 = puVar3[1];
           *(uint *)(uVar2 + 8) = uVar4;
           *(uint *)(uVar4 + 4) = uVar2;
-          *(uint *)(unaff_EBX + 0xc) = uVar2;
+          *(uint *)(param_3 + 0xc) = uVar2;
         }
         else {
           puVar5 = (uint *)((int)puVar3 + uVar2);
-          *(uint **)(unaff_EBX + 0xc) = puVar5;
+          *(uint **)(param_3 + 0xc) = puVar5;
           *puVar5 = uVar1 - uVar2;
           *puVar3 = uVar2;
           uVar2 = puVar3[1];
@@ -96,65 +92,63 @@ uint * __watcall MemAllocator(void)
       }
       uVar4 = (uVar4 - uVar1 & -(uint)(uVar1 <= uVar4)) + uVar1;
       puVar3 = (uint *)puVar3[2];
-    } while (puVar3 != (uint *)(unaff_EBX + 0x20U));
-    *(uint *)(unaff_EBX + 0x14) = uVar4;
+    } while (puVar3 != (uint *)(param_3 + 0x20U));
+    *(uint *)(param_3 + 0x14) = uVar4;
   }
-  return (uint *)0x0;
+  return 0;
 }
 
 
 /* ==== 00436d40 MemFree ==== */
 
-void __watcall MemFree(void)
+void __watcall MemFree(undefined4 *param_1,undefined4 param_2,int param_3)
 
 {
-  undefined4 *in_EAX;
   uint uVar1;
   int i;
   uint uVar2;
-  int unaff_EBX;
   uint *puVar3;
   uint *puVar4;
   uint *puVar5;
   
-  if (in_EAX == (undefined4 *)0x0) {
+  if (param_1 == (undefined4 *)0x0) {
     return;
   }
-  puVar3 = in_EAX + -1;
+  puVar3 = param_1 + -1;
   if ((*puVar3 & 1) == 0) {
     return;
   }
   uVar2 = *puVar3 & 0xfffffffe;
   puVar5 = (uint *)((int)puVar3 + uVar2);
   if ((*puVar5 & 1) == 0) {
-    if (puVar5 == *(uint **)(unaff_EBX + 0xc)) {
-      *(uint **)(unaff_EBX + 0xc) = puVar3;
+    if (puVar5 == *(uint **)(param_3 + 0xc)) {
+      *(uint **)(param_3 + 0xc) = puVar3;
     }
     *puVar3 = uVar2 + *puVar5;
     uVar2 = puVar5[1];
     puVar5 = (uint *)puVar5[2];
     *(uint **)(uVar2 + 8) = puVar5;
     puVar5[1] = uVar2;
-    *(int *)(unaff_EBX + 0x1c) = *(int *)(unaff_EBX + 0x1c) + -1;
+    *(int *)(param_3 + 0x1c) = *(int *)(param_3 + 0x1c) + -1;
   }
   else {
     *puVar3 = uVar2;
-    puVar5 = *(uint **)(unaff_EBX + 0xc);
+    puVar5 = *(uint **)(param_3 + 0xc);
     if (puVar3 < puVar5) {
-      if (((uint *)puVar5[1] < puVar3) || (puVar5 = *(uint **)(unaff_EBX + 0x28), puVar3 < puVar5))
+      if (((uint *)puVar5[1] < puVar3) || (puVar5 = *(uint **)(param_3 + 0x28), puVar3 < puVar5))
       goto LAB_00436dfe;
     }
     else {
       puVar5 = (uint *)puVar5[2];
       if ((puVar3 < puVar5) ||
-         (puVar5 = (uint *)(unaff_EBX + 0x20), *(uint **)(unaff_EBX + 0x24) < puVar3))
+         (puVar5 = (uint *)(param_3 + 0x20), *(uint **)(param_3 + 0x24) < puVar3))
       goto LAB_00436dfe;
     }
-    uVar2 = *(uint *)(unaff_EBX + 0x1c);
-    uVar1 = *(uint *)(unaff_EBX + 0x18) / (uVar2 + 1);
+    uVar2 = *(uint *)(param_3 + 0x1c);
+    uVar1 = *(uint *)(param_3 + 0x18) / (uVar2 + 1);
     if (uVar1 < uVar2) {
       i = uVar1 * 2;
-      if (*(int *)(unaff_EBX + 0x18) - uVar2 <= uVar2) {
+      if (*(int *)(param_3 + 0x18) - uVar2 <= uVar2) {
         i = 0;
       }
       puVar5 = (uint *)((int)puVar3 + *puVar3);
@@ -166,9 +160,9 @@ void __watcall MemFree(void)
         i = i + -1;
       } while (i != 0);
     }
-    puVar5 = *(uint **)(unaff_EBX + 0xc);
+    puVar5 = *(uint **)(param_3 + 0xc);
     if (puVar3 < puVar5) {
-      puVar5 = *(uint **)(unaff_EBX + 0x28);
+      puVar5 = *(uint **)(param_3 + 0x28);
     }
     while (((puVar5 <= puVar3 && (puVar5 = (uint *)puVar5[2], puVar5 <= puVar3)) &&
            (puVar5 = (uint *)puVar5[2], puVar5 <= puVar3))) {
@@ -181,24 +175,24 @@ LAB_00436dfe:
   if ((uint *)((int)puVar4 + *puVar4) == puVar3) {
     uVar2 = uVar2 + *puVar4;
     *puVar4 = uVar2;
-    if (puVar3 == *(uint **)(unaff_EBX + 0xc)) {
-      *(uint **)(unaff_EBX + 0xc) = puVar4;
+    if (puVar3 == *(uint **)(param_3 + 0xc)) {
+      *(uint **)(param_3 + 0xc) = puVar4;
     }
   }
   else {
-    *(int *)(unaff_EBX + 0x1c) = *(int *)(unaff_EBX + 0x1c) + 1;
-    in_EAX[1] = puVar5;
-    *in_EAX = puVar4;
+    *(int *)(param_3 + 0x1c) = *(int *)(param_3 + 0x1c) + 1;
+    param_1[1] = puVar5;
+    *param_1 = puVar4;
     puVar4[2] = (uint)puVar3;
     puVar5[1] = (uint)puVar3;
     puVar4 = puVar3;
   }
-  *(int *)(unaff_EBX + 0x18) = *(int *)(unaff_EBX + 0x18) + -1;
-  if ((puVar4 < *(uint **)(unaff_EBX + 0xc)) && (*(uint *)(unaff_EBX + 0x10) < uVar2)) {
-    *(uint *)(unaff_EBX + 0x10) = uVar2;
+  *(int *)(param_3 + 0x18) = *(int *)(param_3 + 0x18) + -1;
+  if ((puVar4 < *(uint **)(param_3 + 0xc)) && (*(uint *)(param_3 + 0x10) < uVar2)) {
+    *(uint *)(param_3 + 0x10) = uVar2;
   }
-  if (*(uint *)(unaff_EBX + 0x14) < uVar2) {
-    *(uint *)(unaff_EBX + 0x14) = uVar2;
+  if (*(uint *)(param_3 + 0x14) < uVar2) {
+    *(uint *)(param_3 + 0x14) = uVar2;
   }
   return;
 }

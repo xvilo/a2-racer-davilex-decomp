@@ -6,11 +6,8 @@
 int __watcall slot_check_index(int param_1,char *param_2,int param_3)
 
 {
-  int extraout_ECX;
-  
   if ((param_1 < 0) || (9 < param_1)) {
     fatal_exit(s__s__d___slot_check_index____Unkn_00425bb0,param_2,param_3,param_1,10);
-    param_1 = extraout_ECX;
   }
   return param_1;
 }
@@ -21,11 +18,8 @@ int __watcall slot_check_index(int param_1,char *param_2,int param_3)
 int __watcall slot_check_level(int param_1,char *param_2,int param_3)
 
 {
-  int extraout_ECX;
-  
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d___slot_check_level____Unkn_00425bf1,param_2,param_3,param_1,6);
-    param_1 = extraout_ECX;
   }
   return param_1;
 }
@@ -35,12 +29,11 @@ int __watcall slot_check_level(int param_1,char *param_2,int param_3)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall create_slot(int param_1,char *source)
+void __watcall create_slot(int param_1,char *param_2)
 
 {
   int j;
   int slot_check_level_result;
-  int extraout_ECX;
   int i;
   char *extraout_EDX;
   bedien_t *bedien;
@@ -52,10 +45,10 @@ void __watcall create_slot(int param_1,char *source)
   
   bVar4 = 0;
   local_1c = 0;
-  debugmsg(s__s__d__create_slot___d__s__00425c3b,s_slot_cpp_00425c32,0x50,param_1,source);
+  debugmsg(s__s__d__create_slot___d__s__00425c3b,s_slot_cpp_00425c32,0x50,param_1,param_2);
   slot_check_index(param_1,s_slot_cpp_00425c58,0x51);
+  i = 0;
   debugmsg(s_Seeking_the_slot_that_was_saved_l_00425c6a,s_slot_cpp_00425c61,0x52);
-  i = extraout_ECX;
   do {
     j = slot_check_index(i,s_slot_cpp_00425cc1,0x54);
     if ((local_1c < (byte)(&DAT_0043725d)[j * 0x13c]) && (i != param_1)) {
@@ -66,7 +59,7 @@ void __watcall create_slot(int param_1,char *source)
   } while (i < 10);
   debugmsg(s_Found_the_last_time__d_00425cdc,s_slot_cpp_00425cd3,0x58,local_1c);
   i = slot_check_index(param_1,extraout_EDX,0x59);
-  strncpy((char *)(i * 0x13c + 0x437296),source,0x20);
+  strncpy((char *)(i * 0x13c + 0x437296),param_2,0x20);
   i = slot_check_index(param_1,s_slot_cpp_00425cff,0x5a);
   (&DAT_0043725d)[i * 0x13c] = (char)local_1c + '\x01';
   i = slot_check_index(param_1,s_slot_cpp_00425d08,0x5b);
@@ -146,13 +139,12 @@ void __watcall clear_slot(int param_1)
 {
   int j;
   int iVar1;
-  int extraout_ECX;
   int i;
   
   debugmsg(s__s__d___clear_slot___d__00425e2a,s_slot_cpp_00425e21,0x7a,param_1);
   slot_check_index(param_1,s_slot_cpp_00425e45,0x7b);
+  i = 0;
   debugmsg(s_Reseting_the_time_when_the_slots_00425e4e);
-  i = extraout_ECX;
   do {
     j = slot_check_index(i,s_slot_cpp_00425e7d,0x7e);
     iVar1 = slot_check_index(param_1,s_slot_cpp_00425e86,0x7e);
@@ -302,24 +294,19 @@ void __watcall reset_slot(int param_1)
 
 /* ==== 00402979 load_tmp_slotdbase ==== */
 
-void __watcall load_tmp_slotdbase(char *param_1)
+void __watcall load_tmp_slotdbase(char *filename)
 
 {
   int iVar1;
-  char *filename;
-  char *extraout_ECX;
-  char *filename_00;
   
-  debugmsg(s__s__d___load_tmp_slotdbase___s__004260dc,s_slot_cpp_004260d3,0xbc,param_1);
+  debugmsg(s__s__d___load_tmp_slotdbase___s__004260dc,s_slot_cpp_004260d3,0xbc,filename);
   iVar1 = file_exist(filename);
-  filename_00 = filename;
   if (iVar1 == 0) {
     fatal_exit(s__s__d___load_tmp_slotdbase____Fi_00426108,s_slot_cpp_004260ff,0xbe,filename);
-    filename_00 = extraout_ECX;
   }
-  iVar1 = file_read(&slot_list,0xc58,filename_00);
+  iVar1 = file_read(&slot_list,0xc58,filename);
   if (iVar1 != 0) {
-    file_delete(filename_00);
+    file_delete();
     init_slotdbase();
   }
   return;
@@ -394,18 +381,15 @@ void __watcall save_slotdbase(void)
 
 {
   int file_write_result;
-  undefined4 extraout_ECX;
-  char *filename;
   undefined4 extraout_EDX;
-  int count;
   
   debugmsg(s__s__d___save_slotdbase___void___00426243,s_slot_cpp_0042623a,0xf2);
   debugmsg(s__s__d___save_tmp_slotdbase___s__00426159,s_slot_cpp_00426150,0xce,s_SLOT_A2R_00426266,
-           extraout_EDX,extraout_ECX);
-  file_write_result = file_write(&slot_list,count,filename);
+           extraout_EDX);
+  file_write_result = file_write(&slot_list,0xc58,s_SLOT_A2R_00426266);
   if (file_write_result != 0) {
     fatal_exit(s__s__d___save_tmp_slotdbase____Er_00426185,s_slot_cpp_0042617c,0xd0,
-               file_write_result,filename);
+               file_write_result,s_SLOT_A2R_00426266);
   }
   return;
 }
@@ -413,18 +397,16 @@ void __watcall save_slotdbase(void)
 
 /* ==== 00402b50 save_tmp_slotdbase ==== */
 
-void __watcall save_tmp_slotdbase(char *param_1)
+void __watcall save_tmp_slotdbase(char *filename)
 
 {
-  int file_write_result;
-  char *filename;
-  int count;
+  int arg4;
+  int extraout_EDX;
   
-  debugmsg(s__s__d___save_tmp_slotdbase___s__00426159,s_slot_cpp_00426150,0xce,param_1);
-  file_write_result = file_write(&slot_list,count,filename);
-  if (file_write_result != 0) {
-    fatal_exit(s__s__d___save_tmp_slotdbase____Er_00426185,s_slot_cpp_0042617c,0xd0,
-               file_write_result,filename);
+  debugmsg(s__s__d___save_tmp_slotdbase___s__00426159,s_slot_cpp_00426150,0xce,filename);
+  arg4 = file_write(&slot_list,extraout_EDX,filename);
+  if (arg4 != 0) {
+    fatal_exit(s__s__d___save_tmp_slotdbase____Er_00426185,s_slot_cpp_0042617c,0xd0,arg4,filename);
   }
   return;
 }

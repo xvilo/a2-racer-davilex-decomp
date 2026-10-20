@@ -3,27 +3,27 @@
 
 /* ==== 00404297 fill_dwords ==== */
 
-undefined4 * __watcall fill_dwords(uint param_1,undefined4 param_2)
+undefined4 * __watcall
+fill_dwords(undefined4 *param_1,undefined4 param_2,undefined4 param_3,uint param_4)
 
 {
   undefined4 *puVar1;
-  uint unaff_ECX;
   int iVar2;
   uint uVar3;
   
-  puVar1 = (undefined4 *)param_1;
-  if (unaff_ECX != 0) {
+  puVar1 = param_1;
+  if (param_4 != 0) {
     do {
-      if ((param_1 & 0x1f) == 0) break;
-      *(undefined4 *)param_1 = param_2;
-      param_1 = param_1 + 4;
-      unaff_ECX = unaff_ECX - 1;
-    } while (unaff_ECX != 0);
-    if (unaff_ECX >> 2 != 0) {
-      iVar2 = (unaff_ECX >> 2) - 1;
+      if (((uint)param_1 & 0x1f) == 0) break;
+      *param_1 = param_2;
+      param_1 = param_1 + 1;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+    if (param_4 >> 2 != 0) {
+      iVar2 = (param_4 >> 2) - 1;
       if (iVar2 != 0) {
         do {
-          puVar1 = (undefined4 *)param_1;
+          puVar1 = param_1;
           *puVar1 = param_2;
           puVar1[1] = param_2;
           puVar1[2] = param_2;
@@ -34,29 +34,29 @@ undefined4 * __watcall fill_dwords(uint param_1,undefined4 param_2)
           iVar2 = iVar2 + -2;
           puVar1[6] = param_2;
           puVar1[7] = param_2;
-          param_1 = (uint)(puVar1 + 8);
+          param_1 = puVar1 + 8;
         } while (iVar2 != 0);
         puVar1 = puVar1 + 4;
 LAB_004042d6:
-        param_1 = (uint)(puVar1 + 4);
+        param_1 = puVar1 + 4;
       }
-      *(undefined4 *)param_1 = param_2;
-      *(undefined4 *)(param_1 + 4) = param_2;
-      *(undefined4 *)(param_1 + 8) = param_2;
-      *(undefined4 *)(param_1 + 0xc) = param_2;
-      param_1 = param_1 + 0x10;
+      *param_1 = param_2;
+      param_1[1] = param_2;
+      param_1[2] = param_2;
+      param_1[3] = param_2;
+      param_1 = param_1 + 4;
     }
-    uVar3 = unaff_ECX & 3;
-    puVar1 = (undefined4 *)param_1;
+    uVar3 = param_4 & 3;
+    puVar1 = param_1;
     if (uVar3 != 0) {
-      *(undefined4 *)param_1 = param_2;
-      puVar1 = (undefined4 *)(param_1 + 4);
+      *param_1 = param_2;
+      puVar1 = param_1 + 1;
       if (uVar3 != 1) {
         *puVar1 = param_2;
-        puVar1 = (undefined4 *)(param_1 + 8);
+        puVar1 = param_1 + 2;
         if (uVar3 != 2) {
           *puVar1 = param_2;
-          puVar1 = (undefined4 *)(param_1 + 0xc);
+          puVar1 = param_1 + 3;
         }
       }
     }
@@ -67,7 +67,7 @@ LAB_004042d6:
 
 /* ==== 00404303 EnterWVIDEO ==== */
 
-undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined2 unaff_DX)
+undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined4 param_2)
 
 {
   code *pcVar1;
@@ -75,7 +75,7 @@ undefined4 __watcall EnterWVIDEO(undefined4 param_1,undefined2 unaff_DX)
   
   if (WD_Present != '\0') {
     pcVar1 = (code *)swi(3);
-    uVar2 = (*pcVar1)(unaff_DX);
+    uVar2 = (*pcVar1)((undefined2)param_2);
     return uVar2;
   }
   return 0;

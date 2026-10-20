@@ -3,7 +3,7 @@
 
 /* ==== 0041abcd filelength ==== */
 
-long __watcall filelength(int _FileHandle)
+DWORD __watcall filelength(undefined4 param_1)
 
 {
   DWORD DVar1;

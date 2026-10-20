@@ -36,14 +36,12 @@ uint __watcall normalize_mantissa_64(uint param_1,uint param_2)
 
 /* ==== 00415116 CBeginThread ==== */
 
-DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX)
+DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
-  DWORD _Val;
-  HANDLE hHandle;
-  HANDLE thread;
-  byte bVar1;
-  undefined8 nt_thread_init;
+  uint stack_size;
+  DWORD DVar1;
+  byte bVar2;
   char acStackY_1038 [4048];
   char cStack_50;
   char cStack_4f;
@@ -52,51 +50,58 @@ DWORD __watcall CBeginThread(undefined4 param_1,undefined4 param_2,int unaff_EBX
   undefined4 uStack_4c;
   char local_48 [24];
   undefined4 local_30;
+  undefined4 local_2c;
+  HANDLE current_thread;
+  uint local_24;
+  HANDLE local_20;
+  HANDLE *local_1c;
+  HANDLE thread;
   DWORD local_14;
   
-  bVar1 = 0;
+  bVar2 = 0;
   if (TlsIndex == -1) {
-    nt_thread_init = NTThreadInit(param_1,0xffffffff);
-    if ((int)nt_thread_init == 0) {
-      return (DWORD)((ulonglong)nt_thread_init >> 0x20);
+    stack_size = NTThreadInit();
+    if (stack_size == 0) {
+      return 0xffffffff;
     }
     InitMultipleThread();
   }
   local_30 = param_1;
-  GetCurrentThread();
+  local_2c = param_4;
+  current_thread = GetCurrentThread();
+  stack_size = param_3 + 0xfffU & 0xfffff000;
   cStack_50 = s___bgnthd_0041f4dc[0];
   cStack_4f = s___bgnthd_0041f4dc[1];
   cStack_4e = s___bgnthd_0041f4dc[2];
   cStack_4d = s___bgnthd_0041f4dc[3];
-  (&uStack_4c)[(uint)bVar1 * -2] = *(undefined4 *)(s___bgnthd_0041f4dc + (uint)bVar1 * -8 + 4);
-  local_48[(uint)bVar1 * -8 + (uint)bVar1 * -8] =
-       s___bgnthd_0041f4dc[(uint)bVar1 * -8 + (uint)bVar1 * -8 + 8];
-  _Val = GetCurrentThreadId();
-  itoa(_Val,local_48,0x10);
-  hHandle = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
-  thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,unaff_EBX + 0xfffU & 0xfffff000,
+  local_24 = stack_size;
+  (&uStack_4c)[(uint)bVar2 * -2] = *(undefined4 *)(s___bgnthd_0041f4dc + (uint)bVar2 * -8 + 4);
+  local_48[(uint)bVar2 * -8 + (uint)bVar2 * -8] =
+       s___bgnthd_0041f4dc[(uint)bVar2 * -8 + (uint)bVar2 * -8 + 8];
+  DVar1 = GetCurrentThreadId();
+  itoa(DVar1,local_48,0x10);
+  local_20 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,&stack0xffffffb0);
+  local_1c = &thread;
+  thread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,stack_size,
                         (LPTHREAD_START_ROUTINE)&begin_thread_helper,&local_30,0,&local_14);
   if (thread == (HANDLE)0x0) {
     local_14 = 0xffffffff;
   }
   else {
-    WaitForSingleObject(hHandle,0xffffffff);
+    WaitForSingleObject(local_20,0xffffffff);
   }
-  CloseHandle(hHandle);
+  CloseHandle(local_20);
   return local_14;
 }
 
 
 /* ==== 004151ea CEndThread ==== */
 
-void __watcall
-CEndThread(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 unaff_ECX)
+undefined4 __watcall CEndThread(void)
 
 {
-  undefined8 uVar1;
-  
-  uVar1 = (*(code *)sig_fini_rtn)(unaff_EDX,unaff_ECX);
-  DoneExceptionHandler((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
+  (*(code *)sig_fini_rtn)();
+  DoneExceptionHandler();
   if (Is_DLL == 0) {
     NTRemoveThread(1);
   }

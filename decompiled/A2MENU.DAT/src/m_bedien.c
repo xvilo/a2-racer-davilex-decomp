@@ -6,13 +6,11 @@
 int __watcall mc_af_image(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  int extraout_EDX;
   int iVar1;
   
   iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mm_af_image_____Could_no_00427af4,param_3,param_4,param_2,param_1);
-    iVar1 = extraout_EDX;
   }
   return iVar1;
 }
@@ -43,11 +41,11 @@ void __cdecl mc_print_text_bar(char *param_1,...)
   int af_image;
   int iVar1;
   char acStack_110 [256];
-  undefined1 *local_10 [3];
+  undefined1 *local_10;
   
-  local_10[0] = &stack0x00000008;
-  vbprintf((int)acStack_110,0x100,(byte *)param_1,(int *)local_10);
-  local_10[0] = (undefined1 *)0x0;
+  local_10 = &stack0x00000008;
+  vbprintf((int)acStack_110,0x100,(byte *)param_1,(int *)&local_10);
+  local_10 = (undefined1 *)0x0;
   hide_mouse();
   iVar1 = 2;
   af_image = mc_af_image(0x27,7,s_m_bedien_cpp_00427b3d,0x185);
@@ -372,23 +370,21 @@ void __watcall mc_animate_close_textbox(void)
 int __watcall config_keys(void)
 
 {
-  int mb_read_key_result;
   int iVar1;
+  int ckey_new_define_result;
+  int i;
   int iVar2;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int iVar3;
   int local_20 [2];
   
   local_20[0] = -1;
   local_20[1] = 0xffffffff;
   mc_animate_open_textbox();
+  i = 0;
   iVar2 = 0;
-  iVar3 = 0;
   snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
   clear_all_ckey();
   do {
-    if (3 < iVar2) {
+    if (3 < i) {
       snd_play(local_20,s_MC_10_wav_00427c03);
       mc_print_text_bar(s__s_00427c28,s_De_toetsen_zijn_ingesteld__00427c0d);
       snd_wait(local_20);
@@ -397,17 +393,17 @@ int __watcall config_keys(void)
       return 1;
     }
     print_keys();
-    snd_play(local_20,*(char **)((int)&mc_instel_wav + iVar3));
+    snd_play(local_20,*(char **)((int)&mc_instel_wav + iVar2));
     while( true ) {
       do {
         handle_win_msg();
-        if ((iVar2 < 0) || (3 < iVar2)) {
-          iVar2 = 0;
+        if ((i < 0) || (iVar1 = i, 3 < i)) {
+          iVar1 = 0;
         }
         mc_print_text_bar(s__s__s_00427b9c,s_Kies_nu_een_toets_voor__00427b83,
-                          (&PTR_s_LINKS_00433758)[iVar2 * 6]);
-        mb_read_key_result = mb_read_key();
-        if (mb_read_key_result == 0x1b) {
+                          (&PTR_s_LINKS_00433758)[iVar1 * 6]);
+        iVar1 = mb_read_key();
+        if (iVar1 == 0x1b) {
           snd_stop(local_20 + 1);
           snd_play(local_20 + 1,s_click1_wav_00427ba2);
           load_ckey();
@@ -418,25 +414,23 @@ int __watcall config_keys(void)
           return 0;
         }
         snd_play(local_20 + 1,s_click3_wav_00427bad);
-        iVar2 = extraout_ECX;
-      } while (mb_read_key_result < 0);
-      ckey_defined(mb_read_key_result);
-      iVar2 = ckey_new_define(mb_read_key_result);
-      if (iVar2 < 0) break;
+      } while (iVar1 < 0);
+      ckey_defined(iVar1);
+      ckey_new_define_result = ckey_new_define(iVar1);
+      if (ckey_new_define_result < 0) break;
       clear_keys();
       snd_play(local_20,s_MC_09_wav_00427bb8);
-      iVar2 = scan_2_ckey(mb_read_key_result);
-      req_warning(s_Deze_toets__<_s>__is_eerder_gede_00427bc2,(&PTR_DAT_004335f4)[iVar2 * 2]);
+      iVar1 = scan_2_ckey(iVar1);
+      req_warning(s_Deze_toets__<_s>__is_eerder_gede_00427bc2,(&PTR_DAT_004335f4)[iVar1 * 2]);
       snd_stop(local_20);
       print_keys();
-      iVar2 = extraout_ECX_00;
     }
-    if ((extraout_ECX < 0) || (iVar1 = extraout_ECX, 3 < extraout_ECX)) {
-      iVar1 = 0;
+    if ((i < 0) || (ckey_new_define_result = i, 3 < i)) {
+      ckey_new_define_result = 0;
     }
-    iVar3 = iVar3 + 4;
-    iVar2 = extraout_ECX + 1;
-    (&DAT_0043375c)[iVar1 * 6] = mb_read_key_result;
+    iVar2 = iVar2 + 4;
+    i = i + 1;
+    (&DAT_0043375c)[ckey_new_define_result * 6] = iVar1;
     print_keys();
   } while( true );
 }
@@ -448,18 +442,18 @@ void __watcall display_keys(void)
 
 {
   int iVar1;
-  int iVar2;
+  int arg4;
   
   if (available_joy == 0) {
-    iVar2 = 3;
+    arg4 = 3;
   }
   else {
-    iVar2 = 0;
+    arg4 = 0;
   }
-  iVar1 = *(int *)(*(int *)(xvga_anims + 0x26c) + 4 + iVar2 * 8);
+  iVar1 = *(int *)(*(int *)(xvga_anims + 0x26c) + 4 + arg4 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
-    fatal_exit(s__s__d____illegal_keyboard_frame_i_00427c38,s_m_bedien_cpp_00427c2b,0x29f,iVar2,0x33
-              );
+    fatal_exit(s__s__d____illegal_keyboard_frame_i_00427c38,s_m_bedien_cpp_00427c2b,0x29f,arg4,0x33)
+    ;
   }
   hide_mouse();
   set_mem_image(2,iVar1,0x132,0x7d,2);
@@ -639,31 +633,30 @@ int __watcall menu_bedien(void)
 
 {
   bool bVar1;
-  int attached_joysticks;
-  int control_focus;
+  bool bVar2;
+  int iVar3;
   fform_t *fform;
   help_t *help;
   uint handle_form_result;
-  int extraout_ECX;
   int local_1c;
   
   local_1c = -1;
   debugmsg(s__s__d_____>_START_MENU_BEDIEN_<*_00427d75,s_m_bedien_cpp_00427d68,0x350);
-  attached_joysticks = get_attached_joysticks();
+  iVar3 = get_attached_joysticks();
   bVar1 = true;
+  bVar2 = false;
   debugmsg(s__s__d___joystick_available__d__j_00427da6,s_m_bedien_cpp_00427d99,0x351,available_joy,
-           attached_joysticks);
+           iVar3);
   save_tmp_bedien(s_BEDIEN_TMP_00427dd2);
   mc_open_screen();
-  attached_joysticks = extraout_ECX;
   do {
     if (!bVar1) {
       mc_close_screen();
       save_ckey();
-      if (attached_joysticks != 0) {
+      if (bVar2) {
         load_tmp_bedien(s_BEDIEN_TMP_00427e40);
       }
-      file_delete(s_BEDIEN_TMP_00427e4b);
+      file_delete();
       save_bedien();
       debugmsg(s__s__d_____>_STOP_MENU_BEDIEN_<*_00427e63,s_m_bedien_cpp_00427e56,0x3d5);
       return 0;
@@ -678,7 +671,7 @@ int __watcall menu_bedien(void)
 LAB_00406669:
         snd_play(&local_1c,s_click1_wav_00427df3);
         bVar1 = false;
-        attached_joysticks = 1;
+        bVar2 = true;
       }
       else {
         if (handle_form_result < 3) {
@@ -725,9 +718,9 @@ LAB_004066cc:
           fform = (fform_t *)&mc_form_joy;
 LAB_004066d1:
           activate_form(fform);
-          control_focus = 0;
+          iVar3 = 0;
 LAB_004066d8:
-          focus_control(control_focus);
+          focus_control(iVar3);
         }
         goto LAB_004066df;
       }
@@ -738,21 +731,21 @@ LAB_004066d8:
         }
         if (handle_form_result < 0x2712) {
           snd_play(&local_1c,s_click3_wav_00427ddd);
-          control_focus = get_control_focus();
-          if ((control_focus == 0) || (control_focus != 1)) {
-            control_focus = 1;
+          iVar3 = get_control_focus();
+          if ((iVar3 == 0) || (iVar3 != 1)) {
+            iVar3 = 1;
           }
           else {
-            control_focus = 0;
+            iVar3 = 0;
           }
-          focus_control(control_focus);
+          focus_control(iVar3);
           wait_cursor_up_pressed();
         }
         else {
           if (handle_form_result != 0x2712) goto LAB_0040688e;
           snd_play(&local_1c,s_click3_wav_00427de8);
-          control_focus = get_control_focus();
-          focus_control((uint)(control_focus == 0));
+          iVar3 = get_control_focus();
+          focus_control((uint)(iVar3 == 0));
           wait_cursor_down_pressed();
         }
         goto LAB_004066df;
@@ -781,7 +774,7 @@ LAB_004066d8:
         display_keys();
         mc_display_controls();
         activate_form((fform_t *)&mc_form);
-        control_focus = 6;
+        iVar3 = 6;
         goto LAB_004066d8;
       }
     }

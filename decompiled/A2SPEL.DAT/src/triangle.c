@@ -3,7 +3,7 @@
 
 /* ==== 0042c8e0 alloc_triangles ==== */
 
-longlong __watcall alloc_triangles(int param_1,uint param_2)
+undefined4 __watcall alloc_triangles(int param_1)
 
 {
   int i;
@@ -14,7 +14,7 @@ longlong __watcall alloc_triangles(int param_1,uint param_2)
     triangles3d = LocalAlloc(0x40,param_1 * 9);
     if (triangles3d == (HLOCAL)0x0) {
       debugmsg(s__s__d____not_enough_memory_for_t_00451d28);
-      return CONCAT44(param_2,2000);
+      return 2000;
     }
     debugmsg(s__d_triangles_initialized_00451d53,param_1);
     DAT_00480d84 = 1;
@@ -25,13 +25,13 @@ longlong __watcall alloc_triangles(int param_1,uint param_2)
       iVar1 = iVar1 + 9;
     }
   }
-  return (ulonglong)param_2 << 0x20;
+  return 0;
 }
 
 
 /* ==== 0042c95e free_triangles ==== */
 
-longlong __watcall free_triangles(undefined4 param_1,uint param_2)
+void __watcall free_triangles(void)
 
 {
   HLOCAL pvVar1;
@@ -40,19 +40,19 @@ longlong __watcall free_triangles(undefined4 param_1,uint param_2)
     pvVar1 = LocalFree(triangles3d);
     if (pvVar1 != (HLOCAL)0x0) {
       debugmsg(s__s__d____error_freeing_triangles_00451d6e);
-      return CONCAT44(param_2,2000);
+      return;
     }
     debugmsg(s_Triangle_array_freed_00451d92);
     DAT_00480d80 = 0;
     DAT_00480d84 = 0;
   }
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 0042c9b3 find_free_triangles ==== */
 
-longlong __watcall find_free_triangles(undefined4 param_1,uint param_2)
+int __watcall find_free_triangles(void)
 
 {
   int iVar1;
@@ -63,31 +63,30 @@ longlong __watcall find_free_triangles(undefined4 param_1,uint param_2)
   while( true ) {
     if (DAT_00480d80 * 9 <= iVar1) {
       fatal_exit(s__s__d____no_more_free_triangles_00451db5,s_triangle_cpp_00451da8,0x5b);
-      return (ulonglong)param_2 << 0x20;
+      return 0;
     }
     if (*(char *)(triangles3d + 8 + iVar1) == '\0') break;
     iVar1 = iVar1 + 9;
     i = i + 1;
   }
-  return CONCAT44(param_2,i);
+  return i;
 }
 
 
 /* ==== 0042c9fe get_new_triangles ==== */
 
-undefined8 __watcall get_new_triangles(undefined4 param_1,undefined4 param_2)
+int __watcall get_new_triangles(void)
 
 {
-  uint uVar1;
-  longlong free_triangles_val;
+  int free_triangles_val;
   
-  uVar1 = DAT_00480d88;
-  if ((int)DAT_00480d88 < DAT_00480d80) {
+  if (DAT_00480d88 < DAT_00480d80) {
+    free_triangles_val = DAT_00480d88;
     DAT_00480d88 = DAT_00480d88 + 1;
-    return CONCAT44(param_2,uVar1);
+    return free_triangles_val;
   }
-  free_triangles_val = find_free_triangles(param_1,DAT_00480d88);
-  return CONCAT44(param_2,(int)free_triangles_val);
+  free_triangles_val = find_free_triangles();
+  return free_triangles_val;
 }
 
 

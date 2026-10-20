@@ -3,12 +3,12 @@
 
 /* ==== 00425e58 CHP ==== */
 
-float10 __watcall CHP(void)
+undefined4 __watcall CHP(void)
 
 {
-  float10 in_ST0;
+  undefined4 in_EAX;
   
-  return ROUND(in_ST0);
+  return in_EAX;
 }
 
 

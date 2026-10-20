@@ -87,7 +87,7 @@ void __watcall load_infio(void)
   }
   debugmsg(s__s__d____>_INFIO_INI_FILE____d_d_00426cba,s_infio_cpp_00426cb0,0x6b,
            s_INFIO_INI_00426ca6);
-  file_delete(s_INFIO_INI_00426cee);
+  file_delete();
   init_infio();
   return;
 }
@@ -150,7 +150,6 @@ void __watcall init_infio(void)
 {
   int iVar1;
   int iVar2;
-  short extraout_CX;
   int extraout_EDX;
   
   debugmsg(s__s__d_____>_INIT_INFIO_<*_00426f2e,s_infio_cpp_00426f24,0xb1);
@@ -158,8 +157,10 @@ void __watcall init_infio(void)
   if (iVar1 == 0) {
     debugmsg(s_Creating_infio_file__s_00426f5f,s_INFIO_INI_00426f55);
     infio.racer_2 = 2;
+    infio.racer_3 = 3;
     infio.racer_4 = 4;
     infio.racer_5 = 5;
+    infio.music_volume = 3;
     infio.effects_volume = 4;
     infio.race_finished = '\0';
     infio.active_slot = 0;
@@ -184,8 +185,6 @@ void __watcall init_infio(void)
     infio.final = 0;
     infio.position = 6;
     iVar1 = 0;
-    infio.racer_3 = extraout_CX;
-    infio.music_volume = extraout_CX;
     infio.money = extraout_EDX;
     do {
       iVar2 = iVar1 + 2;

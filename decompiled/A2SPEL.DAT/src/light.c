@@ -5,7 +5,7 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-longlong __watcall alloc_lights(int param_1,uint param_2)
+void __watcall alloc_lights(int param_1)
 
 {
   DAT_004767b8 = LocalAlloc(0x40,param_1 << 3);
@@ -15,13 +15,13 @@ longlong __watcall alloc_lights(int param_1,uint param_2)
   DAT_004767bc = param_1;
   DAT_004767c0 = 0;
   _DAT_004767c4 = 1;
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 00425b31 get_new_light ==== */
 
-undefined8 __watcall get_new_light(undefined4 param_1,undefined4 param_2)
+int __watcall get_new_light(void)
 
 {
   int iVar1;
@@ -29,10 +29,10 @@ undefined8 __watcall get_new_light(undefined4 param_1,undefined4 param_2)
   iVar1 = DAT_004767c0;
   if (DAT_004767c0 < DAT_004767bc) {
     DAT_004767c0 = DAT_004767c0 + 1;
-    return CONCAT44(param_2,iVar1);
+    return iVar1;
   }
   fatal_exit(s__s__d____too_many_lights_request_0044f7ee,s_light_cpp_0044f7e4,0x31);
-  return CONCAT44(param_2,0xffffffff);
+  return -1;
 }
 
 
@@ -42,8 +42,9 @@ int __watcall create_standard_light(void)
 
 {
   int *piVar1;
-  int iVar2;
-  undefined8 uVar3;
+  int new_light;
+  long lVar2;
+  char *d3d_error_string_result;
   int *piStack_6c;
   int iStack_68;
   undefined4 uStack_64;
@@ -75,34 +76,37 @@ int __watcall create_standard_light(void)
   local_50 = 0x3f7d70a4;
   local_38 = 0xbf19999a;
   uStack_64 = 0x425bd1;
-  uVar3 = get_new_light(0xbf19999a,0x4c);
-  iVar2 = (int)uVar3;
+  new_light = get_new_light();
   uStack_64 = 0;
-  iStack_68 = DAT_004767b8 + iVar2 * 8;
+  iStack_68 = DAT_004767b8 + new_light * 8;
   piStack_6c = direct3d;
-  uVar3 = (**(code **)(*direct3d + 0x14))();
-  if ((int)uVar3 == 0) {
+  lVar2 = (**(code **)(*direct3d + 0x14))();
+  if (lVar2 == 0) {
     debugmsg(s_D3D___Light_created_ok_0044f845);
-    piVar1 = *(int **)(iVar2 * 8 + DAT_004767b8);
-    uVar3 = (**(code **)(*piVar1 + 0x10))(piVar1,&piStack_6c);
-    if ((int)uVar3 != 0) {
-      uVar3 = d3d_error_string((int)uVar3,(int)((ulonglong)uVar3 >> 0x20));
-      fatal_exit(s__s__d____D3DError_Setting_Light___0044f867,s_light_cpp_0044f85d,0x58,(int)uVar3);
+    piVar1 = *(int **)(new_light * 8 + DAT_004767b8);
+    lVar2 = (**(code **)(*piVar1 + 0x10))(piVar1,&piStack_6c);
+    if (lVar2 != 0) {
+      d3d_error_string_result = d3d_error_string(lVar2);
+      fatal_exit(s__s__d____D3DError_Setting_Light___0044f867,s_light_cpp_0044f85d,0x58,
+                 d3d_error_string_result);
     }
     debugmsg(s_D3D___Light_set_ok_0044f88e);
-    uVar3 = (**(code **)(*d3d_object + 0x34))(d3d_object,*(undefined4 *)(DAT_004767b8 + iVar2 * 8));
-    if ((int)uVar3 != 0) {
-      uVar3 = d3d_error_string((int)uVar3,(int)((ulonglong)uVar3 >> 0x20));
-      fatal_exit(s__s__d____D3DError_Add_Light____s_0044f8ac,s_light_cpp_0044f8a2,0x5e,(int)uVar3);
+    lVar2 = (**(code **)(*d3d_object + 0x34))
+                      (d3d_object,*(undefined4 *)(DAT_004767b8 + new_light * 8));
+    if (lVar2 != 0) {
+      d3d_error_string_result = d3d_error_string(lVar2);
+      fatal_exit(s__s__d____D3DError_Add_Light____s_0044f8ac,s_light_cpp_0044f8a2,0x5e,
+                 d3d_error_string_result);
     }
     debugmsg(s_D3D___Light_added_ok_0044f8cf);
   }
   else {
-    uVar3 = d3d_error_string((int)uVar3,(int)((ulonglong)uVar3 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Creating_Light_0044f81d,s_light_cpp_0044f813,0x51,(int)uVar3);
-    iVar2 = 0;
+    d3d_error_string_result = d3d_error_string(lVar2);
+    fatal_exit(s__s__d____D3DError_Creating_Light_0044f81d,s_light_cpp_0044f813,0x51,
+               d3d_error_string_result);
+    new_light = 0;
   }
-  return iVar2;
+  return new_light;
 }
 
 

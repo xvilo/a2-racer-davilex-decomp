@@ -3,41 +3,39 @@
 
 /* ==== 00431649 qwrite ==== */
 
-DWORD __watcall qwrite(uint file_handle,LPCVOID unaff_EDX_01,DWORD unaff_EBX)
+undefined4 __watcall qwrite(uint param_1,LPCVOID buffer,DWORD number_of_bytes_to_write)
 
 {
   HANDLE hFile;
+  uint io_mode;
   DWORD DVar1;
-  int iVar2;
-  BOOL BVar3;
-  uint unaff_EDX;
-  undefined4 unaff_EDX_02;
-  ulonglong io_mode;
-  undefined8 uVar4;
+  undefined4 uVar2;
+  int iVar3;
+  BOOL BVar4;
   DWORD DStack_14;
   
-  hFile = *(HANDLE *)(FileHandleIDs + file_handle * 4);
+  hFile = *(HANDLE *)(FileHandleIDs + param_1 * 4);
   (*(code *)AccessFileH_1)();
-  io_mode = IOMode(file_handle,unaff_EDX);
+  io_mode = IOMode(param_1);
   if (((io_mode & 0x80) == 0) || (DVar1 = SetFilePointer(hFile,0,(PLONG)0x0,2), DVar1 != 0xffffffff)
      ) {
-    if ((WindowsStdout != (code *)0x0) && (iVar2 = (*WindowsIsWindowedHandle)(), iVar2 != 0)) {
-      DVar1 = (*WindowsStdout)();
+    if ((WindowsStdout != (code *)0x0) && (iVar3 = (*WindowsIsWindowedHandle)(), iVar3 != 0)) {
+      uVar2 = (*WindowsStdout)();
       (*(code *)ReleaseFileH_1)();
-      return DVar1;
+      return uVar2;
     }
-    BVar3 = WriteFile(hFile,unaff_EDX_01,unaff_EBX,&DStack_14,(LPOVERLAPPED)0x0);
-    if (BVar3 != 0) {
-      if (unaff_EBX != DStack_14) {
-        set_errno(0xc,unaff_EDX_02);
+    BVar4 = WriteFile(hFile,buffer,number_of_bytes_to_write,&DStack_14,(LPOVERLAPPED)0x0);
+    if (BVar4 != 0) {
+      if (number_of_bytes_to_write != DStack_14) {
+        set_errno(0xc);
       }
       (*(code *)ReleaseFileH_1)();
       return DStack_14;
     }
   }
-  uVar4 = (*(code *)ReleaseFileH_1)();
-  uVar4 = set_errno_nt((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
-  return (DWORD)uVar4;
+  (*(code *)ReleaseFileH_1)();
+  uVar2 = set_errno_nt();
+  return uVar2;
 }
 
 

@@ -19,22 +19,22 @@ void __watcall snd_stop(int *param_1)
 
 {
   int iVar1;
+  int arg2;
+  int arg2_00;
   int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
   int iVar2;
   
   iVar2 = *param_1;
   iVar1 = snd_valid_buffer(iVar2);
   if (iVar1 != 0) {
     debugmsg(s_snd_buffer____d_00429c14,iVar2);
-    iVar1 = sound_buffer_busy(extraout_EDX);
-    iVar2 = extraout_EDX;
+    iVar1 = sound_buffer_busy(arg2);
+    iVar2 = arg2;
     if (iVar1 != 0) {
-      debugmsg(s_snd_buffer_is_busy__d_00429c25,extraout_EDX);
-      stop_sound_buffer(extraout_EDX_00);
-      debugmsg(s_snd_buffer_is_stopped__d_00429c3c,extraout_EDX_00);
-      iVar2 = extraout_EDX_01;
+      debugmsg(s_snd_buffer_is_busy__d_00429c25,arg2);
+      stop_sound_buffer(arg2_00);
+      debugmsg(s_snd_buffer_is_stopped__d_00429c3c,arg2_00);
+      iVar2 = extraout_EDX;
     }
     debugmsg(s_not_busy_snd_buffer____d_00429c56,iVar2);
   }
@@ -94,22 +94,21 @@ void __watcall snd_play_looping(int *param_1,char *filename)
 void __watcall snd_wait(int *param_1)
 
 {
-  int snd_valid_buffer_result;
+  int arg2;
   int iVar1;
-  int extraout_EDX;
   
-  iVar1 = *param_1;
-  snd_valid_buffer_result = snd_valid_buffer(iVar1);
-  if (snd_valid_buffer_result != 0) {
-    debugmsg(s_snd_buffer____d_00429c70,iVar1);
+  arg2 = *param_1;
+  iVar1 = snd_valid_buffer(arg2);
+  if (iVar1 != 0) {
+    debugmsg(s_snd_buffer____d_00429c70,arg2);
     if (DAT_00437222 >> 0x10 != 2) {
       while( true ) {
-        iVar1 = sound_buffer_busy(extraout_EDX);
+        iVar1 = sound_buffer_busy(arg2);
         if (iVar1 == 0) break;
         handle_win_msg();
       }
     }
-    debugmsg(s_not_busy_snd_buffer____d_00429c81,extraout_EDX);
+    debugmsg(s_not_busy_snd_buffer____d_00429c81,arg2);
   }
   snd_stop(param_1);
   return;
@@ -121,27 +120,27 @@ void __watcall snd_wait(int *param_1)
 int __watcall snd_fade_out(int *param_1)
 
 {
+  int arg2;
   int iVar1;
-  int iVar2;
   int *extraout_EDX;
   int *extraout_EDX_00;
   
-  iVar1 = *param_1;
-  iVar2 = snd_valid_buffer(iVar1);
-  if (iVar2 != 0) {
+  arg2 = *param_1;
+  iVar1 = snd_valid_buffer(arg2);
+  if (iVar1 != 0) {
     if (DAT_00437222 >> 0x10 == 2) {
       snd_stop(param_1);
     }
     else {
-      debugmsg(s_snd_buffer____d_00429c9b,iVar1);
-      iVar2 = sound_buffer_busy(iVar1);
+      debugmsg(s_snd_buffer____d_00429c9b,arg2);
+      iVar1 = sound_buffer_busy(arg2);
       param_1 = extraout_EDX;
-      if (iVar2 != 0) {
-        debugmsg(s_snd_buffer_is_busy__d_00429cac,iVar1);
-        iVar2 = get_sound_buffer_vol(iVar1);
+      if (iVar1 != 0) {
+        debugmsg(s_snd_buffer_is_busy__d_00429cac,arg2);
+        iVar1 = get_sound_buffer_vol(arg2);
         param_1 = extraout_EDX_00;
-        if (0 < iVar2 + -1) {
-          set_sound_buffer_vol(iVar1,iVar2 + -1);
+        if (0 < iVar1 + -1) {
+          set_sound_buffer_vol(arg2,iVar1 + -1);
           return 1;
         }
       }

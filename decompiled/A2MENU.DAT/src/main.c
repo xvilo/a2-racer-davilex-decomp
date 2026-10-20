@@ -26,9 +26,8 @@ void __watcall main_init_sound(void)
 
 {
   uint sound;
-  short extraout_CX;
   short extraout_DX;
-  char *format;
+  char *pcVar1;
   
   if (sndformaat != 0) {
     if (sndformaat != 1) {
@@ -66,7 +65,7 @@ void __watcall main_init_sound(void)
           sound = xvga_init_sound(0x28,0xc);
           if ((11000 < sound) && (sound < 0x2afb)) {
             debugmsg(s__s__d___SND_INIT_ERROR_or_SND_FO_004250e8,s_main_cpp_004250df,0x5b);
-            mysnd_state = extraout_CX;
+            mysnd_state = 1;
             return;
           }
           debugmsg(s_Using_11025__8__mono_00425114);
@@ -74,13 +73,13 @@ void __watcall main_init_sound(void)
           return;
         }
       }
-      format = s_Using_22050__8__mono_0042512a;
-      goto LAB_0040116a;
+      pcVar1 = s_Using_22050__8__mono_0042512a;
+      goto override_prt_40116a_11e5dad1;
     }
   }
-  format = s_Using_22050__16__stereo_00425140;
-LAB_0040116a:
-  debugmsg(format);
+  pcVar1 = s_Using_22050__16__stereo_00425140;
+override_prt_40116a_11e5dad1:
+  debugmsg(pcVar1);
   return;
 }
 
@@ -91,26 +90,25 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
 
 {
   int iVar1;
+  char *file_path_result;
   char *filename_2;
-  char *filename;
+  byte *found;
   uint win_handle_menu_result;
-  undefined4 in_EDX;
-  int extraout_EDX;
   int local_20;
-  uint seed;
+  undefined4 local_c;
   
-  strupr_1(lpCmdLine,in_EDX);
+  strupr_1(lpCmdLine);
   main_init_settings();
   set_debugmsg_state(0,(uint)(debug_on != 0));
   debugmsg(s______________________004251d2);
   debugmsg(s____>_WinMain____<*___004251e8);
   debugmsg(s______________________004251fe);
-  time((time_t *)&seed);
-  srand(seed);
+  time(&local_c);
+  srand(local_c);
   debugmsg(s_Setting_guid_00425214);
   set_xvga_vars(2,0,0);
   debugmsg(s_Setting_graphics_resolution_00425222);
-  set_xvga_vars(0,extraout_EDX,0);
+  set_xvga_vars(0,3,0);
   iVar1 = init_xvga_lib(hInstance,nShowCmd,s_Davilex_Software_00425248,s_A2_Racer_0042523f);
   if (iVar1 == 0) {
     debugmsg(s_error___couldn_t_initialize_grap_00425259);
@@ -119,9 +117,9 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   xvga_flip_page();
   xvga_locate_cdrom((char *)0x0,s_a2intro_smk_0042528a);
   debugmsg(s_xvga_init_fileio___s__004252a1,s_a2mrcs_img_00425296);
-  filename_2 = file_path(&path_buffer2,s_a2mrcs_img_004252b9);
-  filename = file_path(&path_buffer,s_a2mrcs_ind_004252c4);
-  iVar1 = xvga_init_fileio(filename,filename_2);
+  file_path_result = file_path(&path_buffer2,s_a2mrcs_img_004252b9);
+  filename_2 = file_path(&path_buffer,s_a2mrcs_ind_004252c4);
+  iVar1 = xvga_init_fileio(filename_2,file_path_result);
   if (iVar1 != 0) {
     fatal_exit(s__s__d____Unable_to_initialize_re_004252e3,s_main_cpp_004252da,0xb1,
                s_a2mrcs_img_004252cf);
@@ -139,11 +137,11 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   debugmsg(s_Init_mouse____00425376);
   init_mouse();
   debugmsg(s_Done_init_00425385);
-  filename_2 = strstr(lpCmdLine,s_FIRST_00425390);
-  if (filename_2 == (char *)0x0) {
-    filename_2 = strstr(lpCmdLine,s__FIRST_00425396);
+  found = strstr((byte *)lpCmdLine,(byte *)s_FIRST_00425390);
+  if (found == (byte *)0x0) {
+    found = strstr((byte *)lpCmdLine,(byte *)s__FIRST_00425396);
     iVar1 = 0;
-    if (filename_2 == (char *)0x0) goto LAB_004013f3;
+    if (found == (byte *)0x0) goto LAB_004013f3;
   }
   iVar1 = 1;
 LAB_004013f3:

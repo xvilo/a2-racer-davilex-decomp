@@ -3,15 +3,15 @@
 
 /* ==== 00431a10 unlink ==== */
 
-void __watcall unlink(char *file_name)
+void __watcall unlink(void)
 
 {
+  LPCSTR in_EAX;
   BOOL BVar1;
-  undefined4 unaff_EDX_00;
   
-  BVar1 = DeleteFileA(file_name);
+  BVar1 = DeleteFileA(in_EAX);
   if (BVar1 == 0) {
-    set_errno_nt(0,unaff_EDX_00);
+    set_errno_nt();
     return;
   }
   return;

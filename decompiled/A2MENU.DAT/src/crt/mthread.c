@@ -3,10 +3,12 @@
 
 /* ==== 0041fde2 nullSema4Rtn ==== */
 
-void __watcall nullSema4Rtn(void)
+undefined4 __watcall nullSema4Rtn(void)
 
 {
-  return;
+  undefined4 in_EAX;
+  
+  return in_EAX;
 }
 
 
@@ -27,54 +29,55 @@ void __watcall CloseSemaphore(undefined4 *param_1)
 
 /* ==== 0041fe0f AccessIOB ==== */
 
-void __watcall AccessIOB(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessIOB(void)
 
 {
-  AccessSemaphore((undefined4 *)&IOBSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&IOBSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 0041fe19 ReleaseIOB ==== */
 
-void __watcall ReleaseIOB(void)
+undefined4 * __watcall ReleaseIOB(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&IOBSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&IOBSemaphore);
+  return release_semaphore;
 }
 
 
 /* ==== 0041fe23 AccessFileH ==== */
 
-void __watcall AccessFileH(uint param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessFileH(uint param_1)
 
 {
-  AccessSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10),unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10));
+  return DVar1;
 }
 
 
 /* ==== 0041fe30 ReleaseFileH ==== */
 
-void __watcall ReleaseFileH(void)
+undefined4 * __watcall ReleaseFileH(uint param_1)
 
 {
-  uint in_EAX;
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&FileSemaphores + (in_EAX & 0xf) * 0x10,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10));
+  return release_semaphore;
 }
 
 
 /* ==== 0041fe40 InitAccessH ==== */
 
-undefined8 __watcall InitAccessH(int param_1,size_t unaff_EDX)
+int __watcall InitAccessH(int param_1)
 
 {
   int iVar1;
@@ -86,10 +89,10 @@ undefined8 __watcall InitAccessH(int param_1,size_t unaff_EDX)
   while( true ) {
     if (topFileID * 4 <= iVar1) {
       FileHandleIDs = realloc(FileHandleIDs,(topFileID + 1) * 4);
-      *(int *)((int)FileHandleIDs + topFileID * 4) = param_1;
+      FileHandleIDs[topFileID] = param_1;
       topFileID = topFileID + 1;
       (*(code *)ReleaseFList_1)();
-      return CONCAT44(unaff_EDX,topFileID + -1);
+      return topFileID + -1;
     }
     if (*(int *)((int)FileHandleIDs + iVar1) == 0) break;
     iVar1 = iVar1 + 4;
@@ -97,89 +100,92 @@ undefined8 __watcall InitAccessH(int param_1,size_t unaff_EDX)
   }
   *(int *)((int)FileHandleIDs + iVar1) = param_1;
   (*(code *)ReleaseFList_1)();
-  return CONCAT44(unaff_EDX,iVar2);
+  return iVar2;
 }
 
 
 /* ==== 0041fe45 FiniAccessH ==== */
 
-void __watcall FiniAccessH(uint param_1)
+undefined4 __watcall FiniAccessH(uint param_1)
 
 {
-  undefined4 unaff_EDX;
+  undefined4 nt_remove_file_handle;
   
   CloseSemaphore((undefined4 *)(&FileSemaphores + (param_1 & 0xf) * 0x10));
-  NTRemoveFileHandle(unaff_EDX,unaff_EDX);
-  return;
+  nt_remove_file_handle = NTRemoveFileHandle(param_1);
+  return nt_remove_file_handle;
 }
 
 
 /* ==== 0041fe61 AccessNHeap ==== */
 
-void __watcall AccessNHeap(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessNHeap(void)
 
 {
-  AccessSemaphore((undefined4 *)&NHeapSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&NHeapSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 0041fe68 ReleaseNHeap ==== */
 
-void __watcall ReleaseNHeap(void)
+undefined4 * __watcall ReleaseNHeap(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&NHeapSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&NHeapSemaphore);
+  return release_semaphore;
 }
 
 
 /* ==== 0041fe72 AccessFHeap ==== */
 
-void __watcall AccessFHeap(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessFHeap(void)
 
 {
-  AccessSemaphore((undefined4 *)&FHeapSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&FHeapSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 0041fe79 ReleaseFHeap ==== */
 
-void __watcall ReleaseFHeap(void)
+undefined4 * __watcall ReleaseFHeap(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&FHeapSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&FHeapSemaphore);
+  return release_semaphore;
 }
 
 
 /* ==== 0041fe83 AccessTDList ==== */
 
-void __watcall AccessTDList(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall AccessTDList(void)
 
 {
-  AccessSemaphore((undefined4 *)&TDListSemaphore,unaff_EDX);
-  return;
+  DWORD DVar1;
+  
+  DVar1 = AccessSemaphore((undefined4 *)&TDListSemaphore);
+  return DVar1;
 }
 
 
 /* ==== 0041fe8a ReleaseTDList ==== */
 
-void __watcall ReleaseTDList(void)
+undefined4 * __watcall ReleaseTDList(void)
 
 {
-  LONG unaff_EDX;
-  LPLONG unaff_EBX;
+  undefined4 *release_semaphore;
   
-  ReleaseSemaphore(&TDListSemaphore,unaff_EDX,unaff_EBX);
-  return;
+  release_semaphore = ReleaseSemaphore((undefined4 *)&TDListSemaphore);
+  return release_semaphore;
 }
 
 
@@ -187,63 +193,58 @@ void __watcall ReleaseTDList(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall AccessFList(undefined4 param_1,LPLONG unaff_EDX)
+DWORD __watcall
+AccessFList(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  LPLONG current_thread_id;
-  LONG extraout_EDX;
-  LONG extraout_EDX_00;
-  LONG lReleaseCount;
+  DWORD DVar1;
+  DWORD DVar2;
   
-  current_thread_id = (LPLONG)GetCurrentThreadId();
-  if (current_thread_id != plRam00442ad0) {
+  DVar1 = GetCurrentThreadId();
+  DVar2 = DVar1;
+  if (DVar1 != DRam00442ad0) {
     if (iRam00442acc == 0) {
-      AccessSemaphore((undefined4 *)&InitSemaphore,plRam00442ad0);
-      lReleaseCount = extraout_EDX;
+      AccessSemaphore((undefined4 *)&InitSemaphore);
       if (iRam00442acc == 0) {
         _FListSemaphore = CreateMutexA((LPSECURITY_ATTRIBUTES)0x0,0,(LPCSTR)0x0);
         iRam00442acc = 1;
-        lReleaseCount = extraout_EDX_00;
       }
-      ReleaseSemaphore(&InitSemaphore,lReleaseCount,(LPLONG)&FListSemaphore);
+      ReleaseSemaphore((undefined4 *)&InitSemaphore);
     }
-    WaitForSingleObject(_FListSemaphore,0xffffffff);
-    plRam00442ad0 = current_thread_id;
+    DVar2 = WaitForSingleObject(_FListSemaphore,0xffffffff);
+    DRam00442ad0 = DVar1;
   }
   iRam00442ad4 = iRam00442ad4 + 1;
-  return;
+  return DVar2;
 }
 
 
 /* ==== 0041fe96 AccessSemaphore ==== */
 
-void __watcall AccessSemaphore(undefined4 *previous_count,LPLONG unaff_EDX)
+DWORD __watcall AccessSemaphore(undefined4 *param_1)
 
 {
-  LPLONG current_thread_id;
+  DWORD DVar1;
   HANDLE mutex;
-  LONG extraout_EDX;
-  LONG extraout_EDX_00;
-  LONG lReleaseCount;
+  DWORD DVar2;
   
-  current_thread_id = (LPLONG)GetCurrentThreadId();
-  if (current_thread_id != (LPLONG)previous_count[2]) {
-    if (previous_count[1] == 0) {
-      AccessSemaphore((undefined4 *)&InitSemaphore,(LPLONG)previous_count[2]);
-      lReleaseCount = extraout_EDX;
-      if (previous_count[1] == 0) {
+  DVar1 = GetCurrentThreadId();
+  DVar2 = DVar1;
+  if (DVar1 != param_1[2]) {
+    if (param_1[1] == 0) {
+      AccessSemaphore((undefined4 *)&InitSemaphore);
+      if (param_1[1] == 0) {
         mutex = CreateMutexA((LPSECURITY_ATTRIBUTES)0x0,0,(LPCSTR)0x0);
-        previous_count[1] = 1;
-        *previous_count = mutex;
-        lReleaseCount = extraout_EDX_00;
+        param_1[1] = 1;
+        *param_1 = mutex;
       }
-      ReleaseSemaphore(&InitSemaphore,lReleaseCount,previous_count);
+      ReleaseSemaphore((undefined4 *)&InitSemaphore);
     }
-    WaitForSingleObject((HANDLE)*previous_count,0xffffffff);
-    previous_count[2] = current_thread_id;
+    DVar2 = WaitForSingleObject((HANDLE)*param_1,0xffffffff);
+    param_1[2] = DVar1;
   }
-  previous_count[3] = previous_count[3] + 1;
-  return;
+  param_1[3] = param_1[3] + 1;
+  return DVar2;
 }
 
 
@@ -251,83 +252,83 @@ void __watcall AccessSemaphore(undefined4 *previous_count,LPLONG unaff_EDX)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall ReleaseFList(void)
+undefined * __watcall
+ReleaseFList(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
+  undefined *puVar1;
+  
+  puVar1 = &FListSemaphore;
   if (iRam00442ad4 != 0) {
     iRam00442ad4 = iRam00442ad4 + -1;
     if (iRam00442ad4 == 0) {
       iRam00442ad0 = iRam00442ad4;
-      ReleaseMutex(_FListSemaphore);
+      puVar1 = (undefined *)ReleaseMutex(_FListSemaphore);
     }
   }
-  return;
+  return puVar1;
 }
 
 
 /* ==== 0041fef8 ReleaseSemaphore ==== */
 
-BOOL __watcall ReleaseSemaphore(HANDLE hSemaphore,LONG lReleaseCount,LPLONG lpPreviousCount)
+undefined4 * __watcall ReleaseSemaphore(undefined4 *param_1)
 
 {
   int iVar1;
   
-  if (*(int *)((int)hSemaphore + 0xc) != 0) {
-    iVar1 = *(int *)((int)hSemaphore + 0xc) + -1;
-    *(int *)((int)hSemaphore + 0xc) = iVar1;
+  if (param_1[3] != 0) {
+    iVar1 = param_1[3] + -1;
+    param_1[3] = iVar1;
     if (iVar1 == 0) {
-      *(undefined4 *)((int)hSemaphore + 8) = 0;
-      hSemaphore = (HANDLE)ReleaseMutex(*(HANDLE *)hSemaphore);
+      param_1[2] = 0;
+      param_1 = (undefined4 *)ReleaseMutex((HANDLE)*param_1);
     }
   }
-  return (BOOL)hSemaphore;
+  return param_1;
 }
 
 
 /* ==== 0041ff1d MultipleThread ==== */
 
-undefined8 __watcall MultipleThread(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+LPVOID __watcall MultipleThread(void)
 
 {
   LPVOID pvVar1;
-  size_t unaff_ECX;
-  undefined8 thread_data;
   
   pvVar1 = TlsGetValue(TlsIndex);
   if (pvVar1 == (LPVOID)0x0) {
-    thread_data = GetThreadData(0,(void *)0x0,unaff_EBX,unaff_ECX);
-    pvVar1 = (LPVOID)thread_data;
+    pvVar1 = GetThreadData();
   }
-  return CONCAT44(unaff_EDX,pvVar1);
+  return pvVar1;
 }
 
 
 /* ==== 0041ff3d InitThreadData ==== */
 
-undefined8 __watcall
-InitThreadData(void *param_1,size_t unaff_EDX,undefined4 param_3,size_t unaff_ECX)
+undefined4 * __watcall InitThreadData(undefined4 *param_1)
 
 {
   DWORD DVar1;
   
-  if (param_1 == (void *)0x0) {
+  if (param_1 == (undefined4 *)0x0) {
     param_1 = calloc(1,ThreadDataSize);
-    if (param_1 != (void *)0x0) {
+    if (param_1 != (undefined4 *)0x0) {
       *(undefined1 *)((int)param_1 + 0x52) = 1;
     }
   }
-  if (param_1 != (void *)0x0) {
-    *(undefined4 *)((int)param_1 + 0xc) = 1;
+  if (param_1 != (undefined4 *)0x0) {
+    param_1[3] = 1;
     DVar1 = GetCurrentThreadId();
     *(DWORD *)((int)param_1 + 0xda) = DVar1;
   }
-  return CONCAT44(unaff_EDX,param_1);
+  return param_1;
 }
 
 
 /* ==== 0041ff7c NTThreadInit ==== */
 
-undefined8 __watcall NTThreadInit(undefined4 param_1,undefined4 unaff_EDX)
+uint __watcall NTThreadInit(void)
 
 {
   TlsIndex = TlsAlloc();
@@ -336,91 +337,92 @@ undefined8 __watcall NTThreadInit(undefined4 param_1,undefined4 unaff_EDX)
       TlsIndex = TlsAlloc();
     }
   }
-  return CONCAT44(unaff_EDX,(uint)(TlsIndex != 0xffffffff));
+  return (uint)(TlsIndex != 0xffffffff);
 }
 
 
 /* ==== 0041ffc8 NTAddThread ==== */
 
-longlong __watcall NTAddThread(void *param_1,void *unaff_EDX,undefined4 unaff_EBX,size_t unaff_ECX)
+undefined4 __watcall NTAddThread(undefined4 *param_1)
 
 {
-  void *lpTlsValue;
+  undefined4 *lpTlsValue;
   int add_thread_data;
   undefined4 uVar1;
-  undefined8 init_thread_data;
   
   if (TlsIndex == 0xffffffff) {
-LAB_0041ffd4:
-    return ZEXT48(unaff_EDX) << 0x20;
+    return 0;
   }
-  init_thread_data = InitThreadData(param_1,(size_t)unaff_EDX,unaff_EBX,unaff_ECX);
-  lpTlsValue = (void *)init_thread_data;
+  lpTlsValue = InitThreadData(param_1);
   uVar1 = 0;
-  if (lpTlsValue != (void *)0x0) {
-    add_thread_data =
-         AddThreadData(*(undefined4 *)((int)lpTlsValue + 0xda),(int)lpTlsValue,lpTlsValue,unaff_ECX)
-    ;
+  if (lpTlsValue != (undefined4 *)0x0) {
+    add_thread_data = AddThreadData(*(undefined4 *)((int)lpTlsValue + 0xda),(int)lpTlsValue);
     if (add_thread_data == 0) {
       free(lpTlsValue);
-      goto LAB_0041ffd4;
+      return 0;
     }
     TlsSetValue(TlsIndex,lpTlsValue);
     uVar1 = 1;
   }
-  return CONCAT44(unaff_EDX,uVar1);
+  return uVar1;
 }
 
 
 /* ==== 00420015 NTRemoveThread ==== */
 
-void __watcall NTRemoveThread(int param_1)
+int __watcall NTRemoveThread(int param_1)
 
 {
   HANDLE hObject;
   LPVOID tls_get_value;
-  undefined4 unaff_ECX;
-  void *unaff_EDX;
+  int iVar1;
   
+  iVar1 = param_1;
   if (TlsIndex != 0xffffffff) {
     tls_get_value = TlsGetValue(TlsIndex);
+    iVar1 = 0;
     if (tls_get_value != (LPVOID)0x0) {
       hObject = *(HANDLE *)((int)tls_get_value + 0xde);
-      RemoveThreadData(*(undefined4 *)((int)tls_get_value + 0xda),unaff_EDX,hObject,unaff_ECX);
-      TlsSetValue(TlsIndex,(LPVOID)0x0);
+      RemoveThreadData(*(undefined4 *)((int)tls_get_value + 0xda));
+      iVar1 = TlsSetValue(TlsIndex,(LPVOID)0x0);
       if ((hObject != (HANDLE)0x0) && (param_1 != 0)) {
-        CloseHandle(hObject);
+        iVar1 = CloseHandle(hObject);
       }
     }
   }
-  return;
+  return iVar1;
 }
 
 
 /* ==== 00420062 ThreadExit ==== */
 
-void __watcall ThreadExit(void)
+int __watcall
+ThreadExit(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  NTRemoveThread(1);
+  int iVar1;
+  
+  iVar1 = NTRemoveThread(1);
   if (TlsIndex != 0xffffffff) {
-    TlsFree(TlsIndex);
+    iVar1 = TlsFree(TlsIndex);
     TlsIndex = 0xffffffff;
   }
-  return;
+  return iVar1;
 }
 
 
 /* ==== 0042006c NTThreadFini ==== */
 
-void __watcall NTThreadFini(void)
+BOOL __watcall NTThreadFini(void)
 
 {
+  BOOL in_EAX;
+  
   if (TlsIndex != 0xffffffff) {
-    TlsFree(TlsIndex);
+    in_EAX = TlsFree(TlsIndex);
     TlsIndex = 0xffffffff;
   }
-  return;
+  return in_EAX;
 }
 
 
@@ -451,7 +453,7 @@ void __watcall InitMultipleThread(void)
   ReleaseFList_1 = ReleaseFList;
   ThreadExitRtn = ThreadExit;
   AccessFList_1 = AccessFList;
-  AddThreadData(*(undefined4 *)((int)FirstThreadData + 0xda),(int)FirstThreadData,1,0x41fe91);
+  AddThreadData(*(undefined4 *)((int)FirstThreadData + 0xda),(int)FirstThreadData);
   TlsSetValue(TlsIndex,FirstThreadData);
   GetThreadPtr = MultipleThread;
   return;
@@ -460,25 +462,25 @@ void __watcall InitMultipleThread(void)
 
 /* ==== 004201a5 FiniSema4s ==== */
 
-void __watcall FiniSema4s(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+BOOL __watcall FiniSema4s(void)
 
 {
+  BOOL BVar1;
   int extraout_EDX;
   int extraout_EDX_00;
-  undefined8 uVar1;
   
-  (*(code *)CloseSema4)(unaff_EDX,unaff_EBX);
+  (*(code *)CloseSema4)();
   (*(code *)CloseSema4)();
   (*(code *)CloseSema4)();
   do {
     (*(code *)CloseSema4)();
   } while (extraout_EDX_00 != extraout_EDX + 0x100);
-  uVar1 = (*(code *)CloseSema4)();
-  FiniThreadProcessing((int)uVar1,(void *)((ulonglong)uVar1 >> 0x20));
+  (*(code *)CloseSema4)();
+  FiniThreadProcessing();
   (*(code *)CloseSema4)();
   (*(code *)CloseSema4)();
-  NTThreadFini();
-  return;
+  BVar1 = NTThreadFini();
+  return BVar1;
 }
 
 

@@ -3,7 +3,7 @@
 
 /* ==== 0043eca2 ZBuf2F ==== */
 
-void __watcall ZBuf2F(byte *param_1,undefined8 *param_2)
+void __watcall ZBuf2F(byte *param_1)
 
 {
   uint uVar1;
@@ -11,10 +11,10 @@ void __watcall ZBuf2F(byte *param_1,undefined8 *param_2)
   uint uVar3;
   uint uVar4;
   uint uVar5;
+  uint *unaff_EDX;
   uint uVar6;
   bool bVar7;
   bool bVar8;
-  undefined8 normalize_mantissa_64_result;
   
   uVar6 = 0;
   uVar5 = 0;
@@ -31,8 +31,9 @@ void __watcall ZBuf2F(byte *param_1,undefined8 *param_2)
             (uint)CARRY4(uVar3,uVar3) + (uint)CARRY4(uVar2,uVar4);
     param_1 = param_1 + 1;
   }
-  normalize_mantissa_64_result = normalize_mantissa_64(uVar5,uVar6);
-  *param_2 = normalize_mantissa_64_result;
+  uVar5 = normalize_mantissa_64(uVar5,uVar6);
+  unaff_EDX[1] = uVar6;
+  *unaff_EDX = uVar5;
   return;
 }
 

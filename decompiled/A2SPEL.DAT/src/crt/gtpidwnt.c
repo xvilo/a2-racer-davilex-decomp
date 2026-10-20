@@ -3,7 +3,7 @@
 
 /* ==== 0043189c getpid ==== */
 
-int __watcall getpid(void)
+DWORD __watcall getpid(void)
 
 {
   DWORD DVar1;

@@ -3,81 +3,79 @@
 
 /* ==== 00421033 EFG_Format ==== */
 
-undefined8 __watcall EFG_Format(char *param_1,int *unaff_EDX,int unaff_EBX)
+char * __watcall EFG_Format(char *param_1,int *param_2,int param_3)
 
 {
   undefined4 *puVar1;
   byte bVar2;
-  uint uVar3;
-  int iVar4;
-  ushort in_DS;
+  int iVar3;
   undefined4 local_18;
   undefined4 local_14;
   
-  uVar3 = (uint)in_DS;
-  *(undefined4 *)(unaff_EBX + 0xc) = 0;
-  bVar2 = *(byte *)(unaff_EBX + 0x15);
-  iVar4 = 0;
+  *(undefined4 *)(param_3 + 0xc) = 0;
+  bVar2 = *(byte *)(param_3 + 0x15);
+  iVar3 = 0;
   if (bVar2 < 0x47) {
-    if (bVar2 < 0x45) goto LAB_00421111;
-    if (bVar2 < 0x46) goto LAB_0042108f;
+    if (bVar2 < 0x45) {
+      return param_1;
+    }
+    if (0x45 < bVar2) goto LAB_00421094;
   }
   else {
-    if (bVar2 < 0x48) {
-LAB_0042107f:
-      if (*(int *)(unaff_EBX + 8) == 0) {
-        *(undefined4 *)(unaff_EBX + 8) = 1;
+    if (0x47 < bVar2) {
+      if (bVar2 < 0x66) {
+        if (bVar2 != 0x65) {
+          return param_1;
+        }
+        goto LAB_0042108f;
       }
-      bVar2 = bVar2 - 2;
-    }
-    else {
-      if (0x65 < bVar2) {
-        if (bVar2 < 0x67) goto LAB_00421094;
-        if (bVar2 != 0x67) goto LAB_00421111;
-        goto LAB_0042107f;
+      if (bVar2 < 0x67) goto LAB_00421094;
+      if (bVar2 != 0x67) {
+        return param_1;
       }
-      if (bVar2 != 0x65) goto LAB_00421111;
     }
-LAB_0042108f:
-    iVar4 = 1;
+    if (*(int *)(param_3 + 8) == 0) {
+      *(undefined4 *)(param_3 + 8) = 1;
+    }
+    bVar2 = bVar2 - 2;
   }
+LAB_0042108f:
+  iVar3 = 1;
 LAB_00421094:
-  puVar1 = (undefined4 *)*unaff_EDX;
-  *unaff_EDX = (int)(puVar1 + 2);
+  puVar1 = (undefined4 *)*param_2;
+  *param_2 = (int)(puVar1 + 2);
   local_18 = *puVar1;
   local_14 = puVar1[1];
-  if (*(int *)(unaff_EBX + 8) == -1) {
-    *(undefined4 *)(unaff_EBX + 8) = 6;
+  if (*(int *)(param_3 + 8) == -1) {
+    *(undefined4 *)(param_3 + 8) = 6;
   }
-  FtoS(param_1,&local_18,*(int *)(unaff_EBX + 8),0,0xff,iVar4,3,bVar2,
-       *(byte *)(unaff_EBX + 0x15) & 0x5f);
+  FtoS(param_1,(double *)&local_18,*(char **)(param_3 + 8),0,0xff,iVar3,3,(uint)bVar2,
+       (uint)(*(byte *)(param_3 + 0x15) & 0x5f));
   if (*param_1 == '*') {
-    *(undefined1 *)(unaff_EBX + 0x16) = 0x2a;
+    *(undefined1 *)(param_3 + 0x16) = 0x2a;
   }
   param_1[0xff] = '\0';
   for (; *param_1 == ' '; param_1 = param_1 + 1) {
   }
-  forcedecpt(param_1,unaff_EBX);
-  uVar3 = (uint)in_DS;
-  *(undefined4 *)(unaff_EBX + 8) = 0xffffffff;
-LAB_00421111:
-  return CONCAT44(uVar3,param_1);
+  forcedecpt(param_1,param_3);
+  *(undefined4 *)(param_3 + 8) = 0xffffffff;
+  return param_1;
 }
 
 
 /* ==== 0042111d forcedecpt ==== */
 
-void __watcall forcedecpt(char *param_1,int unaff_EDX)
+void __watcall forcedecpt(char *param_1,int param_2)
 
 {
   char cVar1;
   char *pcVar2;
   
-  if ((*(byte *)(unaff_EDX + 0x14) & 1) == 0) {
+  if ((*(byte *)(param_2 + 0x14) & 1) == 0) {
     for (; ((*param_1 != '\0' && (*param_1 != 'e')) && (*param_1 != 'E')); param_1 = param_1 + 1) {
     }
     pcVar2 = param_1 + -1;
-    if ((*(char *)(unaff_EDX + 0x15) == 'G') || (*(char *)(unaff_EDX + 0x15) == 'g')) {
+    if ((*(char *)(param_2 + 0x15) == 'G') || (*(char *)(param_2 + 0x15) == 'g')) {
       for (; *pcVar2 == '0'; pcVar2 = pcVar2 + -1) {
       }
     }

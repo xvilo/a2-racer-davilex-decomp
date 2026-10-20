@@ -3,25 +3,22 @@
 
 /* ==== 00408f21 time ==== */
 
-time_t __watcall time(time_t *_Time)
+void __watcall time(undefined4 *param_1)
 
 {
-  undefined4 unaff_EDX;
-  undefined4 *puVar1;
-  undefined8 getctime_result;
-  time_t mktime_result;
-  tm i;
+  uint getctime_result;
+  undefined4 mktime_result;
+  uint i [9];
   
-  getctime_result = getctime((uint *)&i,_Time);
+  getctime_result = getctime(i);
   if (499 < (int)getctime_result) {
-    i.tm_sec = i.tm_sec + 1;
+    i[0] = i[0] + 1;
   }
-  mktime_result = mktime(&i);
-  puVar1 = (undefined4 *)((ulonglong)mktime_result >> 0x20);
-  if (puVar1 != (undefined4 *)0x0) {
-    *puVar1 = (int)mktime_result;
+  mktime_result = mktime((int *)i);
+  if (param_1 != (undefined4 *)0x0) {
+    *param_1 = mktime_result;
   }
-  return CONCAT44(unaff_EDX,(int)mktime_result);
+  return;
 }
 
 

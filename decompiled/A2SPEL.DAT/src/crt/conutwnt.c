@@ -3,24 +3,23 @@
 
 /* ==== 0043c5b7 NTRealKey ==== */
 
-longlong __watcall NTRealKey(short *param_1,uint unaff_EDX)
+undefined4 __watcall NTRealKey(short *param_1)
 
 {
   if (((*param_1 == 1) && (*(int *)(param_1 + 2) != 0)) &&
      (((ushort)param_1[5] < 0x10 || (0x12 < (ushort)param_1[5])))) {
-    return CONCAT44(unaff_EDX,1);
+    return 1;
   }
-  return (ulonglong)unaff_EDX << 0x20;
+  return 0;
 }
 
 
 /* ==== 0043c5e3 initConsoleHandles ==== */
 
-void __watcall
-initConsoleHandles(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 unaff_ECX)
+void __watcall initConsoleHandles(void)
 
 {
-  (*(code *)AccessFileH_1)(unaff_EDX,unaff_ECX);
+  (*(code *)AccessFileH_1)();
   if (console_in == (HANDLE)0xffffffff) {
     console_in = CreateFileA(s_conin__00456974,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x80,
                              (HANDLE)0x0);
@@ -36,22 +35,20 @@ initConsoleHandles(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,un
 
 /* ==== 0043c64c NTConsoleInput ==== */
 
-undefined4 __watcall
-NTConsoleInput(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX,undefined4 unaff_ECX)
+undefined4 __watcall NTConsoleInput(void)
 
 {
-  initConsoleHandles(param_1,unaff_EDX,unaff_EBX,unaff_ECX);
+  initConsoleHandles();
   return console_in;
 }
 
 
 /* ==== 0043c657 NTConsoleOutput ==== */
 
-undefined4 __watcall
-NTConsoleOutput(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX,undefined4 unaff_ECX)
+undefined4 __watcall NTConsoleOutput(void)
 
 {
-  initConsoleHandles(param_1,unaff_EDX,unaff_EBX,unaff_ECX);
+  initConsoleHandles();
   return console_out;
 }
 

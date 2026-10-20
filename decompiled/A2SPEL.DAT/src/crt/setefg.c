@@ -5,12 +5,14 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall setEFGfmt(void)
+undefined4 __watcall setEFGfmt(void)
 
 {
+  undefined4 in_EAX;
+  
   EFG_printf = EFG_Format;
   _EFG_scanf = cnvs2d;
-  return;
+  return in_EAX;
 }
 
 

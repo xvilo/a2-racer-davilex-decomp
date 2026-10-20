@@ -3,7 +3,7 @@
 
 /* ==== 0040efc1 LinkUpNewMHeap ==== */
 
-undefined8 __watcall LinkUpNewMHeap(int *param_1,undefined4 unaff_EDX)
+int * __watcall LinkUpNewMHeap(int *param_1)
 
 {
   int *piVar1;
@@ -38,82 +38,72 @@ undefined8 __watcall LinkUpNewMHeap(int *param_1,undefined4 unaff_EDX)
   param_1[3] = (int)piVar1;
   *piVar3 = *param_1 + -0x2c;
   *(undefined4 *)((int)piVar3 + *param_1 + -0x2c) = 0xffffffff;
-  return CONCAT44(unaff_EDX,piVar3);
+  return piVar3;
 }
 
 
 /* ==== 0040f035 CreateNewNHeap ==== */
 
-undefined8 __watcall CreateNewNHeap(SIZE_T param_1,uint unaff_EDX)
+undefined4 __watcall CreateNewNHeap(void)
 
 {
-  undefined4 uVar1;
-  uint *puVar2;
-  uint uVar3;
-  int iVar4;
-  longlong adjust_amount;
-  undefined8 link_up_new_m_heap;
+  SIZE_T in_EAX;
+  int adjust_amount;
+  uint *virtual_alloc;
+  uint uVar1;
+  uint *link_up_new_m_heap;
   SIZE_T size;
   
   if ((heap_enabled != 0) && (curbrk != -2)) {
-    size = param_1;
-    adjust_amount = AdjustAmount(&size,unaff_EDX);
-    uVar1 = 0;
-    if ((int)adjust_amount == 0) goto LAB_0040f0bc;
-    puVar2 = VirtualAlloc((LPVOID)0x0,size,0x1000,0x40);
-    uVar1 = 0;
-    if (puVar2 == (uint *)0x0) goto LAB_0040f0bc;
-    uVar3 = size - 4;
-    if ((uVar3 <= size) && (0x37 < uVar3)) {
-      *puVar2 = uVar3;
-      size = uVar3;
-      link_up_new_m_heap = LinkUpNewMHeap((int *)puVar2,puVar2);
-      iVar4 = (int)((ulonglong)link_up_new_m_heap >> 0x20);
-      puVar2 = (uint *)link_up_new_m_heap;
-      size = *puVar2;
-      *puVar2 = size | 1;
-      *(undefined4 *)(iVar4 + 0x14) = 0xffffffff;
-      *(int *)(iVar4 + 0x18) = *(int *)(iVar4 + 0x18) + 1;
-      nfree((uint)(puVar2 + 1));
-      uVar1 = 1;
-      goto LAB_0040f0bc;
+    size = in_EAX;
+    adjust_amount = AdjustAmount(&size);
+    if (adjust_amount == 0) {
+      return 0;
+    }
+    virtual_alloc = VirtualAlloc((LPVOID)0x0,size,0x1000,0x40);
+    if (virtual_alloc == (uint *)0x0) {
+      return 0;
+    }
+    uVar1 = size - 4;
+    if ((uVar1 <= size) && (0x37 < uVar1)) {
+      *virtual_alloc = uVar1;
+      size = uVar1;
+      link_up_new_m_heap = (uint *)LinkUpNewMHeap((int *)virtual_alloc);
+      size = *link_up_new_m_heap;
+      *link_up_new_m_heap = size | 1;
+      virtual_alloc[5] = 0xffffffff;
+      virtual_alloc[6] = virtual_alloc[6] + 1;
+      nfree(link_up_new_m_heap + 1);
+      return 1;
     }
   }
-  uVar1 = 0;
-LAB_0040f0bc:
-  return CONCAT44(unaff_EDX,uVar1);
+  return 0;
 }
 
 
 /* ==== 0040f0c5 ExpandDGROUP ==== */
 
-undefined8 __watcall ExpandDGROUP(undefined4 param_1,undefined4 unaff_EDX_00)
+undefined4 __watcall ExpandDGROUP(undefined4 param_1)
 
 {
-  SIZE_T unaff_EDX;
-  longlong heapmin_result;
-  undefined8 new_n_heap;
+  undefined4 new_n_heap;
   
-  heapmin_result = heapmin(param_1,param_1);
-  unaff_EDX = (SIZE_T)((ulonglong)heapmin_result >> 0x20);
-  new_n_heap = CreateNewNHeap(unaff_EDX,unaff_EDX);
-  return CONCAT44(unaff_EDX_00,(int)new_n_heap);
+  heapmin();
+  new_n_heap = CreateNewNHeap();
+  return new_n_heap;
 }
 
 
 /* ==== 0040f0d6 AdjustAmount ==== */
 
-longlong __watcall AdjustAmount(uint *param_1,uint unaff_EDX)
+undefined4 __watcall AdjustAmount(uint *param_1)
 
 {
   uint uVar1;
-  uint uVar2;
   
   uVar1 = *param_1 + 0xb & 0xfffffff8;
-  uVar2 = 0;
   if (uVar1 == 0) {
-LAB_0040f11d:
-    return CONCAT44(unaff_EDX,uVar2);
+    return 0;
   }
   *param_1 = uVar1;
   uVar1 = uVar1 + 0x3c;
@@ -123,13 +113,12 @@ LAB_0040f11d:
     }
     *param_1 = uVar1;
     if (*param_1 <= uVar1 + 0xfff) {
-      uVar2 = uVar1 + 0xfff >> 8 & 0xfffff0;
-      *param_1 = uVar2 << 8;
-      uVar2 = (uint)(uVar2 != 0);
-      goto LAB_0040f11d;
+      uVar1 = uVar1 + 0xfff >> 8 & 0xfffff0;
+      *param_1 = uVar1 << 8;
+      return (uint)(uVar1 != 0);
     }
   }
-  return (ulonglong)unaff_EDX << 0x20;
+  return 0;
 }
 
 

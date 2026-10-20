@@ -3,42 +3,43 @@
 
 /* ==== 004311f5 sqrt_domain_error ==== */
 
-undefined8 __watcall
-sqrt_domain_error(undefined4 param_1,undefined4 param_2,double param_3,byte param_4)
+undefined4 __watcall
+sqrt_domain_error(undefined4 param_1,undefined4 param_2,uint param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6,uint param_7)
 
 {
   uint uVar1;
-  byte in_stack_0000000c;
   
-  if (in_stack_0000000c == 0) {
-LAB_00431237:
-    uVar1 = (uint)CONCAT11(0x81,in_stack_0000000c);
-    if ((in_stack_0000000c == 6) && (param_3 < 0.0)) {
-      uVar1 = 0x1106;
+  if ((byte)param_7 != 0) {
+    if ((byte)param_7 < 4) {
+      uVar1 = (uint)CONCAT11(0x20,(byte)param_7 | 0x40);
+      goto LAB_0043125b;
+    }
+    if (((byte)param_7 == 4) && ((double)CONCAT44(param_6,param_5) < 0.0)) {
+      return param_1;
     }
   }
-  else {
-    if (3 < in_stack_0000000c) {
-      if ((in_stack_0000000c == 4) && (param_3 < 0.0)) goto LAB_00431263;
-      goto LAB_00431237;
-    }
-    uVar1 = (uint)CONCAT11(0x20,in_stack_0000000c | 0x40);
+  uVar1 = (uint)CONCAT11(0x81,(byte)param_7);
+  param_3 = uVar1;
+  if (((param_7 & 0xff) == 6) && ((double)CONCAT44(param_6,param_5) < 0.0)) {
+    uVar1 = (uint)CONCAT11(0x11,(byte)param_7);
+    param_3 = uVar1;
   }
-  math1err(uVar1,(undefined4 *)&param_3);
-LAB_00431263:
-  return CONCAT44(param_2,param_1);
+LAB_0043125b:
+  math1err(uVar1,&param_5,param_3,param_4);
+  return param_1;
 }
 
 
 /* ==== 00431270 tolower ==== */
 
-int __watcall tolower(int _C)
+int __watcall tolower(int param_1)
 
 {
-  if ((0x40 < _C) && (_C < 0x5b)) {
-    _C = _C + 0x20;
+  if ((0x40 < param_1) && (param_1 < 0x5b)) {
+    param_1 = param_1 + 0x20;
   }
-  return _C;
+  return param_1;
 }
 
 

@@ -3,21 +3,24 @@
 
 /* ==== 00437184 init_80x87 ==== */
 
-ushort __watcall init_80x87(void)
+uint __watcall init_80x87(void)
 
 {
-  byte bVar2;
-  ushort uVar1;
+  undefined4 in_EAX;
+  uint uVar1;
   float10 fVar3;
   float10 fVar4;
+  undefined3 uVar2;
   
   fVar4 = (float10)1 / (float10)0;
   fVar3 = -fVar4;
-  bVar2 = fVar3 < fVar4 | (byte)((ushort)((ushort)(NAN(fVar3) || NAN(fVar4)) << 10) >> 8) |
-          (byte)((ushort)((ushort)(fVar3 == fVar4) << 0xe) >> 8);
-  uVar1 = CONCAT11(bVar2,2);
+  uVar2 = (undefined3)
+          (CONCAT22((short)((uint)in_EAX >> 0x10),
+                    (ushort)(fVar3 < fVar4) << 8 | (ushort)(NAN(fVar3) || NAN(fVar4)) << 10 |
+                    (ushort)(fVar3 == fVar4) << 0xe) >> 8);
+  uVar1 = CONCAT31(uVar2,2);
   if ((uVar1 & 0x4000) == 0) {
-    uVar1 = CONCAT11(bVar2,3);
+    uVar1 = CONCAT31(uVar2,3);
   }
   LOCK();
   UNLOCK();

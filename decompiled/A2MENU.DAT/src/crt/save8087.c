@@ -3,10 +3,12 @@
 
 /* ==== 0042118a do_nothing ==== */
 
-void __watcall do_nothing(void)
+undefined4 __watcall do_nothing(void)
 
 {
-  return;
+  undefined4 in_EAX;
+  
+  return in_EAX;
 }
 
 

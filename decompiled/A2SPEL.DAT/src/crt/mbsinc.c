@@ -3,7 +3,7 @@
 
 /* ==== 00432e0b mbgetcode ==== */
 
-byte * __watcall mbgetcode(byte *param_1,uint *unaff_EDX)
+byte * __watcall mbgetcode(byte *param_1,uint *param_2)
 
 {
   byte *pbVar1;
@@ -13,24 +13,24 @@ byte * __watcall mbgetcode(byte *param_1,uint *unaff_EDX)
   
   pbVar1 = param_1 + 1;
   if (IsDBCS == 0) {
-    *unaff_EDX = (uint)*param_1;
+    *param_2 = (uint)*param_1;
     pbVar3 = pbVar1;
   }
   else {
     bVar2 = *param_1;
-    *unaff_EDX = (uint)bVar2;
+    *param_2 = (uint)bVar2;
     pbVar3 = param_1;
     if (bVar2 != 0) {
       if (IsDBCS == 0) {
         bVar4 = true;
       }
       else {
-        bVar4 = ((&mbcs_lead_byte_table)[(byte)*unaff_EDX] & 1) == 0;
+        bVar4 = ((&mbcs_lead_byte_table)[(byte)*param_2] & 1) == 0;
       }
       pbVar3 = pbVar1;
       if (!bVar4) {
         if (*pbVar1 != 0) {
-          *unaff_EDX = *unaff_EDX << 8 | (uint)*pbVar1;
+          *param_2 = *param_2 << 8 | (uint)*pbVar1;
           return param_1 + 2;
         }
         *param_1 = 0;
@@ -44,7 +44,7 @@ byte * __watcall mbgetcode(byte *param_1,uint *unaff_EDX)
 
 /* ==== 00432e78 mbsnextc ==== */
 
-undefined8 __watcall mbsnextc(byte *param_1,undefined4 unaff_EDX)
+uint __watcall mbsnextc(byte *param_1)
 
 {
   byte bVar1;
@@ -63,17 +63,17 @@ undefined8 __watcall mbsnextc(byte *param_1,undefined4 unaff_EDX)
         bVar3 = (&mbcs_lead_byte_table)[bVar1] & 1;
       }
       if ((bVar3 != 0) && (param_1[1] != 0)) {
-        return CONCAT44(unaff_EDX,(uint)CONCAT11(bVar1,param_1[1]));
+        return (uint)CONCAT11(bVar1,param_1[1]);
       }
     }
   }
-  return CONCAT44(unaff_EDX,uVar2);
+  return uVar2;
 }
 
 
 /* ==== 00432eca mbsinc ==== */
 
-undefined8 __watcall mbsinc(byte *param_1,undefined4 unaff_EDX)
+byte * __watcall mbsinc(byte *param_1)
 
 {
   byte *pbVar1;
@@ -89,10 +89,10 @@ undefined8 __watcall mbsinc(byte *param_1,undefined4 unaff_EDX)
     }
     pbVar1 = param_1 + 1;
     if (!bVar2) {
-      return CONCAT44(unaff_EDX,param_1 + 2);
+      return param_1 + 2;
     }
   }
-  return CONCAT44(unaff_EDX,pbVar1);
+  return pbVar1;
 }
 
 
@@ -100,14 +100,14 @@ undefined8 __watcall mbsinc(byte *param_1,undefined4 unaff_EDX)
 
 /* WARNING: Removing unreachable block (ram,0x00432f4a) */
 
-byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
+byte * __watcall mbsdec(byte *param_1,byte *param_2)
 
 {
   byte *pbVar1;
   bool bVar2;
   
-  if (param_1 < unaff_EDX) {
-    pbVar1 = unaff_EDX + -1;
+  if (param_1 < param_2) {
+    pbVar1 = param_2 + -1;
     if (IsDBCS != 0) {
       if (((&mbcs_lead_byte_table)[*pbVar1] & 1) == 0) {
         do {
@@ -120,10 +120,10 @@ byte * __watcall mbsdec(byte *param_1,byte *unaff_EDX)
             bVar2 = ((&mbcs_lead_byte_table)[*pbVar1] & 1) == 0;
           }
         } while (!bVar2);
-        pbVar1 = unaff_EDX + (-1 - ((int)unaff_EDX - (int)pbVar1) % 2);
+        pbVar1 = param_2 + (-1 - ((int)param_2 - (int)pbVar1) % 2);
       }
       else {
-        pbVar1 = unaff_EDX + -2;
+        pbVar1 = param_2 + -2;
       }
     }
   }

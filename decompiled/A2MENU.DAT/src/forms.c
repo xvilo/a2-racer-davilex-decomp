@@ -73,8 +73,6 @@ void __watcall set_control_state(int param_1,int param_2)
 
 {
   HWND pHVar1;
-  int extraout_EDX;
-  int extraout_EDX_00;
   int iVar2;
   BOOL bEnable;
   fform_t *fform;
@@ -83,11 +81,9 @@ void __watcall set_control_state(int param_1,int param_2)
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____set_control_state__con_0042f272,s_forms_cpp_0042f268,0x71,param_1,
                nmb_of_controls);
-    param_2 = extraout_EDX;
   }
   if (activeform == (fform_t *)0x0) {
     fatal_exit(s__s__d_____set_control_state__No_a_0042f2cb,s_forms_cpp_0042f2c1,0x76);
-    param_2 = extraout_EDX_00;
   }
   iVar2 = param_1 * 0x1c;
   *(undefined4 *)(activeform + iVar2 + 0x14) = *(undefined4 *)(activeform + iVar2 + 0x10);
@@ -127,18 +123,13 @@ LAB_004174fd:
 void __watcall enable_control(int param_1)
 
 {
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____enable_control__contro_0042f356,s_forms_cpp_0042f34c,0x9e,param_1,
                nmb_of_controls);
-    param_1 = extraout_EDX;
   }
   if (activeform == (fform_t *)0x0) {
     fatal_exit(s__s__d_____enable_control__No_act_0042f3ac,s_forms_cpp_0042f3a2,0xa3);
-    param_1 = extraout_EDX_00;
   }
   EnableWindow(*(HWND *)(activeform + param_1 * 0x1c + 0x18),1);
   return;
@@ -150,18 +141,13 @@ void __watcall enable_control(int param_1)
 void __watcall disable_control(int param_1)
 
 {
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____disable_control__contr_0042f3e1,s_forms_cpp_0042f3d7,0xb0,param_1,
                nmb_of_controls);
-    param_1 = extraout_EDX;
   }
   if (activeform == (fform_t *)0x0) {
     fatal_exit(s__s__d_____disable_control__No_ac_0042f438,s_forms_cpp_0042f42e,0xb5);
-    param_1 = extraout_EDX_00;
   }
   EnableWindow(*(HWND *)(activeform + param_1 * 0x1c + 0x18),0);
   return;
@@ -187,18 +173,13 @@ int __watcall get_control_focus(void)
 void __watcall focus_control(int param_1)
 
 {
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____focus_control__control_0042f46e,s_forms_cpp_0042f464,0xcd,param_1,
                nmb_of_controls);
-    param_1 = extraout_EDX;
   }
   if (activeform == (fform_t *)0x0) {
     fatal_exit(s__s__d_____focus_control__No_acti_0042f4c3,s_forms_cpp_0042f4b9,0xd2);
-    param_1 = extraout_EDX_00;
   }
   SetFocus(*(HWND *)(activeform + param_1 * 0x1c + 0x18));
   return;
@@ -210,13 +191,11 @@ void __watcall focus_control(int param_1)
 int __watcall get_control_image_index(int param_1,int param_2)
 
 {
-  int extraout_EDX;
   int iVar1;
   
   iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d____control_illegal_frame_i_0042f4f7,s_forms_cpp_0042f4ed,0xe1);
-    iVar1 = extraout_EDX;
   }
   return iVar1;
 }
@@ -227,23 +206,14 @@ int __watcall get_control_image_index(int param_1,int param_2)
 void __watcall check_control_position(int param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if ((((param_2 < 0) || (param_3 < 0)) || (xvga_screen_xsize < param_2)) ||
      (xvga_screen_ysize < param_3)) {
     fatal_exit(s__s__d_____check_control_position_0042f527,s_forms_cpp_0042f51d,0xed,param_1,param_2
                ,param_3);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if ((param_4 < 1) || (param_5 < 1)) {
     fatal_exit(s__s__d_____check_control_position_0042f58f,s_forms_cpp_0042f585,0xf2,param_1,param_4
                ,param_5);
-    param_4 = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
   }
   if (((xvga_screen_xsize < param_4) || (xvga_screen_ysize < param_5)) ||
      ((xvga_screen_xsize < param_2 + param_4 || (xvga_screen_ysize < param_5 + param_3)))) {
@@ -260,13 +230,11 @@ int __watcall get_previous_control_index(int param_1,int param_2)
 
 {
   int iVar1;
-  int extraout_ECX;
   int fform_index;
   
   if ((param_1 < 0) || (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_previous_control_i_0042f677,s_forms_cpp_0042f66d,0x103,param_1,
                nmb_of_controls);
-    param_2 = extraout_ECX;
   }
   if (param_1 != 0) {
     iVar1 = param_1 * 0x1c;
@@ -326,12 +294,9 @@ int __watcall get_numberofcontrols_inform(void)
 int __watcall get_old_control_state(int param_1)
 
 {
-  int extraout_EDX;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_old_control_state__0042f737,s_forms_cpp_0042f72d,0x13e,param_1);
-    param_1 = extraout_EDX;
   }
   return *(int *)(activeform + param_1 * 0x1c + 0x14);
 }
@@ -342,12 +307,9 @@ int __watcall get_old_control_state(int param_1)
 int __watcall get_control_type(int param_1)
 
 {
-  int extraout_EDX;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_control_type__cont_0042f781,s_forms_cpp_0042f777,0x14b,param_1);
-    param_1 = extraout_EDX;
   }
   return *(int *)(activeform + param_1 * 0x1c + 8);
 }
@@ -358,12 +320,9 @@ int __watcall get_control_type(int param_1)
 int __watcall get_control_state(int param_1)
 
 {
-  int extraout_EDX;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_control_state__con_0042f7c5,s_forms_cpp_0042f7bb,0x158,param_1);
-    param_1 = extraout_EDX;
   }
   return *(int *)(activeform + param_1 * 0x1c + 0x10);
 }
@@ -374,12 +333,9 @@ int __watcall get_control_state(int param_1)
 void * __watcall get_control_hwnd(int param_1)
 
 {
-  int extraout_EDX;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_control_x__control_0042f80b,s_forms_cpp_0042f801,0x165,param_1);
-    param_1 = extraout_EDX;
   }
   return *(void **)(activeform + param_1 * 0x1c + 0x18);
 }
@@ -390,12 +346,9 @@ void * __watcall get_control_hwnd(int param_1)
 int __watcall get_control_x(int param_1)
 
 {
-  int extraout_EDX;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_control_x__control_0042f84d,s_forms_cpp_0042f843,0x172,param_1);
-    param_1 = extraout_EDX;
   }
   return *(int *)(activeform + param_1 * 0x1c);
 }
@@ -406,12 +359,9 @@ int __watcall get_control_x(int param_1)
 int __watcall get_control_y(int param_1)
 
 {
-  int extraout_EDX;
-  
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_control_y__control_0042f88f,s_forms_cpp_0042f885,0x17f,param_1);
-    param_1 = extraout_EDX;
   }
   return *(int *)(activeform + param_1 * 0x1c + 4);
 }
@@ -465,12 +415,9 @@ void * __watcall get_control_pointer(void *param_1)
 void * __watcall get_control_pointer_1(int param_1)
 
 {
-  int extraout_EDX;
-  
   if ((param_1 < 0) || (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____get_control_pointer__c_0042f95b,s_forms_cpp_0042f951,0x1b6,param_1,
                nmb_of_controls);
-    param_1 = extraout_EDX;
   }
   return *(void **)(activeform + param_1 * 0x1c + 0xc);
 }
@@ -482,13 +429,11 @@ void __watcall call_help_function(int param_1)
 
 {
   int iVar1;
-  int extraout_EDX;
   
   if (((*(int *)(activeform + param_1 * 0x1c + 0x18) == 0) || (param_1 < 0)) ||
      (nmb_of_controls < param_1)) {
     fatal_exit(s__s__d_____call_help_function__co_0042f9a9,s_forms_cpp_0042f99f,0x1c2,param_1,
                nmb_of_controls);
-    param_1 = extraout_EDX;
   }
   if ((*(int *)(activeform + param_1 * 0x1c + 8) == -1) ||
      (iVar1 = *(int *)(activeform + param_1 * 0x1c + 8) * 0x19, (&control_list)[iVar1] == '\0')) {

@@ -3,31 +3,31 @@
 
 /* ==== 0041a7e9 mem_putc_1 ==== */
 
-void __watcall mem_putc_1(int *param_1,undefined1 unaff_DL)
+int * __watcall mem_putc_1(int *param_1,undefined4 param_2)
 
 {
   undefined1 *puVar1;
   
   puVar1 = (undefined1 *)*param_1;
   *param_1 = (int)(puVar1 + 1);
-  *puVar1 = unaff_DL;
+  *puVar1 = (undefined1)param_2;
   param_1[4] = param_1[4] + 1;
-  return;
+  return param_1;
 }
 
 
 /* ==== 0041a7fc sprintf ==== */
 
-int __cdecl sprintf(char *_Dest,char *_Format,...)
+void __cdecl sprintf(char *_Dest,char *_Format,...)
 
 {
   int prtf_result;
-  undefined1 *local_10 [3];
+  undefined1 *local_10;
   
-  local_10[0] = &stack0x0000000c;
-  prtf_result = prtf(_Dest,(byte *)_Format,(int *)local_10,mem_putc_1);
+  local_10 = &stack0x0000000c;
+  prtf_result = prtf(_Dest,(byte *)_Format,(int *)&local_10,mem_putc_1);
   _Dest[prtf_result] = '\0';
-  return prtf_result;
+  return;
 }
 
 

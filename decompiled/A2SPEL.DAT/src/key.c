@@ -55,11 +55,10 @@ void __watcall matrix_multiply(float *a,float *b)
 
 /* ==== 00423553 rotate_matrix_x ==== */
 
-void __watcall rotate_matrix_x(float *a_val,float *b_val)
+void __watcall rotate_matrix_x(float *a_val,float *b_val,uint param_3)
 
 {
   int i;
-  uint unaff_EBX;
   float *pfVar1;
   float *pfVar2;
   
@@ -75,9 +74,9 @@ void __watcall rotate_matrix_x(float *a_val,float *b_val)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[10] = *(float *)(sin_table + (unaff_EBX & 0x3ff) * 4);
+  b_val[10] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   b_val[5] = b_val[10];
-  b_val[6] = *(float *)(cos_table + (unaff_EBX & 0x3ff) * 4);
+  b_val[6] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   b_val[9] = -b_val[6];
   matrix_multiply(a_val,b_val);
   return;
@@ -86,11 +85,10 @@ void __watcall rotate_matrix_x(float *a_val,float *b_val)
 
 /* ==== 004235fb rotate_matrix_y ==== */
 
-void __watcall rotate_matrix_y(float *a_val,float *b_val)
+void __watcall rotate_matrix_y(float *a_val,float *b_val,uint param_3)
 
 {
   int i;
-  uint unaff_EBX;
   float *pfVar1;
   float *pfVar2;
   
@@ -106,9 +104,9 @@ void __watcall rotate_matrix_y(float *a_val,float *b_val)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[10] = *(float *)(sin_table + (unaff_EBX & 0x3ff) * 4);
+  b_val[10] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   *b_val = b_val[10];
-  b_val[8] = *(float *)(cos_table + (unaff_EBX & 0x3ff) * 4);
+  b_val[8] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   b_val[2] = -b_val[8];
   matrix_multiply(a_val,b_val);
   return;
@@ -117,11 +115,10 @@ void __watcall rotate_matrix_y(float *a_val,float *b_val)
 
 /* ==== 0042369d rotate_matrix_z ==== */
 
-void __watcall rotate_matrix_z(float *a_val,float *b_val)
+void __watcall rotate_matrix_z(float *a_val,float *b_val,uint param_3)
 
 {
   int i;
-  uint unaff_EBX;
   float *pfVar1;
   float *pfVar2;
   
@@ -137,9 +134,9 @@ void __watcall rotate_matrix_z(float *a_val,float *b_val)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[5] = *(float *)(sin_table + (unaff_EBX & 0x3ff) * 4);
+  b_val[5] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   *b_val = b_val[5];
-  b_val[1] = *(float *)(cos_table + (unaff_EBX & 0x3ff) * 4);
+  b_val[1] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   b_val[4] = -b_val[1];
   matrix_multiply(a_val,b_val);
   return;
@@ -182,11 +179,9 @@ int __watcall keyispressed_1(int param_1,int param_2)
 {
   SHORT SVar1;
   int check_joystick_keys_val;
-  uint extraout_EDX;
   
   if ((param_2 < 0) || (3 < param_2)) {
     fatal_exit(s__keyispressed__illegal_device_re_0044dd38,param_2);
-    param_2 = extraout_EDX;
   }
   if (((param_2 & 2U) != 0) &&
      (check_joystick_keys_val = check_joystick_keys(param_1), check_joystick_keys_val != 0)) {

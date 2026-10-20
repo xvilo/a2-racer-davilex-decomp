@@ -18,11 +18,8 @@ int __watcall get_mouse_type(void)
 void __watcall set_mouse_type(int param_1)
 
 {
-  uint extraout_EDX;
-  
   if (mouse_init_ok != 0) {
     fatal_exit(s__s__d_____set_mouse_type__Can_t_c_0042d0b1,s_mouse_cpp_0042d0a7,0x45);
-    param_1 = extraout_EDX;
   }
   if ((param_1 != 0) && ((uint)param_1 < 3)) {
     mouse_type = param_1;
@@ -38,9 +35,9 @@ void __watcall set_mouse_type(int param_1)
 int __watcall init_mouse(void)
 
 {
-  char *format;
   char *pcVar1;
-  undefined4 uVar2;
+  char *arg2;
+  undefined4 arg3;
   
   if (mouse_type != 0) {
     if ((uint)mouse_type < 2) {
@@ -49,9 +46,9 @@ int __watcall init_mouse(void)
         mouse_init_ok = 1;
         return 1;
       }
-      uVar2 = 0x5f;
-      pcVar1 = s_mouse_cpp_0042d13a;
-      format = s__s__d_____init_mouse__Unable_to_l_0042d144;
+      arg3 = 0x5f;
+      arg2 = s_mouse_cpp_0042d13a;
+      pcVar1 = s__s__d_____init_mouse__Unable_to_l_0042d144;
       mouse_windows_cursor = (void *)0x0;
     }
     else {
@@ -63,11 +60,11 @@ int __watcall init_mouse(void)
         mouse_init_ok = 1;
         return 1;
       }
-      uVar2 = 0x65;
-      pcVar1 = s_mouse_cpp_0042d181;
-      format = s__s__d_____init_mouse__No_mouse_a_0042d18b;
+      arg3 = 0x65;
+      arg2 = s_mouse_cpp_0042d181;
+      pcVar1 = s__s__d_____init_mouse__No_mouse_a_0042d18b;
     }
-    fatal_exit(format,pcVar1,uVar2);
+    fatal_exit(pcVar1,arg2,arg3);
   }
   mouse_init_ok = 1;
   return 1;
@@ -162,46 +159,26 @@ void __watcall mouse_off(void)
 void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
 
 {
-  int iVar1;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_ECX_02;
-  int extraout_ECX_03;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
-  int extraout_EDX_02;
-  int extraout_EDX_03;
+  int arg4;
   
   if (mouse_type == 1) {
     fatal_exit(s__s__d_____set_mouse_anim__You_ca_0042d237,s_mouse_cpp_0042d22d,0xde);
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if ((param_1 < 0) || (max_anim_ptr <= param_1)) {
     fatal_exit(s__s__d_____set_mouse_anim__illega_0042d287,s_mouse_cpp_0042d27d,0xe2,param_1,
                max_anim_ptr);
-    param_1 = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
   }
   if ((param_2 < 0) || (*(int *)(xvga_anims + param_1 * 0xc) <= param_2)) {
     fatal_exit(s__s__d_____set_mouse_anim__illega_0042d2eb,s_mouse_cpp_0042d2e1,0xe6,param_2,
                *(undefined4 *)(xvga_anims + param_1 * 0xc),param_1);
-    param_1 = extraout_ECX_01;
-    param_2 = extraout_EDX_01;
   }
-  iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
-  if ((iVar1 < 0) || (max_mem_image_ptr <= iVar1)) {
-    fatal_exit(s__s__d_____set_mouse_anim__image___0042d34e,s_mouse_cpp_0042d344,0xeb,iVar1,
+  arg4 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
+  if ((arg4 < 0) || (max_mem_image_ptr <= arg4)) {
+    fatal_exit(s__s__d_____set_mouse_anim__image___0042d34e,s_mouse_cpp_0042d344,0xeb,arg4,
                max_mem_image_ptr);
-    param_1 = extraout_ECX_02;
-    param_2 = extraout_EDX_02;
   }
-  if (*(int *)(xvga_mem_images + iVar1 * 0x20) == 0) {
-    fatal_exit(s__s__d_____set_mouse_anim__mouse_i_0042d39b,s_mouse_cpp_0042d391,0xee,iVar1);
-    param_1 = extraout_ECX_03;
-    param_2 = extraout_EDX_03;
+  if (*(int *)(xvga_mem_images + arg4 * 0x20) == 0) {
+    fatal_exit(s__s__d_____set_mouse_anim__mouse_i_0042d39b,s_mouse_cpp_0042d391,0xee,arg4);
   }
   mouse_anim = param_1;
   mouse_frame = param_2;
@@ -216,27 +193,14 @@ void __watcall set_mouse_anim(int param_1,int param_2,char param_3)
 void __watcall get_mouse_anim(int *param_1,int *param_2,char *param_3)
 
 {
-  int *extraout_ECX;
-  int *extraout_ECX_00;
-  int *extraout_ECX_01;
-  int *extraout_EDX;
-  int *extraout_EDX_00;
-  int *extraout_EDX_01;
-  
   if (mouse_init_ok == 0) {
     fatal_exit(s__s__d_____get_mouse_anim__Mouse_i_0042d3fa,s_mouse_cpp_0042d3f0,0x102);
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if (mouse_type == 1) {
     fatal_exit(s__s__d_____get_mouse_anim__window_0042d438,s_mouse_cpp_0042d42e,0x107);
-    param_1 = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
   }
   if (mouse_anim_set == 0) {
     fatal_exit(s__s__d_____get_mouse_anim__No_mou_0042d47a,s_mouse_cpp_0042d470,0x10c);
-    param_1 = extraout_ECX_01;
-    param_2 = extraout_EDX_01;
   }
   *param_1 = mouse_anim;
   *param_2 = mouse_frame;
@@ -250,11 +214,8 @@ void __watcall get_mouse_anim(int *param_1,int *param_2,char *param_3)
 void __watcall set_mouse_pos(int param_1,int param_2)
 
 {
-  int extraout_EDX;
-  
   if (mouse_init_ok == 0) {
     fatal_exit(s__s__d_____set_mouse_pos__Mouse_i_0042d4b9,s_mouse_cpp_0042d4af,0x11a);
-    param_2 = extraout_EDX;
   }
   SetCursorPos(param_1,param_2);
   return;
@@ -293,11 +254,8 @@ void __watcall get_mouse_pos(int *param_1,int *param_2,int *param_3)
 void __watcall set_mouse_hotspot(int param_1,int param_2)
 
 {
-  int extraout_EDX;
-  
   if (mouse_init_ok == 0) {
     fatal_exit(s__s__d_____set_mouse_hotspot__Mou_0042d533,s_mouse_cpp_0042d529,0x13c);
-    param_2 = extraout_EDX;
   }
   mouse_hotspot_x = param_1;
   mouse_hotspot_y = param_2;
@@ -310,11 +268,8 @@ void __watcall set_mouse_hotspot(int param_1,int param_2)
 void __watcall get_mouse_hotspot(int *param_1,int *param_2)
 
 {
-  int *extraout_EDX;
-  
   if (mouse_init_ok == 0) {
     fatal_exit(s__s__d_____get_mouse_hotspot__Mou_0042d574,s_mouse_cpp_0042d56a,0x14a);
-    param_2 = extraout_EDX;
   }
   *param_1 = mouse_hotspot_x;
   *param_2 = mouse_hotspot_y;

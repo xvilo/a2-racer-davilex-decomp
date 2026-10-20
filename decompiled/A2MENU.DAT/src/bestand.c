@@ -6,13 +6,13 @@
 int __watcall file_exist(char *filename)
 
 {
-  FILE *_File;
+  int file;
   int fclose_result;
   
-  _File = fopen(filename,s_r_004256ec);
+  file = fopen(filename,(byte *)s_r_004256ec);
   fclose_result = 0;
-  if (_File != (FILE *)0x0) {
-    fclose_result = fclose(_File);
+  if (file != 0) {
+    fclose_result = fclose(file);
     if (fclose_result != 0) {
       fatal_exit(s__s__d___unable_to_close_file__s_w_004256fa,s_bestand_cpp_004256ee,0x22,filename);
     }
@@ -27,150 +27,139 @@ int __watcall file_exist(char *filename)
 int __watcall file_size(char *filename)
 
 {
-  FILE *_File;
   int iVar1;
+  int iVar2;
   int *errno_ptr;
   char *strerror_result;
-  int fclose_result;
-  char *extraout_ECX;
-  char *extraout_ECX_00;
-  long extraout_EDX;
-  int extraout_EDX_00;
+  char *strerror_result_2;
+  undefined4 uVar3;
+  undefined4 uVar4;
   
-  _File = fopen(filename,s_rb_00425738);
-  iVar1 = 0;
-  if (_File != (FILE *)0x0) {
-    iVar1 = fseek(_File,0,2);
-    if (iVar1 != 0) {
+  iVar1 = fopen(filename,(byte *)s_rb_00425738);
+  iVar2 = 0;
+  if (iVar1 != 0) {
+    uVar4 = 2;
+    uVar3 = 0;
+    iVar2 = fseek(iVar1,0,2);
+    if (iVar2 != 0) {
+      strerror_result_2 = filename;
       errno_ptr = (int *)get_errno_ptr();
       strerror_result = strerror(*errno_ptr);
       fatal_exit(s__s__d____s_while_doing_file_seek_00425747,s_bestand_cpp_0042573b,0x33,
-                 strerror_result,filename);
-      filename = extraout_ECX;
+                 strerror_result,strerror_result_2);
     }
-    iVar1 = ftell(_File);
-    if (iVar1 < 0) {
+    iVar2 = ftell(iVar1,uVar3,uVar4,filename);
+    if (iVar2 < 0) {
+      strerror_result_2 = filename;
       errno_ptr = (int *)get_errno_ptr();
       strerror_result = strerror(*errno_ptr);
       fatal_exit(s__s__d____s_while_getting_file_te_0042577a,s_bestand_cpp_0042576e,0x36,
-                 strerror_result,filename);
-      filename = extraout_ECX_00;
-      iVar1 = extraout_EDX;
+                 strerror_result,strerror_result_2);
     }
-    fclose_result = fclose(_File);
-    if (fclose_result != 0) {
+    iVar1 = fclose(iVar1);
+    if (iVar1 != 0) {
       errno_ptr = (int *)get_errno_ptr();
-      strerror_result = strerror(*errno_ptr);
+      strerror_result_2 = strerror(*errno_ptr);
       fatal_exit(s__s__d____s_while_closing_file__s_004257b1,s_bestand_cpp_004257a5,0x39,
-                 strerror_result,filename);
-      iVar1 = extraout_EDX_00;
+                 strerror_result_2,filename);
     }
   }
-  return iVar1;
+  return iVar2;
 }
 
 
 /* ==== 0040194b file_read ==== */
 
-int __watcall file_read(void *dst_buf,int count,char *filename)
+int __watcall file_read(void *param_1,int param_2,char *filename)
 
 {
-  FILE *_File;
-  uint uVar1;
-  size_t count_read;
+  int *piVar1;
+  uint uVar2;
   int *errno_ptr;
-  char *strerror_result;
+  char *arg4;
   int fclose_result;
-  char *strerror_result_2;
-  size_t extraout_EDX;
-  size_t extraout_EDX_00;
+  char *strerror_result;
   
-  _File = fopen(filename,s_rb_004257d2);
-  if (_File == (FILE *)0x0) {
-    uVar1 = 1000;
+  piVar1 = (int *)fopen(filename,(byte *)s_rb_004257d2);
+  if (piVar1 == (int *)0x0) {
+    uVar2 = 1000;
   }
   else {
-    count_read = fread(dst_buf,1,count,_File);
-    if ((_File->_flag & 0x20) != 0) {
-      strerror_result_2 = filename;
+    uVar2 = fread(param_1,1,param_2,piVar1);
+    if ((*(byte *)(piVar1 + 3) & 0x20) != 0) {
+      strerror_result = filename;
       errno_ptr = (int *)get_errno_ptr();
-      strerror_result = strerror(*errno_ptr);
-      fatal_exit(s__s__d____s_while_reading_from_fi_004257e1,s_bestand_cpp_004257d5,0x4b,
-                 strerror_result,strerror_result_2);
-      count_read = extraout_EDX;
+      arg4 = strerror(*errno_ptr);
+      fatal_exit(s__s__d____s_while_reading_from_fi_004257e1,s_bestand_cpp_004257d5,0x4b,arg4,
+                 strerror_result);
     }
-    fclose_result = fclose(_File);
+    fclose_result = fclose((int)piVar1);
     if (fclose_result != 0) {
-      errno_ptr = (int *)get_errno_ptr();
-      strerror_result_2 = strerror(*errno_ptr);
+      piVar1 = (int *)get_errno_ptr();
+      strerror_result = strerror(*piVar1);
       fatal_exit(s__s__d____s_while_closing_file__s_00425813,s_bestand_cpp_00425807,0x4e,
-                 strerror_result_2,filename);
-      count_read = extraout_EDX_00;
+                 strerror_result,filename);
     }
-    uVar1 = (uint)(count_read != count);
+    uVar2 = (uint)(uVar2 != param_2);
   }
-  return uVar1;
+  return uVar2;
 }
 
 
 /* ==== 004019f0 file_write ==== */
 
-int __watcall file_write(void *str,int count,char *filename)
+int __watcall file_write(void *param_1,int param_2,char *filename)
 
 {
-  FILE *_File;
-  int fclose_result;
-  size_t count_written;
+  int *piVar1;
+  int count_written;
   int *errno_ptr;
+  char *arg4;
+  int fclose_result;
   char *strerror_result;
-  char *strerror_result_2;
-  size_t extraout_EDX;
-  size_t extraout_EDX_00;
   
-  _File = fopen(filename,s_wb_00425834);
-  if (_File == (FILE *)0x0) {
-    fclose_result = 1000;
+  piVar1 = (int *)fopen(filename,(byte *)s_wb_00425834);
+  if (piVar1 == (int *)0x0) {
+    count_written = 1000;
   }
   else {
-    count_written = fwrite(str,1,count,_File);
-    if ((_File->_flag & 0x20) != 0) {
-      strerror_result_2 = filename;
+    count_written = fwrite(param_1,1,param_2,piVar1);
+    if ((*(byte *)(piVar1 + 3) & 0x20) != 0) {
+      strerror_result = filename;
       errno_ptr = (int *)get_errno_ptr();
-      strerror_result = strerror(*errno_ptr);
-      fatal_exit(s__s__d____s_while_writing_to_file_00425843,s_bestand_cpp_00425837,0x60,
-                 strerror_result,strerror_result_2);
-      count_written = extraout_EDX;
+      arg4 = strerror(*errno_ptr);
+      fatal_exit(s__s__d____s_while_writing_to_file_00425843,s_bestand_cpp_00425837,0x60,arg4,
+                 strerror_result);
     }
-    fclose_result = fclose(_File);
+    fclose_result = fclose((int)piVar1);
     if (fclose_result != 0) {
-      errno_ptr = (int *)get_errno_ptr();
-      strerror_result_2 = strerror(*errno_ptr);
+      piVar1 = (int *)get_errno_ptr();
+      strerror_result = strerror(*piVar1);
       fatal_exit(s__s__d___unable_to_close_file__s_00425873,s_bestand_cpp_00425867,99,
-                 strerror_result_2,filename);
-      count_written = extraout_EDX_00;
+                 strerror_result,filename);
     }
-    if (count_written == count) {
-      fclose_result = 0;
+    if (count_written == param_2) {
+      count_written = 0;
     }
     else {
-      fclose_result = 0x3e9;
+      count_written = 0x3e9;
     }
   }
-  return fclose_result;
+  return count_written;
 }
 
 
 /* ==== 00401a98 file_delete ==== */
 
-void __watcall file_delete(char *file_name)
+void __watcall file_delete(void)
 
 {
+  LPCSTR in_EAX;
   BOOL BVar1;
-  undefined4 unaff_EDX_00;
   
-  BVar1 = DeleteFileA(file_name);
+  BVar1 = DeleteFileA(in_EAX);
   if (BVar1 == 0) {
-    set_errno_nt(0,unaff_EDX_00);
+    set_errno_nt();
     return;
   }
   return;

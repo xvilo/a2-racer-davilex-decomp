@@ -3,71 +3,70 @@
 
 /* ==== 004020fd alloca_stack_check ==== */
 
-undefined4 __watcall alloca_stack_check(void)
+undefined4 __watcall
+alloca_stack_check(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                  undefined1 *param_5)
 
 {
-  undefined4 in_EAX;
-  int in_stack_00000004;
-  
   LOCK();
   UNLOCK();
-  check_stack_overflow(in_stack_00000004);
-  return in_EAX;
+  check_stack_overflow(param_5,param_2,param_3);
+  return param_1;
 }
 
 
 /* ==== 0040210d check_stack_overflow ==== */
 
-undefined4 __watcall check_stack_overflow(int param_1)
-
-{
-  bool bVar1;
-  uint *puVar2;
-  undefined4 uVar3;
-  int iVar4;
-  int iVar5;
-  int in_stack_00000004;
-  code *pcStack_4;
-  
-  if ((uint)param_1 < &pcStack_4) {
-    pcStack_4 = (code *)param_1;
-    puVar2 = (uint *)(*(code *)GetThreadPtr)();
-    if (*puVar2 < (uint)-(param_1 - (int)&pcStack_4)) {
-      uVar3 = probe_stack_pages(-(param_1 - (int)&pcStack_4));
-      return uVar3;
-    }
-  }
-  pcStack_4 = probe_stack_pages;
-  uVar3 = wcpp_2_fatal_runtime_error(s_Stack_Overflow__00405a38,1);
-  iVar5 = -4;
-  do {
-    *(int *)(&stack0xfffffff8 + iVar5) = iVar5;
-    iVar5 = iVar5 + -0x1000;
-    iVar4 = in_stack_00000004 + -0x1000;
-    bVar1 = 0xfff < in_stack_00000004;
-    in_stack_00000004 = iVar4;
-  } while (iVar4 != 0 && bVar1);
-  return uVar3;
-}
-
-
-/* ==== 0040213c probe_stack_pages ==== */
-
-int __watcall probe_stack_pages(int param_1)
+void __watcall check_stack_overflow(undefined1 *param_1,undefined4 param_2,undefined4 param_3)
 
 {
   bool bVar1;
   int iVar2;
   int iVar3;
+  undefined4 extraout_ECX;
+  undefined8 uVar4;
   int in_stack_00000004;
+  
+  if (param_1 < &stack0xfffffffc) {
+    iVar2 = (int)param_1 - (int)&stack0xfffffffc;
+    uVar4 = (*(code *)GetThreadPtr)();
+    if (*(uint *)uVar4 < (uint)-iVar2) {
+      probe_stack_pages(-iVar2,(int)((ulonglong)uVar4 >> 0x20),param_3,extraout_ECX,(int)param_1);
+      return;
+    }
+  }
+  wcpp_2_fatal_runtime_error(s_Stack_Overflow__00405a38,1);
+  iVar2 = -4;
+  do {
+    *(int *)(&stack0xfffffff8 + iVar2) = iVar2;
+    iVar2 = iVar2 + -0x1000;
+    iVar3 = in_stack_00000004 + -0x1000;
+    bVar1 = 0xfff < in_stack_00000004;
+    in_stack_00000004 = iVar3;
+  } while (iVar3 != 0 && bVar1);
+  return;
+}
+
+
+/* ==== 0040213c probe_stack_pages ==== */
+
+undefined4 __watcall
+probe_stack_pages(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 int param_5)
+
+{
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  int aiStack_8 [2];
   
   iVar3 = -4;
   do {
-    *(int *)(&stack0xfffffff8 + iVar3) = iVar3;
+    *(int *)((int)aiStack_8 + iVar3) = iVar3;
     iVar3 = iVar3 + -0x1000;
-    iVar2 = in_stack_00000004 + -0x1000;
-    bVar1 = 0xfff < in_stack_00000004;
-    in_stack_00000004 = iVar2;
+    iVar2 = param_5 + -0x1000;
+    bVar1 = 0xfff < param_5;
+    param_5 = iVar2;
   } while (iVar2 != 0 && bVar1);
   return param_1;
 }
@@ -91,110 +90,101 @@ char * __watcall stpcpy(char *param_1,char *param_2)
 
 uint __watcall
 build_environment_block
-          (undefined4 *param_1,int *param_2,undefined4 *param_3,int *param_4,int param_5)
+          (int *param_1,int *param_2,undefined4 *param_3,undefined4 *param_4,undefined4 *param_5,
+          int *param_6,int param_7)
 
 {
   undefined4 uVar1;
   int length;
   char *pcVar2;
   int *piVar3;
-  int *piVar4;
-  undefined4 unaff_EDX;
   int i_val;
-  uint uVar5;
-  undefined8 buffer;
-  int *in_stack_00000008;
-  int in_stack_0000000c;
+  uint uVar4;
   
-  piVar3 = param_2;
   if (param_2 == (int *)0x0) {
-    piVar3 = environ;
+    param_2 = environ;
   }
   i_val = 0;
-  piVar4 = piVar3;
-  if (piVar3 != (int *)0x0) {
-    for (; param_2 = piVar4, *piVar4 != 0; piVar4 = piVar4 + 1) {
-      length = string_length((char *)*piVar4);
+  piVar3 = param_2;
+  if (param_2 != (int *)0x0) {
+    for (; *piVar3 != 0; piVar3 = piVar3 + 1) {
+      length = string_length((char *)*piVar3);
       i_val = i_val + length + 1;
     }
   }
   i_val = i_val + 1;
-  if (in_stack_0000000c != 0) {
+  if (param_7 != 0) {
     length = string_length((char *)*param_1);
     i_val = i_val + length + 3;
   }
   uVar1 = amblksiz;
-  uVar5 = i_val + 0xf;
+  uVar4 = i_val + 0xf;
   amblksiz = 0x10;
-  buffer = nmalloc(uVar5,param_2);
-  pcVar2 = (char *)buffer;
-  if (pcVar2 == (char *)0x0) {
-    buffer = nmalloc(uVar5,(int)((ulonglong)buffer >> 0x20));
-    pcVar2 = (char *)buffer;
-    if (pcVar2 == (char *)0x0) {
-      set_errno(5,(int)((ulonglong)buffer >> 0x20));
-      set_doserrno(8,unaff_EDX);
-      amblksiz = uVar1;
-      return 0xffffffff;
-    }
+  pcVar2 = (char *)nmalloc(uVar4);
+  if ((pcVar2 == (char *)0x0) && (pcVar2 = (char *)nmalloc(uVar4), pcVar2 == (char *)0x0)) {
+    set_errno(5);
+    set_doserrno(8);
+    uVar4 = 0xffffffff;
+    amblksiz = uVar1;
   }
-  amblksiz = uVar1;
-  *param_3 = pcVar2;
-  *(undefined4 *)param_5 = 0;
-  *param_4 = (int)pcVar2;
-  if (piVar3 != (int *)0x0) {
-    for (; *piVar3 != 0; piVar3 = piVar3 + 1) {
-      pcVar2 = stpcpy(pcVar2,(char *)*piVar3);
-      pcVar2 = pcVar2 + 1;
-    }
-  }
-  *pcVar2 = '\0';
-  if (in_stack_0000000c != 0) {
-    strcpy_inline(pcVar2 + 3,(char *)*param_1);
-  }
-  i_val = 0;
-  if (*param_1 != 0) {
-    while( true ) {
-      param_1 = param_1 + 1;
-      if ((char *)*param_1 == (char *)0x0) break;
-      if (i_val != 0) {
-        i_val = i_val + 1;
+  else {
+    amblksiz = uVar1;
+    *param_3 = pcVar2;
+    *param_5 = 0;
+    *param_4 = pcVar2;
+    if (param_2 != (int *)0x0) {
+      for (; *param_2 != 0; param_2 = param_2 + 1) {
+        pcVar2 = stpcpy(pcVar2,(char *)*param_2);
+        pcVar2 = pcVar2 + 1;
       }
-      length = string_length((char *)*param_1);
-      i_val = i_val + length;
     }
+    *pcVar2 = '\0';
+    if (param_7 != 0) {
+      strcpy_inline(pcVar2 + 3,(char *)*param_1);
+    }
+    i_val = 0;
+    if (*param_1 != 0) {
+      while( true ) {
+        param_1 = param_1 + 1;
+        if ((char *)*param_1 == (char *)0x0) break;
+        if (i_val != 0) {
+          i_val = i_val + 1;
+        }
+        length = string_length((char *)*param_1);
+        i_val = i_val + length;
+      }
+    }
+    *param_6 = i_val + 0x108;
+    uVar4 = uVar4 >> 4;
   }
-  *in_stack_00000008 = i_val + 0x108;
-  return uVar5 >> 4;
+  return uVar4;
 }
 
 
 /* ==== 0040227d build_command_line ==== */
 
-void __watcall build_command_line(int param_1,int *param_2)
+void __watcall build_command_line(char *param_1,int *param_2,char *param_3,int param_4)
 
 {
   char *pcVar1;
-  int unaff_ECX;
-  char *unaff_EBX;
   int *piVar2;
   
-  if (unaff_ECX == 0) {
-    pcVar1 = stpcpy(unaff_EBX,(char *)param_1);
+  if (param_4 == 0) {
+    pcVar1 = stpcpy(param_3,param_1);
     *pcVar1 = ' ';
-    unaff_EBX = pcVar1 + 1;
+    param_3 = pcVar1 + 1;
   }
   if ((*param_2 != 0) && (piVar2 = param_2 + 1, *piVar2 != 0)) {
     while( true ) {
       pcVar1 = (char *)*piVar2;
       piVar2 = piVar2 + 1;
-      unaff_EBX = stpcpy(unaff_EBX,pcVar1);
+      param_3 = stpcpy(param_3,pcVar1);
       if (*piVar2 == 0) break;
-      *unaff_EBX = ' ';
-      unaff_EBX = unaff_EBX + 1;
+      *param_3 = ' ';
+      param_3 = param_3 + 1;
     }
   }
-  *unaff_EBX = '\0';
+  *param_3 = '\0';
   return;
 }
 
@@ -220,7 +210,7 @@ int __watcall string_length(char *param_1)
 
 /* ==== 004022d7 stackavail ==== */
 
-undefined8 __watcall stackavail(undefined4 param_1,undefined4 unaff_EDX)
+undefined1 * __watcall stackavail(void)
 
 {
   int *piVar1;
@@ -230,12 +220,12 @@ undefined8 __watcall stackavail(undefined4 param_1,undefined4 unaff_EDX)
   uVar3 = (*(code *)GetThreadPtr)();
   uVar2 = (uint)((ulonglong)uVar3 >> 0x20);
   if (*(uint *)uVar3 < uVar2) {
-    return CONCAT44(unaff_EDX,&stack0xfffffffc + -uVar2);
+    return &stack0xfffffffc + -uVar2;
   }
   uVar3 = (*(code *)GetThreadPtr)();
   *(undefined4 *)uVar3 = (int)((ulonglong)uVar3 >> 0x20);
   piVar1 = (int *)(*(code *)GetThreadPtr)();
-  return CONCAT44(unaff_EDX,&stack0xfffffffc + -*piVar1);
+  return &stack0xfffffffc + -*piVar1;
 }
 
 

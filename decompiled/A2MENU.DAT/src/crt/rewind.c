@@ -3,11 +3,11 @@
 
 /* ==== 0041c4df rewind ==== */
 
-void __watcall rewind(FILE *_File)
+void __watcall rewind(int param_1)
 
 {
-  *(byte *)&_File->_flag = (byte)_File->_flag & 0xcf;
-  fseek(_File,0,0);
+  *(byte *)(param_1 + 0xc) = *(byte *)(param_1 + 0xc) & 0xcf;
+  fseek(param_1,0,0);
   return;
 }
 

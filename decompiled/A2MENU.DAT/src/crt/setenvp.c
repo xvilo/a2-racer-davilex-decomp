@@ -5,59 +5,62 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall setenvp(undefined4 param_1,size_t unaff_EDX)
+undefined4 * __watcall setenvp(void)
 
 {
   char cVar1;
-  size_t j;
-  char *memory;
-  void *buffer;
-  char *pcVar2;
+  undefined4 *in_EAX;
+  uint uVar2;
+  char *pcVar3;
+  char *pcVar4;
   int i;
+  int iVar5;
+  int j;
   
-  pcVar2 = Envptr;
-  if (environ == (void *)0x0) {
+  pcVar4 = Envptr;
+  if (environ == 0) {
     i = 0;
-    memory = Envptr;
-    while (*memory != '\0') {
+    pcVar3 = Envptr;
+    while (*pcVar3 != '\0') {
       do {
-        cVar1 = *memory;
-        memory = memory + 1;
+        cVar1 = *pcVar3;
+        pcVar3 = pcVar3 + 1;
       } while (cVar1 != '\0');
       i = i + 1;
     }
-    j = (int)memory - (int)Envptr;
-    if (j == 0) {
-      j = 1;
+    uVar2 = (int)pcVar3 - (int)Envptr;
+    if (uVar2 == 0) {
+      uVar2 = 1;
     }
-    memory = malloc(j);
-    if (memory != (char *)0x0) {
-      buffer = malloc(i * 5 + 4);
-      if (buffer == (void *)0x0) {
-        free(memory);
+    pcVar3 = (char *)malloc(uVar2);
+    in_EAX = (undefined4 *)0x0;
+    if (pcVar3 != (char *)0x0) {
+      i = malloc(i * 5 + 4);
+      if (i == 0) {
+        in_EAX = (undefined4 *)free((undefined4 *)pcVar3);
       }
       else {
         j = 0;
-        i = 0;
-        environ = buffer;
-        while (_env_mask = environ, *pcVar2 != '\0') {
-          *(char **)(i + (int)environ) = memory;
+        iVar5 = 0;
+        environ = i;
+        while (i = environ, *pcVar4 != '\0') {
+          *(char **)(iVar5 + environ) = pcVar3;
           do {
-            cVar1 = *pcVar2;
-            pcVar2 = pcVar2 + 1;
-            *memory = cVar1;
-            memory = memory + 1;
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
+            *pcVar3 = cVar1;
+            pcVar3 = pcVar3 + 1;
           } while (cVar1 != '\0');
-          i = i + 4;
+          iVar5 = iVar5 + 4;
           j = j + 1;
         }
-        *(undefined4 *)(i + (int)environ) = 0;
-        _env_mask = (void *)((int)_env_mask + i + 4);
-        memset(_env_mask,0,j);
+        *(undefined4 *)(iVar5 + environ) = 0;
+        _env_mask = (undefined4 *)(i + iVar5 + 4);
+        in_EAX = memset(_env_mask,0,j);
       }
     }
   }
-  return;
+  return in_EAX;
 }
 
 

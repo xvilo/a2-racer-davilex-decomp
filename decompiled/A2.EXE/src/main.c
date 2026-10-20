@@ -27,7 +27,7 @@ void __watcall build_infio_path(char *filename)
   byte bVar5;
   
   bVar5 = 0;
-  getcwd(&infio_path,0x118);
+  getcwd((undefined4 *)&infio_path,0x118);
   i_val = 0xffffffff;
   pcVar4 = &infio_path;
   do {
@@ -94,22 +94,23 @@ int __watcall run_module(char *module,char *arguments)
 {
   uint uVar1;
   int iVar2;
-  intptr_t spawnv_result;
+  uint spawnv_result;
   uint *errno_ptr;
   char *lpText;
   char *lpCaption;
-  char *local_58;
+  char *local_58 [20];
   int iVar3;
   
   iVar3 = 0;
   do {
     iVar2 = iVar3 + 4;
-    *(undefined4 *)((int)&local_58 + iVar3) = 0;
+    *(undefined4 *)((int)local_58 + iVar3) = 0;
     iVar3 = iVar2;
   } while (iVar2 != 0x50);
-  local_58 = module;
-  spawnv_result = spawnv(0,module,&local_58);
-  if (spawnv_result == -1) {
+  local_58[0] = module;
+  local_58[1] = arguments;
+  spawnv_result = spawnv(0,(byte *)module,(int *)local_58);
+  if (spawnv_result == 0xffffffff) {
     errno_ptr = (uint *)get_errno_ptr();
     uVar1 = *errno_ptr;
     if (uVar1 < 3) {

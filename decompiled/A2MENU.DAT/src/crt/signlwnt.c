@@ -3,13 +3,13 @@
 
 /* ==== 0041f547 parse_rule_tail ==== */
 
-undefined4 __watcall parse_rule_tail(void)
+undefined4 __watcall
+parse_rule_tail(undefined4 param_1,int param_2,undefined4 param_3,undefined4 param_4,
+               undefined4 param_5)
 
 {
-  int unaff_EDX;
-  
   raise(4);
-  if ((unaff_EDX != 2) && (unaff_EDX != 3)) {
+  if ((param_2 != 2) && (param_2 != 3)) {
     return 1;
   }
   return 0;
@@ -39,24 +39,24 @@ undefined4 __watcall CtrlHandlerIsNeeded(void)
 
 /* ==== 0041f5bb StartCtrlHandler ==== */
 
-undefined8 __watcall StartCtrlHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall StartCtrlHandler(void)
 
 {
   BOOL BVar1;
   
-  if (CtrlHandlerRunning == 0) {
+  if (CtrlHandlerRunning == '\0') {
     BVar1 = SetConsoleCtrlHandler((PHANDLER_ROUTINE)&CtrlSignalHandler,1);
     if (BVar1 != 0) {
-      CtrlHandlerRunning = 1;
+      CtrlHandlerRunning = '\x01';
     }
   }
-  return CONCAT44(unaff_EDX,(uint)CtrlHandlerRunning);
+  return;
 }
 
 
 /* ==== 0041f5e7 KillCtrlHandler ==== */
 
-undefined8 __watcall KillCtrlHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall KillCtrlHandler(void)
 
 {
   BOOL BVar1;
@@ -67,78 +67,71 @@ undefined8 __watcall KillCtrlHandler(undefined4 param_1,undefined4 unaff_EDX)
       CtrlHandlerRunning = '\0';
     }
   }
-  return CONCAT44(unaff_EDX,(uint)(CtrlHandlerRunning == '\0'));
+  return;
 }
 
 
 /* ==== 0041f61e sigabort ==== */
 
-undefined8 __watcall
-sigabort(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX,undefined4 unaff_ECX)
+undefined4 __watcall
+sigabort(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   int iVar2;
-  uint extraout_EDX;
-  uint unaff_EDX_00;
   ulonglong uVar3;
   code *pcVar4;
   
   uVar3 = (*(code *)GetThreadPtr)();
-  unaff_EDX_00 = (uint)(uVar3 >> 0x20);
+  iVar2 = (int)(uVar3 >> 0x20);
   pcVar4 = *(code **)((int)uVar3 + 0x60);
   if (uVar3 < 0x200000000) {
-    if (unaff_EDX_00 == 1) {
-      if (pcVar4 == (code *)0x2) {
+    if (iVar2 != 1) {
+      return 0xffffffff;
+    }
+    if (pcVar4 == (code *)0x2) {
                     /* WARNING: Subroutine does not return */
-        terminate();
-      }
-LAB_0041f74a:
-      if (((pcVar4 != (code *)0x1) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
-        iVar2 = (*(code *)GetThreadPtr)(pcVar4,unaff_EDX,unaff_ECX,unaff_EBX);
-        *(undefined4 *)(iVar2 + 0x58 + unaff_EDX_00 * 8) = 2;
-        (*pcVar4)();
-        unaff_EDX_00 = extraout_EDX;
-      }
-      iVar2 = CtrlHandlerIsNeeded();
-      if (iVar2 == 0) {
-        KillCtrlHandler(0,unaff_EDX_00);
-      }
-      goto LAB_0041f77f;
+      terminate();
     }
   }
   else {
     if (uVar3 < 0x300000000) {
-      sigfpe_handler(0x8c,unaff_EDX_00);
-LAB_0041f77f:
-      uVar1 = 0;
-      goto LAB_0041f781;
+      sigfpe_handler(0x8c);
+      return 0;
     }
-    if (uVar3 < 0xd00000000) goto LAB_0041f74a;
+    if (0xcffffffff < uVar3) {
+      return 0xffffffff;
+    }
   }
-  uVar1 = 0xffffffff;
-LAB_0041f781:
-  return CONCAT44(unaff_EDX,uVar1);
+  if (((pcVar4 != (code *)0x1) && (pcVar4 != (code *)0x2)) && (pcVar4 != (code *)0x3)) {
+    iVar1 = (*(code *)GetThreadPtr)(pcVar4,param_2,param_4,param_3);
+    *(undefined4 *)(iVar1 + 0x58 + iVar2 * 8) = 2;
+    (*pcVar4)();
+  }
+  iVar2 = CtrlHandlerIsNeeded();
+  if (iVar2 == 0) {
+    KillCtrlHandler();
+  }
+  return 0;
 }
 
 
 /* ==== 0041f623 raise ==== */
 
-int __watcall raise(int _SigNum)
+void __watcall raise(int param_1)
 
 {
   code *pcVar1;
   int iVar2;
-  uint extraout_EDX;
-  uint unaff_EDX;
-  ulonglong uVar3;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar3 = (*(code *)GetThreadPtr)();
-  unaff_EDX = (uint)(uVar3 >> 0x20);
-  pcVar1 = *(code **)((int)uVar3 + 0x58 + _SigNum * 8);
-  if (uVar3 < 0x200000000) {
-    if (unaff_EDX != 1) {
-      return -1;
+  uVar4 = (*(code *)GetThreadPtr)();
+  iVar3 = (int)(uVar4 >> 0x20);
+  pcVar1 = *(code **)((int)uVar4 + 0x58 + param_1 * 8);
+  if (uVar4 < 0x200000000) {
+    if (iVar3 != 1) {
+      return;
     }
     if (pcVar1 == (code *)0x2) {
                     /* WARNING: Subroutine does not return */
@@ -146,31 +139,30 @@ int __watcall raise(int _SigNum)
     }
   }
   else {
-    if (uVar3 < 0x300000000) {
-      sigfpe_handler(0x8c,unaff_EDX);
-      return 0;
+    if (uVar4 < 0x300000000) {
+      sigfpe_handler(0x8c);
+      return;
     }
-    if (0xcffffffff < uVar3) {
-      return -1;
+    if (0xcffffffff < uVar4) {
+      return;
     }
   }
   if (((pcVar1 != (code *)0x1) && (pcVar1 != (code *)0x2)) && (pcVar1 != (code *)0x3)) {
     iVar2 = (*(code *)GetThreadPtr)();
-    *(undefined4 *)(iVar2 + 0x58 + unaff_EDX * 8) = 2;
+    *(undefined4 *)(iVar2 + 0x58 + iVar3 * 8) = 2;
     (*pcVar1)();
-    unaff_EDX = extraout_EDX;
   }
-  iVar2 = CtrlHandlerIsNeeded();
-  if (iVar2 == 0) {
-    KillCtrlHandler(0,unaff_EDX);
+  iVar3 = CtrlHandlerIsNeeded();
+  if (iVar3 == 0) {
+    KillCtrlHandler();
   }
-  return 0;
+  return;
 }
 
 
 /* ==== 0041f65c sigfpe_handler ==== */
 
-longlong __watcall sigfpe_handler(undefined4 param_1,uint unaff_EDX)
+void __watcall sigfpe_handler(undefined4 param_1)
 
 {
   code *pcVar1;
@@ -182,52 +174,52 @@ longlong __watcall sigfpe_handler(undefined4 param_1,uint unaff_EDX)
     iVar2 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar2 + 0x68) = 2;
     (*pcVar1)();
-    return (ulonglong)unaff_EDX << 0x20;
+    return;
   }
-  return CONCAT44(unaff_EDX,0xffffffff);
+  return;
 }
 
 
 /* ==== 0041f6a3 signal ==== */
 
-void __watcall signal(int param_1)
+undefined4 __watcall signal(int param_1,int param_2)
 
 {
   int ctrl_handler_is_needed;
   undefined4 extraout_ECX;
-  int unaff_EDX_00;
-  undefined4 unaff_EDX;
-  undefined8 uVar1;
+  undefined4 extraout_ECX_00;
+  undefined4 uVar1;
+  undefined8 uVar2;
   
   if ((param_1 < 1) || (0xc < param_1)) {
-    set_errno(9,unaff_EDX_00);
-    return;
+    set_errno(9);
+    return 3;
   }
   abort_1 = sigabort;
-  if ((unaff_EDX_00 != 2) && (unaff_EDX_00 != 3)) {
-    uVar1 = (*(code *)GetThreadPtr)();
-    if ((*(int *)((int)uVar1 + 0x5c + (int)((ulonglong)uVar1 >> 0x20) * 8) != 0) && (param_1 == 2))
+  if ((param_2 != 2) && (param_2 != 3)) {
+    uVar2 = (*(code *)GetThreadPtr)();
+    if ((*(int *)((int)uVar2 + 0x5c + (int)((ulonglong)uVar2 >> 0x20) * 8) != 0) && (param_1 == 2))
     {
-      control87(0,0x9f);
+      control87(0,0x9f,2,extraout_ECX);
     }
   }
   (*(code *)GetThreadPtr)();
-  uVar1 = (*(code *)GetThreadPtr)();
-  unaff_EDX = (undefined4)((ulonglong)uVar1 >> 0x20);
-  *(undefined4 *)((int)uVar1 + 0x58 + param_1 * 8) = extraout_ECX;
+  uVar2 = (*(code *)GetThreadPtr)();
+  uVar1 = (undefined4)((ulonglong)uVar2 >> 0x20);
+  *(undefined4 *)((int)uVar2 + 0x58 + param_1 * 8) = extraout_ECX_00;
   ctrl_handler_is_needed = CtrlHandlerIsNeeded();
   if (ctrl_handler_is_needed != 0) {
-    StartCtrlHandler(ctrl_handler_is_needed,unaff_EDX);
-    return;
+    StartCtrlHandler();
+    return uVar1;
   }
-  KillCtrlHandler(0,unaff_EDX);
-  return;
+  KillCtrlHandler();
+  return uVar1;
 }
 
 
 /* ==== 0041f788 SigInit ==== */
 
-undefined8 __watcall SigInit(undefined4 param_1,undefined4 unaff_EDX)
+uint __watcall SigInit(void)
 
 {
   int iVar1;
@@ -242,29 +234,31 @@ undefined8 __watcall SigInit(undefined4 param_1,undefined4 unaff_EDX)
     *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(&SignalTable + iVar2);
     *(undefined4 *)(iVar1 + 0x5c) = *(undefined4 *)(iVar2 + 0x436484);
   } while (iVar2 != 0x60);
-  return CONCAT44(unaff_EDX,(uint)in_DS);
+  return (uint)in_DS;
 }
 
 
 /* ==== 0041f7b5 SigFini ==== */
 
-void __watcall SigFini(void)
+undefined4 __watcall SigFini(void)
 
 {
-  return;
+  undefined4 in_EAX;
+  
+  return in_EAX;
 }
 
 
 /* ==== 0041fb86 NewExceptionHandler ==== */
 
-void __watcall NewExceptionHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall NewExceptionHandler(undefined4 param_1)
 
 {
   int iVar1;
   int in_FS_OFFSET;
   undefined8 uVar2;
   
-  uVar2 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar2 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar2 + 0x54) = (int)((ulonglong)uVar2 >> 0x20);
   uVar2 = (*(code *)GetThreadPtr)();
   **(undefined4 **)((int)uVar2 + 0x54) = (int)((ulonglong)uVar2 >> 0x20);
@@ -279,22 +273,21 @@ void __watcall NewExceptionHandler(undefined4 param_1,undefined4 unaff_EDX)
 
 /* ==== 0041fbc4 DoneExceptionHandler ==== */
 
-void __watcall DoneExceptionHandler(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall DoneExceptionHandler(void)
 
 {
   int iVar1;
   undefined4 *in_FS_OFFSET;
-  undefined8 uVar2;
   
-  iVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  iVar1 = (*(code *)GetThreadPtr)();
   if (*(undefined4 **)(iVar1 + 0x54) != (undefined4 *)0x0) {
     *in_FS_OFFSET = **(undefined4 **)(iVar1 + 0x54);
   }
-  uVar2 = (*(code *)GetThreadPtr)();
-  *(undefined4 *)((int)uVar2 + 0x54) = 0;
+  iVar1 = (*(code *)GetThreadPtr)();
+  *(undefined4 *)(iVar1 + 0x54) = 0;
   iVar1 = CtrlHandlerIsNeeded();
   if (iVar1 != 0) {
-    KillCtrlHandler(iVar1,(int)((ulonglong)uVar2 >> 0x20));
+    KillCtrlHandler();
     iVar1 = (*(code *)GetThreadPtr)();
     *(undefined4 *)(iVar1 + 0x78) = 2;
     iVar1 = (*(code *)GetThreadPtr)();

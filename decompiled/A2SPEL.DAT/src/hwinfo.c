@@ -35,7 +35,7 @@ int __watcall xvga_init_drive_info(int param_1)
   int drive_info_index;
   int j;
   int i;
-  char *format;
+  char *pcVar2;
   char local_7c [100];
   
   if (init_drive_list_ok == 0) {
@@ -55,36 +55,36 @@ int __watcall xvga_init_drive_info(int param_1)
       switch(UVar1) {
       case 0:
         *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 0;
-        format = s__s___UNAVAILABLE_00452574;
+        pcVar2 = s__s___UNAVAILABLE_00452574;
         break;
       case 1:
         *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 0;
-        format = s__s___UNAVAILABLE_00452586;
+        pcVar2 = s__s___UNAVAILABLE_00452586;
         break;
       case 2:
         *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 1;
-        format = s__s___FLOPPY_004525c6;
+        pcVar2 = s__s___FLOPPY_004525c6;
         break;
       case 3:
         *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 2;
-        format = s__s___HDD_004525b2;
+        pcVar2 = s__s___HDD_004525b2;
         break;
       case 4:
         *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 4;
-        format = s__s___NETWORK_00452598;
+        pcVar2 = s__s___NETWORK_00452598;
         break;
       case 5:
         *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 3;
-        format = s__s___CDROM_004525a6;
+        pcVar2 = s__s___CDROM_004525a6;
         break;
       case 6:
         *(undefined4 *)(xvga_drive_list + drive_info_index + 4) = 5;
-        format = s__s___RAM_004525bc;
+        pcVar2 = s__s___RAM_004525bc;
         break;
       default:
         goto switchD_0042e836_default;
       }
-      debugmsg(format,local_7c);
+      debugmsg(pcVar2,local_7c);
 switchD_0042e836_default:
       drive_info_index = drive_info_index + 8;
       i = i + 1;
@@ -104,10 +104,10 @@ int __watcall xvga_get_system_info(void)
   BOOL BVar1;
   uint uVar2;
   int iVar3;
+  char *pcVar4;
   _SYSTEM_INFO _Stack_60;
   _MEMORYSTATUS memorystatus;
   DWORD local_1c;
-  char *format;
   
   debugmsg(s_Getting_system_information_004525d3);
   local_1c = 0x27;
@@ -136,36 +136,36 @@ int __watcall xvga_get_system_info(void)
   xvga_processor_type = _Stack_60.dwProcessorType;
   if (_Stack_60.dwProcessorType < 0x1e6) {
     if (_Stack_60.dwProcessorType == 0x182) {
-      format = s_386_processor_installed_00452677;
+      pcVar4 = s_386_processor_installed_00452677;
     }
     else {
 LAB_0042ea27:
-      format = s_Unknown_processor_installed_004526c6;
+      pcVar4 = s_Unknown_processor_installed_004526c6;
     }
   }
   else if (_Stack_60.dwProcessorType < 0x1e7) {
-    format = s_486_processor_installed_00452690;
+    pcVar4 = s_486_processor_installed_00452690;
   }
   else {
     if (_Stack_60.dwProcessorType != 0x24a) goto LAB_0042ea27;
-    format = s_Pentium_processor_installed_004526a9;
+    pcVar4 = s_Pentium_processor_installed_004526a9;
   }
-  debugmsg(format);
+  debugmsg(pcVar4);
   uVar2 = GetSystemMetrics(0x43);
   if (uVar2 == 0) {
-    format = s_Startup___Normal_Boot_004526e3;
+    pcVar4 = s_Startup___Normal_Boot_004526e3;
     xvga_boot_mode = 0;
   }
   else if (uVar2 < 2) {
-    format = s_Startup___Safe_Mode_Boot_004526fa;
+    pcVar4 = s_Startup___Safe_Mode_Boot_004526fa;
     xvga_boot_mode = 1;
   }
   else {
     if (uVar2 != 2) goto LAB_0042ea8a;
-    format = s_Startup___Safe_Mode_Boot_With_Ne_00452714;
+    pcVar4 = s_Startup___Safe_Mode_Boot_With_Ne_00452714;
     xvga_boot_mode = 1;
   }
-  debugmsg(format);
+  debugmsg(pcVar4);
 LAB_0042ea8a:
   iVar3 = GetSystemMetrics(0x13);
   if (iVar3 != 0) {
@@ -273,77 +273,69 @@ int enum_dd_device(_GUID *guid,char *param_2,char *param_3,void *param_4)
   int new_dd_info;
   int iVar1;
   char *found;
-  dd_info_t *_Str1;
-  dd_info_t *extraout_ECX;
-  dd_info_t *extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_EDX;
-  dd_info_t *dd_info_2;
+  dd_info_t *dd_info;
   undefined4 *puVar2;
   undefined4 *puVar3;
-  dd_info_t *pdVar4;
-  byte bVar5;
-  dd_info_t dd_info;
+  dd_info_t *dd_info_3;
+  byte bVar4;
+  dd_info_t dd_info_2;
   
-  bVar5 = 0;
+  bVar4 = 0;
   new_dd_info = get_new_dd_info();
   if (new_dd_info == -1) {
     new_dd_info = 0;
   }
   else {
     debugmsg(s__s___s_004527c0,param_2,param_3);
-    pdVar4 = dd_info_ptr + extraout_EDX * 0xd8 + 0x10;
+    dd_info_3 = dd_info_ptr + new_dd_info * 0xd8 + 0x10;
     do {
-      dd_info = (dd_info_t)*param_2;
-      *pdVar4 = dd_info;
-      if (dd_info == (dd_info_t)0x0) break;
-      dd_info = *(dd_info_t *)(param_2 + 1);
+      dd_info_2 = (dd_info_t)*param_2;
+      *dd_info_3 = dd_info_2;
+      if (dd_info_2 == (dd_info_t)0x0) break;
+      dd_info_2 = *(dd_info_t *)(param_2 + 1);
       param_2 = param_2 + 2;
-      pdVar4[1] = dd_info;
-      pdVar4 = pdVar4 + 2;
-    } while (dd_info != (dd_info_t)0x0);
-    pdVar4 = dd_info_ptr + extraout_EDX * 0xd8 + 0x74;
-    dd_info_2 = _Str1;
+      dd_info_3[1] = dd_info_2;
+      dd_info_3 = dd_info_3 + 2;
+    } while (dd_info_2 != (dd_info_t)0x0);
+    dd_info_3 = dd_info_ptr + new_dd_info * 0xd8 + 0x74;
+    dd_info = (dd_info_t *)param_3;
     do {
-      dd_info = *dd_info_2;
-      *pdVar4 = dd_info;
-      if (dd_info == (dd_info_t)0x0) break;
-      dd_info = dd_info_2[1];
-      dd_info_2 = dd_info_2 + 2;
-      pdVar4[1] = dd_info;
-      pdVar4 = pdVar4 + 2;
-    } while (dd_info != (dd_info_t)0x0);
-    iVar1 = strnicmp((char *)_Str1,s_DD3Dfx_004527c8,6);
-    pdVar4 = _Str1;
+      dd_info_2 = *dd_info;
+      *dd_info_3 = dd_info_2;
+      if (dd_info_2 == (dd_info_t)0x0) break;
+      dd_info_2 = dd_info[1];
+      dd_info = dd_info + 2;
+      dd_info_3[1] = dd_info_2;
+      dd_info_3 = dd_info_3 + 2;
+    } while (dd_info_2 != (dd_info_t)0x0);
+    iVar1 = strnicmp((byte *)param_3,s_DD3Dfx_004527c8,6);
     if (iVar1 == 0) {
       debugmsg(s_dd3ddfx_driver_found__d_004527cf,new_dd_info);
-      pdVar4 = extraout_ECX;
       d3dfx_dd_driver_index = new_dd_info;
     }
-    iVar1 = strnicmp((char *)pdVar4,s_R3D_004527e8,3);
+    iVar1 = strnicmp((byte *)param_3,s_R3D_004527e8,3);
     if (iVar1 == 0) {
       debugmsg(s_Righteous_dd3ddfx_driver_found___004527ec,new_dd_info);
-      pdVar4 = extraout_ECX_00;
       d3dfx_dd_driver_index = new_dd_info;
     }
-    found = strrchr((char *)pdVar4,0x2e);
+    found = strrchr(param_3,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp((char *)pdVar4,s__VXD_0045280f);
+      iVar1 = stricmp((byte *)param_3,(byte *)s__VXD_0045280f);
       if (iVar1 == 0) {
         debugmsg(s_secondary_driver_found__d_00452814,new_dd_info);
-        secondary_dd_driver_index = extraout_ECX_01;
+        secondary_dd_driver_index = new_dd_info;
       }
     }
     if (guid != (_GUID *)0x0) {
-      pdVar4 = dd_info_ptr + new_dd_info * 0xd8;
-      dd_info_2 = pdVar4 + (uint)bVar5 * -8 + 4;
-      puVar2 = (undefined4 *)((int)guid + (uint)bVar5 * -8 + 4);
-      *(ulong *)pdVar4 = guid->Data1;
-      puVar3 = puVar2 + (uint)bVar5 * -2 + 1;
-      *(undefined4 *)dd_info_2 = *puVar2;
-      *(undefined4 *)(dd_info_2 + (uint)bVar5 * -8 + 4) = *puVar3;
-      *(undefined4 *)(dd_info_2 + (uint)bVar5 * -8 + 4 + (uint)bVar5 * -8 + 4) =
-           puVar3[(uint)bVar5 * -2 + 1];
+      dd_info_3 = dd_info_ptr + new_dd_info * 0xd8;
+      dd_info = dd_info_3 + (uint)bVar4 * -8 + 4;
+      puVar2 = (undefined4 *)((int)guid + (uint)bVar4 * -8 + 4);
+      *(ulong *)dd_info_3 = guid->Data1;
+      puVar3 = puVar2 + (uint)bVar4 * -2 + 1;
+      *(undefined4 *)dd_info = *puVar2;
+      *(undefined4 *)(dd_info + (uint)bVar4 * -8 + 4) = *puVar3;
+      *(undefined4 *)(dd_info + (uint)bVar4 * -8 + 4 + (uint)bVar4 * -8 + 4) =
+           puVar3[(uint)bVar4 * -2 + 1];
     }
     new_dd_info = 1;
   }
@@ -373,7 +365,7 @@ _GUID * __watcall xvga_get_dd_guid(int param_1)
 
 {
   int iVar1;
-  char *format;
+  char *pcVar2;
   
   if ((uint)param_1 < 2) {
     if (param_1 != 1) {
@@ -383,28 +375,28 @@ _GUID * __watcall xvga_get_dd_guid(int param_1)
       if (secondary_dd_driver_index == -1) {
         return (_GUID *)0x0;
       }
-      format = s_using_unknown_secondary_driver___0045287e;
+      pcVar2 = s_using_unknown_secondary_driver___0045287e;
       goto LAB_0042edaa;
     }
-    format = s_using_3dfx_driver__d_00452868;
+    pcVar2 = s_using_3dfx_driver__d_00452868;
   }
   else {
     if ((uint)param_1 < 3) {
       if (secondary_dd_driver_index == -1) {
         return (_GUID *)0x0;
       }
-      format = s_using_unknown_secondary_driver___00452845;
+      pcVar2 = s_using_unknown_secondary_driver___00452845;
 LAB_0042edaa:
-      debugmsg(format,secondary_dd_driver_index);
+      debugmsg(pcVar2,secondary_dd_driver_index);
       iVar1 = secondary_dd_driver_index;
       goto LAB_0042edb5;
     }
     if ((param_1 != 3) || (d3dfx_dd_driver_index == -1)) {
       return (_GUID *)0x0;
     }
-    format = s_using_3dfx_driver__d_0045282f;
+    pcVar2 = s_using_3dfx_driver__d_0045282f;
   }
-  debugmsg(format,d3dfx_dd_driver_index);
+  debugmsg(pcVar2,d3dfx_dd_driver_index);
   iVar1 = d3dfx_dd_driver_index;
 LAB_0042edb5:
   return (_GUID *)(dd_info_ptr + iVar1 * 0xd8);
@@ -416,14 +408,14 @@ LAB_0042edb5:
 long mode_available_callback_func(_DDSURFACEDESC *ddsurfacedesc,void *param_2)
 
 {
+  int arg4;
   int iVar1;
-  int extraout_ECX;
   int extraout_EDX;
   
-  iVar1 = *(int *)(ddsurfacedesc + 0x54);
-  debugmsg(s_mode__d__d__d_004528a1,*(undefined4 *)(ddsurfacedesc + 0xc),
-           *(undefined4 *)(ddsurfacedesc + 8),iVar1);
-  iVar1 = search_screen_mode_index(extraout_ECX,extraout_EDX,iVar1);
+  iVar1 = *(int *)(ddsurfacedesc + 0xc);
+  arg4 = *(int *)(ddsurfacedesc + 0x54);
+  debugmsg(s_mode__d__d__d_004528a1,iVar1,*(undefined4 *)(ddsurfacedesc + 8),arg4);
+  iVar1 = search_screen_mode_index(iVar1,extraout_EDX,arg4);
   if (iVar1 == -1) {
     return 1;
   }
@@ -438,15 +430,14 @@ int __watcall xvga_get_screen_mode_info(void)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   
   debugmsg(s_getting_screen_mode_info_004528b0);
   lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x20))
                     (xvga_dd_object,0,0,0,mode_available_callback_func);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____could_not_get_mode_info_004528d5,s_hwinfo_cpp_004528ca,0x17b,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____could_not_get_mode_info_004528d5,s_hwinfo_cpp_004528ca,0x17b,arg4);
   }
   debugmsg(s_done_getting_screen_mode_info_00452904);
   return 0;
@@ -458,11 +449,8 @@ int __watcall xvga_get_screen_mode_info(void)
 int __watcall xvga_test_mode_available(int param_1)
 
 {
-  int extraout_EDX;
-  
   if ((param_1 < 0) || (0xb < param_1)) {
     fatal_exit(s__s__d____illegal_mode_index__und_0045292e,s_hwinfo_cpp_00452923,0x186);
-    param_1 = extraout_EDX;
   }
   return (&DAT_0045930c)[param_1 * 5];
 }

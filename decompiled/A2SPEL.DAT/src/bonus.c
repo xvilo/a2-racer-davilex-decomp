@@ -14,13 +14,11 @@ void __watcall bonus_add_time(void)
 
 /* ==== 00411fe9 restart_time_clock ==== */
 
-undefined8 __watcall restart_time_clock(undefined4 param_1,undefined4 param_2)
+void __watcall restart_time_clock(void)
 
 {
-  undefined8 now;
-  
-  now = time(&DAT_00475a54,param_2);
-  return now;
+  time(&DAT_00475a54);
+  return;
 }
 
 
@@ -29,16 +27,14 @@ undefined8 __watcall restart_time_clock(undefined4 param_1,undefined4 param_2)
 void __watcall update_time_left(void)
 
 {
-  undefined4 unaff_EDX;
-  
   if (time_left != 0) {
-    time(&time_now,unaff_EDX);
+    time(&time_now);
     time_left = time_left - (time_now - DAT_00475a54);
     DAT_00475a54 = time_now;
     if (time_left < 1) {
       infio.ended_by = 3;
       race_finished_ok = 0;
-      set_race_state();
+      set_race_state(5);
       time_left = 0;
       play_sound_effect(0x26,0);
     }
@@ -69,7 +65,7 @@ void __watcall consume_fuel(int amount)
   if (fuel < 1) {
     infio.ended_by = 1;
     race_finished_ok = 0;
-    set_race_state();
+    set_race_state(7);
     play_sound_effect(0x27,0);
     fuel = 0;
   }
@@ -100,7 +96,7 @@ void __watcall pay_money(int amount)
   if (money < 0) {
     infio.ended_by = 2;
     race_finished_ok = 0;
-    set_race_state();
+    set_race_state(6);
     play_sound_effect(0x25,0);
     money = 0;
   }
@@ -138,85 +134,72 @@ void __watcall halt_player_car(void)
 
 /* ==== 004126a8 alloc_bonus_items ==== */
 
-undefined8 __watcall alloc_bonus_items(int param_1,undefined4 param_2)
+undefined4 __watcall alloc_bonus_items(int param_1)
 
 {
-  undefined4 uVar1;
   int i;
   int j;
-  int extraout_EDX;
+  undefined4 *puVar1;
   undefined4 *puVar2;
-  SIZE_T uBytes;
-  undefined4 *puVar3;
+  byte bVar3;
   undefined4 auStack_30 [7];
   
-  puVar2 = &DAT_00459134;
-  puVar3 = auStack_30;
+  bVar3 = 0;
+  puVar1 = &DAT_00459134;
+  puVar2 = auStack_30;
   for (i = 6; i != 0; i = i + -1) {
-    *puVar3 = *puVar2;
+    *puVar2 = *puVar1;
+    puVar1 = puVar1 + 1;
     puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
   }
-  *(undefined1 *)puVar3 = *(undefined1 *)puVar2;
+  *(undefined1 *)puVar2 = *(undefined1 *)puVar1;
   if (0 < param_1) {
     debugmsg(s_Allocating__d_bonus_objects____004463fc,param_1);
-    uBytes = param_1 * 0x18 + extraout_EDX;
-    bonus_items = LocalAlloc(0x40,uBytes);
+    bonus_items = LocalAlloc(0x40,param_1 * 0x19);
     if (bonus_items == (HLOCAL)0x0) {
-      uVar1 = 2000;
-      goto LAB_0041272f;
+      return 2000;
     }
     i = 0;
-    while (i < (int)uBytes) {
-      puVar3 = (undefined4 *)((int)bonus_items + i);
+    while (i < param_1 * 0x19) {
+      puVar2 = (undefined4 *)((int)bonus_items + i);
       i = i + 0x19;
-      puVar2 = auStack_30;
+      puVar1 = auStack_30;
       for (j = 6; j != 0; j = j + -1) {
-        *puVar3 = *puVar2;
-        puVar2 = puVar2 + 1;
-        puVar3 = puVar3 + 1;
+        *puVar2 = *puVar1;
+        puVar1 = puVar1 + (uint)bVar3 * -2 + 1;
+        puVar2 = puVar2 + (uint)bVar3 * -2 + 1;
       }
-      *(undefined1 *)puVar3 = *(undefined1 *)puVar2;
+      *(undefined1 *)puVar2 = *(undefined1 *)puVar1;
     }
     bonus_allocated = param_1;
     debugmsg(s_OK__0044641b);
   }
-  uVar1 = 0;
-LAB_0041272f:
-  return CONCAT44(param_2,uVar1);
+  return 0;
 }
 
 
 /* ==== 00412737 place_bonus_item ==== */
 
-int __watcall place_bonus_item(undefined4 param_1,int weg_section_idx)
+void __watcall place_bonus_item(undefined4 param_1,float weg_section_idx,int param_3)
 
 {
   float fVar1;
   int iVar2;
-  byte extraout_CL;
-  byte extraout_CL_00;
-  byte extraout_CL_01;
-  byte extraout_CL_02;
-  byte extraout_CL_03;
-  float *pfVar3;
-  int unaff_EBX;
-  float fVar4;
-  undefined8 bonus_object;
-  undefined4 local_14;
+  int iVar3;
+  float *pfVar4;
+  int i;
+  float10 in_ST0;
+  int local_14;
   
   if ((byte)param_1 == 0) {
     fatal_exit(s__s__d____Cannot_set_a_bonus_obje_0044642a,s_bonus_cpp_00446420,0x5e);
-    param_1._0_1_ = extraout_CL;
   }
-  if ((weg_section_idx < 0) || (weg_chunk_count < weg_section_idx)) {
+  if (((int)weg_section_idx < 0) || (weg_chunk_count < (int)weg_section_idx)) {
     fatal_exit(s__s__d____Chunk_value__d_out_of_b_00446468,s_bonus_cpp_0044645e,0x61,weg_section_idx
               );
-    param_1._0_1_ = extraout_CL_00;
   }
-  if ((unaff_EBX < 0) || (0xb < unaff_EBX)) {
-    fatal_exit(s__s__d____Lane_value__d_out_of_bo_0044649a,s_bonus_cpp_00446490,100);
-    param_1._0_1_ = extraout_CL_01;
+  if ((param_3 < 0) || (0xb < param_3)) {
+    fatal_exit(s__s__d____Lane_value__d_out_of_bo_0044649a,s_bonus_cpp_00446490,100,param_3);
   }
   if ((byte)param_1 < 2) {
     if ((byte)param_1 == 1) {
@@ -235,111 +218,100 @@ int __watcall place_bonus_item(undefined4 param_1,int weg_section_idx)
     }
   }
   fatal_exit(s__s__d____Illegal_bonus_object_ty_004464cb,s_bonus_cpp_004464c1,0x72);
-  param_1._0_1_ = extraout_CL_02;
 LAB_004127e4:
-  fVar4 = 0.0;
+  i = 0;
   for (iVar2 = 0; (iVar2 < bonus_allocated * 0x19 && (*(char *)(bonus_items + 0xc + iVar2) != '\0'))
       ; iVar2 = iVar2 + 0x19) {
-    fVar4 = (float)((int)fVar4 + 1);
+    i = i + 1;
   }
-  if (fVar4 == (float)bonus_allocated) {
+  if (i == bonus_allocated) {
     fatal_exit(s__s__d____No_more_free_bonus_obje_004464fa,s_bonus_cpp_004464f0,0x7b);
-    param_1._0_1_ = extraout_CL_03;
   }
-  pfVar3 = (float *)(bonus_items + (int)fVar4 * 0x19);
-  *(byte *)(pfVar3 + 3) = (byte)param_1;
-  *(int *)((int)pfVar3 + 0xd) = weg_section_idx;
-  *(int *)((int)pfVar3 + 0x11) = unaff_EBX;
-  fVar1 = *(float *)(&lane_offsets + unaff_EBX * 4);
-  *pfVar3 = (*(float *)(weg_chunks + 0x1c + weg_section_idx * 0x38) * fVar1 +
-            *(float *)(weg_points + weg_sections[weg_section_idx].point * 0x21)) -
-            *(float *)(weg_chunks + 0x24 + weg_section_idx * 0x38) * 40.0;
-  pfVar3[2] = *(float *)(weg_chunks + 0x1c + weg_section_idx * 0x38) * 40.0 +
-              *(float *)(weg_chunks + 0x24 + weg_section_idx * 0x38) * fVar1 +
-              *(float *)(weg_points + weg_sections[weg_section_idx].point * 0x21 + 8);
-  road_height_at(*pfVar3,pfVar3[2]);
+  pfVar4 = (float *)(bonus_items + i * 0x19);
+  *(byte *)(pfVar4 + 3) = (byte)param_1;
+  *(float *)((int)pfVar4 + 0xd) = weg_section_idx;
+  *(int *)((int)pfVar4 + 0x11) = param_3;
+  fVar1 = *(float *)(&lane_offsets + param_3 * 4);
+  iVar2 = (int)weg_section_idx * 7;
+  *pfVar4 = (*(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * fVar1 +
+            *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21)) -
+            *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * 40.0;
+  pfVar4[2] = *(float *)(weg_chunks + 0x1c + (int)weg_section_idx * 0x38) * 40.0 +
+              *(float *)(weg_chunks + 0x24 + (int)weg_section_idx * 0x38) * fVar1 +
+              *(float *)(weg_points + weg_sections[(int)weg_section_idx].point * 0x21 + 8);
+  iVar3 = 0x100 - weg_sections[(int)weg_section_idx].heading;
+  road_height_at(weg_section_idx,pfVar4,i,iVar2,*pfVar4,pfVar4[2]);
   CHP();
-  bonus_object = load_bonus_object(local_14,pfVar3,fVar4,(float)(weg_section_idx * 7),(int)*pfVar3,
-                                   (int)pfVar3[2]);
-  *(int *)((int)((ulonglong)bonus_object >> 0x20) + 0x15) = (int)bonus_object;
-  return (int)fVar4;
+  iVar2 = load_bonus_object(local_14,pfVar4,i,iVar2,*pfVar4,pfVar4[2],(int)ROUND(in_ST0),iVar3);
+  *(int *)((int)pfVar4 + 0x15) = iVar2;
+  return;
 }
 
 
 /* ==== 00412918 describe_bonus ==== */
 
-undefined8 __watcall describe_bonus(uint param_1,undefined4 param_2)
+uint __watcall describe_bonus(uint opponent_index)
 
 {
   undefined1 uVar1;
-  uint opponent_index;
+  uint uVar2;
   int i;
-  uint extraout_EDX;
-  undefined4 *puVar2;
   undefined4 *puVar3;
+  undefined4 *puVar4;
+  byte bVar5;
   undefined4 auStack_30 [7];
   racer_object_t *racer_object;
   
-  puVar3 = &DAT_00459150;
-  puVar2 = auStack_30;
+  bVar5 = 0;
+  puVar4 = &DAT_00459150;
+  puVar3 = auStack_30;
   for (i = 6; i != 0; i = i + -1) {
-    *puVar2 = *puVar3;
+    *puVar3 = *puVar4;
+    puVar4 = puVar4 + 1;
     puVar3 = puVar3 + 1;
-    puVar2 = puVar2 + 1;
   }
-  *(undefined1 *)puVar2 = *(undefined1 *)puVar3;
-  opponent_index = param_1;
+  *(undefined1 *)puVar3 = *(undefined1 *)puVar4;
+  uVar2 = opponent_index;
   if (bonus_allocated == 0) {
-    param_1 = fatal_exit(s__s__d____No_bonus_objects_alloca_00446532,s_bonus_cpp_00446528,0x9f);
-    opponent_index = extraout_EDX;
+    uVar2 = fatal_exit(s__s__d____No_bonus_objects_alloca_00446532,s_bonus_cpp_00446528,0x9f);
   }
   if ((opponent_data[opponent_index].chunk != -1) && (opponent_data[opponent_index].lane != -1)) {
-    param_1 = bonus_allocated;
+    uVar2 = bonus_allocated;
     for (i = 0; i < bonus_allocated * 0x19; i = i + 0x19) {
-      puVar3 = (undefined4 *)(bonus_items + i);
-      if (((*(char *)(puVar3 + 3) != '\0') &&
-          (param_1 = opponent_data[opponent_index].chunk, param_1 == *(uint *)((int)puVar3 + 0xd)))
-         && (param_1 = opponent_data[opponent_index].lane, param_1 == *(uint *)((int)puVar3 + 0x11))
-         ) {
-        uVar1 = *(undefined1 *)(puVar3 + 3);
-        racers[*(int *)((int)puVar3 + 0x15)].needs_update = -1;
-        racers[*(int *)((int)puVar3 + 0x15)].visible = '\0';
+      puVar4 = (undefined4 *)(bonus_items + i);
+      if (((*(char *)(puVar4 + 3) != '\0') &&
+          (uVar2 = opponent_data[opponent_index].chunk, uVar2 == *(uint *)((int)puVar4 + 0xd))) &&
+         (uVar2 = opponent_data[opponent_index].lane, uVar2 == *(uint *)((int)puVar4 + 0x11))) {
+        uVar1 = *(undefined1 *)(puVar4 + 3);
+        racers[*(int *)((int)puVar4 + 0x15)].needs_update = -1;
+        racers[*(int *)((int)puVar4 + 0x15)].visible = '\0';
         racer_object = racers;
-        racers[*(int *)((int)puVar3 + 0x15)].in_use = '\0';
-        opponent_index = CONCAT31((int3)((uint)racer_object >> 8),uVar1);
-        puVar2 = auStack_30;
+        racers[*(int *)((int)puVar4 + 0x15)].in_use = '\0';
+        puVar3 = auStack_30;
         for (i = 6; i != 0; i = i + -1) {
-          *puVar3 = *puVar2;
-          puVar2 = puVar2 + 1;
-          puVar3 = puVar3 + 1;
+          *puVar4 = *puVar3;
+          puVar3 = puVar3 + (uint)bVar5 * -2 + 1;
+          puVar4 = puVar4 + (uint)bVar5 * -2 + 1;
         }
-        *(undefined1 *)puVar3 = *(undefined1 *)puVar2;
-        goto LAB_0041272f;
+        *(undefined1 *)puVar4 = *(undefined1 *)puVar3;
+        return CONCAT31((int3)((uint)racer_object >> 8),uVar1);
       }
     }
   }
-  opponent_index = param_1 & 0xffffff00;
-LAB_0041272f:
-  return CONCAT44(param_2,opponent_index);
+  return uVar2 & 0xffffff00;
 }
 
 
 /* ==== 00412a90 free_bonus ==== */
 
-longlong __watcall free_bonus(undefined4 param_1,uint param_2)
+void __watcall free_bonus(void)
 
 {
-  undefined4 uVar1;
-  
   if (bonus_allocated == 0) {
-    return (ulonglong)param_2 << 0x20;
+    return;
   }
   bonus_items = LocalFree(bonus_items);
-  uVar1 = 0;
-  if (bonus_items != (HLOCAL)0x0) {
-    uVar1 = 2000;
-  }
-  return CONCAT44(param_2,uVar1);
+  return;
 }
 
 
@@ -348,44 +320,53 @@ longlong __watcall free_bonus(undefined4 param_1,uint param_2)
 void __watcall place_all_bonus_items(void)
 
 {
-  int iVar1;
+  float fVar1;
   int iVar2;
-  int weg_section_idx;
   int iVar3;
   uint uVar4;
+  uint random;
+  float weg_section_idx;
+  int j;
   char cVar5;
   int i;
   int iVar6;
-  undefined8 bonus_items_val;
-  int local_1c;
+  float local_1c;
   
-  iVar1 = weg_chunk_count / 0x1b;
-  bonus_items_val = alloc_bonus_items(iVar1,0x14);
-  local_1c = (int)((ulonglong)bonus_items_val >> 0x20);
-  if ((int)bonus_items_val != 0) {
+  iVar2 = weg_chunk_count / 0x1b;
+  iVar3 = alloc_bonus_items(iVar2);
+  local_1c = 2.8026e-44;
+  if (iVar3 != 0) {
     fatal_exit(s__s__d____InitBonus_failed__00446592,s_bonus_cpp_00446588,0xe5);
   }
   iVar3 = weg_chunk_count + -0x28;
   iVar6 = 0x14;
-  for (i = 0; i < iVar1; i = i + 1) {
-    iVar2 = rand();
-    rand();
-    weg_section_idx = iVar6 - iVar2 % 10;
-    iVar2 = rand();
-    cVar5 = (char)((longlong)iVar2 % 4);
+  for (i = 0; i < iVar2; i = i + 1) {
+    uVar4 = rand();
+    random = rand();
+    weg_section_idx = (float)(iVar6 - (int)uVar4 % 10);
+    j = (int)random % 4;
+    if (j == 3) {
+      j = 2;
+    }
+    j = j + 1;
+    if (*(int *)(&track_info + track_index * 0x10) == 0) {
+      j = 10 - j;
+    }
+    uVar4 = rand();
+    cVar5 = (char)((longlong)(int)uVar4 % 4);
     if (cVar5 == '\0') {
       cVar5 = '\x03';
     }
-    iVar2 = weg_section_idx;
+    fVar1 = weg_section_idx;
     if ((cVar5 != '\x02') &&
-       (uVar4 = weg_section_idx - local_1c >> 0x1f, iVar2 = local_1c,
-       0x46 < (int)((weg_section_idx - local_1c ^ uVar4) - uVar4))) {
+       (uVar4 = (int)weg_section_idx - (int)local_1c >> 0x1f, fVar1 = local_1c,
+       0x46 < (int)(((int)weg_section_idx - (int)local_1c ^ uVar4) - uVar4))) {
       cVar5 = '\x02';
-      iVar2 = weg_section_idx;
+      fVar1 = weg_section_idx;
     }
-    local_1c = iVar2;
-    place_bonus_item((int)cVar5,weg_section_idx);
-    iVar6 = iVar6 + iVar3 / iVar1;
+    local_1c = fVar1;
+    place_bonus_item((int)cVar5,weg_section_idx,j);
+    iVar6 = iVar6 + iVar3 / iVar2;
   }
   return;
 }
@@ -393,93 +374,87 @@ void __watcall place_all_bonus_items(void)
 
 /* ==== 00412bf0 draw_bonus_status ==== */
 
-void __watcall draw_bonus_status(undefined4 param_1,undefined4 param_2)
+uint __watcall draw_bonus_status(void)
 
 {
-  undefined8 describe_bonus_result;
+  uint uVar1;
   
-  describe_bonus_result = describe_bonus(0,param_2);
-  switch((uint)describe_bonus_result & 0xff) {
-  case 0:
-    break;
-  case 1:
-    sprintf(s_None_004465bd,s_Time_004465c7);
-    bonus_add_time();
-    return;
-  case 2:
-    sprintf(s_None_004465bd,s_Fuel_004465cc);
-    bonus_add_fuel();
-    return;
-  case 3:
-    sprintf(s_None_004465bd,s_Money_004465d1);
-    bonus_add_money();
-    return;
-  default:
-    fatal_exit(s__s__d____Illegal_bonus_type__004465e1,s_bonus_cpp_004465d7,0x124);
+  uVar1 = describe_bonus(0);
+  if ((byte)uVar1 < 4) {
+    uVar1 = uVar1 & 0xff;
+    switch(uVar1) {
+    case 1:
+      uVar1 = sprintf(s_None_004465bd,s_Time_004465c7);
+      bonus_add_time();
+      return uVar1;
+    case 2:
+      uVar1 = sprintf(s_None_004465bd,s_Fuel_004465cc);
+      bonus_add_fuel();
+      return uVar1;
+    case 3:
+      uVar1 = sprintf(s_None_004465bd,s_Money_004465d1);
+      bonus_add_money();
+      return uVar1;
+    }
   }
-  return;
+  else {
+    uVar1 = fatal_exit(s__s__d____Illegal_bonus_type__004465e1,s_bonus_cpp_004465d7,0x124);
+  }
+  return uVar1;
 }
 
 
 /* ==== 00412c65 load_bonus_object ==== */
 
-undefined8 __watcall
-load_bonus_object(int param_1,undefined4 param_2,float param_3,float param_4,int param_5,int param_6
-                 )
+int __watcall
+load_bonus_object(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
+                 ,float param_6,int param_7,int param_8)
 
 {
-  int racer_object_index;
-  undefined4 extraout_ECX;
   int object;
   int iVar1;
-  undefined8 uVar2;
-  int in_stack_0000000c;
-  int in_stack_00000010;
   
-  uVar2 = get_new_object3d(param_1,param_2);
-  racer_object_index = (int)uVar2;
-  racers[racer_object_index].in_use = '\x01';
-  uVar2 = init_anim3d(1,(int)((ulonglong)uVar2 >> 0x20));
-  racers[racer_object_index].anim = (int)uVar2;
-  racers[racer_object_index].frame = 0;
-  racers[racer_object_index].needs_update = 1;
+  object = get_new_object3d(param_1);
+  racers[object].in_use = '\x01';
+  iVar1 = init_anim3d(1);
+  racers[object].anim = iVar1;
+  racers[object].frame = 0;
+  racers[object].needs_update = 1;
   iVar1 = param_1 * 0x10;
-  racers[racer_object_index].field_36 = '\0';
-  debugmsg(s_starting_static_object___d__004465ff,racer_object_index);
+  racers[object].field_36 = '\0';
+  debugmsg(s_starting_static_object___d__004465ff,object);
   if (*(int *)(&static_object_mesh_ids + iVar1) == -1) {
-    debugmsg(s_static_object___d__mesh_not_yet_l_0044661c,extraout_ECX);
+    debugmsg(s_static_object___d__mesh_not_yet_l_0044661c,object);
     load_object_mesh(object,(&PTR_s_sky_d3d_00457c58)[param_1 * 4]);
     *(undefined4 *)(&static_object_mesh_ids + iVar1) =
-         *(undefined4 *)
-          (*(int *)(anims3d + racers[racer_object_index].anim * 9 + 4) +
-          racers[racer_object_index].frame * 4);
+         *(undefined4 *)(*(int *)(anims3d + racers[object].anim * 9 + 4) + racers[object].frame * 4)
+    ;
   }
   else {
-    debugmsg(s_static_object___d__allready_load_00446650,extraout_ECX);
-    *(undefined4 *)
-     (*(int *)(anims3d + racers[racer_object_index].anim * 9 + 4) +
-     racers[racer_object_index].frame * 4) = *(undefined4 *)(&static_object_mesh_ids + iVar1);
+    debugmsg(s_static_object___d__allready_load_00446650,object);
+    *(undefined4 *)(*(int *)(anims3d + racers[object].anim * 9 + 4) + racers[object].frame * 4) =
+         *(undefined4 *)(&static_object_mesh_ids + iVar1);
   }
   debugmsg(s_done_loading_static_object_0044667e);
   if ((&static_object_texture_ids)[param_1 * 4] == -1) {
     fatal_exit(s__s__d____texture_not_loaded_for_s_004466a5,s_bonus_cpp_0044669b,0x156,param_1);
   }
   debugmsg(s_setting_static_object_texture_004466dc);
-  racers[racer_object_index].field_2c = (&static_object_texture_ids)[param_1 * 4];
+  racers[object].field_2c = (&static_object_texture_ids)[param_1 * 4];
   debugmsg(s_setting_static_object_matrix_004466fb);
-  set_object3d_matrix(racer_object_index,&identity_matrix);
+  set_object3d_matrix(object,&identity_matrix);
   debugmsg(s_setting_static_object_handle_00446719);
-  *(undefined **)&racers[racer_object_index].field_0x20 = &DAT_00412e6a;
+  *(undefined **)&racers[object].field_0x20 = &DAT_00412e6a;
   debugmsg(s_setting_static_object_position_00446737);
-  racers[racer_object_index].field_08 = (float)param_5;
-  racers[racer_object_index].field_0c = (float)in_stack_0000000c;
-  racers[racer_object_index].field_10 = (float)param_6;
-  racers[racer_object_index].field_3f = in_stack_00000010;
-  racers[racer_object_index].in_use = '\x01';
+  racers[object].field_08 = param_5;
+  racers[object].field_0c = (float)param_7;
+  racers[object].field_10 = param_6;
+  racers[object].field_3f = param_8;
+  racers[object].in_use = '\x01';
   debugmsg(s_create_execute_buffer_object___00446757);
-  build_object_execute_buffer();
+  build_object_execute_buffer(object);
   debugmsg(s_done_creating_execute_buffer_obj_00446777);
-  return CONCAT44(param_2,racer_object_index);
+  return object;
 }
 
 

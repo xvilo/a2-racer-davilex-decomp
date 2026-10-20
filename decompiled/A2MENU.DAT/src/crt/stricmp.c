@@ -3,7 +3,7 @@
 
 /* ==== 00419e24 stricmp_1 ==== */
 
-int __watcall stricmp_1(byte *param_1,byte *unaff_EDX)
+int __watcall stricmp_1(byte *param_1,byte *param_2)
 
 {
   byte bVar1;
@@ -11,7 +11,7 @@ int __watcall stricmp_1(byte *param_1,byte *unaff_EDX)
   
   while( true ) {
     bVar1 = *param_1;
-    bVar2 = *unaff_EDX;
+    bVar2 = *param_2;
     if ((0x40 < bVar1) && (bVar1 < 0x5b)) {
       bVar1 = bVar1 + 0x20;
     }
@@ -20,7 +20,7 @@ int __watcall stricmp_1(byte *param_1,byte *unaff_EDX)
     }
     if ((bVar1 != bVar2) || (bVar2 == 0)) break;
     param_1 = param_1 + 1;
-    unaff_EDX = unaff_EDX + 1;
+    param_2 = param_2 + 1;
   }
   return (uint)bVar1 - (uint)bVar2;
 }

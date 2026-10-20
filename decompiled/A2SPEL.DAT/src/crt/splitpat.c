@@ -3,84 +3,83 @@
 
 /* ==== 0042ef6f copypart ==== */
 
-void __watcall copypart(byte *dest,byte *unaff_EDX,int unaff_EBX,int unaff_ECX)
+int __watcall copypart(byte *param_1,byte *param_2,int param_3,int param_4)
 
 {
   int iVar1;
   
-  if (dest != (byte *)0x0) {
-    if (unaff_ECX < unaff_EBX) {
-      unaff_EBX = unaff_ECX;
+  iVar1 = 0;
+  if (param_1 != (byte *)0x0) {
+    if (param_4 < param_3) {
+      param_3 = param_4;
     }
-    iVar1 = mbsnccnt(unaff_EDX,unaff_EBX);
-    mbsncpy((char *)dest,unaff_EDX,iVar1);
-    iVar1 = mbsnbcnt(dest,iVar1);
-    dest[iVar1] = 0;
+    iVar1 = mbsnccnt(param_2,param_3);
+    mbsncpy((char *)param_1,param_2,iVar1);
+    iVar1 = mbsnbcnt(param_1,iVar1);
+    param_1[iVar1] = 0;
   }
-  return;
+  return iVar1;
 }
 
 
 /* ==== 0042efa5 splitpath ==== */
 
-void __watcall
-splitpath(byte *param_1,byte *unaff_EDX_01,byte *unaff_EBX,byte *unaff_ECX,byte *dest)
+void __watcall splitpath(byte *param_1,byte *param_2,byte *param_3,byte *param_4,byte *param_5)
 
 {
   byte bVar1;
+  uint mbptov_result;
   uint uVar2;
-  byte *unaff_EDX;
   byte *pbVar3;
   byte *pbVar4;
-  byte *unaff_EDX_02;
-  undefined8 mbptov_result;
+  byte *pbVar5;
+  byte *pbVar6;
   
   if ((*param_1 == 0) || (param_1[1] != 0x3a)) {
-    pbVar4 = param_1;
-    if (unaff_EDX_01 != (byte *)0x0) {
-      *unaff_EDX_01 = 0;
+    pbVar5 = param_1;
+    if (param_2 != (byte *)0x0) {
+      *param_2 = 0;
     }
   }
   else {
-    if (unaff_EDX_01 != (byte *)0x0) {
+    if (param_2 != (byte *)0x0) {
       bVar1 = *param_1;
-      unaff_EDX_01[1] = 0x3a;
-      unaff_EDX_01[2] = 0;
-      *unaff_EDX_01 = bVar1;
+      param_2[1] = 0x3a;
+      param_2[2] = 0;
+      *param_2 = bVar1;
     }
     param_1 = param_1 + 2;
-    pbVar4 = param_1;
+    pbVar5 = param_1;
   }
   do {
-    unaff_EDX = pbVar4;
-    pbVar4 = unaff_EDX;
-    unaff_EDX_02 = (byte *)0x0;
+    pbVar3 = pbVar5;
+    pbVar5 = pbVar3;
+    pbVar6 = (byte *)0x0;
     do {
       while( true ) {
-        pbVar3 = pbVar4;
-        if (*pbVar3 == 0) {
-          copypart(unaff_EBX,param_1,(int)unaff_EDX - (int)param_1,0xff);
-          if (unaff_EDX_02 == (byte *)0x0) {
-            unaff_EDX_02 = pbVar3;
+        pbVar4 = pbVar5;
+        if (*pbVar4 == 0) {
+          copypart(param_3,param_1,(int)pbVar3 - (int)param_1,0xff);
+          if (pbVar6 == (byte *)0x0) {
+            pbVar6 = pbVar4;
           }
-          copypart(unaff_ECX,unaff_EDX,(int)unaff_EDX_02 - (int)unaff_EDX,0xff);
-          copypart(dest,unaff_EDX_02,(int)pbVar3 - (int)unaff_EDX_02,0xff);
+          copypart(param_4,pbVar3,(int)pbVar6 - (int)pbVar3,0xff);
+          copypart(param_5,pbVar6,(int)pbVar4 - (int)pbVar6,0xff);
           return;
         }
-        mbptov_result = mbptov(pbVar3,unaff_EDX_01);
-        unaff_EDX_01 = (byte *)mbptov_result;
-        if (unaff_EDX_01 != (byte *)0x2e) break;
-        pbVar4 = pbVar3 + 1;
-        unaff_EDX_02 = pbVar3;
+        mbptov_result = mbptov(pbVar4);
+        if (mbptov_result != 0x2e) break;
+        pbVar5 = pbVar4 + 1;
+        pbVar6 = pbVar4;
       }
       if (IsDBCS == 0) {
         uVar2 = 0;
       }
       else {
-        uVar2 = (uint)((&mbcs_lead_byte_table)[*pbVar3] & 1);
+        uVar2 = (uint)((&mbcs_lead_byte_table)[*pbVar4] & 1);
       }
-      pbVar4 = pbVar3 + uVar2 + 1;
-    } while ((unaff_EDX_01 != (byte *)0x5c) && (unaff_EDX_01 != (byte *)0x2f));
+      pbVar5 = pbVar4 + uVar2 + 1;
+    } while ((mbptov_result != 0x5c) && (mbptov_result != 0x2f));
   } while( true );
 }
 

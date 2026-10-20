@@ -3,82 +3,85 @@
 
 /* ==== 00410316 leapyear ==== */
 
-longlong __watcall leapyear(uint param_1,uint unaff_EDX)
+undefined4 __watcall leapyear(uint param_1)
 
 {
   if (((param_1 & 3) == 0) && (((int)param_1 % 100 != 0 || ((int)param_1 % 400 == 0)))) {
-    return CONCAT44(unaff_EDX,1);
+    return 1;
   }
-  return (ulonglong)unaff_EDX << 0x20;
+  return 0;
 }
 
 
 /* ==== 00410351 calc_yday ==== */
 
-int __watcall calc_yday(int param_1,uint unaff_EDX)
+int __watcall calc_yday(int param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  longlong leapyear_result;
-  tm tm;
+  int local_38 [5];
+  int local_24;
+  int local_20;
+  int local_1c;
+  undefined4 local_18;
   
   if (*(int *)(param_1 + 0x20) == 0) {
-    leapyear_result = leapyear(unaff_EDX + 0x76c,unaff_EDX);
-    tm.tm_year = (int)((ulonglong)leapyear_result >> 0x20);
-    if ((int)leapyear_result == 0) {
-      iVar3 = *(int *)(&diyr + *(int *)(param_1 + 0x10) * 2);
-      iVar1 = *(int *)(&DAT_0041f6ea + *(int *)(param_1 + 0x10) * 2);
+    iVar1 = leapyear(param_2 + 0x76c);
+    if (iVar1 == 0) {
+      iVar1 = *(int *)(&diyr + *(int *)(param_1 + 0x10) * 2);
+      iVar2 = *(int *)(&DAT_0041f6ea + *(int *)(param_1 + 0x10) * 2);
     }
     else {
-      iVar3 = *(int *)(&dilyr + *(int *)(param_1 + 0x10) * 2);
-      iVar1 = *(int *)(&DAT_0041f704 + *(int *)(param_1 + 0x10) * 2);
+      iVar1 = *(int *)(&dilyr + *(int *)(param_1 + 0x10) * 2);
+      iVar2 = *(int *)(&DAT_0041f704 + *(int *)(param_1 + 0x10) * 2);
     }
-    tm.tm_sec = 0;
-    tm.tm_min = 0;
-    tm.tm_hour = 0;
-    tm.tm_mday = 1;
-    tm.tm_mon = *(int *)(param_1 + 0x10);
-    tm.tm_isdst = 0;
-    mktime(&tm);
-    iVar4 = ((*(int *)(param_1 + 0x18) - tm.tm_wday) + 7) % 7;
+    local_38[0] = 0;
+    local_38[1] = 0;
+    local_38[2] = 0;
+    local_38[3] = 1;
+    local_38[4] = *(undefined4 *)(param_1 + 0x10);
+    local_18 = 0;
+    local_24 = param_2;
+    mktime(local_38);
+    iVar4 = ((*(int *)(param_1 + 0x18) - local_20) + 7) % 7;
     if (*(int *)(param_1 + 0xc) == 5) {
-      iVar2 = 4;
-      if ((iVar3 >> 0x10) - (iVar1 >> 0x10) < iVar4 + 0x1d) {
-        iVar2 = *(int *)(param_1 + 0xc) + -2;
+      iVar3 = 4;
+      if ((iVar1 >> 0x10) - (iVar2 >> 0x10) < iVar4 + 0x1d) {
+        iVar3 = *(int *)(param_1 + 0xc) + -2;
       }
     }
     else {
-      iVar2 = *(int *)(param_1 + 0xc) + -1;
+      iVar3 = *(int *)(param_1 + 0xc) + -1;
     }
-    iVar3 = iVar2 * 7 + tm.tm_yday + iVar4;
+    iVar1 = iVar3 * 7 + local_1c + iVar4;
   }
   else if (*(int *)(param_1 + 0x20) == 1) {
-    iVar3 = *(int *)(param_1 + 0x1c) + -1;
+    iVar1 = *(int *)(param_1 + 0x1c) + -1;
   }
   else {
-    iVar3 = *(int *)(param_1 + 0x1c);
+    iVar1 = *(int *)(param_1 + 0x1c);
   }
-  return iVar3;
+  return iVar1;
 }
 
 
 /* ==== 00410436 check_order ==== */
 
-undefined4 __watcall check_order(int param_1,int unaff_EDX,uint unaff_EBX)
+undefined4 __watcall check_order(int param_1,int param_2,int param_3)
 
 {
   int yday_2;
   int yday;
   
-  if (*(int *)(unaff_EDX + 0x10) < *(int *)(param_1 + 0x10)) {
+  if (*(int *)(param_2 + 0x10) < *(int *)(param_1 + 0x10)) {
     return 1;
   }
-  if (*(int *)(unaff_EDX + 0x10) <= *(int *)(param_1 + 0x10)) {
-    yday_2 = calc_yday(param_1,unaff_EBX);
-    yday = calc_yday(unaff_EDX,unaff_EBX);
+  if (*(int *)(param_2 + 0x10) <= *(int *)(param_1 + 0x10)) {
+    yday_2 = calc_yday(param_1,param_3);
+    yday = calc_yday(param_2,param_3);
     if (yday < yday_2) {
       return 1;
     }
@@ -89,37 +92,35 @@ undefined4 __watcall check_order(int param_1,int unaff_EDX,uint unaff_EBX)
 
 /* ==== 0041046a isindst ==== */
 
-undefined8 __watcall isindst(int *param_1,undefined4 unaff_EDX_01)
+void __watcall isindst(int *param_1)
 
 {
   bool bVar1;
   uint check_order_val;
+  int j;
   int iVar2;
   int iVar3;
-  int j;
   int i;
   int iVar4;
-  uint uVar5;
-  int *unaff_EDX;
-  int *unaff_EDX_02;
-  uint uVar6;
-  longlong leapyear_result;
+  int *piVar5;
+  int *piVar6;
+  uint uVar7;
   
-  uVar6 = 0;
+  uVar7 = 0;
   if (*PTR_dtzone_004201ea == '\0') goto LAB_0041071e;
   check_order_val = check_order(0x420154,0x420178,param_1[5]);
   if (check_order_val == 0) {
-    unaff_EDX_02 = (int *)&start_dst;
-    unaff_EDX = &end_dst;
+    piVar6 = (int *)&start_dst;
+    piVar5 = &end_dst;
   }
   else {
-    unaff_EDX_02 = &end_dst;
-    unaff_EDX = (int *)&start_dst;
+    piVar6 = &end_dst;
+    piVar5 = (int *)&start_dst;
   }
   i = param_1[4];
-  leapyear_result = leapyear(param_1[5] + 0x76c,0x420178);
+  j = leapyear(param_1[5] + 0x76c);
   iVar4 = i * 2;
-  if ((int)leapyear_result == 0) {
+  if (j == 0) {
     j = *(int *)(&diyr + iVar4);
     iVar4 = *(int *)(&DAT_0041f6ea + iVar4);
   }
@@ -129,115 +130,112 @@ undefined8 __watcall isindst(int *param_1,undefined4 unaff_EDX_01)
   }
   iVar4 = (j >> 0x10) - (iVar4 >> 0x10);
   bVar1 = false;
-  if (unaff_EDX_02[8] == 0) {
-    if (unaff_EDX_02[4] < i) {
-      uVar6 = 1;
+  if (piVar6[8] == 0) {
+    if (piVar6[4] < i) {
+      uVar7 = 1;
     }
-    else if (i == unaff_EDX_02[4]) {
-      j = param_1[3] - ((param_1[6] + 7) - unaff_EDX_02[6]) % 7;
-      iVar2 = (param_1[3] + -1) - ((param_1[6] + 6) - unaff_EDX_02[6]) % 7;
-      if (unaff_EDX_02[3] == 5) {
+    else if (i == piVar6[4]) {
+      j = param_1[3] - ((param_1[6] + 7) - piVar6[6]) % 7;
+      iVar2 = (param_1[3] + -1) - ((param_1[6] + 6) - piVar6[6]) % 7;
+      if (piVar6[3] == 5) {
         iVar3 = iVar4 + -7;
-        if ((iVar3 < j) && (uVar6 = 1, iVar2 <= iVar3)) {
+        if ((iVar3 < j) && (uVar7 = 1, iVar2 <= iVar3)) {
 LAB_004105ef:
-          uVar6 = 1;
+          uVar7 = 1;
           bVar1 = true;
         }
       }
       else {
-        iVar3 = (unaff_EDX_02[3] + -1) * 7 + 1;
-        if ((iVar3 <= j) && (uVar6 = 1, iVar2 < iVar3)) goto LAB_004105ef;
+        iVar3 = (piVar6[3] + -1) * 7 + 1;
+        if ((iVar3 <= j) && (uVar7 = 1, iVar2 < iVar3)) goto LAB_004105ef;
       }
     }
   }
   else {
-    uVar5 = unaff_EDX_02[7];
-    if (unaff_EDX_02[8] == 1) {
-      leapyear_result = leapyear(param_1[5] + 0x76c,uVar5);
-      j = (int)((ulonglong)leapyear_result >> 0x20);
-      if (((int)leapyear_result != 0) && (DAT_0041f6ee >> 0x10 < j)) {
+    j = piVar6[7];
+    if (piVar6[8] == 1) {
+      iVar2 = leapyear(param_1[5] + 0x76c);
+      if ((iVar2 != 0) && (DAT_0041f6ee >> 0x10 < j)) {
         j = j + 1;
       }
-      uVar5 = j - 1;
+      j = j + -1;
     }
-    if (((int)uVar5 <= param_1[7]) && (uVar6 = 1, uVar5 == param_1[7])) goto LAB_004105ef;
+    if ((j <= param_1[7]) && (uVar7 = 1, j == param_1[7])) goto LAB_004105ef;
   }
   if (bVar1) {
-    j = time_less(param_1,unaff_EDX_02);
-    uVar6 = (uint)(j == 0);
+    j = time_less(param_1,piVar6);
+    uVar7 = (uint)(j == 0);
   }
-  if (uVar6 == 0) {
+  if (uVar7 == 0) {
     if (check_order_val != 0) {
-      uVar6 = check_order_val;
+      uVar7 = check_order_val;
     }
     goto LAB_0041071e;
   }
   bVar1 = false;
-  if (unaff_EDX[8] == 0) {
-    if (unaff_EDX[4] < i) {
-      uVar6 = 0;
+  if (piVar5[8] == 0) {
+    if (piVar5[4] < i) {
+      uVar7 = 0;
     }
-    else if (i == unaff_EDX[4]) {
-      i = param_1[3] - ((param_1[6] + 7) - unaff_EDX[6]) % 7;
-      uVar6 = 0;
-      j = (param_1[3] + -1) - ((param_1[6] + 6) - unaff_EDX[6]) % 7;
-      if (unaff_EDX[3] == 5) {
+    else if (i == piVar5[4]) {
+      i = param_1[3] - ((param_1[6] + 7) - piVar5[6]) % 7;
+      uVar7 = 0;
+      j = (param_1[3] + -1) - ((param_1[6] + 6) - piVar5[6]) % 7;
+      if (piVar5[3] == 5) {
         iVar4 = iVar4 + -7;
         if (iVar4 < i) {
           if (j <= iVar4) {
 LAB_004106fe:
-            uVar6 = 0;
+            uVar7 = 0;
             bVar1 = true;
           }
         }
         else {
 LAB_0041069b:
-          uVar6 = 1;
+          uVar7 = 1;
         }
       }
       else {
-        iVar4 = (unaff_EDX[3] + -1) * 7 + 1;
+        iVar4 = (piVar5[3] + -1) * 7 + 1;
         if (i < iVar4) goto LAB_0041069b;
         if (j < iVar4) goto LAB_004106fe;
       }
     }
   }
   else {
-    uVar5 = unaff_EDX[7];
-    if (unaff_EDX[8] == 1) {
-      leapyear_result = leapyear(param_1[5] + 0x76c,uVar5);
-      i = (int)((ulonglong)leapyear_result >> 0x20);
-      if (((int)leapyear_result != 0) && (DAT_0041f6ee >> 0x10 < i)) {
+    i = piVar5[7];
+    if (piVar5[8] == 1) {
+      iVar4 = leapyear(param_1[5] + 0x76c);
+      if ((iVar4 != 0) && (DAT_0041f6ee >> 0x10 < i)) {
         i = i + 1;
       }
-      uVar5 = i - 1;
+      i = i + -1;
     }
-    if (((int)uVar5 <= param_1[7]) && (uVar6 = 0, uVar5 == param_1[7])) goto LAB_004106fe;
+    if ((i <= param_1[7]) && (uVar7 = 0, i == param_1[7])) goto LAB_004106fe;
   }
   if (bVar1) {
-    uVar6 = time_less(param_1,unaff_EDX);
+    uVar7 = time_less(param_1,piVar5);
   }
   if (check_order_val != 0) {
-    uVar6 = check_order_val - uVar6;
+    uVar7 = check_order_val - uVar7;
   }
 LAB_0041071e:
-  param_1[8] = uVar6;
-  return CONCAT44(unaff_EDX_01,uVar6);
+  param_1[8] = uVar7;
+  return;
 }
 
 
 /* ==== 0041072d time_less ==== */
 
-undefined4 __watcall time_less(int *param_1,int *unaff_EDX)
+undefined4 __watcall time_less(int *param_1,int *param_2)
 
 {
   undefined4 uVar1;
   
   uVar1 = 0;
-  if ((param_1[2] < unaff_EDX[2]) ||
-     ((param_1[2] == unaff_EDX[2] &&
-      ((param_1[1] < unaff_EDX[1] || ((param_1[1] == unaff_EDX[1] && (*param_1 < *unaff_EDX))))))))
-  {
+  if ((param_1[2] < param_2[2]) ||
+     ((param_1[2] == param_2[2] &&
+      ((param_1[1] < param_2[1] || ((param_1[1] == param_2[1] && (*param_1 < *param_2)))))))) {
     uVar1 = 1;
   }
   return uVar1;

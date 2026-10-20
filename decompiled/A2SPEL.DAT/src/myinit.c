@@ -3,17 +3,17 @@
 
 /* ==== 00401ebc init_anims_and_standard_textures ==== */
 
-void __watcall init_anims_and_standard_textures(undefined4 param_1,size_t param_2)
+void __watcall init_anims_and_standard_textures(void)
 
 {
-  int flags;
   int iVar1;
-  undefined8 uVar2;
+  int flags;
+  int iVar2;
   
-  iVar1 = civilian_count + police_count;
-  uVar2 = read_track_object_count(track_index,param_2);
-  uVar2 = alloc_objects3d((int)uVar2 + iVar1 + 0x9c,(int)((ulonglong)uVar2 >> 0x20));
-  if ((int)uVar2 != 0) {
+  iVar2 = civilian_count + police_count;
+  iVar1 = read_track_object_count(track_index);
+  iVar1 = alloc_objects3d(iVar1 + iVar2 + 0x9c);
+  if (iVar1 != 0) {
     fatal_exit(s__s__d____Memory_error_initing_an_0044183f,s_myinit_cpp_00441834,0x55);
   }
   debugmsg(s_starting_alloc_of_anims_00441864);
@@ -35,36 +35,28 @@ void __watcall init_anims_and_standard_textures(undefined4 param_1,size_t param_
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-longlong __watcall load_player_object(int param_1,int weg_section_idx,float param_3)
+undefined4 __watcall
+load_player_object(int param_1,int weg_section_idx,int param_3,undefined4 param_4,float param_5)
 
 {
   int opponent_index;
   int *opponent_chunk;
+  undefined4 object_bounds;
   int iVar1;
-  undefined4 extraout_EDX;
-  uint extraout_EDX_00;
   float fVar2;
-  undefined8 uVar3;
-  longlong object_bounds;
-  float in_stack_00000004;
   float local_1c;
-  racer_object_t *racer_object;
   
   debugmsg(s_loading_player_object___004418dd);
-  uVar3 = load_object_file(PTR_s_bmw_d3d_00457bd8,extraout_EDX);
-  player_index = (int)uVar3;
+  player_index = load_object_file(PTR_s_bmw_d3d_00457bd8);
   debugmsg(s_player_objectnr____d_004418f6,player_index);
   racers[player_index].field_2c = DAT_00457be4;
   set_object3d_matrix(player_index,&DAT_004576d0);
   *(undefined1 **)&racers[player_index].field_0x20 = &LAB_00402468;
   debugmsg(s_create_execute_buffer_object___0044190d);
-  build_object_execute_buffer();
+  build_object_execute_buffer(player_index);
   debugmsg(s_done_creating_execute_buffer_obj_0044192d);
-  racer_object = racers;
-  opponent_index = player_index * 0x4b;
   racers[player_index].field_36 = '\x01';
-  uVar3 = alloc_opponent_slot(opponent_index,racer_object);
-  opponent_index = (int)uVar3;
+  opponent_index = alloc_opponent_slot();
   racers[player_index].opponent = opponent_index;
   opponent_data[opponent_index].object = player_index;
   opponent_data[opponent_index].mass = 1000.0;
@@ -75,32 +67,32 @@ longlong __watcall load_player_object(int param_1,int weg_section_idx,float para
   opponent_data[opponent_index].offset_z = 0.0;
   racers[player_index].needs_update = 1;
   opponent_data[opponent_index].waypoint = weg_section_idx;
-  opponent_chunk = get_opponent_chunk(s_myinit_cpp_00441954,0x93);
+  opponent_chunk = get_opponent_chunk(s_myinit_cpp_00441954,0x93,opponent_index);
   *opponent_chunk = weg_section_idx;
   opponent_data[opponent_index].direction = param_1;
   opponent_data[opponent_index].field_e0 = -1;
   opponent_data[opponent_index].field_e4 = 1;
   if (opponent_data[opponent_index].direction == 0) {
-    opponent_data[opponent_index].lane = (int)param_3;
-    opponent_data[opponent_index].target_lane = (int)param_3;
+    opponent_data[opponent_index].lane = param_3;
+    opponent_data[opponent_index].target_lane = param_3;
     iVar1 = weg_chunks + weg_section_idx * 0x38;
-    local_1c = *(float *)(&lane_offsets + (int)param_3 * 4);
+    local_1c = *(float *)(&lane_offsets + param_3 * 4);
     player_x = *(float *)(weg_sections[*(int *)(iVar1 + 8)].point * 0x21 + weg_points);
     fVar2 = *(float *)(weg_sections[*(int *)(iVar1 + 8)].point * 0x21 + weg_points + 8);
   }
   else {
     if (opponent_data[opponent_index].direction != 1) goto LAB_00402196;
-    opponent_data[opponent_index].lane = (int)param_3;
-    opponent_data[opponent_index].target_lane = (int)param_3;
+    opponent_data[opponent_index].lane = param_3;
+    opponent_data[opponent_index].target_lane = param_3;
     iVar1 = weg_chunks + weg_section_idx * 0x38;
-    local_1c = *(float *)(&lane_offsets + (int)param_3 * 4);
+    local_1c = *(float *)(&lane_offsets + param_3 * 4);
     player_x = *(float *)(weg_points + weg_sections[*(int *)(iVar1 + 8)].point * 0x21);
     fVar2 = *(float *)(weg_points + 8 + weg_sections[*(int *)(iVar1 + 8)].point * 0x21);
   }
   player_y = 0.0;
   player_x = (*(float *)(iVar1 + 0x1c) * local_1c + player_x) -
-             *(float *)(iVar1 + 0x24) * (in_stack_00000004 + 40.0);
-  player_z = (in_stack_00000004 + 40.0) * *(float *)(iVar1 + 0x1c) +
+             *(float *)(iVar1 + 0x24) * (param_5 + 40.0);
+  player_z = (param_5 + 40.0) * *(float *)(iVar1 + 0x1c) +
              *(float *)(iVar1 + 0x24) * local_1c + fVar2;
 LAB_00402196:
   opponent_data[opponent_index].x = player_x;
@@ -113,12 +105,12 @@ LAB_00402196:
     player_heading = weg_sections[weg_section_idx].heading + -0x100;
   }
   debugmsg(s_Marking_opponent__d_in_map_at_ch_0044195f,opponent_index,weg_section_idx,param_3);
-  set_map_occupant(opponent_index,weg_section_idx);
+  set_map_occupant(opponent_index,weg_section_idx,param_3);
   debugmsg(s_Done__00441996);
   player_start_lane = weg_section_idx;
   player_chunk = weg_section_idx;
   _DAT_00457740 = weg_section_idx;
-  object_bounds = compute_object_bounds(player_index,extraout_EDX_00);
+  object_bounds = compute_object_bounds(player_index);
   return object_bounds;
 }
 

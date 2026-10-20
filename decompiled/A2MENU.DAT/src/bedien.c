@@ -3,24 +3,19 @@
 
 /* ==== 00401c00 load_tmp_bedien ==== */
 
-void __watcall load_tmp_bedien(char *param_1)
+void __watcall load_tmp_bedien(char *filename)
 
 {
   int iVar1;
-  char *filename;
-  char *extraout_ECX;
-  char *filename_00;
   
   debugmsg(s__s__d____>_LOAD_TEMPORARY_BEDIEN_00425a13,s_bedien_cpp_00425a08,0x29);
   iVar1 = file_exist(filename);
-  filename_00 = filename;
   if (iVar1 == 0) {
     fatal_exit(s__s__d___requested_controls_file___00425a48,s_bedien_cpp_00425a3d,0x2b,filename);
-    filename_00 = extraout_ECX;
   }
-  iVar1 = file_read(&control,0x24,filename_00);
+  iVar1 = file_read(&control,0x24,filename);
   if (iVar1 != 0) {
-    file_delete(filename_00);
+    file_delete();
     init_bedien();
   }
   return;
@@ -35,8 +30,6 @@ void __watcall init_bedien(void)
 
 {
   int iVar1;
-  undefined4 extraout_ECX;
-  undefined4 extraout_EDX;
   
   iVar1 = get_attached_joysticks();
   available_joy = (int)(0 < iVar1);
@@ -44,15 +37,15 @@ void __watcall init_bedien(void)
   iVar1 = file_exist(s_BEDIEN_A2R_00425b17);
   if (iVar1 == 0) {
     debugmsg(s_Creating_controls_file__s_00425b2d,s_BEDIEN_A2R_00425b22);
+    DAT_0043723c = 0;
+    _control = 0;
+    _DAT_00437240 = 1;
     DAT_00437248 = 0x27;
     _DAT_00437250 = 0x28;
     DAT_00437244 = 0x25;
     _DAT_00437258 = 0xd;
     DAT_0043724c = 0x26;
     _DAT_00437254 = 0x20;
-    _control = extraout_EDX;
-    DAT_0043723c = extraout_EDX;
-    _DAT_00437240 = extraout_ECX;
     save_bedien();
   }
   else {
@@ -69,17 +62,14 @@ void __watcall save_bedien(void)
 
 {
   int file_write_result;
-  undefined4 extraout_ECX;
-  char *filename;
   undefined4 extraout_EDX;
-  int count;
   
   debugmsg(s__s__d____>_SAVE_BEDIENING_<*_00425b85,s_bedien_cpp_00425b7a,0x5c);
-  debugmsg(s__s__d____>_SAVE_TEMPORARY_BEDIEN_00425a88,s_bedien_cpp_00425a7d,0x38,extraout_EDX,
-           extraout_ECX);
-  file_write_result = file_write(&control,count,filename);
+  debugmsg(s__s__d____>_SAVE_TEMPORARY_BEDIEN_00425a88,s_bedien_cpp_00425a7d,0x38,extraout_EDX);
+  file_write_result = file_write(&control,0x24,s_BEDIEN_A2R_00425ba5);
   if (file_write_result != 0) {
-    fatal_exit(s__s__d___save_tmp_bedien_____Fail_00425abd,s_bedien_cpp_00425ab2,0x3a,filename);
+    fatal_exit(s__s__d___save_tmp_bedien_____Fail_00425abd,s_bedien_cpp_00425ab2,0x3a,
+               s_BEDIEN_A2R_00425ba5);
   }
   return;
 }
@@ -87,15 +77,14 @@ void __watcall save_bedien(void)
 
 /* ==== 00401d49 save_tmp_bedien ==== */
 
-void __watcall save_tmp_bedien(char *param_1)
+void __watcall save_tmp_bedien(char *filename)
 
 {
   int file_write_result;
-  char *filename;
-  int count;
+  int extraout_EDX;
   
   debugmsg(s__s__d____>_SAVE_TEMPORARY_BEDIEN_00425a88,s_bedien_cpp_00425a7d,0x38);
-  file_write_result = file_write(&control,count,filename);
+  file_write_result = file_write(&control,extraout_EDX,filename);
   if (file_write_result != 0) {
     fatal_exit(s__s__d___save_tmp_bedien_____Fail_00425abd,s_bedien_cpp_00425ab2,0x3a,filename);
   }

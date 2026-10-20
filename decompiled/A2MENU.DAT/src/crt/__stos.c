@@ -3,31 +3,26 @@
 
 /* ==== 0041e940 STOSB ==== */
 
-void __watcall STOSB(uint param_1,uint param_2)
+void __watcall STOSB(undefined4 *param_1,uint param_2,undefined4 param_3,uint param_4)
 
 {
-  undefined1 *puVar1;
-  uint unaff_ECX;
-  uint uVar2;
-  undefined1 uVar3;
-  undefined6 stosd;
+  undefined4 *stosd;
+  uint uVar1;
   
-  if (unaff_ECX != 0) {
+  if (param_4 != 0) {
     do {
-      if ((param_1 & 3) == 0) break;
+      if (((uint)param_1 & 3) == 0) break;
       *(char *)param_1 = (char)param_2;
-      param_1 = param_1 + 1;
+      param_1 = (undefined4 *)((int)param_1 + 1);
       param_2 = param_2 >> 8 | param_2 << 0x18;
-      unaff_ECX = unaff_ECX - 1;
-    } while (unaff_ECX != 0);
-    stosd = STOSD(param_1,param_2);
-    puVar1 = (undefined1 *)stosd;
-    uVar2 = unaff_ECX & 3;
-    if (uVar2 != 0) {
-      uVar3 = (undefined1)((uint6)stosd >> 0x20);
-      *puVar1 = uVar3;
-      if ((uVar2 != 1) && (puVar1[1] = (char)((uint6)stosd >> 0x28), uVar2 != 2)) {
-        puVar1[2] = uVar3;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+    stosd = STOSD(param_1,param_2,param_3,param_4 >> 2);
+    uVar1 = param_4 & 3;
+    if (uVar1 != 0) {
+      *(char *)stosd = (char)param_2;
+      if ((uVar1 != 1) && (*(char *)((int)stosd + 1) = (char)(param_2 >> 8), uVar1 != 2)) {
+        *(char *)((int)stosd + 2) = (char)param_2;
       }
     }
   }
@@ -37,27 +32,27 @@ void __watcall STOSB(uint param_1,uint param_2)
 
 /* ==== 0041e977 STOSD ==== */
 
-undefined4 * __watcall STOSD(uint param_1,undefined4 param_2)
+undefined4 * __watcall
+STOSD(undefined4 *param_1,undefined4 param_2,undefined4 param_3,uint param_4)
 
 {
   undefined4 *puVar1;
-  uint unaff_ECX;
   int iVar2;
   uint uVar3;
   
-  puVar1 = (undefined4 *)param_1;
-  if (unaff_ECX != 0) {
+  puVar1 = param_1;
+  if (param_4 != 0) {
     do {
-      if ((param_1 & 0x1f) == 0) break;
-      *(undefined4 *)param_1 = param_2;
-      param_1 = param_1 + 4;
-      unaff_ECX = unaff_ECX - 1;
-    } while (unaff_ECX != 0);
-    if (unaff_ECX >> 2 != 0) {
-      iVar2 = (unaff_ECX >> 2) - 1;
+      if (((uint)param_1 & 0x1f) == 0) break;
+      *param_1 = param_2;
+      param_1 = param_1 + 1;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+    if (param_4 >> 2 != 0) {
+      iVar2 = (param_4 >> 2) - 1;
       if (iVar2 != 0) {
         do {
-          puVar1 = (undefined4 *)param_1;
+          puVar1 = param_1;
           *puVar1 = param_2;
           puVar1[1] = param_2;
           puVar1[2] = param_2;
@@ -68,29 +63,29 @@ undefined4 * __watcall STOSD(uint param_1,undefined4 param_2)
           iVar2 = iVar2 + -2;
           puVar1[6] = param_2;
           puVar1[7] = param_2;
-          param_1 = (uint)(puVar1 + 8);
+          param_1 = puVar1 + 8;
         } while (iVar2 != 0);
         puVar1 = puVar1 + 4;
 LAB_0041e9b6:
-        param_1 = (uint)(puVar1 + 4);
+        param_1 = puVar1 + 4;
       }
-      *(undefined4 *)param_1 = param_2;
-      *(undefined4 *)(param_1 + 4) = param_2;
-      *(undefined4 *)(param_1 + 8) = param_2;
-      *(undefined4 *)(param_1 + 0xc) = param_2;
-      param_1 = param_1 + 0x10;
+      *param_1 = param_2;
+      param_1[1] = param_2;
+      param_1[2] = param_2;
+      param_1[3] = param_2;
+      param_1 = param_1 + 4;
     }
-    uVar3 = unaff_ECX & 3;
-    puVar1 = (undefined4 *)param_1;
+    uVar3 = param_4 & 3;
+    puVar1 = param_1;
     if (uVar3 != 0) {
-      *(undefined4 *)param_1 = param_2;
-      puVar1 = (undefined4 *)(param_1 + 4);
+      *param_1 = param_2;
+      puVar1 = param_1 + 1;
       if (uVar3 != 1) {
         *puVar1 = param_2;
-        puVar1 = (undefined4 *)(param_1 + 8);
+        puVar1 = param_1 + 2;
         if (uVar3 != 2) {
           *puVar1 = param_2;
-          puVar1 = (undefined4 *)(param_1 + 0xc);
+          puVar1 = param_1 + 3;
         }
       }
     }

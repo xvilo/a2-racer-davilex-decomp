@@ -6,9 +6,8 @@
 void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
 
 {
-  char *env_value;
   int iVar1;
-  int extraout_EDX;
+  char *env_value;
   char local_108 [260];
   
   if (param_1 == (char *)0x0) {
@@ -19,12 +18,11 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     cd_directory = param_1;
     sprintf(local_108,s_x__s__s_00448264,param_1,param_2);
   }
-  env_value = getenv(s_NOCD_00448274);
-  if (env_value == (char *)0x0) {
+  iVar1 = getenv(s_NOCD_00448274);
+  if (iVar1 == 0) {
     iVar1 = xvga_get_first_cdrom();
     if (iVar1 == -1) {
       fatal_exit(s_fatal_error___no_program_cdrom_w_0044827e);
-      iVar1 = extraout_EDX;
     }
     cd_drive = (char)iVar1;
     local_108[0] = cd_drive;
@@ -34,7 +32,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
     }
   }
   else {
-    env_value = getenv(s_NOCD_00448279);
+    env_value = (char *)getenv(s_NOCD_00448279);
     cd_drive = *env_value;
   }
   return;
@@ -46,7 +44,7 @@ void __watcall xvga_locate_cdrom(char *param_1,char *param_2)
 char * __watcall file_path(char *filename_val,char *param_2)
 
 {
-  FILE *_File;
+  int file;
   byte abStack_310 [256];
   byte local_210 [256];
   byte local_110 [256];
@@ -55,13 +53,13 @@ char * __watcall file_path(char *filename_val,char *param_2)
   splitpath((byte *)param_2,local_10,local_210,abStack_310,local_110);
   makepath((byte *)filename_val,&DAT_004482cc,&DAT_004482cb,abStack_310,local_110);
   debugmsg(s_path__s_004482cd,filename_val);
-  _File = fopen(filename_val,s_r_004482d6);
-  if (_File == (FILE *)0x0) {
+  file = fopen(filename_val,(byte *)s_r_004482d6);
+  if (file == 0) {
     makepath((byte *)filename_val,&cd_drive,(byte *)cd_directory,abStack_310,local_110);
     debugmsg(s_failed_goto_path__s_004482d8,filename_val);
   }
   else {
-    fclose(_File);
+    fclose(file);
   }
   return filename_val;
 }

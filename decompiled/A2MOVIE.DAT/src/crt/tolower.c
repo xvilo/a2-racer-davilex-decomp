@@ -3,13 +3,13 @@
 
 /* ==== 0040c035 tolower ==== */
 
-int __watcall tolower(int _C)
+int __watcall tolower(int param_1)
 
 {
-  if ((0x40 < _C) && (_C < 0x5b)) {
-    _C = _C + 0x20;
+  if ((0x40 < param_1) && (param_1 < 0x5b)) {
+    param_1 = param_1 + 0x20;
   }
-  return _C;
+  return param_1;
 }
 
 

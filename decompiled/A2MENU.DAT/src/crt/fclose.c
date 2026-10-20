@@ -3,38 +3,38 @@
 
 /* ==== 004133f6 fclose ==== */
 
-int __watcall fclose(FILE *_File)
+undefined4 __watcall fclose(int param_1)
 
 {
   undefined4 *puVar1;
-  int shutdown_stream_result;
+  uint shutdown_stream_result;
   
   (*(code *)AccessIOB_1)();
   puVar1 = OpenStreams;
   while( true ) {
     if (puVar1 == (undefined4 *)0x0) {
       (*(code *)ReleaseIOB_1)();
-      return -1;
+      return 0xffffffff;
     }
-    if (_File == (FILE *)puVar1[1]) break;
+    if (param_1 == puVar1[1]) break;
     puVar1 = (undefined4 *)*puVar1;
   }
   (*(code *)ReleaseIOB_1)();
-  shutdown_stream_result = shutdown_stream((int)_File,1);
+  shutdown_stream_result = shutdown_stream(param_1,1);
   return shutdown_stream_result;
 }
 
 
 /* ==== 00413435 shutdown_stream ==== */
 
-undefined4 __watcall shutdown_stream(int param_1,int unaff_EDX)
+uint __watcall shutdown_stream(int param_1,int param_2)
 
 {
-  undefined4 extraout_EDX;
+  uint doclose_result;
   
-  doclose(param_1,unaff_EDX);
+  doclose_result = doclose(param_1,param_2);
   freefp(param_1);
-  return extraout_EDX;
+  return doclose_result;
 }
 
 
@@ -55,26 +55,26 @@ int __watcall hex(int param_1)
 
 /* ==== 00413456 MkTmpFile ==== */
 
-void __watcall MkTmpFile(undefined1 *param_1,uint unaff_EDX)
+void __watcall MkTmpFile(undefined1 *param_1,uint param_2)
 
 {
-  uint uVar1;
+  DWORD DVar1;
   int hex_result;
   undefined1 *puVar2;
   
-  uVar1 = getpid();
+  DVar1 = getpid();
   puVar2 = param_1 + 4;
   *param_1 = 0x74;
   do {
-    hex_result = hex(uVar1 & 0xf);
+    hex_result = hex(DVar1 & 0xf);
     *puVar2 = (char)hex_result;
     puVar2 = puVar2 + -1;
-    uVar1 = uVar1 >> 4;
+    DVar1 = DVar1 >> 4;
   } while (puVar2 != param_1);
   param_1[5] = 0x5f;
-  hex_result = hex((int)unaff_EDX >> 4 & 0xf);
+  hex_result = hex((int)param_2 >> 4 & 0xf);
   param_1[6] = (char)hex_result;
-  hex_result = hex(unaff_EDX & 0xf);
+  hex_result = hex(param_2 & 0xf);
   param_1[8] = 0x2e;
   param_1[9] = 0x74;
   param_1[10] = 0x6d;
@@ -87,15 +87,17 @@ void __watcall MkTmpFile(undefined1 *param_1,uint unaff_EDX)
 
 /* ==== 004134bb doclose ==== */
 
-uint __watcall doclose(int param_1,int unaff_EDX)
+uint __watcall doclose(int param_1,int param_2)
 
 {
   uint uVar1;
-  long position;
+  int position;
   uint close_result;
-  FILE *_File;
-  undefined8 flush_result;
-  char acStack_24 [16];
+  int extraout_ECX;
+  int iVar2;
+  undefined4 extraout_EDX;
+  undefined4 unaff_EBX;
+  undefined1 auStack_24 [16];
   
   if (*(int *)(param_1 + 0xc) == 0) {
     uVar1 = 0xffffffff;
@@ -103,25 +105,25 @@ uint __watcall doclose(int param_1,int unaff_EDX)
   else {
     uVar1 = 0;
     if ((*(byte *)(param_1 + 0xd) & 0x10) != 0) {
-      flush_result = flush(param_1,unaff_EDX);
-      uVar1 = (uint)flush_result;
+      uVar1 = flush(param_1);
     }
     (*(code *)AccessFileH_1)();
-    position = ftell(_File);
+    iVar2 = extraout_ECX;
+    position = ftell(extraout_ECX,extraout_EDX,unaff_EBX,extraout_ECX);
     if (position != -1) {
-      lseek_1(_File->_file,position,0);
+      lseek_1(*(undefined4 *)(iVar2 + 0x10),position,0);
     }
-    if (unaff_EDX != 0) {
-      close_result = close(_File->_file);
+    if (param_2 != 0) {
+      close_result = close(*(int *)(iVar2 + 0x10));
       uVar1 = uVar1 | close_result;
     }
-    if ((_File->_flag & 8) != 0) {
-      free(_File->_base);
-      _File->_base = (char *)0x0;
+    if ((*(byte *)(iVar2 + 0xc) & 8) != 0) {
+      free(*(undefined4 **)(iVar2 + 8));
+      *(undefined4 *)(iVar2 + 8) = 0;
     }
-    if ((_File->_flag & 0x800) != 0) {
-      MkTmpFile(acStack_24,(uint)*(byte *)((int)&_File->_bufsiz + 1));
-      remove(acStack_24);
+    if ((*(byte *)(iVar2 + 0xd) & 8) != 0) {
+      MkTmpFile(auStack_24,(uint)*(byte *)(iVar2 + 0x19));
+      remove();
     }
     (*(code *)ReleaseFileH_1)();
     (*(code *)FiniAccessH_1)();

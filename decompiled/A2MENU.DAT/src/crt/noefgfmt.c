@@ -3,11 +3,13 @@
 
 /* ==== 00420d4f no_support_loaded ==== */
 
-void __watcall no_support_loaded(void)
+int __watcall no_support_loaded(void)
 
 {
-  fatal_runtime_error(s_Floating_point_support_not_loade_00431e30);
-  return;
+  int fatal_runtime_error_result;
+  
+  fatal_runtime_error_result = fatal_runtime_error(s_Floating_point_support_not_loade_00431e30,1);
+  return fatal_runtime_error_result;
 }
 
 

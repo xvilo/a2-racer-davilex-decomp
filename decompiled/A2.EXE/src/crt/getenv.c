@@ -3,26 +3,24 @@
 
 /* ==== 00402708 dospawn ==== */
 
-undefined8 __watcall
-dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPSTR param_5,
-       LPVOID param_6,int *command_line)
+DWORD __watcall dospawn(void)
 
 {
   BOOL BVar1;
   DWORD DVar2;
-  undefined4 unaff_EDX_00;
-  undefined4 unaff_EDX_00_00;
-  undefined8 uVar3;
+  int in_stack_00000004;
+  char *in_stack_00000008;
+  char *in_stack_0000000c;
   LPVOID in_stack_00000010;
   int *in_stack_00000014;
   _STARTUPINFOA startupinfo;
   _PROCESS_INFORMATION local_2c;
   DWORD local_1c;
   
-  build_command_line((int)param_6,in_stack_00000014);
-  memset(&startupinfo,0,0x44);
+  build_command_line(in_stack_00000008,in_stack_00000014,in_stack_0000000c,0);
+  memset(&startupinfo.cb,0,0x44);
   startupinfo.wShowWindow = 1;
-  BVar1 = CreateProcessA((LPCSTR)0x0,(LPSTR)command_line,(LPSECURITY_ATTRIBUTES)0x0,
+  BVar1 = CreateProcessA((LPCSTR)0x0,in_stack_0000000c,(LPSECURITY_ATTRIBUTES)0x0,
                          (LPSECURITY_ATTRIBUTES)0x0,1,0,in_stack_00000010,(LPCSTR)0x0,&startupinfo,
                          &local_2c);
   if (BVar1 == 0) {
@@ -30,75 +28,73 @@ dospawn(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,LPS
     if (((DVar2 == 5) || (DVar2 == 0xc1)) || (DVar2 == 0xa1)) {
       DVar2 = 2;
     }
-    uVar3 = set_errno_dos(DVar2,DVar2);
-    local_1c = (DWORD)uVar3;
+    local_1c = set_errno_dos(DVar2);
   }
   else {
     DVar2 = local_2c.dwProcessId;
-    if (param_5 == (LPSTR)0x0) {
-      if ((osbuild >> 8 & 0x80) != 0) {
-        Sleep(1000);
-        local_1c = 0x103;
-        do {
+    if (in_stack_00000004 == 0) {
+      if ((osbuild >> 8 & 0x80) == 0) {
+        DVar2 = WaitForSingleObject(local_2c.hProcess,0xffffffff);
+        if (DVar2 == 0) {
+          GetExitCodeProcess(local_2c.hProcess,&local_1c);
           DVar2 = local_1c;
-          if (local_1c != 0x103) goto LAB_00402824;
-          Sleep(100);
-          BVar1 = GetExitCodeProcess(local_2c.hProcess,&local_1c);
-        } while (BVar1 != 0);
-        uVar3 = set_errno_nt(0,unaff_EDX_00);
-        local_1c = (DWORD)uVar3;
-        goto LAB_0040283c;
-      }
-      DVar2 = WaitForSingleObject(local_2c.hProcess,0xffffffff);
-      if (DVar2 == 0) {
-        GetExitCodeProcess(local_2c.hProcess,&local_1c);
-        DVar2 = local_1c;
+        }
+        else {
+          DVar2 = set_errno_nt();
+        }
       }
       else {
-        uVar3 = set_errno_nt(DVar2,unaff_EDX_00_00);
-        DVar2 = (DWORD)uVar3;
+        Sleep(1000);
+        local_1c = 0x103;
+        while (DVar2 = local_1c, local_1c == 0x103) {
+          Sleep(100);
+          BVar1 = GetExitCodeProcess(local_2c.hProcess,&local_1c);
+          if (BVar1 == 0) {
+            DVar2 = set_errno_nt();
+            return DVar2;
+          }
+        }
       }
     }
-LAB_00402824:
     local_1c = DVar2;
     CloseHandle(local_2c.hProcess);
     CloseHandle(local_2c.hThread);
   }
-LAB_0040283c:
-  return CONCAT44(param_2,local_1c);
+  return local_1c;
 }
 
 
 /* ==== 00402846 getenv ==== */
 
-char * __watcall getenv(char *_VarName)
+undefined4 __watcall getenv(char *param_1)
 
 {
   char cVar1;
+  byte *pbVar2;
   int cmp;
   uint i_val;
-  size_t _MaxCount;
-  undefined4 *puVar2;
-  char *str1;
+  int iVar3;
+  undefined4 *puVar4;
+  char *pcVar5;
   
-  if ((environ != (undefined4 *)0x0) && (_VarName != (char *)0x0)) {
+  if ((environ != (undefined4 *)0x0) && (param_1 != (char *)0x0)) {
     i_val = 0xffffffff;
-    str1 = _VarName;
+    pcVar5 = param_1;
     do {
       if (i_val == 0) break;
       i_val = i_val - 1;
-      cVar1 = *str1;
-      str1 = str1 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    _MaxCount = ~i_val - 1;
-    for (puVar2 = environ; str1 = (char *)*puVar2, str1 != (char *)0x0; puVar2 = puVar2 + 1) {
-      cmp = strnicmp(str1,_VarName,_MaxCount);
-      if ((cmp == 0) && (str1[_MaxCount] == '=')) {
-        return str1 + ~i_val;
+    iVar3 = ~i_val - 1;
+    for (puVar4 = environ; pbVar2 = (byte *)*puVar4, pbVar2 != (byte *)0x0; puVar4 = puVar4 + 1) {
+      cmp = strnicmp(pbVar2,param_1,iVar3);
+      if ((cmp == 0) && (pbVar2[iVar3] == 0x3d)) {
+        return pbVar2 + ~i_val;
       }
     }
   }
-  return (char *)0x0;
+  return 0;
 }
 
 

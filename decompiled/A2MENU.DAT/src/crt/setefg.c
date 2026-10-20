@@ -3,12 +3,14 @@
 
 /* ==== 0041ea36 setEFGfmt ==== */
 
-void __watcall setEFGfmt(void)
+undefined4 __watcall setEFGfmt(void)
 
 {
+  undefined4 in_EAX;
+  
   EFG_printf = EFG_Format;
   EFG_scanf = cnvs2d;
-  return;
+  return in_EAX;
 }
 
 

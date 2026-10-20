@@ -3,36 +3,37 @@
 
 /* ==== 00436efe InitRtns ==== */
 
-void __watcall InitRtns(void)
+undefined4 __watcall InitRtns(undefined4 param_1)
 
 {
-  byte in_AL;
-  byte bVar1;
+  undefined4 uVar1;
   char *pcVar2;
   char *pcVar3;
   
+  uVar1 = param_1;
   while( true ) {
     pcVar2 = &DAT_00459f0e;
-    bVar1 = in_AL;
+    uVar1 = CONCAT31((int3)((uint)uVar1 >> 8),(char)param_1);
     for (pcVar3 = &DAT_00459ed8; pcVar3 < &DAT_00459f0e; pcVar3 = pcVar3 + 6) {
-      if ((*pcVar3 != '\x02') && ((byte)pcVar3[1] <= bVar1)) {
-        bVar1 = pcVar3[1];
+      if ((*pcVar3 != '\x02') && ((byte)pcVar3[1] <= (byte)uVar1)) {
+        uVar1 = CONCAT31((int3)((uint)uVar1 >> 8),pcVar3[1]);
         pcVar2 = pcVar3;
       }
     }
     if (pcVar2 == &DAT_00459f0e) break;
+    uVar1 = 0;
     if (*(code **)(pcVar2 + 2) != (code *)0x0) {
-      (**(code **)(pcVar2 + 2))();
+      uVar1 = (**(code **)(pcVar2 + 2))();
     }
     *pcVar2 = '\x02';
   }
-  return;
+  return uVar1;
 }
 
 
 /* ==== 00436f49 FiniRtns ==== */
 
-void __watcall FiniRtns(undefined4 param_1,byte param_2)
+void __watcall FiniRtns(undefined4 param_1,undefined4 param_2)
 
 {
   byte bVar1;
@@ -49,7 +50,7 @@ void __watcall FiniRtns(undefined4 param_1,byte param_2)
       }
     }
     if (pcVar2 == &IID_IDirectSound3DBuffer) break;
-    if ((bVar1 <= param_2) && (*(code **)(pcVar2 + 2) != (code *)0x0)) {
+    if ((bVar1 <= (byte)param_2) && (*(code **)(pcVar2 + 2) != (code *)0x0)) {
       (**(code **)(pcVar2 + 2))();
     }
     *pcVar2 = '\x02';

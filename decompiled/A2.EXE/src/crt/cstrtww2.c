@@ -3,12 +3,12 @@
 
 /* ==== 004014ff spawnv ==== */
 
-intptr_t __watcall spawnv(int param_1,char *_Filename,char **_ArgList)
+uint __watcall spawnv(undefined4 param_1,byte *param_2,int *param_3)
 
 {
-  intptr_t spawnve_result;
+  uint spawnve_result;
   
-  spawnve_result = spawnve(param_1,_Filename,_ArgList,environ);
+  spawnve_result = spawnve(param_1,param_2,param_3,environ);
   return spawnve_result;
 }
 
@@ -27,12 +27,14 @@ int * __watcall get_errno_ptr(void)
 
 /* ==== 00401522 wstart2 ==== */
 
-void __watcall wstart2(void)
+undefined4 __watcall wstart2(void)
 
 {
+  undefined4 win_main_1;
+  
   WinMainProc = WinMain;
-  WinMain_1();
-  return;
+  win_main_1 = WinMain_1();
+  return win_main_1;
 }
 
 

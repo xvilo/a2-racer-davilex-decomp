@@ -7,13 +7,10 @@ void __watcall mdt_display_stand(int param_1,int param_2,int param_3,int param_4
 
 {
   undefined *puVar1;
+  int slot_check_level_result;
   int iVar2;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_EDX;
-  int extraout_EDX_00;
   undefined4 *puVar3;
-  int i;
+  int arg5;
   undefined4 local_30;
   int local_2c;
   int local_28;
@@ -39,76 +36,83 @@ void __watcall mdt_display_stand(int param_1,int param_2,int param_3,int param_4
     xvga_select_font(2);
     local_28 = param_2 + 0x52;
     local_1c = param_2 + 0x1e4;
-    i = 1;
+    arg5 = 1;
     do {
       local_14 = local_20;
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428aa8,0x8a);
       local_2c = local_2c * 0x13c;
-      iVar2 = slot_check_level(param_1,s_m_stand_cpp_00428ab4,0x8a);
+      slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428ab4,0x8a);
+      iVar2 = 0;
       puVar3 = &local_30;
-      if (i == *(int *)(&DAT_004372d6 + iVar2 * 2 + local_2c) >> 0x10) {
+      if (arg5 == *(int *)(&DAT_004372d6 + slot_check_level_result * 2 + local_2c) >> 0x10) {
         local_14 = local_24;
         iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428ac0,0x8c);
         puVar3 = (undefined4 *)(iVar2 * 0x13c + 0x437296);
-        slot_check_index(active_slot,s_m_stand_cpp_00428acc,0x8d);
-        slot_check_level(param_1,s_m_stand_cpp_00428ad8,0x8d);
+        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428acc,0x8d);
+        slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428ad8,0x8d);
+        iVar2 = *(int *)(&DAT_004372bc + slot_check_level_result * 4 + iVar2 * 0x13c);
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428ae4,0x8f);
       local_2c = local_2c * 0x13c;
-      iVar2 = slot_check_level(param_1,s_m_stand_cpp_00428af0,0x8f);
+      slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428af0,0x8f);
       puVar1 = speler_namen;
-      if (i == *(int *)(&DAT_0043735a + iVar2 * 2 + local_2c) >> 0x10) {
-        slot_check_index(active_slot,s_m_stand_cpp_00428afc,0x91);
-        slot_check_level(param_1,s_m_stand_cpp_00428b08,0x91);
+      if (arg5 == *(int *)(&DAT_0043735a + slot_check_level_result * 2 + local_2c) >> 0x10) {
+        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428afc,0x91);
+        slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b08,0x91);
+        iVar2 = *(int *)(&DAT_004372e4 + slot_check_level_result * 4 + iVar2 * 0x13c);
         puVar3 = (undefined4 *)puVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b14,0x93);
       local_2c = local_2c * 0x13c;
-      iVar2 = slot_check_level(param_1,s_m_stand_cpp_00428b20,0x93);
+      slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b20,0x93);
       puVar1 = PTR_s_Gijs_Comara_00435a1c;
-      if (i == *(int *)(&DAT_00437366 + iVar2 * 2 + local_2c) >> 0x10) {
-        slot_check_index(active_slot,s_m_stand_cpp_00428b2c,0x95);
-        slot_check_level(param_1,s_m_stand_cpp_00428b38,0x95);
+      if (arg5 == *(int *)(&DAT_00437366 + slot_check_level_result * 2 + local_2c) >> 0x10) {
+        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b2c,0x95);
+        slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b38,0x95);
+        iVar2 = *(int *)(&DAT_004372fc + slot_check_level_result * 4 + iVar2 * 0x13c);
         puVar3 = (undefined4 *)puVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b44,0x97);
       local_2c = local_2c * 0x13c;
-      iVar2 = slot_check_level(param_1,s_m_stand_cpp_00428b50,0x97);
+      slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b50,0x97);
       puVar1 = PTR_s_Rudolf_Porge_00435a20;
-      if (i == *(int *)(&DAT_00437372 + iVar2 * 2 + local_2c) >> 0x10) {
-        slot_check_index(active_slot,s_m_stand_cpp_00428b5c,0x99);
-        slot_check_level(param_1,s_m_stand_cpp_00428b68,0x99);
+      if (arg5 == *(int *)(&DAT_00437372 + slot_check_level_result * 2 + local_2c) >> 0x10) {
+        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b5c,0x99);
+        slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b68,0x99);
+        iVar2 = *(int *)(&DAT_00437314 + slot_check_level_result * 4 + iVar2 * 0x13c);
         puVar3 = (undefined4 *)puVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b74,0x9b);
       local_2c = local_2c * 0x13c;
-      iVar2 = slot_check_level(param_1,s_m_stand_cpp_00428b80,0x9b);
+      slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b80,0x9b);
       puVar1 = PTR_s_Richard_Viber_00435a24;
-      if (i == *(int *)(&DAT_0043737e + iVar2 * 2 + local_2c) >> 0x10) {
-        slot_check_index(active_slot,s_m_stand_cpp_00428b8c,0x9d);
-        slot_check_level(param_1,s_m_stand_cpp_00428b98,0x9d);
+      if (arg5 == *(int *)(&DAT_0043737e + slot_check_level_result * 2 + local_2c) >> 0x10) {
+        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b8c,0x9d);
+        slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b98,0x9d);
+        iVar2 = *(int *)(&DAT_0043732c + slot_check_level_result * 4 + iVar2 * 0x13c);
         puVar3 = (undefined4 *)puVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428ba4,0x9f);
       local_2c = local_2c * 0x13c;
-      iVar2 = slot_check_level(param_1,s_m_stand_cpp_00428bb0,0x9f);
+      slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428bb0,0x9f);
       puVar1 = PTR_s_Brian_Jakuar_00435a28;
-      if (i == *(int *)(&DAT_0043738a + iVar2 * 2 + local_2c) >> 0x10) {
-        slot_check_index(active_slot,s_m_stand_cpp_00428bbc,0xa1);
-        slot_check_level(param_1,s_m_stand_cpp_00428bc8,0xa1);
+      if (arg5 == *(int *)(&DAT_0043738a + slot_check_level_result * 2 + local_2c) >> 0x10) {
+        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428bbc,0xa1);
+        slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428bc8,0xa1);
+        iVar2 = *(int *)(&DAT_00437344 + slot_check_level_result * 4 + iVar2 * 0x13c);
         puVar3 = (undefined4 *)puVar1;
       }
       xvga_set_font_colors(2,local_14,local_14);
-      win_print_xy(1,local_18,local_10,s__d_00428bd4,i);
-      win_print_xy(1,local_28,extraout_EDX,s__s_00428bd7,puVar3);
-      win_print_xy(1,local_1c,extraout_EDX,s___2_2du__2_2dm__2_2ds_00428bda,extraout_ECX / 0xe10,
-                   (int)((longlong)
-                         ((ulonglong)(uint)((int)((longlong)extraout_ECX / 0x3c) >> 0x1f) << 0x20 |
-                         (longlong)extraout_ECX / 0x3c & 0xffffffffU) % 0x3c),
-                   (int)(CONCAT44(extraout_EDX_00 >> 0x1f,extraout_ECX) % 0x3c));
-      i = i + 1;
-      local_10 = extraout_ECX_00;
-    } while (i < 7);
+      slot_check_level_result = local_10;
+      win_print_xy(1,local_18,local_10,s__d_00428bd4,arg5);
+      win_print_xy(1,local_28,slot_check_level_result,s__s_00428bd7,puVar3);
+      win_print_xy(1,local_1c,slot_check_level_result,s___2_2du__2_2dm__2_2ds_00428bda,iVar2 / 0xe10
+                   ,(int)((longlong)
+                          ((ulonglong)(uint)((int)((longlong)iVar2 / 0x3c) >> 0x1f) << 0x20 |
+                          (longlong)iVar2 / 0x3c & 0xffffffffU) % 0x3c),iVar2 % 0x3c);
+      arg5 = arg5 + 1;
+      local_10 = slot_check_level_result + 0x19;
+    } while (arg5 < 7);
   }
   return;
 }
@@ -137,13 +141,11 @@ void __watcall mdt_open_screen(int param_1)
 
 {
   int use_mdt_menu_cfg_anims_result;
-  int extraout_ECX;
   
   load_pcx_file_1(2,(&mdt_stand_pcx)[param_1 % 6],0x1f);
   use_mdt_menu_cfg_anims_result = use_mdt_menu_cfg_anims();
   if (use_mdt_menu_cfg_anims_result != 0) {
     fatal_exit(s__s__d____Could_not_load_mdt_menu_00428bfc,s_m_stand_cpp_00428bf0,0xd9);
-    param_1 = extraout_ECX;
   }
   hide_mouse();
   clear_screen(0,0);

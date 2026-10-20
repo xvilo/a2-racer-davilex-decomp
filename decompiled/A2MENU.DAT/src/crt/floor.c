@@ -3,18 +3,21 @@
 
 /* ==== 0042210f floor ==== */
 
-double __watcall floor(double _X)
+void __watcall
+floor(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5
+     ,undefined4 param_6)
 
 {
-  double modf_result;
-  undefined2 extraout_ST0h;
-  double local_18;
+  undefined1 local_18 [8];
+  undefined4 local_10;
+  undefined4 uStack_c;
+  undefined4 uStack_8;
   
-  modf_result = modf(_X,&local_18);
-  if ((float10)CONCAT28(extraout_ST0h,modf_result) < (float10)0) {
-    local_18 = local_18 + -1.0;
-  }
-  return SUB108((float10)local_18,0);
+  local_10 = param_2;
+  uStack_c = param_3;
+  uStack_8 = param_1;
+  modf(local_18,param_6,param_5,param_4,param_5,param_6,(double *)local_18);
+  return;
 }
 
 

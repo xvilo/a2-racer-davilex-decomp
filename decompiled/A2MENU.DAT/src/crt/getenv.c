@@ -3,35 +3,35 @@
 
 /* ==== 0041a82c getenv ==== */
 
-char * __watcall getenv(char *_VarName)
+undefined4 __watcall getenv(char *param_1)
 
 {
   char cVar1;
   byte *pbVar2;
   int strnicmp_1_result;
   uint i;
-  int unaff_EBX;
-  undefined4 *puVar3;
-  char *pcVar4;
+  int iVar3;
+  undefined4 *puVar4;
+  char *pcVar5;
   
-  if ((environ != (undefined4 *)0x0) && (_VarName != (char *)0x0)) {
+  if ((environ != (undefined4 *)0x0) && (param_1 != (char *)0x0)) {
     i = 0xffffffff;
-    pcVar4 = _VarName;
+    pcVar5 = param_1;
     do {
       if (i == 0) break;
       i = i - 1;
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    unaff_EBX = ~i - 1;
-    for (puVar3 = environ; pbVar2 = (byte *)*puVar3, pbVar2 != (byte *)0x0; puVar3 = puVar3 + 1) {
-      strnicmp_1_result = strnicmp_1(pbVar2,_VarName,unaff_EBX);
-      if ((strnicmp_1_result == 0) && (pbVar2[unaff_EBX] == 0x3d)) {
-        return (char *)(pbVar2 + ~i);
+    iVar3 = ~i - 1;
+    for (puVar4 = environ; pbVar2 = (byte *)*puVar4, pbVar2 != (byte *)0x0; puVar4 = puVar4 + 1) {
+      strnicmp_1_result = strnicmp_1(pbVar2,param_1,iVar3);
+      if ((strnicmp_1_result == 0) && (pbVar2[iVar3] == 0x3d)) {
+        return pbVar2 + ~i;
       }
     }
   }
-  return (char *)0x0;
+  return 0;
 }
 
 

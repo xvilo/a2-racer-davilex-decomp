@@ -6,16 +6,16 @@
 void __watcall load_static_object_textures(void)
 
 {
+  undefined4 *puVar1;
   int texture;
-  int iVar1;
   int flags;
   
-  iVar1 = 0;
+  flags = 0;
   do {
-    flags = iVar1 + 0x10;
-    texture = load_texture(*(char **)((int)&PTR_s_sky_pcx_00457c5c + iVar1),flags);
-    *(int *)((int)&static_object_texture_ids + iVar1) = texture;
-    iVar1 = flags;
+    puVar1 = (undefined4 *)((int)&PTR_s_sky_pcx_00457c5c + flags);
+    flags = flags + 0x10;
+    texture = load_texture((char *)*puVar1,flags);
+    *(int *)(&static_object_types + flags) = texture;
   } while (flags != 0x300);
   return;
 }
@@ -23,7 +23,7 @@ void __watcall load_static_object_textures(void)
 
 /* ==== 00408cad release_static_object_textures ==== */
 
-void __watcall release_static_object_textures(undefined4 param_1,undefined4 param_2)
+void __watcall release_static_object_textures(void)
 
 {
   int *piVar1;
@@ -32,7 +32,7 @@ void __watcall release_static_object_textures(undefined4 param_1,undefined4 para
   iVar2 = 0;
   do {
     piVar1 = *(int **)(*(int *)((int)&static_object_texture_ids + iVar2) * 0xc + 4 + texture_table);
-    (**(code **)(*piVar1 + 8))(piVar1,param_2);
+    (**(code **)(*piVar1 + 8))(piVar1);
     piVar1 = *(int **)(texture_table + 8 + *(int *)((int)&static_object_texture_ids + iVar2) * 0xc);
     iVar2 = iVar2 + 0x10;
     (**(code **)(*piVar1 + 8))(piVar1);
@@ -46,38 +46,34 @@ void __watcall release_static_object_textures(undefined4 param_1,undefined4 para
 int __watcall start_countdown(int seconds)
 
 {
-  undefined4 unaff_EDX;
-  undefined8 now;
+  int now;
   
   countdown_seconds = seconds;
-  now = time(&countdown_last_tick,unaff_EDX);
-  return (int)now;
+  now = time(&countdown_last_tick);
+  return now;
 }
 
 
 /* ==== 00408cff countdown_expired ==== */
 
-undefined8 __watcall countdown_expired(undefined4 param_1,undefined4 param_2)
+uint __watcall countdown_expired(void)
 
 {
-  undefined8 now;
-  
   if (countdown_seconds != 0) {
-    now = time(&DAT_00473044,param_2);
-    param_2 = (undefined4)((ulonglong)now >> 0x20);
+    time(&DAT_00473044);
     countdown_seconds = countdown_seconds - (DAT_00473044 - countdown_last_tick);
     countdown_last_tick = DAT_00473044;
     if (countdown_seconds < 1) {
       countdown_seconds = 0;
     }
   }
-  return CONCAT44(param_2,(uint)(countdown_seconds == 0));
+  return (uint)(countdown_seconds == 0);
 }
 
 
 /* ==== 00408d59 init_timing ==== */
 
-void __watcall init_timing(undefined4 param_1,undefined4 param_2)
+void __watcall init_timing(void)
 
 {
   timing_start_ticks = clock_ticks();
@@ -89,13 +85,12 @@ void __watcall init_timing(undefined4 param_1,undefined4 param_2)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined8 __watcall exit_timing(int param_1,undefined4 param_2)
+void __watcall exit_timing(int param_1)
 
 {
   double dVar1;
   undefined4 uVar2;
   undefined4 uVar3;
-  float10 chp;
   
   _DAT_00473038 = clock_ticks();
   dVar1 = (double)(uint)(_DAT_00473038 - timing_start_ticks) / 100.0;
@@ -112,8 +107,8 @@ undefined8 __watcall exit_timing(int param_1,undefined4 param_2)
   uVar3 = elapsed_seconds._0_4_;
   elapsed_seconds = dVar1;
   debugmsg(s_fps____f_004438ca,uVar3,uVar2);
-  chp = CHP();
-  return CONCAT44(param_2,(int)ROUND(chp));
+  CHP();
+  return;
 }
 
 
@@ -165,13 +160,12 @@ int __watcall init_anims_1(int param_1)
 
 /* ==== 00408f1a use_dashboard_anims_0 ==== */
 
-undefined8 __watcall use_dashboard_anims_0(undefined4 param_1,undefined4 param_2)
+void __watcall use_dashboard_anims_0(undefined4 param_1)
 
 {
   char *filename_val_2;
   char *filename_val;
   int use_mem_images_result;
-  undefined4 uVar1;
   
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___004439a1,s_menuanim_cpp_00443994,0x24e);
@@ -182,18 +176,16 @@ undefined8 __watcall use_dashboard_anims_0(undefined4 param_1,undefined4 param_2
   filename_val_2 = file_path(&DAT_00473118,s_gamespr_ind_004439cb);
   filename_val = file_path(&buffer1,s_gamespr_img_004439d7);
   use_mem_images_result = use_mem_images(filename_val,filename_val_2,&anim_base);
-  uVar1 = 0;
   if (use_mem_images_result != 0) {
     disable_mem_images(&anim_base);
-    uVar1 = 2000;
   }
-  return CONCAT44(param_2,uVar1);
+  return;
 }
 
 
 /* ==== 00408f9e free_dashboard_anims_0 ==== */
 
-longlong __watcall free_dashboard_anims_0(undefined4 param_1,uint param_2)
+void __watcall free_dashboard_anims_0(undefined4 param_1)
 
 {
   if (init_anims_ok == 0) {
@@ -202,19 +194,18 @@ longlong __watcall free_dashboard_anims_0(undefined4 param_1,uint param_2)
   reset_anim_base();
   add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_00458988);
   disable_mem_images(&anim_base);
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 00408fe1 use_dashboard_anims_1 ==== */
 
-undefined8 __watcall use_dashboard_anims_1(undefined4 param_1,undefined4 param_2)
+void __watcall use_dashboard_anims_1(undefined4 param_1)
 
 {
   char *filename_val_2;
   char *filename_val;
   int use_mem_images_result;
-  undefined4 uVar1;
   
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00443a27,s_menuanim_cpp_00443a1a,0x267);
@@ -225,18 +216,16 @@ undefined8 __watcall use_dashboard_anims_1(undefined4 param_1,undefined4 param_2
   filename_val_2 = file_path(&DAT_00473118,s_gamespr_ind_00443a51);
   filename_val = file_path(&buffer1,s_gamespr_img_00443a5d);
   use_mem_images_result = use_mem_images(filename_val,filename_val_2,&anim_base);
-  uVar1 = 0;
   if (use_mem_images_result != 0) {
     disable_mem_images(&anim_base);
-    uVar1 = 2000;
   }
-  return CONCAT44(param_2,uVar1);
+  return;
 }
 
 
 /* ==== 00409065 free_dashboard_anims_1 ==== */
 
-longlong __watcall free_dashboard_anims_1(undefined4 param_1,uint param_2)
+void __watcall free_dashboard_anims_1(undefined4 param_1)
 
 {
   if (init_anims_ok == 0) {
@@ -245,19 +234,18 @@ longlong __watcall free_dashboard_anims_1(undefined4 param_1,uint param_2)
   reset_anim_base();
   add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_004589d4);
   disable_mem_images(&anim_base);
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 00409095 use_dashboard_anims_2 ==== */
 
-undefined8 __watcall use_dashboard_anims_2(undefined4 param_1,undefined4 param_2)
+void __watcall use_dashboard_anims_2(undefined4 param_1)
 
 {
   char *filename_val_2;
   char *filename_val;
   int use_mem_images_result;
-  undefined4 uVar1;
   
   if (init_anims_ok == 0) {
     fatal_exit(s__s__d____please_call_init_anims___00443aad,s_menuanim_cpp_00443aa0,0x280);
@@ -268,18 +256,16 @@ undefined8 __watcall use_dashboard_anims_2(undefined4 param_1,undefined4 param_2
   filename_val_2 = file_path(&DAT_00473118,s_gamespr_ind_00443ad7);
   filename_val = file_path(&buffer1,s_gamespr_img_00443ae3);
   use_mem_images_result = use_mem_images(filename_val,filename_val_2,&anim_base);
-  uVar1 = 0;
   if (use_mem_images_result != 0) {
     disable_mem_images(&anim_base);
-    uVar1 = 2000;
   }
-  return CONCAT44(param_2,uVar1);
+  return;
 }
 
 
 /* ==== 00409119 free_dashboard_anims_2 ==== */
 
-longlong __watcall free_dashboard_anims_2(undefined4 param_1,uint param_2)
+void __watcall free_dashboard_anims_2(undefined4 param_1)
 
 {
   if (init_anims_ok == 0) {
@@ -288,34 +274,30 @@ longlong __watcall free_dashboard_anims_2(undefined4 param_1,uint param_2)
   reset_anim_base();
   add_array_to_anim_base((anim_t *)&anims,(long *)&DAT_00458a14);
   disable_mem_images(&anim_base);
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 0040914c init_dashboard ==== */
 
-undefined8 __watcall init_dashboard(uint param_1,undefined4 param_2)
+void __watcall init_dashboard(uint param_1)
 
 {
   uint uVar1;
   int anims_1;
   bool bVar2;
-  undefined8 uVar3;
   
   anims_1 = init_anims_1(2);
   if (dashboard_on_screen == 0) {
     if (screen_resolution == 0) {
-      uVar3 = use_dashboard_anims_2(0,param_1);
-      param_1 = (uint)((ulonglong)uVar3 >> 0x20);
+      use_dashboard_anims_2(0);
     }
     else if (screen_resolution == 1) {
-      uVar3 = use_dashboard_anims_1(1,param_1);
-      param_1 = (uint)((ulonglong)uVar3 >> 0x20);
+      use_dashboard_anims_1(1);
     }
   }
   else {
-    uVar3 = use_dashboard_anims_0(anims_1,param_1);
-    param_1 = (uint)((ulonglong)uVar3 >> 0x20);
+    use_dashboard_anims_0(anims_1);
   }
   if (param_1 == 0) {
     bVar2 = true;
@@ -323,8 +305,7 @@ undefined8 __watcall init_dashboard(uint param_1,undefined4 param_2)
   else {
     if (param_1 < 2) {
       dashboard_surface = 1;
-      uVar1 = dashboard_surface;
-      goto LAB_004091b8;
+      return;
     }
     bVar2 = param_1 == 2;
   }
@@ -333,34 +314,28 @@ undefined8 __watcall init_dashboard(uint param_1,undefined4 param_2)
     fatal_exit(s__init_dashboard__invalid_focus_00443b28);
     uVar1 = dashboard_surface;
   }
-LAB_004091b8:
   dashboard_surface = uVar1;
-  return CONCAT44(param_2,1);
+  return;
 }
 
 
 /* ==== 004091bf release_dashboard ==== */
 
-undefined8 __watcall release_dashboard(undefined4 param_1,uint param_2)
+void __watcall release_dashboard(undefined4 param_1)
 
 {
-  longlong lVar1;
-  
   if (dashboard_on_screen == 0) {
     if (screen_resolution == 0) {
-      lVar1 = free_dashboard_anims_2(0,param_2);
-      param_2 = (uint)((ulonglong)lVar1 >> 0x20);
+      free_dashboard_anims_2(0);
     }
     else if (screen_resolution == 1) {
-      lVar1 = free_dashboard_anims_1(1,param_2);
-      param_2 = (uint)((ulonglong)lVar1 >> 0x20);
+      free_dashboard_anims_1(1);
     }
   }
   else {
-    lVar1 = free_dashboard_anims_0(param_1,param_2);
-    param_2 = (uint)((ulonglong)lVar1 >> 0x20);
+    free_dashboard_anims_0(param_1);
   }
-  return CONCAT44(param_2,1);
+  return;
 }
 
 

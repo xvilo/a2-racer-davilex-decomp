@@ -17,20 +17,16 @@ int __watcall get_togglebutton_togglestate(int param_1)
 {
   int iVar1;
   void *control_pointer_1;
-  int extraout_EDX;
-  int extraout_EDX_00;
   
   if (-1 < param_1) {
     iVar1 = get_numberofcontrols_inform();
     if (param_1 <= iVar1) goto LAB_004119d3;
   }
   fatal_exit(s__s__d_____get_togglebutton_toggl_0041ec5d,s_tgglbuts_cpp_0041ec50,0x40,param_1);
-  param_1 = extraout_EDX;
 LAB_004119d3:
   iVar1 = get_control_type(param_1);
   if (iVar1 != 2) {
     fatal_exit(s__s__d_____get_togglebutton_toggl_0041ecaf,s_tgglbuts_cpp_0041eca2,0x45,param_1);
-    param_1 = extraout_EDX_00;
   }
   control_pointer_1 = get_control_pointer_1(param_1);
   return *(int *)((int)control_pointer_1 + 0xd);
@@ -44,27 +40,21 @@ void __watcall set_togglebutton_togglestate(int param_1,int param_2)
 {
   int iVar1;
   int *control_pointer_1;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
   
   if (-1 < param_1) {
     iVar1 = get_numberofcontrols_inform();
     if (param_1 <= iVar1) goto LAB_00411a29;
   }
   fatal_exit(s__s__d_____set_togglebutton_toggl_0041ed08,s_tgglbuts_cpp_0041ecfb,0x56,param_1);
-  param_2 = extraout_ECX;
 LAB_00411a29:
   iVar1 = get_control_type(param_1);
   if (iVar1 != 2) {
     fatal_exit(s__s__d_____get_togglebutton_toggl_0041ed5a,s_tgglbuts_cpp_0041ed4d,0x5b,param_1);
-    param_2 = extraout_ECX_00;
   }
   control_pointer_1 = get_control_pointer_1(param_1);
   if (*(int *)(xvga_anims + *control_pointer_1 * 0xc) / 2 < param_2) {
     fatal_exit(s__s__d_____set_togglebutton_toggl_0041edb3,s_tgglbuts_cpp_0041eda6,0x62,
                *(int *)(xvga_anims + *control_pointer_1 * 0xc) / 2);
-    param_2 = extraout_ECX_01;
   }
   *(int *)((int)control_pointer_1 + 0xd) = param_2;
   return;
@@ -76,11 +66,8 @@ LAB_00411a29:
 void __watcall destroy_togglebutton(fform_t *fform)
 
 {
-  fform_t *extraout_EDX;
-  
   if (*(int *)(fform + 0x18) == 0) {
     fatal_exit(s__s__d_____destroy_togglebutton__n_0041ee0a,s_tgglbuts_cpp_0041edfd,0x6f);
-    fform = extraout_EDX;
   }
   DestroyWindow(*(HWND *)(fform + 0x18));
   return;

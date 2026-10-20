@@ -3,132 +3,125 @@
 
 /* ==== 00413917 fwrite ==== */
 
-size_t __watcall fwrite(void *_Str,size_t _Size,size_t _Count,FILE *_File)
+undefined4 __watcall fwrite(byte *param_1,undefined4 param_2,int param_3,int *param_4)
 
 {
   byte bVar1;
   uint uVar2;
   bool bVar3;
-  size_t sVar4;
+  undefined4 uVar4;
   uint uVar5;
   int extraout_ECX;
   uint j;
   uint extraout_ECX_00;
-  size_t unaff_EDX;
-  undefined4 extraout_EDX;
-  DWORD unaff_EBX;
+  int extraout_EDX;
+  undefined4 extraout_EDX_00;
+  DWORD number_of_bytes_to_write;
   byte *pbVar6;
-  char *pcVar7;
+  byte *pbVar7;
   byte bVar8;
   undefined8 uVar9;
-  byte *pbStack_1c;
+  byte *buffer;
   int i;
   uint uStack_10;
   
   bVar8 = 0;
-  (*(code *)AccessFileH_1)(_Size);
+  (*(code *)AccessFileH_1)(param_2);
   if ((*(byte *)(extraout_ECX + 0xc) & 2) == 0) {
-    set_errno(4,unaff_EDX);
+    set_errno(4);
     *(byte *)(extraout_ECX + 0xc) = *(byte *)(extraout_ECX + 0xc) | 0x20;
     (*(code *)ReleaseFileH_1)();
-    sVar4 = 0;
+    uVar4 = 0;
   }
   else {
-    uStack_10 = _Count * unaff_EDX;
+    uStack_10 = param_3 * extraout_EDX;
     if (uStack_10 == 0) {
       (*(code *)ReleaseFileH_1)();
-      sVar4 = 0;
+      uVar4 = 0;
     }
     else {
       if (*(int *)(extraout_ECX + 8) == 0) {
-        ioalloc((int)_File,unaff_EDX);
+        ioalloc(param_4);
       }
-      uVar2 = _File->_flag;
-      bVar1 = (byte)_File->_flag;
+      uVar2 = param_4[3];
+      bVar1 = *(byte *)(param_4 + 3);
       i = 0;
-      *(byte *)&_File->_flag = bVar1 & 0xcf;
-      pbStack_1c = _Str;
+      *(byte *)(param_4 + 3) = bVar1 & 0xcf;
+      buffer = param_1;
       if ((bVar1 & 0x40) == 0) {
-        bVar8 = *(byte *)((int)&_File->_flag + 1);
         bVar3 = false;
-        if ((bVar8 & 4) != 0) {
+        if ((*(byte *)((int)param_4 + 0xd) & 4) != 0) {
           bVar3 = true;
-          *(byte *)((int)&_File->_flag + 1) = bVar8 & 0xfa | 1;
+          *(byte *)((int)param_4 + 0xd) = *(byte *)((int)param_4 + 0xd) & 0xfa | 1;
         }
         do {
-          bVar8 = *pbStack_1c;
-          pbStack_1c = pbStack_1c + 1;
-          fputc((uint)bVar8,_File);
-          if ((_File->_flag & 0x30) != 0) break;
+          bVar8 = *buffer;
+          buffer = buffer + 1;
+          fputc((uint)bVar8,param_4);
+          if ((*(byte *)(param_4 + 3) & 0x30) != 0) break;
           i = i + 1;
         } while (uStack_10 - i != 0);
         if (bVar3) {
-          uVar5 = CONCAT22((short)((uint)_File >> 0x10),
-                           CONCAT11(*(undefined1 *)((int)&_File->_flag + 1),(char)_File)) &
-                  0xfffffaff;
-          *(byte *)((int)&_File->_flag + 1) = (byte)(uVar5 >> 8) | 4;
-          flush(_File,uVar5);
+          *(byte *)((int)param_4 + 0xd) = *(byte *)((int)param_4 + 0xd) & 0xfa | 4;
+          flush(param_4);
         }
       }
       else {
         do {
-          if ((_File->_cnt == 0) && ((uint)_File->_charbuf <= uStack_10)) {
+          if ((param_4[1] == 0) && ((uint)param_4[5] <= uStack_10)) {
             uVar5 = uStack_10 >> 8 & 0xfffffe;
-            unaff_EBX = uVar5 << 8;
+            number_of_bytes_to_write = uVar5 << 8;
             if (uVar5 == 0) {
-              unaff_EBX = uStack_10;
+              number_of_bytes_to_write = uStack_10;
             }
-            uVar5 = qwrite(_File->_file,pbStack_1c,unaff_EBX);
+            uVar5 = qwrite(param_4[4],buffer,number_of_bytes_to_write);
             if (uVar5 != 0xffffffff) {
               if (uVar5 != 0) goto LAB_00413a43;
               uVar9 = (*(code *)GetThreadPtr)();
               uVar5 = (uint)((ulonglong)uVar9 >> 0x20);
               *(undefined4 *)((int)uVar9 + 4) = 0xc;
             }
-            *(byte *)&_File->_flag = (byte)_File->_flag | 0x20;
+            *(byte *)(param_4 + 3) = *(byte *)(param_4 + 3) | 0x20;
           }
           else {
-            uVar5 = _File->_charbuf - _File->_cnt;
-            if (uStack_10 < uVar5) {
+            uVar5 = param_4[5] - param_4[1];
+            if (uStack_10 < (uint)(param_4[5] - param_4[1])) {
               uVar5 = uStack_10;
             }
-            pbVar6 = pbStack_1c;
-            pcVar7 = _File->_ptr;
+            pbVar6 = buffer;
+            pbVar7 = (byte *)*param_4;
             for (j = uVar5 >> 2; j != 0; j = j - 1) {
-              *(undefined4 *)pcVar7 = *(undefined4 *)pbVar6;
-              pbVar6 = pbVar6 + ((uint)bVar8 * -2 + 1) * 4;
-              pcVar7 = pcVar7 + ((uint)bVar8 * -2 + 1) * 4;
+              *(undefined4 *)pbVar7 = *(undefined4 *)pbVar6;
+              pbVar6 = pbVar6 + (uint)bVar8 * -8 + 4;
+              pbVar7 = pbVar7 + (uint)bVar8 * -8 + 4;
             }
             for (j = uVar5 & 3; j != 0; j = j - 1) {
-              *pcVar7 = *pbVar6;
+              *pbVar7 = *pbVar6;
               pbVar6 = pbVar6 + (uint)bVar8 * -2 + 1;
-              pcVar7 = pcVar7 + (uint)bVar8 * -2 + 1;
+              pbVar7 = pbVar7 + (uint)bVar8 * -2 + 1;
             }
-            bVar1 = *(byte *)((int)&_File->_flag + 1);
-            _File->_cnt = _File->_cnt + uVar5;
-            pcVar7 = _File->_ptr;
-            *(byte *)((int)&_File->_flag + 1) = bVar1 | 0x10;
-            _File->_ptr = pcVar7 + uVar5;
-            if ((_File->_cnt == _File->_charbuf) || ((_File->_flag & 0x400) != 0)) {
-              uVar9 = flush(_File,uVar5);
-              uVar5 = (uint)((ulonglong)uVar9 >> 0x20);
+            param_4[1] = param_4[1] + uVar5;
+            *(byte *)((int)param_4 + 0xd) = *(byte *)((int)param_4 + 0xd) | 0x10;
+            *param_4 = *param_4 + uVar5;
+            if ((param_4[1] == param_4[5]) || ((*(byte *)((int)param_4 + 0xd) & 4) != 0)) {
+              flush(param_4);
             }
           }
 LAB_00413a43:
-          pbStack_1c = pbStack_1c + uVar5;
+          buffer = buffer + uVar5;
           i = i + uVar5;
           uStack_10 = uStack_10 - uVar5;
-        } while ((uStack_10 != 0) && ((_File->_flag & 0x20) == 0));
+        } while ((uStack_10 != 0) && ((*(byte *)(param_4 + 3) & 0x20) == 0));
       }
-      if ((_File->_flag & 0x20) != 0) {
+      if ((*(byte *)(param_4 + 3) & 0x20) != 0) {
         i = 0;
       }
-      _File->_flag = _File->_flag | uVar2 & 0x30;
+      param_4[3] = param_4[3] | uVar2 & 0x30;
       (*(code *)ReleaseFileH_1)();
-      sVar4 = (size_t)(CONCAT44(extraout_EDX,i) / (ulonglong)extraout_ECX_00);
+      uVar4 = (undefined4)(CONCAT44(extraout_EDX_00,i) / (ulonglong)extraout_ECX_00);
     }
   }
-  return sVar4;
+  return uVar4;
 }
 
 

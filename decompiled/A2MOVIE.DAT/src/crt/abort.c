@@ -6,7 +6,7 @@
 void __watcall terminate(void)
 
 {
-  fatal_runtime_error(s_ABNORMAL_TERMINATION_0041f258);
+  fatal_runtime_error(s_ABNORMAL_TERMINATION_0041f258,0xff);
   return;
 }
 

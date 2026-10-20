@@ -57,108 +57,73 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
 
 {
   int iVar1;
-  uint ini_value_setting;
-  undefined4 extraout_EAX;
-  char *pcVar2;
-  char *filename_val;
-  undefined4 extraout_EAX_00;
-  undefined4 extraout_EAX_01;
-  undefined4 extraout_EAX_02;
-  undefined4 extraout_EAX_03;
-  undefined4 extraout_EAX_04;
-  undefined4 extraout_EAX_05;
-  int keyispressed_result;
-  undefined4 uVar3;
-  undefined4 extraout_EAX_06;
-  undefined4 extraout_EAX_07;
-  undefined4 extraout_EAX_08;
-  undefined4 extraout_EAX_09;
-  undefined4 extraout_EAX_10;
-  undefined4 extraout_EAX_11;
-  undefined4 extraout_EAX_12;
-  undefined4 extraout_EAX_13;
-  int extraout_EAX_14;
-  char *extraout_ECX;
-  float extraout_ECX_00;
-  uint extraout_EDX;
-  size_t extraout_EDX_00;
-  uint extraout_EDX_01;
-  undefined4 extraout_EDX_02;
-  int extraout_EDX_03;
-  undefined4 extraout_EDX_04;
-  undefined4 extraout_EDX_05;
-  undefined4 extraout_EDX_06;
-  undefined4 extraout_EDX_07;
-  undefined4 extraout_EDX_08;
-  undefined4 extraout_EDX_09;
-  uint extraout_EDX_10;
-  uint extraout_EDX_11;
-  uint extraout_EDX_12;
-  undefined4 extraout_EDX_13;
-  uint extraout_EDX_14;
-  undefined4 extraout_EDX_15;
-  uint extraout_EDX_16;
-  undefined4 extraout_EDX_17;
-  uint extraout_EDX_18;
-  undefined4 extraout_EDX_19;
-  uint extraout_EDX_20;
-  undefined4 extraout_EDX_21;
-  uint uVar4;
-  uint ini_value_setting_2;
   uint ini_value_setting_3;
-  longlong lVar5;
-  undefined8 uVar6;
+  char *filename_val;
+  char *filename_val_2;
+  undefined4 uVar2;
+  int iVar3;
+  int player_at_finish_result;
+  int extraout_EDX;
+  undefined4 extraout_EDX_00;
+  int extraout_EDX_01;
+  int frame_val;
+  int extraout_EDX_02;
+  uint uVar4;
+  int iVar5;
+  uint ini_value_setting;
+  uint ini_value_setting_2;
+  bool bVar6;
   
-  ini_value_setting_2 = 1;
+  ini_value_setting = 1;
   iVar1 = file_exist(s_a2_ini_0044100e);
   uVar4 = 0;
-  ini_value_setting_3 = 0;
+  ini_value_setting_2 = 0;
   if (iVar1 != 0) {
     set_ini_filename(s_a2_ini_00441015);
     uVar4 = read_ini_value_setting(s_HELPDESK_00441022,s_DEBUG_0044101c);
-    ini_value_setting_3 = read_ini_value_setting(s_HELPDESK_00441032,s_SNDFRT_0044102b);
-    ini_value_setting_2 = read_ini_value_setting(s_HELPDESK_00441042,s_WINMSG_0044103b);
+    ini_value_setting_2 = read_ini_value_setting(s_HELPDESK_00441032,s_SNDFRT_0044102b);
+    ini_value_setting = read_ini_value_setting(s_HELPDESK_00441042,s_WINMSG_0044103b);
     racer_range = read_ini_value_setting(s_TWEAK_00441056,s_RACERRANGE_0044104b);
-    ini_value_setting = read_ini_value_setting(s_TWEAK_0044106b,s_RACERHIGHSPEED_0044105c);
-    racer_high_speed = (float)ini_value_setting;
-    ini_value_setting = read_ini_value_setting(s_TWEAK_0044107f,s_RACERLOWSPEED_00441071);
-    racer_low_speed = (float)ini_value_setting;
+    ini_value_setting_3 = read_ini_value_setting(s_TWEAK_0044106b,s_RACERHIGHSPEED_0044105c);
+    racer_high_speed = (float)ini_value_setting_3;
+    ini_value_setting_3 = read_ini_value_setting(s_TWEAK_0044107f,s_RACERLOWSPEED_00441071);
+    racer_low_speed = (float)ini_value_setting_3;
     switch(track_index) {
     case 0:
       police_count = read_ini_value_setting(s_TWEAK_0044108d,s_POLICE0_00441085);
-      filename_val = s_CIVIL0_00441093;
-      pcVar2 = s_TWEAK_0044109a;
+      filename_val_2 = s_CIVIL0_00441093;
+      filename_val = s_TWEAK_0044109a;
       break;
     case 1:
       police_count = read_ini_value_setting(s_TWEAK_004410a8,s_POLICE1_004410a0);
-      filename_val = s_CIVIL1_004410ae;
-      pcVar2 = s_TWEAK_004410b5;
+      filename_val_2 = s_CIVIL1_004410ae;
+      filename_val = s_TWEAK_004410b5;
       break;
     case 2:
       police_count = read_ini_value_setting(s_TWEAK_004410c3,s_POLICE2_004410bb);
-      filename_val = s_CIVIL2_004410c9;
-      pcVar2 = s_TWEAK_004410d0;
+      filename_val_2 = s_CIVIL2_004410c9;
+      filename_val = s_TWEAK_004410d0;
       break;
     case 3:
       police_count = read_ini_value_setting(s_TWEAK_004410de,s_POLICE3_004410d6);
-      filename_val = s_CIVIL3_004410e4;
-      pcVar2 = s_TWEAK_004410eb;
+      filename_val_2 = s_CIVIL3_004410e4;
+      filename_val = s_TWEAK_004410eb;
       break;
     case 4:
       police_count = read_ini_value_setting(s_TWEAK_004410f9,s_POLICE4_004410f1);
-      filename_val = s_CIVIL4_004410ff;
-      pcVar2 = s_TWEAK_00441106;
+      filename_val_2 = s_CIVIL4_004410ff;
+      filename_val = s_TWEAK_00441106;
       break;
     case 5:
       police_count = read_ini_value_setting(s_TWEAK_00441114,s_POLICE5_0044110c);
-      filename_val = s_CIVIL5_0044111a;
-      pcVar2 = s_TWEAK_00441121;
+      filename_val_2 = s_CIVIL5_0044111a;
+      filename_val = s_TWEAK_00441121;
       break;
     default:
       fatal_exit(s__s__d____Illegal_track_value__d__00441130,s_main_cpp_00441127,0xb3,track_index);
       goto LAB_00401123;
     }
-    civilian_count = read_ini_value_setting(pcVar2,filename_val);
+    civilian_count = read_ini_value_setting(filename_val,filename_val_2);
 LAB_00401123:
     if (police_count == 0) {
       police_count = 8;
@@ -169,7 +134,7 @@ LAB_00401123:
   }
   set_debugmsg_state(0,(uint)(uVar4 != 0));
   debugmsg(s_setting_up_program_00441152);
-  init_race_settings(extraout_EAX,extraout_EDX);
+  init_race_settings();
   if (*(int *)(&DAT_00458c74 + video_mode_index * 0x20) == 0) {
     debugmsg(s_set_xvga_vars_allowmodex_00441166);
     set_xvga_vars(1,0x40,1);
@@ -179,7 +144,7 @@ LAB_00401123:
   debugmsg(s_set_xvga_vars_RESOLUTION_00441197);
   set_xvga_vars(0,*(int *)(&DAT_00458c74 + video_mode_index * 0x20),0);
   debugmsg(s_init_xvga_lib_004411b1);
-  iVar1 = init_xvga_lib(hInstance,nShowCmd,s_Davilex_Entertainment_004411c8,extraout_ECX);
+  iVar1 = init_xvga_lib(hInstance,nShowCmd,s_Davilex_Entertainment_004411c8,s_A2Racer_004411c0);
   if (iVar1 == 0) {
     debugmsg(s_error___couldn_t_initialize_prog_004411de);
     return 0;
@@ -188,23 +153,23 @@ LAB_00401123:
   calibrate_joysticks();
   xvga_locate_cdrom((char *)0x0,s_a2intro_smk_0044121a);
   debugmsg(s_init_fileio_00441226);
-  pcVar2 = file_path(&DAT_0045b124,s_rcs_img_00441233);
-  filename_val = file_path(&DAT_0045b020,s_rcs_ind_0044123b);
-  xvga_init_fileio(filename_val,pcVar2);
+  filename_val = file_path(&DAT_0045b124,s_rcs_img_00441233);
+  filename_val_2 = file_path(&DAT_0045b020,s_rcs_ind_0044123b);
+  xvga_init_fileio(filename_val_2,filename_val);
   if (texture_conversion_mode != 0) {
     debugmsg(s_set_conversion_mode_00441243);
     set_conversion_mode();
   }
   if (screen_resolution == 0) {
     debugmsg(s_load_hi_wait_screen_00441258);
-    pcVar2 = s_hi_wait_pcx_0044126d;
+    filename_val = s_hi_wait_pcx_0044126d;
 LAB_0040149d:
-    load_pcx_file_1(1,pcVar2,0x1f);
+    load_pcx_file_1(1,filename_val,0x1f);
     xvga_flip_page();
   }
   else if (screen_resolution == 1) {
     debugmsg(s_load_lo_wait_screen_00441279);
-    pcVar2 = s_lo_wait_pcx_0044128e;
+    filename_val = s_lo_wait_pcx_0044128e;
     goto LAB_0040149d;
   }
   debugmsg(s_set_mouse_type_0044129a);
@@ -215,7 +180,7 @@ LAB_0040149d:
   mouse_off();
   debugmsg(s_handle_win_msg_004412c1);
   handle_win_msg();
-  if (ini_value_setting_3 == 0) {
+  if (ini_value_setting_2 == 0) {
     debugmsg(s_Setting_Sound_lib__BEST_AS_POSSI_004412d1);
     uVar4 = xvga_init_sound(0x3c,9);
     if (11000 < uVar4) {
@@ -227,8 +192,8 @@ LAB_0040149d:
             if (uVar4 != 0x2afa) goto LAB_0040157d;
             uVar4 = xvga_init_sound(0x3c,0xc);
             if ((uVar4 < 0x2af9) || ((0x2af9 < uVar4 && (uVar4 != 0x2afa)))) {
-              pcVar2 = s_Using_11025__8__mono_004412f6;
-              goto LAB_0040154d;
+              filename_val = s_Using_11025__8__mono_004412f6;
+              goto override_prt_40154d_11e5dad1;
             }
           }
 LAB_004014ca:
@@ -237,11 +202,11 @@ LAB_004014ca:
           goto LAB_004014d6;
         }
 LAB_0040157d:
-        pcVar2 = s_Using_22050__8__mono_0044130c;
-        goto LAB_0040154d;
+        filename_val = s_Using_22050__8__mono_0044130c;
+        goto override_prt_40154d_11e5dad1;
       }
     }
-    pcVar2 = s_Using_22050__16__stereo_00441322;
+    filename_val = s_Using_22050__16__stereo_00441322;
   }
   else {
     debugmsg(s_Setting_Sound_lib__SAFEMODE__110_0044133b);
@@ -258,10 +223,10 @@ LAB_0040157d:
         goto LAB_004014d6;
       }
     }
-    pcVar2 = s_Using_11025__8__mono_00441369;
+    filename_val = s_Using_11025__8__mono_00441369;
   }
-LAB_0040154d:
-  debugmsg(pcVar2);
+override_prt_40154d_11e5dad1:
+  debugmsg(filename_val);
 LAB_004014d6:
   debugmsg(s_Loading_samples_0044137f);
   load_samples();
@@ -278,20 +243,22 @@ LAB_004014d6:
   get_xvga_palette(xvga_lib_palette,0,0xff);
   set_xvga_palette_flag(xvga_lib_palette,0,0xff,0x40,1);
   debugmsg(s_change_viewport_size_00441402);
-  change_viewport_size(0,0);
+  change_viewport_size
+            (0,0,*(int *)(&DAT_00458c7c + video_mode_index * 0x20),
+             *(int *)(&DAT_00458c80 + video_mode_index * 0x20));
   debugmsg(s_Initializing_3D_lib_00441418);
-  init_3d_lib(*(undefined4 *)(&DAT_00458c78 + video_mode_index * 0x20),10);
+  init_3d_lib(*(uint *)(&DAT_00458c78 + video_mode_index * 0x20),10,10,0x50,10);
   debugmsg(s_Done_initializing_3D_lib_0044142d);
   set_background();
   debugmsg(s_Initializing_anims_and_standard_t_00441450);
-  init_anims_and_standard_textures(extraout_EAX_00,extraout_EDX_00);
+  init_anims_and_standard_textures();
   if (texture_conversion_mode != 0) {
     debugmsg(s_set_render_var_TEXTURE_FILTER_0044147a);
-    set_render_var(7,2);
+    set_render_var(7,2,1);
   }
   debugmsg(s_Initializing_opponent_objects_00441499);
-  lVar5 = init_opponents(police_count + 0x38 + civilian_count,extraout_EDX_01);
-  if ((int)lVar5 != 0) {
+  iVar1 = init_opponents(police_count + 0x38 + civilian_count);
+  if (iVar1 != 0) {
     fatal_exit(s__s__d____error_initialising_oppo_004414c1,s_main_cpp_004414b8,0x170);
   }
   debugmsg(s_loading_weg_data_004414f1);
@@ -300,36 +267,39 @@ LAB_004014d6:
     fatal_exit(s__s__d____error_loading_map_dataf_0044150c,s_main_cpp_00441503,0x175,
                (&PTR_s_etappe1_trk_00458d54)[track_index * 4]);
   }
-  debugmsg(s_Initializing_opponent_map_struct_00441537);
-  init_opponent_map(extraout_EAX_01,extraout_EDX_02);
+  uVar2 = debugmsg(s_Initializing_opponent_map_struct_00441537);
+  init_opponent_map(uVar2);
   debugmsg(s_OK_00441561);
   debugmsg(s_Initialising_drivers____00441565);
-  init_drivers(opponent_count,extraout_EDX_03);
+  init_drivers(opponent_count,extraout_EDX,police_count);
   debugmsg(s_OK_0044157e);
-  init_active_opponent_list(opponent_count,extraout_EDX_04);
+  init_active_opponent_list(opponent_count);
   debugmsg(s_Init_active_opponent_list_OK__00441582);
   debugmsg(s_Initializing_player_object_004415a1);
   debugmsg(s_Initializing_dashboard_004415bd);
-  init_dashboard(1,extraout_EDX_05);
+  init_dashboard(1);
   debugmsg(s_Initializing_radar_004415d5);
   init_radar();
+  iVar1 = 1;
   debugmsg(s_Init_atan_table_004415e9);
-  atan_table_id = init_atan_table(4,0,1.4013e-42);
+  iVar5 = 1000;
+  atan_table_id = init_atan_table(4,0,1000,1,-61.0,256.0);
   debugmsg(s_Initializing_controls_004415fa);
   init_controls();
   if (DAT_00458c2c != 0) {
     debugmsg(s_set_horizon_object_00441611);
-    load_static_object(0,extraout_EDX_06,1.4013e-42,extraout_ECX_00,0,0);
+    load_static_object(0,extraout_EDX_00,iVar5,iVar1,0.0,0.0,0,0);
   }
   debugmsg(s_init_pionnen_00441625);
-  init_pionnen(extraout_EAX_02,extraout_EDX_07);
+  init_pionnen();
   debugmsg(s_set_all_objects_00441633);
-  set_all_objects(extraout_EAX_03,extraout_EDX_08);
+  set_all_objects();
   if ((DAT_00458c6c != 0) && (DAT_00458c6c == 1)) {
     debugmsg(s_init_static_objects_00441644);
-    init_static_objects(track_index,extraout_EDX_11);
+    init_static_objects(track_index);
   }
   if (dashboard_on_screen != 0) {
+    iVar5 = 0x1f;
     debugmsg(s_load_dashboard_to_SCREEN_00441659);
     load_pcx_file_1(0,s_surscrn_pcx_00441673,0x1f);
   }
@@ -338,177 +308,154 @@ LAB_004014d6:
   debugmsg(s_Dump_all_bonus_stuff_0044168f);
   place_all_bonus_items();
   debugmsg(s_init_timing_004416a5);
-  init_timing(extraout_EAX_04,extraout_EDX_09);
+  init_timing();
   race_state = 1;
   start_camera_intro();
   debugmsg(s_Done_init___starting_loop_004416b2);
-  uVar3 = extraout_EAX_05;
-  uVar4 = extraout_EDX_10;
+  frame_val = extraout_EDX_01;
   while (race_state != 8) {
     update_racers();
-    lVar5 = render_3d_frame(uVar3,uVar4);
-    iVar1 = video_mode_index * 0x20;
-    uVar6 = CONCAT44((int)((ulonglong)lVar5 >> 0x20),iVar1);
-    if (*(int *)(&DAT_00458c8c + iVar1) != 0) {
-      uVar6 = blt_viewport(*(undefined4 *)(&DAT_00458c78 + iVar1),0,0,
-                           *(undefined4 *)(&DAT_00458c7c + iVar1),
-                           *(undefined4 *)(&DAT_00458c80 + iVar1),0,0);
+    render_3d_frame();
+    iVar3 = video_mode_index * 0x20;
+    if (*(int *)(&DAT_00458c8c + iVar3) != 0) {
+      frame_val = 0;
+      iVar5 = 0;
+      iVar1 = *(int *)(&DAT_00458c7c + iVar3);
+      blt_viewport(*(uint *)(&DAT_00458c78 + iVar3),0,0,iVar1,*(undefined4 *)(&DAT_00458c80 + iVar3)
+                   ,0,0,*(undefined4 *)(&DAT_00458c84 + iVar3),
+                   *(undefined4 *)(&DAT_00458c88 + iVar3));
     }
-    uVar3 = (undefined4)uVar6;
     draw_radar();
     draw_dashboard();
-    uVar6 = draw_bonus_status(uVar3,(int)((ulonglong)uVar6 >> 0x20));
-    iVar1 = (int)uVar6;
+    uVar4 = draw_bonus_status();
     update_pionnen();
-    uVar6 = update_race(iVar1,(int)((ulonglong)uVar6 >> 0x20));
-    uVar3 = (undefined4)uVar6;
+    iVar3 = update_race(uVar4,frame_val,iVar5,iVar1);
     xvga_flip_page();
     mark_active_racers();
-    uVar6 = CONCAT44((int)((ulonglong)uVar6 >> 0x20),uVar3);
-    while( true ) {
-      iVar1 = (int)((ulonglong)uVar6 >> 0x20);
-      if (race_state != 9) break;
-      uVar6 = update_race((int)uVar6,iVar1);
+    while (race_state == 9) {
+      iVar3 = update_race(iVar3,frame_val,iVar5,iVar1);
     }
-    keyispressed_result = keyispressed(0x50);
-    uVar6 = CONCAT44(iVar1,keyispressed_result);
-    if ((keyispressed_result != 0) && (uVar6 = CONCAT44(iVar1,keyispressed_result), race_state == 0)
-       ) {
+    iVar3 = keyispressed(0x50);
+    if ((iVar3 != 0) && (race_state == 0)) {
       do {
-        iVar1 = keyispressed(0x50);
-      } while (iVar1 != 0);
-      uVar6 = set_race_state();
+        iVar3 = keyispressed(0x50);
+      } while (iVar3 != 0);
+      set_race_state(9);
     }
-    lVar5 = player_at_finish((int)uVar6,(uint)((ulonglong)uVar6 >> 0x20));
-    uVar4 = (uint)((ulonglong)lVar5 >> 0x20);
-    if ((((int)lVar5 != 0) && (race_state != 8)) && (race_state != 3)) {
+    player_at_finish_result = player_at_finish();
+    iVar3 = race_state;
+    if (((player_at_finish_result != 0) && (iVar5 = iVar3, race_state != 8)) && (race_state != 3)) {
       set_racer_finish_time(0);
       play_sound_effect(0x2b,0);
-      uVar4 = 1;
+      frame_val = 1;
       race_state = 3;
       race_finished_ok = 1;
     }
-    iVar1 = keyispressed(0x70);
-    if (iVar1 != 0) {
+    iVar3 = keyispressed(0x70);
+    if (iVar3 != 0) {
       set_camera_position(2);
     }
-    iVar1 = keyispressed(0x71);
-    if (iVar1 != 0) {
+    iVar3 = keyispressed(0x71);
+    if (iVar3 != 0) {
       set_camera_position(1);
     }
-    iVar1 = keyispressed(0x74);
-    if (iVar1 != 0) {
+    iVar3 = keyispressed(0x74);
+    if (iVar3 != 0) {
       DAT_00458c24 = (uint)(DAT_00458c24 == 0);
     }
-    iVar1 = keyispressed(0x1b);
-    if ((iVar1 != 0) && (race_state == 0)) {
+    iVar3 = keyispressed(0x1b);
+    if ((iVar3 != 0) && (race_state == 0)) {
+      iVar1 = 8;
       infio.ended_by = 0;
       race_finished_ok = 0;
       race_state = 8;
     }
-    if (ini_value_setting_2 != 0) {
+    if (ini_value_setting != 0) {
       debugmsg(s_do_msg_loop_004416cd);
       do_msg_loop();
-      uVar4 = extraout_EDX_12;
+      frame_val = extraout_EDX_02;
     }
-    iVar1 = keyispressed(0x76);
-    if (iVar1 != 0) {
-      set_render_var(9,2);
-      uVar4 = 1;
-      set_render_var(4,1);
+    iVar3 = keyispressed(0x76);
+    if (iVar3 != 0) {
+      set_render_var(9,2,0);
+      iVar5 = 1;
+      frame_val = 1;
+      set_render_var(4,1,1);
     }
-    iVar1 = keyispressed(0x75);
-    if (iVar1 != 0) {
+    iVar3 = keyispressed(0x75);
+    if (iVar3 != 0) {
       uVar4 = (int)(player_chunk - 100U) >> 0x1f;
-      uVar4 = ((player_chunk - 100U ^ uVar4) - uVar4) * 0x32 + 200;
-      set_render_var(10,100);
-      set_render_var(0xb,uVar4);
+      iVar1 = ((player_chunk - 100U ^ uVar4) - uVar4) * 0x32 + 200;
+      set_render_var(10,100,0);
+      iVar5 = 1;
+      frame_val = iVar1;
+      set_render_var(0xb,iVar1,1);
     }
-    iVar1 = keyispressed(0x5a);
-    uVar3 = 0;
-    if (iVar1 != 0) {
-      iVar1 = keyispressed(0x4f);
-      uVar3 = 0;
-      if (iVar1 != 0) {
-        iVar1 = keyispressed(0x11);
-        uVar3 = 0;
-        if (iVar1 != 0) {
-          iVar1 = keyispressed(0x7b);
-          uVar3 = 0;
-          if (iVar1 != 0) {
-            uVar3 = 4;
-            set_camera_position(4);
-          }
-        }
-      }
+    iVar3 = keyispressed(0x5a);
+    if (((iVar3 != 0) && (iVar3 = keyispressed(0x4f), iVar3 != 0)) &&
+       ((iVar3 = keyispressed(0x11), iVar3 != 0 && (iVar3 = keyispressed(0x7b), iVar3 != 0)))) {
+      set_camera_position(4);
     }
     frame_counter = frame_counter + 1;
   }
   debugmsg(s_exit_timing_004416da);
-  exit_timing(frame_counter,extraout_EDX_13);
+  exit_timing(frame_counter);
   debugmsg(s_Stopping_all_sounds_004416e7);
   stop_all_sound_buffers();
   debugmsg(s_Clear_screen_on_exit_004416fc);
   clear_screen(1,0);
   xvga_flip_page();
   debugmsg(s_Check_if_finisched_OK_00441712);
-  if (race_finished_ok == 0) {
+  bVar6 = race_finished_ok == 0;
+  if (bVar6) {
     infio.time = race_finished_ok;
-    infio.race_finished = '\0';
   }
   else {
-    uVar6 = get_racer_finish_time(0,race_finished_ok);
-    infio.time = (int)uVar6;
+    infio.time = get_racer_finish_time(0);
     infio.money = money;
-    uVar6 = get_racer_finish_time_2(0,(int)((ulonglong)uVar6 >> 0x20));
-    infio.position = (short)uVar6;
-    uVar6 = get_racer_finish_time_2(1,(int)((ulonglong)uVar6 >> 0x20));
-    infio.racer_1 = (short)uVar6;
-    uVar6 = get_racer_finish_time_2(2,(int)((ulonglong)uVar6 >> 0x20));
-    infio.racer_2 = (short)uVar6;
-    uVar6 = get_racer_finish_time_2(3,(int)((ulonglong)uVar6 >> 0x20));
-    infio.racer_3 = (short)uVar6;
-    uVar6 = get_racer_finish_time_2(4,(int)((ulonglong)uVar6 >> 0x20));
-    infio.racer_4 = (short)uVar6;
-    uVar6 = get_racer_finish_time_2(5,(int)((ulonglong)uVar6 >> 0x20));
-    infio.racer_5 = (short)uVar6;
-    uVar6 = get_racer_finish_time(1,(int)((ulonglong)uVar6 >> 0x20));
-    infio.time_racer_1 = (int)uVar6;
-    uVar6 = get_racer_finish_time(2,(int)((ulonglong)uVar6 >> 0x20));
-    infio.time_racer_2 = (int)uVar6;
-    uVar6 = get_racer_finish_time(3,(int)((ulonglong)uVar6 >> 0x20));
-    infio.time_racer_3 = (int)uVar6;
-    uVar6 = get_racer_finish_time(4,(int)((ulonglong)uVar6 >> 0x20));
-    infio.time_racer_4 = (int)uVar6;
-    uVar6 = get_racer_finish_time(5,CONCAT31((int3)((ulonglong)uVar6 >> 0x28),1));
-    infio.time_racer_5 = (int)uVar6;
-    infio.race_finished = (uchar)((ulonglong)uVar6 >> 0x20);
+    uVar2 = get_racer_finish_time_2(0);
+    infio.position = (short)uVar2;
+    uVar2 = get_racer_finish_time_2(1);
+    infio.racer_1 = (short)uVar2;
+    uVar2 = get_racer_finish_time_2(2);
+    infio.racer_2 = (short)uVar2;
+    uVar2 = get_racer_finish_time_2(3);
+    infio.racer_3 = (short)uVar2;
+    uVar2 = get_racer_finish_time_2(4);
+    infio.racer_4 = (short)uVar2;
+    uVar2 = get_racer_finish_time_2(5);
+    infio.racer_5 = (short)uVar2;
+    infio.time_racer_1 = get_racer_finish_time(1);
+    infio.time_racer_2 = get_racer_finish_time(2);
+    infio.time_racer_3 = get_racer_finish_time(3);
+    infio.time_racer_4 = get_racer_finish_time(4);
+    infio.time_racer_5 = get_racer_finish_time(5);
   }
+  infio.race_finished = !bVar6;
   save_infio();
-  debugmsg(s_Releasing_dashboard_00441729);
-  release_dashboard(extraout_EAX_06,extraout_EDX_14);
+  uVar2 = debugmsg(s_Releasing_dashboard_00441729);
+  release_dashboard(uVar2);
   debugmsg(s_Releasing_radar_0044173e);
-  release_radar(extraout_EAX_07,extraout_EDX_15);
+  release_radar();
   debugmsg(s_Free_bonus_0044174f);
-  free_bonus(extraout_EAX_08,extraout_EDX_16);
+  free_bonus();
   debugmsg(s_Exit_player_0044175b);
-  exit_player(extraout_EAX_09,extraout_EDX_17);
-  debugmsg(s_Exit_drivers_00441768);
-  exit_drivers(extraout_EAX_10,extraout_EDX_18);
-  debugmsg(s_Exit_opponent_map_00441776);
-  exit_opponent_map(extraout_EAX_11,extraout_EDX_19);
+  exit_player();
+  uVar2 = debugmsg(s_Exit_drivers_00441768);
+  exit_drivers(uVar2);
+  uVar2 = debugmsg(s_Exit_opponent_map_00441776);
+  exit_opponent_map(uVar2);
   debugmsg(s_Exit_opponents_00441789);
-  exit_opponents(extraout_EAX_12,extraout_EDX_20);
-  debugmsg(s_Exit_system_3d_00441799);
-  exit_system_3d(extraout_EAX_13,extraout_EDX_21);
+  exit_opponents();
+  uVar2 = debugmsg(s_Exit_system_3d_00441799);
+  exit_system_3d(uVar2);
   debugmsg(s_Exit_d3dlib_004417a9);
   exit_d3dlib();
   debugmsg(s_Exit_fileio_004417b6);
   xvga_exit_fileio();
   debugmsg(s_Exit_sound_lib_004417c3);
   xvga_exit_sound();
-  debugmsg(s_Exit_xvga_lib_004417d3);
-  iVar1 = extraout_EAX_14;
+  iVar1 = debugmsg(s_Exit_xvga_lib_004417d3);
   exit_xvga_lib();
   return iVar1;
 }
@@ -518,48 +465,61 @@ LAB_004014d6:
 
 void __watcall
 blt_viewport(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-            undefined4 param_5,undefined4 param_6,undefined4 param_7)
+            undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,
+            undefined4 param_9)
 
 {
   long lVar1;
-  char *dd_error_string_result;
-  char *format;
+  char *arg4;
   char *pcVar2;
-  undefined4 uVar3;
+  char *arg2;
+  undefined4 arg3;
   undefined4 local_20;
   undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  undefined4 local_8;
+  undefined4 local_4;
   
+  local_4 = param_5;
   local_20 = param_6;
   local_1c = param_7;
+  local_18 = param_8;
+  local_14 = param_9;
   if (param_1 == 0) {
     return;
   }
+  local_10 = param_2;
+  local_c = param_3;
+  local_8 = param_4;
   if (param_1 < 2) {
     lVar1 = (**(code **)(*(int *)xvga_screen + 0x14))
-                      (xvga_screen,&local_20,xvga_back_screen,&stack0xfffffff0,0,0);
+                      (xvga_screen,&local_20,xvga_back_screen,&local_10,0,0);
     if (lVar1 == 0) {
       return;
     }
-    dd_error_string_result = dd_error_string(lVar1);
-    uVar3 = 0x2e3;
-    pcVar2 = s_main_cpp_0044180a;
-    format = s__s__d____blitting_error___s___00441813;
+    arg4 = dd_error_string(lVar1);
+    arg3 = 0x2e3;
+    arg2 = s_main_cpp_0044180a;
+    pcVar2 = s__s__d____blitting_error___s___00441813;
   }
   else {
     if (param_1 != 2) {
       return;
     }
     lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
-                      (xvga_back_screen,&local_20,xvga_buffer_screen,&stack0xfffffff0,0,0);
+                      (xvga_back_screen,&local_20,xvga_buffer_screen,&local_10,0,0);
     if (lVar1 == 0) {
       return;
     }
-    dd_error_string_result = dd_error_string(lVar1);
-    uVar3 = 0x2de;
-    pcVar2 = s_main_cpp_004417e2;
-    format = s__s__d____blitting_error___s___004417eb;
+    arg4 = dd_error_string(lVar1);
+    arg3 = 0x2de;
+    arg2 = s_main_cpp_004417e2;
+    pcVar2 = s__s__d____blitting_error___s___004417eb;
   }
-  fatal_exit(format,pcVar2,uVar3,dd_error_string_result);
+  fatal_exit(pcVar2,arg2,arg3,arg4);
   return;
 }
 

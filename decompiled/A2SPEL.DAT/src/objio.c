@@ -64,81 +64,88 @@ void __watcall resolve_collision(int racer_a,int racer_b)
 
 /* ==== 0040a17d compute_object_bounds ==== */
 
-longlong __watcall compute_object_bounds(int racer_object_index,uint param_2)
+undefined4 __watcall compute_object_bounds(int racer_object_index)
 
 {
+  int arg2;
   int iVar1;
-  undefined4 extraout_EAX;
   int i;
   racer_object_t *racer_object;
   int *piVar2;
   float *pfVar3;
   int iVar4;
-  int iVar5;
-  undefined4 extraout_EDX;
+  uint uVar5;
   int iVar6;
   int iVar7;
   float10 fVar8;
+  undefined8 debugmsg_result;
   float local_28;
   float local_24;
   float local_20;
   float local_1c;
-  int opponent_index;
   
   racer_object = racers + racer_object_index;
   local_20 = 0.0;
   local_1c = 0.0;
-  iVar1 = *(int *)(*(int *)(anims3d + racer_object->anim * 9 + 4) + racer_object->frame * 4);
-  opponent_index = racer_object->opponent;
+  uVar5 = *(uint *)(*(int *)(anims3d + racer_object->anim * 9 + 4) + racer_object->frame * 4);
+  arg2 = racer_object->opponent;
   local_28 = 10000.0;
   local_24 = 10000.0;
-  if ((opponent_index < 0) || (opponent_count < opponent_index)) {
-    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443be6,opponent_index,opponent_count);
+  if ((arg2 < 0) || (opponent_count < arg2)) {
+    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443be6,arg2,opponent_count);
   }
   iVar6 = 0;
+  iVar1 = uVar5 * 0x11;
   iVar7 = 0;
-  for (i = 0; piVar2 = (int *)(frames3d + iVar1 * 0x11), i < *piVar2; i = i + 1) {
-    iVar5 = *(int *)(iVar7 + piVar2[1]);
+  for (i = 0; piVar2 = (int *)(frames3d + iVar1), i < *piVar2; i = i + 1) {
+    uVar5 = *(uint *)(iVar7 + piVar2[1]);
     if (*(char *)(weg_points + 0x20 + iVar6) != '\0') {
-      pfVar3 = (float *)(weg_points + iVar5 * 0x21);
+      pfVar3 = (float *)(weg_points + uVar5 * 0x21);
       if (*pfVar3 < local_28) {
         local_28 = *pfVar3;
       }
-      iVar4 = iVar5 * 0x21 + weg_points;
+      iVar4 = uVar5 * 0x21 + weg_points;
       if (*(float *)(iVar4 + 8) < local_24) {
         local_24 = *(float *)(iVar4 + 8);
       }
-      pfVar3 = (float *)(iVar5 * 0x21 + weg_points);
+      pfVar3 = (float *)(uVar5 * 0x21 + weg_points);
       if (local_20 < *pfVar3) {
         local_20 = *pfVar3;
       }
-      iVar5 = iVar5 * 0x21 + weg_points;
-      if (local_1c < *(float *)(iVar5 + 8)) {
-        local_1c = *(float *)(iVar5 + 8);
+      iVar4 = uVar5 * 0x21 + weg_points;
+      uVar5 = weg_points;
+      if (local_1c < *(float *)(iVar4 + 8)) {
+        local_1c = *(float *)(iVar4 + 8);
       }
     }
     iVar6 = iVar6 + 0x21;
     iVar7 = iVar7 + 4;
   }
-  debugmsg(s_Bounding_rectangle_for_object__d_00443c0e,racer_object_index,(double)local_28,
-           (double)local_24,(double)local_20,(double)local_1c);
+  debugmsg_result =
+       debugmsg(s_Bounding_rectangle_for_object__d_00443c0e,racer_object_index,
+                SUB84((double)local_28,0),(int)((ulonglong)(double)local_28 >> 0x20),
+                SUB84((double)local_24,0),(int)((ulonglong)(double)local_24 >> 0x20),
+                SUB84((double)local_20,0),(int)((ulonglong)(double)local_20 >> 0x20),
+                SUB84((double)local_1c,0),(int)((ulonglong)(double)local_1c >> 0x20));
   fVar8 = (float10)local_1c * (float10)local_1c + (float10)local_20 * (float10)local_20;
-  sqrt_checked(extraout_EAX,extraout_EDX);
-  opponent_data[opponent_index].local_corners[0] = local_28;
-  opponent_data[opponent_index].local_corners[1] = 0.0;
-  opponent_data[opponent_index].local_corners[2] = local_24;
-  opponent_data[opponent_index].local_corners[3] = local_20;
-  opponent_data[opponent_index].local_corners[4] = 0.0;
-  opponent_data[opponent_index].local_corners[5] = local_24;
-  opponent_data[opponent_index].local_corners[6] = local_20;
-  opponent_data[opponent_index].local_corners[7] = 0.0;
-  opponent_data[opponent_index].local_corners[8] = local_1c;
-  opponent_data[opponent_index].local_corners[9] = local_28;
-  opponent_data[opponent_index].local_corners[10] = 0.0;
-  opponent_data[opponent_index].local_corners[0xb] = local_1c;
-  opponent_data[opponent_index].radius = (float)fVar8;
-  debugmsg(s_radius_for_object__d_____f__00443c40);
-  return (ulonglong)param_2 << 0x20;
+  sqrt_checked((int)debugmsg_result,(int)((ulonglong)debugmsg_result >> 0x20),uVar5,i);
+  opponent_data[arg2].local_corners[0] = local_28;
+  opponent_data[arg2].local_corners[1] = 0.0;
+  opponent_data[arg2].local_corners[2] = local_24;
+  opponent_data[arg2].local_corners[3] = local_20;
+  opponent_data[arg2].local_corners[4] = 0.0;
+  opponent_data[arg2].local_corners[5] = local_24;
+  opponent_data[arg2].local_corners[6] = local_20;
+  opponent_data[arg2].local_corners[7] = 0.0;
+  opponent_data[arg2].local_corners[8] = local_1c;
+  opponent_data[arg2].local_corners[9] = local_28;
+  opponent_data[arg2].local_corners[10] = 0.0;
+  opponent_data[arg2].local_corners[0xb] = local_1c;
+  opponent_data[arg2].radius = (float)fVar8;
+  debugmsg(s_radius_for_object__d_____f__00443c40,racer_object_index,
+           SUB84((double)opponent_data[arg2].radius,0),
+           (int)((ulonglong)(double)opponent_data[arg2].radius >> 0x20));
+  return 0;
 }
 
 
@@ -150,13 +157,11 @@ int __watcall racers_collide(int racer_a,int racer_b)
   float fVar1;
   float fVar2;
   undefined4 uVar3;
+  int arg2;
   float fVar4;
   int iVar5;
   int iVar6;
   float *pfVar7;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int opponent_index;
   int unaff_EBX;
   int i;
   float local_e0 [6];
@@ -179,20 +184,18 @@ int __watcall racers_collide(int racer_a,int racer_b)
   int local_18;
   
   i = racers[racer_a].opponent;
-  opponent_index = racers[racer_b].opponent;
+  arg2 = racers[racer_b].opponent;
   local_18 = 0;
   if ((i < 0) || (opponent_count < i)) {
     fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d41,i,opponent_count);
-    opponent_index = extraout_EDX;
   }
-  if ((opponent_index < 0) || (opponent_count < opponent_index)) {
-    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d69,opponent_index,opponent_count);
-    opponent_index = extraout_EDX_00;
+  if ((arg2 < 0) || (opponent_count < arg2)) {
+    fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d69,arg2,opponent_count);
   }
   pfVar7 = local_e0;
-  fVar1 = opponent_data[opponent_index].x - (opponent_data[i].x + opponent_data[i].offset_x);
-  fVar4 = opponent_data[opponent_index].z - (opponent_data[i].z + opponent_data[i].offset_z);
-  fVar2 = opponent_data[i].radius + opponent_data[opponent_index].radius;
+  fVar1 = opponent_data[arg2].x - (opponent_data[i].x + opponent_data[i].offset_x);
+  fVar4 = opponent_data[arg2].z - (opponent_data[i].z + opponent_data[i].offset_z);
+  fVar2 = opponent_data[i].radius + opponent_data[arg2].radius;
   local_1c = local_18;
   if (fVar4 * fVar4 + fVar1 * fVar1 <= fVar2 * fVar2) {
     local_1c = 1;
@@ -204,34 +207,34 @@ int __watcall racers_collide(int racer_a,int racer_b)
       *(float *)((int)local_a4 + iVar5) = fVar1 + fVar2;
       *(float *)((int)local_a4 + iVar5 + 8) =
            *(float *)((int)opponent_data[i].world_corners + iVar5 + 8) + opponent_data[i].offset_z;
-      uVar3 = *(undefined4 *)((int)opponent_data[opponent_index].world_corners + iVar5);
+      uVar3 = *(undefined4 *)((int)opponent_data[arg2].world_corners + iVar5);
       *(undefined4 *)((int)local_e0 + iVar5 + 4) = 0;
       *(undefined4 *)((int)local_e0 + iVar5) = uVar3;
       iVar6 = iVar5 + 0xc;
       *(undefined4 *)((int)local_e0 + iVar5 + 8) =
-           *(undefined4 *)((int)opponent_data[opponent_index].world_corners + iVar5 + 8);
+           *(undefined4 *)((int)opponent_data[arg2].world_corners + iVar5 + 8);
       iVar5 = iVar6;
     } while (iVar6 != 0x30);
     local_74 = opponent_data[i].x + opponent_data[i].offset_x;
     local_6c = opponent_data[i].z + opponent_data[i].offset_z;
-    local_b0 = opponent_data[opponent_index].x;
-    local_a8 = opponent_data[opponent_index].z;
+    local_b0 = opponent_data[arg2].x;
+    local_a8 = opponent_data[arg2].z;
     vector_subtract(local_38,local_a4 + 3,local_a4);
     vector_subtract(local_5c,local_8c,local_a4 + 3);
     vector_subtract(local_44,local_80,local_8c);
     vector_subtract(local_68,local_a4,local_80);
     for (i = 0; i < 5; i = i + 1) {
       vector_subtract(local_50,pfVar7,local_a4);
-      cross_product_y(&local_20,local_38);
+      cross_product_y(&local_20,local_38,local_50);
       if (0.0 <= local_20) {
         vector_subtract(local_50,pfVar7,local_8c);
-        cross_product_y(&local_20,local_44);
+        cross_product_y(&local_20,local_44,local_50);
         if (0.0 <= local_20) {
           vector_subtract(local_50,pfVar7,local_a4 + 3);
-          cross_product_y(&local_20,local_5c);
+          cross_product_y(&local_20,local_5c,local_50);
           if (0.0 <= local_20) {
             vector_subtract(local_50,pfVar7,local_80);
-            cross_product_y(&local_20,local_68);
+            cross_product_y(&local_20,local_68,local_50);
             if (0.0 <= local_20) {
               local_1c = 2;
               if (unaff_EBX == 0) {
@@ -252,16 +255,16 @@ int __watcall racers_collide(int racer_a,int racer_b)
       vector_subtract(local_68,local_e0,local_bc);
       for (i = 0; i < 5; i = i + 1) {
         vector_subtract(local_50,pfVar7,local_e0);
-        cross_product_y(&local_20,local_38);
+        cross_product_y(&local_20,local_38,local_50);
         if (0.0 <= local_20) {
           vector_subtract(local_50,pfVar7,local_c8);
-          cross_product_y(&local_20,local_44);
+          cross_product_y(&local_20,local_44,local_50);
           if (0.0 <= local_20) {
             vector_subtract(local_50,pfVar7,local_e0 + 3);
-            cross_product_y(&local_20,local_5c);
+            cross_product_y(&local_20,local_5c,local_50);
             if (0.0 <= local_20) {
               vector_subtract(local_50,pfVar7,local_bc);
-              cross_product_y(&local_20,local_68);
+              cross_product_y(&local_20,local_68,local_50);
               if (0.0 <= local_20) {
                 local_1c = 2;
                 if (unaff_EBX == 0) {
@@ -282,89 +285,91 @@ int __watcall racers_collide(int racer_a,int racer_b)
 
 /* ==== 0040bcaf cross_product_y ==== */
 
-void __watcall cross_product_y(float *param_1,float *param_2)
+void __watcall cross_product_y(float *param_1,float *param_2,float *param_3)
 
 {
-  float *unaff_EBX;
-  
-  *param_1 = *param_2 * unaff_EBX[2] - param_2[2] * *unaff_EBX;
+  *param_1 = *param_2 * param_3[2] - param_2[2] * *param_3;
   return;
 }
 
 
 /* ==== 0040bccd update_racer_corners ==== */
 
-void __watcall update_racer_corners(void)
+void __watcall update_racer_corners(int opponent_index)
 
 {
   float fVar1;
   float fVar2;
-  int in_EAX;
   uint uVar3;
   
-  uVar3 = opponent_data[in_EAX].heading & 0x3ff;
+  uVar3 = opponent_data[opponent_index].heading & 0x3ff;
   fVar1 = *(float *)(cos_table + uVar3 * 4);
   fVar2 = *(float *)(sin_table + uVar3 * 4);
-  opponent_data[in_EAX].world_corners[0] =
-       (opponent_data[in_EAX].local_corners[0] * fVar2 -
-       opponent_data[in_EAX].local_corners[2] * fVar1) + opponent_data[in_EAX].x;
-  opponent_data[in_EAX].world_corners[2] =
-       opponent_data[in_EAX].local_corners[2] * fVar2 +
-       opponent_data[in_EAX].local_corners[0] * fVar1 + opponent_data[in_EAX].z;
-  opponent_data[in_EAX].world_corners[3] =
-       (opponent_data[in_EAX].local_corners[3] * fVar2 -
-       opponent_data[in_EAX].local_corners[5] * fVar1) + opponent_data[in_EAX].x;
-  opponent_data[in_EAX].world_corners[5] =
-       opponent_data[in_EAX].local_corners[5] * fVar2 +
-       opponent_data[in_EAX].local_corners[3] * fVar1 + opponent_data[in_EAX].z;
-  opponent_data[in_EAX].world_corners[6] =
-       (opponent_data[in_EAX].local_corners[6] * fVar2 -
-       opponent_data[in_EAX].local_corners[8] * fVar1) + opponent_data[in_EAX].x;
-  opponent_data[in_EAX].world_corners[8] =
-       opponent_data[in_EAX].local_corners[8] * fVar2 +
-       opponent_data[in_EAX].local_corners[6] * fVar1 + opponent_data[in_EAX].z;
-  opponent_data[in_EAX].world_corners[9] =
-       (opponent_data[in_EAX].local_corners[9] * fVar2 -
-       opponent_data[in_EAX].local_corners[0xb] * fVar1) + opponent_data[in_EAX].x;
-  opponent_data[in_EAX].world_corners[0xb] =
-       opponent_data[in_EAX].local_corners[0xb] * fVar2 +
-       opponent_data[in_EAX].local_corners[9] * fVar1 + opponent_data[in_EAX].z;
+  opponent_data[opponent_index].world_corners[0] =
+       (opponent_data[opponent_index].local_corners[0] * fVar2 -
+       opponent_data[opponent_index].local_corners[2] * fVar1) + opponent_data[opponent_index].x;
+  opponent_data[opponent_index].world_corners[2] =
+       opponent_data[opponent_index].local_corners[2] * fVar2 +
+       opponent_data[opponent_index].local_corners[0] * fVar1 + opponent_data[opponent_index].z;
+  opponent_data[opponent_index].world_corners[3] =
+       (opponent_data[opponent_index].local_corners[3] * fVar2 -
+       opponent_data[opponent_index].local_corners[5] * fVar1) + opponent_data[opponent_index].x;
+  opponent_data[opponent_index].world_corners[5] =
+       opponent_data[opponent_index].local_corners[5] * fVar2 +
+       opponent_data[opponent_index].local_corners[3] * fVar1 + opponent_data[opponent_index].z;
+  opponent_data[opponent_index].world_corners[6] =
+       (opponent_data[opponent_index].local_corners[6] * fVar2 -
+       opponent_data[opponent_index].local_corners[8] * fVar1) + opponent_data[opponent_index].x;
+  opponent_data[opponent_index].world_corners[8] =
+       opponent_data[opponent_index].local_corners[8] * fVar2 +
+       opponent_data[opponent_index].local_corners[6] * fVar1 + opponent_data[opponent_index].z;
+  opponent_data[opponent_index].world_corners[9] =
+       (opponent_data[opponent_index].local_corners[9] * fVar2 -
+       opponent_data[opponent_index].local_corners[0xb] * fVar1) + opponent_data[opponent_index].x;
+  opponent_data[opponent_index].world_corners[0xb] =
+       opponent_data[opponent_index].local_corners[0xb] * fVar2 +
+       opponent_data[opponent_index].local_corners[9] * fVar1 + opponent_data[opponent_index].z;
   return;
 }
 
 
 /* ==== 0040c278 race_positions_valid ==== */
 
-undefined8 __watcall race_positions_valid(undefined4 param_1,undefined4 param_2)
+undefined4 __watcall race_positions_valid(void)
 
 {
   int iVar1;
-  undefined4 uVar2;
-  int iVar3;
+  int iVar2;
   int j;
   int i;
   
-  for (i = 0; i < 0xc; i = i + 2) {
-    iVar1 = *(int *)((int)&infio.ended_by + i) >> 0x10;
-    if ((iVar1 < 1) || (6 < iVar1)) goto LAB_0040c29c;
-  }
-  iVar1 = 0;
-  for (i = 0; i < 6; i = i + 1) {
-    iVar3 = 0;
-    for (j = 0; j < 6; j = j + 1) {
-      if ((i != j) &&
-         (*(short *)((int)&infio.position + iVar1) == *(short *)((int)&infio.position + iVar3)))
-      goto LAB_0040c29c;
-      iVar3 = iVar3 + 2;
+  i = 0;
+  while( true ) {
+    if (0xb < i) {
+      i = 0;
+      iVar1 = 0;
+      do {
+        if (5 < i) {
+          return 1;
+        }
+        iVar2 = 0;
+        for (j = 0; j < 6; j = j + 1) {
+          if ((i != j) &&
+             (*(short *)((int)&infio.position + iVar1) == *(short *)((int)&infio.position + iVar2)))
+          {
+            return 0;
+          }
+          iVar2 = iVar2 + 2;
+        }
+        iVar1 = iVar1 + 2;
+        i = i + 1;
+      } while( true );
     }
-    iVar1 = iVar1 + 2;
+    iVar1 = *(int *)((int)&infio.ended_by + i) >> 0x10;
+    if ((iVar1 < 1) || (6 < iVar1)) break;
+    i = i + 2;
   }
-  uVar2 = 1;
-LAB_0040c2db:
-  return CONCAT44(param_2,uVar2);
-LAB_0040c29c:
-  uVar2 = 0;
-  goto LAB_0040c2db;
+  return 0;
 }
 
 
@@ -372,22 +377,18 @@ LAB_0040c29c:
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall init_race_settings(undefined4 param_1,uint param_2)
+void __watcall init_race_settings(void)
 
 {
-  int file_exist_result;
-  uint ini_value_setting;
   int iVar1;
-  int extraout_ECX;
+  uint ini_value_setting;
   int extraout_EDX;
   uint ini_value_setting_2;
-  undefined8 race_positions_valid_result;
   
   init_infio();
-  file_exist_result = file_exist(s_a2_ini_00443e74);
+  iVar1 = file_exist(s_a2_ini_00443e74);
   ini_value_setting_2 = 0;
-  iVar1 = 0;
-  if (file_exist_result != 0) {
+  if (iVar1 != 0) {
     set_ini_filename(s_a2_ini_00443e7b);
     ini_value_setting_2 = read_ini_value_setting(s_HELPDESK_00443e88,s_SCALE_00443e82);
     ini_value_setting = read_ini_value_setting(s_BONUS_00443e96,s_TIME_00443e91);
@@ -396,15 +397,14 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
     DAT_00458d5c = ini_value_setting * 0x3c;
     ini_value_setting = read_ini_value_setting(s_TRACK_00443eb0,s_START2_00443ea9);
     DAT_00458d6c = ini_value_setting * 0x3c;
-    param_2 = read_ini_value_setting(s_TRACK_00443ebd,s_START3_00443eb6);
-    _DAT_00458d7c = param_2 * 0x3c;
+    ini_value_setting = read_ini_value_setting(s_TRACK_00443ebd,s_START3_00443eb6);
+    _DAT_00458d7c = ini_value_setting * 0x3c;
     _DAT_00458d9c = DAT_00458d6c;
     _DAT_00458dac = DAT_00458d5c;
-    iVar1 = DAT_00458d5c;
     _DAT_00458d8c = _DAT_00458d7c;
   }
-  race_positions_valid_result = race_positions_valid(iVar1,param_2);
-  if ((int)race_positions_valid_result == 0) {
+  iVar1 = race_positions_valid();
+  if (iVar1 == 0) {
     infio.racer_1 = 1;
     infio.racer_2 = 2;
     infio.racer_3 = 3;
@@ -426,7 +426,7 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
   if ((track_index < 0) || (5 < track_index)) {
     track_index = 0;
   }
-  init_race_timers((&DAT_00458d5c)[track_index * 4],0xc);
+  init_race_timers((&DAT_00458d5c)[track_index * 4]);
   money = infio.money;
   if ((infio.money < 1) || (9999 < infio.money)) {
     money = 1000;
@@ -495,7 +495,7 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
     }
     else if (dashboard_on_screen == 0) {
       debugmsg(s_using_config_3_00443ee3);
-      video_mode_index = extraout_ECX;
+      video_mode_index = 3;
     }
     else {
       debugmsg(s_using_config_4_00443ed3);
@@ -512,71 +512,69 @@ void __watcall init_race_settings(undefined4 param_1,uint param_2)
 
 /* ==== 0040c6fe set_race_state ==== */
 
-void __watcall set_race_state(void)
+int __watcall set_race_state(int param_1)
 
 {
-  int in_EAX;
+  int start_countdown_result;
   
-  if ((((race_state == 0) || (in_EAX == 0)) || (in_EAX == 8)) && (race_state != 8)) {
-    race_state = in_EAX;
+  if ((((race_state == 0) || (param_1 == 0)) || (param_1 == 8)) && (race_state != 8)) {
+    race_state = param_1;
   }
   if ((uint)race_state < 5) {
     if (race_state == 0) {
       race_running = 1;
       controls_enabled = 1;
-      return;
+      return 0;
     }
     if (race_state != 4) {
-      return;
+      return race_state;
     }
     next_fine();
     start_countdown(7);
+    start_countdown_result = 0x23;
     play_sound_effect(0x23,0);
-    return;
+    return start_countdown_result;
   }
   if ((uint)race_state < 6) {
     halt_player_car();
     start_countdown(7);
     controls_enabled = 0;
-    return;
+    return 0;
   }
   if (6 < (uint)race_state) {
     if ((uint)race_state < 8) {
       halt_player_car();
-      start_countdown(7);
+      start_countdown_result = start_countdown(7);
       controls_enabled = 0;
-      return;
+      return start_countdown_result;
     }
     if (race_state != 9) {
-      return;
+      return race_state;
     }
     race_running = 0;
     controls_enabled = 0;
-    return;
+    return 9;
   }
-  start_countdown(0xc);
+  start_countdown_result = start_countdown(0xc);
   controls_enabled = 0;
-  return;
+  return start_countdown_result;
 }
 
 
 /* ==== 0040c814 update_race ==== */
 
-undefined8 __watcall update_race(int param_1,int param_2)
+int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param_4)
 
 {
   int iVar1;
-  int frame_val;
   int effect_val;
-  undefined4 uVar2;
-  int unaff_ECX;
-  int unaff_EBX;
+  uint countdown_expired_result;
+  int iVar2;
   int iVar3;
   int iVar4;
   int iVar5;
   int unaff_ESI;
   int unaff_EDI;
-  undefined8 uVar6;
   int local_3c;
   int local_38;
   int local_34;
@@ -585,32 +583,28 @@ undefined8 __watcall update_race(int param_1,int param_2)
   int local_24;
   int local_20;
   
-  frame_val = race_state + -1;
-  switch(frame_val) {
+  effect_val = race_state + -1;
+  switch(effect_val) {
   case 0:
     if (DAT_00475a2c == 0) {
       start_camera_intro();
     }
     camera_height = camera_height + -10.0;
-    uVar2 = CONCAT22((short)((uint)frame_val >> 0x10),
-                     (ushort)(0.0 < camera_height) << 8 | (ushort)NAN(camera_height) << 10 |
-                     (ushort)(camera_height == 0.0) << 0xe);
+    effect_val = CONCAT22((short)((uint)effect_val >> 0x10),
+                          (ushort)(0.0 < camera_height) << 8 | (ushort)NAN(camera_height) << 10 |
+                          (ushort)(camera_height == 0.0) << 0xe);
     if (0.0 >= camera_height) {
-      uVar2 = 2;
+      effect_val = 2;
       set_camera_position(2);
       race_state = 2;
     }
-    return CONCAT44(param_2,uVar2);
+    return effect_val;
   case 1:
-    effect_val = param_2;
     if (DAT_00475a34 == 0) {
-      uVar6 = begin_start_countdown();
-      effect_val = (int)((ulonglong)uVar6 >> 0x20);
-      frame_val = (int)uVar6;
+      begin_start_countdown();
     }
-    uVar6 = countdown_expired(frame_val,effect_val);
-    frame_val = (int)((ulonglong)uVar6 >> 0x20);
-    if ((int)uVar6 != 0) {
+    countdown_expired_result = countdown_expired();
+    if (countdown_expired_result != 0) {
       countdown_step = countdown_step + 1;
       if (countdown_step == 5) {
         frame_val = 4;
@@ -633,157 +627,135 @@ undefined8 __watcall update_race(int param_1,int param_2)
     }
     effect_val = countdown_step;
     draw_big_digit_1(countdown_step,frame_val);
-    return CONCAT44(param_2,effect_val);
+    return effect_val;
   case 2:
-    effect_val = param_2;
     if (DAT_00475a30 == 0) {
-      uVar6 = stop_player_car();
-      effect_val = (int)((ulonglong)uVar6 >> 0x20);
-      frame_val = (int)uVar6;
+      stop_player_car();
     }
-    uVar6 = countdown_expired(frame_val,effect_val);
-    if ((((int)uVar6 != 0) || (frame_val = keyispressed(0x20), frame_val != 0)) ||
-       (frame_val = keyispressed(0xd), frame_val != 0)) {
+    countdown_expired_result = countdown_expired();
+    if (((countdown_expired_result != 0) || (effect_val = keyispressed(0x20), effect_val != 0)) ||
+       (effect_val = keyispressed(0xd), effect_val != 0)) {
       race_state = 8;
     }
-    draw_big_digit_2(DAT_00475a28,(int)((ulonglong)uVar6 >> 0x20));
-    frame_val = DAT_00475a28 + 1;
-    DAT_00475a28 = frame_val % 0x10;
-    return CONCAT44(param_2,frame_val / 0x10);
+    draw_big_digit_2(DAT_00475a28,frame_val);
+    effect_val = DAT_00475a28 + 1;
+    DAT_00475a28 = effect_val % 0x10;
+    return effect_val / 0x10;
   case 3:
     break;
   case 4:
     if (screen_resolution == 0) {
-      unaff_EBX = 0x140;
-      unaff_ECX = 0xf0;
+      param_3 = 0x140;
+      param_4 = 0xf0;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x188) + 4);
       if (dashboard_on_screen != 0) {
-        unaff_ECX = 0x8c;
+        param_4 = 0x8c;
       }
     }
-    else {
-      frame_val = param_2;
-      if (screen_resolution == 1) {
-        unaff_EBX = 0xa0;
-        unaff_ECX = 100;
-        frame_val = *(int *)(*(int *)(xvga_anims + 0x17c) + 4);
-      }
+    else if (screen_resolution == 1) {
+      param_3 = 0xa0;
+      param_4 = 100;
+      frame_val = *(int *)(*(int *)(xvga_anims + 0x17c) + 4);
     }
-    uVar2 = 1;
-    set_mem_image(1,frame_val,unaff_EBX,unaff_ECX,0);
-    uVar6 = countdown_expired(uVar2,frame_val);
-    uVar2 = 0;
-    if ((int)uVar6 != 0) {
-      uVar2 = set_race_state();
+    set_mem_image(1,frame_val,param_3,param_4,0);
+    countdown_expired_result = countdown_expired();
+    effect_val = 0;
+    if (countdown_expired_result != 0) {
+      effect_val = set_race_state(8);
     }
-    return CONCAT44(param_2,uVar2);
+    return effect_val;
   case 5:
     if (screen_resolution == 0) {
-      unaff_EBX = 0xa0;
-      unaff_ECX = 100;
+      param_3 = 0xa0;
+      param_4 = 100;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x128) + 4);
       if (dashboard_on_screen != 0) {
-        unaff_ECX = 0x3c;
+        param_4 = 0x3c;
       }
     }
-    else {
-      frame_val = param_2;
-      if (screen_resolution == 1) {
-        unaff_EBX = 0x4b;
-        unaff_ECX = 0x1e;
-        frame_val = *(int *)(*(int *)(xvga_anims + 0x11c) + 4);
-      }
+    else if (screen_resolution == 1) {
+      param_3 = 0x4b;
+      param_4 = 0x1e;
+      frame_val = *(int *)(*(int *)(xvga_anims + 0x11c) + 4);
     }
-    uVar2 = 1;
-    set_mem_image(1,frame_val,unaff_EBX,unaff_ECX,2);
-    uVar6 = countdown_expired(uVar2,frame_val);
-    if (((int)uVar6 == 0) && (frame_val = keyispressed(0xd), frame_val == 0)) {
-      frame_val = keyispressed(0x20);
-      uVar2 = 0;
-      if (frame_val == 0) goto LAB_00412475;
+    set_mem_image(1,frame_val,param_3,param_4,2);
+    countdown_expired_result = countdown_expired();
+    if (((countdown_expired_result == 0) && (effect_val = keyispressed(0xd), effect_val == 0)) &&
+       (effect_val = keyispressed(0x20), effect_val == 0)) {
+      return 0;
     }
-    uVar2 = set_race_state();
-LAB_00412475:
-    return CONCAT44(param_2,uVar2);
+    effect_val = set_race_state(8);
+    return effect_val;
   case 6:
     if (screen_resolution == 0) {
-      unaff_EBX = 0x140;
-      unaff_ECX = 0xf0;
+      param_3 = 0x140;
+      param_4 = 0xf0;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x1a0) + 4);
       if (dashboard_on_screen != 0) {
-        unaff_ECX = 0x8c;
+        param_4 = 0x8c;
       }
     }
-    else {
-      frame_val = param_2;
-      if (screen_resolution == 1) {
-        unaff_EBX = 0xa0;
-        unaff_ECX = 100;
-        frame_val = *(int *)(*(int *)(xvga_anims + 0x194) + 4);
-      }
+    else if (screen_resolution == 1) {
+      param_3 = 0xa0;
+      param_4 = 100;
+      frame_val = *(int *)(*(int *)(xvga_anims + 0x194) + 4);
     }
-    uVar2 = 1;
-    set_mem_image(1,frame_val,unaff_EBX,unaff_ECX,0);
-    uVar6 = countdown_expired(uVar2,frame_val);
-    uVar2 = 0;
-    if ((int)uVar6 != 0) {
-      uVar2 = set_race_state();
+    set_mem_image(1,frame_val,param_3,param_4,0);
+    countdown_expired_result = countdown_expired();
+    effect_val = 0;
+    if (countdown_expired_result != 0) {
+      effect_val = set_race_state(8);
     }
-    return CONCAT44(param_2,uVar2);
+    return effect_val;
   default:
-    return CONCAT44(param_2,frame_val);
+    return effect_val;
   case 8:
     if (screen_resolution == 0) {
-      unaff_EBX = 0xa0;
-      unaff_ECX = 0x8c;
+      param_3 = 0xa0;
+      param_4 = 0x8c;
       frame_val = *(int *)(*(int *)(xvga_anims + 0x140) + 4);
       if (dashboard_on_screen != 0) {
-        unaff_ECX = 100;
+        param_4 = 100;
       }
     }
-    else {
-      frame_val = param_2;
-      if (screen_resolution == 1) {
-        unaff_EBX = 0x50;
-        unaff_ECX = 0x32;
-        frame_val = *(int *)(*(int *)(xvga_anims + 0x134) + 4);
-      }
+    else if (screen_resolution == 1) {
+      param_3 = 0x50;
+      param_4 = 0x32;
+      frame_val = *(int *)(*(int *)(xvga_anims + 0x134) + 4);
     }
-    set_mem_image(1,frame_val,unaff_EBX,unaff_ECX,2);
+    set_mem_image(1,frame_val,param_3,param_4,2);
     effect_val = keyispressed(0x50);
-    if ((effect_val == 0) && (effect_val = keyispressed(0xd), effect_val == 0)) {
-      effect_val = keyispressed(0x20);
-      uVar2 = 0;
-      if (effect_val == 0) goto LAB_00412527;
+    if (((effect_val == 0) && (effect_val = keyispressed(0xd), effect_val == 0)) &&
+       (effect_val = keyispressed(0x20), effect_val == 0)) {
+      return 0;
     }
     do {
       effect_val = keyispressed(0x50);
     } while (effect_val != 0);
-    restart_time_clock(0,frame_val);
-    uVar2 = set_race_state();
-LAB_00412527:
-    return CONCAT44(param_2,uVar2);
+    restart_time_clock();
+    effect_val = set_race_state(0);
+    return effect_val;
   }
-  frame_val = current_fine / 1000;
-  effect_val = (current_fine % 1000) % 100;
-  iVar3 = (effect_val % 10) * 8;
-  effect_val = (effect_val / 10) * 8;
+  effect_val = current_fine / 1000;
+  iVar2 = (current_fine % 1000) % 100;
+  iVar3 = (iVar2 % 10) * 8;
+  iVar2 = (iVar2 / 10) * 8;
   iVar4 = ((current_fine % 1000) / 100) * 8;
-  iVar5 = frame_val * 8;
+  iVar5 = effect_val * 8;
   if (screen_resolution == 0) {
     local_2c = *(int *)(*(int *)(xvga_anims + 0x110) + 4);
     iVar1 = *(int *)(xvga_anims + 0x158);
     local_28 = *(int *)(iVar5 + 4 + iVar1);
     local_34 = *(int *)(iVar4 + 4 + iVar1);
-    local_24 = *(int *)(effect_val + 4 + iVar1);
+    local_24 = *(int *)(iVar2 + 4 + iVar1);
     unaff_EDI = 0x186;
     unaff_ESI = 0xe6;
     local_3c = 0xa0;
     local_38 = *(int *)(iVar1 + iVar3 + 4);
     local_20 = 0xc;
-    unaff_ECX = 100;
+    param_4 = 100;
     if (dashboard_on_screen != 0) {
-      unaff_ECX = 0x3c;
+      param_4 = 0x3c;
       unaff_ESI = 0xbe;
     }
   }
@@ -793,64 +765,59 @@ LAB_00412527:
     local_3c = 0x4b;
     local_28 = *(int *)(iVar5 + 4 + iVar1);
     local_34 = *(int *)(iVar4 + 4 + iVar1);
-    local_24 = *(int *)(effect_val + 4 + iVar1);
-    unaff_ECX = 0x1e;
+    local_24 = *(int *)(iVar2 + 4 + iVar1);
+    param_4 = 0x1e;
     unaff_EDI = 0xc3;
     unaff_ESI = 0x5f;
     local_38 = *(int *)(iVar1 + iVar3 + 4);
     local_20 = 6;
   }
-  set_mem_image(1,local_2c,local_3c,unaff_ECX,2);
-  if (frame_val != 0) {
+  set_mem_image(1,local_2c,local_3c,param_4,2);
+  if (effect_val != 0) {
     set_mem_image(1,local_28,unaff_EDI,unaff_ESI,0);
   }
   set_mem_image(1,local_34,local_20 + unaff_EDI,unaff_ESI,0);
   set_mem_image(1,local_24,local_20 * 2 + unaff_EDI,unaff_ESI,0);
-  uVar2 = 1;
   set_mem_image(1,local_38,unaff_EDI + local_20 * 3,unaff_ESI,0);
-  uVar6 = countdown_expired(uVar2,local_38);
-  if (((int)uVar6 == 0) && (frame_val = keyispressed(0xd), frame_val == 0)) {
-    effect_val = keyispressed(0x20);
-    frame_val = 0;
-    if (effect_val == 0) goto LAB_0041232b;
+  countdown_expired_result = countdown_expired();
+  if (((countdown_expired_result == 0) && (effect_val = keyispressed(0xd), effect_val == 0)) &&
+     (effect_val = keyispressed(0x20), effect_val == 0)) {
+    return 0;
   }
-  set_race_state();
-  frame_val = current_fine;
+  set_race_state(0);
+  effect_val = current_fine;
   pay_money(current_fine);
-LAB_0041232b:
-  return CONCAT44(param_2,frame_val);
+  return effect_val;
 }
 
 
 /* ==== 0040cb06 load_object_file ==== */
 
-undefined8 __watcall load_object_file(char *param_1,undefined4 param_2)
+int __watcall load_object_file(char *filename_val)
 
 {
-  FILE *_File;
-  size_t count_read;
+  __iobuf *file;
+  uint count_read;
+  int i;
   int j;
   int *piVar1;
-  int i;
   int iVar2;
-  undefined8 new_object3d;
   int local_2c;
   int local_28;
-  int local_24;
+  int new_object3d;
   int local_20;
   int local_1c;
   
-  _File = (FILE *)xvga_src_fopen(param_1);
-  if (_File == (FILE *)0x0) {
-    fatal_exit(s__s__d____Unable_to_load_object__c_004440e0,s_objio_cpp_004440d6,0x6c,param_1);
+  file = xvga_src_fopen(filename_val);
+  if (file == (__iobuf *)0x0) {
+    fatal_exit(s__s__d____Unable_to_load_object__c_004440e0,s_objio_cpp_004440d6,0x6c,filename_val);
   }
-  fread(&local_2c,1,4,_File);
-  count_read = fread(&local_28,1,4,_File);
-  new_object3d = get_new_object3d(count_read,1);
-  i = (int)new_object3d;
+  fread((char *)&local_2c,1,4,(int *)file);
+  count_read = fread((char *)&local_28,1,4,(int *)file);
+  i = get_new_object3d(count_read);
   racers[i].in_use = '\x01';
-  local_24 = i;
-  j = init_static_anim3d(1,local_2c);
+  new_object3d = i;
+  j = init_static_anim3d(1,local_2c,local_28);
   racers[i].anim = j;
   racers[i].frame = 0;
   iVar2 = 0;
@@ -861,19 +828,19 @@ undefined8 __watcall load_object_file(char *param_1,undefined4 param_2)
                                      *(int *)(*(int *)(*piVar1 * 9 + 4 + anims3d) + piVar1[1] * 4) *
                                      0x11));
     iVar2 = iVar2 + 4;
-    fread((void *)(weg_points + *piVar1 * 0x21),1,0x21,_File);
+    fread((char *)(weg_points + *piVar1 * 0x21),1,0x21,(int *)file);
   }
-  local_20 = local_24 * 0x4b;
+  local_20 = new_object3d * 0x4b;
   j = 0;
   for (i = 0; i < local_28; i = i + 1) {
     piVar1 = (int *)((int)&racers->anim + local_20);
     piVar1 = (int *)(j + *(int *)(*(int *)(*(int *)(anims3d + *piVar1 * 9 + 4) + piVar1[1] * 4) *
                                   0x11 + 0xc + frames3d));
     j = j + 4;
-    fread((void *)(triangles3d + *piVar1 * 9),1,9,_File);
+    fread((char *)(triangles3d + *piVar1 * 9),1,9,(int *)file);
   }
-  xvga_src_fclose((__iobuf *)_File);
-  return CONCAT44(param_2,local_24);
+  xvga_src_fclose(file);
+  return new_object3d;
 }
 
 
@@ -882,7 +849,7 @@ undefined8 __watcall load_object_file(char *param_1,undefined4 param_2)
 void __watcall load_object_mesh(int object,char *filename)
 
 {
-  FILE *_File;
+  __iobuf *file;
   int i;
   int *piVar1;
   int iVar2;
@@ -891,14 +858,14 @@ void __watcall load_object_mesh(int object,char *filename)
   int local_1c;
   int local_18;
   
-  _File = (FILE *)xvga_src_fopen(filename);
-  if (_File == (FILE *)0x0) {
+  file = xvga_src_fopen(filename);
+  if (file == (__iobuf *)0x0) {
     fatal_exit(s__s__d____Unable_to_load_object__c_0044411d,s_objio_cpp_00444113,0x9e,filename);
   }
-  fread(&local_24,1,4,_File);
-  fread(&local_20,1,4,_File);
+  fread((char *)&local_24,1,4,(int *)file);
+  fread((char *)&local_20,1,4,(int *)file);
   racers[object].in_use = '\x01';
-  i = init_frame3d(local_24,local_20);
+  i = init_frame3d();
   iVar2 = 0;
   *(int *)(*(int *)(anims3d + 4 + racers[object].anim * 9) + racers[object].frame * 4) = i;
   local_18 = object * 0x4b;
@@ -907,7 +874,7 @@ void __watcall load_object_mesh(int object,char *filename)
     piVar1 = (int *)(*(int *)(*(int *)(*(int *)(*piVar1 * 9 + 4 + anims3d) + piVar1[1] * 4) * 0x11 +
                               4 + frames3d) + iVar2);
     iVar2 = iVar2 + 4;
-    fread((void *)(weg_points + *piVar1 * 0x21),1,0x21,_File);
+    fread((char *)(weg_points + *piVar1 * 0x21),1,0x21,(int *)file);
   }
   local_1c = object * 0x4b;
   iVar2 = 0;
@@ -917,9 +884,9 @@ void __watcall load_object_mesh(int object,char *filename)
                                      *(int *)(*(int *)(*piVar1 * 9 + 4 + anims3d) + piVar1[1] * 4) *
                                      0x11));
     iVar2 = iVar2 + 4;
-    fread((void *)(triangles3d + *piVar1 * 9),1,9,_File);
+    fread((char *)(triangles3d + *piVar1 * 9),1,9,(int *)file);
   }
-  xvga_src_fclose((__iobuf *)_File);
+  xvga_src_fclose(file);
   return;
 }
 

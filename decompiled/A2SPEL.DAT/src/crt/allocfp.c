@@ -3,58 +3,48 @@
 
 /* ==== 00431491 allocfp ==== */
 
-undefined8 __watcall allocfp(undefined4 param_1,size_t unaff_EDX_00)
+undefined4 __watcall allocfp(void)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar2;
-  char *_Dst;
+  undefined4 *buffer;
+  char *pcVar1;
   undefined4 extraout_ECX;
-  undefined4 unaff_EDX;
-  uint uVar3;
-  undefined8 buffer;
+  uint uVar2;
   
   (*(code *)AccessIOB_1)();
   if (ClosedStreams == (undefined4 *)0x0) {
-    for (_Dst = &iob; _Dst < tmpfnext; _Dst = _Dst + 0x1a) {
-      if ((_Dst[0xc] & 3U) == 0) {
-        buffer = nmalloc(8,unaff_EDX);
-        uVar2 = (undefined4)((ulonglong)buffer >> 0x20);
-        puVar1 = (undefined4 *)buffer;
-        if (puVar1 == (undefined4 *)0x0) goto LAB_00431531;
-        uVar3 = 3;
+    for (pcVar1 = &iob; pcVar1 < tmpfnext; pcVar1 = pcVar1 + 0x1a) {
+      if ((pcVar1[0xc] & 3U) == 0) {
+        buffer = (undefined4 *)nmalloc(8);
+        if (buffer == (undefined4 *)0x0) goto LAB_00431531;
+        uVar2 = 3;
         goto LAB_00431506;
       }
     }
-    uVar3 = 0x4003;
-    buffer = nmalloc(0x22,unaff_EDX);
-    uVar2 = (undefined4)((ulonglong)buffer >> 0x20);
-    puVar1 = (undefined4 *)buffer;
-    if (puVar1 == (undefined4 *)0x0) {
+    uVar2 = 0x4003;
+    buffer = (undefined4 *)nmalloc(0x22);
+    if (buffer == (undefined4 *)0x0) {
 LAB_00431531:
-      set_errno(5,uVar2);
+      set_errno(5);
       (*(code *)ReleaseIOB_1)();
-      uVar2 = 0;
-      goto LAB_00431543;
+      return 0;
     }
-    _Dst = (char *)(puVar1 + 2);
+    pcVar1 = (char *)(buffer + 2);
   }
   else {
-    _Dst = (char *)ClosedStreams[1];
-    uVar3 = (uint)((ushort)*(undefined4 *)(_Dst + 0xc) & 0x4003 | 3);
-    puVar1 = ClosedStreams;
+    pcVar1 = (char *)ClosedStreams[1];
+    uVar2 = (uint)((ushort)*(undefined4 *)(pcVar1 + 0xc) & 0x4003 | 3);
+    buffer = ClosedStreams;
     ClosedStreams = (undefined4 *)*ClosedStreams;
   }
 LAB_00431506:
-  memset(_Dst,0,0x1a);
-  *(uint *)(_Dst + 0xc) = uVar3;
-  puVar1[1] = _Dst;
-  *puVar1 = OpenStreams;
-  OpenStreams = puVar1;
+  memset((undefined4 *)pcVar1,0,0x1a);
+  *(uint *)(pcVar1 + 0xc) = uVar2;
+  buffer[1] = pcVar1;
+  *buffer = OpenStreams;
+  OpenStreams = buffer;
   (*(code *)ReleaseIOB_1)();
-  uVar2 = extraout_ECX;
-LAB_00431543:
-  return CONCAT44(unaff_EDX_00,uVar2);
+  return extraout_ECX;
 }
 
 
@@ -84,16 +74,18 @@ void __watcall freefp(int param_1)
 
 /* ==== 00431582 purgefp ==== */
 
-void __watcall purgefp(void)
+undefined4 __watcall purgefp(void)
 
 {
-  uint extraout_EDX;
+  undefined4 *puVar1;
+  undefined4 in_EAX;
   
-  while (ClosedStreams != 0) {
-    nfree(ClosedStreams);
-    ClosedStreams = extraout_EDX;
+  while (ClosedStreams != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*ClosedStreams;
+    in_EAX = nfree(ClosedStreams);
+    ClosedStreams = puVar1;
   }
-  return;
+  return in_EAX;
 }
 
 

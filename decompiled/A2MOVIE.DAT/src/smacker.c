@@ -7,9 +7,9 @@ int __watcall init_smacker(void *param_1)
 
 {
   char cVar1;
-  char *format;
   char *pcVar2;
-  undefined4 uVar3;
+  char *arg2;
+  undefined4 arg3;
   
   if (init_smacker_ok != 0) {
     return 0;
@@ -17,18 +17,18 @@ int __watcall init_smacker(void *param_1)
   if (param_1 == (void *)0x0) {
     cVar1 = _SmackSoundUseDirectSound_4(0);
     if (cVar1 != '\0') goto LAB_00405de7;
-    uVar3 = 0x40;
-    pcVar2 = s_smacker_cpp_0041b5d4;
-    format = s__s__d____failed_to_set_directsou_0041b5e0;
+    arg3 = 0x40;
+    arg2 = s_smacker_cpp_0041b5d4;
+    pcVar2 = s__s__d____failed_to_set_directsou_0041b5e0;
   }
   else {
     cVar1 = _SmackSoundUseDirectSound_4(param_1);
     if (cVar1 != '\0') goto LAB_00405de7;
-    uVar3 = 0x3b;
-    pcVar2 = s_smacker_cpp_0041b598;
-    format = s__s__d____failed_to_set_directsou_0041b5a4;
+    arg3 = 0x3b;
+    arg2 = s_smacker_cpp_0041b598;
+    pcVar2 = s__s__d____failed_to_set_directsou_0041b5a4;
   }
-  fatal_exit(format,pcVar2,uVar3);
+  fatal_exit(pcVar2,arg2,arg3);
 LAB_00405de7:
   clear_smacker_keys();
   set_smacker_key(1,0x1b);
@@ -101,48 +101,47 @@ void __watcall smacker_next_frame_and_wait(void)
 
 /* ==== 00406006 do_play_smacker ==== */
 
-void __watcall do_play_smacker(undefined4 param_1,undefined4 param_2,int param_3)
+void __watcall
+do_play_smacker(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+               int param_5)
 
 {
   uchar *surface_ptr;
-  char *dd_error_string_result;
-  int fatal_exit_result;
-  undefined4 extraout_EDX;
-  undefined4 uVar1;
-  undefined8 uVar2;
-  int in_stack_00000004;
+  long lVar1;
+  char *arg4;
   undefined4 local_2c;
   undefined4 local_28;
   undefined4 local_24;
   undefined4 local_20;
   undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
   
   local_2c = 0;
   local_28 = 0;
   local_20 = *(undefined4 *)(smkfile + 8);
   local_24 = *(undefined4 *)(smkfile + 4);
   local_1c = param_1;
+  local_18 = param_2;
+  local_14 = param_3;
+  local_10 = param_4;
   while (smacker_playing != 0) {
     if (*(int *)(smkfile + 0x68) != 0) {
-      set_smack_palette(in_stack_00000004);
+      set_smack_palette(param_5);
     }
     surface_ptr = get_surface_ptr(xvga_buffer_screen);
     _SmackToBuffer_28(smkfile,0,0,xvga_screen_xsize,xvga_screen_ysize,surface_ptr,0);
     _SmackDoFrame_4(smkfile);
     reset_surface_ptr_1(xvga_buffer_screen,surface_ptr);
-    uVar2 = (**(code **)(*(int *)xvga_back_screen + 0x14))
+    lVar1 = (**(code **)(*(int *)xvga_back_screen + 0x14))
                       (xvga_back_screen,&local_1c,xvga_buffer_screen,&local_2c,0,0);
-    uVar1 = (undefined4)((ulonglong)uVar2 >> 0x20);
-    fatal_exit_result = 0;
-    if ((long)uVar2 != 0) {
-      dd_error_string_result = dd_error_string((long)uVar2);
-      fatal_exit_result =
-           fatal_exit(s__s__d____blitting_error___s___0041b647,s_smacker_cpp_0041b63b,0xc4,
-                      dd_error_string_result);
-      uVar1 = extraout_EDX;
+    if (lVar1 != 0) {
+      arg4 = dd_error_string(lVar1);
+      fatal_exit(s__s__d____blitting_error___s___0041b647,s_smacker_cpp_0041b63b,0xc4,arg4);
     }
     smacker_next_frame_and_wait();
-    xvga_flip_page(fatal_exit_result,uVar1);
+    xvga_flip_page();
   }
   return;
 }
@@ -191,7 +190,9 @@ void __watcall check_smacker_keys(void)
 
 /* ==== 00406225 play_smacker ==== */
 
-undefined4 __watcall play_smacker(int param_1,int param_2,int param_3,int param_4,int param_5)
+void __watcall
+play_smacker(undefined4 param_1,int param_2,int param_3,int param_4,int param_5,undefined4 param_6,
+            int param_7)
 
 {
   if (init_smacker_ok == 0) {
@@ -224,12 +225,15 @@ undefined4 __watcall play_smacker(int param_1,int param_2,int param_3,int param_
     }
     smacker_playing = 1;
     smacker_paused = 0;
-    do_play_smacker(param_2,param_3,param_4);
+    if ((param_4 == *(int *)(smkfile + 4)) && (param_5 == *(int *)(smkfile + 8))) {
+      param_5 = *(int *)(smkfile + 8);
+    }
+    do_play_smacker(param_2,param_3,param_4,param_5,param_7);
     debugmsg(s_closing_smacker_0041b78e);
     _SmackClose_4(smkfile);
     debugmsg(s_closing_smacker_done_0041b79f);
   }
-  return 0;
+  return;
 }
 
 
@@ -279,14 +283,14 @@ void __watcall set_smacker_key(int param_1,int param_2)
 
 {
   int free_smacker_key;
-  char *format;
   char *pcVar1;
-  undefined4 uVar2;
+  char *arg2;
+  undefined4 arg3;
   
   if ((param_1 == 0) || (2 < (uint)param_1)) {
-    uVar2 = 0x174;
-    pcVar1 = s_smacker_cpp_0041b7fe;
-    format = s__s__d_____set_smacker_key__Unkno_0041b80a;
+    arg3 = 0x174;
+    arg2 = s_smacker_cpp_0041b7fe;
+    pcVar1 = s__s__d_____set_smacker_key__Unkno_0041b80a;
   }
   else {
     free_smacker_key = get_free_smacker_key();
@@ -296,11 +300,11 @@ void __watcall set_smacker_key(int param_1,int param_2)
       return;
     }
     param_1 = 0x14;
-    uVar2 = 0x170;
-    pcVar1 = s_smacker_cpp_0041b7b5;
-    format = s__s__d_____set_smacker_key__No_fr_0041b7c1;
+    arg3 = 0x170;
+    arg2 = s_smacker_cpp_0041b7b5;
+    pcVar1 = s__s__d_____set_smacker_key__No_fr_0041b7c1;
   }
-  fatal_exit(format,pcVar1,uVar2,param_1);
+  fatal_exit(pcVar1,arg2,arg3,param_1);
   return;
 }
 

@@ -3,7 +3,7 @@
 
 /* ==== 004043b5 isatty ==== */
 
-int __watcall isatty(int _FileHandle)
+undefined4 __watcall isatty(undefined4 param_1)
 
 {
   DWORD DVar1;

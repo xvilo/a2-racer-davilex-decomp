@@ -5,7 +5,7 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-longlong __watcall alloc_materials(int param_1,uint param_2)
+void __watcall alloc_materials(int param_1)
 
 {
   materials = LocalAlloc(0x40,param_1 * 0xc);
@@ -15,23 +15,23 @@ longlong __watcall alloc_materials(int param_1,uint param_2)
   DAT_00480ff4 = param_1;
   DAT_00480ff8 = 0;
   _DAT_00480ffc = 1;
-  return (ulonglong)param_2 << 0x20;
+  return;
 }
 
 
 /* ==== 0042fb03 create_default_material ==== */
 
-void __watcall create_default_material(undefined4 param_1)
+void __watcall create_default_material(void)
 
 {
-  default_material = create_material(1,0xffffffff);
+  default_material = create_material(1,-1);
   return;
 }
 
 
 /* ==== 0042fb25 get_new_material ==== */
 
-undefined8 __watcall get_new_material(undefined4 param_1,undefined4 param_2)
+int __watcall get_new_material(void)
 
 {
   int iVar1;
@@ -39,46 +39,49 @@ undefined8 __watcall get_new_material(undefined4 param_1,undefined4 param_2)
   iVar1 = DAT_00480ff8;
   if (DAT_00480ff8 < DAT_00480ff4) {
     DAT_00480ff8 = DAT_00480ff8 + 1;
-    return CONCAT44(param_2,iVar1);
+    return iVar1;
   }
   fatal_exit(s__s__d____too_many_materials_requ_00452c31,s_material_cpp_00452c24,0x38);
-  return CONCAT44(param_2,0xffffffff);
+  return -1;
 }
 
 
 /* ==== 0042fb59 set_material_texture ==== */
 
-undefined4 __watcall set_material_texture(int param_1,int *param_2)
+void __watcall set_material_texture(int param_1,int param_2)
 
 {
   int *piVar1;
-  undefined8 uVar2;
+  long lVar2;
+  char *d3d_error_string_result;
   undefined4 local_64 [16];
   undefined4 uStack_24;
   
   if ((param_1 < 0) || (DAT_00480ff4 <= param_1)) {
-    fatal_exit(s__s__d____illegal_texture_index___00452c66,s_material_cpp_00452c59,0x42);
+    fatal_exit(s__s__d____illegal_texture_index___00452c66,s_material_cpp_00452c59,0x42,param_1,
+               DAT_00480ff4);
   }
-  if (((int)param_2 < 0) || (DAT_0047679c <= (int)param_2)) {
-    fatal_exit(s__s__d____illegal_texture_index___00452c9f,s_material_cpp_00452c92,0x45);
+  if ((param_2 < 0) || (DAT_0047679c <= param_2)) {
+    fatal_exit(s__s__d____illegal_texture_index___00452c9f,s_material_cpp_00452c92,0x45,param_2,
+               DAT_0047679c);
   }
   memset(local_64,0,0x50);
   local_64[0] = 0x50;
-  uVar2 = (**(code **)(**(int **)(materials + param_1 * 0xc) + 0x14))();
-  if ((int)uVar2 != 0) {
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
+  lVar2 = (**(code **)(**(int **)(materials + param_1 * 0xc) + 0x14))();
+  if (lVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar2);
     fatal_exit(s__s__d____D3DError_Get_Material___00452cd8,s_material_cpp_00452ccb,0x4c,param_1,
-               (int)uVar2);
+               d3d_error_string_result);
   }
-  uStack_24 = *(undefined4 *)(texture_table + (int)param_2 * 0xc);
+  uStack_24 = *(undefined4 *)(texture_table + param_2 * 0xc);
   piVar1 = *(int **)(materials + param_1 * 0xc);
-  uVar2 = (**(code **)(*piVar1 + 0x10))(piVar1,&stack0xffffff94);
-  if ((int)uVar2 != 0) {
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
+  lVar2 = (**(code **)(*piVar1 + 0x10))(piVar1,&stack0xffffff94);
+  if (lVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar2);
     fatal_exit(s__s__d____D3DError_Set_Material___00452d10,s_material_cpp_00452d03,0x52,param_1,
-               (int)uVar2);
+               d3d_error_string_result);
   }
-  return 0;
+  return;
 }
 
 
@@ -88,11 +91,11 @@ int __watcall create_material(undefined4 param_1,int param_2)
 
 {
   int *piVar1;
-  int iVar2;
-  int extraout_ECX;
+  int arg2;
+  long lVar2;
+  char *d3d_error_string_result;
   undefined4 *puVar3;
   undefined4 extraout_EDX;
-  undefined8 uVar4;
   undefined4 local_64;
   undefined4 local_60;
   undefined4 local_5c;
@@ -108,8 +111,7 @@ int __watcall create_material(undefined4 param_1,int param_2)
   undefined4 local_1c;
   undefined4 local_18;
   
-  uVar4 = get_new_material(param_1,param_2);
-  iVar2 = (int)uVar4;
+  arg2 = get_new_material();
   switch(param_1) {
   case 0:
     memset(&local_64,0,0x50);
@@ -198,37 +200,40 @@ int __watcall create_material(undefined4 param_1,int param_2)
     local_18 = 0x10;
   }
   if ((DAT_004767a4 == 0) || (param_2 == -1)) {
-    debugmsg(s_Not_set_object_texture_nr____d_i_00452d9e);
+    debugmsg(s_Not_set_object_texture_nr____d_i_00452d9e,param_2,DAT_004767a4);
     local_1c = extraout_EDX;
   }
   else {
     if ((param_2 < 0) || (DAT_0047679c < param_2)) {
-      fatal_exit(s__s__d____illegal_texture_index___00452d48,s_material_cpp_00452d3b);
-      param_2 = extraout_ECX;
+      fatal_exit(s__s__d____illegal_texture_index___00452d48,s_material_cpp_00452d3b,0xd3,param_2,
+                 DAT_0047679c);
     }
     debugmsg(s_____Set_object_texture__d_to_han_00452d75);
     local_1c = *(undefined4 *)(param_2 * 0xc + texture_table);
   }
-  uVar4 = (**(code **)(*direct3d + 0x18))();
-  if ((int)uVar4 != 0) {
-    uVar4 = d3d_error_string((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Create_Materia_00452dde,s_material_cpp_00452dd1,0xdd,(int)uVar4);
+  lVar2 = (**(code **)(*direct3d + 0x18))();
+  if (lVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar2);
+    fatal_exit(s__s__d____D3DError_Create_Materia_00452dde,s_material_cpp_00452dd1,0xdd,
+               d3d_error_string_result);
   }
-  piVar1 = *(int **)(materials + iVar2 * 0xc);
-  uVar4 = (**(code **)(*piVar1 + 0x10))(piVar1,&stack0xffffff90);
-  if ((int)uVar4 != 0) {
-    uVar4 = d3d_error_string((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Set_Material___00452e14,s_material_cpp_00452e07,0xe0,(int)uVar4);
+  piVar1 = *(int **)(materials + arg2 * 0xc);
+  lVar2 = (**(code **)(*piVar1 + 0x10))(piVar1,&stack0xffffff90);
+  if (lVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar2);
+    fatal_exit(s__s__d____D3DError_Set_Material___00452e14,s_material_cpp_00452e07,0xe0,
+               d3d_error_string_result);
   }
-  puVar3 = (undefined4 *)(materials + iVar2 * 0xc);
+  puVar3 = (undefined4 *)(materials + arg2 * 0xc);
   piVar1 = (int *)*puVar3;
-  uVar4 = (**(code **)(*piVar1 + 0x18))(piVar1,d3d_device,puVar3 + 1);
-  if ((int)uVar4 != 0) {
-    uVar4 = d3d_error_string((int)uVar4,(int)((ulonglong)uVar4 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Get_Material_H_00452e47,s_material_cpp_00452e3a,0xe3,(int)uVar4);
+  lVar2 = (**(code **)(*piVar1 + 0x18))(piVar1,d3d_device,puVar3 + 1);
+  if (lVar2 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar2);
+    fatal_exit(s__s__d____D3DError_Get_Material_H_00452e47,s_material_cpp_00452e3a,0xe3,
+               d3d_error_string_result);
   }
-  debugmsg(s_material__d_created_00452e74,iVar2);
-  return iVar2;
+  debugmsg(s_material__d_created_00452e74,arg2);
+  return arg2;
 }
 
 

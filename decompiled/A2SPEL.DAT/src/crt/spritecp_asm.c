@@ -3,35 +3,41 @@
 
 /* ==== 00439764 blt_sprite ==== */
 
-undefined8 __watcall
-blt_sprite(undefined4 param_1,undefined4 param_2,int param_3,char *param_4,int param_5,int param_6,
-          int param_7,int param_8,int param_9,int param_10)
+undefined4 __watcall
+blt_sprite(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
   int i;
   char *pcVar1;
+  int in_stack_00000004;
+  char *in_stack_00000008;
+  int in_stack_0000000c;
+  int in_stack_00000010;
+  int in_stack_00000014;
+  int in_stack_00000018;
   int in_stack_0000001c;
   int in_stack_00000020;
   
-  if (param_9 != 0) {
-    pcVar1 = (char *)(param_8 * in_stack_00000020 + param_7 + param_5);
-    i = param_9;
+  if (in_stack_00000014 != 0) {
+    pcVar1 = (char *)(in_stack_00000010 * in_stack_00000020 + in_stack_0000000c + in_stack_00000004)
+    ;
+    i = in_stack_00000014;
     do {
       do {
-        if (*(char *)param_6 != -1) {
-          *pcVar1 = *(char *)param_6;
+        if (*in_stack_00000008 != -1) {
+          *pcVar1 = *in_stack_00000008;
         }
-        param_6 = param_6 + 1;
+        in_stack_00000008 = in_stack_00000008 + 1;
         pcVar1 = pcVar1 + 1;
         i = i + -1;
       } while (0 < i);
-      pcVar1 = pcVar1 + (in_stack_00000020 - param_9);
-      param_6 = param_6 + in_stack_0000001c;
-      param_10 = param_10 + -1;
-      i = param_9;
-    } while (0 < param_10);
+      pcVar1 = pcVar1 + (in_stack_00000020 - in_stack_00000014);
+      in_stack_00000008 = in_stack_00000008 + in_stack_0000001c;
+      in_stack_00000018 = in_stack_00000018 + -1;
+      i = in_stack_00000014;
+    } while (0 < in_stack_00000018);
   }
-  return CONCAT44(param_2,param_1);
+  return param_1;
 }
 
 

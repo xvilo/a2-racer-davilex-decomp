@@ -3,15 +3,15 @@
 
 /* ==== 00437175 cnvs2d ==== */
 
-void __watcall cnvs2d(char *str,double *unaff_EDX,char *unaff_EBX)
+byte * __watcall cnvs2d(byte *param_1,double *param_2,undefined4 param_3,uint param_4)
 
 {
-  double strtod_result;
-  undefined2 extraout_ST0h;
+  byte *strtod_result;
+  float10 in_ST0;
   
-  strtod_result = strtod(str,(char **)0x0);
-  *unaff_EDX = (double)(float10)CONCAT28(extraout_ST0h,strtod_result);
-  return;
+  strtod_result = strtod(param_1,(undefined4 *)0x0,param_2,param_4);
+  *param_2 = (double)in_ST0;
+  return strtod_result;
 }
 
 

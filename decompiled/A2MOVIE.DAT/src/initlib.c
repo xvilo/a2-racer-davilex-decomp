@@ -14,23 +14,22 @@ void __watcall set_debugmsg_state(int toggle,int channel)
 
 /* ==== 00401448 debugmsg ==== */
 
-void __cdecl debugmsg(char *format,...)
+void __cdecl debugmsg(char *param_1,...)
 
 {
   FILE *_File;
-  FILE *_File_00;
   CHAR aCStack_330 [800];
-  undefined1 *local_10 [3];
+  undefined1 *local_10;
   
   if (debugmsg_toggle == 1) {
     if (debugmsg_channel == 0) {
-      _File = fopen(s_debug_txt_00418214,s_at__00418210);
+      _File = (FILE *)fopen(s_debug_txt_00418214,(byte *)s_at__00418210);
       if (_File != (FILE *)0x0) {
-        local_10[0] = &stack0x00000008;
-        vsprintf(aCStack_330,format,(va_list)local_10);
-        local_10[0] = (undefined1 *)0x0;
+        local_10 = &stack0x00000008;
+        vsprintf((int)aCStack_330,(byte *)param_1,(int *)&local_10);
+        local_10 = (undefined1 *)0x0;
         fprintf(_File,aCStack_330);
-        fclose(_File_00);
+        fclose((int)_File);
       }
     }
     else if (debugmsg_channel == 1) {
@@ -43,16 +42,16 @@ void __cdecl debugmsg(char *format,...)
 
 /* ==== 004014db message ==== */
 
-int __cdecl message(char *format,...)
+int __cdecl message(char *param_1,...)
 
 {
   int iVar1;
-  char local_1a0 [400];
-  undefined1 *local_10 [3];
+  CHAR local_1a0 [400];
+  undefined1 *local_10;
   
-  local_10[0] = &stack0x00000008;
-  vsprintf(local_1a0,format,(va_list)local_10);
-  local_10[0] = (undefined1 *)0x0;
+  local_10 = &stack0x00000008;
+  vsprintf((int)local_1a0,(byte *)param_1,(int *)&local_10);
+  local_10 = (undefined1 *)0x0;
   iVar1 = MessageBoxA(xvga_hwnd,local_1a0,(LPCSTR)0x0,0);
   return iVar1;
 }
@@ -106,13 +105,13 @@ void __watcall exit_xvga_lib(void)
 
 /* ==== 00401642 fatal_exit ==== */
 
-int __cdecl fatal_exit(char *format,...)
+int __cdecl fatal_exit(char *param_1,...)
 
 {
   int i;
   UINT *pUVar1;
   UINT *pUVar2;
-  char local_1c8 [400];
+  CHAR local_1c8 [400];
   UINT local_38 [7];
   undefined1 *local_1c;
   
@@ -124,7 +123,7 @@ int __cdecl fatal_exit(char *format,...)
     pUVar1 = pUVar1 + 1;
     pUVar2 = pUVar2 + 1;
   }
-  vsprintf(local_1c8,format,(va_list)&local_1c);
+  vsprintf((int)local_1c8,(byte *)param_1,(int *)&local_1c);
   local_1c = (undefined1 *)0x0;
   debugmsg(s___d___s_00418282,0,local_1c8);
   ShowWindow(xvga_hwnd,6);
@@ -139,74 +138,71 @@ int __cdecl fatal_exit(char *format,...)
 
 /* ==== 004016e7 xvga_flip_page ==== */
 
-void __watcall xvga_flip_page(undefined4 param_1,undefined4 param_2)
+int __watcall xvga_flip_page(void)
 
 {
   long lVar1;
-  char *dd_error_string_result;
-  char *format;
+  char *arg4;
+  int fatal_exit_result;
   char *pcVar2;
-  undefined4 uVar3;
+  char *arg2;
+  undefined4 arg3;
   
   if (xvga_back_buffers == 0) {
-    lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))(xvga_screen,0,0,xvga_back_screen,0,0,param_2);
+    lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))(xvga_screen,0,0,xvga_back_screen,0,0);
     if (lVar1 == 0) {
-      return;
+      return 0;
     }
-    dd_error_string_result = dd_error_string(lVar1);
-    uVar3 = 0xd9;
-    pcVar2 = s_initlib_cpp_004182bf;
-    format = s__s__d____blitting_error___s___004182cb;
+    arg4 = dd_error_string(lVar1);
+    arg3 = 0xd9;
+    arg2 = s_initlib_cpp_004182bf;
+    pcVar2 = s__s__d____blitting_error___s___004182cb;
   }
   else {
     lVar1 = (**(code **)(*(int *)xvga_screen + 0x2c))(xvga_screen,0,1);
     if (lVar1 == 0) {
-      return;
+      return 0;
     }
-    dd_error_string_result = dd_error_string(lVar1);
-    uVar3 = 0xd5;
-    pcVar2 = s_initlib_cpp_00418290;
-    format = s__s__d____error_flipping_surfaces_0041829c;
+    arg4 = dd_error_string(lVar1);
+    arg3 = 0xd5;
+    arg2 = s_initlib_cpp_00418290;
+    pcVar2 = s__s__d____error_flipping_surfaces_0041829c;
   }
-  fatal_exit(format,pcVar2,uVar3,dd_error_string_result);
-  return;
+  fatal_exit_result = fatal_exit(pcVar2,arg2,arg3,arg4);
+  return fatal_exit_result;
 }
 
 
 /* ==== 004017df set_xvga_vars ==== */
 
-undefined4 __watcall set_xvga_vars(uint param_1,uint param_2)
+void __watcall set_xvga_vars(uint param_1,uint param_2,int param_3)
 
 {
-  uint extraout_EDX;
-  int unaff_EBX;
-  
   if (param_1 == 0) {
     if (((int)param_2 < 0) || (0x12 < (int)param_2)) {
       fatal_exit(s__s__d____error_predefined_screen_004182f6,s_initlib_cpp_004182ea,0xe4);
-      param_2 = extraout_EDX;
     }
     DAT_0041f8e0 = param_2;
     xvga_screen_xsize = (&xvga_screen_modes)[param_2 * 5];
     xvga_screen_ysize = (&DAT_0041f900)[param_2 * 5];
     xvga_screen_bpp = (&DAT_0041f904)[param_2 * 5];
     xvga_allowmodex = *(int *)(&DAT_0041f908 + param_2 * 0x14);
-    return 0;
+    return;
   }
   if (1 < param_1) {
     if (param_1 != 2) {
       fatal_exit(s__s__d____unknown_variable___d__r_00418343,s_initlib_cpp_00418337,0xf7,param_1);
-      return 0;
+      return;
     }
     DAT_0041f8f8 = param_2;
-    return 0;
+    return;
   }
-  if (unaff_EBX != 1) {
+  if (param_3 != 1) {
     DAT_0041f8f0 = param_2;
-    return 0;
+    return;
   }
   DAT_0041f8f0 = DAT_0041f8f0 | param_2;
-  return 0;
+  return;
 }
 
 
@@ -392,7 +388,7 @@ uchar * __watcall get_surface_ptr(IDirectDrawSurface *direct_draw_surface)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   undefined4 local_78 [4];
   uchar *puStack_68;
   
@@ -400,9 +396,8 @@ uchar * __watcall get_surface_ptr(IDirectDrawSurface *direct_draw_surface)
   local_78[0] = 0x6c;
   lVar1 = (**(code **)(*(int *)direct_draw_surface + 100))(direct_draw_surface,0,local_78,1,0);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____could_not_lock_surface___00418ade,s_initlib_cpp_00418ad2,0x16e,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____could_not_lock_surface___00418ade,s_initlib_cpp_00418ad2,0x16e,arg4);
   }
   return puStack_68;
 }
@@ -416,39 +411,38 @@ uchar * __watcall get_surface_ptr_1(int param_1)
 
 {
   int iVar1;
-  long lVar2;
-  char *dd_error_string_result;
-  IDirectDrawSurface *extraout_ECX;
-  IDirectDrawSurface *pIVar3;
+  IDirectDrawSurface *pIVar2;
+  long lVar3;
+  char *arg4;
+  IDirectDrawSurface *unaff_ECX;
   undefined4 local_7c [4];
   uchar *puStack_6c;
   
   if (param_1 == 0) {
-    pIVar3 = xvga_screen;
+    unaff_ECX = xvga_screen;
     if (DAT_0042123c == 0) {
       return (uchar *)0x0;
     }
   }
   else {
-    pIVar3 = xvga_back_screen;
+    pIVar2 = xvga_back_screen;
     iVar1 = DAT_00421240;
-    if (((uint)param_1 < 2) || (pIVar3 = xvga_buffer_screen, iVar1 = DAT_00421244, param_1 == 2)) {
+    if (((uint)param_1 < 2) || (pIVar2 = xvga_buffer_screen, iVar1 = DAT_00421244, param_1 == 2)) {
+      unaff_ECX = pIVar2;
       if (iVar1 == 0) {
         return (uchar *)0x0;
       }
     }
     else {
       fatal_exit(s__s__d____unidentified_focus_erro_00418b11,s_initlib_cpp_00418b05,399,param_1);
-      pIVar3 = extraout_ECX;
     }
   }
   memset(local_7c,0,0x6c);
   local_7c[0] = 0x6c;
-  lVar2 = (**(code **)(*(int *)pIVar3 + 100))(pIVar3,0,local_7c,1,0);
-  if (lVar2 != 0) {
-    dd_error_string_result = dd_error_string(lVar2);
-    fatal_exit(s__s__d____could_not_lock_surface___00418b47,s_initlib_cpp_00418b3b,0x197,
-               dd_error_string_result);
+  lVar3 = (**(code **)(*(int *)unaff_ECX + 100))(unaff_ECX,0,local_7c,1,0);
+  if (lVar3 != 0) {
+    arg4 = dd_error_string(lVar3);
+    fatal_exit(s__s__d____could_not_lock_surface___00418b47,s_initlib_cpp_00418b3b,0x197,arg4);
   }
   return puStack_6c;
 }
@@ -460,7 +454,7 @@ uchar * __watcall get_surface_ptr_3(IDirectDrawSurface *direct_draw_surface,int 
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   undefined4 local_78 [4];
   uchar *puStack_68;
   
@@ -468,9 +462,8 @@ uchar * __watcall get_surface_ptr_3(IDirectDrawSurface *direct_draw_surface,int 
   local_78[0] = 0x6c;
   lVar1 = (**(code **)(*(int *)direct_draw_surface + 100))(direct_draw_surface,0,local_78,1);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____could_not_lock_surface___00418be3,s_initlib_cpp_00418bd7,0x1e2,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____could_not_lock_surface___00418be3,s_initlib_cpp_00418bd7,0x1e2,arg4);
   }
   *param_2 = 0;
   return puStack_68;
@@ -487,8 +480,7 @@ void __watcall reset_surface_ptr(int param_1,void *param_2)
   int iVar1;
   IDirectDrawSurface *pIVar2;
   long lVar3;
-  char *dd_error_string_result;
-  void *extraout_EDX;
+  char *arg4;
   IDirectDrawSurface *unaff_EBX;
   
   pIVar2 = xvga_screen;
@@ -502,13 +494,11 @@ void __watcall reset_surface_ptr(int param_1,void *param_2)
   }
   else {
     fatal_exit(s__s__d____unidentified_focus_erro_00418c16,s_initlib_cpp_00418c0a,0x205,param_1);
-    param_2 = extraout_EDX;
   }
   lVar3 = (**(code **)(*(int *)unaff_EBX + 0x80))(unaff_EBX,param_2);
   if (lVar3 != 0) {
-    dd_error_string_result = dd_error_string(lVar3);
-    fatal_exit(s__s__d____could_not_unlock_surfac_00418c4c,s_initlib_cpp_00418c40,0x20a,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar3);
+    fatal_exit(s__s__d____could_not_unlock_surfac_00418c4c,s_initlib_cpp_00418c40,0x20a,arg4);
   }
   return;
 }
@@ -520,13 +510,12 @@ void __watcall reset_surface_ptr_1(IDirectDrawSurface *direct_draw_surface,void 
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   
   lVar1 = (**(code **)(*(int *)direct_draw_surface + 0x80))(direct_draw_surface,param_2);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____could_not_unlock_surfac_00418c81,s_initlib_cpp_00418c75,0x21f,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____could_not_unlock_surfac_00418c81,s_initlib_cpp_00418c75,0x21f,arg4);
   }
   return;
 }
@@ -538,20 +527,25 @@ IDirectDrawSurface * __watcall create_surface(int param_1,int param_2)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   undefined4 local_80;
   undefined4 local_7c;
+  int local_78;
+  int local_74;
   IDirectDrawSurface *pIStack_24;
+  undefined4 local_18;
   undefined1 local_14 [4];
   
   memset(&local_80,0,0x6c);
+  local_18 = 0x800;
   local_80 = 0x6c;
   local_7c = 7;
+  local_78 = param_2;
+  local_74 = param_1;
   lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x18))(xvga_dd_object,&local_80,local_14,0);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____could_not_create_surfac_00418cb6,s_initlib_cpp_00418caa,0x233,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____could_not_create_surfac_00418cb6,s_initlib_cpp_00418caa,0x233,arg4);
   }
   return pIStack_24;
 }
@@ -559,24 +553,30 @@ IDirectDrawSurface * __watcall create_surface(int param_1,int param_2)
 
 /* ==== 00401ee2 create_offscreen_surface ==== */
 
-undefined4 __watcall create_offscreen_surface(void)
+undefined4 __watcall
+create_offscreen_surface(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   undefined4 local_7c;
   undefined4 local_78;
+  undefined4 local_74;
+  undefined4 local_70;
   undefined4 uStack_20;
+  undefined4 local_14;
   undefined1 local_10 [4];
   
   memset(&local_7c,0,0x6c);
   local_7c = 0x6c;
   local_78 = 7;
+  local_74 = param_2;
+  local_70 = param_1;
+  local_14 = param_3;
   lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x18))(xvga_dd_object,&local_7c,local_10,0);
   if (lVar1 != 0) {
-    dd_error_string_result = dd_error_string(lVar1);
-    fatal_exit(s__s__d____could_not_create_surfac_00418ceb,s_initlib_cpp_00418cdf,0x249,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar1);
+    fatal_exit(s__s__d____could_not_create_surfac_00418ceb,s_initlib_cpp_00418cdf,0x249,arg4);
   }
   return uStack_20;
 }
@@ -613,19 +613,17 @@ void __watcall test_surface_lock(int focus)
 
 /* ==== 0040229f blt_buffer_to_screen ==== */
 
-void __watcall blt_buffer_to_screen(undefined4 param_1,undefined4 param_2)
+void __watcall blt_buffer_to_screen(void)
 
 {
   long lVar1;
-  char *dd_error_string_result;
+  char *arg4;
   
   if (xvga_allowmodex == 0) {
-    lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))
-                      (xvga_screen,0,0,xvga_buffer_screen,0,0,param_2);
+    lVar1 = (**(code **)(*(int *)xvga_screen + 0x1c))(xvga_screen,0,0,xvga_buffer_screen,0,0);
     if (lVar1 != 0) {
-      dd_error_string_result = dd_error_string(lVar1);
-      fatal_exit(s__s__d____blitting_error___s___00418e64,s_initlib_cpp_00418e58,0x2ee,
-                 dd_error_string_result);
+      arg4 = dd_error_string(lVar1);
+      fatal_exit(s__s__d____blitting_error___s___00418e64,s_initlib_cpp_00418e58,0x2ee,arg4);
     }
   }
   return;
@@ -637,13 +635,13 @@ void __watcall blt_buffer_to_screen(undefined4 param_1,undefined4 param_2)
 void __watcall clear_screen(int param_1,int param_2)
 
 {
-  uchar *_Dst;
+  uchar *surface_ptr_1;
   
   if (xvga_allowmodex == 0) {
-    _Dst = get_surface_ptr_1(param_1);
-    if (_Dst != (uchar *)0x0) {
-      memset(_Dst,param_2 & 0xff,xvga_screen_xsize * xvga_screen_ysize);
-      reset_surface_ptr(param_1,_Dst);
+    surface_ptr_1 = get_surface_ptr_1(param_1);
+    if (surface_ptr_1 != (uchar *)0x0) {
+      memset((undefined4 *)surface_ptr_1,param_2 & 0xff,xvga_screen_xsize * xvga_screen_ysize);
+      reset_surface_ptr(param_1,surface_ptr_1);
     }
   }
   return;
@@ -656,10 +654,9 @@ void __watcall init_lib_surfaces(void)
 
 {
   long lVar1;
-  char *format;
-  int iVar2;
+  char *pcVar2;
+  int iVar3;
   uchar *surface_ptr_3;
-  undefined4 uVar3;
   void *extraout_EDX;
   undefined4 local_88;
   undefined4 local_84;
@@ -683,13 +680,13 @@ void __watcall init_lib_surfaces(void)
       debugmsg(s_creating_00418ed9);
       lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x18))(xvga_dd_object,&local_88,&xvga_screen,0);
       if (lVar1 != 0) {
-        format = dd_error_string(lVar1);
-        fatal_exit(s__s__d____could_not_create_primar_00418eef,s_initlib_cpp_00418ee3,0x331,format);
+        pcVar2 = dd_error_string(lVar1);
+        fatal_exit(s__s__d____could_not_create_primar_00418eef,s_initlib_cpp_00418ee3,0x331,pcVar2);
       }
       debugmsg(s_locking_00418f20);
-      iVar2 = 0;
+      iVar3 = 0;
       test_surface_lock(0);
-      if (iVar2 != 0) break;
+      if (iVar3 != 0) break;
       if ((xvga_back_buffers == 0) || (xvga_allowmodex != 0)) goto LAB_004024e0;
       (**(code **)(*(int *)xvga_screen + 8))(xvga_screen);
       xvga_back_buffers = 0;
@@ -705,15 +702,16 @@ LAB_004024e0:
   if (xvga_back_screen_defined != 0) goto LAB_00402614;
   if (xvga_back_buffers == 0) {
     debugmsg(s_back_screen_00418fc0);
-    xvga_back_screen = (IDirectDrawSurface *)create_offscreen_surface();
-    iVar2 = 1;
+    xvga_back_screen =
+         (IDirectDrawSurface *)create_offscreen_surface(xvga_screen_xsize,xvga_screen_ysize,0x2800);
+    iVar3 = 1;
     test_surface_lock(1);
-    if (iVar2 != 0) {
+    if (iVar3 != 0) {
       DAT_00421240 = 1;
       surface_ptr_3 = get_surface_ptr_3(xvga_back_screen,&xvga_back_screen_pitch);
       reset_surface_ptr_1(xvga_back_screen,surface_ptr_3);
-      format = s_back_screen_locking_done_00418fcd;
-      goto LAB_00402602;
+      pcVar2 = s_back_screen_locking_done_00418fcd;
+      goto override_prt_402602_11e5dad1;
     }
   }
   else {
@@ -721,28 +719,29 @@ LAB_004024e0:
     uStack_1c = 4;
     lVar1 = (**(code **)(*(int *)xvga_screen + 0x30))(xvga_screen,&uStack_1c,&xvga_back_screen);
     if (lVar1 != 0) {
-      format = dd_error_string(lVar1);
-      fatal_exit(s__s__d____unable_to_create_attach_00418f5f,s_initlib_cpp_00418f53,0x34c,format);
+      pcVar2 = dd_error_string(lVar1);
+      fatal_exit(s__s__d____unable_to_create_attach_00418f5f,s_initlib_cpp_00418f53,0x34c,pcVar2);
     }
     debugmsg(s_back_screen_locking_00418f91);
-    iVar2 = 1;
+    iVar3 = 1;
     test_surface_lock(1);
-    if (iVar2 != 0) {
+    if (iVar3 != 0) {
       DAT_00421240 = 1;
       surface_ptr_3 = get_surface_ptr_3(xvga_back_screen,&xvga_back_screen_pitch);
       reset_surface_ptr_1(xvga_back_screen,surface_ptr_3);
-      format = s_back_screen_locking_done_00418fa6;
-LAB_00402602:
-      debugmsg(format);
+      pcVar2 = s_back_screen_locking_done_00418fa6;
+override_prt_402602_11e5dad1:
+      debugmsg(pcVar2);
     }
   }
   xvga_back_screen_defined = 1;
 LAB_00402614:
   if (xvga_buffer_screen_defined == 0) {
-    xvga_buffer_screen = (IDirectDrawSurface *)create_offscreen_surface();
-    iVar2 = 2;
+    xvga_buffer_screen =
+         (IDirectDrawSurface *)create_offscreen_surface(xvga_screen_xsize,xvga_screen_ysize,0x2800);
+    iVar3 = 2;
     test_surface_lock(2);
-    if (iVar2 != 0) {
+    if (iVar3 != 0) {
       DAT_00421244 = 1;
       surface_ptr_3 = get_surface_ptr_3(xvga_buffer_screen,&xvga_buffer_screen_pitch);
       reset_surface_ptr_1(xvga_buffer_screen,surface_ptr_3);
@@ -754,9 +753,8 @@ LAB_00402614:
   debugmsg(s_getting_pixel_format_00418ffa);
   get_xvga_pixel_format();
   clear_screen(2,0);
-  uVar3 = 1;
   clear_screen(1,0);
-  xvga_flip_page(uVar3,0);
+  xvga_flip_page();
   return;
 }
 
@@ -791,53 +789,42 @@ void __watcall exit_lib_surfaces(void)
 
 /* ==== 00402751 init_xvga_lib ==== */
 
-undefined4 __watcall init_xvga_lib(LPCSTR param_1,int param_2)
+undefined4 __watcall init_xvga_lib(HINSTANCE param_1,int param_2,LPCSTR param_3,LPCSTR param_4)
 
 {
   int iVar1;
   int nWidth;
-  undefined4 extraout_EAX;
   _GUID *p_Var2;
   long lVar3;
   char *dd_error_string_result;
-  undefined4 extraout_EAX_00;
-  LPCSTR unaff_ECX;
-  uint extraout_EDX;
-  undefined4 extraout_EDX_00;
-  LPCSTR unaff_EBX;
   HWND hWndParent;
   HMENU hMenu;
   LPVOID lpParam;
-  UINT local_38;
-  code *local_34;
-  int local_30;
-  int local_2c;
-  HINSTANCE local_28;
-  HICON local_24;
-  HCURSOR local_20;
-  HBRUSH local_1c;
-  uint seed;
+  WNDCLASSA wndclass;
+  undefined4 local_10;
   
-  time((time_t *)&seed);
-  srand(seed);
+  time(&local_10);
+  srand(local_10);
   if (DAT_0042124c == 0) {
-    local_30 = DAT_0042124c;
-    local_2c = DAT_0042124c;
-    local_38 = 3;
-    local_34 = WindowProc;
-    local_28 = (HINSTANCE)param_1;
-    local_24 = LoadIconA((HINSTANCE)param_1,(LPCSTR)0x7f00);
-    local_20 = (HCURSOR)0x0;
-    local_1c = (HBRUSH)0x0;
-    RegisterClassA((WNDCLASSA *)&local_38);
+    wndclass.cbClsExtra = DAT_0042124c;
+    wndclass.cbWndExtra = DAT_0042124c;
+    wndclass.style = 3;
+    wndclass.lpfnWndProc = WindowProc;
+    wndclass.hInstance = param_1;
+    wndclass.hIcon = LoadIconA(param_1,(LPCSTR)0x7f00);
+    wndclass.hCursor = (HCURSOR)0x0;
+    wndclass.hbrBackground = (HBRUSH)0x0;
+    wndclass.lpszMenuName = param_3;
+    wndclass.lpszClassName = param_3;
+    RegisterClassA(&wndclass);
     debugmsg(s_____init_xvgalib_____00419055);
     lpParam = (LPVOID)0x0;
     hMenu = (HMENU)0x0;
     hWndParent = (HWND)0x0;
     iVar1 = GetSystemMetrics(1);
     nWidth = GetSystemMetrics(0);
-    xvga_hwnd = CreateWindowExA(0x40000,unaff_EBX,unaff_ECX,0x80000000,0,0,nWidth,iVar1,hWndParent,
-                                hMenu,(HINSTANCE)param_1,lpParam);
+    xvga_hwnd = CreateWindowExA(0x40000,param_3,param_4,0x80000000,0,0,nWidth,iVar1,hWndParent,hMenu
+                                ,param_1,lpParam);
     if (xvga_hwnd == (HWND)0x0) {
       debugmsg(s_failure_to_make_window_0041906b);
       return 0;
@@ -848,7 +835,7 @@ undefined4 __watcall init_xvga_lib(LPCSTR param_1,int param_2)
     DAT_0042124c = 1;
   }
   debugmsg(s_starting_direct_draw_driver_sear_00419093);
-  enum_dd_drivers(extraout_EAX,extraout_EDX);
+  enum_dd_drivers();
   debugmsg(s_Finished_search_004190b7);
   if (DAT_00421250 == 0) {
     debugmsg(s_create_direct_draw_object_004190c8);
@@ -888,7 +875,7 @@ undefined4 __watcall init_xvga_lib(LPCSTR param_1,int param_2)
   set_clipping_limit(0,0,xvga_screen_xsize,xvga_screen_ysize);
   init_lib_surfaces();
   debugmsg(s_screen_update_004191d4);
-  blt_buffer_to_screen(extraout_EAX_00,extraout_EDX_00);
+  blt_buffer_to_screen();
   debugmsg(s_init_input_004191e3);
   debugmsg(s_system_info_004191ef);
   xvga_get_system_info();

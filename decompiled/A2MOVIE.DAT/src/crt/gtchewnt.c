@@ -3,18 +3,18 @@
 
 /* ==== 00412d05 getche ==== */
 
-int __watcall getche(void)
+uint __watcall getche(void)
 
 {
   int iVar1;
-  int _Ch;
+  uint getch_result;
   
   iVar1 = cbyte;
-  _Ch = getch();
-  if ((_Ch != -1) && (iVar1 == 0)) {
-    putch(_Ch);
+  getch_result = getch();
+  if ((getch_result != 0xffffffff) && (iVar1 == 0)) {
+    putch(getch_result);
   }
-  return _Ch;
+  return getch_result;
 }
 
 

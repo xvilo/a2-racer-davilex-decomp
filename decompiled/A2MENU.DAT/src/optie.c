@@ -3,24 +3,19 @@
 
 /* ==== 00401aa0 load_tmp_optie ==== */
 
-void __watcall load_tmp_optie(char *param_1)
+void __watcall load_tmp_optie(char *filename)
 
 {
   int iVar1;
-  char *filename;
-  char *extraout_ECX;
-  char *filename_00;
   
   debugmsg(s__s__d____>_LOAD_TEMPORARY_OPTIE_<_0042589e,s_optie_cpp_00425894,0x27);
   iVar1 = file_exist(filename);
-  filename_00 = filename;
   if (iVar1 == 0) {
     fatal_exit(s__s__d___load_tmp_optie____File___004258ce,s_optie_cpp_004258c4,0x29,filename);
-    filename_00 = extraout_ECX;
   }
-  iVar1 = file_read(&opties,0x14,filename_00);
+  iVar1 = file_read(&opties,0x14,filename);
   if (iVar1 != 0) {
-    file_delete(filename_00);
+    file_delete();
     init_optie();
   }
   return;
@@ -35,23 +30,21 @@ void __watcall init_optie(void)
 
 {
   int file_exist_result;
-  undefined2 extraout_CX;
-  undefined2 extraout_DX;
   
   debugmsg(s__s__d_____>_INIT_OPTION_<*_00425987,s_optie_cpp_0042597d,0x42);
   file_exist_result = file_exist(s_OPTIE_A2R_004259a6);
   if (file_exist_result == 0) {
     debugmsg(s_Creating_option_file__s_OPTIE_A2_004259b0);
+    _opties = 1;
     DAT_00437222._2_2_ = 0;
+    DAT_00437222._0_2_ = 1;
     DAT_00437228._0_2_ = 0;
     DAT_00437228._2_2_ = 0;
+    DAT_0043722c._0_2_ = 1;
+    DAT_00437226 = 1;
     DAT_0043722c._2_2_ = 0;
+    DAT_00437230._0_2_ = 3;
     DAT_00437230._2_2_ = 4;
-    _opties = extraout_DX;
-    DAT_00437222._0_2_ = extraout_DX;
-    DAT_00437226 = extraout_DX;
-    DAT_0043722c._0_2_ = extraout_DX;
-    DAT_00437230._0_2_ = extraout_CX;
     save_optie();
     return;
   }
@@ -67,13 +60,12 @@ void __watcall save_optie(void)
 
 {
   int file_write_result;
-  char *filename;
-  int count;
   
   debugmsg(s__s__d____>_SAVE_TEMPORARY_OPTIE_<_0042591d,s_optie_cpp_00425913,0x37);
-  file_write_result = file_write(&opties,count,filename);
+  file_write_result = file_write(&opties,0x14,s_OPTIE_A2R_004259fe);
   if (file_write_result != 0) {
-    fatal_exit(s__s__d___save_tmp_optie_____Faile_0042594d,s_optie_cpp_00425943,0x39,filename);
+    fatal_exit(s__s__d___save_tmp_optie_____Faile_0042594d,s_optie_cpp_00425943,0x39,
+               s_OPTIE_A2R_004259fe);
   }
   return;
 }
@@ -81,15 +73,14 @@ void __watcall save_optie(void)
 
 /* ==== 00401bb8 save_tmp_optie ==== */
 
-void __watcall save_tmp_optie(char *param_1)
+void __watcall save_tmp_optie(char *filename)
 
 {
   int file_write_result;
-  char *filename;
-  int count;
+  int extraout_EDX;
   
   debugmsg(s__s__d____>_SAVE_TEMPORARY_OPTIE_<_0042591d,s_optie_cpp_00425913,0x37);
-  file_write_result = file_write(&opties,count,filename);
+  file_write_result = file_write(&opties,extraout_EDX,filename);
   if (file_write_result != 0) {
     fatal_exit(s__s__d___save_tmp_optie_____Faile_0042594d,s_optie_cpp_00425943,0x39,filename);
   }

@@ -95,11 +95,11 @@ address	function	file	evidence
 0040d414	assign_driver_to_opponent	driver	string
 0040d5d2	scan_lanes_ahead	driver	run
 0040d71c	scan_lanes_for_heading	driver	string
-0040d7ed	racer_distance_margin	driver	neighbour
-0040d80e	classify_lane_occupant	driver	neighbour
-0040d8aa	drive_racer	driver	neighbour
-0040e301	drive_traffic	driver	neighbour
-0040ec6c	drive_opponent	driver	neighbour
+0040d7ed	racer_distance_margin	driver	run
+0040d80e	classify_lane_occupant	driver	run
+0040d8aa	drive_racer	driver	string
+0040e301	drive_traffic	driver	string
+0040ec6c	drive_opponent	driver	string
 0040f38c	release_radar	radar	neighbour
 0040f3ad	init_radar	radar	string
 0040f7c1	draw_radar	radar	string
@@ -415,7 +415,7 @@ address	function	file	evidence
 004241c8	get_new_anim3d	anim3d	run
 004242bc	init_static_anim3d	anim3d	string
 0042438b	init_anim3d	anim3d	string
-00424415	free_anim3d	texture	neighbour
+00424415	free_anim3d	anim3d	string
 0042451c	alloc_texture_formats	texture	string
 00424580	add_texture_format	texture	string
 004245ee	enum_texture_format_callback	texture	run
@@ -505,7 +505,7 @@ address	function	file	evidence
 0042bf82	find_free_frame3d	frame3d	string
 0042bfcd	get_new_frame3d	frame3d	run
 0042bfee	init_frame3d	frame3d	string
-0042c151	free_frame3d	crt/fopen	neighbour
+0042c151	free_frame3d	frame3d	string
 0042c296	sqrt_checked	crt/fopen	neighbour
 0042c2cd	open_flags	crt/fopen	matched
 0042c39e	doopen	crt/fopen	matched

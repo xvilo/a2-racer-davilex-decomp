@@ -3,50 +3,46 @@
 
 /* ==== 00421343 GetThreadData ==== */
 
-undefined8 __watcall
-GetThreadData(undefined4 param_1,void *unaff_EDX,undefined4 unaff_EBX,size_t unaff_ECX)
+LPVOID __watcall GetThreadData(void)
 
 {
+  int nt_add_thread;
   LPVOID tls_get_value;
-  longlong nt_add_thread;
   
-  nt_add_thread = NTAddThread((void *)0x0,unaff_EDX,unaff_EBX,unaff_ECX);
+  nt_add_thread = NTAddThread((undefined4 *)0x0);
   tls_get_value = (LPVOID)0x0;
-  if ((int)nt_add_thread != 0) {
+  if (nt_add_thread != 0) {
     tls_get_value = TlsGetValue(TlsIndex);
   }
   if (tls_get_value == (LPVOID)0x0) {
-    fatal_runtime_error(s_Thread_has_no_thread_specific_da_00431e7c);
+    fatal_runtime_error(s_Thread_has_no_thread_specific_da_00431e7c,1);
   }
-  return CONCAT44(unaff_EDX,tls_get_value);
+  return tls_get_value;
 }
 
 
 /* ==== 0042137a AddThreadData ==== */
 
-undefined4 __watcall
-AddThreadData(undefined4 param_1,int unaff_EDX,undefined4 param_3,size_t unaff_ECX)
+undefined4 __watcall AddThreadData(undefined4 param_1,int param_2)
 
 {
-  void *buffer;
+  undefined4 *buffer;
+  int initthread_result;
   undefined4 extraout_ECX;
-  undefined4 *_Memory;
-  undefined8 initthread_result;
   
   (*(code *)AccessTDList_1)();
   buffer = calloc(1,0x10);
-  if (buffer != (void *)0x0) {
+  if (buffer != (undefined4 *)0x0) {
     initthread_result = initthread();
-    _Memory = (undefined4 *)((ulonglong)initthread_result >> 0x20);
-    if ((int)initthread_result == 0) {
-      _Memory[2] = unaff_EDX;
-      _Memory[1] = param_1;
-      _Memory[3] = (uint)*(byte *)(unaff_EDX + 0x52);
-      *_Memory = thread_data_list;
-      thread_data_list = _Memory;
+    if (initthread_result == 0) {
+      buffer[2] = param_2;
+      buffer[1] = param_1;
+      buffer[3] = (uint)*(byte *)(param_2 + 0x52);
+      *buffer = thread_data_list;
+      thread_data_list = buffer;
     }
     else {
-      free(_Memory);
+      free(buffer);
     }
   }
   (*(code *)ReleaseTDList_1)();
@@ -56,55 +52,54 @@ AddThreadData(undefined4 param_1,int unaff_EDX,undefined4 param_3,size_t unaff_E
 
 /* ==== 004213db RemoveThreadData ==== */
 
-void __watcall
-RemoveThreadData(undefined4 param_1,void *unaff_EDX,undefined4 unaff_EBX,undefined4 unaff_ECX)
+void __watcall RemoveThreadData(undefined4 param_1)
 
 {
-  int extraout_ECX;
-  undefined4 *_Memory;
   undefined4 *puVar1;
-  undefined4 *memory;
+  int extraout_ECX;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
   
-  (*(code *)AccessTDList_1)(unaff_EDX,unaff_ECX,unaff_EBX);
-  memory = thread_data_list;
-  puVar1 = &thread_data_list;
+  (*(code *)AccessTDList_1)();
+  puVar1 = thread_data_list;
+  puVar3 = &thread_data_list;
   do {
-    _Memory = memory;
-    if (_Memory == (undefined4 *)0x0) {
+    puVar2 = puVar1;
+    if (puVar2 == (undefined4 *)0x0) {
 LAB_0042141b:
       (*(code *)ReleaseTDList_1)();
       return;
     }
-    if (extraout_ECX == _Memory[1]) {
-      if (_Memory[3] != 0) {
-        free((void *)_Memory[2]);
+    if (extraout_ECX == puVar2[1]) {
+      if (puVar2[3] != 0) {
+        free((undefined4 *)puVar2[2]);
       }
-      *puVar1 = *_Memory;
-      free(_Memory);
+      *puVar3 = *puVar2;
+      free(puVar2);
       goto LAB_0042141b;
     }
-    memory = (undefined4 *)*_Memory;
-    puVar1 = _Memory;
+    puVar1 = (undefined4 *)*puVar2;
+    puVar3 = puVar2;
   } while( true );
 }
 
 
 /* ==== 00421425 FreeThreadDataList ==== */
 
-void __watcall FreeThreadDataList(undefined4 param_1,void *unaff_EDX)
+void __watcall FreeThreadDataList(void)
 
 {
   undefined4 *puVar1;
-  undefined4 *_Memory;
+  undefined4 *puVar2;
   
-  _Memory = thread_data_list;
-  while (_Memory != (undefined4 *)0x0) {
-    puVar1 = (undefined4 *)*_Memory;
-    if (_Memory[3] != 0) {
-      free((void *)_Memory[2]);
+  puVar2 = thread_data_list;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    if (puVar2[3] != 0) {
+      free((undefined4 *)puVar2[2]);
     }
-    free(_Memory);
-    _Memory = puVar1;
+    free(puVar2);
+    puVar2 = puVar1;
   }
   return;
 }

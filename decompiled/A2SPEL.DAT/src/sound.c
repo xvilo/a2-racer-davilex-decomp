@@ -100,72 +100,66 @@ int enum_sound_info_callback(_GUID *guid,char *param_2,char *param_3,void *param
 
 {
   int new_sound_info;
+  int cmp;
   char *found;
-  sound_info_t *_Str1;
-  sound_info_t *extraout_ECX;
-  int extraout_EDX;
-  int iVar1;
   sound_info_t *sound_info_2;
+  undefined4 *puVar1;
   undefined4 *puVar2;
-  undefined4 *puVar3;
-  sound_info_t *psVar4;
-  byte bVar5;
+  sound_info_t *sound_info_3;
+  byte bVar3;
   sound_info_t sound_info;
   
-  bVar5 = 0;
+  bVar3 = 0;
   new_sound_info = get_new_sound_info();
   if (new_sound_info == -1) {
     new_sound_info = 0;
   }
   else {
     debugmsg(s__s___s_004496dd,param_2,param_3);
-    iVar1 = (extraout_EDX - new_sound_info) * 8;
-    psVar4 = sound_info_ptr + iVar1 + 0x10;
+    sound_info_3 = sound_info_ptr + new_sound_info * 0xd8 + 0x10;
     do {
       sound_info = (sound_info_t)*param_2;
-      *psVar4 = sound_info;
+      *sound_info_3 = sound_info;
       if (sound_info == (sound_info_t)0x0) break;
       sound_info = *(sound_info_t *)(param_2 + 1);
       param_2 = param_2 + 2;
-      psVar4[1] = sound_info;
-      psVar4 = psVar4 + 2;
+      sound_info_3[1] = sound_info;
+      sound_info_3 = sound_info_3 + 2;
     } while (sound_info != (sound_info_t)0x0);
-    psVar4 = sound_info_ptr + iVar1 + 0x74;
-    sound_info_2 = _Str1;
+    sound_info_3 = sound_info_ptr + new_sound_info * 0xd8 + 0x74;
+    sound_info_2 = (sound_info_t *)param_3;
     do {
       sound_info = *sound_info_2;
-      *psVar4 = sound_info;
+      *sound_info_3 = sound_info;
       if (sound_info == (sound_info_t)0x0) break;
       sound_info = sound_info_2[1];
       sound_info_2 = sound_info_2 + 2;
-      psVar4[1] = sound_info;
-      psVar4 = psVar4 + 2;
+      sound_info_3[1] = sound_info;
+      sound_info_3 = sound_info_3 + 2;
     } while (sound_info != (sound_info_t)0x0);
-    iVar1 = stricmp((char *)_Str1,s_SB16_VXD_004496e5);
-    psVar4 = _Str1;
-    if (iVar1 == 0) {
+    cmp = stricmp((byte *)param_3,(byte *)s_SB16_VXD_004496e5);
+    if (cmp == 0) {
       debugmsg(s_sb16_driver_found__d_004496ee,new_sound_info);
-      psVar4 = extraout_ECX;
       sb16_driver_index = new_sound_info;
     }
-    found = strrchr((char *)psVar4,0x2e);
+    found = strrchr(param_3,0x2e);
     if (found != (char *)0x0) {
-      iVar1 = stricmp((char *)psVar4,s__VXD_00449704);
-      if (iVar1 == 0) {
+      cmp = stricmp((byte *)param_3,(byte *)s__VXD_00449704);
+      if (cmp == 0) {
         debugmsg(s_secondary_driver_found__d_00449709,new_sound_info);
         secondary_driver_index = new_sound_info;
       }
     }
     if (guid != (_GUID *)0x0) {
-      psVar4 = sound_info_ptr + new_sound_info * 0xd8;
-      sound_info_2 = psVar4 + (uint)bVar5 * -8 + 4;
-      puVar2 = (undefined4 *)((int)guid + (uint)bVar5 * -8 + 4);
-      *(ulong *)psVar4 = guid->Data1;
-      puVar3 = puVar2 + (uint)bVar5 * -2 + 1;
-      *(undefined4 *)sound_info_2 = *puVar2;
-      *(undefined4 *)(sound_info_2 + (uint)bVar5 * -8 + 4) = *puVar3;
-      *(undefined4 *)(sound_info_2 + (uint)bVar5 * -8 + 4 + (uint)bVar5 * -8 + 4) =
-           puVar3[(uint)bVar5 * -2 + 1];
+      sound_info_3 = sound_info_ptr + new_sound_info * 0xd8;
+      sound_info_2 = sound_info_3 + (uint)bVar3 * -8 + 4;
+      puVar1 = (undefined4 *)((int)guid + (uint)bVar3 * -8 + 4);
+      *(ulong *)sound_info_3 = guid->Data1;
+      puVar2 = puVar1 + (uint)bVar3 * -2 + 1;
+      *(undefined4 *)sound_info_2 = *puVar1;
+      *(undefined4 *)(sound_info_2 + (uint)bVar3 * -8 + 4) = *puVar2;
+      *(undefined4 *)(sound_info_2 + (uint)bVar3 * -8 + 4 + (uint)bVar3 * -8 + 4) =
+           puVar2[(uint)bVar3 * -2 + 1];
     }
     new_sound_info = 1;
   }
@@ -196,9 +190,9 @@ int __watcall set_output_format(int param_1,int param_2,int param_3,int param_4)
 {
   long lVar1;
   char *ds_error_string_result;
-  char *format;
   char *pcVar2;
-  undefined4 uVar3;
+  char *pcVar3;
+  undefined4 uVar4;
   undefined4 local_30;
   undefined4 local_2c;
   undefined4 local_28;
@@ -209,13 +203,15 @@ int __watcall set_output_format(int param_1,int param_2,int param_3,int param_4)
   int local_14;
   undefined2 local_10;
   undefined2 local_e;
+  int local_c;
   
-  memset(&local_1c,0,0x10);
+  local_c = param_2;
+  memset((undefined4 *)&local_1c,0,0x10);
   local_1c = 1;
   local_10 = (undefined2)param_3;
   local_14 = param_3 * param_1;
   local_1a = (param_4 != 0) + 1;
-  local_e = (undefined2)param_2;
+  local_e = (undefined2)local_c;
   local_18 = param_1;
   memset(&local_30,0,0x14);
   local_28 = 0;
@@ -235,17 +231,17 @@ int __watcall set_output_format(int param_1,int param_2,int param_3,int param_4)
       return 0;
     }
     ds_error_string_result = ds_error_string(lVar1);
-    uVar3 = 0xcc;
-    pcVar2 = s_sound_cpp_0044975a;
-    format = s__s__d____error_setting_format____00449764;
+    uVar4 = 0xcc;
+    pcVar3 = s_sound_cpp_0044975a;
+    pcVar2 = s__s__d____error_setting_format____00449764;
   }
   else {
     ds_error_string_result = ds_error_string(lVar1);
-    uVar3 = 199;
-    pcVar2 = s_sound_cpp_00449724;
-    format = s__s__d____error_creating_sound_bu_0044972e;
+    uVar4 = 199;
+    pcVar3 = s_sound_cpp_00449724;
+    pcVar2 = s__s__d____error_creating_sound_bu_0044972e;
   }
-  debugmsg(format,pcVar2,uVar3,ds_error_string_result);
+  debugmsg(pcVar2,pcVar3,uVar4,ds_error_string_result);
   return 0x2afa;
 }
 
@@ -257,9 +253,9 @@ int __watcall set_3d_output_format(int param_1,int param_2,int param_3,int param
 {
   long lVar1;
   char *ds_error_string_result;
-  char *format;
   char *pcVar2;
-  undefined4 uVar3;
+  char *pcVar3;
+  undefined4 uVar4;
   undefined4 local_30;
   undefined4 local_2c;
   undefined4 local_28;
@@ -270,13 +266,15 @@ int __watcall set_3d_output_format(int param_1,int param_2,int param_3,int param
   int local_14;
   undefined2 local_10;
   undefined2 local_e;
+  int local_c;
   
-  memset(&local_1c,0,0x10);
+  local_c = param_2;
+  memset((undefined4 *)&local_1c,0,0x10);
   local_1c = 1;
   local_10 = (undefined2)param_3;
   local_14 = param_3 * param_1;
   local_1a = (param_4 != 0) + 1;
-  local_e = (undefined2)param_2;
+  local_e = (undefined2)local_c;
   local_18 = param_1;
   memset(&local_30,0,0x14);
   local_28 = 0;
@@ -296,17 +294,17 @@ int __watcall set_3d_output_format(int param_1,int param_2,int param_3,int param
       return 0;
     }
     ds_error_string_result = ds_error_string(lVar1);
-    uVar3 = 0xfa;
-    pcVar2 = s_sound_cpp_004497fd;
-    format = s__s__d____error_setting_format____00449807;
+    uVar4 = 0xfa;
+    pcVar3 = s_sound_cpp_004497fd;
+    pcVar2 = s__s__d____error_setting_format____00449807;
   }
   else {
     ds_error_string_result = ds_error_string(lVar1);
-    uVar3 = 0xf5;
-    pcVar2 = s_sound_cpp_004497c7;
-    format = s__s__d____error_creating_sound_bu_004497d1;
+    uVar4 = 0xf5;
+    pcVar3 = s_sound_cpp_004497c7;
+    pcVar2 = s__s__d____error_creating_sound_bu_004497d1;
   }
-  debugmsg(format,pcVar2,uVar3,ds_error_string_result);
+  debugmsg(pcVar2,pcVar3,uVar4,ds_error_string_result);
   return 0x2afa;
 }
 
@@ -318,16 +316,26 @@ create_sound_buffer(int param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   undefined4 local_34;
   undefined4 local_30;
   int local_2c;
   undefined4 *local_24;
   undefined4 local_20;
+  int local_1c;
+  int local_18;
+  undefined2 local_14;
+  undefined2 local_12;
   undefined1 local_10 [4];
+  int local_c;
   
+  local_c = param_3;
   memset(&local_20,0,0x10);
+  local_14 = (undefined2)param_4;
+  local_18 = param_4 * param_2;
   local_20 = (IDirectSoundBuffer *)CONCAT22((param_5 != 0) + 1,1);
+  local_12 = (undefined2)local_c;
+  local_1c = param_2;
   memset(&local_34,0,0x14);
   local_24 = &local_20;
   local_34 = 0x14;
@@ -335,9 +343,8 @@ create_sound_buffer(int param_1,int param_2,int param_3,int param_4,int param_5)
   local_2c = param_1;
   lVar1 = (**(code **)(*(int *)xvga_ds_object + 0xc))(xvga_ds_object,&local_34,local_10,0);
   if (lVar1 != 0) {
-    ds_error_string_result = ds_error_string(lVar1);
-    fatal_exit(s__s__d____error_creating_sound_bu_00449874,s_sound_cpp_0044986a,0x123,
-               ds_error_string_result);
+    arg4 = ds_error_string(lVar1);
+    fatal_exit(s__s__d____error_creating_sound_bu_00449874,s_sound_cpp_0044986a,0x123,arg4);
   }
   return local_20;
 }
@@ -355,15 +362,27 @@ create_3d_sound_buffer
   char *ds_error_string_result;
   undefined4 local_30;
   undefined4 local_2c;
+  int local_28;
+  undefined4 *local_20;
   undefined2 local_1c;
   short local_1a;
+  int local_18;
+  int local_14;
+  undefined2 local_10;
+  undefined2 local_e;
   
-  memset(&local_1c,0,0x10);
+  memset((undefined4 *)&local_1c,0,0x10);
   local_1c = 1;
   local_1a = (param_7 != 0) + 1;
+  local_10 = (undefined2)param_6;
+  local_14 = param_6 * param_4;
+  local_e = (undefined2)param_5;
+  local_18 = param_4;
   memset(&local_30,0,0x14);
+  local_20 = (undefined4 *)&local_1c;
   local_2c = 0xb8;
   local_30 = 0x14;
+  local_28 = param_3;
   lVar1 = (**(code **)(*(int *)xvga_ds_object + 0xc))
                     (xvga_ds_object,&local_30,direct_sound_buffer,0);
   if (lVar1 != 0) {
@@ -388,7 +407,7 @@ IDirectSoundBuffer * __watcall duplicate_sound_buffer(IDirectSoundBuffer *direct
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   IDirectSound *pIVar2;
   undefined1 auStack_10 [4];
   
@@ -396,9 +415,8 @@ IDirectSoundBuffer * __watcall duplicate_sound_buffer(IDirectSoundBuffer *direct
   lVar1 = (**(code **)(*(int *)xvga_ds_object + 0x14))
                     (xvga_ds_object,direct_sound_buffer,auStack_10);
   if (lVar1 != 0) {
-    ds_error_string_result = ds_error_string(lVar1);
-    fatal_exit(s__s__d____error_duplicating_sound_00449919,s_sound_cpp_0044990f,0x154,
-               ds_error_string_result);
+    arg4 = ds_error_string(lVar1);
+    fatal_exit(s__s__d____error_duplicating_sound_00449919,s_sound_cpp_0044990f,0x154,arg4);
   }
   return (IDirectSoundBuffer *)pIVar2;
 }
@@ -410,7 +428,7 @@ int __watcall sound_buffer_busy(int param_1)
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg5;
   int *piVar2;
   undefined1 auStack_14 [4];
   
@@ -423,9 +441,9 @@ int __watcall sound_buffer_busy(int param_1)
       piVar2 = *(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28);
       lVar1 = (**(code **)(*piVar2 + 0x24))(piVar2,auStack_14);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____getting_sound_status_fa_0044998d,s_sound_cpp_00449983,0x170,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
       if (((uint)piVar2 & 1) == 1) {
         return 1;
@@ -534,7 +552,7 @@ int __watcall delete_all_sound_buffers(void)
 
 /* ==== 004197c1 search_sound_buffer ==== */
 
-int __watcall search_sound_buffer(char *str2,int param_2,int param_3,int param_4)
+int __watcall search_sound_buffer(char *param_1,int param_2,int param_3,int param_4)
 
 {
   int iVar1;
@@ -546,7 +564,7 @@ int __watcall search_sound_buffer(char *str2,int param_2,int param_3,int param_4
       return -1;
     }
     if ((*(int *)(xvga_sound_buffer + snd_buf_index + 0x30) != 0) &&
-       (iVar1 = stricmp((char *)(xvga_sound_buffer + snd_buf_index),str2), iVar1 == 0)) {
+       (iVar1 = stricmp((byte *)(xvga_sound_buffer + snd_buf_index),(byte *)param_1), iVar1 == 0)) {
       if (param_4 == 0) {
         return param_3;
       }
@@ -566,24 +584,23 @@ int __watcall search_sound_buffer(char *str2,int param_2,int param_3,int param_4
 int __watcall get_free_buffer(void)
 
 {
+  int i;
   int iVar1;
-  int extraout_EDX;
-  int iVar2;
   int snd_buf_index;
   
+  i = 0;
   iVar1 = 0;
-  iVar2 = 0;
   while( true ) {
-    if (max_sound_buffers <= iVar1) {
+    if (max_sound_buffers <= i) {
       return -1;
     }
-    snd_buf_index = iVar2 + 0x30;
+    snd_buf_index = iVar1 + 0x30;
     if (*(int *)(xvga_sound_buffer + snd_buf_index) == 0) break;
-    iVar2 = iVar2 + 0x40;
-    debugmsg(s__d_used__d_00449a9e,iVar1,*(int *)(xvga_sound_buffer + snd_buf_index));
-    iVar1 = extraout_EDX + 1;
+    iVar1 = iVar1 + 0x40;
+    debugmsg(s__d_used__d_00449a9e,i,*(int *)(xvga_sound_buffer + snd_buf_index));
+    i = i + 1;
   }
-  return iVar1;
+  return i;
 }
 
 
@@ -592,27 +609,24 @@ int __watcall get_free_buffer(void)
 int __watcall get_free_buffer_1(int param_1)
 
 {
-  int extraout_ECX;
+  int i;
   int iVar1;
-  int extraout_EDX;
-  int iVar2;
   int snd_buf_index;
   
+  i = 0;
   iVar1 = 0;
-  iVar2 = 0;
   while( true ) {
-    if (max_sound_buffers <= iVar1) {
+    if (max_sound_buffers <= i) {
       return -1;
     }
-    if ((param_1 == *(int *)(xvga_sound_buffer + iVar2 + 0x34)) &&
-       (*(int *)(xvga_sound_buffer + iVar2 + 0x30) == 0)) break;
-    snd_buf_index = iVar2 + 0x30;
-    iVar2 = iVar2 + 0x40;
-    debugmsg(s__d_used__d_00449aaa,iVar1,*(undefined4 *)(xvga_sound_buffer + snd_buf_index));
-    iVar1 = extraout_EDX + 1;
-    param_1 = extraout_ECX;
+    if ((param_1 == *(int *)(xvga_sound_buffer + iVar1 + 0x34)) &&
+       (*(int *)(xvga_sound_buffer + iVar1 + 0x30) == 0)) break;
+    snd_buf_index = iVar1 + 0x30;
+    iVar1 = iVar1 + 0x40;
+    debugmsg(s__d_used__d_00449aaa,i,*(undefined4 *)(xvga_sound_buffer + snd_buf_index));
+    i = i + 1;
   }
-  return iVar1;
+  return i;
 }
 
 
@@ -623,7 +637,7 @@ int __watcall delete_sound_buffer(int param_1)
 {
   uint i;
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   int iVar2;
   uint uVar3;
   
@@ -641,9 +655,8 @@ int __watcall delete_sound_buffer(int param_1)
   lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + uVar3 * 0x40 + 0x28) + 0x48))
                     (*(int **)(xvga_sound_buffer + uVar3 * 0x40 + 0x28));
   if (lVar1 != 0) {
-    ds_error_string_result = ds_error_string(lVar1);
-    fatal_exit(s__s__d____error_releasing_sound_b_00449acd,s_sound_cpp_00449ac3,0x220,
-               ds_error_string_result);
+    arg4 = ds_error_string(lVar1);
+    fatal_exit(s__s__d____error_releasing_sound_b_00449acd,s_sound_cpp_00449ac3,0x220,arg4);
   }
   iVar2 = uVar3 * 0x40;
   (**(code **)(**(int **)(xvga_sound_buffer + iVar2 + 0x28) + 8))
@@ -679,16 +692,15 @@ int __watcall xvga_init_sound(int param_1,int param_2)
 
 {
   long direct_sound_create;
-  char *format_2;
-  int iVar1;
-  int extraout_ECX;
+  char *pcVar1;
+  int iVar2;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
-  int iVar2;
-  char *format;
-  char *pcVar3;
-  undefined4 uVar4;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
+  undefined4 uVar6;
   
   xvga_get_sound_info();
   if (init_sound_ok == 0) {
@@ -698,13 +710,13 @@ int __watcall xvga_init_sound(int param_1,int param_2)
           debugmsg(s_Using_default_driver_00449c0a);
           direct_sound_create = DirectSoundCreate(extraout_EDX_01,&xvga_ds_object,extraout_EDX_01);
           if (direct_sound_create != 0) {
-            format_2 = ds_error_string(direct_sound_create);
-            uVar4 = 0x262;
-            pcVar3 = s_sound_cpp_00449c20;
-            format = s__s__d____error_creating_sound_ob_00449c2a;
+            pcVar1 = ds_error_string(direct_sound_create);
+            uVar6 = 0x262;
+            pcVar5 = s_sound_cpp_00449c20;
+            pcVar4 = s__s__d____error_creating_sound_ob_00449c2a;
             goto LAB_00419a37;
           }
-          format_2 = s_Default_driver_init_failure___No_00449c56;
+          pcVar1 = s_Default_driver_init_failure___No_00449c56;
         }
         else {
           debugmsg(s_Attempting_to_use_secondary_driv_00449b78);
@@ -712,13 +724,13 @@ int __watcall xvga_init_sound(int param_1,int param_2)
                DirectSoundCreate(sound_info_ptr + secondary_driver_index * 0xd8,&xvga_ds_object,
                                  extraout_EDX_00);
           if (direct_sound_create != 0) {
-            format_2 = ds_error_string(direct_sound_create);
-            uVar4 = 0x25a;
-            pcVar3 = s_sound_cpp_00449b9c;
-            format = s__s__d____error_creating_sound_ob_00449ba6;
+            pcVar1 = ds_error_string(direct_sound_create);
+            uVar6 = 0x25a;
+            pcVar5 = s_sound_cpp_00449b9c;
+            pcVar4 = s__s__d____error_creating_sound_ob_00449ba6;
             goto LAB_00419a37;
           }
-          format_2 = s_Attempting_to_use_secondary__unk_00449bd2;
+          pcVar1 = s_Attempting_to_use_secondary__unk_00449bd2;
         }
       }
       else {
@@ -727,26 +739,26 @@ int __watcall xvga_init_sound(int param_1,int param_2)
              DirectSoundCreate(sound_info_ptr + sb16_driver_index * 0xd8,&xvga_ds_object,
                                extraout_EDX);
         if (direct_sound_create != 0) {
-          format_2 = ds_error_string(direct_sound_create);
-          uVar4 = 0x251;
-          pcVar3 = s_sound_cpp_00449b19;
-          format = s__s__d____error_creating_sound_ob_00449b23;
+          pcVar1 = ds_error_string(direct_sound_create);
+          uVar6 = 0x251;
+          pcVar5 = s_sound_cpp_00449b19;
+          pcVar4 = s__s__d____error_creating_sound_ob_00449b23;
           goto LAB_00419a37;
         }
-        format_2 = s_Attempting_to_use_sb16_driver_su_00449b4f;
+        pcVar1 = s_Attempting_to_use_sb16_driver_su_00449b4f;
       }
       snd_object_create = 1;
-      debugmsg(format_2);
+      debugmsg(pcVar1);
     }
     if (snd_coop_level_set == 0) {
-      iVar1 = (**(code **)(*(int *)xvga_ds_object + 0x18))(xvga_ds_object,xvga_hwnd,3);
-      if ((iVar1 != 0) != 0) {
-        format_2 = ds_error_string((uint)(iVar1 != 0));
-        uVar4 = 0x26d;
-        pcVar3 = s_sound_cpp_00449c7e;
-        format = s__s__d____error_setting_the_coop_l_00449c88;
+      iVar2 = (**(code **)(*(int *)xvga_ds_object + 0x18))(xvga_ds_object,xvga_hwnd,3);
+      if ((iVar2 != 0) != 0) {
+        pcVar1 = ds_error_string((uint)(iVar2 != 0));
+        uVar6 = 0x26d;
+        pcVar5 = s_sound_cpp_00449c7e;
+        pcVar4 = s__s__d____error_setting_the_coop_l_00449c88;
 LAB_00419a37:
-        debugmsg(format,pcVar3,uVar4,format_2);
+        debugmsg(pcVar4,pcVar5,uVar6,pcVar1);
         return 0x2af9;
       }
       snd_coop_level_set = 1;
@@ -759,36 +771,36 @@ LAB_00419a37:
       snd_buffer_alloc = 1;
     }
     max_sound_buffers = param_1;
-    for (iVar1 = 0; iVar1 < param_1 * 0x40; iVar1 = iVar1 + 0x40) {
-      *(undefined4 *)(xvga_sound_buffer + iVar1 + 0x30) = 0;
-      *(undefined4 *)(xvga_sound_buffer + iVar1 + 0x38) = 0;
-      *(undefined4 *)(xvga_sound_buffer + iVar1 + 0x34) = 0;
+    for (iVar2 = 0; iVar2 < param_1 * 0x40; iVar2 = iVar2 + 0x40) {
+      *(undefined4 *)(xvga_sound_buffer + iVar2 + 0x30) = 0;
+      *(undefined4 *)(xvga_sound_buffer + iVar2 + 0x38) = 0;
+      *(undefined4 *)(xvga_sound_buffer + iVar2 + 0x34) = 0;
     }
     if ((param_2 < 0) || (0xd < param_2)) {
       fatal_exit(s__s__d____error_illegal_sound_mod_00449cf4);
     }
     if ((param_2 != 0xe) && (snd_format_set == 0)) {
-      iVar2 = param_2 * 0x10;
-      iVar1 = set_output_format(*(int *)(&sound_modes + iVar2),*(int *)(&DAT_004594b4 + iVar2),
-                                *(int *)(&DAT_004594bc + iVar2),*(int *)(&DAT_004594b8 + iVar2));
-      if (iVar1 != 0) {
+      iVar3 = param_2 * 0x10;
+      iVar2 = set_output_format(*(int *)(&sound_modes + iVar3),*(int *)(&DAT_004594b4 + iVar3),
+                                *(int *)(&DAT_004594bc + iVar3),*(int *)(&DAT_004594b8 + iVar3));
+      if (iVar2 != 0) {
         return 0x2afa;
       }
-      if (*(int *)(&DAT_004594b8 + iVar2) == 0) {
-        format_2 = s_MONO_00449d28;
+      if (*(int *)(&DAT_004594b8 + iVar3) == 0) {
+        pcVar1 = s_MONO_00449d28;
       }
       else {
-        format_2 = s_STEREO_00449d21;
+        pcVar1 = s_STEREO_00449d21;
       }
       debugmsg(s_setting_sound_format__dHz__dbits_00449d2d,
                *(undefined4 *)(&sound_modes + param_2 * 0x10),
-               *(undefined4 *)(&DAT_004594b4 + param_2 * 0x10),format_2);
+               *(undefined4 *)(&DAT_004594b4 + param_2 * 0x10),pcVar1);
       snd_format_set = 1;
     }
     debugmsg(s_init_smacker_00449d52);
     init_smacker(xvga_ds_object);
     debugmsg(s_init_smacker_done_00449d60);
-    init_sound_ok = extraout_ECX;
+    init_sound_ok = 1;
   }
   return 0;
 }
@@ -800,16 +812,15 @@ int __watcall xvga_init_sound_1(int param_1,int param_2,int param_3)
 
 {
   long lVar1;
-  char *format_2;
-  int iVar2;
-  int extraout_ECX;
+  char *pcVar2;
+  int iVar3;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
   int i;
-  char *format;
-  char *pcVar3;
-  undefined4 uVar4;
+  char *pcVar4;
+  char *pcVar5;
+  undefined4 uVar6;
   
   xvga_get_sound_info();
   if (init_sound_ok == 0) {
@@ -819,26 +830,26 @@ int __watcall xvga_init_sound_1(int param_1,int param_2,int param_3)
           debugmsg(s_Using_default_driver_00449e83);
           lVar1 = DirectSoundCreate(extraout_EDX_01,&xvga_ds_object,extraout_EDX_01);
           if (lVar1 != 0) {
-            format_2 = ds_error_string(lVar1);
-            uVar4 = 699;
-            pcVar3 = s_sound_cpp_00449e99;
-            format = s__s__d____error_creating_sound_ob_00449ea3;
+            pcVar2 = ds_error_string(lVar1);
+            uVar6 = 699;
+            pcVar5 = s_sound_cpp_00449e99;
+            pcVar4 = s__s__d____error_creating_sound_ob_00449ea3;
             goto LAB_00419d3a;
           }
-          format_2 = s_Default_driver_init_failure___No_00449ecf;
+          pcVar2 = s_Default_driver_init_failure___No_00449ecf;
         }
         else {
           debugmsg(s_Attempting_to_use_secondary_driv_00449df1);
           lVar1 = DirectSoundCreate(sound_info_ptr + secondary_driver_index * 0xd8,&xvga_ds_object,
                                     extraout_EDX_00);
           if (lVar1 != 0) {
-            format_2 = ds_error_string(lVar1);
-            uVar4 = 0x2b3;
-            pcVar3 = s_sound_cpp_00449e15;
-            format = s__s__d____error_creating_sound_ob_00449e1f;
+            pcVar2 = ds_error_string(lVar1);
+            uVar6 = 0x2b3;
+            pcVar5 = s_sound_cpp_00449e15;
+            pcVar4 = s__s__d____error_creating_sound_ob_00449e1f;
             goto LAB_00419d3a;
           }
-          format_2 = s_Attempting_to_use_secondary__unk_00449e4b;
+          pcVar2 = s_Attempting_to_use_secondary__unk_00449e4b;
         }
       }
       else {
@@ -846,26 +857,26 @@ int __watcall xvga_init_sound_1(int param_1,int param_2,int param_3)
         lVar1 = DirectSoundCreate(sound_info_ptr + sb16_driver_index * 0xd8,&xvga_ds_object,
                                   extraout_EDX);
         if (lVar1 != 0) {
-          format_2 = ds_error_string(lVar1);
-          uVar4 = 0x2aa;
-          pcVar3 = s_sound_cpp_00449d92;
-          format = s__s__d____error_creating_sound_ob_00449d9c;
+          pcVar2 = ds_error_string(lVar1);
+          uVar6 = 0x2aa;
+          pcVar5 = s_sound_cpp_00449d92;
+          pcVar4 = s__s__d____error_creating_sound_ob_00449d9c;
           goto LAB_00419d3a;
         }
-        format_2 = s_Attempting_to_use_sb16_driver_su_00449dc8;
+        pcVar2 = s_Attempting_to_use_sb16_driver_su_00449dc8;
       }
       snd_object_create = 1;
-      debugmsg(format_2);
+      debugmsg(pcVar2);
     }
     if (snd_coop_level_set == 0) {
-      iVar2 = (**(code **)(*(int *)xvga_ds_object + 0x18))(xvga_ds_object,xvga_hwnd,3);
-      if ((iVar2 != 0) != 0) {
-        format_2 = ds_error_string((uint)(iVar2 != 0));
-        uVar4 = 0x2c6;
-        pcVar3 = s_sound_cpp_00449ef7;
-        format = s__s__d____error_setting_the_coop_l_00449f01;
+      iVar3 = (**(code **)(*(int *)xvga_ds_object + 0x18))(xvga_ds_object,xvga_hwnd,3);
+      if ((iVar3 != 0) != 0) {
+        pcVar2 = ds_error_string((uint)(iVar3 != 0));
+        uVar6 = 0x2c6;
+        pcVar5 = s_sound_cpp_00449ef7;
+        pcVar4 = s__s__d____error_setting_the_coop_l_00449f01;
 LAB_00419d3a:
-        debugmsg(format,pcVar3,uVar4,format_2);
+        debugmsg(pcVar4,pcVar5,uVar6,pcVar2);
         return 0x2af9;
       }
       snd_coop_level_set = 1;
@@ -879,17 +890,17 @@ LAB_00419d3a:
       snd_buffer_alloc = 1;
     }
     debugmsg(s_sound_init_00449f6d);
-    iVar2 = 0;
+    iVar3 = 0;
     for (i = 0; i < max_sound_buffers; i = i + 1) {
       if (i < param_2) {
-        *(undefined4 *)(xvga_sound_buffer + iVar2 + 0x34) = 1;
+        *(undefined4 *)(xvga_sound_buffer + iVar3 + 0x34) = 1;
       }
       else {
-        *(undefined4 *)(xvga_sound_buffer + iVar2 + 0x34) = 0;
+        *(undefined4 *)(xvga_sound_buffer + iVar3 + 0x34) = 0;
       }
-      *(undefined4 *)(xvga_sound_buffer + iVar2 + 0x30) = 0;
-      *(undefined4 *)(xvga_sound_buffer + iVar2 + 0x38) = 0;
-      iVar2 = iVar2 + 0x40;
+      *(undefined4 *)(xvga_sound_buffer + iVar3 + 0x30) = 0;
+      *(undefined4 *)(xvga_sound_buffer + iVar3 + 0x38) = 0;
+      iVar3 = iVar3 + 0x40;
     }
     if ((param_3 < 0) || (0xd < param_3)) {
       fatal_exit(s__s__d____error_illegal_sound_mod_00449f79);
@@ -898,21 +909,21 @@ LAB_00419d3a:
       debugmsg(s_setting_3d_output_format_00449fa6);
       if (snd_format_set == 0) {
         i = param_3 * 0x10;
-        iVar2 = set_3d_output_format
+        iVar3 = set_3d_output_format
                           (*(int *)(&sound_modes + i),*(int *)(&DAT_004594b4 + i),
                            *(int *)(&DAT_004594bc + i),*(int *)(&DAT_004594b8 + i));
-        if (iVar2 != 0) {
+        if (iVar3 != 0) {
           return 0x2afa;
         }
         if (*(int *)(&DAT_004594b8 + i) == 0) {
-          format_2 = s_MONO_00449fc7;
+          pcVar2 = s_MONO_00449fc7;
         }
         else {
-          format_2 = s_STEREO_00449fc0;
+          pcVar2 = s_STEREO_00449fc0;
         }
         debugmsg(s_setting_sound_format__dHz__dbits_00449fcc,
                  *(undefined4 *)(&sound_modes + param_3 * 0x10),
-                 *(undefined4 *)(&DAT_004594b4 + param_3 * 0x10),format_2);
+                 *(undefined4 *)(&DAT_004594b4 + param_3 * 0x10),pcVar2);
         snd_format_set = 1;
       }
     }
@@ -920,14 +931,14 @@ LAB_00419d3a:
     lVar1 = (*(code *)**(undefined4 **)ds_primary)
                       (ds_primary,&IID_IDirectSound3DListener,&ds3d_listener);
     if (lVar1 != 0) {
-      format_2 = ds_error_string(lVar1);
-      fatal_exit(s__s__d____could_not_query_interfa_0044a00c,s_sound_cpp_0044a002,0x2f1,format_2);
+      pcVar2 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____could_not_query_interfa_0044a00c,s_sound_cpp_0044a002,0x2f1,pcVar2);
     }
     debugmsg(s_init_smacker_0044a046);
     init_smacker(xvga_ds_object);
     debugmsg(s_init_smacker_done_0044a054);
     debugmsg(s_done_0044a067);
-    init_sound_ok = extraout_ECX;
+    init_sound_ok = 1;
   }
   return 0;
 }
@@ -939,27 +950,23 @@ int __watcall set_sound_buffer_freq(int param_1,int param_2)
 
 {
   long lVar1;
-  char *ds_error_string_result;
-  int extraout_EDX;
-  int extraout_EDX_00;
+  char *arg5;
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
       fatal_exit(s__s__d____sound_buffer_index_ille_0044a077,s_sound_cpp_0044a06d,0x30c,param_1);
-      param_2 = extraout_EDX;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       if ((param_2 < 100) || (100000 < param_2)) {
         fatal_exit(s__s__d____attempt_at_setting_buff_0044a0aa,s_sound_cpp_0044a0a0,0x316,param_1,
                    param_2);
-        param_2 = extraout_EDX_00;
       }
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28) + 0x44))
                         (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28),param_2);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____sound_buffer_index_ille_0044a0fc,s_sound_cpp_0044a0f2,0x31a,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
     }
   }
@@ -973,7 +980,7 @@ int __watcall get_sound_buffer_freq(int param_1)
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg5;
   int *piVar2;
   undefined1 auStack_10 [4];
   
@@ -987,9 +994,9 @@ int __watcall get_sound_buffer_freq(int param_1)
       if (lVar1 == 0) {
         return (int)piVar2;
       }
-      ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____sound_buffer_index_ille_0044a167,s_sound_cpp_0044a15d,0x337,param_1,
-                 ds_error_string_result);
+      arg5 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____sound_buffer_index_ille_0044a167,s_sound_cpp_0044a15d,0x337,param_1,arg5
+                );
       return (int)piVar2;
     }
   }
@@ -1003,27 +1010,23 @@ int __watcall set_sound_buffer_vol(int param_1,int param_2)
 
 {
   long lVar1;
-  char *ds_error_string_result;
-  int extraout_EDX;
-  int extraout_EDX_00;
+  char *arg5;
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
       fatal_exit(s__s__d____sound_buffer_index_ille_0044a19f,s_sound_cpp_0044a195,0x34a,param_1);
-      param_2 = extraout_EDX;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       if ((param_2 < -10000) || (-100 < param_2)) {
         fatal_exit(s__s__d____attempt_at_setting_buff_0044a1d2,s_sound_cpp_0044a1c8,0x354,param_1,
                    param_2);
-        param_2 = extraout_EDX_00;
       }
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28) + 0x3c))
                         (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28),param_2);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____sound_buffer_index_ille_0044a21b,s_sound_cpp_0044a211,0x358,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
     }
   }
@@ -1067,32 +1070,26 @@ int __watcall set_sound_buffer_pan(int param_1,int param_2)
 
 {
   long lVar1;
-  char *ds_error_string_result;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
+  char *arg5;
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
       fatal_exit(s__s__d____sound_buffer_index_ille_0044a2be,s_sound_cpp_0044a2b4,0x387,param_1);
-      param_2 = extraout_EDX;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x34) == 1) {
       fatal_exit(s__s__d____type_sound_buffer__d_in_0044a2f1,s_sound_cpp_0044a2e7,0x38c,param_1);
-      param_2 = extraout_EDX_00;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       if ((param_2 < -10000) || (10000 < param_2)) {
         fatal_exit(s__s__d____attempt_at_setting_buff_0044a336,s_sound_cpp_0044a32c,0x396,param_1,
                    param_2);
-        param_2 = extraout_EDX_01;
       }
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28) + 0x40))
                         (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28),param_2);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____sound_buffer_index_ille_0044a374,s_sound_cpp_0044a36a,0x39a,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
     }
   }
@@ -1137,14 +1134,14 @@ int __watcall get_sound_buffer_pan(int param_1)
 
 /* WARNING: Removing unreachable block (ram,0x0041a48b) */
 
-int __watcall load_sound_buffer_data(int param_1,__iobuf *file,int dst_buf,int param_4)
+int __watcall load_sound_buffer_data(int param_1,__iobuf *file,int param_3,int param_4)
 
 {
   int *piVar1;
   int src_fseek;
   long lVar2;
   char *ds_error_string_result;
-  size_t count_read;
+  uint count_read;
   undefined1 local_1c [16];
   
   if ((param_4 == -1) || (src_fseek = xvga_src_fseek(file,param_4,0), src_fseek == 0)) {
@@ -1156,9 +1153,9 @@ int __watcall load_sound_buffer_data(int param_1,__iobuf *file,int dst_buf,int p
                  ds_error_string_result);
     }
     if ((&stack0x00000000 == (undefined1 *)0x1c) ||
-       (count_read = fread((void *)dst_buf,(size_t)local_1c,1,(FILE *)file), count_read == 1)) {
+       (count_read = fread((char *)param_3,(uint)local_1c,1,(int *)file), count_read == 1)) {
       lVar2 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28) + 0x4c))
-                        (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28),piVar1,0,dst_buf,
+                        (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x28),piVar1,0,param_3,
                          local_1c);
       if (lVar2 != 0) {
         ds_error_string_result = ds_error_string(lVar2);
@@ -1174,58 +1171,60 @@ int __watcall load_sound_buffer_data(int param_1,__iobuf *file,int dst_buf,int p
 
 /* ==== 0041a517 load_wave_file ==== */
 
-int __watcall load_wave_file(char *param_1,int param_2)
+int __watcall load_wave_file(char *filename_val,int param_2)
 
 {
-  FILE *_File;
-  size_t count_read;
+  __iobuf *file;
+  uint count_read;
   IDirectSoundBuffer *pIVar1;
-  undefined4 extraout_EDX;
-  int extraout_EDX_00;
+  undefined4 arg3;
+  int extraout_EDX;
   int iVar2;
-  undefined1 auStack_44 [24];
+  char acStack_44 [24];
   int local_2c;
   short local_24;
   short sStack_22;
-  int dst_buf;
+  int local_1c;
+  int local_18;
   
   if (init_sound_ok == 0) {
 LAB_0041a67a:
     iVar2 = 0;
   }
   else {
-    _File = (FILE *)xvga_src_fopen(param_1);
-    if (_File == (FILE *)0x0) {
-      debugmsg(s___s__0044a4c8,param_1);
+    local_18 = param_2;
+    file = xvga_src_fopen(filename_val);
+    if (file == (__iobuf *)0x0) {
+      debugmsg(s___s__0044a4c8,filename_val);
       return 1000;
     }
-    count_read = fread(auStack_44,0x2c,1,_File);
+    count_read = fread(acStack_44,0x2c,1,(int *)file);
     if (count_read != 1) {
-      xvga_src_fclose((__iobuf *)_File);
+      xvga_src_fclose(file);
       return 0x3e9;
     }
-    debugmsg(s_file____s_0044a4ce,param_1);
-    debugmsg(s_bufferlength__d_0044a4e0,dst_buf);
+    debugmsg(s_file____s_0044a4ce,filename_val);
+    debugmsg(s_bufferlength__d_0044a4e0,local_1c);
     debugmsg(s_samplerate___d_0044a4f1,local_2c);
     debugmsg(s_bpps___d_0044a502,(int)sStack_22);
-    debugmsg(s_align___d_stereo__d_0044a513,(int)local_24,extraout_EDX);
-    iVar2 = param_2 * 0x40;
-    *(int *)(xvga_sound_buffer + iVar2 + 0x3c) = dst_buf;
+    debugmsg(s_align___d_stereo__d_0044a513,(int)local_24,arg3);
+    iVar2 = local_18 * 0x40;
+    *(int *)(xvga_sound_buffer + iVar2 + 0x3c) = local_1c;
     if (*(int *)(xvga_sound_buffer + iVar2 + 0x34) == 0) {
-      pIVar1 = create_sound_buffer(dst_buf,local_2c,(int)sStack_22,(int)local_24,extraout_EDX_00);
+      pIVar1 = create_sound_buffer(local_1c,local_2c,(int)sStack_22,(int)local_24,extraout_EDX);
       *(IDirectSoundBuffer **)(xvga_sound_buffer + iVar2 + 0x28) = pIVar1;
       if (pIVar1 != (IDirectSoundBuffer *)0x0) {
 LAB_0041a661:
-        load_sound_buffer_data(param_2,(__iobuf *)_File,dst_buf,0x2c);
-        xvga_src_fclose((__iobuf *)_File);
+        load_sound_buffer_data(local_18,file,local_1c,0x2c);
+        xvga_src_fclose(file);
         goto LAB_0041a67a;
       }
     }
     else {
       iVar2 = create_3d_sound_buffer
                         ((IDirectSoundBuffer **)(xvga_sound_buffer + iVar2 + 0x28),
-                         (IDirectSound3DBuffer **)(xvga_sound_buffer + iVar2 + 0x2c),dst_buf,
-                         local_2c,(int)sStack_22,(int)local_24,extraout_EDX_00);
+                         (IDirectSound3DBuffer **)(xvga_sound_buffer + iVar2 + 0x2c),local_1c,
+                         local_2c,(int)sStack_22,(int)local_24,extraout_EDX);
       if (iVar2 == 0) goto LAB_0041a661;
     }
     iVar2 = 2000;
@@ -1268,280 +1267,279 @@ int __watcall play_sound_buffer(int param_1,int param_2)
 
 /* ==== 0041a723 play_sound_buffer_1 ==== */
 
-int __watcall play_sound_buffer_1(char *str2,int param_2)
+int __watcall play_sound_buffer_1(char *filename_val,int param_2)
 
 {
   bool bVar1;
+  int arg2;
   int iVar2;
-  int iVar3;
   int snd_buf_index;
-  IDirectSoundBuffer *pIVar4;
-  long lVar5;
-  char *ds_error_string_result;
-  int extraout_EDX;
+  IDirectSoundBuffer *pIVar3;
+  long lVar4;
+  char *arg5;
   snd_buf_t *snd_buf;
   snd_buf_t snd_buf_2;
   
   if (init_sound_ok == 0) {
 LAB_0041a739:
-    iVar2 = -1;
+    arg2 = -1;
   }
   else {
-    iVar3 = search_sound_buffer(str2,0,0,0);
-    if (iVar3 == -1) {
-      iVar2 = get_free_buffer_1(0);
-      if (iVar2 == -1) {
-        iVar2 = delete_sound_buffer(-1);
+    iVar2 = search_sound_buffer(filename_val,0,0,0);
+    if (iVar2 == -1) {
+      arg2 = get_free_buffer_1(0);
+      if (arg2 == -1) {
+        arg2 = delete_sound_buffer(-1);
       }
-      debugmsg(s_new_buffer_used__d_0044a590,iVar2);
-      iVar3 = load_wave_file(str2,iVar2);
-      if (iVar3 != 0) goto LAB_0041a739;
-      *(undefined4 *)(xvga_sound_buffer + iVar2 * 0x40 + 0x30) = 1;
-      snd_buf = xvga_sound_buffer + iVar2 * 0x40;
+      debugmsg(s_new_buffer_used__d_0044a590,arg2);
+      iVar2 = load_wave_file(filename_val,arg2);
+      if (iVar2 != 0) goto LAB_0041a739;
+      *(undefined4 *)(xvga_sound_buffer + arg2 * 0x40 + 0x30) = 1;
+      snd_buf = xvga_sound_buffer + arg2 * 0x40;
       do {
-        snd_buf_2 = (snd_buf_t)*str2;
+        snd_buf_2 = (snd_buf_t)*filename_val;
         *snd_buf = snd_buf_2;
         if (snd_buf_2 == (snd_buf_t)0x0) break;
-        snd_buf_2 = *(snd_buf_t *)(str2 + 1);
-        str2 = str2 + 2;
+        snd_buf_2 = *(snd_buf_t *)(filename_val + 1);
+        filename_val = filename_val + 2;
         snd_buf[1] = snd_buf_2;
         snd_buf = snd_buf + 2;
       } while (snd_buf_2 != (snd_buf_t)0x0);
     }
     else {
       bVar1 = true;
-      snd_buf_index = sound_buffer_busy(iVar3);
-      iVar2 = iVar3;
-      if ((snd_buf_index != 0) && (iVar2 = search_sound_buffer(str2,0,iVar3 + 1,1), iVar2 == -1)) {
-        iVar2 = get_free_buffer_1(0);
-        if (iVar2 == -1) {
-          iVar2 = delete_sound_buffer(iVar3);
+      snd_buf_index = sound_buffer_busy(iVar2);
+      arg2 = iVar2;
+      if ((snd_buf_index != 0) &&
+         (arg2 = search_sound_buffer(filename_val,0,iVar2 + 1,1), arg2 == -1)) {
+        arg2 = get_free_buffer_1(0);
+        if (arg2 == -1) {
+          arg2 = delete_sound_buffer(iVar2);
         }
         bVar1 = false;
       }
       if (!bVar1) {
-        if (iVar2 == iVar3) {
+        if (arg2 == iVar2) {
           fatal_exit(s__s__d____duplicate_buffers_0044a5ae,s_sound_cpp_0044a5a4,0x465);
         }
-        debugmsg(s_duplicate_used__d_0044a5cb,iVar2);
-        snd_buf_index = extraout_EDX * 0x40;
+        debugmsg(s_duplicate_used__d_0044a5cb,arg2);
+        snd_buf_index = arg2 * 0x40;
         *(undefined4 *)(xvga_sound_buffer + snd_buf_index + 0x30) = 1;
         snd_buf = xvga_sound_buffer + snd_buf_index;
         do {
-          snd_buf_2 = (snd_buf_t)*str2;
+          snd_buf_2 = (snd_buf_t)*filename_val;
           *snd_buf = snd_buf_2;
           if (snd_buf_2 == (snd_buf_t)0x0) break;
-          snd_buf_2 = *(snd_buf_t *)(str2 + 1);
-          str2 = str2 + 2;
+          snd_buf_2 = *(snd_buf_t *)(filename_val + 1);
+          filename_val = filename_val + 2;
           snd_buf[1] = snd_buf_2;
           snd_buf = snd_buf + 2;
         } while (snd_buf_2 != (snd_buf_t)0x0);
-        pIVar4 = duplicate_sound_buffer
-                           (*(IDirectSoundBuffer **)(xvga_sound_buffer + iVar3 * 0x40 + 0x28));
-        *(IDirectSoundBuffer **)(xvga_sound_buffer + snd_buf_index + 0x28) = pIVar4;
+        pIVar3 = duplicate_sound_buffer
+                           (*(IDirectSoundBuffer **)(xvga_sound_buffer + iVar2 * 0x40 + 0x28));
+        *(IDirectSoundBuffer **)(xvga_sound_buffer + snd_buf_index + 0x28) = pIVar3;
       }
     }
     if ((param_2 & 4U) == 0) {
-      *(int *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) =
-           *(int *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) + 1;
+      *(int *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) =
+           *(int *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) + 1;
     }
     else {
-      *(undefined4 *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) = 1000000;
+      *(undefined4 *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) = 1000000;
     }
-    iVar3 = sound_buffer_busy(iVar2);
-    if ((iVar3 == 0) &&
-       (lVar5 = (**(code **)(**(int **)(xvga_sound_buffer + iVar2 * 0x40 + 0x28) + 0x30))
-                          (*(int **)(xvga_sound_buffer + iVar2 * 0x40 + 0x28),0,0,param_2),
-       lVar5 != 0)) {
-      ds_error_string_result = ds_error_string(lVar5);
-      fatal_exit(s__s__d____error_playing_sound__d___0044a5e8,s_sound_cpp_0044a5de,0x478,iVar2,
-                 ds_error_string_result);
+    iVar2 = sound_buffer_busy(arg2);
+    if ((iVar2 == 0) &&
+       (lVar4 = (**(code **)(**(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x28) + 0x30))
+                          (*(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x28),0,0,param_2),
+       lVar4 != 0)) {
+      arg5 = ds_error_string(lVar4);
+      fatal_exit(s__s__d____error_playing_sound__d___0044a5e8,s_sound_cpp_0044a5de,0x478,arg2,arg5);
     }
   }
-  return iVar2;
+  return arg2;
 }
 
 
 /* ==== 0041a903 play_sound_buffer_2 ==== */
 
-int __watcall play_sound_buffer_2(char *str2,int param_2,int param_3)
+int __watcall play_sound_buffer_2(char *filename_val,int param_2,int param_3)
 
 {
   bool bVar1;
+  int arg2;
   int iVar2;
-  int iVar3;
   int snd_buf_index;
-  IDirectSoundBuffer *pIVar4;
-  long lVar5;
-  char *ds_error_string_result;
-  int extraout_EDX;
-  snd_buf_t *snd_buf_2;
-  snd_buf_t snd_buf;
-  
-  if (init_sound_ok == 0) {
-LAB_0041a91a:
-    iVar2 = -1;
-  }
-  else {
-    iVar3 = search_sound_buffer(str2,0,0,0);
-    if (iVar3 == -1) {
-      iVar2 = get_free_buffer_1(0);
-      if (iVar2 == -1) {
-        iVar2 = delete_sound_buffer(-1);
-      }
-      debugmsg(s_new_buffer_used__d_0044a60f,iVar2);
-      iVar3 = load_wave_file(str2,iVar2);
-      if (iVar3 != 0) goto LAB_0041a91a;
-      *(undefined4 *)(xvga_sound_buffer + iVar2 * 0x40 + 0x30) = 1;
-      snd_buf_2 = xvga_sound_buffer + iVar2 * 0x40;
-      do {
-        snd_buf = (snd_buf_t)*str2;
-        *snd_buf_2 = snd_buf;
-        if (snd_buf == (snd_buf_t)0x0) break;
-        snd_buf = *(snd_buf_t *)(str2 + 1);
-        str2 = str2 + 2;
-        snd_buf_2[1] = snd_buf;
-        snd_buf_2 = snd_buf_2 + 2;
-      } while (snd_buf != (snd_buf_t)0x0);
-    }
-    else {
-      snd_buf_index = sound_buffer_busy(iVar3);
-      bVar1 = true;
-      iVar2 = iVar3;
-      if ((snd_buf_index != 0) && (iVar2 = search_sound_buffer(str2,0,iVar3 + 1,1), iVar2 == -1)) {
-        iVar2 = get_free_buffer_1(0);
-        if (iVar2 == -1) {
-          iVar2 = delete_sound_buffer(iVar3);
-        }
-        bVar1 = false;
-      }
-      if (!bVar1) {
-        if (iVar2 == iVar3) {
-          fatal_exit(s__s__d____duplicate_buffers_0044a62d,s_sound_cpp_0044a623,0x4a3);
-        }
-        debugmsg(s_duplicate_used__d_0044a64a,iVar2);
-        snd_buf_index = extraout_EDX * 0x40;
-        *(undefined4 *)(xvga_sound_buffer + snd_buf_index + 0x30) = 1;
-        snd_buf_2 = xvga_sound_buffer + snd_buf_index;
-        do {
-          snd_buf = (snd_buf_t)*str2;
-          *snd_buf_2 = snd_buf;
-          if (snd_buf == (snd_buf_t)0x0) break;
-          snd_buf = *(snd_buf_t *)(str2 + 1);
-          str2 = str2 + 2;
-          snd_buf_2[1] = snd_buf;
-          snd_buf_2 = snd_buf_2 + 2;
-        } while (snd_buf != (snd_buf_t)0x0);
-        pIVar4 = duplicate_sound_buffer
-                           (*(IDirectSoundBuffer **)(xvga_sound_buffer + iVar3 * 0x40 + 0x28));
-        *(IDirectSoundBuffer **)(xvga_sound_buffer + snd_buf_index + 0x28) = pIVar4;
-      }
-    }
-    if ((param_3 & 4U) == 0) {
-      *(int *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) =
-           *(int *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) + 1;
-    }
-    else {
-      *(undefined4 *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) = 1000000;
-    }
-    iVar3 = sound_buffer_busy(iVar2);
-    if (iVar3 == 0) {
-      set_sound_buffer_vol(iVar2,param_2);
-      lVar5 = (**(code **)(**(int **)(xvga_sound_buffer + iVar2 * 0x40 + 0x28) + 0x30))
-                        (*(int **)(xvga_sound_buffer + iVar2 * 0x40 + 0x28),0,0,param_3);
-      if (lVar5 != 0) {
-        ds_error_string_result = ds_error_string(lVar5);
-        fatal_exit(s__s__d____error_playing_sound__d___0044a667,s_sound_cpp_0044a65d,0x4b7,iVar2,
-                   ds_error_string_result);
-      }
-    }
-  }
-  return iVar2;
-}
-
-
-/* ==== 0041aaf3 load_sound_buffer ==== */
-
-int __watcall load_sound_buffer(char *str2,int param_2)
-
-{
-  bool bVar1;
-  int iVar2;
-  int iVar3;
-  int snd_buf_index;
-  IDirectSoundBuffer *pIVar4;
-  int extraout_EDX;
+  IDirectSoundBuffer *pIVar3;
+  long lVar4;
+  char *arg5;
   snd_buf_t *snd_buf;
   snd_buf_t snd_buf_2;
   
   if (init_sound_ok == 0) {
-LAB_0041ab09:
-    iVar2 = -1;
+LAB_0041a91a:
+    arg2 = -1;
   }
   else {
-    iVar3 = search_sound_buffer(str2,0,0,0);
-    if (iVar3 == -1) {
-      iVar2 = get_free_buffer_1(0);
-      if (iVar2 == -1) {
-        iVar2 = delete_sound_buffer(-1);
+    iVar2 = search_sound_buffer(filename_val,0,0,0);
+    if (iVar2 == -1) {
+      arg2 = get_free_buffer_1(0);
+      if (arg2 == -1) {
+        arg2 = delete_sound_buffer(-1);
       }
-      debugmsg(s_new_buffer_used__d_0044a68e,iVar2);
-      iVar3 = load_wave_file(str2,iVar2);
-      if (iVar3 != 0) goto LAB_0041ab09;
-      *(undefined4 *)(xvga_sound_buffer + iVar2 * 0x40 + 0x30) = 1;
-      snd_buf = xvga_sound_buffer + iVar2 * 0x40;
+      debugmsg(s_new_buffer_used__d_0044a60f,arg2);
+      iVar2 = load_wave_file(filename_val,arg2);
+      if (iVar2 != 0) goto LAB_0041a91a;
+      *(undefined4 *)(xvga_sound_buffer + arg2 * 0x40 + 0x30) = 1;
+      snd_buf = xvga_sound_buffer + arg2 * 0x40;
       do {
-        snd_buf_2 = (snd_buf_t)*str2;
+        snd_buf_2 = (snd_buf_t)*filename_val;
         *snd_buf = snd_buf_2;
         if (snd_buf_2 == (snd_buf_t)0x0) break;
-        snd_buf_2 = *(snd_buf_t *)(str2 + 1);
-        str2 = str2 + 2;
+        snd_buf_2 = *(snd_buf_t *)(filename_val + 1);
+        filename_val = filename_val + 2;
         snd_buf[1] = snd_buf_2;
         snd_buf = snd_buf + 2;
       } while (snd_buf_2 != (snd_buf_t)0x0);
     }
     else {
-      snd_buf_index = sound_buffer_busy(iVar3);
+      snd_buf_index = sound_buffer_busy(iVar2);
       bVar1 = true;
-      iVar2 = iVar3;
-      if ((snd_buf_index != 0) && (iVar2 = search_sound_buffer(str2,0,iVar3 + 1,1), iVar2 == -1)) {
-        iVar2 = get_free_buffer_1(0);
-        if (iVar2 == -1) {
-          iVar2 = delete_sound_buffer(iVar3);
+      arg2 = iVar2;
+      if ((snd_buf_index != 0) &&
+         (arg2 = search_sound_buffer(filename_val,0,iVar2 + 1,1), arg2 == -1)) {
+        arg2 = get_free_buffer_1(0);
+        if (arg2 == -1) {
+          arg2 = delete_sound_buffer(iVar2);
         }
         bVar1 = false;
       }
       if (!bVar1) {
-        if (iVar2 == iVar3) {
-          fatal_exit(s__s__d____duplicate_buffers_0044a6ac,s_sound_cpp_0044a6a2,0x4e2);
+        if (arg2 == iVar2) {
+          fatal_exit(s__s__d____duplicate_buffers_0044a62d,s_sound_cpp_0044a623,0x4a3);
         }
-        debugmsg(s_duplicate_used__d_0044a6c9,iVar2);
-        snd_buf_index = extraout_EDX * 0x40;
+        debugmsg(s_duplicate_used__d_0044a64a,arg2);
+        snd_buf_index = arg2 * 0x40;
         *(undefined4 *)(xvga_sound_buffer + snd_buf_index + 0x30) = 1;
         snd_buf = xvga_sound_buffer + snd_buf_index;
         do {
-          snd_buf_2 = (snd_buf_t)*str2;
+          snd_buf_2 = (snd_buf_t)*filename_val;
           *snd_buf = snd_buf_2;
           if (snd_buf_2 == (snd_buf_t)0x0) break;
-          snd_buf_2 = *(snd_buf_t *)(str2 + 1);
-          str2 = str2 + 2;
+          snd_buf_2 = *(snd_buf_t *)(filename_val + 1);
+          filename_val = filename_val + 2;
           snd_buf[1] = snd_buf_2;
           snd_buf = snd_buf + 2;
         } while (snd_buf_2 != (snd_buf_t)0x0);
-        pIVar4 = duplicate_sound_buffer
-                           (*(IDirectSoundBuffer **)(xvga_sound_buffer + iVar3 * 0x40 + 0x28));
-        *(IDirectSoundBuffer **)(xvga_sound_buffer + snd_buf_index + 0x28) = pIVar4;
+        pIVar3 = duplicate_sound_buffer
+                           (*(IDirectSoundBuffer **)(xvga_sound_buffer + iVar2 * 0x40 + 0x28));
+        *(IDirectSoundBuffer **)(xvga_sound_buffer + snd_buf_index + 0x28) = pIVar3;
+      }
+    }
+    if ((param_3 & 4U) == 0) {
+      *(int *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) =
+           *(int *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) + 1;
+    }
+    else {
+      *(undefined4 *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) = 1000000;
+    }
+    iVar2 = sound_buffer_busy(arg2);
+    if (iVar2 == 0) {
+      set_sound_buffer_vol(arg2,param_2);
+      lVar4 = (**(code **)(**(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x28) + 0x30))
+                        (*(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x28),0,0,param_3);
+      if (lVar4 != 0) {
+        arg5 = ds_error_string(lVar4);
+        fatal_exit(s__s__d____error_playing_sound__d___0044a667,s_sound_cpp_0044a65d,0x4b7,arg2,arg5
+                  );
+      }
+    }
+  }
+  return arg2;
+}
+
+
+/* ==== 0041aaf3 load_sound_buffer ==== */
+
+int __watcall load_sound_buffer(char *filename_val,int param_2)
+
+{
+  bool bVar1;
+  int arg2;
+  int iVar2;
+  int snd_buf_index;
+  IDirectSoundBuffer *pIVar3;
+  snd_buf_t *snd_buf;
+  snd_buf_t snd_buf_2;
+  
+  if (init_sound_ok == 0) {
+LAB_0041ab09:
+    arg2 = -1;
+  }
+  else {
+    iVar2 = search_sound_buffer(filename_val,0,0,0);
+    if (iVar2 == -1) {
+      arg2 = get_free_buffer_1(0);
+      if (arg2 == -1) {
+        arg2 = delete_sound_buffer(-1);
+      }
+      debugmsg(s_new_buffer_used__d_0044a68e,arg2);
+      iVar2 = load_wave_file(filename_val,arg2);
+      if (iVar2 != 0) goto LAB_0041ab09;
+      *(undefined4 *)(xvga_sound_buffer + arg2 * 0x40 + 0x30) = 1;
+      snd_buf = xvga_sound_buffer + arg2 * 0x40;
+      do {
+        snd_buf_2 = (snd_buf_t)*filename_val;
+        *snd_buf = snd_buf_2;
+        if (snd_buf_2 == (snd_buf_t)0x0) break;
+        snd_buf_2 = *(snd_buf_t *)(filename_val + 1);
+        filename_val = filename_val + 2;
+        snd_buf[1] = snd_buf_2;
+        snd_buf = snd_buf + 2;
+      } while (snd_buf_2 != (snd_buf_t)0x0);
+    }
+    else {
+      snd_buf_index = sound_buffer_busy(iVar2);
+      bVar1 = true;
+      arg2 = iVar2;
+      if ((snd_buf_index != 0) &&
+         (arg2 = search_sound_buffer(filename_val,0,iVar2 + 1,1), arg2 == -1)) {
+        arg2 = get_free_buffer_1(0);
+        if (arg2 == -1) {
+          arg2 = delete_sound_buffer(iVar2);
+        }
+        bVar1 = false;
+      }
+      if (!bVar1) {
+        if (arg2 == iVar2) {
+          fatal_exit(s__s__d____duplicate_buffers_0044a6ac,s_sound_cpp_0044a6a2,0x4e2);
+        }
+        debugmsg(s_duplicate_used__d_0044a6c9,arg2);
+        snd_buf_index = arg2 * 0x40;
+        *(undefined4 *)(xvga_sound_buffer + snd_buf_index + 0x30) = 1;
+        snd_buf = xvga_sound_buffer + snd_buf_index;
+        do {
+          snd_buf_2 = (snd_buf_t)*filename_val;
+          *snd_buf = snd_buf_2;
+          if (snd_buf_2 == (snd_buf_t)0x0) break;
+          snd_buf_2 = *(snd_buf_t *)(filename_val + 1);
+          filename_val = filename_val + 2;
+          snd_buf[1] = snd_buf_2;
+          snd_buf = snd_buf + 2;
+        } while (snd_buf_2 != (snd_buf_t)0x0);
+        pIVar3 = duplicate_sound_buffer
+                           (*(IDirectSoundBuffer **)(xvga_sound_buffer + iVar2 * 0x40 + 0x28));
+        *(IDirectSoundBuffer **)(xvga_sound_buffer + snd_buf_index + 0x28) = pIVar3;
       }
     }
     if ((param_2 & 4U) == 0) {
-      *(int *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) =
-           *(int *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) + 1;
+      *(int *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) =
+           *(int *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) + 1;
     }
     else {
-      *(undefined4 *)(xvga_sound_buffer + iVar2 * 0x40 + 0x38) = 1000000;
+      *(undefined4 *)(xvga_sound_buffer + arg2 * 0x40 + 0x38) = 1000000;
     }
   }
-  return iVar2;
+  return arg2;
 }
 
 
@@ -1551,28 +1549,26 @@ int __watcall set_3dsound_buffer_pos(int param_1,float param_2,float param_3,flo
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg5;
   undefined4 in_stack_00000004;
   undefined4 in_stack_00000008;
   undefined4 in_stack_0000000c;
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
-      fatal_exit(s__s__d____sound_buffer_index_ille_0044a6e6,s_sound_cpp_0044a6dc,0x501,param_1,
-                 param_2,param_4,param_3);
+      fatal_exit(s__s__d____sound_buffer_index_ille_0044a6e6,s_sound_cpp_0044a6dc,0x501,param_1);
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x34) != 1) {
-      fatal_exit(s__s__d____type_sound_buffer__d_in_0044a719,s_sound_cpp_0044a70f,0x506,param_1,
-                 param_2,param_4,param_3);
+      fatal_exit(s__s__d____type_sound_buffer__d_in_0044a719,s_sound_cpp_0044a70f,0x506,param_1);
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c) + 0x4c))
                         (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c),in_stack_00000004,
-                         in_stack_00000008,in_stack_0000000c,0);
+                         in_stack_00000008,in_stack_0000000c,0,param_2,param_4,param_3);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____error_setting_sound_pos_0044a75e,s_sound_cpp_0044a754,0x50f,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
     }
   }
@@ -1586,18 +1582,14 @@ int __watcall set_3dsound_buffer_pos_1(int param_1,_D3DVECTOR *d3_dvector)
 
 {
   long lVar1;
-  char *ds_error_string_result;
-  _D3DVECTOR *extraout_EDX;
-  _D3DVECTOR *extraout_EDX_00;
+  char *arg5;
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
       fatal_exit(s__s__d____sound_buffer_index_ille_0044a798,s_sound_cpp_0044a78e,0x520,param_1);
-      d3_dvector = extraout_EDX;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x34) != 1) {
       fatal_exit(s__s__d____type_sound_buffer__d_in_0044a7cb,s_sound_cpp_0044a7c1,0x525,param_1);
-      d3_dvector = extraout_EDX_00;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c) + 0x4c))
@@ -1605,9 +1597,9 @@ int __watcall set_3dsound_buffer_pos_1(int param_1,_D3DVECTOR *d3_dvector)
                          *(undefined4 *)d3_dvector,*(undefined4 *)(d3_dvector + 4),
                          *(undefined4 *)(d3_dvector + 8),0);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____error_setting_sound_pos_0044a810,s_sound_cpp_0044a806,0x52e,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
     }
   }
@@ -1621,18 +1613,14 @@ int __watcall set_3dsound_buffer_velocity(int param_1,_D3DVECTOR *d3_dvector)
 
 {
   long lVar1;
-  char *ds_error_string_result;
-  _D3DVECTOR *extraout_EDX;
-  _D3DVECTOR *extraout_EDX_00;
+  char *arg5;
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
       fatal_exit(s__s__d____sound_buffer_index_ille_0044a849,s_sound_cpp_0044a83f,0x53f,param_1);
-      d3_dvector = extraout_EDX;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x34) != 1) {
       fatal_exit(s__s__d____type_sound_buffer__d_in_0044a87c,s_sound_cpp_0044a872,0x544,param_1);
-      d3_dvector = extraout_EDX_00;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c) + 0x50))
@@ -1640,9 +1628,9 @@ int __watcall set_3dsound_buffer_velocity(int param_1,_D3DVECTOR *d3_dvector)
                          *(undefined4 *)d3_dvector,*(undefined4 *)(d3_dvector + 4),
                          *(undefined4 *)(d3_dvector + 8),0);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____error_setting_sound_vel_0044a8c1,s_sound_cpp_0044a8b7,0x54d,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
     }
   }
@@ -1663,17 +1651,15 @@ int __watcall set_3dsound_buffer_velocity_1(int param_1,float param_2,float para
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
-      fatal_exit(s__s__d____sound_buffer_index_ille_0044a8fb,s_sound_cpp_0044a8f1,0x55e,param_1,
-                 param_2,param_4,param_3);
+      fatal_exit(s__s__d____sound_buffer_index_ille_0044a8fb,s_sound_cpp_0044a8f1,0x55e,param_1);
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x34) != 1) {
-      fatal_exit(s__s__d____type_sound_buffer__d_in_0044a92e,s_sound_cpp_0044a924,0x563,param_1,
-                 param_2,param_4,param_3);
+      fatal_exit(s__s__d____type_sound_buffer__d_in_0044a92e,s_sound_cpp_0044a924,0x563,param_1);
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c) + 0x50))
                         (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c),in_stack_00000004,
-                         in_stack_00000008,in_stack_0000000c,0);
+                         in_stack_00000008,in_stack_0000000c,0,param_2,param_4,param_3);
       if (lVar1 != 0) {
         ds_error_string_result = ds_error_string(lVar1);
         fatal_exit(s__s__d____error_setting_sound_vel_0044a973,s_sound_cpp_0044a969,0x56c,param_1,
@@ -1691,7 +1677,7 @@ int __watcall get_3dsound_buffer_pos(int param_1,float *param_2,float *param_3,f
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg5;
   int *piVar2;
   float *pfVar3;
   float afStack_18 [3];
@@ -1708,9 +1694,9 @@ int __watcall get_3dsound_buffer_pos(int param_1,float *param_2,float *param_3,f
       piVar2 = *(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c);
       lVar1 = (**(code **)(*piVar2 + 0x28))();
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____error_getting_sound_pos_0044aa25,s_sound_cpp_0044aa1b,0x58d,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
       *param_2 = (float)piVar2;
       *param_3 = (float)pfVar3;
@@ -1727,26 +1713,22 @@ int __watcall get_3dsound_buffer_pos_1(int param_1,_D3DVECTOR *d3_dvector)
 
 {
   long lVar1;
-  char *ds_error_string_result;
-  _D3DVECTOR *extraout_ECX;
-  _D3DVECTOR *extraout_ECX_00;
+  char *arg5;
   
   if (init_sound_ok != 0) {
     if ((param_1 < 0) || (max_sound_buffers < param_1)) {
       fatal_exit(s__s__d____sound_buffer_index_ille_0044aa5f,s_sound_cpp_0044aa55,0x5a3,param_1);
-      d3_dvector = extraout_ECX;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x34) != 1) {
       fatal_exit(s__s__d____type_sound_buffer__d_in_0044aa92,s_sound_cpp_0044aa88,0x5a8,param_1);
-      d3_dvector = extraout_ECX_00;
     }
     if (*(int *)(xvga_sound_buffer + param_1 * 0x40 + 0x30) != 0) {
       lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c) + 0x28))
                         (*(int **)(xvga_sound_buffer + param_1 * 0x40 + 0x2c),d3_dvector);
       if (lVar1 != 0) {
-        ds_error_string_result = ds_error_string(lVar1);
+        arg5 = ds_error_string(lVar1);
         fatal_exit(s__s__d____error_getting_sound_pos_0044aad7,s_sound_cpp_0044aacd,0x5b1,param_1,
-                   ds_error_string_result);
+                   arg5);
       }
     }
   }
@@ -1760,14 +1742,13 @@ int set_3dlistener_pos(float param_1,float param_2,float param_3)
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   
   if (init_sound_ok != 0) {
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x38))(ds3d_listener,param_1,param_2,param_3,0);
     if (lVar1 != 0) {
-      ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_posi_0044ab11,s_sound_cpp_0044ab07,0x5c2,
-                 ds_error_string_result);
+      arg4 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____error_set_listener_posi_0044ab11,s_sound_cpp_0044ab07,0x5c2,arg4);
     }
   }
   return 0;
@@ -1800,16 +1781,15 @@ int __watcall set_3dlistener_pos_1(_D3DVECTOR *d3_dvector)
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   
   if (init_sound_ok != 0) {
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x38))
                       (ds3d_listener,*(undefined4 *)d3_dvector,*(undefined4 *)(d3_dvector + 4),
                        *(undefined4 *)(d3_dvector + 8),0);
     if (lVar1 != 0) {
-      ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_posi_0044ab73,s_sound_cpp_0044ab69,0x5e2,
-                 ds_error_string_result);
+      arg4 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____error_set_listener_posi_0044ab73,s_sound_cpp_0044ab69,0x5e2,arg4);
     }
   }
   return 0;
@@ -1885,16 +1865,15 @@ int __watcall get_3dlistener_pos_1(float *param_1,float *param_2,float *param_3)
 {
   IDirectSound3DListener *pIVar1;
   long lVar2;
-  char *ds_error_string_result;
+  char *arg4;
   float afStack_18 [3];
   
   pIVar1 = ds3d_listener;
   if (init_sound_ok != 0) {
     lVar2 = (**(code **)(*(int *)ds3d_listener + 0x1c))();
     if (lVar2 != 0) {
-      ds_error_string_result = ds_error_string(lVar2);
-      fatal_exit(s__s__d____error_get_listener_posi_0044ac37,s_sound_cpp_0044ac2d,0x624,
-                 ds_error_string_result);
+      arg4 = ds_error_string(lVar2);
+      fatal_exit(s__s__d____error_get_listener_posi_0044ac37,s_sound_cpp_0044ac2d,0x624,arg4);
     }
     *param_1 = (float)pIVar1;
     *param_2 = (float)afStack_18;
@@ -1936,7 +1915,7 @@ int __watcall set_3dlistener_orientation(_D3DVECTOR *d3_dvector_2,_D3DVECTOR *d3
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   
   if (init_sound_ok != 0) {
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x34))
@@ -1944,9 +1923,8 @@ int __watcall set_3dlistener_orientation(_D3DVECTOR *d3_dvector_2,_D3DVECTOR *d3
                        *(undefined4 *)(d3_dvector_2 + 8),*(undefined4 *)d3_dvector,
                        *(undefined4 *)(d3_dvector + 4),*(undefined4 *)(d3_dvector + 8),0);
     if (lVar1 != 0) {
-      ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0044ac99,s_sound_cpp_0044ac8f,0x650,
-                 ds_error_string_result);
+      arg4 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____error_set_listener_orie_0044ac99,s_sound_cpp_0044ac8f,0x650,arg4);
     }
   }
   return 0;
@@ -1961,14 +1939,13 @@ set_3dlistener_orientation_1
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   
   if (init_sound_ok != 0) {
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x34))(ds3d_listener,param_5,param_6);
     if (lVar1 != 0) {
-      ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0044accd,s_sound_cpp_0044acc3,0x660,
-                 ds_error_string_result);
+      arg4 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____error_set_listener_orie_0044accd,s_sound_cpp_0044acc3,0x660,arg4);
     }
   }
   return 0;
@@ -1981,7 +1958,7 @@ int set_3dlistener_dopplerfactor(float param_1)
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   
   if (init_sound_ok != 0) {
     if (param_1 < 0.0) {
@@ -1992,9 +1969,8 @@ int set_3dlistener_dopplerfactor(float param_1)
     }
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x30))(ds3d_listener,param_1,0);
     if (lVar1 != 0) {
-      ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0044ad01,s_sound_cpp_0044acf7,0x677,
-                 ds_error_string_result);
+      arg4 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____error_set_listener_orie_0044ad01,s_sound_cpp_0044acf7,0x677,arg4);
     }
   }
   return 0;
@@ -2061,14 +2037,13 @@ void __watcall execute_ds3d_settings(void)
 
 {
   long lVar1;
-  char *ds_error_string_result;
+  char *arg4;
   
   if (init_sound_ok != 0) {
     lVar1 = (**(code **)(*(int *)ds3d_listener + 0x44))(ds3d_listener);
     if (lVar1 != 0) {
-      ds_error_string_result = ds_error_string(lVar1);
-      fatal_exit(s__s__d____error_set_listener_orie_0044adb5,s_sound_cpp_0044adab,0x6b7,
-                 ds_error_string_result);
+      arg4 = ds_error_string(lVar1);
+      fatal_exit(s__s__d____error_set_listener_orie_0044adb5,s_sound_cpp_0044adab,0x6b7,arg4);
     }
   }
   return;
@@ -2078,93 +2053,92 @@ void __watcall execute_ds3d_settings(void)
 /* ==== 0041b4e6 play_3dsound_buffer ==== */
 
 int __watcall
-play_3dsound_buffer(char *param_1,int param_2,float param_3,float param_4,float param_5)
+play_3dsound_buffer(char *filename_val,int param_2,float param_3,float param_4,float param_5)
 
 {
-  int free_buffer_1;
+  int arg2;
   int snd_buf_index;
   int sound_buffer_busy_result;
   long lVar1;
   char *pcVar2;
-  undefined4 extraout_ECX;
   undefined4 unaff_ESI;
   snd_buf_t *snd_buf_2;
-  char *format;
   char *pcVar3;
-  undefined4 uVar4;
+  char *arg2_00;
+  undefined4 arg3;
   snd_buf_t snd_buf;
   
   if (init_sound_ok != 0) {
-    free_buffer_1 = get_free_buffer_1(1);
-    if (free_buffer_1 == -1) {
+    arg2 = get_free_buffer_1(1);
+    if (arg2 == -1) {
       return -1;
     }
-    debugmsg(s_new_3d_buffer_used__d_0044addf,free_buffer_1);
-    snd_buf_index = load_wave_file(param_1,free_buffer_1);
+    debugmsg(s_new_3d_buffer_used__d_0044addf,arg2);
+    snd_buf_index = load_wave_file(filename_val,arg2);
     if (snd_buf_index == 0) {
-      snd_buf_index = free_buffer_1 * 0x40;
+      snd_buf_index = arg2 * 0x40;
       *(undefined4 *)(xvga_sound_buffer + snd_buf_index + 0x30) = 1;
       snd_buf_2 = xvga_sound_buffer + snd_buf_index;
       do {
-        snd_buf = (snd_buf_t)*param_1;
+        snd_buf = (snd_buf_t)*filename_val;
         *snd_buf_2 = snd_buf;
         if (snd_buf == (snd_buf_t)0x0) break;
-        snd_buf = *(snd_buf_t *)(param_1 + 1);
-        param_1 = param_1 + 2;
+        snd_buf = *(snd_buf_t *)(filename_val + 1);
+        filename_val = filename_val + 2;
         snd_buf_2[1] = snd_buf;
         snd_buf_2 = snd_buf_2 + 2;
       } while (snd_buf != (snd_buf_t)0x0);
       *(int *)(xvga_sound_buffer + snd_buf_index + 0x38) =
            *(int *)(xvga_sound_buffer + snd_buf_index + 0x38) + 1;
-      sound_buffer_busy_result = sound_buffer_busy(free_buffer_1);
+      sound_buffer_busy_result = sound_buffer_busy(arg2);
       if (sound_buffer_busy_result == 0) {
         lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + snd_buf_index + 0x28) + 0x30))
-                          (*(int **)(xvga_sound_buffer + snd_buf_index + 0x28),0,0,extraout_ECX);
+                          (*(int **)(xvga_sound_buffer + snd_buf_index + 0x28),0,0,param_2);
         if (lVar1 != 0) {
           pcVar2 = ds_error_string(lVar1);
-          fatal_exit(s__s__d____error_playing_sound__d___0044ae00,s_sound_cpp_0044adf6,0x6d6,
-                     free_buffer_1,pcVar2);
+          fatal_exit(s__s__d____error_playing_sound__d___0044ae00,s_sound_cpp_0044adf6,0x6d6,arg2,
+                     pcVar2);
         }
-        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c) + 0x4c))
-                          (*(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c),unaff_ESI,
-                           param_4,param_3,0);
+        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c) + 0x4c))
+                          (*(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c),unaff_ESI,param_4,
+                           param_3,0);
         if (lVar1 != 0) {
           pcVar2 = ds_error_string(lVar1);
-          fatal_exit(s__s__d____error_setting_position___0044ae31,s_sound_cpp_0044ae27,0x6d9,
-                     free_buffer_1,pcVar2);
+          fatal_exit(s__s__d____error_setting_position___0044ae31,s_sound_cpp_0044ae27,0x6d9,arg2,
+                     pcVar2);
         }
-        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c) + 0x44))
-                          (*(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c),0x41200000,0);
+        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c) + 0x44))
+                          (*(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c),0x41200000,0);
         if (lVar1 != 0) {
           pcVar2 = ds_error_string(lVar1);
-          fatal_exit(s__s__d____error_setting_position___0044ae65,s_sound_cpp_0044ae5b,0x6dc,
-                     free_buffer_1,pcVar2);
+          fatal_exit(s__s__d____error_setting_position___0044ae65,s_sound_cpp_0044ae5b,0x6dc,arg2,
+                     pcVar2);
         }
-        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c) + 0x40))
-                          (*(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c),0x461c4000,0);
+        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c) + 0x40))
+                          (*(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c),0x461c4000,0);
         if (lVar1 != 0) {
           pcVar2 = ds_error_string(lVar1);
-          fatal_exit(s__s__d____error_setting_position___0044ae99,s_sound_cpp_0044ae8f,0x6df,
-                     free_buffer_1,pcVar2);
+          fatal_exit(s__s__d____error_setting_position___0044ae99,s_sound_cpp_0044ae8f,0x6df,arg2,
+                     pcVar2);
         }
-        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c) + 0x48))
-                          (*(int **)(xvga_sound_buffer + free_buffer_1 * 0x40 + 0x2c),1,0);
+        lVar1 = (**(code **)(**(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c) + 0x48))
+                          (*(int **)(xvga_sound_buffer + arg2 * 0x40 + 0x2c),1,0);
         if (lVar1 == 0) {
-          return free_buffer_1;
+          return arg2;
         }
         pcVar2 = ds_error_string(lVar1);
-        uVar4 = 0x6e2;
-        pcVar3 = s_sound_cpp_0044aec3;
-        format = s__s__d____error_setting_position___0044aecd;
+        arg3 = 0x6e2;
+        arg2_00 = s_sound_cpp_0044aec3;
+        pcVar3 = s__s__d____error_setting_position___0044aecd;
       }
       else {
         pcVar2 = *(char **)(xvga_sound_buffer + snd_buf_index + 0x34);
-        uVar4 = 0x6e5;
-        pcVar3 = s_sound_cpp_0044aef7;
-        format = s__s__d____sound_buffer__d_type__d_0044af01;
+        arg3 = 0x6e5;
+        arg2_00 = s_sound_cpp_0044aef7;
+        pcVar3 = s__s__d____sound_buffer__d_type__d_0044af01;
       }
-      fatal_exit(format,pcVar3,uVar4,free_buffer_1,pcVar2);
-      return free_buffer_1;
+      fatal_exit(pcVar3,arg2_00,arg3,arg2,pcVar2);
+      return arg2;
     }
   }
   return -1;
@@ -2174,37 +2148,37 @@ play_3dsound_buffer(char *param_1,int param_2,float param_3,float param_4,float 
 /* ==== 0041b6d6 load_3dsound_buffer ==== */
 
 int __watcall
-load_3dsound_buffer(char *param_1,int param_2,float param_3,float param_4,float param_5)
+load_3dsound_buffer(char *filename_val,int param_2,float param_3,float param_4,float param_5)
 
 {
-  int free_buffer_1;
+  int arg2;
   int snd_buf_index;
-  snd_buf_t *snd_buf_2;
-  snd_buf_t snd_buf;
+  snd_buf_t *snd_buf;
+  snd_buf_t snd_buf_2;
   
   if (init_sound_ok != 0) {
-    free_buffer_1 = get_free_buffer_1(1);
-    if (free_buffer_1 == -1) {
+    arg2 = get_free_buffer_1(1);
+    if (arg2 == -1) {
       return -1;
     }
-    debugmsg(s_new_3d_buffer_used__d_0044af38,free_buffer_1);
-    snd_buf_index = load_wave_file(param_1,free_buffer_1);
+    debugmsg(s_new_3d_buffer_used__d_0044af38,arg2);
+    snd_buf_index = load_wave_file(filename_val,arg2);
     if (snd_buf_index == 0) {
-      snd_buf_index = free_buffer_1 * 0x40;
+      snd_buf_index = arg2 * 0x40;
       *(undefined4 *)(xvga_sound_buffer + snd_buf_index + 0x30) = 1;
-      snd_buf_2 = xvga_sound_buffer + snd_buf_index;
+      snd_buf = xvga_sound_buffer + snd_buf_index;
       do {
-        snd_buf = (snd_buf_t)*param_1;
-        *snd_buf_2 = snd_buf;
-        if (snd_buf == (snd_buf_t)0x0) break;
-        snd_buf = *(snd_buf_t *)(param_1 + 1);
-        param_1 = param_1 + 2;
-        snd_buf_2[1] = snd_buf;
-        snd_buf_2 = snd_buf_2 + 2;
-      } while (snd_buf != (snd_buf_t)0x0);
+        snd_buf_2 = (snd_buf_t)*filename_val;
+        *snd_buf = snd_buf_2;
+        if (snd_buf_2 == (snd_buf_t)0x0) break;
+        snd_buf_2 = *(snd_buf_t *)(filename_val + 1);
+        filename_val = filename_val + 2;
+        snd_buf[1] = snd_buf_2;
+        snd_buf = snd_buf + 2;
+      } while (snd_buf_2 != (snd_buf_t)0x0);
       *(int *)(xvga_sound_buffer + snd_buf_index + 0x38) =
            *(int *)(xvga_sound_buffer + snd_buf_index + 0x38) + 1;
-      return free_buffer_1;
+      return arg2;
     }
   }
   return -1;

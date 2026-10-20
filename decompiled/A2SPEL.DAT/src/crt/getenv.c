@@ -3,34 +3,35 @@
 
 /* ==== 0042eedc getenv ==== */
 
-char * __watcall getenv(char *_VarName)
+undefined4 __watcall getenv(char *param_1)
 
 {
   char cVar1;
+  byte *pbVar2;
   int cmp;
   uint i;
-  size_t _MaxCount;
-  undefined4 *puVar2;
-  char *str1;
+  int iVar3;
+  undefined4 *puVar4;
+  char *pcVar5;
   
-  if ((environ != (undefined4 *)0x0) && (_VarName != (char *)0x0)) {
+  if ((environ != (undefined4 *)0x0) && (param_1 != (char *)0x0)) {
     i = 0xffffffff;
-    str1 = _VarName;
+    pcVar5 = param_1;
     do {
       if (i == 0) break;
       i = i - 1;
-      cVar1 = *str1;
-      str1 = str1 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    _MaxCount = ~i - 1;
-    for (puVar2 = environ; str1 = (char *)*puVar2, str1 != (char *)0x0; puVar2 = puVar2 + 1) {
-      cmp = strnicmp(str1,_VarName,_MaxCount);
-      if ((cmp == 0) && (str1[_MaxCount] == '=')) {
-        return str1 + ~i;
+    iVar3 = ~i - 1;
+    for (puVar4 = environ; pbVar2 = (byte *)*puVar4, pbVar2 != (byte *)0x0; puVar4 = puVar4 + 1) {
+      cmp = strnicmp(pbVar2,param_1,iVar3);
+      if ((cmp == 0) && (pbVar2[iVar3] == 0x3d)) {
+        return pbVar2 + ~i;
       }
     }
   }
-  return (char *)0x0;
+  return 0;
 }
 
 

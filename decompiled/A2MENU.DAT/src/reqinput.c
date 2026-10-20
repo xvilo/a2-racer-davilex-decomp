@@ -7,22 +7,22 @@ void __watcall reqi_stop_snd(int *param_1)
 
 {
   int sound_buffer_busy_result;
+  int arg2;
+  int arg2_00;
   int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
-  int iVar1;
+  int arg2_01;
   
   if (-1 < *param_1) {
     debugmsg(s_snd_buffer____d_004296d8,*param_1);
-    sound_buffer_busy_result = sound_buffer_busy(extraout_EDX);
-    iVar1 = extraout_EDX;
+    sound_buffer_busy_result = sound_buffer_busy(arg2);
+    arg2_01 = arg2;
     if (sound_buffer_busy_result != 0) {
-      debugmsg(s_snd_buffer_is_busy__d_004296e9,extraout_EDX);
-      stop_sound_buffer(extraout_EDX_00);
-      debugmsg(s_snd_buffer_is_stopped__d_00429700,extraout_EDX_00);
-      iVar1 = extraout_EDX_01;
+      debugmsg(s_snd_buffer_is_busy__d_004296e9,arg2);
+      stop_sound_buffer(arg2_00);
+      debugmsg(s_snd_buffer_is_stopped__d_00429700,arg2_00);
+      arg2_01 = extraout_EDX;
     }
-    debugmsg(s_not_busy_snd_buffer____d_0042971a,iVar1);
+    debugmsg(s_not_busy_snd_buffer____d_0042971a,arg2_01);
   }
   *param_1 = -1;
   return;
@@ -108,10 +108,7 @@ int __cdecl req_input(char *param_1,int param_2,char *param_3,...)
 {
   bool bVar1;
   uint handle_form_result;
-  int keyispressed_result_2;
   int keyispressed_result;
-  int extraout_ECX;
-  int extraout_ECX_00;
   char acStack_124 [256];
   undefined1 *local_24;
   int local_20;
@@ -124,12 +121,11 @@ int __cdecl req_input(char *param_1,int param_2,char *param_3,...)
   vbprintf((int)acStack_124,0x100,(byte *)param_3,(int *)&local_24);
   local_24 = (undefined1 *)0x0;
   reqi_open(acStack_124);
-  keyispressed_result = 0xd;
   do {
-    keyispressed_result_2 = local_1c;
+    keyispressed_result = local_1c;
     if (!bVar1) {
       reqi_close();
-      return (uint)(keyispressed_result_2 == 0);
+      return (uint)(keyispressed_result == 0);
     }
     handle_form_result = handle_form();
     if (handle_form_result == 0) {
@@ -141,23 +137,21 @@ int __cdecl req_input(char *param_1,int param_2,char *param_3,...)
       reqi_wait_snd(&local_20);
       bVar1 = false;
       debugmsg(s__s__d____buffer____s_0042982c,s_reqinput_cpp_0042981f,0xea,param_1);
-      keyispressed_result = extraout_ECX;
     }
     else {
       if (1 < handle_form_result) {
         if (handle_form_result != 10000) {
-          keyispressed_result_2 = keyispressed(keyispressed_result);
-          if (keyispressed_result_2 != 0) {
+          keyispressed_result = keyispressed(0xd);
+          if (keyispressed_result != 0) {
             focus_control(0);
             snd_play(&local_20,s_click2_wav_00429843);
             get_edit_box_text(2,param_1,param_2);
             debugmsg(s__s__d____ENTER_DETECTED_for_edit_0042985b,s_reqinput_cpp_0042984e,0xf3,
                      param_1);
-            while (keyispressed_result = keyispressed(extraout_ECX_00), keyispressed_result != 0) {
+            while (keyispressed_result = keyispressed(0xd), keyispressed_result != 0) {
               handle_win_msg();
             }
             bVar1 = false;
-            keyispressed_result = extraout_ECX_00;
           }
           goto LAB_0040a93c;
         }

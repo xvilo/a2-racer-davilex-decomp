@@ -3,64 +3,59 @@
 
 /* ==== 00431a00 fflush ==== */
 
-int __watcall fflush(FILE *_File)
+void __watcall fflush(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  DWORD DVar1;
-  int lseek_result;
+  int qwrite_result;
   undefined4 *extraout_ECX;
-  DWORD extraout_EDX;
-  undefined4 unaff_EDX;
-  int iVar2;
-  DWORD unaff_EBX;
-  LPCVOID unaff_EDX_01;
+  int iVar1;
+  DWORD DVar2;
+  LPCVOID buffer;
   
-  if (_File == (FILE *)0x0) {
-    flush_all_open_streams(0,unaff_EDX);
-    return 0;
+  if (param_1 == 0) {
+    flush_all_open_streams(0,param_2,param_3,param_4);
+    return;
   }
   (*(code *)AccessFileH_1)();
-  iVar2 = 0;
+  iVar1 = 0;
   if ((*(byte *)((int)extraout_ECX + 0xd) & 0x10) == 0) {
     if ((extraout_ECX[2] != 0) &&
        (*(byte *)(extraout_ECX + 3) = *(byte *)(extraout_ECX + 3) & 0xef,
        (*(byte *)((int)extraout_ECX + 0xd) & 0x20) == 0)) {
-      lseek_result = 0;
+      DVar2 = 0;
       if (extraout_ECX[1] != 0) {
-        lseek_result = lseek(extraout_ECX[4],-extraout_ECX[1],1);
+        DVar2 = lseek(extraout_ECX[4],-extraout_ECX[1],1);
       }
-      if (lseek_result == -1) {
+      if (DVar2 == 0xffffffff) {
         *(byte *)(extraout_ECX + 3) = *(byte *)(extraout_ECX + 3) | 0x20;
-        iVar2 = -1;
       }
     }
   }
   else {
     *(byte *)((int)extraout_ECX + 0xd) = *(byte *)((int)extraout_ECX + 0xd) & 0xef;
     if (((*(byte *)(extraout_ECX + 3) & 2) != 0) &&
-       (unaff_EDX_01 = (LPCVOID)extraout_ECX[2], unaff_EDX_01 != (LPCVOID)0x0)) {
-      unaff_EBX = extraout_ECX[1];
-      while ((unaff_EBX != 0 && (iVar2 == 0))) {
-        DVar1 = qwrite(extraout_ECX[4],unaff_EDX_01,unaff_EBX);
-        if (DVar1 == 0xffffffff) {
+       (buffer = (LPCVOID)extraout_ECX[2], buffer != (LPCVOID)0x0)) {
+      DVar2 = extraout_ECX[1];
+      while ((DVar2 != 0 && (iVar1 == 0))) {
+        qwrite_result = qwrite(extraout_ECX[4],buffer,DVar2);
+        if (qwrite_result == -1) {
           *(byte *)(extraout_ECX + 3) = *(byte *)(extraout_ECX + 3) | 0x20;
-          iVar2 = -1;
+          iVar1 = -1;
         }
-        else if (DVar1 == 0) {
-          set_errno(0xc,0);
-          iVar2 = -1;
+        else if (qwrite_result == 0) {
+          set_errno(0xc);
+          iVar1 = -1;
           *(byte *)(extraout_ECX + 3) = *(byte *)(extraout_ECX + 3) | 0x20;
-          DVar1 = extraout_EDX;
         }
-        unaff_EDX_01 = (LPCVOID)((int)unaff_EDX_01 + DVar1);
-        unaff_EBX = unaff_EBX - DVar1;
+        buffer = (LPCVOID)((int)buffer + qwrite_result);
+        DVar2 = DVar2 - qwrite_result;
       }
     }
   }
   *extraout_ECX = extraout_ECX[2];
   extraout_ECX[1] = 0;
   (*(code *)ReleaseFileH_1)();
-  return iVar2;
+  return;
 }
 
 

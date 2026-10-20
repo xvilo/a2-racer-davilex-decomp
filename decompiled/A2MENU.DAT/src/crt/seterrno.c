@@ -3,58 +3,60 @@
 
 /* ==== 0041c5f6 set_EDOM ==== */
 
-void __watcall set_EDOM(undefined4 param_1,undefined4 unaff_EDX)
+int __watcall set_EDOM(undefined4 param_1,undefined4 param_2)
 
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar1 = (*(code *)GetThreadPtr)(param_2);
   *(int *)((int)uVar1 + 4) = (int)((ulonglong)uVar1 >> 0x20);
-  return;
+  return (int)uVar1;
 }
 
 
 /* ==== 0041c5fb set_errno ==== */
 
-void __watcall set_errno(undefined4 param_1,undefined4 unaff_EDX)
+int __watcall set_errno(undefined4 param_1)
 
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar1 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar1 + 4) = (int)((ulonglong)uVar1 >> 0x20);
-  return;
+  return (int)uVar1;
 }
 
 
 /* ==== 0041c609 set_ERANGE ==== */
 
-void __watcall set_ERANGE(undefined4 param_1,undefined4 unaff_EDX)
+int __watcall set_ERANGE(void)
 
 {
-  set_errno(0xe,unaff_EDX);
-  return;
+  int set_errno_result;
+  
+  set_errno_result = set_errno(0xe);
+  return set_errno_result;
 }
 
 
 /* ==== 0041c610 set_EINVAL ==== */
 
-undefined4 __watcall set_EINVAL(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall set_EINVAL(void)
 
 {
-  set_errno(9,unaff_EDX);
+  set_errno(9);
   return 0xffffffff;
 }
 
 
 /* ==== 0041c620 set_doserrno ==== */
 
-void __watcall set_doserrno(undefined4 param_1,undefined4 unaff_EDX)
+void __watcall set_doserrno(undefined4 param_1)
 
 {
   undefined8 uVar1;
   
-  uVar1 = (*(code *)GetThreadPtr)(unaff_EDX);
+  uVar1 = (*(code *)GetThreadPtr)();
   *(int *)((int)uVar1 + 8) = (int)((ulonglong)uVar1 >> 0x20);
   return;
 }

@@ -3,14 +3,12 @@
 
 /* ==== 00418be0 memset ==== */
 
-void * __watcall memset(void *_Dst,int _Val,size_t _Size)
+undefined4 * __watcall memset(undefined4 *param_1,undefined4 param_2,undefined4 param_3)
 
 {
-  undefined1 uVar1;
-  
-  uVar1 = (undefined1)_Val;
-  STOSB((uint)_Dst,CONCAT31(CONCAT21(CONCAT11(uVar1,uVar1),uVar1),uVar1));
-  return _Dst;
+  STOSB(param_1,CONCAT31(CONCAT21(CONCAT11((undefined1)param_2,(undefined1)param_2),
+                                  (undefined1)param_2),(undefined1)param_2),param_3,param_3);
+  return param_1;
 }
 
 

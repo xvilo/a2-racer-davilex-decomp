@@ -3,17 +3,19 @@
 
 /* ==== 00414aa7 Nan_Inf ==== */
 
-undefined8 __watcall
-Nan_Inf(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 param_4,int param_5,
+undefined4 __watcall
+Nan_Inf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,int param_5,
        uint param_6,undefined4 *param_7)
 
 {
   undefined4 *puVar1;
   undefined4 uVar2;
   short local_c;
+  ushort uStack_a;
   
   local_c = (short)param_6;
-  if ((param_6 >> 0x10 & 0x7ff0) == 0x7ff0) {
+  uStack_a = (ushort)(param_6 >> 0x10);
+  if ((uStack_a & 0x7ff0) == 0x7ff0) {
     puVar1 = param_7;
     if ((param_6 & 0x80000000) != 0) {
       puVar1 = (undefined4 *)((int)param_7 + 1);
@@ -29,7 +31,7 @@ Nan_Inf(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 pa
   else {
     uVar2 = 0;
   }
-  return CONCAT44(unaff_EDX,uVar2);
+  return uVar2;
 }
 
 

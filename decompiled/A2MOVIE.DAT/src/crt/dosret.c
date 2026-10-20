@@ -3,47 +3,43 @@
 
 /* ==== 0040be8f set_errno_dos ==== */
 
-undefined8 __watcall set_errno_dos(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall set_errno_dos(uint param_1)
 
 {
   int iVar1;
-  uint extraout_EDX;
-  uint uVar2;
   
-  set_doserrno(param_1,param_1);
-  uVar2 = extraout_EDX;
-  if (extraout_EDX == 0x7b) {
+  set_doserrno(param_1);
+  if (param_1 == 0x7b) {
     iVar1 = 1;
   }
-  else if (extraout_EDX == 0xce) {
+  else if (param_1 == 0xce) {
     iVar1 = 9;
   }
-  else if (extraout_EDX == 0xb7) {
+  else if (param_1 == 0xb7) {
     iVar1 = 7;
   }
   else {
-    if (0x13 < extraout_EDX) {
-      uVar2 = 0x13;
+    if (0x13 < param_1) {
+      param_1 = 0x13;
     }
-    iVar1 = *(int *)(&real87 + uVar2) >> 0x18;
+    iVar1 = *(int *)(&real87 + param_1) >> 0x18;
   }
-  set_errno(iVar1,uVar2);
-  return CONCAT44(unaff_EDX,0xffffffff);
+  set_errno(iVar1);
+  return 0xffffffff;
 }
 
 
 /* ==== 0040bee0 set_errno_nt ==== */
 
-undefined8 __watcall set_errno_nt(undefined4 param_1,undefined4 unaff_EDX_00)
+undefined4 __watcall set_errno_nt(void)
 
 {
   DWORD DVar1;
-  undefined4 unaff_EDX;
-  undefined8 set_errno_dos_result;
+  undefined4 set_errno_dos_result;
   
   DVar1 = GetLastError();
-  set_errno_dos_result = set_errno_dos(DVar1,unaff_EDX);
-  return CONCAT44(unaff_EDX_00,(int)set_errno_dos_result);
+  set_errno_dos_result = set_errno_dos(DVar1);
+  return set_errno_dos_result;
 }
 
 

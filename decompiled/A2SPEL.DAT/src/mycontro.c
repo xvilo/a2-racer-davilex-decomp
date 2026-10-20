@@ -3,31 +3,31 @@
 
 /* ==== 0040243f exit_player ==== */
 
-void __watcall exit_player(undefined4 param_1,undefined4 param_2)
+void __watcall exit_player(void)
 
 {
   (**(code **)(**(int **)&racers[player_index].field_0x30 + 8))
-            (*(int **)&racers[player_index].field_0x30,param_2);
+            (*(int **)&racers[player_index].field_0x30);
   return;
 }
 
 
 /* ==== 00402831 exit_system_3d ==== */
 
-void __watcall exit_system_3d(undefined4 param_1,undefined4 param_2)
+void __watcall exit_system_3d(undefined4 param_1)
 
 {
   int *piVar1;
-  undefined4 extraout_EAX;
-  undefined4 extraout_EDX;
+  int iVar2;
   int i;
-  undefined8 uVar2;
   
-  debugmsg(s_Deallocating_objects__anims__fra_00441adc,param_2);
+  debugmsg(s_Deallocating_objects__anims__fra_00441adc);
+  iVar2 = 0;
   for (i = 0; i < object_count; i = i + 1) {
-    free_anim3d();
+    free_anim3d(*(int *)((int)&racers->anim + iVar2));
+    iVar2 = iVar2 + 0x4b;
   }
-  debugmsg(s_Deallocating_standard_textures_00441b0e,param_2);
+  debugmsg(s_Deallocating_standard_textures_00441b0e);
   piVar1 = *(int **)(texture_table + 4 + road_texture * 0xc);
   (**(code **)(*piVar1 + 8))(piVar1);
   piVar1 = *(int **)(road_texture * 0xc + 8 + texture_table);
@@ -37,9 +37,9 @@ void __watcall exit_system_3d(undefined4 param_1,undefined4 param_2)
   piVar1 = *(int **)(grass_texture * 0xc + 8 + texture_table);
   (**(code **)(*piVar1 + 8))(piVar1);
   debugmsg(s_exiting_car___obj_types_00441b2e);
-  uVar2 = release_car_textures(extraout_EAX,extraout_EDX);
-  uVar2 = release_static_object_textures((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-  free_3d_arrays((int)uVar2,(uint)((ulonglong)uVar2 >> 0x20));
+  release_car_textures();
+  release_static_object_textures();
+  free_3d_arrays();
   debugmsg(s_Done_deallocating_objects__anims_00441b47);
   return;
 }
@@ -78,55 +78,56 @@ void __watcall load_and_play_motor_sample(int sample,int loop)
 
 /* ==== 004029ab select_rpm_step_for_speed ==== */
 
-void __watcall select_rpm_step_for_speed(float param_1)
+void __watcall
+select_rpm_step_for_speed
+          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
+          )
 
 {
   int i;
   int iVar1;
-  float in_stack_00000004;
   
   rpm_step = 0;
   iVar1 = 0;
   for (i = 0; i < rpm_step_count; i = i + 1) {
-    if (*(float *)((int)&rpm_table + iVar1) <= in_stack_00000004) {
+    if (*(float *)((int)&rpm_table + iVar1) <= param_5) {
       rpm_step = i;
     }
     iVar1 = iVar1 + 0xc;
   }
-  debugmsg(s_cartoerenspeed____f_00441b80,(double)(float)(&rpm_table)[rpm_step * 3]);
+  debugmsg(s_cartoerenspeed____f_00441b80,SUB84((double)(float)(&rpm_table)[rpm_step * 3],0),
+           (int)((ulonglong)(double)(float)(&rpm_table)[rpm_step * 3] >> 0x20));
   return;
 }
 
 
 /* ==== 00402a06 add_rpm_steps ==== */
 
-void __watcall add_rpm_steps(void)
+void __watcall
+add_rpm_steps(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+             undefined4 param_5,undefined4 param_6,float param_7,float param_8,float param_9)
 
 {
   int iVar1;
-  undefined4 in_EAX;
-  float fVar2;
-  int iVar3;
-  float10 chp;
-  float in_stack_00000004;
-  float in_stack_00000008;
-  float in_stack_00000014;
-  float local_14;
+  undefined4 chp;
+  int iVar2;
+  float10 fVar3;
+  float local_18;
   float local_10;
   
-  local_14 = in_stack_00000004;
   local_10 = 0.0;
-  iVar3 = rpm_step_count * 0xc;
-  while (iVar1 = rpm_step_count, local_10 < in_stack_00000014) {
-    fVar2 = local_14;
+  local_18 = param_7;
+  iVar2 = rpm_step_count * 0xc;
+  while (iVar1 = rpm_step_count, local_10 < param_9) {
+    fVar3 = (float10)local_18;
     chp = CHP();
-    *(undefined4 *)(&DAT_0045b2c4 + iVar3) = in_EAX;
+    *(undefined4 *)(&DAT_0045b2c4 + iVar2) = param_1;
     rpm_step_count = iVar1 + 1;
-    *(float *)((int)&rpm_table + iVar3) = fVar2;
-    local_14 = local_14 + (in_stack_00000008 - in_stack_00000004) / in_stack_00000014;
+    *(undefined4 *)((int)&rpm_table + iVar2) = chp;
+    local_18 = local_18 + (param_8 - param_7) / param_9;
     local_10 = local_10 + 1.0;
-    *(int *)(&DAT_0045b2bc + iVar3) = (int)ROUND(chp);
-    iVar3 = iVar3 + 0xc;
+    *(int *)(&DAT_0045b2bc + iVar2) = (int)ROUND(fVar3);
+    iVar2 = iVar2 + 0xc;
   }
   return;
 }
@@ -140,9 +141,9 @@ void __watcall init_controls(void)
   int iVar1;
   int iVar2;
   int i;
-  int extraout_EDX;
-  int iVar3;
+  undefined4 uVar3;
   int iVar4;
+  int iVar5;
   
   DAT_004577e0 = (int)infio.key_left;
   DAT_004577e4 = (int)infio.key_right;
@@ -164,51 +165,53 @@ LAB_00402b3a:
   set_joystick_keys(1,0,DAT_004577e0);
   set_joystick_keys(1,1,DAT_004577e4);
   set_joystick_keys(1,2,DAT_004577e8);
+  uVar3 = 3;
+  iVar5 = DAT_004577ec;
   set_joystick_keys(1,3,DAT_004577ec);
-  add_rpm_steps();
+  add_rpm_steps(0,uVar3,iVar5,0,0xc0200000,0,50.0,0.0,7.0);
   idle_rpm_step = rpm_step_count;
   rpm_step = rpm_step_count;
-  add_rpm_steps();
-  add_rpm_steps();
-  add_rpm_steps();
-  add_rpm_steps();
-  add_rpm_steps();
+  add_rpm_steps(1,uVar3,iVar5,i,0,0x40200000,0.0,55.0,7.0);
+  add_rpm_steps(2,uVar3,iVar5,i,0x40200000,0x40800000,35.0,60.0,12.0);
+  add_rpm_steps(3,uVar3,iVar5,i,0x40800000,0x40c00000,40.0,63.0,15.0);
+  add_rpm_steps(4,uVar3,iVar5,i,0x40c00000,0x41000000,45.0,65.0,30.0);
   iVar4 = 0;
-  iVar3 = extraout_EDX;
+  add_rpm_steps(5,0,iVar5,i,0x41000000,0x41700000,45.0,60.0,80.0);
+  iVar5 = 0;
   do {
-    iVar1 = iVar4 + 8;
-    *(int *)((int)&DAT_004729c8 + iVar4) = i + 0x2b11;
-    iVar2 = iVar3 + -2000;
+    iVar1 = iVar5 + 8;
+    *(int *)((int)&DAT_004729c8 + iVar5) = i + 0x2b11;
+    iVar2 = iVar4 + -2000;
     i = i + 1;
-    iVar3 = iVar3 + 0x2d;
-    *(int *)((int)&DAT_004729cc + iVar4) = iVar2;
-    iVar4 = iVar1;
+    iVar4 = iVar4 + 0x2d;
+    *(int *)((int)&DAT_004729cc + iVar5) = iVar2;
+    iVar5 = iVar1;
   } while (iVar1 != 0x118);
-  iVar4 = 0x118;
+  iVar5 = 0x118;
   do {
-    iVar2 = iVar4 + 8;
-    iVar3 = i + 0x2b11;
-    *(undefined4 *)((int)&DAT_004729cc + iVar4) = 0xfffffdfd;
+    iVar2 = iVar5 + 8;
+    iVar4 = i + 0x2b11;
+    *(undefined4 *)((int)&DAT_004729cc + iVar5) = 0xfffffdfd;
     i = i + 400;
-    *(int *)((int)&DAT_004729c8 + iVar4) = iVar3;
-    iVar4 = iVar2;
+    *(int *)((int)&DAT_004729c8 + iVar5) = iVar4;
+    iVar5 = iVar2;
   } while (iVar2 != 0x280);
-  iVar4 = -100;
+  iVar5 = -100;
   i = 0;
   do {
-    iVar3 = i + 8;
-    *(int *)((int)&DAT_00472cec + i) = iVar4;
+    iVar4 = i + 8;
+    *(int *)((int)&DAT_00472cec + i) = iVar5;
     *(undefined4 *)((int)&DAT_00472ce8 + i) = 0x157c;
-    iVar4 = iVar4 + -0x2a;
-    i = iVar3;
-  } while (iVar3 != 0x118);
+    iVar5 = iVar5 + -0x2a;
+    i = iVar4;
+  } while (iVar4 != 0x118);
   i = 0x118;
   do {
-    iVar4 = i + 8;
+    iVar5 = i + 8;
     *(undefined4 *)((int)&DAT_00472ce8 + i) = 0x157c;
     *(undefined4 *)((int)&DAT_00472cec + i) = 0xffffec78;
-    i = iVar4;
-  } while (iVar4 != 0x280);
+    i = iVar5;
+  } while (iVar5 != 0x280);
   return;
 }
 
@@ -251,29 +254,26 @@ void __watcall set_camera_position(int camera)
 
 /* ==== 00402e48 update_camera ==== */
 
-void __watcall update_camera(undefined4 param_1,undefined4 param_2)
+void __watcall update_camera(void)
 
 {
-  int iVar1;
-  
-  iVar1 = camera_position + -1;
-  switch(iVar1) {
-  case 0:
-    update_camera_chase(iVar1);
-    break;
+  switch(camera_position) {
   case 1:
-    update_camera_cockpit(iVar1);
+    update_camera_chase();
+    break;
+  case 2:
+    update_camera_cockpit();
     racers[player_index].visible = '\0';
     return;
-  case 2:
-    update_camera_opponent(iVar1,param_2);
-    break;
   case 3:
-    update_camera_overhead(iVar1);
+    update_camera_opponent();
+    break;
+  case 4:
+    update_camera_overhead();
     break;
   default:
     fatal_exit(s__s__d____unknown_camera_position_00441bd5,s_mycontro_cpp_00441bc8,0x16d,
-               camera_position,param_2);
+               camera_position);
     return;
   }
   racers[player_index].visible = '\x01';
@@ -308,18 +308,20 @@ void __watcall play_gear_change_sound(int new_step,int old_step)
 
 /* ==== 00402f3f start_engine_sounds ==== */
 
-void __watcall start_engine_sounds(void)
+int __watcall start_engine_sounds(void)
 
 {
+  int in_EAX;
+  
   if (engine_sound_enabled != 0) {
     load_and_play_motor_sample(1,1);
     load_and_play_motor_sample(0,1);
     set_sound_buffer_freq(DAT_0045777a,DAT_004729c8 + 6000);
     set_sound_buffer_vol(DAT_0045777a,((DAT_004729cc + 300) - volume_attenuation) - volume_offset);
     set_sound_buffer_vol(motor_sample_handles,(DAT_00472cec - volume_attenuation) - volume_offset);
-    set_sound_buffer_freq(motor_sample_handles,DAT_00472ce8);
+    in_EAX = set_sound_buffer_freq(motor_sample_handles,DAT_00472ce8);
   }
-  return;
+  return in_EAX;
 }
 
 

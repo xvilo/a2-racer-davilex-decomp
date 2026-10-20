@@ -3,7 +3,7 @@
 
 /* ==== 0041ca78 close ==== */
 
-int __watcall close(int _FileHandle)
+undefined4 __watcall close(int param_1)
 
 {
   HANDLE hObject;
@@ -12,10 +12,9 @@ int __watcall close(int _FileHandle)
   int iVar3;
   int extraout_ECX;
   int extraout_ECX_00;
-  undefined4 unaff_EDX;
   
   iVar3 = 0;
-  hObject = *(HANDLE *)(FileHandleIDs + _FileHandle * 4);
+  hObject = *(HANDLE *)(FileHandleIDs + param_1 * 4);
   if ((WindowsCloseWindow != (code *)0x0) &&
      (iVar1 = (*WindowsIsWindowedHandle)(), iVar3 = extraout_ECX, iVar1 != 0)) {
     (*WindowsRemoveWindowedHandle)();
@@ -23,10 +22,10 @@ int __watcall close(int _FileHandle)
     iVar3 = extraout_ECX_00;
   }
   if ((iVar3 == 0) && (BVar2 = CloseHandle(hObject), BVar2 == 0)) {
-    set_errno(4,unaff_EDX);
-    return -1;
+    set_errno(4);
+    return 0xffffffff;
   }
-  SetIOMode(_FileHandle,0);
+  SetIOMode(param_1,0);
   return 0;
 }
 

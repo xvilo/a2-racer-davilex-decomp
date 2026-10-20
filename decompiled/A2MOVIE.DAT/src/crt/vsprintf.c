@@ -3,29 +3,29 @@
 
 /* ==== 00406898 mem_putc ==== */
 
-void __watcall mem_putc(int *param_1,undefined1 unaff_DL)
+int * __watcall mem_putc(int *param_1,undefined4 param_2)
 
 {
   undefined1 *puVar1;
   
   puVar1 = (undefined1 *)*param_1;
   *param_1 = (int)(puVar1 + 1);
-  *puVar1 = unaff_DL;
+  *puVar1 = (undefined1)param_2;
   param_1[4] = param_1[4] + 1;
-  return;
+  return param_1;
 }
 
 
 /* ==== 004068ab vsprintf ==== */
 
-int __watcall vsprintf(char *_Dest,char *_Format,va_list _Args)
+void __watcall vsprintf(int param_1,byte *param_2,int *param_3)
 
 {
   int prtf_result;
   
-  prtf_result = prtf(_Dest,(byte *)_Format);
-  _Dest[prtf_result] = '\0';
-  return prtf_result;
+  prtf_result = prtf(param_1,param_2,param_3,mem_putc);
+  *(undefined1 *)(param_1 + prtf_result) = 0;
+  return;
 }
 
 

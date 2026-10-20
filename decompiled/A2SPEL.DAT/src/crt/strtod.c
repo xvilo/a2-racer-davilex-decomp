@@ -3,111 +3,130 @@
 
 /* ==== 0043bbee strtod ==== */
 
-/* WARNING: Removing unreachable block (ram,0x0043bc8d) */
-/* WARNING: Removing unreachable block (ram,0x0043bc98) */
-/* WARNING: Removing unreachable block (ram,0x0043bca1) */
-/* WARNING: Removing unreachable block (ram,0x0043bcb7) */
-/* WARNING: Removing unreachable block (ram,0x0043bcbc) */
-/* WARNING: Removing unreachable block (ram,0x0043bcbf) */
-/* WARNING: Removing unreachable block (ram,0x0043bcc1) */
-/* WARNING: Removing unreachable block (ram,0x0043bcc4) */
-/* WARNING: Removing unreachable block (ram,0x0043bcd1) */
-/* WARNING: Removing unreachable block (ram,0x0043bcd6) */
-/* WARNING: Removing unreachable block (ram,0x0043bcde) */
-/* WARNING: Removing unreachable block (ram,0x0043bce6) */
-/* WARNING: Removing unreachable block (ram,0x0043bcec) */
-/* WARNING: Removing unreachable block (ram,0x0043bd0d) */
-/* WARNING: Removing unreachable block (ram,0x0043bcf9) */
-/* WARNING: Removing unreachable block (ram,0x0043bcfb) */
-/* WARNING: Removing unreachable block (ram,0x0043bd08) */
-/* WARNING: Removing unreachable block (ram,0x0043bd0e) */
-/* WARNING: Removing unreachable block (ram,0x0043bc5f) */
-
-double __watcall strtod(char *_Str,char **_EndPtr)
+byte * __watcall strtod(byte *param_1,undefined4 *param_2,undefined4 param_3,uint param_4)
 
 {
   byte bVar1;
-  bool bVar2;
+  byte *pbVar2;
   byte *pbVar3;
   byte *pbVar4;
-  byte bVar5;
-  undefined4 unaff_EDX;
+  uint uVar5;
+  byte bVar7;
+  uint uVar6;
   int i;
-  int j;
-  float10 z_buf2_f;
+  int k;
+  undefined4 local_40;
   byte local_3c [20];
-  undefined8 local_28;
-  int local_20;
-  char *local_18;
+  undefined4 local_28;
+  undefined4 uStack_24;
+  int j;
+  byte *local_1c;
+  byte *local_18;
   
-  for (pbVar3 = (byte *)_Str; (bVar5 = *pbVar3, bVar5 == 0x20 || ((8 < bVar5 && (bVar5 < 0xe))));
-      pbVar3 = pbVar3 + 1) {
+  for (pbVar2 = param_1; (bVar7 = *pbVar2, bVar7 == 0x20 || ((8 < bVar7 && (bVar7 < 0xe))));
+      pbVar2 = pbVar2 + 1) {
   }
-  bVar2 = false;
-  pbVar4 = pbVar3 + 1;
-  if ((bVar5 != 0x2b) && (pbVar4 = pbVar3, bVar5 == 0x2d)) {
-    bVar2 = true;
-    pbVar4 = pbVar3 + 1;
+  uVar5 = param_4 & 0xffffff00;
+  pbVar3 = pbVar2 + 1;
+  if ((bVar7 != 0x2b) && (pbVar3 = pbVar2, bVar7 == 0x2d)) {
+    uVar5 = CONCAT31((int3)(param_4 >> 8),1);
+    pbVar3 = pbVar2 + 1;
   }
   i = 0;
-  bVar5 = 0x30;
-  local_20 = 0;
-  local_18 = _Str;
+  bVar7 = 0x30;
+  j = 0;
+  local_18 = param_1;
   while( true ) {
-    do {
-      bVar1 = *pbVar4;
-      pbVar4 = pbVar4 + 1;
-    } while (bVar1 == 0x2e);
+    while( true ) {
+      bVar1 = *pbVar3;
+      uVar5 = CONCAT22((short)(uVar5 >> 0x10),CONCAT11((char)uVar5,(char)uVar5)) & 0xffff08ff;
+      pbVar2 = pbVar3 + 1;
+      if (bVar1 != 0x2e) break;
+      if ((uVar5 >> 8 & 0xff) != 0) goto LAB_0043bc7b;
+      uVar5 = uVar5 | 8;
+      pbVar3 = pbVar2;
+    }
     if ((bVar1 < 0x30) || (0x39 < bVar1)) break;
-    bVar5 = bVar5 | bVar1;
-    if (bVar5 != 0x30) {
+    if ((uVar5 >> 8 & 0xff) != 0) {
+      j = j + 1;
+    }
+    bVar7 = bVar7 | bVar1;
+    if (bVar7 != 0x30) {
       if (i < 0x11) {
         local_3c[i] = bVar1;
       }
       i = i + 1;
     }
+    uVar5 = uVar5 | 4;
+    pbVar3 = pbVar2;
   }
-  j = -local_20;
+LAB_0043bc7b:
+  k = 0;
+  pbVar4 = pbVar2;
+  if (((CONCAT11((char)uVar5,bVar1) & 0x4ff) >> 8 != 0) &&
+     ((bVar1 == 0x65 || (pbVar4 = pbVar3, local_18 = pbVar3, bVar1 == 0x45)))) {
+    pbVar4 = pbVar3 + 2;
+    if ((*pbVar2 != 0x2b) && (pbVar4 = pbVar2, *pbVar2 == 0x2d)) {
+      uVar5 = uVar5 | 2;
+      pbVar4 = pbVar3 + 2;
+    }
+    uVar5 = uVar5 & 0xfffffffb;
+    for (; (uVar6 = (uint)*pbVar4, 0x2f < uVar6 && (uVar6 < 0x3a)); pbVar4 = pbVar4 + 1) {
+      if (k < 1000) {
+        k = uVar6 + k * 10 + -0x30;
+      }
+      uVar5 = uVar5 | 4;
+    }
+    if ((uVar5 & 2) != 0) {
+      k = -k;
+    }
+    local_1c = pbVar3;
+    local_18 = pbVar4;
+    if ((uVar5 & 4) == 0) {
+      pbVar4 = pbVar3;
+      local_18 = pbVar3;
+    }
+  }
+  k = k - j;
   if (0x11 < i) {
-    j = j + i + -0x11;
+    k = k + i + -0x11;
     i = 0x11;
   }
-  for (; (0 < i && ((&stack0xffffffc3)[i] == '0')); i = i + -1) {
-    j = j + 1;
+  while ((0 < i && (pbVar4 = (byte *)(uint)local_3c[i + -1], pbVar4 == (byte *)0x30))) {
+    k = k + 1;
+    i = i + -1;
   }
-  if (i == 0) {
-    local_28 = 0.0;
-    goto LAB_0043bdc9;
-  }
-  local_3c[i] = 0;
-  z_buf2_f = (float10)ZBuf2F(local_3c,&local_28);
-  i = j + -1 + i;
-  if (i < 0x135) {
-    if (i < -0x134) {
-      set_ERANGE(i,unaff_EDX);
-      local_28 = 0.0;
-      goto LAB_0043bdc9;
+  local_40 = param_2;
+  if (i != 0) {
+    local_3c[i] = 0;
+    ZBuf2F(local_3c);
+    i = k + -1 + i;
+    if (i < 0x135) {
+      if (i < -0x134) {
+        pbVar4 = (byte *)set_ERANGE();
+        goto LAB_0043bdc9;
+      }
+      if (k != 0) {
+        Scale10V(i,uStack_24,local_28,uVar5,local_28,uStack_24,k);
+      }
+      pbVar2 = (byte *)(uint)((byte)uVar5 & 1);
+      pbVar4 = pbVar2;
     }
-    if (j != 0) {
-      Scale10V(i,local_28._4_4_);
-      local_28 = (double)z_buf2_f;
+    else {
+      set_ERANGE();
+      pbVar2 = (byte *)(uint)((byte)uVar5 & 1);
+      pbVar4 = DAT_00457638;
     }
-    if (!bVar2) goto LAB_0043bdc9;
-  }
-  else {
-    set_ERANGE(i,unaff_EDX);
-    if (!bVar2) {
-      local_28 = (double)CONCAT44(DAT_00457638,HugeValue);
-      goto LAB_0043bdc9;
+    if (pbVar2 != (byte *)0x0) {
+      pbVar4 = pbVar2;
     }
-    local_28 = (double)CONCAT44(DAT_00457638,HugeValue);
   }
-  local_28 = -local_28;
 LAB_0043bdc9:
-  if (_EndPtr != (char **)0x0) {
-    *_EndPtr = local_18;
+  if (local_40 != (undefined4 *)0x0) {
+    *local_40 = local_18;
+    pbVar4 = local_18;
   }
-  return SUB108((float10)local_28,0);
+  return pbVar4;
 }
 
 

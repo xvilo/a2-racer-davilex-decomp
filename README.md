@@ -37,7 +37,16 @@ tools/decompile_all.sh A2MENU.DAT      # one module
 A2_DISC=/elsewhere/disc tools/decompile_all.sh
 ```
 
-For each module the script runs `rea analyze` (Ghidra provider, with a snapshot in `build/`). It then runs Ghidra headless with `tools/ExportDecompiled.java` to write the full C export.
+For each module the script runs `rea analyze` (Ghidra provider, with a snapshot in `build/`). It then runs Ghidra headless with these scripts:
+
+| Script | Does |
+|---|---|
+| `ApplyWatcom.java` | Applies names, signatures and structures from `symbols/`. It also adds Watcom's register calling conventions, names shared tails, and defines short strings and float constants |
+| `InferSignatures.java` | For functions with no known signature, finds the register parameters (EAX, EDX, EBX, ECX) from the machine code, then the return type from the call sites. Each function gets `__watcall0`…`__watcall4` by its register-parameter count, since Watcom preserves every argument register a function doesn't take. Each variadic call gets its real argument count |
+| `AutoNameVariables.java` | Names variables from argument roles, call results, loop counters and types |
+| `ExportDecompiled.java` | Writes `decompiled.c`, `functions.tsv` (with each prototype) and `strings.tsv` |
+
+`tools/split_sources.py` then splits the C export into the original source files.
 
 ## Game modules
 

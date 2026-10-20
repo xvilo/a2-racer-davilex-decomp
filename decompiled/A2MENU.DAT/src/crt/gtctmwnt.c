@@ -3,7 +3,7 @@
 
 /* ==== 0041a488 getctime ==== */
 
-undefined8 __watcall getctime(uint *param_1,undefined4 unaff_EDX)
+uint __watcall getctime(uint *param_1)
 
 {
   _SYSTEMTIME systemtime;
@@ -16,7 +16,7 @@ undefined8 __watcall getctime(uint *param_1,undefined4 unaff_EDX)
   param_1[1] = (uint)systemtime.wMinute;
   param_1[8] = 0xffffffff;
   *param_1 = (uint)systemtime.wSecond;
-  return CONCAT44(unaff_EDX,(uint)systemtime.wMilliseconds);
+  return (uint)systemtime.wMilliseconds;
 }
 
 

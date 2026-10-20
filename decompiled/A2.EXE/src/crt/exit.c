@@ -22,42 +22,37 @@ void __watcall crt_nop_hook_5(void)
 
 /* ==== 004036d4 exit ==== */
 
-void __watcall exit(int _Code)
+void __watcall exit(undefined4 param_1)
 
 {
-  undefined4 unaff_EDX_00;
-  undefined4 unaff_EBX;
+  undefined4 extraout_EDX;
   
   (*(code *)atexit)();
   (*(code *)int23_exit)();
-  exit_1(unaff_EDX_00,unaff_EDX_00,unaff_EBX);
+  exit_1(extraout_EDX);
   return;
 }
 
 
 /* ==== 004036ec exit_1 ==== */
 
-void __watcall exit_1(undefined4 param_1,undefined4 unaff_EDX_00,undefined4 unaff_EBX)
+undefined4 __watcall exit_1(undefined4 param_1)
 
 {
-  undefined4 extraout_ECX;
-  undefined4 extraout_ECX_00;
-  undefined4 unaff_ECX;
+  undefined4 exit_2_result;
   UINT extraout_EDX;
   UINT extraout_EDX_00;
   UINT exit_code;
   
-  (*(code *)int23_exit)(unaff_EDX_00);
+  (*(code *)int23_exit)();
   (*(code *)FPE_handler_exit)();
-  unaff_ECX = extraout_ECX;
   exit_code = extraout_EDX;
   if (WindowExitRtn != (code *)0x0) {
     (*WindowExitRtn)();
-    unaff_ECX = extraout_ECX_00;
     exit_code = extraout_EDX_00;
   }
-  exit_2(exit_code,exit_code,unaff_EBX,unaff_ECX);
-  return;
+  exit_2_result = exit_2(exit_code);
+  return exit_2_result;
 }
 
 

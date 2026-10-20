@@ -3,7 +3,7 @@
 
 /* ==== 00403f11 save_8087 ==== */
 
-void __watcall save_8087(undefined2 *param_1)
+undefined2 * __watcall save_8087(undefined2 *param_1)
 
 {
   undefined2 in_FPUControlWord;
@@ -35,49 +35,53 @@ void __watcall save_8087(undefined2 *param_1)
   *(unkbyte10 *)(param_1 + 0x27) = in_ST5;
   *(unkbyte10 *)(param_1 + 0x2c) = in_ST6;
   *(unkbyte10 *)(param_1 + 0x31) = in_ST7;
-  return;
+  return param_1;
 }
 
 
 /* ==== 00403f16 rest_8087 ==== */
 
-undefined1  [10] __watcall rest_8087(int param_1)
+undefined4 __watcall rest_8087(undefined4 param_1)
 
 {
-  return *(undefined1 (*) [10])(param_1 + 0x1c);
+  return param_1;
 }
 
 
 /* ==== 00403f1a init_8087 ==== */
 
-void __watcall init_8087(void)
+uint __watcall init_8087(void)
 
 {
+  uint _0x87;
+  
   if (real87 != '\0') {
     Save8087 = save_8087;
     Rest8087 = rest_8087;
   }
-  init_80x87();
-  return;
+  _0x87 = init_80x87();
+  return _0x87;
 }
 
 
 /* ==== 00403f55 chk8087 ==== */
 
-void __watcall chk8087(void)
+uint __watcall chk8087(void)
 
 {
-  char _087_val;
+  undefined4 in_EAX;
+  uint uVar1;
   
+  uVar1 = CONCAT22((short)((uint)in_EAX >> 0x10),CONCAT11(_087,(char)in_EAX));
   if (_087 == '\0') {
     real87 = _087;
-    _087_val = init_8087();
+    uVar1 = init_8087();
     if (no87 == '\0') {
-      _087 = _087_val;
-      real87 = _087_val;
+      _087 = (char)uVar1;
+      real87 = (char)uVar1;
     }
   }
-  return;
+  return uVar1;
 }
 
 

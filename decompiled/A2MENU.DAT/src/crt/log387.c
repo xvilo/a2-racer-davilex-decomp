@@ -6,49 +6,43 @@
 /* WARNING: Removing unreachable block (ram,0x004220d3) */
 /* WARNING: Removing unreachable block (ram,0x004220cb) */
 
-bool __watcall IF_LOG(void)
+uint __watcall IF_LOG(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
   float10 fVar1;
   ushort uVar2;
-  undefined4 in_EAX;
-  undefined4 unaff_ECX;
-  undefined4 unaff_EDX;
-  undefined4 unaff_EBX;
-  bool bVar4;
-  bool bVar5;
+  undefined4 log87_err_result;
+  uint uVar3;
   float10 in_ST0;
-  undefined4 uVar3;
   
   fVar1 = (float10)0;
   uVar2 = CONCAT11(in_ST0 < fVar1 | (byte)((ushort)((ushort)(NAN(in_ST0) || NAN(fVar1)) << 10) >> 8)
                    | (byte)((ushort)((ushort)(in_ST0 == fVar1) << 0xe) >> 8),10);
-  uVar3 = CONCAT22((short)((uint)in_EAX >> 0x10),uVar2);
-  bVar5 = (uVar2 & 0x4000) == 0;
-  bVar4 = (uVar2 & 0x100) == 0;
-  if (bVar4 && bVar5) {
+  uVar3 = CONCAT22((short)((uint)param_1 >> 0x10),uVar2);
+  if ((uVar2 & 0x100) == 0 && (uVar2 & 0x4000) == 0) {
     log2(in_ST0);
+    uVar3 = uVar3 & 0xffffff00;
   }
   else {
-    log87_err(uVar3,unaff_EDX,unaff_EBX,unaff_ECX,SUB84((double)in_ST0,0),
-              (uint)((ulonglong)(double)in_ST0 >> 0x20),uVar3);
+    log87_err_result =
+         log87_err(uVar3,param_2,param_3,param_4,SUB84((double)in_ST0,0),
+                   (uint)((ulonglong)(double)in_ST0 >> 0x20),uVar3);
+    uVar3 = CONCAT31((int3)((uint)log87_err_result >> 8),1);
   }
-  return !bVar4 || !bVar5;
+  return uVar3;
 }
 
 
 /* ==== 004220a2 IF_LOG_tail ==== */
 
-undefined8 __watcall IF_LOG_tail(undefined4 param_1,undefined4 param_2)
+uint __watcall IF_LOG_tail(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
   float10 fVar1;
   byte bVar2;
+  undefined4 log87_err_result;
   uint uVar3;
-  undefined4 unaff_ECX;
-  undefined4 unaff_EBX;
   float10 in_ST0;
-  undefined8 log87_err_result;
   
   fVar1 = (float10)0;
   bVar2 = (byte)((ushort)((ushort)(in_ST0 == fVar1) << 0xe) >> 8);
@@ -58,80 +52,80 @@ undefined8 __watcall IF_LOG_tail(undefined4 param_1,undefined4 param_2)
                             ,(char)param_1));
   if (in_ST0 < fVar1 || bVar2 != 0) {
     log87_err_result =
-         log87_err(uVar3,param_2,unaff_EBX,unaff_ECX,SUB84((double)in_ST0,0),
+         log87_err(uVar3,param_2,param_3,param_4,SUB84((double)in_ST0,0),
                    (uint)((ulonglong)(double)in_ST0 >> 0x20),uVar3);
-    param_2 = (undefined4)((ulonglong)log87_err_result >> 0x20);
-    uVar3 = CONCAT31((int3)((ulonglong)log87_err_result >> 8),1);
+    uVar3 = CONCAT31((int3)((uint)log87_err_result >> 8),1);
   }
   else {
     log2(in_ST0);
     uVar3 = uVar3 & 0xffffff00;
   }
-  return CONCAT44(param_2,uVar3);
+  return uVar3;
 }
 
 
 /* ==== 004220e3 IF_LOG2 ==== */
 
-undefined8 __watcall IF_LOG2(undefined4 param_1,undefined4 param_2)
+uint __watcall IF_LOG2(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
-  uVar1 = IF_LOG_tail(CONCAT31((int3)((uint)param_1 >> 8),9),param_2);
+  uVar1 = IF_LOG_tail(CONCAT31((int3)((uint)param_1 >> 8),9),param_2,param_3,param_4);
   return uVar1;
 }
 
 
 /* ==== 004220e7 IF_LOG10 ==== */
 
-undefined8 __watcall IF_LOG10(undefined4 param_1,undefined4 param_2)
+uint __watcall IF_LOG10(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
-  uVar1 = IF_LOG_tail(CONCAT31((int3)((uint)param_1 >> 8),0xb),param_2);
+  uVar1 = IF_LOG_tail(CONCAT31((int3)((uint)param_1 >> 8),0xb),param_2,param_3,param_4);
   return uVar1;
 }
 
 
 /* ==== 004220eb log ==== */
 
-double __watcall log(double _X)
+uint __watcall
+log(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,undefined4 param_5,
+   undefined4 param_6)
 
 {
-  float10 fVar1;
+  uint if_log;
   
-  fVar1 = (float10)_X;
-  IF_LOG();
-  return SUB108(fVar1,0);
+  if_log = IF_LOG(param_1,param_2,param_3,param_4);
+  return if_log;
 }
 
 
 /* ==== 004220f7 log10 ==== */
 
-double __watcall log10(double _X)
+uint __watcall
+log10(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,undefined4 param_5,
+     undefined4 param_6)
 
 {
-  undefined4 in_EAX;
-  undefined4 unaff_EDX;
-  float10 fVar1;
+  uint if_log10;
   
-  fVar1 = (float10)_X;
-  IF_LOG10(in_EAX,unaff_EDX);
-  return SUB108(fVar1,0);
+  if_log10 = IF_LOG10(param_1,param_2,param_3,param_4);
+  return if_log10;
 }
 
 
 /* ==== 00422103 log2 ==== */
 
-undefined8 __watcall
-log2(undefined4 param_1,undefined4 unaff_EDX,undefined4 param_3,undefined4 unaff_ECX)
+uint __watcall
+log2(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4,undefined4 param_5,
+    undefined4 param_6)
 
 {
-  undefined8 if_log2;
+  uint if_log2;
   
-  if_log2 = IF_LOG2(param_1,unaff_EDX);
+  if_log2 = IF_LOG2(param_1,param_2,param_3,param_4);
   return if_log2;
 }
 

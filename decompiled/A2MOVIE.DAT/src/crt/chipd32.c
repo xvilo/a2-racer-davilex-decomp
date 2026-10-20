@@ -7,7 +7,8 @@
 /* WARNING: Instruction at (ram,0x004153c2) overlaps instruction at (ram,0x004153c1)
     */
 
-void __watcall bin2string_inline_table(void)
+undefined4 __watcall
+bin2string_inline_table(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4)
 
 {
   short sVar1;
@@ -20,11 +21,8 @@ void __watcall bin2string_inline_table(void)
   undefined4 uVar7;
   char *pcVar8;
   uint *puVar9;
-  int unaff_ECX;
   ushort *extraout_ECX;
-  byte extraout_DL;
-  char extraout_DL_00;
-  char unaff_BH;
+  char extraout_DL;
   undefined4 *unaff_ESI;
   undefined4 *unaff_EDI;
   int in_FS_OFFSET;
@@ -53,16 +51,16 @@ void __watcall bin2string_inline_table(void)
   pcVar8[in_FS_OFFSET] = pcVar8[in_FS_OFFSET] + bVar2;
   *pcVar8 = *pcVar8 + bVar2;
   *pcVar8 = *pcVar8 + bVar2;
-  piVar6 = (int *)CONCAT31(uVar10,bVar2 + (char)((uint)unaff_ECX >> 8));
+  piVar6 = (int *)CONCAT31(uVar10,bVar2 + (char)((uint)param_4 >> 8));
   pbVar5 = (byte *)((int)piVar6 + *piVar6);
   bVar3 = (byte)pbVar5;
   *pbVar5 = *pbVar5 + bVar3;
   *pbVar5 = *pbVar5 + bVar3;
   bVar2 = *pbVar5;
-  *pbVar5 = *pbVar5 + extraout_DL;
+  *pbVar5 = *pbVar5 + (byte)param_2;
   uVar10 = (undefined3)((uint)pbVar5 >> 8);
   cVar4 = bVar3 + (9 < (bVar3 & 0xf) | in_AF) * '\x06' +
-          (0x99 < bVar3 || CARRY1(bVar2,extraout_DL)) * '`';
+          (0x99 < bVar3 || CARRY1(bVar2,(byte)param_2)) * '`';
   pcVar8 = (char *)CONCAT31(uVar10,cVar4);
   *pcVar8 = *pcVar8 + cVar4;
   *pcVar8 = *pcVar8 + cVar4;
@@ -79,8 +77,8 @@ void __watcall bin2string_inline_table(void)
   while( true ) {
     bVar3 = *pbVar5;
     *pbVar5 = *pbVar5 + bVar2;
-    unaff_ECX = unaff_ECX + -1;
-    if (unaff_ECX == 0 || *pbVar5 != 0) break;
+    param_4 = param_4 + -1;
+    if (param_4 == 0 || *pbVar5 != 0) break;
     *(char *)(unaff_ESI + 0x26) = *(char *)(unaff_ESI + 0x26) + CARRY1(bVar3,bVar2);
   }
   uVar7 = func_0x0000023b();
@@ -91,7 +89,7 @@ void __watcall bin2string_inline_table(void)
   pcVar8 = (char *)func_0x01299c5e();
   bVar2 = (byte)pcVar8;
   *pcVar8 = *pcVar8 + bVar2;
-  *pcVar8 = *pcVar8 + extraout_DL_00;
+  *pcVar8 = *pcVar8 + extraout_DL;
   *unaff_EDI = *unaff_ESI;
   uVar10 = (undefined3)(CONCAT22((short)((uint)pcVar8 >> 0x10),CONCAT11(bVar2 / 0x18,bVar2)) >> 8);
   puVar9 = (uint *)CONCAT31(uVar10,bVar2 % 0x18);
@@ -104,7 +102,7 @@ void __watcall bin2string_inline_table(void)
   bVar2 = *pbVar5;
   *pbVar5 = *pbVar5 + bVar3;
   pcVar8 = (char *)((int)unaff_ESI + (uint)bVar11 * -8 + -0x6f);
-  *pcVar8 = *pcVar8 + unaff_BH + CARRY1(bVar2,bVar3);
+  *pcVar8 = *pcVar8 + (char)((uint)param_3 >> 8) + CARRY1(bVar2,bVar3);
   puVar9 = (uint *)((int)piVar6 + *piVar6);
   *(char *)((int)puVar9 + -0x790d5b3a) = *(char *)((int)puVar9 + -0x790d5b3a) + (char)puVar9;
   pcVar8 = (char *)((uint)puVar9 & *puVar9);
@@ -120,30 +118,32 @@ void __watcall bin2string_inline_table(void)
 
 /* ==== 0041542e bin2string_inline_table_2 ==== */
 
-void __watcall bin2string_inline_table_2(void)
+undefined4 __watcall bin2string_inline_table_2(void)
 
 {
-  return;
+  undefined4 in_EAX;
+  
+  return in_EAX;
 }
 
 
 /* ==== 00415430 fdiv_pentium_safe_core ==== */
 
-uint __watcall
-fdiv_pentium_safe_core
-          (int param_1,uint param_2,ushort param_3,undefined4 param_4,uint param_5,uint param_6)
+uint __watcall fdiv_pentium_safe_core(void)
 
 {
   float10 fVar1;
   uint uVar2;
   float10 fVar3;
+  int in_stack_00000004;
+  uint in_stack_00000008;
   ushort in_stack_0000000c;
   uint in_stack_00000014;
   uint in_stack_00000018;
   
-  fVar1 = (float10)CONCAT28(in_stack_0000000c,CONCAT44(param_6,param_5));
-  while (!CARRY4(param_6,param_6)) {
-    if (param_5 == 0 && param_6 == 0) {
+  fVar1 = (float10)CONCAT28(in_stack_0000000c,CONCAT44(in_stack_00000008,in_stack_00000004));
+  while (!CARRY4(in_stack_00000008,in_stack_00000008)) {
+    if (in_stack_00000004 == 0 && in_stack_00000008 == 0) {
       return 0;
     }
     if ((in_stack_0000000c & 0x7fff) != 0) {
@@ -160,15 +160,15 @@ fdiv_pentium_safe_core
       return uVar2;
     }
     fVar3 = fVar1 * (float10)9.223372e+18;
-    param_5 = SUB104(fVar3,0);
+    in_stack_00000004 = SUB104(fVar3,0);
     in_stack_0000000c = (ushort)((unkuint10)fVar3 >> 0x40);
-    param_6 = (uint)((unkuint10)fVar3 >> 0x20);
+    in_stack_00000008 = (uint)((unkuint10)fVar3 >> 0x20);
   }
-  uVar2 = param_6 * 2 ^ 0xe000000;
+  uVar2 = in_stack_00000008 * 2 ^ 0xe000000;
   if ((uVar2 & 0xe000000) != 0) {
     return uVar2;
   }
-  uVar2 = (param_6 & 0x7fffffff) >> 0x1b;
+  uVar2 = (in_stack_00000008 & 0x7fffffff) >> 0x1b;
   if ((&DAT_00420394)[uVar2] != '\0') {
     if (((in_stack_0000000c & 0x7fff) != 0) && ((in_stack_0000000c & 0x7fff) != 0x7fff)) {
       if ((in_stack_00000018 & 0x7fff) != 1) {
@@ -192,14 +192,7 @@ fdiv_pentium_safe_core
 void __watcall __fdivp_sti_st(void)
 
 {
-  int in_EAX;
-  undefined4 unaff_ECX;
-  uint unaff_EDX;
-  ushort unaff_BX;
-  unkbyte10 in_ST0;
-  
-  fdiv_pentium_safe_core
-            (in_EAX,unaff_EDX,unaff_BX,unaff_ECX,(uint)in_ST0,(uint)((unkuint10)in_ST0 >> 0x20));
+  fdiv_pentium_safe_core();
   return;
 }
 
@@ -214,27 +207,21 @@ void __watcall __fdivp_sti_st(void)
 void __watcall __fdivrp_sti_st(void)
 
 {
-  int in_EAX;
-  undefined4 unaff_ECX;
-  uint unaff_EDX;
-  ushort unaff_BX;
-  unkbyte10 in_ST1;
-  
-  fdiv_pentium_safe_core
-            (in_EAX,unaff_EDX,unaff_BX,unaff_ECX,(uint)in_ST1,(uint)((unkuint10)in_ST1 >> 0x20));
+  fdiv_pentium_safe_core();
   return;
 }
 
 
 /* ==== 00415a68 fdiv_m64 ==== */
 
-undefined4 __watcall fdiv_m64(undefined4 param_1,uint param_2)
+undefined4 __watcall
+fdiv_m64(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+        undefined4 param_5,uint param_6)
 
 {
   ushort in_FPUStatusWord;
-  uint in_stack_00000008;
   
-  if ((in_stack_00000008 & 0x7ff00000) == 0x7ff00000) {
+  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
     return param_1;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
@@ -254,13 +241,14 @@ undefined4 __watcall fdiv_m64(undefined4 param_1,uint param_2)
    Libraries: Visual Studio 1998 Debug, Visual Studio 1998 Release, Visual Studio 2003 Debug, Visual
    Studio 2003 Release */
 
-uint __watcall __adj_fdivr_m32(uint param_1)
+undefined4 __watcall
+__adj_fdivr_m32(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+               uint param_5)
 
 {
   ushort in_FPUStatusWord;
-  uint in_stack_00000004;
   
-  if ((in_stack_00000004 & 0x7f800000) == 0x7f800000) {
+  if ((param_5 & 0x7f800000) == 0x7f800000) {
     return param_1;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
@@ -274,13 +262,14 @@ uint __watcall __adj_fdivr_m32(uint param_1)
 
 /* ==== 00415b00 fdivr_checked ==== */
 
-undefined4 __watcall fdivr_checked(undefined4 param_1,uint param_2)
+undefined4 __watcall
+fdivr_checked(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+             undefined4 param_5,uint param_6)
 
 {
   ushort in_FPUStatusWord;
-  uint in_stack_00000008;
   
-  if ((in_stack_00000008 & 0x7ff00000) == 0x7ff00000) {
+  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
     return param_1;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {

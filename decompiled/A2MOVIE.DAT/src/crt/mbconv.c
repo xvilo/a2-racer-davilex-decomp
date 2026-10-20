@@ -3,7 +3,7 @@
 
 /* ==== 0040dbd8 mbptov ==== */
 
-undefined8 __watcall mbptov(byte *param_1,undefined4 unaff_EDX)
+uint __watcall mbptov(byte *param_1)
 
 {
   byte bVar1;
@@ -13,33 +13,33 @@ undefined8 __watcall mbptov(byte *param_1,undefined4 unaff_EDX)
     bVar1 = (&DAT_0041ff19)[*param_1] & 1;
   }
   if (bVar1 != 0) {
-    return CONCAT44(unaff_EDX,(uint)CONCAT11(*param_1,param_1[1]));
+    return (uint)CONCAT11(*param_1,param_1[1]);
   }
-  return CONCAT44(unaff_EDX,(uint)*param_1);
+  return (uint)*param_1;
 }
 
 
 /* ==== 0040dc16 mbvtop ==== */
 
-void __watcall mbvtop(undefined4 param_1,char *unaff_EDX)
+char * __watcall mbvtop(undefined4 param_1,char *param_2)
 
 {
   char cVar1;
   
   cVar1 = (char)((uint)param_1 >> 8);
   if (cVar1 != '\0') {
-    unaff_EDX[1] = (char)param_1;
-    *unaff_EDX = cVar1;
-    return;
+    param_2[1] = (char)param_1;
+    *param_2 = cVar1;
+    return param_2;
   }
-  *unaff_EDX = (char)param_1;
-  return;
+  *param_2 = (char)param_1;
+  return param_2;
 }
 
 
 /* ==== 0040dc30 mbvtop_1 ==== */
 
-undefined8 __watcall mbvtop_1(undefined4 param_1,undefined4 unaff_EDX)
+undefined * __watcall mbvtop_1(undefined4 param_1)
 
 {
   DAT_00421660 = (char)((uint)param_1 >> 8);
@@ -51,7 +51,7 @@ undefined8 __watcall mbvtop_1(undefined4 param_1,undefined4 unaff_EDX)
     DAT_00421662 = 0;
     DAT_00421661 = (char)param_1;
   }
-  return CONCAT44(unaff_EDX,&DAT_00421660);
+  return &DAT_00421660;
 }
 
 

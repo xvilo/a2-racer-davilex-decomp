@@ -3,21 +3,21 @@
 
 /* ==== 00422998 fdiv_main_routine ==== */
 
-uint __watcall
-fdiv_main_routine(int param_1,uint param_2,ushort param_3,undefined4 param_4,uint param_5,
-                 uint param_6)
+uint __watcall fdiv_main_routine(void)
 
 {
   float10 fVar1;
   uint uVar2;
   float10 fVar3;
+  int in_stack_00000004;
+  uint in_stack_00000008;
   ushort in_stack_0000000c;
   uint in_stack_00000014;
   uint in_stack_00000018;
   
-  fVar1 = (float10)CONCAT28(in_stack_0000000c,CONCAT44(param_6,param_5));
-  while (!CARRY4(param_6,param_6)) {
-    if (param_5 == 0 && param_6 == 0) {
+  fVar1 = (float10)CONCAT28(in_stack_0000000c,CONCAT44(in_stack_00000008,in_stack_00000004));
+  while (!CARRY4(in_stack_00000008,in_stack_00000008)) {
+    if (in_stack_00000004 == 0 && in_stack_00000008 == 0) {
       return 0;
     }
     if ((in_stack_0000000c & 0x7fff) != 0) {
@@ -34,15 +34,15 @@ fdiv_main_routine(int param_1,uint param_2,ushort param_3,undefined4 param_4,uin
       return uVar2;
     }
     fVar3 = fVar1 * (float10)9.223372e+18;
-    param_5 = SUB104(fVar3,0);
+    in_stack_00000004 = SUB104(fVar3,0);
     in_stack_0000000c = (ushort)((unkuint10)fVar3 >> 0x40);
-    param_6 = (uint)((unkuint10)fVar3 >> 0x20);
+    in_stack_00000008 = (uint)((unkuint10)fVar3 >> 0x20);
   }
-  uVar2 = param_6 * 2 ^ 0xe000000;
+  uVar2 = in_stack_00000008 * 2 ^ 0xe000000;
   if ((uVar2 & 0xe000000) != 0) {
     return uVar2;
   }
-  uVar2 = (param_6 & 0x7fffffff) >> 0x1b;
+  uVar2 = (in_stack_00000008 & 0x7fffffff) >> 0x1b;
   if ((&DAT_0043678c)[uVar2] != '\0') {
     if (((in_stack_0000000c & 0x7fff) != 0) && ((in_stack_0000000c & 0x7fff) != 0x7fff)) {
       if ((in_stack_00000018 & 0x7fff) != 1) {
@@ -61,14 +61,7 @@ fdiv_main_routine(int param_1,uint param_2,ushort param_3,undefined4 param_4,uin
 void __watcall fdivp_sti_st(void)
 
 {
-  int in_EAX;
-  undefined4 unaff_ECX;
-  uint unaff_EDX;
-  ushort unaff_BX;
-  unkbyte10 in_ST0;
-  
-  fdiv_main_routine(in_EAX,unaff_EDX,unaff_BX,unaff_ECX,(uint)in_ST0,
-                    (uint)((unkuint10)in_ST0 >> 0x20));
+  fdiv_main_routine();
   return;
 }
 
@@ -78,27 +71,20 @@ void __watcall fdivp_sti_st(void)
 void __watcall fdivrp_sti_st(void)
 
 {
-  int in_EAX;
-  undefined4 unaff_ECX;
-  uint unaff_EDX;
-  ushort unaff_BX;
-  unkbyte10 in_ST1;
-  
-  fdiv_main_routine(in_EAX,unaff_EDX,unaff_BX,unaff_ECX,(uint)in_ST1,
-                    (uint)((unkuint10)in_ST1 >> 0x20));
+  fdiv_main_routine();
   return;
 }
 
 
 /* ==== 00422f84 fdiv_m32 ==== */
 
-uint __watcall fdiv_m32(uint param_1)
+undefined4 __watcall
+fdiv_m32(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,uint param_5)
 
 {
   ushort in_FPUStatusWord;
-  uint in_stack_00000004;
   
-  if ((in_stack_00000004 & 0x7f800000) == 0x7f800000) {
+  if ((param_5 & 0x7f800000) == 0x7f800000) {
     return param_1;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
@@ -112,13 +98,14 @@ uint __watcall fdiv_m32(uint param_1)
 
 /* ==== 00422fd0 fdiv_m64 ==== */
 
-undefined4 __watcall fdiv_m64(undefined4 param_1,uint param_2)
+undefined4 __watcall
+fdiv_m64(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+        undefined4 param_5,uint param_6)
 
 {
   ushort in_FPUStatusWord;
-  uint in_stack_00000008;
   
-  if ((in_stack_00000008 & 0x7ff00000) == 0x7ff00000) {
+  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
     return param_1;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
@@ -132,13 +119,13 @@ undefined4 __watcall fdiv_m64(undefined4 param_1,uint param_2)
 
 /* ==== 0042301c fdiv_m32r ==== */
 
-uint __watcall fdiv_m32r(uint param_1)
+undefined4 __watcall
+fdiv_m32r(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,uint param_5)
 
 {
   ushort in_FPUStatusWord;
-  uint in_stack_00000004;
   
-  if ((in_stack_00000004 & 0x7f800000) == 0x7f800000) {
+  if ((param_5 & 0x7f800000) == 0x7f800000) {
     return param_1;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {
@@ -152,13 +139,14 @@ uint __watcall fdiv_m32r(uint param_1)
 
 /* ==== 00423068 fdiv_m64r ==== */
 
-undefined4 __watcall fdiv_m64r(undefined4 param_1,uint param_2)
+undefined4 __watcall
+fdiv_m64r(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+         undefined4 param_5,uint param_6)
 
 {
   ushort in_FPUStatusWord;
-  uint in_stack_00000008;
   
-  if ((in_stack_00000008 & 0x7ff00000) == 0x7ff00000) {
+  if ((param_6 & 0x7ff00000) == 0x7ff00000) {
     return param_1;
   }
   if ((in_FPUStatusWord & 0x3800) != 0) {

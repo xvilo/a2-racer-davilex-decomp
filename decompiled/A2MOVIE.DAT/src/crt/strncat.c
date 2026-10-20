@@ -6,37 +6,35 @@
 /* WARNING: Instruction at (ram,0x00410e8e) overlaps instruction at (ram,0x00410e8c)
     */
 
-char * __watcall strncat(char *_Dest,char *_Source,size_t _Count)
+void __watcall strncat(char *param_1,char *param_2,int param_3)
 
 {
   char cVar1;
   char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  bool bVar5;
+  bool bVar4;
   
   pcVar2 = (char *)0xffffffff;
-  bVar5 = true;
-  pcVar3 = _Dest;
+  bVar4 = true;
   do {
-    pcVar4 = pcVar3;
+    pcVar3 = param_1;
     if (pcVar2 == (char *)0x0) break;
     pcVar2 = pcVar2 + -1;
-    pcVar4 = pcVar3 + 1;
-    bVar5 = *pcVar3 == '\0';
-    pcVar3 = pcVar4;
-  } while (!bVar5);
-  if (!bVar5) {
-    pcVar4 = pcVar2;
+    pcVar3 = param_1 + 1;
+    bVar4 = *param_1 == '\0';
+    param_1 = pcVar3;
+  } while (!bVar4);
+  if (!bVar4) {
+    pcVar3 = pcVar2;
   }
-  pcVar4 = pcVar4 + -1;
-  for (; (_Count != 0 && (cVar1 = *_Source, *pcVar4 = cVar1, cVar1 != '\0')); _Source = _Source + 1)
-  {
-    pcVar4 = pcVar4 + 1;
-    _Count = _Count - 1;
+  pcVar3 = pcVar3 + -1;
+  for (; (param_3 != 0 && (cVar1 = *param_2, *pcVar3 = cVar1, cVar1 != '\0')); param_2 = param_2 + 1
+      ) {
+    pcVar3 = pcVar3 + 1;
+    param_3 = param_3 + -1;
   }
-  *pcVar4 = '\0';
-  return _Dest;
+  *pcVar3 = '\0';
+  return;
 }
 
 

@@ -24,12 +24,10 @@ void __watcall play_sound_effect(int effect,int loop)
 
 {
   int play_sound_buffer_2_result;
-  int extraout_ECX;
   
   if (engine_sound_enabled != 0) {
     if ((effect < 0) || (0x2f < effect)) {
       fatal_exit(s_SNDFX_sample_out_of_bounds_00445896);
-      loop = extraout_ECX;
     }
     play_sound_buffer_2_result =
          play_sound_buffer_2(s_motor2_wav_00458db4 + effect * 0xf,-100 - volume_attenuation,0);
@@ -47,18 +45,25 @@ void __watcall play_sound_effect(int effect,int loop)
 void __watcall play_crash_sound(void)
 
 {
-  char *str2;
+  char *filename_val;
   int iVar1;
-  float10 chp;
+  float10 fVar2;
+  float in_stack_00000004;
+  float in_stack_00000008;
+  float in_stack_0000000c;
+  float in_stack_00000010;
   
   if (engine_sound_enabled != 0) {
-    chp = CHP();
-    iVar1 = (int)ROUND(chp);
+    fVar2 = ABS((float10)in_stack_0000000c - (float10)player_z) +
+            ABS((float10)in_stack_00000008 - (float10)player_y) +
+            ABS((float10)in_stack_00000004 - (float10)player_x);
+    CHP();
+    iVar1 = (int)ROUND(fVar2);
     if ((-1 < iVar1) && (iVar1 < 500)) {
-      str2 = s_bump2_wav_00458e4a;
+      fVar2 = (float10)in_stack_00000010 * (float10)25.0;
       iVar1 = (&volume_by_distance)[iVar1] - volume_attenuation;
-      chp = CHP();
-      play_sound_buffer_2(str2,iVar1 - (int)ROUND(chp),0);
+      filename_val = (char *)CHP();
+      play_sound_buffer_2(filename_val,iVar1 - (int)ROUND(fVar2),0);
     }
   }
   return;
@@ -71,11 +76,17 @@ void __watcall play_bump3_sound(void)
 
 {
   int iVar1;
-  float10 chp;
+  float10 fVar2;
+  float in_stack_00000004;
+  float in_stack_00000008;
+  float in_stack_0000000c;
   
   if (engine_sound_enabled != 0) {
-    chp = CHP();
-    iVar1 = (int)ROUND(chp);
+    fVar2 = ABS((float10)in_stack_0000000c - (float10)player_z) +
+            ABS((float10)in_stack_00000008 - (float10)player_y) +
+            ABS((float10)in_stack_00000004 - (float10)player_x);
+    CHP();
+    iVar1 = (int)ROUND(fVar2);
     if ((-1 < iVar1) && (iVar1 < 500)) {
       play_sound_buffer_2(s_bump3_wav_00458e59,(&volume_by_distance)[iVar1] - volume_attenuation,0);
     }
@@ -90,11 +101,17 @@ void __watcall play_bump_sound(void)
 
 {
   int iVar1;
-  float10 chp;
+  float10 fVar2;
+  float in_stack_00000004;
+  float in_stack_00000008;
+  float in_stack_0000000c;
   
   if (engine_sound_enabled != 0) {
-    chp = CHP();
-    iVar1 = (int)ROUND(chp);
+    fVar2 = ABS((float10)in_stack_0000000c - (float10)player_z) +
+            ABS((float10)in_stack_00000008 - (float10)player_y) +
+            ABS((float10)in_stack_00000004 - (float10)player_x);
+    CHP();
+    iVar1 = (int)ROUND(fVar2);
     if ((-1 < iVar1) && (iVar1 < 500)) {
       play_sound_buffer_2(s_bump_wav_00458e3b,(&volume_by_distance)[iVar1] - volume_attenuation,0);
     }
@@ -189,7 +206,7 @@ void __watcall load_infio(void)
   }
   debugmsg(s__s__d____>_INFIO_INI_FILE____d_d_00445b46,s_infio_cpp_00445b3c,0x6b,
            s_INFIO_INI_00445b32);
-  file_delete(s_INFIO_INI_00445b7a);
+  file_delete();
   init_infio();
   return;
 }
@@ -252,7 +269,6 @@ void __watcall init_infio(void)
 {
   int iVar1;
   int iVar2;
-  short extraout_CX;
   int extraout_EDX;
   
   debugmsg(s__s__d_____>_INIT_INFIO_<*_00445dba,s_infio_cpp_00445db0,0xb1);
@@ -260,6 +276,7 @@ void __watcall init_infio(void)
   if (iVar1 == 0) {
     debugmsg(s_Creating_infio_file__s_00445deb,s_INFIO_INI_00445de1);
     infio.racer_2 = 2;
+    infio.racer_3 = 3;
     infio.racer_4 = 4;
     infio.racer_5 = 5;
     infio.effects_volume = 4;
@@ -287,7 +304,6 @@ void __watcall init_infio(void)
     infio.music_volume = 2;
     infio.position = 6;
     iVar1 = 0;
-    infio.racer_3 = extraout_CX;
     infio.money = extraout_EDX;
     do {
       iVar2 = iVar1 + 2;

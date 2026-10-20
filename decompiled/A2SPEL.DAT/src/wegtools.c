@@ -3,16 +3,15 @@
 
 /* ==== 0041dcc0 point_side_of_line ==== */
 
-undefined4 __watcall point_side_of_line(int *param_1,int param_2)
+undefined4 __watcall point_side_of_line(int *param_1,int param_2,int param_3)
 
 {
   int iVar1;
-  int unaff_EBX;
   
   iVar1 = param_1[3];
   param_1[2] = param_1[2] - *param_1;
   param_1[3] = iVar1 - param_1[1];
-  iVar1 = (param_2 - *param_1) * (iVar1 - param_1[1]) - param_1[2] * (unaff_EBX - param_1[1]);
+  iVar1 = (param_2 - *param_1) * (iVar1 - param_1[1]) - param_1[2] * (param_3 - param_1[1]);
   if (0 < iVar1) {
     return 1;
   }
@@ -25,98 +24,95 @@ undefined4 __watcall point_side_of_line(int *param_1,int param_2)
 
 /* ==== 0041dd0c point_side_of_chunk_edge ==== */
 
-void __watcall point_side_of_chunk_edge(void)
+undefined4 __watcall
+point_side_of_chunk_edge
+          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5
+          ,float param_6)
 
 {
-  int *piVar1;
-  float10 chp;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
+  int *chp;
+  undefined4 point_side_of_line_result;
+  float10 fVar1;
+  float10 fVar2;
   
-  piVar1 = &local_20;
-  chp = CHP();
-  local_20 = (int)ROUND(chp);
-  chp = CHP();
-  local_18 = (int)ROUND(chp);
-  chp = CHP();
-  local_1c = (int)ROUND(chp);
-  chp = CHP();
-  local_14 = (int)ROUND(chp);
-  chp = CHP();
-  local_10 = (int)ROUND(chp);
-  chp = CHP();
-  local_10 = (int)ROUND(chp);
-  point_side_of_line(piVar1,local_10);
-  return;
+  CHP();
+  CHP();
+  CHP();
+  CHP();
+  fVar1 = (float10)param_6;
+  CHP();
+  fVar2 = (float10)param_5;
+  chp = (int *)CHP();
+  point_side_of_line_result = point_side_of_line(chp,(int)ROUND(fVar2),(int)ROUND(fVar1));
+  return point_side_of_line_result;
 }
 
 
 /* ==== 0041ddb8 point_between_chunk_edges ==== */
 
-undefined8 __watcall point_between_chunk_edges(undefined4 param_1,undefined4 param_2)
+uint __watcall
+point_between_chunk_edges
+          (int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,float param_5,
+          float param_6)
 
 {
   int point_side_of_chunk_edge_result_2;
   int point_side_of_chunk_edge_result;
   
-  point_side_of_chunk_edge_result_2 = point_side_of_chunk_edge();
-  point_side_of_chunk_edge_result = point_side_of_chunk_edge();
-  return CONCAT44(param_2,(uint)(point_side_of_chunk_edge_result_2 !=
-                                point_side_of_chunk_edge_result));
+  point_side_of_chunk_edge_result_2 =
+       point_side_of_chunk_edge(param_1,param_1,param_3,param_4,param_5,param_6);
+  point_side_of_chunk_edge_result =
+       point_side_of_chunk_edge
+                 (param_1 + 1,param_1,point_side_of_chunk_edge_result_2,param_4,param_5,param_6);
+  return (uint)(point_side_of_chunk_edge_result_2 != point_side_of_chunk_edge_result);
 }
 
 
 /* ==== 0041de40 update_chunk_for_position ==== */
 
-undefined8 __watcall update_chunk_for_position(int param_1,undefined4 param_2)
+undefined4 __watcall update_chunk_for_position(int param_1)
 
 {
-  undefined4 uVar1;
-  int extraout_ECX;
+  uint point_between_chunk_edges_result;
+  int iVar1;
+  int i;
   int iVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 point_between_chunk_edges_result;
+  float in_stack_00000004;
+  float in_stack_00000008;
   
   if ((param_1 < 0) || (weg_chunk_capacity <= param_1)) {
     fatal_exit(s__s__d____chunk__d_out_of_array_b_0044c999,s_wegtools_cpp_0044c98c,0x4f,param_1,
                weg_chunk_capacity);
-    param_1 = extraout_ECX;
   }
-  iVar3 = param_1 + 1;
-  iVar4 = param_1 << 2;
-  iVar2 = iVar3 * 4;
-  while( true ) {
-    do {
-      if ((param_1 < 1) && (weg_chunk_capacity <= iVar3)) {
-        fatal_exit(s_weg_chunk_is__1_0044c9c9);
-        uVar1 = 0xffffffff;
-        goto LAB_0041ddb2;
+  i = param_1 + 1;
+  iVar2 = param_1 << 2;
+  iVar1 = i * 4;
+  while ((0 < param_1 || (i < weg_chunk_capacity))) {
+    if (0 < param_1) {
+      point_between_chunk_edges_result =
+           point_between_chunk_edges
+                     (*(int *)(iVar2 + weg_chunk_quads),i,param_1,iVar1,in_stack_00000004,
+                      in_stack_00000008);
+      if (point_between_chunk_edges_result != 0) {
+        return *(undefined4 *)(iVar2 + weg_chunk_quads);
       }
-      if (0 < param_1) {
-        point_between_chunk_edges_result =
-             point_between_chunk_edges(*(undefined4 *)(iVar4 + weg_chunk_quads),iVar3);
-        iVar3 = (int)((ulonglong)point_between_chunk_edges_result >> 0x20);
-        if ((int)point_between_chunk_edges_result != 0) {
-          uVar1 = *(undefined4 *)(iVar4 + weg_chunk_quads);
-          goto LAB_0041ddb2;
-        }
-        iVar4 = iVar4 + -4;
-        param_1 = param_1 + -1;
+      iVar2 = iVar2 + -4;
+      param_1 = param_1 + -1;
+    }
+    if (i < weg_chunk_capacity) {
+      point_between_chunk_edges_result =
+           point_between_chunk_edges
+                     (*(int *)(iVar1 + weg_chunk_quads),i,param_1,iVar1,in_stack_00000004,
+                      in_stack_00000008);
+      if (point_between_chunk_edges_result != 0) {
+        return *(undefined4 *)(iVar1 + weg_chunk_quads);
       }
-    } while (weg_chunk_capacity <= iVar3);
-    point_between_chunk_edges_result =
-         point_between_chunk_edges(*(undefined4 *)(iVar2 + weg_chunk_quads),iVar3);
-    if ((int)point_between_chunk_edges_result != 0) break;
-    iVar2 = iVar2 + 4;
-    iVar3 = (int)((ulonglong)point_between_chunk_edges_result >> 0x20) + 1;
+      iVar1 = iVar1 + 4;
+      i = i + 1;
+    }
   }
-  uVar1 = *(undefined4 *)(iVar2 + weg_chunk_quads);
-LAB_0041ddb2:
-  return CONCAT44(param_2,uVar1);
+  fatal_exit(s_weg_chunk_is__1_0044c9c9);
+  return 0xffffffff;
 }
 
 

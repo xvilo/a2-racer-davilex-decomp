@@ -3,15 +3,15 @@
 
 /* ==== 00412ea7 heapenable ==== */
 
-undefined8 __watcall heapenable(undefined4 param_1,undefined4 unaff_EDX,undefined4 unaff_EBX)
+undefined4 __watcall heapenable(undefined4 param_1)
 
 {
   undefined4 extraout_EDX;
   
-  (*(code *)AccessNHeap_1)(unaff_EDX,unaff_EBX);
+  (*(code *)AccessNHeap_1)();
   heap_enabled = param_1;
   (*(code *)ReleaseNHeap_1)();
-  return CONCAT44(unaff_EDX,extraout_EDX);
+  return extraout_EDX;
 }
 
 

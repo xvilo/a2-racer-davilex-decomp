@@ -3,43 +3,40 @@
 
 /* ==== 0040e9d2 ioalloc ==== */
 
-void __watcall ioalloc(int param_1)
+void __watcall ioalloc(undefined4 *param_1)
 
 {
+  int buffer;
   byte bVar1;
-  int unaff_EDX;
-  undefined4 *puVar2;
-  undefined8 buffer;
   
-  chktty(param_1,param_1);
-  if (*(int *)(unaff_EDX + 0x14) == 0) {
-    if ((*(byte *)(unaff_EDX + 0xd) & 2) == 0) {
-      if ((*(byte *)(unaff_EDX + 0xd) & 4) == 0) {
-        *(undefined4 *)(unaff_EDX + 0x14) = 0x1000;
+  chktty((int)param_1);
+  if (param_1[5] == 0) {
+    if ((*(byte *)((int)param_1 + 0xd) & 2) == 0) {
+      if ((*(byte *)((int)param_1 + 0xd) & 4) == 0) {
+        param_1[5] = 0x1000;
       }
       else {
-        *(undefined4 *)(unaff_EDX + 0x14) = 1;
+        param_1[5] = 1;
       }
     }
     else {
-      *(undefined4 *)(unaff_EDX + 0x14) = 0x86;
+      param_1[5] = 0x86;
     }
   }
-  buffer = nmalloc(*(uint *)(unaff_EDX + 0x14),unaff_EDX);
-  puVar2 = (undefined4 *)((ulonglong)buffer >> 0x20);
-  puVar2[2] = (int)buffer;
-  if ((int)buffer == 0) {
-    puVar2[5] = 1;
-    bVar1 = *(byte *)((int)puVar2 + 0xd) & 0xf8;
-    *(byte *)((int)puVar2 + 0xd) = bVar1;
-    puVar2[2] = puVar2 + 6;
-    *(byte *)((int)puVar2 + 0xd) = bVar1 | 4;
+  buffer = nmalloc(param_1[5]);
+  param_1[2] = buffer;
+  if (buffer == 0) {
+    param_1[5] = 1;
+    bVar1 = *(byte *)((int)param_1 + 0xd) & 0xf8;
+    *(byte *)((int)param_1 + 0xd) = bVar1;
+    param_1[2] = param_1 + 6;
+    *(byte *)((int)param_1 + 0xd) = bVar1 | 4;
   }
   else {
-    *(byte *)(puVar2 + 3) = *(byte *)(puVar2 + 3) | 8;
+    *(byte *)(param_1 + 3) = *(byte *)(param_1 + 3) | 8;
   }
-  puVar2[1] = 0;
-  *puVar2 = puVar2[2];
+  param_1[1] = 0;
+  *param_1 = param_1[2];
   return;
 }
 

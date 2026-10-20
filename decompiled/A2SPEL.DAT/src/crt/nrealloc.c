@@ -3,7 +3,7 @@
 
 /* ==== 0043c662 nrealloc ==== */
 
-undefined4 * __watcall nrealloc(undefined4 *param_1,uint unaff_EDX)
+undefined4 * __watcall nrealloc(undefined4 *param_1,uint param_2)
 
 {
   undefined4 *puVar1;
@@ -12,23 +12,20 @@ undefined4 * __watcall nrealloc(undefined4 *param_1,uint unaff_EDX)
   undefined4 *puVar2;
   undefined4 *puVar3;
   byte bVar4;
-  undefined8 buffer;
   
   bVar4 = 0;
   if (param_1 == (undefined4 *)0x0) {
-    buffer = nmalloc(unaff_EDX,unaff_EDX);
-    puVar1 = (undefined4 *)buffer;
+    puVar1 = (undefined4 *)nmalloc(param_2);
   }
-  else if (unaff_EDX == 0) {
-    nfree((uint)param_1);
+  else if (param_2 == 0) {
+    nfree(param_1);
     puVar1 = (undefined4 *)0x0;
   }
   else {
     i = msize((int)param_1);
-    puVar1 = (undefined4 *)expand((uint)param_1,unaff_EDX);
+    puVar1 = (undefined4 *)expand((uint)param_1,param_2);
     if (puVar1 == (undefined4 *)0x0) {
-      buffer = nmalloc(unaff_EDX,unaff_EDX);
-      puVar1 = (undefined4 *)buffer;
+      puVar1 = (undefined4 *)nmalloc(param_2);
       if (puVar1 == (undefined4 *)0x0) {
         expand((uint)param_1,i);
       }
@@ -45,7 +42,7 @@ undefined4 * __watcall nrealloc(undefined4 *param_1,uint unaff_EDX)
           puVar2 = (undefined4 *)((int)puVar2 + (uint)bVar4 * -2 + 1);
           puVar3 = (undefined4 *)((int)puVar3 + (uint)bVar4 * -2 + 1);
         }
-        nfree((uint)param_1);
+        nfree(param_1);
       }
     }
   }

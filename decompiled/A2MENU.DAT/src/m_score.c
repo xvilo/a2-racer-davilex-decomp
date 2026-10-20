@@ -6,13 +6,11 @@
 int __watcall ms_af_image(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  int extraout_EDX;
   int iVar1;
   
   iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___ms_af_image_____Could_no_00428404,param_3,param_4,param_2,param_1);
-    iVar1 = extraout_EDX;
   }
   return iVar1;
 }
@@ -44,101 +42,102 @@ int __watcall ms_get_current_display(int param_1)
 
 /* ==== 00407910 ms_print_score ==== */
 
-void __watcall ms_print_score(single_score_t *single_score,int param_2,int param_3,int param_4)
+void __watcall ms_print_score(single_score_t *single_score_4,int param_2,int param_3,int param_4)
 
 {
-  ulonglong uVar1;
+  ulong uVar1;
   ulong uVar2;
   ulong uVar3;
-  undefined4 extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  single_score_t *extraout_ECX_02;
-  ulong uVar4;
-  int iVar5;
-  int i;
+  int iVar4;
+  int arg5;
+  single_score_t *single_score;
+  single_score_t *single_score_2;
+  single_score_t *single_score_3;
   
   if (param_4 == 0) {
-    uVar2 = 0xafaff;
-    uVar3 = 0xa0ffa;
+    uVar1 = 0xafaff;
+    uVar2 = 0xa0ffa;
   }
   else {
+    uVar1 = 0;
     uVar2 = 0;
-    uVar3 = 0;
   }
-  i = 0;
-  iVar5 = param_3 + 0xb1;
+  arg5 = 0;
+  iVar4 = param_3 + 0xb1;
   do {
-    uVar4 = uVar2;
-    if (*(short *)(single_score + 0x26) != 0) {
-      uVar4 = uVar3;
+    uVar3 = uVar1;
+    if (*(short *)(single_score_4 + 0x26) != 0) {
+      uVar3 = uVar2;
     }
-    xvga_set_font_colors(2,uVar4,uVar4);
-    i = i + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar5,s__2d_00428440,i);
-    win_bprintf(1,param_2 + 0x52,iVar5,0xb0,s__s_00428444,extraout_ECX);
-    win_print_xy(1,param_2 + 0x10c,iVar5,s__9d_00428447,*(undefined4 *)(extraout_ECX_00 + 0x28));
-    uVar1 = (longlong)*(int *)(extraout_ECX_01 + 0x20) / 0x3c;
-    win_print_xy(1,param_2 + 0x1e4,iVar5,s___2_2du__2_2dm__2_2ds_0042844b,
-                 *(int *)(extraout_ECX_01 + 0x20) / 0xe10,
+    xvga_set_font_colors(2,uVar3,uVar3);
+    arg5 = arg5 + 1;
+    win_print_xy(1,param_2 + 0x2c,iVar4,s__2d_00428440,arg5);
+    win_bprintf(1,param_2 + 0x52,iVar4,0xb0,s__s_00428444,single_score_4);
+    win_print_xy(1,param_2 + 0x10c,iVar4,s__9d_00428447,*(undefined4 *)(single_score_4 + 0x28));
+    single_score_2 = single_score_4 + 0x20;
+    single_score = single_score_4 + 0x20;
+    single_score_3 = single_score_4 + 0x20;
+    single_score_4 = single_score_4 + 0x2c;
+    win_print_xy(1,param_2 + 0x1e4,iVar4,s___2_2du__2_2dm__2_2ds_0042844b,
+                 *(int *)single_score_3 / 0xe10,
                  (int)((longlong)
-                       ((ulonglong)(uint)((int)uVar1 >> 0x1f) << 0x20 | uVar1 & 0xffffffff) % 0x3c),
-                 *(int *)(extraout_ECX_01 + 0x20) % 0x3c);
-    single_score = extraout_ECX_02;
-    iVar5 = iVar5 + 0x17;
-  } while (i < 10);
+                       ((ulonglong)(uint)((int)((longlong)*(int *)single_score / 0x3c) >> 0x1f) <<
+                        0x20 | (longlong)*(int *)single_score / 0x3c & 0xffffffffU) % 0x3c),
+                 *(int *)single_score_2 % 0x3c);
+    iVar4 = iVar4 + 0x17;
+  } while (arg5 < 10);
   return;
 }
 
 
 /* ==== 00407a2f ms_print_hiscore ==== */
 
-void __watcall ms_print_hiscore(single_score_t *single_score,int param_2,int param_3,int param_4)
+void __watcall ms_print_hiscore(single_score_t *single_score_3,int param_2,int param_3,int param_4)
 
 {
-  ulonglong uVar1;
+  ulong uVar1;
   ulong uVar2;
   ulong uVar3;
-  undefined4 extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_ECX_02;
-  single_score_t *extraout_ECX_03;
-  ulong uVar4;
-  int iVar5;
-  int i;
+  int iVar4;
+  int arg5;
+  single_score_t *single_score;
+  single_score_t *single_score_2;
+  single_score_t *single_score_4;
   
   if (param_4 == 0) {
-    uVar2 = 0xafaff;
-    uVar3 = 0xa0ffa;
+    uVar1 = 0xafaff;
+    uVar2 = 0xa0ffa;
   }
   else {
+    uVar1 = 0;
     uVar2 = 0;
-    uVar3 = 0;
   }
-  i = 0;
-  iVar5 = param_3 + 0xb1;
+  arg5 = 0;
+  iVar4 = param_3 + 0xb1;
   do {
-    uVar4 = uVar2;
-    if (*(short *)(single_score + 0x26) != 0) {
-      uVar4 = uVar3;
+    uVar3 = uVar1;
+    if (*(short *)(single_score_3 + 0x26) != 0) {
+      uVar3 = uVar2;
     }
-    xvga_set_font_colors(2,uVar4,uVar4);
-    i = i + 1;
-    win_print_xy(1,param_2 + 0x2c,iVar5,s__d_00428461,i);
-    win_bprintf(1,param_2 + 0x52,iVar5,0x84,s__s_00428464,extraout_ECX);
-    win_print_xy(1,param_2 + 0xe0,iVar5,s__s_00428467,
-                 (&level_naam)[*(int *)(extraout_ECX_00 + 0x22) >> 0x10]);
-    win_print_xy(1,param_2 + 0x162,iVar5,s__9d_0042846a,*(undefined4 *)(extraout_ECX_01 + 0x28));
-    uVar1 = (longlong)*(int *)(extraout_ECX_02 + 0x20) / 0x3c;
-    win_print_xy(1,param_2 + 0x1e4,iVar5,s___2_2du__2_2dm__2_2ds_0042846e,
-                 *(int *)(extraout_ECX_02 + 0x20) / 0xe10,
+    xvga_set_font_colors(2,uVar3,uVar3);
+    arg5 = arg5 + 1;
+    win_print_xy(1,param_2 + 0x2c,iVar4,s__d_00428461,arg5);
+    win_bprintf(1,param_2 + 0x52,iVar4,0x84,s__s_00428464,single_score_3);
+    win_print_xy(1,param_2 + 0xe0,iVar4,s__s_00428467,
+                 (&level_naam)[*(int *)(single_score_3 + 0x22) >> 0x10]);
+    win_print_xy(1,param_2 + 0x162,iVar4,s__9d_0042846a,*(undefined4 *)(single_score_3 + 0x28));
+    single_score_2 = single_score_3 + 0x20;
+    single_score = single_score_3 + 0x20;
+    single_score_4 = single_score_3 + 0x20;
+    single_score_3 = single_score_3 + 0x2c;
+    win_print_xy(1,param_2 + 0x1e4,iVar4,s___2_2du__2_2dm__2_2ds_0042846e,
+                 *(int *)single_score_4 / 0xe10,
                  (int)((longlong)
-                       ((ulonglong)(uint)((int)uVar1 >> 0x1f) << 0x20 | uVar1 & 0xffffffff) % 0x3c),
-                 *(int *)(extraout_ECX_02 + 0x20) % 0x3c);
-    single_score = extraout_ECX_03;
-    iVar5 = iVar5 + 0x17;
-  } while (i < 10);
+                       ((ulonglong)(uint)((int)((longlong)*(int *)single_score / 0x3c) >> 0x1f) <<
+                        0x20 | (longlong)*(int *)single_score / 0x3c & 0xffffffffU) % 0x3c),
+                 *(int *)single_score_2 % 0x3c);
+    iVar4 = iVar4 + 0x17;
+  } while (arg5 < 10);
   return;
 }
 
@@ -193,13 +192,11 @@ void __watcall ms_open_screen(int param_1)
 
 {
   int use_ms_menu_cfg_anims_result;
-  int extraout_ECX;
   
   load_pcx_file_1(2,s_Score_pcx_004284c0,0x1f);
   use_ms_menu_cfg_anims_result = use_ms_menu_cfg_anims();
   if (use_ms_menu_cfg_anims_result != 0) {
     fatal_exit(s__s__d____Could_not_load_ms_menu__004284d6,s_m_score_cpp_004284ca,0x171);
-    param_1 = extraout_ECX;
   }
   hide_mouse();
   handle_wipe(2,3,600);

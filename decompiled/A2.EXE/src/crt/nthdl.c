@@ -3,7 +3,7 @@
 
 /* ==== 00402fb5 NTAtMaxFiles ==== */
 
-undefined8 __watcall NTAtMaxFiles(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall NTAtMaxFiles(void)
 
 {
   undefined4 uVar1;
@@ -19,13 +19,13 @@ LAB_00402fcb:
     }
     uVar1 = 1;
   }
-  return CONCAT44(unaff_EDX,uVar1);
+  return uVar1;
 }
 
 
 /* ==== 00402ffa NTAddFileHandle ==== */
 
-undefined8 __watcall NTAddFileHandle(int param_1,undefined4 unaff_EDX)
+int __watcall NTAddFileHandle(int param_1)
 
 {
   int iVar1;
@@ -40,7 +40,7 @@ undefined8 __watcall NTAddFileHandle(int param_1,undefined4 unaff_EDX)
       FileHandleIDs[topFileID] = param_1;
       topFileID = topFileID + 1;
       (*(code *)ReleaseFList_1)();
-      return CONCAT44(unaff_EDX,topFileID + -1);
+      return topFileID + -1;
     }
     if (*(int *)((int)FileHandleIDs + iVar1) == 0) break;
     iVar1 = iVar1 + 4;
@@ -48,16 +48,17 @@ undefined8 __watcall NTAddFileHandle(int param_1,undefined4 unaff_EDX)
   }
   *(int *)((int)FileHandleIDs + iVar1) = param_1;
   (*(code *)ReleaseFList_1)();
-  return CONCAT44(unaff_EDX,i_val);
+  return i_val;
 }
 
 
 /* ==== 00403073 NTAddSpecificFileHandle ==== */
 
-void __watcall NTAddSpecificFileHandle(HANDLE handle,int unaff_EDX)
+undefined4 __watcall NTAddSpecificFileHandle(HANDLE handle,int param_2)
 
 {
   int iVar1;
+  undefined4 uVar2;
   uint extraout_EDX;
   DWORD nStdHandle;
   
@@ -74,68 +75,65 @@ void __watcall NTAddSpecificFileHandle(HANDLE handle,int unaff_EDX)
   }
   SetStdHandle(nStdHandle,handle);
 LAB_004030a5:
-  if (unaff_EDX < topFileID) {
-    FileHandleIDs[unaff_EDX] = handle;
+  if (param_2 < topFileID) {
+    FileHandleIDs[param_2] = handle;
   }
   else {
-    FileHandleIDs = nrealloc(FileHandleIDs,unaff_EDX * 4 + 4);
-    for (iVar1 = topFileID << 2; iVar1 < unaff_EDX * 4; iVar1 = iVar1 + 4) {
+    FileHandleIDs = nrealloc(FileHandleIDs,param_2 * 4 + 4);
+    for (iVar1 = topFileID << 2; iVar1 < param_2 * 4; iVar1 = iVar1 + 4) {
       *(undefined4 *)((int)FileHandleIDs + iVar1) = 0;
     }
-    topFileID = unaff_EDX + 1;
-    FileHandleIDs[unaff_EDX] = handle;
+    topFileID = param_2 + 1;
+    FileHandleIDs[param_2] = handle;
   }
-  (*(code *)ReleaseFList_1)();
-  return;
+  uVar2 = (*(code *)ReleaseFList_1)();
+  return uVar2;
 }
 
 
 /* ==== 0040310f NTRemoveFileHandle ==== */
 
-void __watcall NTRemoveFileHandle(undefined4 param_1,undefined4 unaff_EDX)
+undefined4 __watcall NTRemoveFileHandle(undefined4 param_1)
 
 {
+  undefined4 uVar1;
   int extraout_EDX;
   
-  (*(code *)AccessFList_1)(unaff_EDX);
+  (*(code *)AccessFList_1)();
   if ((0 < extraout_EDX) && (extraout_EDX < topFileID)) {
     *(undefined4 *)(FileHandleIDs + extraout_EDX * 4) = 0;
   }
-  (*(code *)ReleaseFList_1)();
-  return;
+  uVar1 = (*(code *)ReleaseFList_1)();
+  return uVar1;
 }
 
 
 /* ==== 0040313b NTInitFileHandles ==== */
 
-undefined8 __watcall NTInitFileHandles(undefined4 param_1,undefined4 unaff_EDX_02)
+void __watcall NTInitFileHandles(void)
 
 {
   HANDLE std_handle;
-  undefined4 unaff_EDX;
-  undefined4 unaff_EDX_03;
-  undefined4 unaff_EDX_04;
-  undefined8 nt_add_file_handle;
   
   topFileID = 0;
   FileHandleIDs = 0;
   std_handle = GetStdHandle(0xfffffff6);
-  NTAddFileHandle((int)std_handle,unaff_EDX);
+  NTAddFileHandle((int)std_handle);
   std_handle = GetStdHandle(0xfffffff5);
-  NTAddFileHandle((int)std_handle,unaff_EDX_03);
+  NTAddFileHandle((int)std_handle);
   std_handle = GetStdHandle(0xfffffff4);
-  nt_add_file_handle = NTAddFileHandle((int)std_handle,unaff_EDX_04);
-  return CONCAT44(unaff_EDX_02,(int)nt_add_file_handle);
+  NTAddFileHandle((int)std_handle);
+  return;
 }
 
 
 /* ==== 00403172 NTGetFakeHandle ==== */
 
-undefined8 __watcall NTGetFakeHandle(undefined4 param_1,undefined4 unaff_EDX)
+int __watcall NTGetFakeHandle(void)
 
 {
   fakeHandle = fakeHandle + 1;
-  return CONCAT44(unaff_EDX,fakeHandle);
+  return fakeHandle;
 }
 
 

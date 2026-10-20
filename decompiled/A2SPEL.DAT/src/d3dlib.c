@@ -14,99 +14,99 @@ void __watcall release_d3d(void)
 
 /* ==== 0041c32c d3d_error_string ==== */
 
-undefined8 __watcall d3d_error_string(long param_1,undefined4 param_2)
+char * __watcall d3d_error_string(long param_1)
 
 {
   char *dd_error_string_result;
   
   switch(param_1) {
   case -0x7789fd44:
-    return CONCAT44(param_2,s_Bad_major_version_0044b77c);
+    return s_Bad_major_version_0044b77c;
   case -0x7789fd43:
-    return CONCAT44(param_2,s_Bad_minor_version_0044b78e);
+    return s_Bad_minor_version_0044b78e;
   default:
     dd_error_string_result = dd_error_string(param_1);
-    return CONCAT44(param_2,dd_error_string_result);
+    return dd_error_string_result;
   case -0x7789fd3a:
-    return CONCAT44(param_2,s_create_execute_failed_0044b7b7);
+    return s_create_execute_failed_0044b7b7;
   case -0x7789fd39:
-    return CONCAT44(param_2,s_destroy_execute_failed_0044b7cd);
+    return s_destroy_execute_failed_0044b7cd;
   case -0x7789fd38:
-    return CONCAT44(param_2,s_execute_lock_failed_0044b7f3);
+    return s_execute_lock_failed_0044b7f3;
   case -0x7789fd37:
-    return CONCAT44(param_2,s_execute_unlock_failed_0044b829);
+    return s_execute_unlock_failed_0044b829;
   case -0x7789fd36:
-    return CONCAT44(param_2,s_execute_locked_0044b807);
+    return s_execute_locked_0044b807;
   case -0x7789fd35:
-    return CONCAT44(param_2,s_execute_not_locked_0044b816);
+    return s_execute_not_locked_0044b816;
   case -0x7789fd34:
-    return CONCAT44(param_2,s_execute_failed_0044b7e4);
+    return s_execute_failed_0044b7e4;
   case -0x7789fd33:
-    return CONCAT44(param_2,s_clipped_execute_failed_0044b7a0);
+    return s_clipped_execute_failed_0044b7a0;
   case -0x7789fd30:
-    return CONCAT44(param_2,s_No_texture_support_0044b9ef);
+    return s_No_texture_support_0044b9ef;
   case -0x7789fd2f:
-    return CONCAT44(param_2,s_Create_texture_failed_0044b970);
+    return s_Create_texture_failed_0044b970;
   case -0x7789fd2e:
-    return CONCAT44(param_2,s_Destroy_texture_failed_0044b986);
+    return s_Destroy_texture_failed_0044b986;
   case -0x7789fd2d:
-    return CONCAT44(param_2,s_Texture_lock_failed_0044b9cc);
+    return s_Texture_lock_failed_0044b9cc;
   case -0x7789fd2c:
-    return CONCAT44(param_2,s_Texture_unlock_failed_0044ba29);
+    return s_Texture_unlock_failed_0044ba29;
   case -0x7789fd2b:
-    return CONCAT44(param_2,s_Texture_load_failed_0044b9b8);
+    return s_Texture_load_failed_0044b9b8;
   case -0x7789fd2a:
-    return CONCAT44(param_2,s_Texture_swap_failed_0044ba15);
+    return s_Texture_swap_failed_0044ba15;
   case -0x7789fd29:
-    return CONCAT44(param_2,s_Texture_locked_0044b9e0);
+    return s_Texture_locked_0044b9e0;
   case -0x7789fd28:
-    return CONCAT44(param_2,s_Texture_not_locked_0044ba02);
+    return s_Texture_not_locked_0044ba02;
   case -0x7789fd27:
-    return CONCAT44(param_2,s_Get_texture_surface_failed_0044b99d);
+    return s_Get_texture_surface_failed_0044b99d;
   case -0x7789fd26:
-    return CONCAT44(param_2,s_Matrix_create_failed_0044b8b1);
+    return s_Matrix_create_failed_0044b8b1;
   case -0x7789fd25:
-    return CONCAT44(param_2,s_Matrix_destroy_failed_0044b8c6);
+    return s_Matrix_destroy_failed_0044b8c6;
   case -0x7789fd24:
-    return CONCAT44(param_2,s_Matrix_set_data_failed_0044b8f3);
+    return s_Matrix_set_data_failed_0044b8f3;
   case -0x7789fd23:
-    return CONCAT44(param_2,s_Matrix_get_data_failed_0044b8dc);
+    return s_Matrix_get_data_failed_0044b8dc;
   case -0x7789fd22:
-    return CONCAT44(param_2,s_Set_viewport_failed_0044b95c);
+    return s_Set_viewport_failed_0044b95c;
   case -0x7789fd1c:
-    return CONCAT44(param_2,s_Material_create_failed_0044b850);
+    return s_Material_create_failed_0044b850;
   case -0x7789fd1b:
-    return CONCAT44(param_2,s_Material_destroy_failed_0044b867);
+    return s_Material_destroy_failed_0044b867;
   case -0x7789fd1a:
-    return CONCAT44(param_2,s_Material_set_data_failed_0044b898);
+    return s_Material_set_data_failed_0044b898;
   case -0x7789fd19:
-    return CONCAT44(param_2,s_Material_get_data_failed_0044b87f);
+    return s_Material_get_data_failed_0044b87f;
   case -0x7789fd12:
-    return CONCAT44(param_2,s_Light_set_failed_0044b83f);
+    return s_Light_set_failed_0044b83f;
   case -0x7789fd08:
-    return CONCAT44(param_2,s_Scene_in_scene_error_0044b92e);
+    return s_Scene_in_scene_error_0044b92e;
   case -0x7789fd07:
-    return CONCAT44(param_2,s_Scene_not_in_scene_error_0044b943);
+    return s_Scene_not_in_scene_error_0044b943;
   case -0x7789fd06:
-    return CONCAT44(param_2,s_Scene_begin_failed_0044b90a);
+    return s_Scene_begin_failed_0044b90a;
   case -0x7789fd05:
-    return CONCAT44(param_2,s_Scene_end_failed_0044b91d);
+    return s_Scene_end_failed_0044b91d;
   }
 }
 
 
 /* ==== 0041c439 query_d3d_interface ==== */
 
-void __watcall query_d3d_interface(undefined4 param_1,undefined4 param_2)
+void __watcall query_d3d_interface(void)
 
 {
-  undefined8 uVar1;
+  long lVar1;
+  char *arg4;
   
-  uVar1 = (*(code *)**(undefined4 **)xvga_dd_object)(xvga_dd_object,&DAT_00430081,&direct3d,param_2)
-  ;
-  if ((int)uVar1 != 0) {
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    fatal_exit(s__s__d____D3DError____s_0044ba5d,s_d3dlib_cpp_0044ba52,0x81,(int)uVar1);
+  lVar1 = (*(code *)**(undefined4 **)xvga_dd_object)(xvga_dd_object,&DAT_00430081,&direct3d);
+  if (lVar1 != 0) {
+    arg4 = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError____s_0044ba5d,s_d3dlib_cpp_0044ba52,0x81,arg4);
   }
   return;
 }
@@ -114,60 +114,55 @@ void __watcall query_d3d_interface(undefined4 param_1,undefined4 param_2)
 
 /* ==== 0041c473 create_d3d_device ==== */
 
-void __watcall create_d3d_device(uint param_1,undefined4 param_2)
+void __watcall create_d3d_device(uint param_1)
 
 {
-  undefined4 uVar1;
-  uint extraout_EDX;
-  undefined8 uVar2;
-  char *format;
-  char *pcVar3;
-  undefined4 uVar4;
+  long lVar1;
+  char *arg4;
+  char *pcVar2;
+  char *arg2;
+  undefined4 arg3;
   
   if (DAT_00476518 == 0) {
-    fatal_exit(s__s__d____error_device_driver_gui_0044ba81,s_d3dlib_cpp_0044ba76,0x94,param_2);
-    param_1 = extraout_EDX;
+    fatal_exit(s__s__d____error_device_driver_gui_0044ba81,s_d3dlib_cpp_0044ba76,0x94);
   }
   if (param_1 == 0) {
-    uVar2 = (*(code *)**(undefined4 **)xvga_screen)(xvga_screen,&DAT_00476508,&d3d_device);
-    if ((int)uVar2 == 0) {
+    lVar1 = (*(code *)**(undefined4 **)xvga_screen)(xvga_screen,&DAT_00476508,&d3d_device);
+    if (lVar1 == 0) {
       return;
     }
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    uVar1 = (undefined4)uVar2;
-    uVar4 = 0x9c;
-    pcVar3 = s_d3dlib_cpp_0044bab7;
-    format = s__s__d____D3DError_Query_Device_I_0044bac2;
+    arg4 = d3d_error_string(lVar1);
+    arg3 = 0x9c;
+    arg2 = s_d3dlib_cpp_0044bab7;
+    pcVar2 = s__s__d____D3DError_Query_Device_I_0044bac2;
   }
   else if (param_1 < 2) {
-    uVar2 = (*(code *)**(undefined4 **)xvga_back_screen)(xvga_back_screen,&DAT_00476508,&d3d_device)
+    lVar1 = (*(code *)**(undefined4 **)xvga_back_screen)(xvga_back_screen,&DAT_00476508,&d3d_device)
     ;
-    if ((int)uVar2 == 0) {
+    if (lVar1 == 0) {
       return;
     }
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    uVar1 = (undefined4)uVar2;
-    uVar4 = 0xa3;
-    pcVar3 = s_d3dlib_cpp_0044baf8;
-    format = s__s__d____D3DError_Query_Device_I_0044bb03;
+    arg4 = d3d_error_string(lVar1);
+    arg3 = 0xa3;
+    arg2 = s_d3dlib_cpp_0044baf8;
+    pcVar2 = s__s__d____D3DError_Query_Device_I_0044bb03;
   }
   else {
     if (param_1 != 2) {
-      fatal_exit(s__s__d____Illegal_focus_for_3d_de_0044bb90,s_d3dlib_cpp_0044bb85,0xaf,param_2);
+      fatal_exit(s__s__d____Illegal_focus_for_3d_de_0044bb90,s_d3dlib_cpp_0044bb85,0xaf);
       return;
     }
-    uVar2 = (*(code *)**(undefined4 **)xvga_buffer_screen)
+    lVar1 = (*(code *)**(undefined4 **)xvga_buffer_screen)
                       (xvga_buffer_screen,&DAT_00476508,&d3d_device);
-    if ((int)uVar2 == 0) {
+    if (lVar1 == 0) {
       return;
     }
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    uVar1 = (undefined4)uVar2;
-    uVar4 = 0xaa;
-    pcVar3 = s_d3dlib_cpp_0044bb3d;
-    format = s__s__d____D3DError_Query_Device_I_0044bb48;
+    arg4 = d3d_error_string(lVar1);
+    arg3 = 0xaa;
+    arg2 = s_d3dlib_cpp_0044bb3d;
+    pcVar2 = s__s__d____D3DError_Query_Device_I_0044bb48;
   }
-  fatal_exit(format,pcVar3,uVar4,uVar1);
+  fatal_exit(pcVar2,arg2,arg3,arg4);
   return;
 }
 
@@ -184,54 +179,51 @@ void __watcall release_d3d_device(void)
 
 /* ==== 0041c5e5 find_d3d_device ==== */
 
-/* WARNING: Type propagation algorithm not settling */
-
 void __watcall find_d3d_device(void)
 
 {
   int in_EAX;
-  byte bVar1;
-  undefined8 uVar2;
+  long lVar1;
+  char *d3d_error_string_result;
+  byte bVar2;
   undefined4 auStackY_19d0 [1521];
-  int **ppiVar3;
-  int *apiStack_1f0 [92];
+  undefined1 *puVar3;
+  int *piVar4;
   undefined4 uStack_80;
   undefined4 uStack_7c;
   undefined1 uStack_74;
   
-  bVar1 = 0;
+  bVar2 = 0;
   if ((in_EAX != 1) && (in_EAX != 2)) {
-    apiStack_1f0[1] = (int *)0xdd;
-    apiStack_1f0[0] = (int *)s_d3dlib_cpp_0044bc12;
-    fatal_exit(s__s__d____find_3d_device_illegal_c_0044bc1d);
+    fatal_exit(s__s__d____find_3d_device_illegal_c_0044bc1d,s_d3dlib_cpp_0044bc12,0xdd,in_EAX);
   }
-  apiStack_1f0[2] = (int *)0x0;
-  apiStack_1f0[1] = (int *)&LAB_0041c580;
-  apiStack_1f0[0] = direct3d;
-  uVar2 = (**(code **)(*direct3d + 0x10))();
-  if ((int)uVar2 != 0) {
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    fatal_exit(s__s__d____D3DError_EnumDevice_____0044bc62,s_d3dlib_cpp_0044bc57,0xe2,(int)uVar2);
+  piVar4 = direct3d;
+  lVar1 = (**(code **)(*direct3d + 0x10))();
+  uStack_74 = SUB41(piVar4,0);
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError_EnumDevice_____0044bc62,s_d3dlib_cpp_0044bc57,0xe2,
+               d3d_error_string_result);
   }
   memset(&uStack_80,0,0x5c);
   uStack_80 = 0x5c;
-  uStack_74 = apiStack_1f0[0]._0_1_;
   uStack_7c = 1;
-  memset(apiStack_1f0 + 1,0,0x16c);
-  ppiVar3 = apiStack_1f0 + 1;
-  apiStack_1f0[1] = (int *)0x16c;
-  uVar2 = (**(code **)(*direct3d + 0x20))(direct3d,&uStack_80);
-  if ((int)uVar2 != 0) {
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    fatal_exit(s__s__d____D3DError_FindDevice_____0044bc91,s_d3dlib_cpp_0044bc86,0xf0,(int)uVar2);
+  memset((undefined4 *)&stack0xfffffe14,0,0x16c);
+  puVar3 = &stack0xfffffe14;
+  lVar1 = (**(code **)(*direct3d + 0x20))(direct3d,&uStack_80);
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError_FindDevice_____0044bc91,s_d3dlib_cpp_0044bc86,0xf0,
+               d3d_error_string_result);
   }
-  DAT_00476508 = ppiVar3;
-  (&DAT_0047650c)[(uint)bVar1 * -2] = apiStack_1f0[(uint)bVar1 * -2];
-  (&DAT_00476510)[(uint)bVar1 * -2 + (uint)bVar1 * -2] =
-       apiStack_1f0[(uint)bVar1 * 0xfffffffe + (uint)bVar1 * 0xfffffffe + 1];
-  (&DAT_00476510 + (uint)bVar1 * -2 + (uint)bVar1 * -2)[(uint)bVar1 * -2 + 1] =
-       (apiStack_1f0 + (uint)bVar1 * 0xfffffffe + (uint)bVar1 * 0xfffffffe + 1)
-       [(uint)bVar1 * -2 + 1];
+  DAT_00476508 = puVar3;
+  (&DAT_0047650c)[(uint)bVar2 * -2] = *(undefined4 *)(&stack0xfffffe10 + (uint)bVar2 * -8);
+  (&DAT_00476510)[(uint)bVar2 * -2 + (uint)bVar2 * -2] =
+       *(undefined4 *)(&stack0xfffffe14 + (uint)bVar2 * -8 + (uint)bVar2 * -8);
+  (&DAT_00476510 + (uint)bVar2 * -2 + (uint)bVar2 * -2)[(uint)bVar2 * -2 + 1] =
+       *(undefined4 *)
+        ((int)(&stack0xfffffe14 + (uint)bVar2 * -8 + (uint)bVar2 * -8) + ((uint)bVar2 * -2 + 1) * 4)
+  ;
   DAT_00476518 = 1;
   debugmsg(s_D3D___Query_Device_Interface_suc_0044bcb5);
   return;
@@ -240,116 +232,113 @@ void __watcall find_d3d_device(void)
 
 /* ==== 0041c6ff init_3d_lib ==== */
 
-undefined8 __watcall init_3d_lib(undefined4 param_1,undefined4 param_2)
+void __watcall init_3d_lib(uint param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
   int iVar1;
-  undefined4 extraout_EAX;
-  undefined4 extraout_EAX_00;
-  undefined4 unaff_ECX;
-  undefined4 extraout_EDX;
-  int extraout_EDX_00;
-  uint extraout_EDX_01;
-  uint extraout_EDX_02;
-  undefined4 extraout_EDX_03;
-  uint extraout_EDX_04;
-  undefined4 unaff_EBX;
-  undefined8 math3d;
-  longlong lVar2;
-  undefined4 in_stack_00000004;
+  int extraout_EDX;
   
-  math3d = init_math3d(param_1,param_2);
-  query_d3d_interface((int)math3d,(int)((ulonglong)math3d >> 0x20));
+  init_math3d();
+  query_d3d_interface();
   find_d3d_device();
   debugmsg(s_init_z_buffer_0044bcdd);
-  iVar1 = create_zbuffer();
+  iVar1 = create_zbuffer(param_1,0x10,xvga_screen_xsize,xvga_screen_ysize);
   if (iVar1 == 0) {
     fatal_exit(s__s__d____D3D___Error_creating_Z__0044bcf7,s_d3dlib_cpp_0044bcec,0x10c);
   }
   debugmsg(s_z_buffer_initialized____d_0044bd21,zbuffer_created);
-  create_d3d_device(param_1,extraout_EDX);
-  iVar1 = set_xvga_palette(xvga_lib_palette,extraout_EDX_00,0x100);
-  enum_texture_formats(iVar1,extraout_EDX_00);
-  lVar2 = alloc_lights(param_2,extraout_EDX_01);
-  lVar2 = alloc_materials(unaff_EBX,(uint)((ulonglong)lVar2 >> 0x20));
-  lVar2 = alloc_textures(unaff_ECX,(uint)((ulonglong)lVar2 >> 0x20));
-  create_default_material((int)lVar2);
+  create_d3d_device(param_1);
+  iVar1 = set_xvga_palette(xvga_lib_palette,extraout_EDX,0x100);
+  enum_texture_formats(iVar1);
+  alloc_lights(param_2);
+  alloc_materials(param_3);
+  alloc_textures(param_4);
+  create_default_material();
   debugmsg(s_init_viewport_0044bd3c);
-  init_viewport(extraout_EAX,extraout_EDX_02);
+  init_viewport();
   debugmsg(s_init_viewport_ok_0044bd4b);
   debugmsg(s_clear_z_buffer_0044bd5d);
-  clear_zbuffer(extraout_EAX_00,extraout_EDX_03);
+  clear_zbuffer();
   debugmsg(s_clear_z_buffer_ok_0044bd6d);
   log_device_caps();
-  lVar2 = init_cameras(in_stack_00000004,extraout_EDX_04);
-  return CONCAT44((int)((ulonglong)lVar2 >> 0x20),1);
+  init_cameras(param_5);
+  return;
 }
 
 
 /* ==== 0041c818 create_zbuffer ==== */
 
-undefined4 __watcall create_zbuffer(void)
+undefined4 __watcall
+create_zbuffer(uint param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  uint in_EAX;
-  undefined4 uVar1;
-  undefined8 uVar2;
-  char *format;
-  char *pcVar3;
-  undefined4 uVar4;
+  long lVar1;
+  char *d3d_error_string_result;
+  char *pcVar2;
+  char *arg2;
+  undefined4 arg3;
   undefined4 local_78;
   undefined4 local_74;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_60;
+  undefined4 local_10;
   
   memset(&local_78,0,0x6c);
   local_78 = 0x6c;
   local_74 = 0x47;
-  uVar2 = (**(code **)(*(int *)xvga_dd_object + 0x18))(xvga_dd_object,&local_78,&zbuffer_surface,0);
-  if ((int)uVar2 != 0) {
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    fatal_exit(s__s__d____D3DError_Z_buffer_creat_0044bd8b,s_d3dlib_cpp_0044bd80,0x143,(int)uVar2);
+  local_10 = 0x20000;
+  if (param_1 == 2) {
+    local_10 = 0x20800;
   }
-  if (in_EAX == 0) {
-    uVar2 = (**(code **)(*(int *)xvga_screen + 0xc))(xvga_screen,zbuffer_surface);
-    if ((int)uVar2 == 0) {
+  local_70 = param_4;
+  local_6c = param_3;
+  local_60 = param_2;
+  lVar1 = (**(code **)(*(int *)xvga_dd_object + 0x18))(xvga_dd_object,&local_78,&zbuffer_surface,0);
+  if (lVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(lVar1);
+    fatal_exit(s__s__d____D3DError_Z_buffer_creat_0044bd8b,s_d3dlib_cpp_0044bd80,0x143,
+               d3d_error_string_result);
+  }
+  if (param_1 == 0) {
+    lVar1 = (**(code **)(*(int *)xvga_screen + 0xc))(xvga_screen,zbuffer_surface);
+    if (lVar1 == 0) {
       zbuffer_created = 1;
       return 1;
     }
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    uVar1 = (undefined4)uVar2;
-    uVar4 = 0x14e;
-    pcVar3 = s_d3dlib_cpp_0044bdb6;
-    format = s__s__d____D3DError_Z_buffer_attac_0044bdc1;
+    d3d_error_string_result = d3d_error_string(lVar1);
+    arg3 = 0x14e;
+    arg2 = s_d3dlib_cpp_0044bdb6;
+    pcVar2 = s__s__d____D3DError_Z_buffer_attac_0044bdc1;
   }
-  else if (in_EAX < 2) {
-    uVar2 = (**(code **)(*(int *)xvga_back_screen + 0xc))(xvga_back_screen,zbuffer_surface);
-    if ((int)uVar2 == 0) {
+  else if (param_1 < 2) {
+    lVar1 = (**(code **)(*(int *)xvga_back_screen + 0xc))(xvga_back_screen,zbuffer_surface);
+    if (lVar1 == 0) {
       zbuffer_created = 1;
       return 1;
     }
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    uVar1 = (undefined4)uVar2;
-    uVar4 = 0x155;
-    pcVar3 = s_d3dlib_cpp_0044bdf7;
-    format = s__s__d____D3DError_Z_buffer_attac_0044be02;
+    d3d_error_string_result = d3d_error_string(lVar1);
+    arg3 = 0x155;
+    arg2 = s_d3dlib_cpp_0044bdf7;
+    pcVar2 = s__s__d____D3DError_Z_buffer_attac_0044be02;
   }
   else {
-    if (in_EAX != 2) {
+    if (param_1 != 2) {
       fatal_exit(s__s__d____Illegal_focus_for_z_buf_0044be8e,s_d3dlib_cpp_0044be83,0x161);
       zbuffer_created = 1;
       return 1;
     }
-    uVar2 = (**(code **)(*(int *)xvga_buffer_screen + 0xc))(xvga_buffer_screen,zbuffer_surface);
-    if ((int)uVar2 == 0) {
+    lVar1 = (**(code **)(*(int *)xvga_buffer_screen + 0xc))(xvga_buffer_screen,zbuffer_surface);
+    if (lVar1 == 0) {
       zbuffer_created = 1;
       return 1;
     }
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    uVar1 = (undefined4)uVar2;
-    uVar4 = 0x15c;
-    pcVar3 = s_d3dlib_cpp_0044be3c;
-    format = s__s__d____D3DError_Z_buffer_attac_0044be47;
+    d3d_error_string_result = d3d_error_string(lVar1);
+    arg3 = 0x15c;
+    arg2 = s_d3dlib_cpp_0044be3c;
+    pcVar2 = s__s__d____D3DError_Z_buffer_attac_0044be47;
   }
-  fatal_exit(format,pcVar3,uVar4,uVar1);
+  fatal_exit(pcVar2,arg2,arg3,d3d_error_string_result);
   zbuffer_created = 1;
   return 1;
 }
@@ -357,30 +346,31 @@ undefined4 __watcall create_zbuffer(void)
 
 /* ==== 0041c97f clear_zbuffer ==== */
 
-longlong __watcall clear_zbuffer(undefined4 param_1,undefined4 param_2)
+void __watcall clear_zbuffer(void)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  uint local_1c;
+  long lVar1;
+  char *arg4;
+  undefined4 uVar2;
+  undefined4 local_1c;
   int local_18;
   int local_14;
   int local_10;
   
-  uVar1 = 1;
+  uVar2 = 1;
   if (zbuffer_created != 0) {
-    uVar1 = 3;
+    uVar2 = 3;
   }
   local_1c = DAT_004764d0;
   local_18 = viewport_x;
   local_14 = viewport_width + viewport_x;
   local_10 = viewport_height + viewport_x;
-  uVar2 = (**(code **)(*d3d_object + 0x30))(d3d_object,1,&local_1c,uVar1);
-  if ((int)uVar2 != 0) {
-    uVar2 = d3d_error_string((int)uVar2,(int)((ulonglong)uVar2 >> 0x20));
-    fatal_exit(s__s__d___D3DError_Clearing_z_buff_0044bebf,s_d3dlib_cpp_0044beb4,0x17e,(int)uVar2);
+  lVar1 = (**(code **)(*d3d_object + 0x30))(d3d_object,1,&local_1c,uVar2);
+  if (lVar1 != 0) {
+    arg4 = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_Clearing_z_buff_0044bebf,s_d3dlib_cpp_0044beb4,0x17e,arg4);
   }
-  return (ulonglong)local_1c << 0x20;
+  return;
 }
 
 
@@ -402,7 +392,6 @@ void __watcall release_zbuffer(void)
 void __watcall exit_d3dlib(void)
 
 {
-  undefined4 extraout_ECX;
   undefined4 extraout_EDX;
   
   debugmsg(s_releasing_viewport_0044bee9);
@@ -412,7 +401,7 @@ void __watcall exit_d3dlib(void)
   debugmsg(s_releasing_d3d_device_0044bf10);
   release_d3d_device();
   debugmsg(s_releasing_d3dlib_done_0044bf26);
-  (**(code **)(*(int *)xvga_dd_object + 8))(xvga_dd_object,extraout_EDX,extraout_ECX);
+  (**(code **)(*(int *)xvga_dd_object + 8))(xvga_dd_object,extraout_EDX);
   return;
 }
 
@@ -422,7 +411,8 @@ void __watcall exit_d3dlib(void)
 void __watcall log_device_caps(void)
 
 {
-  undefined8 uVar1;
+  long lVar1;
+  char *arg4;
   undefined4 *puVar2;
   undefined4 local_170 [3];
   undefined4 uStack_164;
@@ -438,10 +428,10 @@ void __watcall log_device_caps(void)
   puVar2 = local_170;
   local_170[0] = 0xac;
   local_c4[0] = 0xac;
-  uVar1 = (**(code **)(*d3d_device + 0x10))(d3d_device,local_170,local_c4);
-  if ((int)uVar1 != 0) {
-    uVar1 = d3d_error_string((int)uVar1,(int)((ulonglong)uVar1 >> 0x20));
-    fatal_exit(s__s__d___D3DError_getting_device_c_0044bfc8,s_d3dlib_cpp_0044bfbd,0x1bf,(int)uVar1);
+  lVar1 = (**(code **)(*d3d_device + 0x10))(d3d_device,local_170,local_c4);
+  if (lVar1 != 0) {
+    arg4 = d3d_error_string(lVar1);
+    fatal_exit(s__s__d___D3DError_getting_device_c_0044bfc8,s_d3dlib_cpp_0044bfbd,0x1bf,arg4);
   }
   debugmsg(s_HARDWARE_CAPABILITIES_0044bff4);
   if (((uint)puVar2 & 0x10) != 0) {

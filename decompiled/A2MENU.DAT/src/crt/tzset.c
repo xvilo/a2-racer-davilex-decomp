@@ -5,12 +5,15 @@
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall CacheOSTZ(int param_1)
+uint __watcall CacheOSTZ(int param_1)
 
 {
-  _tzFlag = _tzFlag & 0xfffffffc | ~(_tzFlag & 1) & 1;
+  uint uVar1;
+  
+  uVar1 = _tzFlag & 1;
+  _tzFlag = _tzFlag & 0xfffffffc | ~uVar1 & 1;
   _tzFlag = _tzFlag | (uint)(param_1 != 0) * 2;
-  return;
+  return uVar1;
 }
 
 
@@ -18,53 +21,56 @@ void __watcall CacheOSTZ(int param_1)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall tryOSTimeZone(void)
+undefined1 * __watcall tryOSTimeZone(void)
 
 {
-  DWORD DVar1;
-  undefined1 *puVar2;
-  WCHAR *pWVar3;
-  char cVar4;
-  _TIME_ZONE_INFORMATION time_zone_information;
+  undefined4 in_EAX;
+  undefined1 *time_zone_information;
+  undefined1 *puVar1;
+  WCHAR *pWVar2;
+  char cVar3;
+  _TIME_ZONE_INFORMATION time_zone_information_2;
   
+  puVar1 = (undefined1 *)CONCAT22((short)((uint)in_EAX >> 0x10),CONCAT11(tzFlag,(char)in_EAX));
   if (((tzFlag & 1) == 0) || ((tzFlag & 2) == 0)) {
     tzFlag = tzFlag | 2;
-    DVar1 = GetTimeZoneInformation(&time_zone_information);
-    if (DVar1 != 0) {
-      if (DVar1 < 2) {
+    time_zone_information = (undefined1 *)GetTimeZoneInformation(&time_zone_information_2);
+    puVar1 = (undefined1 *)0x0;
+    if (time_zone_information != (undefined1 *)0x0) {
+      if (time_zone_information < (undefined1 *)0x2) {
         _daylight = 0;
       }
       else {
-        if (DVar1 != 2) {
-          return;
+        if (time_zone_information != (undefined1 *)0x2) {
+          return time_zone_information;
         }
         _daylight = 1;
-        dst_adjust = time_zone_information.DaylightBias * -0x3c;
+        dst_adjust = time_zone_information_2.DaylightBias * -0x3c;
       }
-      cVar4 = ' ';
-      timezone = (time_zone_information.StandardBias + time_zone_information.Bias) * 0x3c;
-      puVar2 = &stzone;
-      for (pWVar3 = time_zone_information.StandardName; *pWVar3 != L'\0'; pWVar3 = pWVar3 + 1) {
-        if (cVar4 == ' ') {
-          *puVar2 = (char)*pWVar3;
-          puVar2 = puVar2 + 1;
+      cVar3 = ' ';
+      timezone = (time_zone_information_2.StandardBias + time_zone_information_2.Bias) * 0x3c;
+      puVar1 = &stzone;
+      for (pWVar2 = time_zone_information_2.StandardName; *pWVar2 != L'\0'; pWVar2 = pWVar2 + 1) {
+        if (cVar3 == ' ') {
+          *puVar1 = (char)*pWVar2;
+          puVar1 = puVar1 + 1;
         }
-        cVar4 = (char)*pWVar3;
+        cVar3 = (char)*pWVar2;
       }
-      cVar4 = ' ';
-      *puVar2 = 0;
-      puVar2 = &dtzone;
-      for (pWVar3 = time_zone_information.DaylightName; *pWVar3 != L'\0'; pWVar3 = pWVar3 + 1) {
-        if (cVar4 == ' ') {
-          *puVar2 = (char)*pWVar3;
-          puVar2 = puVar2 + 1;
+      cVar3 = ' ';
+      *puVar1 = 0;
+      puVar1 = &dtzone;
+      for (pWVar2 = time_zone_information_2.DaylightName; *pWVar2 != L'\0'; pWVar2 = pWVar2 + 1) {
+        if (cVar3 == ' ') {
+          *puVar1 = (char)*pWVar2;
+          puVar1 = puVar1 + 1;
         }
-        cVar4 = (char)*pWVar3;
+        cVar3 = (char)*pWVar2;
       }
-      *puVar2 = 0;
+      *puVar1 = 0;
     }
   }
-  return;
+  return puVar1;
 }
 
 
@@ -72,7 +78,7 @@ void __watcall tryOSTimeZone(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void __watcall tzset(void)
+void __watcall tzset(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
   DWORD DVar1;
@@ -107,7 +113,7 @@ void __watcall tzset(void)
       if (*pbVar3 == 0x2c) {
         uStack_20._0_2_ = 0xf4a2;
         uStack_20._2_2_ = 0x41;
-        pbVar3 = (byte *)parse_rule(pbVar3 + 1,(int *)&start_dst);
+        pbVar3 = parse_rule(pbVar3 + 1,(int *)&start_dst);
       }
       if (*pbVar3 == 0x2c) {
         uStack_20._0_2_ = 0xf4ba;
@@ -168,7 +174,7 @@ void __watcall tzset(void)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined8 __watcall parse_tz(byte *param_1,undefined4 unaff_EDX)
+uint __watcall parse_tz(byte *param_1)
 
 {
   byte *pbVar1;
@@ -187,7 +193,7 @@ undefined8 __watcall parse_tz(byte *param_1,undefined4 unaff_EDX)
     pbVar1 = parse_offset(pbVar1,&dtzone,&local_1c);
     dst_adjust = timezone - local_1c;
     if (*pbVar1 == 0x2c) {
-      pbVar1 = (byte *)parse_rule(pbVar1 + 1,(int *)&start_dst);
+      pbVar1 = parse_rule(pbVar1 + 1,(int *)&start_dst);
     }
     uVar2 = (uint)*pbVar1;
     if (uVar2 == 0x2c) {
@@ -201,13 +207,13 @@ undefined8 __watcall parse_tz(byte *param_1,undefined4 unaff_EDX)
       end_dst = end_dst - dst_adjust % 0x3c;
     }
   }
-  return CONCAT44(unaff_EDX,uVar2);
+  return uVar2;
 }
 
 
 /* ==== 0041f204 parse_time ==== */
 
-void __watcall parse_time(byte *param_1,int *unaff_EDX)
+byte * __watcall parse_time(byte *param_1,int *param_2)
 
 {
   byte bVar1;
@@ -220,14 +226,14 @@ void __watcall parse_time(byte *param_1,int *unaff_EDX)
     param_1 = param_1 + 1;
     iVar2 = (uint)bVar1 + iVar2 * 10 + -0x30;
   }
-  *unaff_EDX = iVar2;
-  return;
+  *param_2 = iVar2;
+  return param_1;
 }
 
 
 /* ==== 0041f228 parse_offset ==== */
 
-byte * __watcall parse_offset(byte *param_1,byte *unaff_EDX,int *unaff_EBX)
+byte * __watcall parse_offset(byte *param_1,byte *param_2,int *param_3)
 
 {
   byte bVar1;
@@ -239,6 +245,7 @@ byte * __watcall parse_offset(byte *param_1,byte *unaff_EDX,int *unaff_EBX)
   int local_20;
   int local_1c;
   uint local_18;
+  byte *local_14;
   
   pbVar3 = param_1;
   if (*param_1 == 0x3a) {
@@ -252,7 +259,7 @@ byte * __watcall parse_offset(byte *param_1,byte *unaff_EDX,int *unaff_EBX)
   if (0x1e < (int)local_18) {
     local_18 = 0x1e;
   }
-  pbVar4 = unaff_EDX;
+  pbVar4 = param_2;
   for (i = local_18 >> 2; i != 0; i = i - 1) {
     *(undefined4 *)pbVar4 = *(undefined4 *)pbVar3;
     pbVar3 = pbVar3 + 4;
@@ -263,7 +270,7 @@ byte * __watcall parse_offset(byte *param_1,byte *unaff_EDX,int *unaff_EBX)
     pbVar3 = pbVar3 + 1;
     pbVar4 = pbVar4 + 1;
   }
-  unaff_EDX[local_18] = 0;
+  param_2[local_18] = 0;
   bVar2 = false;
   if (bVar1 == 0x2d) {
     bVar2 = true;
@@ -275,15 +282,15 @@ LAB_0041f2c2:
     local_24 = 0;
     local_20 = 0;
     local_1c = 0;
-    param_1 = (byte *)parse_time(param_1,&local_1c);
-    if ((*param_1 == 0x3a) &&
-       (param_1 = (byte *)parse_time(param_1 + 1,&local_20), *param_1 == 0x3a)) {
-      param_1 = (byte *)parse_time(param_1 + 1,&local_24);
+    local_14 = param_2;
+    param_1 = parse_time(param_1,&local_1c);
+    if ((*param_1 == 0x3a) && (param_1 = parse_time(param_1 + 1,&local_20), *param_1 == 0x3a)) {
+      param_1 = parse_time(param_1 + 1,&local_24);
     }
     local_24 = local_24 + (local_20 + local_1c * 0x3c) * 0x3c;
-    *unaff_EBX = local_24;
+    *param_3 = local_24;
     if (bVar2) {
-      *unaff_EBX = -local_24;
+      *param_3 = -local_24;
     }
   }
   return param_1;
@@ -292,10 +299,10 @@ LAB_0041f2c2:
 
 /* ==== 0041f351 parse_rule ==== */
 
-char * __watcall parse_rule(byte *param_1,int *unaff_EDX)
+byte * __watcall parse_rule(byte *param_1,int *param_2)
 
 {
-  char *parse_time_result;
+  byte *parse_time_result;
   int iVar1;
   int local_1c;
   int local_18;
@@ -311,38 +318,38 @@ char * __watcall parse_rule(byte *param_1,int *unaff_EDX)
     param_1 = param_1 + 1;
     iVar1 = 0;
   }
-  unaff_EDX[8] = iVar1;
-  parse_time_result = (char *)parse_time(param_1,&local_10);
+  param_2[8] = iVar1;
+  parse_time_result = parse_time(param_1,&local_10);
   if (iVar1 == 0) {
-    unaff_EDX[4] = local_10 + -1;
-    if (*parse_time_result == '.') {
-      parse_time_result = (char *)parse_time((byte *)(parse_time_result + 1),&local_10);
-      unaff_EDX[3] = local_10;
-      if (*parse_time_result == '.') {
-        parse_time_result = (char *)parse_time((byte *)(parse_time_result + 1),&local_10);
-        unaff_EDX[6] = local_10;
+    param_2[4] = local_10 + -1;
+    if (*parse_time_result == 0x2e) {
+      parse_time_result = parse_time(parse_time_result + 1,&local_10);
+      param_2[3] = local_10;
+      if (*parse_time_result == 0x2e) {
+        parse_time_result = parse_time(parse_time_result + 1,&local_10);
+        param_2[6] = local_10;
       }
     }
-    unaff_EDX[7] = 0;
+    param_2[7] = 0;
   }
   else {
-    unaff_EDX[7] = local_10;
+    param_2[7] = local_10;
   }
   local_14 = 2;
   local_1c = 0;
   local_18 = 0;
-  if (*parse_time_result == '/') {
-    parse_time_result = (char *)parse_time((byte *)(parse_time_result + 1),&local_14);
-    if (*parse_time_result == ':') {
-      parse_time_result = (char *)parse_time((byte *)(parse_time_result + 1),&local_18);
-      if (*parse_time_result == ':') {
-        parse_time_result = (char *)parse_time((byte *)(parse_time_result + 1),&local_1c);
+  if (*parse_time_result == 0x2f) {
+    parse_time_result = parse_time(parse_time_result + 1,&local_14);
+    if (*parse_time_result == 0x3a) {
+      parse_time_result = parse_time(parse_time_result + 1,&local_18);
+      if (*parse_time_result == 0x3a) {
+        parse_time_result = parse_time(parse_time_result + 1,&local_1c);
       }
     }
   }
-  *unaff_EDX = local_1c;
-  unaff_EDX[1] = local_18;
-  unaff_EDX[2] = local_14;
+  *param_2 = local_1c;
+  param_2[1] = local_18;
+  param_2[2] = local_14;
   return parse_time_result;
 }
 

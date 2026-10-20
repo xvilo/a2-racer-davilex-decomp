@@ -3,64 +3,56 @@
 
 /* ==== 0040160b nmalloc ==== */
 
-undefined8 __watcall nmalloc(uint param_1,undefined4 unaff_EDX)
+undefined4 __watcall nmalloc(uint param_1)
 
 {
   bool bVar1;
   undefined4 uVar2;
   uint uVar3;
-  uint *mem_allocator;
+  int mem_allocator;
   int iVar4;
   undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
   uint uVar5;
-  undefined8 expand_dgroup;
+  ushort in_DS;
   
-  if ((param_1 != 0) && (param_1 < 0xffffffd5)) {
+  if ((param_1 == 0) || (0xffffffd4 < param_1)) {
+    uVar2 = 0;
+  }
+  else {
     bVar1 = false;
     uVar5 = param_1 + 3 & 0xfffffffc;
     (*(code *)AccessNHeap_1)();
-    uVar2 = extraout_EDX;
-LAB_00401644:
-    do {
-      uVar3 = uVar5;
-      if (uVar5 < 0xc) {
-        uVar3 = 0xc;
-      }
-      if ((uVar3 <= LargestSizeB4MiniHeapRover) || (iVar4 = MiniHeapRover, MiniHeapRover == 0)) {
-        LargestSizeB4MiniHeapRover = 0;
-        iVar4 = nheapbeg;
-      }
-      for (; iVar4 != 0; iVar4 = *(int *)(iVar4 + 8)) {
-        MiniHeapRover = iVar4;
-        mem_allocator = MemAllocator();
-        if (mem_allocator != (uint *)0x0) goto LAB_004016db;
-        if (LargestSizeB4MiniHeapRover < *(uint *)(iVar4 + 0x14)) {
-          LargestSizeB4MiniHeapRover = *(uint *)(iVar4 + 0x14);
+    while( true ) {
+      while( true ) {
+        uVar3 = uVar5;
+        if (uVar5 < 0xc) {
+          uVar3 = 0xc;
         }
-        uVar2 = 0;
-      }
-      if (!bVar1) {
-        expand_dgroup = ExpandDGROUP(param_1,uVar2);
-        uVar2 = (undefined4)((ulonglong)expand_dgroup >> 0x20);
-        if ((int)expand_dgroup != 0) {
-          bVar1 = true;
-          goto LAB_00401644;
+        if ((uVar3 <= LargestSizeB4MiniHeapRover) || (iVar4 = MiniHeapRover, MiniHeapRover == 0)) {
+          LargestSizeB4MiniHeapRover = 0;
+          iVar4 = nheapbeg;
         }
+        for (; iVar4 != 0; iVar4 = *(int *)(iVar4 + 8)) {
+          MiniHeapRover = iVar4;
+          mem_allocator = MemAllocator(param_1,(uint)in_DS,iVar4);
+          if (mem_allocator != 0) goto LAB_004016db;
+          if (LargestSizeB4MiniHeapRover < *(uint *)(iVar4 + 0x14)) {
+            LargestSizeB4MiniHeapRover = *(uint *)(iVar4 + 0x14);
+          }
+        }
+        if ((bVar1) || (iVar4 = ExpandDGROUP(param_1), iVar4 == 0)) break;
+        bVar1 = true;
       }
       iVar4 = nmemneed();
-      if (iVar4 == 0) goto LAB_004016db;
+      if (iVar4 == 0) break;
       bVar1 = false;
-    } while( true );
-  }
-  uVar2 = 0;
-LAB_004016eb:
-  return CONCAT44(unaff_EDX,uVar2);
+    }
 LAB_004016db:
-  nheap_clean = 0;
-  (*(code *)ReleaseNHeap_1)();
-  uVar2 = extraout_EDX_00;
-  goto LAB_004016eb;
+    nheap_clean = 0;
+    (*(code *)ReleaseNHeap_1)();
+    uVar2 = extraout_EDX;
+  }
+  return uVar2;
 }
 
 

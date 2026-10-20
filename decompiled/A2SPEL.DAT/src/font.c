@@ -6,12 +6,10 @@
 int __watcall clock_ticks(void)
 
 {
-  undefined4 in_EAX;
-  undefined4 unaff_EDX;
-  undefined8 uVar1;
+  uint uVar1;
   
-  uVar1 = get_ticks_centiseconds(in_EAX,unaff_EDX);
-  return (int)uVar1 - clock_start_ticks;
+  uVar1 = get_ticks_centiseconds();
+  return uVar1 - clock_start_ticks;
 }
 
 
@@ -75,16 +73,14 @@ int __watcall get_string_height(char *param_1,int param_2)
 
 /* WARNING: Removing unreachable block (ram,0x004296ff) */
 
-int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
+int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
 
 {
   IDirectDrawSurface *pIVar1;
   int iVar2;
   UINT UVar3;
   INT *pIVar4;
-  IDirectDrawSurface *pIStack_200;
-  undefined1 *puStack_1fc;
-  char acStack_1f8 [392];
+  undefined1 auStack_1f8 [392];
   tagRECT tStack_70;
   tagRECT tStack_60;
   tagRECT tStack_50;
@@ -92,20 +88,16 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
   tagSIZE size_3;
   tagSIZE size_2;
   HDC pHStack_24;
-  undefined1 *local_20;
-  undefined1 local_1c [4];
+  undefined1 *local_20 [2];
   tagSIZE *size;
   
-  local_20 = &stack0x00000014;
-  puStack_1fc = (undefined1 *)0x429217;
-  vsprintf(acStack_1f8,format,(va_list)&local_20);
-  local_20 = (undefined1 *)0x0;
+  local_20[0] = &stack0x00000014;
+  vsprintf((int)auStack_1f8,(byte *)param_4,(int *)local_20);
+  local_20[0] = (undefined1 *)0x0;
   if (param_1 == 0) {
     if (xvga_screen_defined == 0) {
       return 0x2711;
     }
-    puStack_1fc = local_1c;
-    pIStack_200 = xvga_screen;
     iVar2 = (**(code **)(*(int *)xvga_screen + 0x44))();
     if (iVar2 != 0) {
       return 0;
@@ -113,8 +105,8 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
     if (xvga_font_set == 0) {
       SetBkColor(pHStack_24,0xff0000);
       SetTextColor(pHStack_24,0xffff);
-      iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-      TextOutA(pHStack_24,param_2,param_3,(LPCSTR)&pIStack_200,iVar2);
+      iVar2 = lstrlenA(&stack0xfffffe00);
+      TextOutA(pHStack_24,param_2,param_3,&stack0xfffffe00,iVar2);
       pIVar1 = xvga_screen;
     }
     else {
@@ -123,12 +115,12 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
       SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
       SetBkMode(pHStack_24,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
       size = &size_4;
-      iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-      GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,size);
+      iVar2 = lstrlenA(&stack0xfffffe00);
+      GetTextExtentPoint32A(pHStack_24,&stack0xfffffe00,iVar2,size);
       SetRect(&tStack_50,param_2,param_3,size_4.cx + param_2,size_4.cy + param_3);
       pIVar4 = (INT *)0x0;
-      UVar3 = lstrlenA((LPCSTR)&pIStack_200);
-      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_50,(LPCSTR)&pIStack_200,UVar3,pIVar4);
+      UVar3 = lstrlenA(&stack0xfffffe00);
+      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_50,&stack0xfffffe00,UVar3,pIVar4);
       pIVar1 = xvga_screen;
     }
   }
@@ -136,8 +128,6 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
     if (xvga_back_screen_defined == 0) {
       return 0x2711;
     }
-    puStack_1fc = local_1c;
-    pIStack_200 = xvga_back_screen;
     iVar2 = (**(code **)(*(int *)xvga_back_screen + 0x44))();
     if (iVar2 != 0) {
       return 0;
@@ -145,8 +135,8 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
     if (xvga_font_set == 0) {
       SetBkColor(pHStack_24,0xff0000);
       SetTextColor(pHStack_24,0xffff);
-      iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-      TextOutA(pHStack_24,param_2,param_3,(LPCSTR)&pIStack_200,iVar2);
+      iVar2 = lstrlenA(&stack0xfffffe00);
+      TextOutA(pHStack_24,param_2,param_3,&stack0xfffffe00,iVar2);
       pIVar1 = xvga_back_screen;
     }
     else {
@@ -155,27 +145,23 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
       SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
       SetBkMode(pHStack_24,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
       size = &size_2;
-      iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-      GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,size);
+      iVar2 = lstrlenA(&stack0xfffffe00);
+      GetTextExtentPoint32A(pHStack_24,&stack0xfffffe00,iVar2,size);
       SetRect(&tStack_60,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
       pIVar4 = (INT *)0x0;
-      UVar3 = lstrlenA((LPCSTR)&pIStack_200);
-      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_60,(LPCSTR)&pIStack_200,UVar3,pIVar4);
+      UVar3 = lstrlenA(&stack0xfffffe00);
+      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_60,&stack0xfffffe00,UVar3,pIVar4);
       pIVar1 = xvga_back_screen;
     }
   }
   else {
     if (param_1 != 2) {
-      puStack_1fc = (undefined1 *)0xac;
-      pIStack_200 = (IDirectDrawSurface *)s_font_cpp_00450ab4;
-      fatal_exit(s__s__d____unidentified_focus_erro_00450abd);
+      fatal_exit(s__s__d____unidentified_focus_erro_00450abd,s_font_cpp_00450ab4,0xac);
       return 0;
     }
     if (xvga_buffer_screen_defined == 0) {
       return 0x2711;
     }
-    puStack_1fc = local_1c;
-    pIStack_200 = xvga_buffer_screen;
     iVar2 = (**(code **)(*(int *)xvga_buffer_screen + 0x44))();
     if (iVar2 != 0) {
       return 0;
@@ -183,8 +169,8 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
     if (xvga_font_set == 0) {
       SetBkColor(pHStack_24,0xff0000);
       SetTextColor(pHStack_24,0xffff);
-      iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-      TextOutA(pHStack_24,param_2,param_3,(LPCSTR)&pIStack_200,iVar2);
+      iVar2 = lstrlenA(&stack0xfffffe00);
+      TextOutA(pHStack_24,param_2,param_3,&stack0xfffffe00,iVar2);
       pIVar1 = xvga_buffer_screen;
     }
     else {
@@ -193,12 +179,12 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
       SetBkColor(pHStack_24,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
       SetBkMode(pHStack_24,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
       size = &size_3;
-      iVar2 = lstrlenA((LPCSTR)&pIStack_200);
-      GetTextExtentPoint32A(pHStack_24,(LPCSTR)&pIStack_200,iVar2,size);
+      iVar2 = lstrlenA(&stack0xfffffe00);
+      GetTextExtentPoint32A(pHStack_24,&stack0xfffffe00,iVar2,size);
       SetRect(&tStack_70,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
       pIVar4 = (INT *)0x0;
-      UVar3 = lstrlenA((LPCSTR)&pIStack_200);
-      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_70,(LPCSTR)&pIStack_200,UVar3,pIVar4);
+      UVar3 = lstrlenA(&stack0xfffffe00);
+      ExtTextOutA(pHStack_24,param_2,param_3,0,&tStack_70,&stack0xfffffe00,UVar3,pIVar4);
       pIVar1 = xvga_buffer_screen;
     }
   }
@@ -212,42 +198,36 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *format,...)
 /* WARNING: Removing unreachable block (ram,0x00429bfa) */
 
 int __cdecl
-win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,char *format,...)
+win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,char *param_6,...)
 
 {
   IDirectDrawSurface *pIVar1;
   int iVar2;
   UINT UVar3;
   INT *pIVar4;
-  IDirectDrawSurface *pIStack_1f0;
-  undefined1 *puStack_1ec;
-  char acStack_1e8 [392];
+  undefined1 auStack_1e8 [392];
   tagRECT tStack_60;
   tagRECT tStack_50;
   tagRECT tStack_40;
   tagSIZE size_2;
   HDC pHStack_28;
-  undefined1 local_20 [4];
   undefined1 *local_1c;
   tagSIZE *size;
   
   local_1c = &stack0x0000001c;
-  puStack_1ec = (undefined1 *)0x42974f;
-  vsprintf(acStack_1e8,format,(va_list)&local_1c);
+  vsprintf((int)auStack_1e8,(byte *)param_6,(int *)&local_1c);
   local_1c = (undefined1 *)0x0;
   if (param_1 == 0) {
     if (xvga_screen_defined == 0) {
       return 0x2711;
     }
-    puStack_1ec = local_20;
-    pIStack_1f0 = xvga_screen;
     iVar2 = (**(code **)(*(int *)xvga_screen + 0x44))();
     if (iVar2 == 0) {
       if (xvga_font_set == 0) {
         SetBkColor(pHStack_28,param_4);
         SetTextColor(pHStack_28,param_3);
-        iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
-        TextOutA(pHStack_28,param_2,param_3,(LPCSTR)&pIStack_1f0,iVar2);
+        iVar2 = lstrlenA(&stack0xfffffe10);
+        TextOutA(pHStack_28,param_2,param_3,&stack0xfffffe10,iVar2);
       }
       else {
         SelectObject(pHStack_28,(HGDIOBJ)(&xvga_fonts)[xvga_font_index * 4]);
@@ -255,12 +235,12 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         SetBkColor(pHStack_28,param_4);
         SetBkMode(pHStack_28,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
         size = &size_2;
-        iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
-        GetTextExtentPoint32A(pHStack_28,(LPCSTR)&pIStack_1f0,iVar2,size);
+        iVar2 = lstrlenA(&stack0xfffffe10);
+        GetTextExtentPoint32A(pHStack_28,&stack0xfffffe10,iVar2,size);
         SetRect(&tStack_50,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
         pIVar4 = (INT *)0x0;
-        UVar3 = lstrlenA((LPCSTR)&pIStack_1f0);
-        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_50,(LPCSTR)&pIStack_1f0,UVar3,pIVar4);
+        UVar3 = lstrlenA(&stack0xfffffe10);
+        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_50,&stack0xfffffe10,UVar3,pIVar4);
       }
       (**(code **)(*(int *)xvga_screen + 0x68))(xvga_screen,pHStack_28);
     }
@@ -270,8 +250,6 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
       if (xvga_back_screen_defined == 0) {
         return 0x2711;
       }
-      puStack_1ec = local_20;
-      pIStack_1f0 = xvga_back_screen;
       iVar2 = (**(code **)(*(int *)xvga_back_screen + 0x44))();
       if (iVar2 != 0) {
         return 0;
@@ -279,8 +257,8 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
       if (xvga_font_set == 0) {
         SetBkColor(pHStack_28,param_4);
         SetTextColor(pHStack_28,param_3);
-        iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
-        TextOutA(pHStack_28,param_2,param_3,(LPCSTR)&pIStack_1f0,iVar2);
+        iVar2 = lstrlenA(&stack0xfffffe10);
+        TextOutA(pHStack_28,param_2,param_3,&stack0xfffffe10,iVar2);
         pIVar1 = xvga_back_screen;
       }
       else {
@@ -289,27 +267,23 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         SetBkColor(pHStack_28,param_4);
         SetBkMode(pHStack_28,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
         size = &size_2;
-        iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
-        GetTextExtentPoint32A(pHStack_28,(LPCSTR)&pIStack_1f0,iVar2,size);
+        iVar2 = lstrlenA(&stack0xfffffe10);
+        GetTextExtentPoint32A(pHStack_28,&stack0xfffffe10,iVar2,size);
         SetRect(&tStack_40,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
         pIVar4 = (INT *)0x0;
-        UVar3 = lstrlenA((LPCSTR)&pIStack_1f0);
-        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_40,(LPCSTR)&pIStack_1f0,UVar3,pIVar4);
+        UVar3 = lstrlenA(&stack0xfffffe10);
+        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_40,&stack0xfffffe10,UVar3,pIVar4);
         pIVar1 = xvga_back_screen;
       }
     }
     else {
       if (param_1 != 2) {
-        puStack_1ec = (undefined1 *)0x110;
-        pIStack_1f0 = (IDirectDrawSurface *)s_font_cpp_00450ae2;
-        fatal_exit(s__s__d____unidentified_focus_erro_00450aeb);
+        fatal_exit(s__s__d____unidentified_focus_erro_00450aeb,s_font_cpp_00450ae2,0x110);
         return 0;
       }
       if (xvga_buffer_screen_defined == 0) {
         return 0x2711;
       }
-      puStack_1ec = local_20;
-      pIStack_1f0 = xvga_buffer_screen;
       iVar2 = (**(code **)(*(int *)xvga_buffer_screen + 0x44))();
       if (iVar2 != 0) {
         return 0;
@@ -317,8 +291,8 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
       if (xvga_font_set == 0) {
         SetBkColor(pHStack_28,param_4);
         SetTextColor(pHStack_28,param_3);
-        iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
-        TextOutA(pHStack_28,param_2,param_3,(LPCSTR)&pIStack_1f0,iVar2);
+        iVar2 = lstrlenA(&stack0xfffffe10);
+        TextOutA(pHStack_28,param_2,param_3,&stack0xfffffe10,iVar2);
         pIVar1 = xvga_buffer_screen;
       }
       else {
@@ -327,12 +301,12 @@ win_print_xy_1(int param_1,int param_2,int param_3,ulong param_4,ulong param_5,c
         SetBkColor(pHStack_28,param_4);
         SetBkMode(pHStack_28,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
         size = &size_2;
-        iVar2 = lstrlenA((LPCSTR)&pIStack_1f0);
-        GetTextExtentPoint32A(pHStack_28,(LPCSTR)&pIStack_1f0,iVar2,size);
+        iVar2 = lstrlenA(&stack0xfffffe10);
+        GetTextExtentPoint32A(pHStack_28,&stack0xfffffe10,iVar2,size);
         SetRect(&tStack_60,param_2,param_3,size_2.cx + param_2,size_2.cy + param_3);
         pIVar4 = (INT *)0x0;
-        UVar3 = lstrlenA((LPCSTR)&pIStack_1f0);
-        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_60,(LPCSTR)&pIStack_1f0,UVar3,pIVar4);
+        UVar3 = lstrlenA(&stack0xfffffe10);
+        ExtTextOutA(pHStack_28,param_2,param_3,0,&tStack_60,&stack0xfffffe10,UVar3,pIVar4);
         pIVar1 = xvga_buffer_screen;
       }
     }
@@ -348,14 +322,10 @@ int __watcall xvga_load_select_font(char *param_1,int param_2,int param_3,int pa
 
 {
   int free_font_index;
-  int extraout_ECX;
-  int extraout_EDX;
   
   free_font_index = get_free_font_index();
   if (free_font_index == -1) {
     fatal_exit(s__s__d____No_Free_Font_index__00450b19,s_font_cpp_00450b10,0x120);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   xvga_load_font(free_font_index,param_1,param_2,param_3,param_4);
   xvga_select_font(free_font_index);
@@ -369,20 +339,12 @@ int __watcall xvga_load_font(int param_1,char *param_2,int param_3,int param_4,i
 
 {
   HFONT pHVar1;
-  DWORD extraout_ECX;
-  DWORD extraout_ECX_00;
-  char *extraout_EDX;
-  LPCSTR extraout_EDX_00;
   
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_00450b41,s_font_cpp_00450b38,0x131,5);
-    param_4 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   if ((&xvga_fonts)[param_1 * 4] != 0) {
     fatal_exit(s__s__d____Font_index_already_in_u_00450b78,s_font_cpp_00450b6f,0x136,param_1);
-    param_4 = extraout_ECX_00;
-    param_2 = extraout_EDX_00;
   }
   pHVar1 = CreateFontA(param_3,0,0,0,400,param_4,param_5,0,0,0,0,0,2,param_2);
   (&xvga_fonts)[param_1 * 4] = pHVar1;
@@ -398,16 +360,11 @@ int __watcall xvga_load_font(int param_1,char *param_2,int param_3,int param_4,i
 int __watcall xvga_select_font(int param_1)
 
 {
-  int extraout_EDX;
-  int extraout_EDX_00;
-  
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_00450bac,s_font_cpp_00450ba3,0x14e,5);
-    param_1 = extraout_EDX;
   }
   if ((&xvga_fonts)[param_1 * 4] == 0) {
     fatal_exit(s__s__d____Font_is_not_loaded___d__00450be3,s_font_cpp_00450bda,0x153,param_1);
-    param_1 = extraout_EDX_00;
   }
   xvga_font_index = param_1;
   xvga_font_set = 1;
@@ -420,13 +377,8 @@ int __watcall xvga_select_font(int param_1)
 void __watcall xvga_set_font_colors(int param_1,ulong param_2,ulong param_3)
 
 {
-  int extraout_ECX;
-  ulong extraout_EDX;
-  
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_00450c10,s_font_cpp_00450c07,0x163,5);
-    param_1 = extraout_ECX;
-    param_2 = extraout_EDX;
   }
   *(ulong *)(&DAT_00459710 + param_1 * 0x10) = param_2;
   *(ulong *)(&DAT_00459714 + param_1 * 0x10) = param_3;
@@ -439,11 +391,8 @@ void __watcall xvga_set_font_colors(int param_1,ulong param_2,ulong param_3)
 void __watcall xvga_set_font_bkmode(int param_1,int param_2)
 
 {
-  uint extraout_EDX;
-  
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_00450c47,s_font_cpp_00450c3e,0x171,5);
-    param_2 = extraout_EDX;
   }
   if (param_2 != 0) {
     if ((uint)param_2 < 2) {
@@ -465,11 +414,8 @@ void __watcall xvga_set_font_bkmode(int param_1,int param_2)
 void __watcall xvga_free_font(int param_1)
 
 {
-  int extraout_EDX;
-  
   if ((param_1 < 0) || (5 < param_1)) {
     fatal_exit(s__s__d____Font_index_out_of_bound_00450ca9,s_font_cpp_00450ca0,0x189,5);
-    param_1 = extraout_EDX;
   }
   if ((&xvga_fonts)[param_1 * 4] != 0) {
     if (param_1 == xvga_font_index) {

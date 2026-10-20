@@ -3,11 +3,14 @@
 
 /* ==== 00403692 RegisterThreadDataSize ==== */
 
-void __watcall RegisterThreadDataSize(int param_1)
+int __watcall RegisterThreadDataSize(int param_1)
 
 {
+  int iVar1;
+  
+  iVar1 = ThreadDataSize;
   ThreadDataSize = ThreadDataSize + param_1;
-  return;
+  return iVar1;
 }
 
 

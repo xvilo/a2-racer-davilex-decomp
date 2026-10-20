@@ -6,13 +6,11 @@
 int __watcall mo_af_image(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  int extraout_EDX;
   int iVar1;
   
   iVar1 = *(int *)(*(int *)(xvga_anims + param_1 * 0xc + 8) + 4 + param_2 * 8);
   if ((iVar1 < 0) || (max_mem_image_ptr < iVar1)) {
     fatal_exit(s__s__d___mo_af_image_____Could_no_00428010,param_3,param_4,param_2,param_1);
-    iVar1 = extraout_EDX;
   }
   return iVar1;
 }
@@ -369,7 +367,7 @@ int __watcall menu_opties(int *param_1,char *param_2)
   byte bVar3;
   
   bVar3 = 0;
-  debugmsg(s__s__d_____>_STOP_MENU_OPTIES_<*_0042824c,s_m_opties_cpp_0042823f,0x2e0,0xffffffff,0,0);
+  debugmsg(s__s__d_____>_STOP_MENU_OPTIES_<*_0042824c,s_m_opties_cpp_0042823f,0x2e0);
   save_tmp_optie(s_Opties_TMP_0042826f);
   mo_open_screen();
   while (handle_form_result = handle_form(), 0x2712 < handle_form_result) {

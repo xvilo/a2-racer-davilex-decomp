@@ -3,17 +3,10 @@
 
 /* ==== 0043c564 control87 ==== */
 
-uint __watcall control87(uint param_1,uint unaff_EDX)
+void __watcall control87(uint param_1,uint param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  ushort in_FPUControlWord;
-  undefined4 local_18;
-  
-  local_18 = 0;
-  if ((_087 != '\0') && (local_18 = (uint)in_FPUControlWord, unaff_EDX != 0)) {
-    local_18 = ~unaff_EDX & local_18 | unaff_EDX & param_1 & 0xffff;
-  }
-  return local_18;
+  return;
 }
 
 

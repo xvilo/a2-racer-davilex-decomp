@@ -3,157 +3,146 @@
 
 /* ==== 0040cdfc init_opponent_map ==== */
 
-undefined8 __watcall init_opponent_map(undefined4 param_1,undefined4 param_2)
+void __watcall init_opponent_map(undefined4 param_1)
 
 {
-  undefined4 uVar1;
-  HLOCAL pvVar2;
-  int iVar3;
+  HLOCAL pvVar1;
+  int iVar2;
   int i;
   int lane_val;
   
   if (opponent_map_allocated == 0) {
     debugmsg(s_init_opponent_map__>_allocating_s_00444150,weg_chunk_count);
     opponent_map = LocalAlloc(0x40,weg_chunk_count << 2);
-    if (opponent_map == (HLOCAL)0x0) {
-LAB_0040ce3d:
-      uVar1 = 2000;
-      goto LAB_0040cec7;
-    }
-    debugmsg(s_init_opponent_map__>_big_chunk_a_00444185);
-    lane_val = 0;
-    for (i = 0; i < weg_chunk_count; i = i + 1) {
-      pvVar2 = LocalAlloc(0x40,0x2c);
-      *(HLOCAL *)(lane_val + (int)opponent_map) = pvVar2;
-      if (pvVar2 == (HLOCAL)0x0) goto LAB_0040ce3d;
-      lane_val = lane_val + 4;
-    }
-    debugmsg(s_init_opponent_map__>_clearing_ma_004441af);
-    for (i = 0; i < weg_chunk_count; i = i + 1) {
+    if (opponent_map != (HLOCAL)0x0) {
+      debugmsg(s_init_opponent_map__>_big_chunk_a_00444185);
       lane_val = 0;
-      do {
-        iVar3 = lane_val + 1;
-        clear_map_occupant(i,lane_val);
-        lane_val = iVar3;
-      } while (iVar3 < 0xb);
+      for (i = 0; i < weg_chunk_count; i = i + 1) {
+        pvVar1 = LocalAlloc(0x40,0x2c);
+        *(HLOCAL *)(lane_val + (int)opponent_map) = pvVar1;
+        if (pvVar1 == (HLOCAL)0x0) {
+          return;
+        }
+        lane_val = lane_val + 4;
+      }
+      debugmsg(s_init_opponent_map__>_clearing_ma_004441af);
+      for (i = 0; i < weg_chunk_count; i = i + 1) {
+        lane_val = 0;
+        do {
+          iVar2 = lane_val + 1;
+          clear_map_occupant(i,lane_val);
+          lane_val = iVar2;
+        } while (iVar2 < 0xb);
+      }
+      opponent_map_allocated = 1;
+      debugmsg(s_init_opponent_map__>_finished_004441d2);
     }
-    opponent_map_allocated = 1;
-    debugmsg(s_init_opponent_map__>_finished_004441d2);
   }
-  uVar1 = 0;
-LAB_0040cec7:
-  return CONCAT44(param_2,uVar1);
+  return;
 }
 
 
 /* ==== 0040cf27 exit_opponent_map ==== */
 
-undefined8 __watcall exit_opponent_map(undefined4 param_1,undefined4 param_2)
+void __watcall exit_opponent_map(undefined4 param_1)
 
 {
   HLOCAL pvVar1;
-  undefined4 uVar2;
   int i;
-  int iVar3;
-  char *format;
+  int iVar2;
+  char *pcVar3;
   
   debugmsg(s_Exiting_opponent_map_0044424b);
   if (opponent_map_allocated == 0) {
-    format = s_Not_alloceted__>_OK_00444261;
+    pcVar3 = s_Not_alloceted__>_OK_00444261;
   }
   else {
-    iVar3 = 0;
+    iVar2 = 0;
     for (i = 0; i < weg_chunk_count; i = i + 1) {
-      pvVar1 = LocalFree(*(HLOCAL *)(iVar3 + (int)opponent_map));
-      if (pvVar1 != (HLOCAL)0x0) goto LAB_0040cf70;
-      iVar3 = iVar3 + 4;
+      pvVar1 = LocalFree(*(HLOCAL *)(iVar2 + (int)opponent_map));
+      if (pvVar1 != (HLOCAL)0x0) {
+        return;
+      }
+      iVar2 = iVar2 + 4;
     }
     pvVar1 = LocalFree(opponent_map);
     if (pvVar1 != (HLOCAL)0x0) {
-LAB_0040cf70:
-      uVar2 = 2000;
-      goto LAB_0040cf9d;
+      return;
     }
-    format = s_Exit_opponent_map_OK_00444276;
+    pcVar3 = s_Exit_opponent_map_OK_00444276;
     opponent_map_allocated = 0;
   }
-  debugmsg(format);
-  uVar2 = 0;
-LAB_0040cf9d:
-  return CONCAT44(param_2,uVar2);
+  debugmsg(pcVar3);
+  return;
 }
 
 
 /* ==== 0040d12c init_drivers ==== */
 
-undefined4 __watcall init_drivers(int param_1,int param_2)
+void __watcall init_drivers(int param_1,int param_2,int param_3)
 
 {
   int iVar1;
-  int random;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_EDX;
-  int unaff_EBX;
-  char *format;
+  uint random;
+  char *pcVar2;
   
   if (drivers_initialized != 0) {
-    format = s_Driverlist_already_initialized__0044439c;
-LAB_0040d2ae:
-    debugmsg(format);
-    return 0;
+    pcVar2 = s_Driverlist_already_initialized__0044439c;
+override_prt_40d2ae_11e5dad1:
+    debugmsg(pcVar2);
+    return;
   }
   debugmsg(s_Allocating__03d_drivers__________004443bd,param_1);
-  driver_list = LocalAlloc(0x40,(param_1 * 8 - extraout_EDX) * 4);
+  driver_list = LocalAlloc(0x40,param_1 * 0x1c);
   if (driver_list != (HLOCAL)0x0) {
     driver_lane_data = LocalAlloc(0x40,param_2 * 0xc);
     if (driver_lane_data != (HLOCAL)0x0) {
-      driver_path_data = LocalAlloc(0x40,unaff_EBX * 0x18);
+      driver_path_data = LocalAlloc(0x40,param_3 * 0x18);
       if (driver_path_data != (HLOCAL)0x0) {
         driver_count = param_1;
         debugmsg(s__d_drivers_allocated_OK_004443e7,param_1);
         debugmsg(s_Clearing_driver_list____00444400);
-        for (iVar1 = 0; iVar1 < extraout_ECX; iVar1 = iVar1 + 0x1c) {
+        for (iVar1 = 0; iVar1 < param_1 * 0x1c; iVar1 = iVar1 + 0x1c) {
           *(undefined4 *)((int)driver_list + iVar1 + 0x18) = 0;
           *(undefined4 *)((int)driver_list + iVar1 + 0xc) = 0;
         }
         debugmsg(s_OK_Clearing_racer_list____00444418);
-        for (iVar1 = 0; iVar1 < (extraout_ECX_00 * 4 - param_2) * 4; iVar1 = iVar1 + 0xc) {
+        for (iVar1 = 0; iVar1 < param_2 * 0xc; iVar1 = iVar1 + 0xc) {
           random = rand();
-          *(int *)(iVar1 + (int)driver_lane_data) = random % 2;
+          *(int *)(iVar1 + (int)driver_lane_data) = (int)random % 2;
           *(undefined4 *)(iVar1 + 4 + (int)driver_lane_data) = 0xffffffff;
           *(undefined4 *)(iVar1 + 8 + (int)driver_lane_data) = 0;
         }
         debugmsg(s_OK_Clearing_police_list____00444432);
-        for (iVar1 = 0; iVar1 < unaff_EBX * 0x18; iVar1 = iVar1 + 0x18) {
+        for (iVar1 = 0; iVar1 < param_3 * 0x18; iVar1 = iVar1 + 0x18) {
           *(undefined4 *)(iVar1 + (int)driver_path_data) = 0;
           *(undefined4 *)(iVar1 + 0xc + (int)driver_path_data) = 0;
         }
-        format = s_OK_Init_drivers_completely_OK_0044444d;
+        pcVar2 = s_OK_Init_drivers_completely_OK_0044444d;
         drivers_initialized = 1;
-        DAT_00475154 = unaff_EBX;
-        goto LAB_0040d2ae;
+        DAT_00475154 = param_3;
+        goto override_prt_40d2ae_11e5dad1;
       }
     }
   }
-  return 2000;
+  return;
 }
 
 
 /* ==== 0040d2bd exit_drivers ==== */
 
-longlong __watcall exit_drivers(undefined4 param_1,uint param_2)
+void __watcall exit_drivers(undefined4 param_1)
 
 {
   HLOCAL pvVar1;
-  char *format;
+  char *pcVar2;
   
   debugmsg(s_Exiting_drivers_0044446c);
   if (drivers_initialized == 0) {
-    format = s_Already_exited___returning_0044447d;
-LAB_0040d32e:
-    debugmsg(format);
-    return (ulonglong)param_2 << 0x20;
+    pcVar2 = s_Already_exited___returning_0044447d;
+override_prt_40d32e_11e5dad1:
+    debugmsg(pcVar2);
+    return;
   }
   pvVar1 = LocalFree(driver_list);
   if (pvVar1 == (HLOCAL)0x0) {
@@ -161,184 +150,158 @@ LAB_0040d32e:
     if (pvVar1 == (HLOCAL)0x0) {
       pvVar1 = LocalFree(driver_path_data);
       if (pvVar1 == (HLOCAL)0x0) {
-        format = s_Drivers_exited_OK_00444499;
+        pcVar2 = s_Drivers_exited_OK_00444499;
         drivers_initialized = 0;
         DAT_00475154 = 0;
-        goto LAB_0040d32e;
+        goto override_prt_40d32e_11e5dad1;
       }
     }
   }
-  return CONCAT44(param_2,2000);
+  return;
 }
 
 
 /* ==== 0040d33d get_new_driver ==== */
 
-undefined8 __watcall get_new_driver(undefined4 param_1,undefined4 param_2)
+undefined4 __watcall get_new_driver(undefined4 param_1)
 
 {
-  int iVar1;
+  int arg2;
   int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
-  int extraout_EDX_02;
-  undefined4 extraout_EDX_03;
-  int iVar2;
+  undefined4 extraout_EDX_00;
+  int iVar1;
   
   debugmsg(s_Getting_new_driver____004444ac);
   if (drivers_initialized == 0) {
     fatal_exit(s__s__d__Driver_list_not_initializ_004444ce,s_driver_cpp_004444c3,0xb1);
   }
   debugmsg(s_Scanning_driver_list____004444f3);
+  arg2 = 0;
   iVar1 = 0;
-  iVar2 = 0;
   do {
-    if (driver_count <= iVar1) {
+    if (driver_count <= arg2) {
 LAB_0040d3b7:
       debugmsg(s_Scan_completed____00444535);
-      iVar1 = extraout_EDX_00;
-      if (extraout_EDX_00 == driver_count) {
+      if (arg2 == driver_count) {
         fatal_exit(s__s__d__Not_enough_drivers_availa_00444548);
-        iVar1 = extraout_EDX_01;
       }
-      debugmsg(s_Driver_object_found_at_index__d_0044456e,iVar1);
-      *(undefined4 *)((iVar1 * 8 - extraout_EDX_02) * 4 + 0x18 + driver_list) = 1;
+      debugmsg(s_Driver_object_found_at_index__d_0044456e,arg2);
+      *(undefined4 *)(arg2 * 0x1c + 0x18 + driver_list) = 1;
       debugmsg(s_Get_completed__0044458f);
-      return CONCAT44(param_2,extraout_EDX_03);
+      return extraout_EDX_00;
     }
-    debugmsg(s_Scanning_index__d_0044450c,iVar1);
-    if (*(int *)(iVar2 + 0x18 + driver_list) == 0) {
-      debugmsg(s_Breaking_at_index__d_0044451f,extraout_EDX);
+    debugmsg(s_Scanning_index__d_0044450c,arg2);
+    if (*(int *)(iVar1 + 0x18 + driver_list) == 0) {
+      debugmsg(s_Breaking_at_index__d_0044451f,arg2);
+      arg2 = extraout_EDX;
       goto LAB_0040d3b7;
     }
-    iVar2 = iVar2 + 0x1c;
-    iVar1 = extraout_EDX + 1;
+    iVar1 = iVar1 + 0x1c;
+    arg2 = arg2 + 1;
   } while( true );
 }
 
 
 /* ==== 0040d414 assign_driver_to_opponent ==== */
 
-undefined4 __watcall assign_driver_to_opponent(void)
+void __watcall assign_driver_to_opponent(int param_1,int opponent_index,uint param_3)
 
 {
-  int in_EAX;
-  int extraout_ECX;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_ECX_02;
-  int extraout_ECX_03;
-  int extraout_ECX_04;
-  int extraout_ECX_05;
-  int extraout_EDX;
-  int extraout_EDX_00;
-  int extraout_EDX_01;
-  int opponent_index;
-  int extraout_EDX_02;
   int iVar1;
-  uint unaff_EBX;
   int iVar2;
   
-  debugmsg(s_Setting_driver__d_to_opponent__d_0044459f);
-  iVar1 = extraout_ECX;
-  if (*(int *)(driver_list + 0x18 + in_EAX * 0x1c) == 0) {
-    fatal_exit(s__s__d__Cannot_set_unused_driver___004445d8,s_driver_cpp_004445cd,0xd1,extraout_ECX)
-    ;
-    iVar1 = extraout_ECX_00;
+  debugmsg(s_Setting_driver__d_to_opponent__d_0044459f,param_1,opponent_index);
+  if (*(int *)(driver_list + 0x18 + param_1 * 0x1c) == 0) {
+    fatal_exit(s__s__d__Cannot_set_unused_driver___004445d8,s_driver_cpp_004445cd,0xd1,param_1,
+               opponent_index);
   }
-  if (*(int *)(driver_list + 0xc + iVar1 * 0x1c) != 0) {
-    fatal_exit(s__s__d__Attempt_to_double_assign_d_00444619,s_driver_cpp_0044460e,0xd5,iVar1);
-    iVar1 = extraout_ECX_01;
+  if (*(int *)(driver_list + 0xc + param_1 * 0x1c) != 0) {
+    fatal_exit(s__s__d__Attempt_to_double_assign_d_00444619,s_driver_cpp_0044460e,0xd5,param_1,
+               opponent_index);
   }
-  debugmsg(s_Assigning_driver__d_to_opponent___00444656,iVar1);
-  iVar2 = (iVar1 * 8 - extraout_ECX_02) * 4;
-  *(int *)(iVar2 + driver_list) = extraout_EDX;
-  iVar1 = extraout_ECX_02;
-  opponent_index = extraout_EDX;
-  if (opponent_data[extraout_EDX].direction == 1) {
-    if (unaff_EBX == 3) {
+  debugmsg(s_Assigning_driver__d_to_opponent___00444656,param_1);
+  iVar2 = param_1 * 0x1c;
+  *(int *)(iVar2 + driver_list) = opponent_index;
+  if (opponent_data[opponent_index].direction == 1) {
+    if (param_3 == 3) {
       *(undefined4 *)(iVar2 + 4 + driver_list) = 1;
     }
     else {
       debugmsg(s_Heading_is_SOUTH__preferred_lane_0044467a);
       *(undefined4 *)(iVar2 + 4 + driver_list) = 2;
-      iVar1 = extraout_ECX_03;
-      opponent_index = extraout_EDX_00;
     }
   }
   if (opponent_data[opponent_index].direction == 0) {
-    if (unaff_EBX == 3) {
-      *(undefined4 *)(iVar1 * 0x1c + 4 + driver_list) = 9;
+    if (param_3 == 3) {
+      *(undefined4 *)(param_1 * 0x1c + 4 + driver_list) = 9;
     }
     else {
       debugmsg(s_Heading_is_NORTH__preferred_lane_004446a1);
-      *(undefined4 *)(iVar1 * 0x1c + 4 + driver_list) = 8;
-      iVar1 = extraout_ECX_04;
-      opponent_index = extraout_EDX_01;
+      *(undefined4 *)(param_1 * 0x1c + 4 + driver_list) = 8;
     }
   }
-  *(float *)(iVar1 * 0x1c + 8 + driver_list) = opponent_data[opponent_index].max_speed;
-  debugmsg(s_Preferred_speed____f_Driver_sett_004446c8,
-           (double)*(float *)(iVar1 * 0x1c + 8 + driver_list));
-  *(undefined4 *)(extraout_ECX_05 + 0xc + driver_list) = 1;
-  *(uint *)(extraout_ECX_05 + 0x10 + driver_list) = unaff_EBX;
-  if (unaff_EBX < 3) {
-    if (unaff_EBX == 2) {
-      *(undefined4 *)(extraout_ECX_05 + 0x14 + driver_list) = 0xffffffff;
+  iVar2 = param_1 * 0x1c;
+  *(float *)(iVar2 + 8 + driver_list) = opponent_data[opponent_index].max_speed;
+  debugmsg(s_Preferred_speed____f_Driver_sett_004446c8,(double)*(float *)(iVar2 + 8 + driver_list));
+  *(undefined4 *)(iVar2 + 0xc + driver_list) = 1;
+  *(uint *)(iVar2 + 0x10 + driver_list) = param_3;
+  if (param_3 < 3) {
+    if (param_3 == 2) {
+      *(undefined4 *)(iVar2 + 0x14 + driver_list) = 0xffffffff;
     }
   }
   else {
-    if (unaff_EBX < 4) {
-      iVar1 = extraout_EDX_02 + -1;
+    if (param_3 < 4) {
+      iVar1 = opponent_index + -1;
     }
     else {
-      if (unaff_EBX != 4) goto LAB_0040d2ae;
-      iVar1 = extraout_EDX_02 + -6;
+      if (param_3 != 4) goto init_drivers_override_prt_40d2ae_11e5dad1;
+      iVar1 = opponent_index + -6;
     }
-    *(int *)(extraout_ECX_05 + 0x14 + driver_list) = iVar1;
+    *(int *)(iVar2 + 0x14 + driver_list) = iVar1;
   }
-LAB_0040d2ae:
+init_drivers_override_prt_40d2ae_11e5dad1:
   debugmsg(s_Driver_set_completed_OK_004446f3);
-  return 0;
+  return;
 }
 
 
 /* ==== 0040d5d2 scan_lanes_ahead ==== */
 
-void __watcall scan_lanes_ahead(int param_1,int *param_2,int param_3,int param_4,int param_5)
+void __watcall
+scan_lanes_ahead(int *param_1,int *param_2,int param_3,int param_4,int param_5,int param_6,
+                int param_7)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   int chunk_val;
   int j;
   int *piVar2;
   int i;
-  int in_stack_00000008;
-  int in_stack_0000000c;
   int local_20;
   int local_14;
   int local_10;
   
-  if (in_stack_0000000c == 0) {
+  if (param_7 == 0) {
     local_20 = -1;
   }
-  else if (in_stack_0000000c == 1) {
-    local_20 = in_stack_0000000c;
+  else if (param_7 == 1) {
+    local_20 = param_7;
   }
-  puVar1 = (undefined4 *)param_1;
+  piVar1 = param_1;
   piVar2 = param_2;
   do {
-    *puVar1 = 0xffffffff;
-    puVar1 = puVar1 + 1;
+    *piVar1 = -1;
+    piVar1 = piVar1 + 1;
     *piVar2 = -1;
     piVar2 = piVar2 + 1;
-  } while (puVar1 != (undefined4 *)(param_1 + 0x2c));
+  } while (piVar1 != param_1 + 0xb);
   local_10 = param_4;
   for (i = 0; i <= param_5; i = i + 1) {
     j = 0;
-    piVar2 = (int *)param_1;
+    piVar1 = param_1;
     do {
-      if (*piVar2 == -1) {
+      if (*piVar1 == -1) {
         chunk_val = local_10;
         if (local_10 < 0) {
           chunk_val = weg_chunk_count + local_10;
@@ -347,35 +310,35 @@ void __watcall scan_lanes_ahead(int param_1,int *param_2,int param_3,int param_4
           chunk_val = chunk_val - weg_chunk_count;
         }
         chunk_val = get_map_occupant(chunk_val,j);
-        *piVar2 = chunk_val;
+        *piVar1 = chunk_val;
         if (param_3 == chunk_val) {
-          *piVar2 = -1;
+          *piVar1 = -1;
         }
       }
       j = j + 1;
-      piVar2 = piVar2 + 1;
+      piVar1 = piVar1 + 1;
     } while (j < 0xb);
     local_10 = local_10 + local_20;
   }
   local_14 = param_4;
-  for (i = 0; i <= in_stack_00000008; i = i + 1) {
+  for (i = 0; i <= param_6; i = i + 1) {
     j = 0;
-    piVar2 = param_2;
+    piVar1 = param_2;
     do {
       chunk_val = local_14;
-      if (*piVar2 == -1) {
+      if (*piVar1 == -1) {
         for (; chunk_val < 0; chunk_val = chunk_val + weg_chunk_count) {
         }
         for (; weg_chunk_count <= chunk_val; chunk_val = chunk_val - weg_chunk_count) {
         }
         chunk_val = get_map_occupant(chunk_val,j);
-        *piVar2 = chunk_val;
+        *piVar1 = chunk_val;
         if (param_3 == chunk_val) {
-          *piVar2 = -1;
+          *piVar1 = -1;
         }
       }
       j = j + 1;
-      piVar2 = piVar2 + 1;
+      piVar1 = piVar1 + 1;
     } while (j < 0xb);
     local_14 = local_14 - local_20;
   }
@@ -385,25 +348,23 @@ void __watcall scan_lanes_ahead(int param_1,int *param_2,int param_3,int param_4
 
 /* ==== 0040d71c scan_lanes_for_heading ==== */
 
-void __watcall scan_lanes_for_heading(undefined4 *param_1,int param_2)
+int __watcall scan_lanes_for_heading(int param_1,int param_2,int param_3,undefined4 *param_4)
 
 {
-  undefined4 *chunk_val;
-  int map_occupant;
-  undefined4 *unaff_ECX;
-  int unaff_EBX;
+  undefined4 *puVar1;
+  int chunk_val;
   int lane;
   int unaff_EBP;
   int unaff_EDI;
   int local_14;
   int i;
   
-  if (unaff_EBX == 0) {
+  if (param_3 == 0) {
     unaff_EBP = -1;
     unaff_EDI = 10;
     local_14 = 6;
   }
-  else if (unaff_EBX == 1) {
+  else if (param_3 == 1) {
     unaff_EDI = 4;
     local_14 = 0;
     unaff_EBP = 1;
@@ -411,75 +372,65 @@ void __watcall scan_lanes_for_heading(undefined4 *param_1,int param_2)
   else {
     fatal_exit(s__s__d__Impossible_heading__00444717,s_driver_cpp_0044470c,0x17f);
   }
-  chunk_val = unaff_ECX;
+  puVar1 = param_4;
   do {
-    *chunk_val = 0;
-    chunk_val = chunk_val + 1;
-  } while (chunk_val != unaff_ECX + 6);
+    *puVar1 = 0;
+    puVar1 = puVar1 + 1;
+  } while (puVar1 != param_4 + 6);
   for (i = 0; lane = local_14, i <= param_2; i = i + 1) {
     for (; lane <= unaff_EDI; lane = lane + 1) {
       chunk_val = param_1;
-      if ((int)param_1 < 0) {
-        chunk_val = (undefined4 *)(weg_chunk_count + (int)param_1);
+      if (param_1 < 0) {
+        chunk_val = weg_chunk_count + param_1;
       }
-      if (weg_chunk_count <= (int)chunk_val) {
-        chunk_val = (undefined4 *)((int)chunk_val - weg_chunk_count);
+      if (weg_chunk_count <= chunk_val) {
+        chunk_val = chunk_val - weg_chunk_count;
       }
-      map_occupant = get_map_occupant((int)chunk_val,lane);
-      if (map_occupant < 6) {
-        unaff_ECX[map_occupant] = 1;
+      chunk_val = get_map_occupant(chunk_val,lane);
+      if (chunk_val < 6) {
+        param_4[chunk_val] = 1;
       }
     }
-    param_1 = (undefined4 *)((int)param_1 + unaff_EBP);
+    param_1 = param_1 + unaff_EBP;
   }
-  return;
+  return i;
 }
 
 
 /* ==== 0040d7ed racer_distance_margin ==== */
 
-float10 __watcall racer_distance_margin(undefined4 param_1,int param_2)
+void __watcall racer_distance_margin(undefined4 param_1,undefined4 param_2)
 
 {
-  int in_EAX;
-  float10 fVar1;
-  float10 fVar2;
-  
-  fVar1 = (float10)*(float *)(in_EAX + 4) - (float10)*(float *)(param_2 + 4);
-  fVar2 = (float10)*(float *)(in_EAX + 0xc) - (float10)*(float *)(param_2 + 0xc);
-  return (fVar2 * fVar2 + fVar1 * fVar1) -
-         ((float10)*(float *)(in_EAX + 0x54) + (float10)*(float *)(param_2 + 0x54));
+  return;
 }
 
 
 /* ==== 0040d80e classify_lane_occupant ==== */
 
-undefined4 __watcall classify_lane_occupant(int param_1,int param_2,int *param_3)
+undefined4 __watcall
+classify_lane_occupant(int param_1,int param_2,int param_3,int param_4,undefined4 *param_5)
 
 {
   undefined4 uVar1;
-  int unaff_ECX;
-  int *piVar2;
-  float10 racer_distance_margin_result;
-  int *in_stack_00000004;
+  float10 in_ST0;
   int opponent_index;
   
-  if ((unaff_ECX == *(int *)(param_1 + 200)) || (param_3[unaff_ECX] == -1)) {
-    piVar2 = (int *)(unaff_ECX * 4 + param_2);
-    opponent_index = *piVar2;
+  if ((param_4 == *(int *)(param_1 + 200)) || (*(int *)(param_3 + param_4 * 4) == -1)) {
+    opponent_index = *(int *)(param_4 * 4 + param_2);
     if (opponent_index == -1) {
-      if (in_stack_00000004 != (int *)0x0) {
-        *in_stack_00000004 = 0;
+      if (param_5 != (undefined4 *)0x0) {
+        *param_5 = 0;
       }
       uVar1 = 4;
     }
     else {
-      if (in_stack_00000004 != (int *)0x0) {
-        *in_stack_00000004 = (int)(opponent_data + opponent_index);
+      if (param_5 != (undefined4 *)0x0) {
+        *param_5 = opponent_data + opponent_index;
       }
-      racer_distance_margin_result = racer_distance_margin(piVar2,*in_stack_00000004);
-      if ((float10)57600.0 < racer_distance_margin_result) {
-        if (102400.0 < (double)racer_distance_margin_result) {
+      racer_distance_margin(param_1,*param_5);
+      if ((float10)57600.0 < in_ST0) {
+        if (102400.0 < (double)in_ST0) {
           uVar1 = 3;
         }
         else {
@@ -492,8 +443,8 @@ undefined4 __watcall classify_lane_occupant(int param_1,int param_2,int *param_3
     }
   }
   else {
-    if (in_stack_00000004 != (int *)0x0) {
-      *in_stack_00000004 = 0;
+    if (param_5 != (undefined4 *)0x0) {
+      *param_5 = 0;
     }
     uVar1 = 0;
   }
@@ -503,33 +454,33 @@ undefined4 __watcall classify_lane_occupant(int param_1,int param_2,int *param_3
 
 /* ==== 0040d8aa drive_racer ==== */
 
-void __watcall drive_racer(void)
+/* WARNING: Type propagation algorithm not settling */
+
+undefined4 __watcall drive_racer(int param_1)
 
 {
   float fVar1;
-  int in_EAX;
+  float fVar2;
+  longlong lVar3;
   opponent_t *opponent;
-  uint uVar2;
-  int k;
-  int iVar3;
-  float extraout_ECX;
+  uint uVar4;
   int i;
-  int extraout_ECX_00;
+  int iVar5;
+  undefined4 uVar6;
+  int j;
+  uint uVar7;
+  int k;
   int extraout_EDX;
   int extraout_EDX_00;
-  uint uVar4;
   int extraout_EDX_01;
-  int j;
   int extraout_EDX_02;
-  int extraout_EDX_03;
-  int extraout_EDX_04;
-  int extraout_EDX_05;
   int opponent_index;
-  int *piVar5;
-  int *piVar6;
-  float10 chp;
+  int *piVar8;
+  int *piVar9;
+  float10 fVar10;
+  char *pcVar11;
   int local_d8 [11];
-  undefined1 local_ac [44];
+  int local_ac [11];
   int local_80 [6];
   int classify_lane_occupant_result [4];
   uint classify_lane_occupant_result_2;
@@ -546,29 +497,27 @@ void __watcall drive_racer(void)
   int local_24;
   int local_20;
   opponent_t *opponent_2;
-  char *format;
   
-  if (*(int *)(in_EAX * 0x1c + 0x18 + driver_list) == 0) {
-    fatal_exit(s__s__d__Cannot_drive_unused_drive_0044474e);
-    in_EAX = extraout_EDX;
+  if (*(int *)(param_1 * 0x1c + 0x18 + driver_list) == 0) {
+    fatal_exit(s__s__d__Cannot_drive_unused_drive_0044474e,s_driver_cpp_00444743,0x20b,param_1);
   }
-  if (*(int *)(in_EAX * 0x1c + 0xc + driver_list) == 0) {
-    fatal_exit(s__s__d__Cannot_drive_unassigned_d_00444780);
-    in_EAX = extraout_EDX_00;
+  if (*(int *)(param_1 * 0x1c + 0xc + driver_list) == 0) {
+    fatal_exit(s__s__d__Cannot_drive_unassigned_d_00444780,s_driver_cpp_00444775,0x20f,param_1);
   }
-  piVar5 = (int *)(driver_list + in_EAX * 0x1c);
-  opponent = opponent_data + *piVar5;
-  piVar6 = (int *)(driver_path_data + piVar5[5] * 0x18);
+  piVar8 = (int *)(driver_list + param_1 * 0x1c);
+  opponent = opponent_data + *piVar8;
+  piVar9 = (int *)(driver_path_data + piVar8[5] * 0x18);
   local_28 = opponent->lane;
   opponent_2 = opponent;
-  debugmsg(s_Driving_car___03d_OppIndex____03_004447ab,in_EAX,*piVar5,local_28,opponent->chunk,
+  debugmsg(s_Driving_car___03d_OppIndex____03_004447ab,param_1,*piVar8,local_28,opponent->chunk,
            opponent->direction,(double)opponent->speed,(double)opponent->max_speed,
-           (double)(float)piVar5[2],piVar5[1],opponent->chunk);
-  uVar2 = opponent->chunk - opponent->waypoint;
-  uVar4 = (int)uVar2 >> 0x1f;
-  if (2 < (int)((uVar2 ^ uVar4) - uVar4)) {
+           (double)(float)piVar8[2],piVar8[1],opponent->chunk);
+  uVar4 = opponent->chunk - opponent->waypoint;
+  uVar7 = (int)uVar4 >> 0x1f;
+  if (2 < (int)((uVar4 ^ uVar7) - uVar7)) {
     debugmsg(s_ILLEGAL_WAYPOINT_FOUND__0044484b);
   }
+  opponent_index = local_28;
   if (opponent_2->direction == 1) {
     local_30 = 0;
     local_34 = 3;
@@ -579,52 +528,64 @@ void __watcall drive_racer(void)
     local_30 = 10;
     local_34 = 7;
   }
-  opponent_index = local_2c;
-  local_4c = local_28 + local_2c;
+  iVar5 = local_2c;
+  i = local_28 + local_2c;
+  local_4c = i;
   debugmsg(s_Checking_state_of_police____00444864);
-  local_48 = extraout_EDX_01 - opponent_index;
+  local_48 = opponent_index - iVar5;
   local_50 = local_28;
-  if (*piVar6 == 0) {
+  if (*piVar9 == 0) {
     debugmsg(s_Car_is_on_stake_out____00444881);
     opponent_index = 0;
     local_3c = 0;
-    opponent_2->max_speed = extraout_ECX;
+    opponent_2->max_speed = 0.0;
     local_20 = 0;
-    scan_lanes_for_heading((undefined4 *)opponent_2->chunk,6);
-    for (; iVar3 = local_3c, local_3c < 6; local_3c = local_3c + 1) {
+    i = scan_lanes_for_heading(opponent_2->chunk,6,opponent_2->direction,local_80);
+    for (; iVar5 = local_3c, local_3c < 6; local_3c = local_3c + 1) {
       if (*(int *)((int)local_80 + opponent_index) != 0) {
-        piVar6[2] = 0;
-        if (9.0 < *(float *)((int)opponent_data->world_corners + local_20 + -0x48)) {
-          piVar6[2] = 1;
+        piVar9[2] = 0;
+        i = (int)opponent_data->world_corners + local_20 + -0x58;
+        fVar1 = *(float *)(i + 0x10);
+        i = CONCAT22((short)((uint)i >> 0x10),
+                     (ushort)(fVar1 < 9.0) << 8 | (ushort)NAN(fVar1) << 10 |
+                     (ushort)(fVar1 == 9.0) << 0xe);
+        if (fVar1 >= 9.0 && (fVar1 == 9.0) == 0) {
+          piVar9[2] = 1;
         }
-        if (piVar6[2] != 0) {
+        if (piVar9[2] != 0) {
+          j = 0;
           i = 0;
-          k = 0;
-          for (j = 0; j < DAT_00475154; j = j + 1) {
-            if (j == *(int *)(driver_path_data + 4 + k)) {
-              i = i + 1;
+          for (k = 0; k < DAT_00475154; k = k + 1) {
+            if (k == *(int *)(i + 4 + driver_path_data)) {
+              j = j + 1;
             }
-            k = k + 0x18;
+            i = i + 0x18;
           }
-          if (i < 2) {
+          if (j < 2) {
             if (local_3c == 0) {
-              k = rand();
-              if (k % 3 != 0) {
+              uVar4 = rand();
+              i = (int)uVar4 / 3;
+              if ((int)uVar4 % 3 != 0) {
 LAB_0040db8f:
-                *piVar6 = 1;
-                piVar6[1] = iVar3;
-                chp = CHP();
-                piVar6[4] = (int)ROUND(chp);
-                piVar6[5] = piVar5[1];
-                opponent_2->max_speed = (float)piVar5[2];
-                return;
+                *piVar9 = 1;
+                piVar9[1] = iVar5;
+                fVar10 = (float10)(float)piVar8[2];
+                CHP();
+                piVar9[4] = (int)ROUND(fVar10);
+                piVar9[5] = piVar8[1];
+                opponent_2->max_speed = (float)piVar8[2];
+                return opponent_2;
               }
             }
             else {
-              k = piVar5[5];
-              if ((((int)((longlong)k % 2) == 0) &&
-                  (i = rand(), CONCAT31((int3)((ulonglong)((longlong)k % 2) >> 8),i == 0) % 3 != 0))
-                 && (race_state == 0)) goto LAB_0040db8f;
+              i = piVar8[5] / 2;
+              lVar3 = (longlong)piVar8[5] % 2;
+              if ((int)lVar3 == 0) {
+                uVar4 = rand();
+                j = CONCAT31((int3)((ulonglong)lVar3 >> 8),uVar4 == 0);
+                i = j / 3;
+                if ((j % 3 != 0) && (race_state == 0)) goto LAB_0040db8f;
+              }
             }
           }
         }
@@ -633,163 +594,179 @@ LAB_0040db8f:
       local_20 = local_20 + 0x100;
     }
   }
-  if (*piVar6 == 0) {
-    return;
+  if (*piVar9 == 0) {
+    return i;
   }
-  scan_lanes_ahead((int)local_ac,local_d8,*piVar5,opponent_2->chunk,9);
+  scan_lanes_ahead(local_ac,local_d8,*piVar8,opponent_2->chunk,9,3,opponent_2->direction);
   opponent = opponent_data;
-  if (*piVar6 == 1) {
-    opponent_index = piVar6[1];
+  if (*piVar9 == 1) {
+    opponent_index = piVar9[1];
     if ((opponent_data[opponent_index].chunk == opponent_2->chunk) ||
-       (k = local_2c * opponent_data[opponent_index].chunk, iVar3 = local_2c * opponent_2->chunk,
-       k - iVar3 != 0 && iVar3 <= k)) {
-      piVar5[2] = (int)(float)piVar6[4];
-      piVar5[1] = opponent[opponent_index].lane;
+       (i = local_2c * opponent_data[opponent_index].chunk, iVar5 = local_2c * opponent_2->chunk,
+       i - iVar5 != 0 && iVar5 <= i)) {
+      piVar8[2] = (int)(float)piVar9[4];
+      piVar8[1] = opponent[opponent_index].lane;
     }
     else if (opponent_data[opponent_index].lane == opponent_2->lane) {
       fVar1 = opponent_data[opponent_index].speed + -1.0;
-      piVar5[2] = (int)fVar1;
+      piVar8[2] = (int)fVar1;
       if (fVar1 < 0.0) {
-        piVar5[2] = 0;
+        piVar8[2] = 0;
       }
-      piVar5[1] = opponent[opponent_index].lane;
-      uVar2 = opponent_2->chunk - opponent[opponent_index].chunk;
-      uVar4 = (int)uVar2 >> 0x1f;
-      if ((int)((uVar2 ^ uVar4) - uVar4) < 2) {
-        if (piVar6[1] == 0) {
-          set_race_state();
+      piVar8[1] = opponent[opponent_index].lane;
+      uVar4 = opponent_2->chunk - opponent[opponent_index].chunk;
+      uVar7 = (int)uVar4 >> 0x1f;
+      if ((int)((uVar4 ^ uVar7) - uVar7) < 2) {
+        if (piVar9[1] == 0) {
+          set_race_state(4);
         }
         else {
           *(int *)(*(int *)(driver_list + 0x14 + opponent[opponent_index].field_e0 * 0x1c) * 0xc +
-                   driver_lane_data + 4) = *piVar5;
+                   driver_lane_data + 4) = *piVar8;
           *(undefined4 *)
            (driver_lane_data + 8 +
            *(int *)(driver_list + 0x14 + opponent[opponent_index].field_e0 * 0x1c) * 0xc) = 100;
         }
-        opponent_index = piVar6[1];
-        iVar3 = 0;
-        for (k = 0; k < DAT_00475154; k = k + 1) {
-          if (opponent_index == ((undefined4 *)(driver_path_data + iVar3))[1]) {
-            *(undefined4 *)(driver_path_data + iVar3) = 2;
-            *(undefined4 *)(driver_path_data + 4 + iVar3) = 0xffffffff;
-            *(undefined4 *)(driver_path_data + 0xc + iVar3) = 0x15e;
+        opponent_index = piVar9[1];
+        iVar5 = 0;
+        for (i = 0; i < DAT_00475154; i = i + 1) {
+          if (opponent_index == ((undefined4 *)(driver_path_data + iVar5))[1]) {
+            *(undefined4 *)(driver_path_data + iVar5) = 2;
+            *(undefined4 *)(driver_path_data + 4 + iVar5) = 0xffffffff;
+            *(undefined4 *)(driver_path_data + 0xc + iVar5) = 0x15e;
           }
-          iVar3 = iVar3 + 0x18;
+          iVar5 = iVar5 + 0x18;
         }
       }
     }
     else {
-      uVar2 = opponent_data[opponent_index].chunk - opponent_2->chunk;
-      uVar4 = (int)uVar2 >> 0x1f;
-      local_38 = (uVar2 ^ uVar4) - uVar4;
+      uVar4 = opponent_data[opponent_index].chunk - opponent_2->chunk;
+      uVar7 = (int)uVar4 >> 0x1f;
+      local_38 = (uVar4 ^ uVar7) - uVar7;
       if ((double)local_38 < 57600.0) {
         opponent_2->target_lane = opponent_data[opponent_index].lane;
-        opponent_2->max_speed = opponent[opponent_index].speed;
-        if (0.0 <= opponent_2->max_speed) {
-          return;
+        fVar2 = opponent[opponent_index].speed;
+        opponent_2->max_speed = fVar2;
+        fVar1 = opponent_2->max_speed;
+        uVar6 = CONCAT22((short)((uint)fVar2 >> 0x10),
+                         (ushort)(0.0 < fVar1) << 8 | (ushort)NAN(fVar1) << 10 |
+                         (ushort)(fVar1 == 0.0) << 0xe);
+        if (0.0 < fVar1 || (fVar1 == 0.0) != 0) {
+          return uVar6;
         }
         opponent_2->max_speed = 0.0;
-        return;
+        return uVar6;
       }
-      piVar5[2] = (int)opponent_data[opponent_index].speed;
-      piVar5[1] = opponent[opponent_index].lane;
+      piVar8[2] = (int)opponent_data[opponent_index].speed;
+      piVar8[1] = opponent[opponent_index].lane;
       if (opponent_2->max_speed < 0.0) {
         opponent_2->max_speed = 0.0;
       }
     }
   }
-  classify_lane_occupant_result[3] = classify_lane_occupant((int)opponent_2,(int)local_ac,local_d8);
+  classify_lane_occupant_result[3] =
+       classify_lane_occupant
+                 ((int)opponent_2,(int)local_ac,(int)local_d8,local_50,classify_lane_occupant_result
+                 );
   if ((local_28 == local_34) || (local_28 == local_30)) {
     if (local_28 == local_34) {
       local_4c = local_48;
     }
-    classify_lane_occupant_result_2 = classify_lane_occupant((int)opponent_2,(int)local_ac,local_d8)
-    ;
+    classify_lane_occupant_result_2 =
+         classify_lane_occupant
+                   ((int)opponent_2,(int)local_ac,(int)local_d8,local_4c,
+                    classify_lane_occupant_result + 1);
   }
   else {
-    classify_lane_occupant_result_2 = classify_lane_occupant((int)opponent_2,(int)local_ac,local_d8)
-    ;
-    local_54 = classify_lane_occupant((int)opponent_2,(int)local_ac,local_d8);
+    classify_lane_occupant_result_2 =
+         classify_lane_occupant
+                   ((int)opponent_2,(int)local_ac,(int)local_d8,local_4c,
+                    classify_lane_occupant_result + 1);
+    local_54 = classify_lane_occupant
+                         ((int)opponent_2,(int)local_ac,(int)local_d8,local_48,
+                          classify_lane_occupant_result + 2);
   }
-  if (*piVar6 == 2) {
+  if (*piVar9 == 2) {
     if (local_50 != local_30) {
       opponent_2->target_lane = local_30;
-      piVar6[3] = 0x15e;
-      return;
+      piVar9[3] = 0x15e;
+      return local_50;
     }
-    if (piVar6[3] != 0) {
+    if (piVar9[3] != 0) {
       opponent_2->max_speed = opponent_2->max_speed * 0.99;
-      piVar6[3] = piVar6[3] + -1;
+      piVar9[3] = piVar9[3] + -1;
       if (1 < classify_lane_occupant_result[3]) {
-        return;
+        return opponent_2;
       }
       opponent_2->max_speed = *(float *)(classify_lane_occupant_result[0] + 0x10);
-      return;
+      return opponent_2;
     }
     opponent_2->max_speed = 0.0;
-    *piVar6 = 0;
-    return;
+    *piVar9 = 0;
+    return opponent_2;
   }
   debugmsg(s_Using__EMPTY_LANE__tactic____00444899);
-  if (extraout_EDX_02 == 2) {
+  if (extraout_EDX == 2) {
     if (classify_lane_occupant_result_2 == classify_lane_occupant_result[3]) {
       if ((int)classify_lane_occupant_result_2 < 2) {
-        uVar2 = classify_lane_occupant_result_2 ^ classify_lane_occupant_result[3];
+        uVar4 = classify_lane_occupant_result_2 ^ classify_lane_occupant_result[3];
       }
       else {
-        uVar2 = piVar5[1] - local_50;
-        uVar4 = (int)uVar2 >> 0x1f;
+        uVar4 = piVar8[1] - local_50;
+        uVar7 = (int)uVar4 >> 0x1f;
         debugmsg(s_Both_lanes_of_equal_status_004448b7);
-        if ((int)((uVar2 ^ uVar4) - uVar4) <= extraout_EDX_03) {
-          format = s_Current_lane_is_closer_to_prefer_00444903;
-          goto LAB_0040e043;
+        if ((int)((uVar4 ^ uVar7) - uVar7) <= extraout_EDX_00) {
+          pcVar11 = s_Current_lane_is_closer_to_prefer_00444903;
+          goto override_prt_40e043_11e5dad1;
         }
-        format = s_Other_lane_is_closer_to_preferre_004448d3;
-LAB_0040e007:
-        debugmsg(format);
+        pcVar11 = s_Other_lane_is_closer_to_preferre_004448d3;
+override_prt_40e007_11e5dad1:
+        debugmsg(pcVar11);
         opponent_2->target_lane = local_4c;
-        uVar2 = 1;
+        uVar4 = 1;
       }
     }
     else {
       if (classify_lane_occupant_result[3] < (int)classify_lane_occupant_result_2) {
-        format = s_SWITCHING_to_other_lane____00444933;
-        goto LAB_0040e007;
+        pcVar11 = s_SWITCHING_to_other_lane____00444933;
+        goto override_prt_40e007_11e5dad1;
       }
-      format = s_STAYING_in_current_lane____0044494f;
-LAB_0040e043:
-      debugmsg(format);
-      uVar2 = 0;
+      pcVar11 = s_STAYING_in_current_lane____0044494f;
+override_prt_40e043_11e5dad1:
+      debugmsg(pcVar11);
+      uVar4 = 0;
     }
-    if (1 < classify_lane_occupant_result[uVar2 + 3]) {
+    if (1 < classify_lane_occupant_result[uVar4 + 3]) {
       debugmsg(s_Speeding_00444979);
 LAB_0040e089:
-      opponent_2->max_speed = (float)piVar5[2];
+      opponent_2->max_speed = (float)piVar8[2];
       goto LAB_0040e096;
     }
     debugmsg(s_Slowing_down_0044496b);
-    opponent_index = *(int *)((int)classify_lane_occupant_result + extraout_EDX_04);
+    opponent_index = *(int *)((int)classify_lane_occupant_result + extraout_EDX_01);
   }
   else {
-    debugmsg(s_Somewhere_in_the_middle____Statu_00444983);
+    debugmsg(s_Somewhere_in_the_middle____Statu_00444983,classify_lane_occupant_result[3],
+             classify_lane_occupant_result_2,local_54);
     if ((classify_lane_occupant_result[3] < (int)classify_lane_occupant_result_2) ||
        (classify_lane_occupant_result[3] < (int)local_54)) {
       debugmsg(s_One_of_the_other_lanes_is_best___004449cb);
+      opponent_index = local_48;
       if (local_54 == classify_lane_occupant_result_2) {
         if ((int)local_54 < 2) {
           opponent_2->max_speed = *(float *)(classify_lane_occupant_result[0] + 0x10);
         }
         else {
-          uVar2 = piVar5[1] - local_4c;
-          uVar4 = (int)uVar2 >> 0x1f;
+          uVar4 = piVar8[1] - local_4c;
+          uVar7 = (int)uVar4 >> 0x1f;
           debugmsg(s_Both_others_are_equal____004449ee);
-          if ((int)((uVar2 ^ uVar4) - uVar4) <= extraout_EDX_05) {
+          if ((int)((uVar4 ^ uVar7) - uVar7) <= extraout_EDX_02) {
             debugmsg(s_SWITCHING_to_faster_lane____00444a08);
             goto LAB_0040e170;
           }
           debugmsg(s_SWITCHING_to_slower_lane____00444a25);
           local_24 = 2;
-          opponent_2->target_lane = extraout_ECX_00;
+          opponent_2->target_lane = opponent_index;
         }
       }
       else {
@@ -810,10 +787,10 @@ LAB_0040e17e:
     else {
       debugmsg(s_Current_lane_is_one_of_the_best__00444aa4);
       if (classify_lane_occupant_result[3] == classify_lane_occupant_result_2) {
-        uVar2 = piVar5[1] - local_4c >> 0x1f;
-        uVar4 = piVar5[1] - local_50 >> 0x1f;
-        if ((int)((piVar5[1] - local_4c ^ uVar2) - uVar2) <
-            (int)((piVar5[1] - local_50 ^ uVar4) - uVar4)) {
+        uVar4 = piVar8[1] - local_4c >> 0x1f;
+        uVar7 = piVar8[1] - local_50 >> 0x1f;
+        if ((int)((piVar8[1] - local_4c ^ uVar4) - uVar4) <
+            (int)((piVar8[1] - local_50 ^ uVar7) - uVar7)) {
 LAB_0040e170:
           local_24 = 1;
           opponent_index = local_4c;
@@ -822,10 +799,10 @@ LAB_0040e170:
         local_24 = 0;
       }
       else if (local_54 == classify_lane_occupant_result[3]) {
-        uVar2 = piVar5[1] - local_50 >> 0x1f;
-        uVar4 = piVar5[1] - local_48 >> 0x1f;
-        if ((int)((piVar5[1] - local_48 ^ uVar4) - uVar4) <
-            (int)((piVar5[1] - local_50 ^ uVar2) - uVar2)) {
+        uVar4 = piVar8[1] - local_50 >> 0x1f;
+        uVar7 = piVar8[1] - local_48 >> 0x1f;
+        if ((int)((piVar8[1] - local_48 ^ uVar7) - uVar7) <
+            (int)((piVar8[1] - local_50 ^ uVar4) - uVar4)) {
           local_24 = 2;
           opponent_2->target_lane = local_48;
         }
@@ -842,60 +819,61 @@ LAB_0040e170:
   }
   opponent_2->max_speed = *(float *)(opponent_index + 0x10);
 LAB_0040e096:
-  debugmsg(s_Normal_exit_covered____00444ac8);
-  return;
+  uVar6 = debugmsg(s_Normal_exit_covered____00444ac8);
+  return uVar6;
 }
 
 
 /* ==== 0040e301 drive_traffic ==== */
 
-void __watcall drive_traffic(void)
+undefined4 __watcall drive_traffic(int param_1)
 
 {
-  float fVar1;
-  int in_EAX;
-  uint uVar2;
-  int iVar3;
+  undefined4 *puVar1;
+  float fVar2;
+  uint uVar3;
+  undefined2 uVar7;
   int iVar4;
-  uint uVar5;
-  int iVar6;
+  int iVar5;
+  undefined4 uVar6;
+  uint uVar8;
+  int iVar9;
+  int *piVar10;
   int extraout_EDX;
   int extraout_EDX_00;
-  int *piVar7;
   int extraout_EDX_01;
+  uint uVar11;
+  uint uVar12;
   int extraout_EDX_02;
   int extraout_EDX_03;
   int extraout_EDX_04;
-  int extraout_EDX_05;
-  int extraout_EDX_06;
-  int extraout_EDX_07;
   int unaff_EBX;
   int i;
   int unaff_EBP;
   opponent_t *opponent;
-  int *piVar8;
-  undefined4 local_a4 [11];
+  int *piVar13;
+  char *pcVar14;
+  int local_a4 [11];
   int local_78 [11];
   uint local_4c [6];
   uint local_34 [7];
-  char *format;
   
   local_34[3] = 0;
-  if (*(int *)(driver_list + 0x18 + in_EAX * 0x1c) == 0) {
-    fatal_exit(s__s__d__Cannot_drive_unused_drive_00444b0b);
+  if (*(int *)(driver_list + 0x18 + param_1 * 0x1c) == 0) {
+    fatal_exit(s__s__d__Cannot_drive_unused_drive_00444b0b,s_driver_cpp_00444b00,0x3f3,param_1);
   }
-  if (*(int *)(driver_list + 0xc + in_EAX * 0x1c) == 0) {
-    fatal_exit(s__s__d__Cannot_drive_unassigned_d_00444b3d);
+  if (*(int *)(driver_list + 0xc + param_1 * 0x1c) == 0) {
+    fatal_exit(s__s__d__Cannot_drive_unassigned_d_00444b3d,s_driver_cpp_00444b32,0x3f7,param_1);
   }
-  piVar8 = (int *)(driver_list + in_EAX * 0x1c);
-  opponent = opponent_data + *piVar8;
+  piVar13 = (int *)(driver_list + param_1 * 0x1c);
+  opponent = opponent_data + *piVar13;
   local_34[6] = opponent->lane;
-  debugmsg(s_Driving_car___03d_OppIndex____03_00444b68,in_EAX,*piVar8,local_34[6],opponent->chunk,
+  debugmsg(s_Driving_car___03d_OppIndex____03_00444b68,param_1,*piVar13,local_34[6],opponent->chunk,
            opponent->direction,(double)opponent->speed,(double)opponent->max_speed,
-           (double)(float)piVar8[2],piVar8[1],opponent->chunk);
-  uVar2 = opponent->chunk - opponent->waypoint;
-  uVar5 = (int)uVar2 >> 0x1f;
-  if (2 < (int)((uVar2 ^ uVar5) - uVar5)) {
+           (double)(float)piVar13[2],piVar13[1],opponent->chunk);
+  uVar3 = opponent->chunk - opponent->waypoint;
+  uVar8 = (int)uVar3 >> 0x1f;
+  if (2 < (int)((uVar3 ^ uVar8) - uVar8)) {
     debugmsg(s_ILLEGAL_WAYPOINT_FOUND__00444c08);
   }
   if (opponent->direction == 1) {
@@ -911,61 +889,72 @@ void __watcall drive_traffic(void)
   local_4c[4] = local_34[6] + unaff_EBX;
   local_4c[5] = local_34[6] - unaff_EBX;
   local_4c[3] = local_34[6];
-  scan_lanes_ahead((int)local_a4,local_78,*piVar8,opponent->chunk,9);
+  scan_lanes_ahead(local_a4,local_78,*piVar13,opponent->chunk,9,3,opponent->direction);
   debugmsg(s_FrontArray_filled____values__00444c21);
   i = 0;
-  iVar6 = 0;
+  iVar9 = 0;
   do {
-    debugmsg(s_Element__03d____04d_00444c3f,i,*(undefined4 *)((int)local_a4 + iVar6));
+    puVar1 = (undefined4 *)((int)local_a4 + iVar9);
+    iVar9 = iVar9 + 4;
+    debugmsg(s_Element__03d____04d_00444c3f,i,*puVar1);
     i = i + 1;
-    iVar6 = extraout_EDX;
   } while (i < 0xb);
   debugmsg(s_BackArray_filled____values__00444c54);
   i = 0;
-  iVar6 = 0;
+  iVar9 = 0;
   do {
-    debugmsg(s_Element__03d____04d_00444c71,i,*(undefined4 *)((int)local_78 + iVar6));
+    puVar1 = (undefined4 *)((int)local_78 + iVar9);
+    iVar9 = iVar9 + 4;
+    debugmsg(s_Element__03d____04d_00444c71,i,*puVar1);
     i = i + 1;
-    iVar6 = extraout_EDX_00;
   } while (i < 0xb);
-  local_4c[0] = classify_lane_occupant((int)opponent,(int)local_a4,local_78);
+  local_4c[0] = classify_lane_occupant
+                          ((int)opponent,(int)local_a4,(int)local_78,local_4c[3],local_4c + 6);
   if ((local_34[6] == local_34[5]) || (local_34[6] == local_34[4])) {
     if (local_34[6] == local_34[5]) {
       local_4c[4] = local_4c[5];
     }
-    local_4c[1] = classify_lane_occupant((int)opponent,(int)local_a4,local_78);
-    iVar6 = 2;
+    local_4c[1] = classify_lane_occupant
+                            ((int)opponent,(int)local_a4,(int)local_78,local_4c[4],local_4c + 7);
+    iVar9 = 2;
   }
   else {
-    local_4c[1] = classify_lane_occupant((int)opponent,(int)local_a4,local_78);
-    local_4c[2] = classify_lane_occupant((int)opponent,(int)local_a4,local_78);
-    iVar6 = 3;
+    local_4c[1] = classify_lane_occupant
+                            ((int)opponent,(int)local_a4,(int)local_78,local_4c[4],local_4c + 7);
+    local_4c[2] = classify_lane_occupant
+                            ((int)opponent,(int)local_a4,(int)local_78,local_4c[5],local_4c + 8);
+    iVar9 = 3;
   }
-  piVar7 = (int *)(driver_lane_data + piVar8[5] * 0xc);
-  if (piVar7[1] != -1) {
-    if (opponent->max_speed != 2.0) {
-      fVar1 = opponent->max_speed * 0.5;
-      opponent->max_speed = fVar1;
-      if (2.0 <= fVar1) {
-        return;
+  piVar10 = (int *)(driver_lane_data + piVar13[5] * 0xc);
+  if (piVar10[1] != -1) {
+    fVar2 = opponent->max_speed;
+    uVar7 = (undefined2)((uint)(piVar13[5] * 0xc) >> 0x10);
+    if ((fVar2 == 2.0) == 0) {
+      fVar2 = opponent->max_speed * 0.5;
+      opponent->max_speed = fVar2;
+      uVar6 = CONCAT22(uVar7,(ushort)(fVar2 < 2.0) << 8 | (ushort)NAN(fVar2) << 10 |
+                             (ushort)(fVar2 == 2.0) << 0xe);
+      if (fVar2 >= 2.0) {
+        return uVar6;
       }
       opponent->max_speed = 2.0;
-      return;
+      return uVar6;
     }
-    if (piVar7[2] == 0) {
-      return;
+    if (piVar10[2] == 0) {
+      return CONCAT22(uVar7,(ushort)(fVar2 < 2.0) << 8 | (ushort)NAN(fVar2) << 10 |
+                            (ushort)(fVar2 == 2.0) << 0xe);
     }
-    piVar7[2] = piVar7[2] + -1;
-    iVar6 = piVar8[5] * 0xc + driver_lane_data;
-    if (*(int *)(iVar6 + 8) != 0) {
-      return;
+    piVar10[2] = piVar10[2] + -1;
+    iVar9 = piVar13[5] * 0xc + driver_lane_data;
+    if (*(int *)(iVar9 + 8) != 0) {
+      return iVar9;
     }
-    *(undefined4 *)(iVar6 + 4) = 0xffffffff;
-    return;
+    *(undefined4 *)(iVar9 + 4) = 0xffffffff;
+    return iVar9;
   }
-  if (*piVar7 == 4) {
-    piVar8[1] = local_34[4];
-    piVar8[2] = (int)(float)*(int *)(piVar8[5] * 0xc + 8 + driver_lane_data);
+  if (*piVar10 == 4) {
+    piVar13[1] = local_34[4];
+    piVar13[2] = (int)(float)*(int *)(piVar13[5] * 0xc + 8 + driver_lane_data);
     if (opponent->max_speed == 0.0) {
       racers[opponent->object].needs_update = -1;
     }
@@ -973,48 +962,48 @@ void __watcall drive_traffic(void)
   debugmsg(s_Racer_logic_activated_00444c86);
   if (local_34[3] == 0) {
     debugmsg(s_Using__EMPTY_LANE__tactic____00444c9d);
-    if (iVar6 == 2) {
+    if (iVar9 == 2) {
       if (local_4c[1] == local_4c[0]) {
         if ((int)local_4c[1] < 2) {
-          uVar2 = local_4c[1] ^ local_4c[0];
+          uVar3 = local_4c[1] ^ local_4c[0];
         }
         else {
-          uVar2 = piVar8[1] - local_4c[3];
-          uVar5 = (int)uVar2 >> 0x1f;
+          uVar3 = piVar13[1] - local_4c[3];
+          uVar8 = (int)uVar3 >> 0x1f;
           debugmsg(s_Both_lanes_of_equal_status_00444cbb);
-          if ((int)((uVar2 ^ uVar5) - uVar5) <= extraout_EDX_01) {
-            format = s_Current_lane_is_closer_to_prefer_00444d07;
+          if ((int)((uVar3 ^ uVar8) - uVar8) <= extraout_EDX) {
+            pcVar14 = s_Current_lane_is_closer_to_prefer_00444d07;
             goto LAB_0040e754;
           }
-          format = s_Other_lane_is_closer_to_preferre_00444cd7;
+          pcVar14 = s_Other_lane_is_closer_to_preferre_00444cd7;
 LAB_0040e721:
-          debugmsg(format);
+          debugmsg(pcVar14);
           opponent->target_lane = local_4c[4];
-          uVar2 = 1;
+          uVar3 = 1;
         }
       }
       else {
         if ((int)local_4c[0] < (int)local_4c[1]) {
-          format = s_SWITCHING_to_other_lane____00444d37;
+          pcVar14 = s_SWITCHING_to_other_lane____00444d37;
           goto LAB_0040e721;
         }
-        format = s_STAYING_in_current_lane____00444d53;
+        pcVar14 = s_STAYING_in_current_lane____00444d53;
 LAB_0040e754:
-        debugmsg(format);
-        uVar2 = 0;
+        debugmsg(pcVar14);
+        uVar3 = 0;
       }
-      if (1 < (int)local_4c[uVar2]) {
-        format = s_Speeding_00444d7d;
+      if (1 < (int)local_4c[uVar3]) {
+        pcVar14 = s_Speeding_00444d7d;
 LAB_0040e786:
-        debugmsg(format);
-        opponent->max_speed = (float)piVar8[2];
+        debugmsg(pcVar14);
+        opponent->max_speed = (float)piVar13[2];
         goto LAB_0040ec39;
       }
       debugmsg(s_Slowing_down_00444d6f);
-      local_34[0] = *(uint *)((int)local_4c + extraout_EDX_02 + 0x18);
+      local_34[0] = *(uint *)((int)local_4c + extraout_EDX_00 + 0x18);
     }
     else {
-      debugmsg(s_Somewhere_in_the_middle____Statu_00444d87);
+      debugmsg(s_Somewhere_in_the_middle____Statu_00444d87,local_4c[0],local_4c[1],local_4c[2]);
       if (((int)local_4c[0] < (int)local_4c[1]) || ((int)local_4c[0] < (int)local_4c[2])) {
         debugmsg(s_One_of_the_other_lanes_is_best___00444dcf);
         if (local_4c[2] == local_4c[1]) {
@@ -1022,48 +1011,48 @@ LAB_0040e786:
             opponent->max_speed = *(float *)(local_34[0] + 0x10);
             goto LAB_0040e8e8;
           }
-          uVar2 = piVar8[1] - local_4c[4];
-          uVar5 = (int)uVar2 >> 0x1f;
+          uVar3 = piVar13[1] - local_4c[4];
+          uVar8 = (int)uVar3 >> 0x1f;
           debugmsg(s_Both_others_are_equal____00444df2);
-          if (extraout_EDX_03 < (int)((uVar2 ^ uVar5) - uVar5)) {
-            format = s_SWITCHING_to_slower_lane____00444e29;
-            goto LAB_0040e83b;
+          if (extraout_EDX_01 < (int)((uVar3 ^ uVar8) - uVar8)) {
+            pcVar14 = s_SWITCHING_to_slower_lane____00444e29;
+            goto override_prt_40e83b_11e5dad1;
           }
-          format = s_SWITCHING_to_faster_lane____00444e0c;
+          pcVar14 = s_SWITCHING_to_faster_lane____00444e0c;
         }
         else {
           if ((int)local_4c[1] < (int)local_4c[2]) {
-            format = s_Slower_lane_is_best_SWITCHING_to_00444e46;
-LAB_0040e83b:
-            debugmsg(format);
+            pcVar14 = s_Slower_lane_is_best_SWITCHING_to_00444e46;
+override_prt_40e83b_11e5dad1:
+            debugmsg(pcVar14);
             goto LAB_0040e843;
           }
-          format = s_Faster_lane_is_best_SWITCHING_to_00444e77;
+          pcVar14 = s_Faster_lane_is_best_SWITCHING_to_00444e77;
         }
-        debugmsg(format);
+        debugmsg(pcVar14);
 LAB_0040e82b:
         unaff_EBP = 1;
-        uVar2 = local_4c[4];
+        uVar3 = local_4c[4];
 LAB_0040e84c:
-        opponent->target_lane = uVar2;
+        opponent->target_lane = uVar3;
       }
       else {
         debugmsg(s_Current_lane_is_one_of_the_best__00444ea8);
         if (local_4c[0] != local_4c[1]) {
           if ((local_4c[2] != local_4c[0]) ||
-             (uVar2 = (int)(piVar8[1] - local_4c[3]) >> 0x1f,
-             uVar5 = (int)(piVar8[1] - local_4c[5]) >> 0x1f,
-             (int)((piVar8[1] - local_4c[3] ^ uVar2) - uVar2) <=
-             (int)((piVar8[1] - local_4c[5] ^ uVar5) - uVar5))) goto LAB_0040e8e6;
+             (uVar3 = (int)(piVar13[1] - local_4c[3]) >> 0x1f,
+             uVar8 = (int)(piVar13[1] - local_4c[5]) >> 0x1f,
+             (int)((piVar13[1] - local_4c[3] ^ uVar3) - uVar3) <=
+             (int)((piVar13[1] - local_4c[5] ^ uVar8) - uVar8))) goto LAB_0040e8e6;
 LAB_0040e843:
           unaff_EBP = 2;
-          uVar2 = local_4c[5];
+          uVar3 = local_4c[5];
           goto LAB_0040e84c;
         }
-        uVar2 = (int)(piVar8[1] - local_4c[4]) >> 0x1f;
-        uVar5 = (int)(piVar8[1] - local_4c[3]) >> 0x1f;
-        if ((int)((piVar8[1] - local_4c[4] ^ uVar2) - uVar2) <
-            (int)((piVar8[1] - local_4c[3] ^ uVar5) - uVar5)) goto LAB_0040e82b;
+        uVar3 = (int)(piVar13[1] - local_4c[4]) >> 0x1f;
+        uVar8 = (int)(piVar13[1] - local_4c[3]) >> 0x1f;
+        if ((int)((piVar13[1] - local_4c[4] ^ uVar3) - uVar3) <
+            (int)((piVar13[1] - local_4c[3] ^ uVar8) - uVar8)) goto LAB_0040e82b;
 LAB_0040e8e6:
         unaff_EBP = 0;
       }
@@ -1077,45 +1066,45 @@ LAB_0040ea09:
   else {
     if (1 < local_34[3]) goto LAB_0040ec39;
     debugmsg(s_Using__FASTEST_LANE__tactic____00444ecc);
-    if (iVar6 != 2) {
+    if (iVar9 != 2) {
       debugmsg(s_Somewhere_in_the_middle____00444fb8);
       if (1 < (int)local_4c[0]) {
-        uVar2 = (int)(piVar8[1] - local_4c[3]) >> 0x1f;
-        iVar3 = (piVar8[1] - local_4c[3] ^ uVar2) - uVar2;
-        iVar6 = piVar8[1];
-        uVar2 = (int)(iVar6 - local_4c[4]) >> 0x1f;
-        i = piVar8[1];
-        uVar5 = (int)(i - local_4c[5]) >> 0x1f;
-        opponent->max_speed = (float)piVar8[2];
-        iVar4 = 0;
-        if ((1 < (int)local_4c[1]) && ((int)((iVar6 - local_4c[4] ^ uVar2) - uVar2) < iVar3)) {
-          iVar4 = 1;
+        uVar3 = (int)(piVar13[1] - local_4c[3]) >> 0x1f;
+        iVar4 = (piVar13[1] - local_4c[3] ^ uVar3) - uVar3;
+        iVar9 = piVar13[1];
+        uVar3 = (int)(iVar9 - local_4c[4]) >> 0x1f;
+        i = piVar13[1];
+        uVar8 = (int)(i - local_4c[5]) >> 0x1f;
+        opponent->max_speed = (float)piVar13[2];
+        iVar5 = 0;
+        if ((1 < (int)local_4c[1]) && ((int)((iVar9 - local_4c[4] ^ uVar3) - uVar3) < iVar4)) {
+          iVar5 = 1;
         }
-        if ((1 < (int)local_4c[2]) && ((int)((i - local_4c[5] ^ uVar5) - uVar5) < iVar3)) {
-          iVar4 = 2;
+        if ((1 < (int)local_4c[2]) && ((int)((i - local_4c[5] ^ uVar8) - uVar8) < iVar4)) {
+          iVar5 = 2;
         }
-        uVar2 = local_4c[iVar4 + 3];
+        uVar3 = local_4c[iVar5 + 3];
 LAB_0040e9a4:
-        opponent->target_lane = uVar2;
+        opponent->target_lane = uVar3;
         goto LAB_0040ec39;
       }
       debugmsg(s_Too_close_on_target____00444fd4);
       if (local_4c[1] != local_4c[2]) {
         debugmsg(s_Do_we_crash_in_here_somwhere_____004450d7);
-        if (local_4c[0] == local_4c[extraout_EDX_07]) {
-          if (*(float *)(local_34[0] + 0x10) < *(float *)(local_4c[extraout_EDX_07 + 6] + 0x10)) {
-            opponent->target_lane = local_4c[extraout_EDX_07 + 3];
-            local_34[0] = local_4c[extraout_EDX_07 + 6];
+        if (local_4c[0] == local_4c[extraout_EDX_04]) {
+          if (*(float *)(local_34[0] + 0x10) < *(float *)(local_4c[extraout_EDX_04 + 6] + 0x10)) {
+            opponent->target_lane = local_4c[extraout_EDX_04 + 3];
+            local_34[0] = local_4c[extraout_EDX_04 + 6];
           }
           opponent->max_speed = *(float *)(local_34[0] + 0x10);
         }
         else {
-          opponent->target_lane = local_4c[extraout_EDX_07 + 3];
-          opponent->max_speed = (float)piVar8[2];
+          opponent->target_lane = local_4c[extraout_EDX_04 + 3];
+          opponent->max_speed = (float)piVar13[2];
         }
-        format = s_No_we_don_t__004450fa;
-LAB_0040ebb9:
-        debugmsg(format);
+        pcVar14 = s_No_we_don_t__004450fa;
+override_prt_40ebb9_11e5dad1:
+        debugmsg(pcVar14);
         goto LAB_0040ec39;
       }
       debugmsg(s_Both_alternatives_look_good____00444fec);
@@ -1125,11 +1114,11 @@ LAB_0040ebb9:
            (*(float *)(local_34[0] + 0x10) < *(float *)(local_34[2] + 0x10))) {
           if (*(float *)(local_34[2] + 0x10) <= *(float *)(local_34[1] + 0x10)) {
             opponent->max_speed = *(float *)(local_34[1] + 0x10);
-            uVar2 = local_4c[4];
+            uVar3 = local_4c[4];
           }
           else {
             opponent->max_speed = *(float *)(local_34[2] + 0x10);
-            uVar2 = local_4c[5];
+            uVar3 = local_4c[5];
           }
           goto LAB_0040e9a4;
         }
@@ -1137,21 +1126,21 @@ LAB_0040ebb9:
       else {
         debugmsg(s_One_is_better_than_the_other____00445031);
         if ((int)local_4c[0] < (int)local_4c[1]) {
-          uVar2 = piVar8[1] - local_4c[4];
-          uVar5 = (int)uVar2 >> 0x1f;
+          uVar3 = piVar13[1] - local_4c[4];
+          uVar8 = (int)uVar3 >> 0x1f;
           debugmsg(s_Checking_which_is_best__Faster_o_00445052);
-          if (extraout_EDX_05 < (int)((uVar2 ^ uVar5) - uVar5)) {
-            format = s_Slower_is_better____00445099;
+          if (extraout_EDX_02 < (int)((uVar3 ^ uVar8) - uVar8)) {
+            pcVar14 = s_Slower_is_better____00445099;
           }
           else {
-            format = s_Faster_is_better____00445084;
+            pcVar14 = s_Faster_is_better____00445084;
           }
-          debugmsg(format);
+          debugmsg(pcVar14);
           debugmsg(s_Going_to_better_lane____OK___004450ae);
-          opponent->target_lane = local_4c[extraout_EDX_06 + 3];
-          format = s____>_YES__004450cb;
-          opponent->max_speed = (float)piVar8[2];
-          goto LAB_0040ebb9;
+          opponent->target_lane = local_4c[extraout_EDX_03 + 3];
+          pcVar14 = s____>_YES__004450cb;
+          opponent->max_speed = (float)piVar13[2];
+          goto override_prt_40ebb9_11e5dad1;
         }
       }
       goto LAB_0040ea09;
@@ -1161,58 +1150,53 @@ LAB_0040ebb9:
       debugmsg(s_Searching_for_preferred_lane___00444efc);
       if ((int)local_4c[0] <= (int)local_4c[1]) {
         debugmsg(s_Other_lane_better_or_equal_to_cu_00444f1c);
-        uVar2 = piVar8[1] - local_4c[3];
-        uVar5 = (int)uVar2 >> 0x1f;
+        uVar3 = piVar13[1] - local_4c[3];
+        uVar11 = (int)uVar3 >> 0x1f;
+        uVar8 = piVar13[1] - local_4c[4];
+        uVar12 = (int)uVar8 >> 0x1f;
         debugmsg(s_Differences_to_preferred_lane_ca_00444f4b);
-        opponent->max_speed = (float)piVar8[2];
-        if ((int)((uVar2 ^ uVar5) - uVar5) <= extraout_EDX_04) goto LAB_0040ec39;
+        opponent->max_speed = (float)piVar13[2];
+        if ((int)((uVar3 ^ uVar11) - uVar11) <= (int)((uVar8 ^ uVar12) - uVar12)) goto LAB_0040ec39;
         debugmsg(s_Switching_to_other_lane____00444f78);
-        uVar2 = local_4c[4];
+        uVar3 = local_4c[4];
         goto LAB_0040e9a4;
       }
-      format = s_Current_lane_is_best____staying__00444f94;
+      pcVar14 = s_Current_lane_is_best____staying__00444f94;
       goto LAB_0040e786;
     }
     if (local_4c[0] == local_4c[1]) {
-      uVar2 = local_34[0];
+      uVar3 = local_34[0];
       if (*(float *)(local_34[0] + 0x10) < *(float *)(local_34[1] + 0x10)) {
         opponent->target_lane = local_4c[4];
-        uVar2 = local_34[1];
+        uVar3 = local_34[1];
       }
-      opponent->max_speed = *(float *)(uVar2 + 0x10);
+      opponent->max_speed = *(float *)(uVar3 + 0x10);
     }
     if ((int)local_4c[1] <= (int)local_4c[0]) goto LAB_0040ea09;
     opponent->target_lane = local_4c[4];
 LAB_0040e8fb:
-    opponent->max_speed = (float)piVar8[2];
+    opponent->max_speed = (float)piVar13[2];
   }
 LAB_0040ec39:
-  debugmsg(s_Normal_exit_covered_for_driver___00445108,in_EAX);
-  return;
+  uVar6 = debugmsg(s_Normal_exit_covered_for_driver___00445108,param_1);
+  return uVar6;
 }
 
 
 /* ==== 0040ec6c drive_opponent ==== */
 
-void __watcall drive_opponent(void)
+void __watcall drive_opponent(int param_1)
 
 {
-  int in_EAX;
   uint uVar1;
-  char *format;
-  float fVar2;
-  undefined4 extraout_ECX;
-  int iVar3;
-  int extraout_ECX_00;
-  int extraout_ECX_01;
-  int extraout_ECX_02;
-  int extraout_ECX_03;
-  int extraout_ECX_04;
-  uint uVar4;
-  opponent_t *opponent_2;
+  char *pcVar2;
+  float fVar3;
+  int iVar4;
+  uint uVar5;
   opponent_t *opponent;
-  int *piVar5;
-  float10 racer_distance_margin_result;
+  opponent_t *opponent_2;
+  int *piVar6;
+  float10 debugmsg_result;
   int local_a0 [11];
   int local_74 [11];
   double local_48;
@@ -1225,243 +1209,247 @@ void __watcall drive_opponent(void)
   int local_20;
   int local_1c;
   
-  if (*(int *)(driver_list + 0x18 + in_EAX * 0x1c) == 0) {
-    fatal_exit(s__s__d__Cannot_drive_unused_drive_00445142);
+  if (*(int *)(driver_list + 0x18 + param_1 * 0x1c) == 0) {
+    fatal_exit(s__s__d__Cannot_drive_unused_drive_00445142,s_driver_cpp_00445137,0x609,param_1);
   }
-  if (*(int *)(driver_list + 0xc + in_EAX * 0x1c) == 0) {
-    fatal_exit(s__s__d__Cannot_drive_unassigned_d_00445174);
+  if (*(int *)(driver_list + 0xc + param_1 * 0x1c) == 0) {
+    fatal_exit(s__s__d__Cannot_drive_unassigned_d_00445174,s_driver_cpp_00445169,0x60d,param_1);
   }
-  piVar5 = (int *)(driver_list + in_EAX * 0x1c);
-  opponent = opponent_data + *piVar5;
-  switch(piVar5[4]) {
+  piVar6 = (int *)(driver_list + param_1 * 0x1c);
+  opponent_2 = opponent_data + *piVar6;
+  switch(piVar6[4]) {
   case 0:
   case 1:
     break;
   case 2:
     goto switchD_0040ecf6_caseD_2;
   case 3:
-    drive_traffic();
+    drive_traffic(param_1);
     break;
   case 4:
-    drive_racer();
+    drive_racer(param_1);
     break;
   default:
-    fatal_exit(s__s__d__Illegal_driver_type__d_fo_004451aa);
+    fatal_exit(s__s__d__Illegal_driver_type__d_fo_004451aa,s_driver_cpp_0044519f,0x625,piVar6[4],
+               param_1,*piVar6);
 switchD_0040ecf6_caseD_2:
-    local_1c = opponent->lane;
-    debugmsg(s_Driving_car___03d_OppIndex____03_004451e9);
-    uVar1 = opponent->chunk - opponent->waypoint;
-    uVar4 = (int)uVar1 >> 0x1f;
-    if (2 < (int)((uVar1 ^ uVar4) - uVar4)) {
+    local_1c = opponent_2->lane;
+    debugmsg(s_Driving_car___03d_OppIndex____03_004451e9,param_1,*piVar6,local_1c,opponent_2->chunk,
+             opponent_2->direction,(double)opponent_2->speed,(double)opponent_2->max_speed,
+             (double)(float)piVar6[2],piVar6[1]);
+    uVar1 = opponent_2->chunk - opponent_2->waypoint;
+    uVar5 = (int)uVar1 >> 0x1f;
+    if (2 < (int)((uVar1 ^ uVar5) - uVar5)) {
       debugmsg(s_ILLEGAL_WAYPOINT_FOUND__0044528b);
     }
-    if (opponent->direction == 1) {
+    if (opponent_2->direction == 1) {
       local_20 = 1;
     }
-    if (opponent->direction == 0) {
+    if (opponent_2->direction == 0) {
       local_20 = -1;
     }
-    scan_lanes_ahead((int)local_a0,local_74,*piVar5,opponent->chunk,9);
+    scan_lanes_ahead(local_a0,local_74,*piVar6,opponent_2->chunk,9,3,opponent_2->direction);
     debugmsg(s_Driving_logic_activated____004452a4);
-    if (piVar5[1] != local_1c) {
-      debugmsg(s_Driving_in_the_fast_lane_00445414);
+    if (piVar6[1] != local_1c) {
+      debugmsg_result = (float10)debugmsg(s_Driving_in_the_fast_lane_00445414);
       if (local_a0[local_1c] == -1) {
         debugmsg(s__>_Nothing_in_current_lane____0044542e);
-        iVar3 = local_1c - local_20;
-        if (local_74[iVar3] != -1) {
+        iVar4 = local_1c - local_20;
+        if (local_74[iVar4] != -1) {
 LAB_0040f339:
-          opponent->max_speed = (float)piVar5[2];
+          opponent_2->max_speed = (float)piVar6[2];
           return;
         }
-        if (local_a0[iVar3] != -1) {
-          debugmsg(s___>_Slow_lane_not_emtpy__checkin_00445493);
-          if ((float)piVar5[2] <= opponent_data[local_a0[iVar3]].speed) {
-            racer_distance_margin_result =
-                 racer_distance_margin(opponent_data + local_a0[iVar3],(int)opponent);
-            local_24 = (float)racer_distance_margin_result;
-            debugmsg(s____Range_to_target____>>__f___>_c_004454e3,
-                     (double)racer_distance_margin_result);
+        if (local_a0[iVar4] != -1) {
+          debugmsg_result = (float10)debugmsg(s___>_Slow_lane_not_emtpy__checkin_00445493);
+          opponent = opponent_data + local_a0[iVar4];
+          if ((float)piVar6[2] <= opponent->speed) {
+            racer_distance_margin(opponent,opponent_2);
+            local_24 = (float)debugmsg_result;
+            debugmsg(s____Range_to_target____>>__f___>_c_004454e3,SUB84((double)debugmsg_result,0),
+                     (int)((ulonglong)(double)debugmsg_result >> 0x20));
             if (57600.0 < local_24) {
               if (102400.0 <= local_24) {
-                format = s_Normal_exit_covered_for_driver___0044555a;
-                opponent->max_speed = (float)piVar5[2];
-                opponent->target_lane = iVar3;
+                pcVar2 = s_Normal_exit_covered_for_driver___0044555a;
+                opponent_2->max_speed = (float)piVar6[2];
+                opponent_2->target_lane = iVar4;
               }
               else {
                 debugmsg(s___>_Good_range__switching_back_00445516);
-                fVar2 = *(float *)(extraout_ECX_02 + 0x10);
-                opponent->target_lane = iVar3;
-                opponent->max_speed = fVar2;
-                if ((float)piVar5[2] < fVar2) {
-                  opponent->max_speed = (float)piVar5[2];
+                fVar3 = opponent->speed;
+                opponent_2->target_lane = iVar4;
+                opponent_2->max_speed = fVar3;
+                if ((float)piVar6[2] < fVar3) {
+                  opponent_2->max_speed = (float)piVar6[2];
                 }
-                if (opponent->max_speed < 0.0) {
-                  opponent->max_speed = 0.0;
+                if (opponent_2->max_speed < 0.0) {
+                  opponent_2->max_speed = 0.0;
                 }
-                format = s_Normal_exit_covered_for_driver___00445537;
+                pcVar2 = s_Normal_exit_covered_for_driver___00445537;
               }
-              goto LAB_0040f175;
+              goto override_prt_40f175_281c20b5;
             }
-            opponent->max_speed = (float)piVar5[2];
-            if (opponent->max_speed <= (float)piVar5[2]) {
+            opponent_2->max_speed = (float)piVar6[2];
+            if (opponent_2->max_speed <= (float)piVar6[2]) {
               return;
             }
             goto LAB_0040f339;
           }
-          format = s___>_Faster_than_slow_laner____sp_004454ba;
+          pcVar2 = s___>_Faster_than_slow_laner____sp_004454ba;
           goto LAB_0040ee33;
         }
         debugmsg(s___>_Slow_lane_empty__SWITCHING__0044544e);
-        format = s_Normal_exit_covered_for_driver___00445470;
-        opponent->target_lane = iVar3;
+        pcVar2 = s_Normal_exit_covered_for_driver___00445470;
+        opponent_2->target_lane = iVar4;
 LAB_0040eef9:
-        opponent->max_speed = (float)piVar5[2];
-LAB_0040f175:
-        debugmsg(format);
+        opponent_2->max_speed = (float)piVar6[2];
+override_prt_40f175_281c20b5:
+        debugmsg(pcVar2,param_1);
         return;
       }
-      opponent_2 = opponent_data + local_a0[local_1c];
-      racer_distance_margin_result = racer_distance_margin(local_1c - local_20,(int)opponent);
-      local_38 = (double)racer_distance_margin_result;
-      debugmsg(s__>_Fast_lane_occupied____Range_t_0044557d,local_38._0_4_);
-      iVar3 = extraout_ECX_03;
+      iVar4 = local_1c - local_20;
+      opponent = opponent_data + local_a0[local_1c];
+      racer_distance_margin(opponent,opponent_2);
+      local_38 = (double)debugmsg_result;
+      debugmsg_result =
+           (float10)debugmsg(s__>_Fast_lane_occupied____Range_t_0044557d,local_38._0_4_,
+                             (int)((ulonglong)local_38 >> 0x20));
       if (57600.0 < local_38) {
         if (102400.0 <= local_38) goto LAB_0040f339;
-        fVar2 = (float)piVar5[2];
-        local_40 = (double)fVar2;
-        if (opponent_2->speed < fVar2) goto LAB_0040ef3a;
-        if (local_74[extraout_ECX_03] == -1) {
-          if (local_a0[extraout_ECX_03] == -1) {
-            fVar2 = (float)piVar5[2];
-            format = s_Normal_exit_covered_for_driver___0044561b;
+        fVar3 = (float)piVar6[2];
+        local_40 = (double)fVar3;
+        if (opponent->speed < fVar3) goto LAB_0040ef3a;
+        if (local_74[iVar4] == -1) {
+          if (local_a0[iVar4] == -1) {
+            fVar3 = (float)piVar6[2];
+            pcVar2 = s_Normal_exit_covered_for_driver___0044561b;
           }
           else {
-            opponent_4 = opponent_data + local_74[extraout_ECX_03];
-            if (opponent_4->speed < fVar2) goto LAB_0040f339;
-            racer_distance_margin_result = racer_distance_margin(extraout_ECX_03,(int)opponent);
-            local_48 = (double)racer_distance_margin_result;
-            debugmsg(s____Range_to_target____>>__f_0044563e,local_48._0_4_);
+            opponent_4 = opponent_data + local_74[iVar4];
+            if (opponent_4->speed < fVar3) goto LAB_0040f339;
+            racer_distance_margin(opponent_4,opponent_2);
+            local_48 = (double)debugmsg_result;
+            debugmsg(s____Range_to_target____>>__f_0044563e,local_48._0_4_,
+                     (int)((ulonglong)local_48 >> 0x20));
             if (local_48 <= 57600.0) goto LAB_0040f1db;
             if (local_48 < 102400.0) {
-              fVar2 = opponent_4->speed;
-              opponent->target_lane = extraout_ECX_04;
-              opponent->max_speed = fVar2;
-              if ((float)piVar5[2] < fVar2) {
-                opponent->max_speed = (float)piVar5[2];
+              fVar3 = opponent_4->speed;
+              opponent_2->target_lane = iVar4;
+              opponent_2->max_speed = fVar3;
+              if ((float)piVar6[2] < fVar3) {
+                opponent_2->max_speed = (float)piVar6[2];
               }
-              if (opponent->max_speed < 0.0) {
-                opponent->max_speed = 0.0;
+              if (opponent_2->max_speed < 0.0) {
+                opponent_2->max_speed = 0.0;
               }
-              format = s_Normal_exit_covered_for_driver___0044565c;
-              goto LAB_0040f175;
+              pcVar2 = s_Normal_exit_covered_for_driver___0044565c;
+              goto override_prt_40f175_281c20b5;
             }
-            fVar2 = (float)piVar5[2];
-            format = s_Normal_exit_covered_for_driver___0044567f;
-            iVar3 = extraout_ECX_04;
+            fVar3 = (float)piVar6[2];
+            pcVar2 = s_Normal_exit_covered_for_driver___0044567f;
           }
 LAB_0040f16c:
-          opponent->max_speed = fVar2;
-          opponent->target_lane = iVar3;
-          goto LAB_0040f175;
+          opponent_2->max_speed = fVar3;
+          opponent_2->target_lane = iVar4;
+          goto override_prt_40f175_281c20b5;
         }
       }
-      else if (local_74[extraout_ECX_03] == -1) {
-        if (local_a0[extraout_ECX_03] == -1) {
-          fVar2 = (float)piVar5[2];
-          format = s_Normal_exit_covered_for_driver___004455b2;
+      else if (local_74[iVar4] == -1) {
+        if (local_a0[iVar4] == -1) {
+          fVar3 = (float)piVar6[2];
+          pcVar2 = s_Normal_exit_covered_for_driver___004455b2;
           goto LAB_0040f16c;
         }
-        opponent_3 = opponent_data + local_a0[extraout_ECX_03];
-        if (opponent->speed < opponent_3->speed) {
-          opponent->max_speed = opponent_3->speed;
-          opponent->target_lane = extraout_ECX_03;
-          if (opponent->max_speed < 0.0) {
-            opponent->max_speed = 0.0;
+        opponent_3 = opponent_data + local_a0[iVar4];
+        if (opponent_2->speed < opponent_3->speed) {
+          opponent_2->max_speed = opponent_3->speed;
+          opponent_2->target_lane = iVar4;
+          if (opponent_2->max_speed < 0.0) {
+            opponent_2->max_speed = 0.0;
           }
-          format = s_Normal_exit_covered_for_driver___004455d5;
-          goto LAB_0040f175;
+          pcVar2 = s_Normal_exit_covered_for_driver___004455d5;
+          goto override_prt_40f175_281c20b5;
         }
-        racer_distance_margin_result = racer_distance_margin(extraout_ECX_03,(int)opponent);
-        if ((float10)240.0 < racer_distance_margin_result) {
-          opponent->max_speed = opponent_3->speed;
-          opponent->target_lane = extraout_ECX_03;
-          if (opponent->max_speed < 0.0) {
-            opponent->max_speed = 0.0;
+        racer_distance_margin(opponent,opponent_2);
+        if ((float10)240.0 < debugmsg_result) {
+          opponent_2->max_speed = opponent_3->speed;
+          opponent_2->target_lane = iVar4;
+          if (opponent_2->max_speed < 0.0) {
+            opponent_2->max_speed = 0.0;
           }
-          format = s_Normal_exit_covered_for_driver___004455f8;
-          goto LAB_0040f175;
+          pcVar2 = s_Normal_exit_covered_for_driver___004455f8;
+          goto override_prt_40f175_281c20b5;
         }
       }
 LAB_0040f1db:
-      opponent->max_speed = opponent_2->speed;
-      fVar2 = opponent->max_speed;
+      opponent_2->max_speed = opponent->speed;
+      fVar3 = opponent_2->max_speed;
 LAB_0040f1e4:
-      if (fVar2 <= (float)piVar5[2]) goto LAB_0040f1f2;
-      fVar2 = (float)piVar5[2];
+      if (fVar3 <= (float)piVar6[2]) goto LAB_0040f1f2;
+      fVar3 = (float)piVar6[2];
 LAB_0040f1ef:
-      opponent->max_speed = fVar2;
+      opponent_2->max_speed = fVar3;
 LAB_0040f1f2:
-      if (0.0 <= opponent->max_speed) {
+      if (0.0 <= opponent_2->max_speed) {
         return;
       }
-      opponent->max_speed = 0.0;
+      opponent_2->max_speed = 0.0;
       return;
     }
-    debugmsg(s__>_Driving_in_slow_lane_004452c0);
+    debugmsg_result = (float10)debugmsg(s__>_Driving_in_slow_lane_004452c0);
     if (local_a0[local_1c] == -1) {
-      format = s__>_Nothing_in_sight__004452da;
+      pcVar2 = s__>_Nothing_in_sight__004452da;
     }
     else {
-      opponent_2 = opponent_data + local_a0[local_1c];
-      racer_distance_margin_result = racer_distance_margin(extraout_ECX,(int)opponent);
-      local_30 = (float)racer_distance_margin_result;
-      debugmsg(s__>_TARGET____d_______Range_to_ta_004452f1);
+      opponent = opponent_data + local_a0[local_1c];
+      racer_distance_margin(opponent,opponent_2);
+      local_30 = (float)debugmsg_result;
+      debugmsg(s__>_TARGET____d_______Range_to_ta_004452f1,local_a0[local_1c],
+               SUB84((double)debugmsg_result,0),(int)((ulonglong)(double)debugmsg_result >> 0x20));
       if (local_30 <= 57600.0) {
-        debugmsg(s___>_Too_close__00445322);
-        iVar3 = local_1c + local_20;
-        if (((float)piVar5[2] <= opponent_2->speed) || (opponent->speed < opponent_2->speed)) {
-          format = s___>_SLOWING_DOWN_0044539b;
+        debugmsg_result = (float10)debugmsg(s___>_Too_close__00445322);
+        iVar4 = local_1c + local_20;
+        if (((float)piVar6[2] <= opponent->speed) || (opponent_2->speed < opponent->speed)) {
+          pcVar2 = s___>_SLOWING_DOWN_0044539b;
 LAB_0040ef47:
-          debugmsg(format);
-          fVar2 = opponent_2->speed;
-          opponent->max_speed = fVar2;
+          debugmsg(pcVar2);
+          fVar3 = opponent->speed;
+          opponent_2->max_speed = fVar3;
           goto LAB_0040f1e4;
         }
-        if (local_74[iVar3] == -1) {
-          if (local_a0[iVar3] == -1) {
+        if (local_74[iVar4] == -1) {
+          if (local_a0[iVar4] == -1) {
             debugmsg(s___>_OVERTAKING_00445333);
-            format = s_Normal_exit_covered_for_driver___00445344;
-            iVar3 = extraout_ECX_00;
+            pcVar2 = s_Normal_exit_covered_for_driver___00445344;
           }
           else {
-            racer_distance_margin_result = racer_distance_margin(iVar3,(int)opponent);
-            if (racer_distance_margin_result <= (float10)57600.0) goto LAB_0040ef3a;
+            racer_distance_margin(opponent_data + local_a0[iVar4],opponent_2);
+            if (debugmsg_result <= (float10)57600.0) goto LAB_0040ef3a;
             debugmsg(s___>_OVERTAKING_00445367);
-            format = s_Normal_exit_covered_for_driver___00445378;
-            iVar3 = extraout_ECX_01;
+            pcVar2 = s_Normal_exit_covered_for_driver___00445378;
           }
-          opponent->target_lane = iVar3;
+          opponent_2->target_lane = iVar4;
           goto LAB_0040eef9;
         }
 LAB_0040ef3a:
-        fVar2 = opponent_2->speed;
+        fVar3 = opponent->speed;
         goto LAB_0040f1ef;
       }
       if (102400.0 <= local_30) {
-        format = s___>_max_range______>_DOING_NOTHI_004453ee;
+        pcVar2 = s___>_max_range______>_DOING_NOTHI_004453ee;
       }
       else {
         debugmsg(s___>_Normal_range_004453ae);
-        if ((float)piVar5[2] <= opponent_2->speed) {
-          format = s___>_FOLLOWING_004453de;
+        if ((float)piVar6[2] <= opponent->speed) {
+          pcVar2 = s___>_FOLLOWING_004453de;
           goto LAB_0040ef47;
         }
-        format = s___>_PREPARING_TO_OVERTAKE_004453c2;
+        pcVar2 = s___>_PREPARING_TO_OVERTAKE_004453c2;
       }
     }
 LAB_0040ee33:
-    debugmsg(format);
-    opponent->max_speed = (float)piVar5[2];
+    debugmsg(pcVar2);
+    opponent_2->max_speed = (float)piVar6[2];
   }
   return;
 }

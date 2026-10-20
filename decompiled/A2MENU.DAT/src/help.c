@@ -21,7 +21,7 @@ void __watcall init_help(void)
 {
   int iVar1;
   long lVar2;
-  char *dd_error_string_result;
+  char *arg4;
   uchar *puVar3;
   int translate_pixel_result;
   uchar *puVar4;
@@ -45,9 +45,8 @@ void __watcall init_help(void)
   puStack_30 = (undefined1 *)&i;
   lVar2 = (**(code **)(*(int *)helpgrid + 0x74))(helpgrid,8);
   if (lVar2 != 0) {
-    dd_error_string_result = dd_error_string(lVar2);
-    fatal_exit(s__s__d____failed_to_set_color_key_0042d679,s_help_cpp_0042d670,0x5a,
-               dd_error_string_result);
+    arg4 = dd_error_string(lVar2);
+    fatal_exit(s__s__d____failed_to_set_color_key_0042d679,s_help_cpp_0042d670,0x5a,arg4);
   }
   puVar3 = get_surface_ptr_3(helpgrid,(int *)&puStack_30);
   i = 0;
@@ -166,8 +165,6 @@ void __watcall play_help(help_t *help,int param_2)
   HWND hWnd;
   int numberofcontrols_inform;
   int iVar2;
-  int extraout_ECX;
-  int extraout_ECX_00;
   int unaff_ESI;
   
   mouse_off();
@@ -178,7 +175,6 @@ void __watcall play_help(help_t *help,int param_2)
   numberofcontrols_inform = get_numberofcontrols_inform();
   if (numberofcontrols_inform == 0) {
     fatal_exit(s__s__d_____play_help__empty_form_o_0042d72d,s_help_cpp_0042d724,0xdb);
-    numberofcontrols_inform = extraout_ECX;
   }
   do {
     if ((*(int *)help == -1) || (bVar1)) {
@@ -191,7 +187,6 @@ void __watcall play_help(help_t *help,int param_2)
     draw_grid(0);
     if ((*(int *)help < 0) || (numberofcontrols_inform < *(int *)help)) {
       fatal_exit(s__s__d_____play_help__illegal_for_0042d76d,s_help_cpp_0042d764,0xe4,*(int *)help);
-      numberofcontrols_inform = extraout_ECX_00;
     }
     unaff_ESI = play_sound_buffer_1(*(char **)(help + 4),0);
     call_help_function(*(int *)help);
