@@ -49,6 +49,23 @@ For each module the script runs `rea analyze` (Ghidra provider, with a snapshot 
 
 `tools/split_sources.py` then splits the C export into the original source files.
 
+## Game data
+
+`tools/a2extract.py <disc> <out>` unpacks the resource archives and converts images to PNG (standard library only). Keep its output out of the repo, since it is the game's own data.
+
+| Archive | Kind | Contents |
+|---|---|---|
+| `A2MRCS.IND/.IMG` | named | Menu screens (PCX) and menu sounds and music (WAV) |
+| `A2MRC.IND/.IMG` | sprites | Menu buttons, labels and animation frames |
+| `RCS.IND/.IMG` | named | Race 3D models (`.D3D`), textures (PCX) and sounds (WAV) |
+| `GAMESPR.IND/.IMG` | sprites | Race dashboard and overlay sprites |
+
+The formats:
+- **Named archive:** the `.IND` holds a `u16` count followed by 24-byte entries `{char name[16]; u32 unused; u32 offset}`.
+- **Sprite archive:** the `.IND` holds a `u16` count followed by `u32` offsets into the `.IMG`. Each `.IMG` entry is `{u16 width, height, center_x, center_y; u8 pixels[width*height]}`, with 8-bit palette indices; the palette comes from the screen's PCX.
+
+Tracks are `ETAPPE<n>.TRK` and `ETAPPE<n>.OMP`, one pair per stage. Movies are Smacker (`.SMK`).
+
 ## Game modules
 
 All are 32-bit x86 PE files built with Watcom C/C++ in 1997.
