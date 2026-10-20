@@ -5,10 +5,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# The port is Rust (port/Cargo.toml). Release builds use the `static` feature: SDL2 is
+# compiled from source and linked in, so the executables need nothing beyond the
+# system (on Linux SDL opens X11/Wayland, the sound server and OpenGL at run time).
+
 jobs:
-  # Release builds carry SDL2 and SDL2_ttf inside (tools/build_static_sdl.sh). On Linux
-  # SDL still opens X11/Wayland, the sound server and OpenGL at run time, so the
-  # executable needs only glibc; 22.04's keeps it running on older distributions.
   linux:
     runs-on: ubuntu-22.04
     steps:
@@ -16,26 +17,27 @@ jobs:
       - name: Dependencies (SDL's video, sound and input back ends)
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+          sudo apt-get install -y cmake libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
             libxfixes-dev libxi-dev libxss-dev libxkbcommon-dev libwayland-dev wayland-protocols \
             libdecor-0-dev libegl1-mesa-dev libgl1-mesa-dev libasound2-dev libpulse-dev \
             libpipewire-0.3-dev libudev-dev libdbus-1-dev
-      - name: SDL2 and SDL2_ttf, static
-        run: tools/build_static_sdl.sh deps
       - name: Build
+        working-directory: port
         run: |
-          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/deps
-          cmake --build port/build -j 4 2>&1 | tee build.log
+          cargo build --release --features static 2>&1 | tee build.log
           exit ${PIPESTATUS[0]}
+      - name: Test
+        working-directory: port
+        run: cargo test --release --features static
       - name: Report compiler errors
         if: failure()
-        run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
+        run: grep -E "^(error|warning)" -A3 port/build.log | head -40 | sed 's/^/::error::/' || true
       - name: Package
         run: |
-          ldd port/build/a2racer
-          if ldd port/build/a2racer | grep -iE "sdl|freetype"; then echo "::error::links SDL dynamically"; exit 1; fi
+          ldd port/target/release/a2racer
+          if ldd port/target/release/a2racer | grep -iE "sdl|freetype"; then echo "::error::links SDL dynamically"; exit 1; fi
           mkdir -p dist/a2racer
-          cp port/build/a2racer port/README.md dist/a2racer/
+          cp port/target/release/a2racer port/README.md dist/a2racer/
           tar -C dist -czf a2racer-linux-x86_64.tar.gz a2racer
       - uses: actions/upload-artifact@v4
         with:
@@ -44,25 +46,31 @@ jobs:
 
   macos:
     runs-on: macos-14
+    env:
+      MACOSX_DEPLOYMENT_TARGET: "11.0"
     steps:
       - uses: actions/checkout@v4
-      - name: SDL2 and SDL2_ttf, static and universal
-        run: tools/build_static_sdl.sh deps "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - name: Build
+      - name: Toolchains
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+      - name: Build (Apple Silicon and Intel)
+        working-directory: port
         run: |
-          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_PREFIX_PATH=$PWD/deps
-          cmake --build port/build -j 4 2>&1 | tee build.log
-          exit ${PIPESTATUS[0]}
+          for t in aarch64-apple-darwin x86_64-apple-darwin; do
+            cargo build --release --features static --target $t 2>&1 | tee -a build.log
+            [ ${PIPESTATUS[0]} -eq 0 ] || exit 1
+          done
       - name: Report compiler errors
         if: failure()
-        run: grep -E "error|warning|undefined|Undefined" build.log | head -50 | sed 's/^/::error::/' || true
-      - name: Package
+        run: grep -E "^(error|warning)" -A3 port/build.log | head -40 | sed 's/^/::error::/' || true
+      - name: Package (universal)
         run: |
-          otool -L port/build/a2racer
-          if otool -L port/build/a2racer | grep -E "SDL|freetype|/opt/homebrew|/usr/local"; then echo "::error::links a non-system library"; exit 1; fi
-          lipo -info port/build/a2racer
           mkdir -p dist/a2racer
-          cp port/build/a2racer port/README.md dist/a2racer/
+          lipo -create -output dist/a2racer/a2racer \
+            port/target/aarch64-apple-darwin/release/a2racer port/target/x86_64-apple-darwin/release/a2racer
+          otool -L dist/a2racer/a2racer
+          if otool -L dist/a2racer/a2racer | grep -E "SDL|/opt/homebrew|/usr/local"; then echo "::error::links a non-system library"; exit 1; fi
+          lipo -info dist/a2racer/a2racer
+          cp port/README.md dist/a2racer/
           codesign --force --sign - dist/a2racer/a2racer
           (cd dist && zip -r ../a2racer-macos-universal.zip a2racer)
       - uses: actions/upload-artifact@v4
@@ -70,65 +78,37 @@ jobs:
           name: a2racer-macos-universal
           path: a2racer-macos-universal.zip
 
-  windows-mingw:
+  windows:
     runs-on: windows-2022
-    defaults:
-      run:
-        shell: msys2 {0}
     steps:
       - uses: actions/checkout@v4
-      - uses: msys2/setup-msys2@v2
-        with:
-          msystem: UCRT64
-          install: >-
-            zip
-            mingw-w64-ucrt-x86_64-gcc
-            mingw-w64-ucrt-x86_64-cmake
-            mingw-w64-ucrt-x86_64-ninja
-            mingw-w64-ucrt-x86_64-SDL2
-            mingw-w64-ucrt-x86_64-SDL2_ttf
       - name: Build
+        working-directory: port
+        shell: bash
         run: |
-          cmake -S port -B port/build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          cmake --build port/build 2>&1 | tee build.log
+          cargo build --release --features static 2>&1 | tee build.log
           exit ${PIPESTATUS[0]}
       - name: Report compiler errors
         if: failure()
-        run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
-      - name: Package with its DLLs
+        shell: bash
+        run: grep -E "^(error|warning)" -A3 port/build.log | head -40 | sed 's/^/::error::/' || true
+      - name: Package
+        shell: bash
         run: |
           mkdir -p dist/a2racer
-          cp port/build/a2racer.exe port/README.md dist/a2racer/
-          ldd port/build/a2racer.exe | awk '/ucrt64/ { print $3 }' | xargs -r cp -t dist/a2racer/
-          (cd dist && zip -r ../a2racer-windows-x86_64.zip a2racer)
+          cp port/target/release/a2racer.exe port/README.md dist/a2racer/
+          (cd dist && 7z a -tzip ../a2racer-windows-x86_64.zip a2racer)
       - uses: actions/upload-artifact@v4
         with:
           name: a2racer-windows-x86_64
           path: a2racer-windows-x86_64.zip
 
-  windows-msvc:
-    runs-on: windows-2022
-    steps:
-      - uses: actions/checkout@v4
-      - name: Dependencies
-        shell: pwsh
-        run: vcpkg install sdl2:x64-windows sdl2-ttf:x64-windows
-      - name: Build
-        shell: bash
-        run: |
-          cmake -S port -B port/build -DCMAKE_TOOLCHAIN_FILE="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
-          cmake --build port/build --config Release 2>&1 | tee build.log
-          exit ${PIPESTATUS[0]}
-      - name: Report compiler errors
-        if: failure()
-        shell: bash
-        run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
-
   # Every push to main replaces the "latest" pre-release with these builds, so they can
-  # be downloaded without a GitHub account.
+  # be downloaded without a GitHub account. Off while the port moves from C to Rust:
+  # the last release (from the C port) stays up until the Rust port runs the whole game.
   release:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [linux, macos, windows-mingw, windows-msvc]
+    if: false
+    needs: [linux, macos, windows]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -145,4 +125,4 @@ jobs:
           gh release delete latest --yes --cleanup-tag || true
           gh release create latest dist/* --target "$GITHUB_SHA" --prerelease \
             --title "Latest build" \
-            --notes "Automatic build of the port from ${GITHUB_SHA::7}. The game's data is not included: run it with --data pointing at the original A2 Racer CD (or a copy of its files). See README.md in each archive."
+            --notes "Automatic build of the port from ${GITHUB_SHA::7}. The game's data is not included: run it with --data pointing at the original A2 Racer CD image (.bin/.iso) or a copy of its files. See README.md in each archive."

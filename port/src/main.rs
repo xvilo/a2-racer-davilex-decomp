@@ -1,4 +1,5 @@
 mod gfx;
+mod menu;
 mod movie;
 mod platform;
 mod res;
@@ -25,5 +26,5 @@ fn main() {
     if let Err(e) = xvga::sound::xvga_init_sound(0x28, None) {
         eprintln!("sound: {e}");
     }
-    println!("{:?}", movie::play_movie(&data, "a2intro.smk"));
+    println!("{:?}", movie::movies::play_movie(&data, "a2intro.smk"));
 }
