@@ -56,6 +56,9 @@ bool sys_quit_requested(void);
 uint32_t sys_ticks(void);
 /* Whether a key (Windows virtual-key code, as the game stores them) is held now. */
 bool keyispressed(int vk);
+/* Joystick n (0 or 1) as winmm's joyGetPosEx reports it: x and y 0..65535 (centre
+ * 32767), a bit per button; false when there is no such joystick. */
+bool sys_joystick_position(int n, unsigned *x, unsigned *y, unsigned *buttons);
 /* Typed characters arrive in sys_input.text while text input is on. */
 void sys_text_input(bool on);
 void sys_sleep(uint32_t ms);

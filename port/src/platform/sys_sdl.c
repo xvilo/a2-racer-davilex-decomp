@@ -536,6 +536,38 @@ bool sys_quit_requested(void)
 	return quit_requested;
 }
 
+static SDL_Joystick *joysticks[2];
+
+bool sys_joystick_position(int n, unsigned *x, unsigned *y, unsigned *buttons)
+{
+	if (headless || n < 0 || n > 1)
+		return false;
+	if (!SDL_WasInit(SDL_INIT_JOYSTICK) && SDL_InitSubSystem(SDL_INIT_JOYSTICK) != 0)
+		return false;
+	SDL_JoystickUpdate();
+	if (joysticks[n] && !SDL_JoystickGetAttached(joysticks[n])) {
+		SDL_JoystickClose(joysticks[n]);
+		joysticks[n] = NULL;
+	}
+	if (!joysticks[n]) {
+		if (SDL_NumJoysticks() <= n)
+			return false;
+		joysticks[n] = SDL_JoystickOpen(n);
+		if (!joysticks[n])
+			return false;
+	}
+	SDL_Joystick *j = joysticks[n];
+	*x = (unsigned)(SDL_JoystickGetAxis(j, 0) + 32768);
+	*y = (unsigned)(SDL_JoystickGetAxis(j, 1) + 32768);
+	*buttons = 0;
+	int count = SDL_JoystickNumButtons(j);
+	for (int i = 0; i < count && i < 32; i++) {
+		if (SDL_JoystickGetButton(j, i))
+			*buttons |= 1u << i;
+	}
+	return true;
+}
+
 bool keyispressed(int vk)
 {
 	if (headless)

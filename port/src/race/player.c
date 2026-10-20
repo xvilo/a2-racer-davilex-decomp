@@ -15,6 +15,7 @@
 #include "race/sndfx.h"
 #include "race/texture.h"
 #include "race/weg.h"
+#include "xvga/joystick.h"
 
 car_type_t car_types[CAR_TYPE_COUNT] = {
 	{ "porche.d3d", "porche.pcx", "k_porche.pcx", -1, -1, 9.0f, 0, 900.0f },
@@ -66,6 +67,7 @@ int engine_rpm;
 
 static int key_left, key_right, key_gas, key_brake;
 static int control_type;          /* 1 keyboard, 2 joypad, 3 steering wheel */
+static int joystick_attached;     /* the port's: joystick 1 is there */
 static int steering_position = 14; /* 0..28, 14 straight */
 static float steering_return_rate = 1.0f;
 static int steer_index = 14;      /* DAT_00457750: the position the car steers with */
@@ -102,6 +104,13 @@ void init_controls(void)
 	key_gas = infio.key_gas;
 	key_brake = infio.key_brake;
 	control_type = infio.control_type == 1 ? 2 : infio.control_type == 2 ? 3 : 1;
+	/* calibrate_joysticks ran at the race's start in the original. */
+	calibrate_joysticks();
+	joystick_attached = get_attached_joysticks() & 1;
+	set_joystick_keys(1, 0, key_left);
+	set_joystick_keys(1, 1, key_right);
+	set_joystick_keys(1, 2, key_gas);
+	set_joystick_keys(1, 3, key_brake);
 	rpm_step_count = 0;
 	add_rpm_steps(0, -2.5f, 0.0f, 50.0f, 0.0f, 7.0f); /* reverse */
 	idle_rpm_step = rpm_step = rpm_step_count;
@@ -242,14 +251,43 @@ void handle_player_controls(void)
 	}
 	if (!controls_enabled)
 		return;
-	/* TODO: joypad and steering wheel (control types 2 and 3). */
+	/* 1 keyboard, 2 joypad (its stick and buttons as the keys), 3 steering wheel (the
+	 * stick's x steers directly). The port falls back to the keyboard when the joystick
+	 * is missing. */
+	int device = 1, joystick_buttons = 0;
+	if (control_type == 2) {
+		device = joystick_attached ? 2 : 1;
+		handle_joystick();
+	}
+	else if (control_type == 3 && joystick_attached) {
+		int y;
+		device = 0;
+		get_joystick_position(1, 0x1c, 0x1c, &steering_position, &y, &joystick_buttons);
+		if (0x1c < steering_position)
+			steering_position = 0x1b;
+		if (steering_position < 0)
+			steering_position = 0;
+	}
+	int wheel = control_type == 3 && joystick_attached;
 	int steer = autopilot_steer();
-	if (keyispressed(key_left) || steer < 0)
-		update_steering(1);
-	else if (keyispressed(key_right) || steer > 0)
-		update_steering(2);
-	else
+	if (keyispressed_1(key_left, device) || (joystick_buttons & 4) || steer < 0) {
+		if (wheel)
+			steer_index = steering_position;
+		else
+			update_steering(1);
+	}
+	else if (keyispressed_1(key_right, device) || (joystick_buttons & 8) || steer > 0) {
+		if (wheel)
+			steer_index = steering_position;
+		else
+			update_steering(2);
+	}
+	else if (wheel) {
+		steer_index = steering_position;
+	}
+	else {
 		update_steering(3);
+	}
 
 	opponent_t *op = &opponent_data[objects3d[player_index].opponent];
 	op->speed = player_speed;
@@ -261,11 +299,11 @@ void handle_player_controls(void)
 	}
 
 	int input;
-	if (keyispressed(key_gas) || (autopilot && player_speed < 9.0f)) {
+	if (keyispressed_1(key_gas, device) || (joystick_buttons & 1) || (autopilot && player_speed < 9.0f)) {
 		input = 1;
 		accelerator_input = 1;
 	}
-	else if (keyispressed(key_brake)) {
+	else if (keyispressed_1(key_brake, device) || (joystick_buttons & 2)) {
 		if (rpm_step == idle_rpm_step)
 			accelerator_input = 2;
 		input = accelerator_input == 1 ? 2 : accelerator_input == 2 ? 1 : 0;

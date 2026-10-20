@@ -23,6 +23,7 @@ add_executable(a2racer
 	src/gfx/wipes.c
 	src/xvga/fileio.c
 	src/xvga/inifile.c
+	src/xvga/joystick.c
 	src/xvga/font.c
 	src/xvga/sound.c
 	src/menu/menu_data.c
