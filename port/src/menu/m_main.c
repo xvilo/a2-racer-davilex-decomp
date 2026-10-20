@@ -7,13 +7,15 @@
 #include "gfx/screen.h"
 #include "gfx/wipes.h"
 #include "menu/forms.h"
+#include "menu/help.h"
 #include "menu/menu_data.h"
+#include "menu/menu_util.h"
 #include "menu/mysound.h"
 #include "menu/optie.h"
+#include "menu/requesters.h"
 #include "menu/slot.h"
 #include "menu/txttool.h"
 #include "platform/sys.h"
-#include "res/pcx.h"
 #include "xvga/font.h"
 
 /* Controls of mm_form, by index. */
@@ -31,25 +33,7 @@ enum {
 static int mm_tune_buffer = -1;
 static game_t *game;
 
-/* load_pcx_file_1 flags: 1 the picture, 2 read the palette, 4 apply it. */
-enum { PCX_IMAGE = 1, PCX_PALETTE = 2, PCX_SET_PALETTE = 4 };
-
-static int load_pcx_file_1(int which, const char *name, int flags)
-{
-	size_t size;
-	const uint8_t *data = named_archive_find(&game->menu_files, name, &size);
-	pcx_image img;
-	if (!data || pcx_decode(data, size, &img)) {
-		fprintf(stderr, "load_pcx_file: cannot load %s\n", name);
-		return 1000;
-	}
-	if (flags & PCX_IMAGE)
-		screen_blit(which, img.pixels, img.width, img.height, 0, 0, -1);
-	if ((flags & (PCX_PALETTE | PCX_SET_PALETTE)) == (PCX_PALETTE | PCX_SET_PALETTE))
-		memcpy(screen.palette, img.palette, sizeof screen.palette);
-	pcx_free(&img);
-	return 0;
-}
+static void mm_close_screen(int clear);
 
 /* Waits for the input that started an action to finish (wait_*_pressed). */
 static void wait_keys_released(void)
@@ -142,7 +126,7 @@ static void mm_animate_map(int stage)
 /* first: coming from the start (with the palette) rather than back from a submenu. */
 static void mm_open_screen_1(int first)
 {
-	load_pcx_file_1(2, "hoofd.pcx", first ? 0x1f : 0x19);
+	load_pcx_file_1(game, 2, "hoofd.pcx", first ? 0x1f : 0x19);
 	handle_wipe(2, WIPE_PIXELFADE, 600);
 	blt_scr_2_scr(2, 0, 0, 0, SCREEN_W, SCREEN_H, 0); /* do_screen_update */
 	mm_display_info();
@@ -150,6 +134,21 @@ static void mm_open_screen_1(int first)
 	mm_animate_map(slot_list[slot_check_index(active_slot)].stage);
 	activate_form(mm_form);
 	xvga_show();
+}
+
+/* "Opnieuw": the series starts over. After a stage or more, the result first goes into
+ * the high scores (TODO: add_new_hiscore and menu_score, score.cpp and m_score.cpp). */
+static void mm_handle_opnieuw_spel(void)
+{
+	if (slot_list[slot_check_index(active_slot)].stage - 1 < 0) {
+		reset_slot(active_slot);
+		mm_display_info();
+	}
+	else {
+		mm_close_screen(0);
+		reset_slot(active_slot);
+		mm_open_screen_1(0);
+	}
 }
 
 void mm_open_screen(game_t *g)
@@ -187,9 +186,11 @@ int menu_main(game_t *g)
 			break;
 		case MM_HELP:
 			snd_play(&click, "click1.wav");
+			wait_form_key_released();
 			snd_wait(&click);
-			/* TODO: play_help(mm_help) with the music turned down. */
-			fprintf(stderr, "menu_main: help is not ported yet\n");
+			snd_set_volume(&mm_tune_buffer, -8000);
+			play_help(mm_help, 1);
+			snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume));
 			break;
 		case MM_EXIT:
 			snd_play(&click, "click1.wav");
@@ -197,15 +198,45 @@ int menu_main(game_t *g)
 			break;
 		case MM_START:
 			snd_play(&click, "click1.wav");
+			wait_form_key_released();
 			snd_wait(&click);
 			result = MENU_START_RACE;
 			running = 0;
 			break;
+		case MM_RESTART:
+			snd_play(&click, "click1.wav");
+			wait_form_key_released();
+			snd_wait(&click);
+			snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume / 2));
+			snd_play(&click, "MM_07.wav");
+			if (req_vraag("De huidige race wordt afgelast. Alle coureurs worden geacht opnieuw "
+					"te beginnen.\nWeet je zeker dat je opnieuw wil beginnen?")) {
+				snd_stop(&click);
+				mm_handle_opnieuw_spel();
+			}
+			snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume));
+			snd_stop(&click);
+			activate_form(mm_form);
+			break;
+		case MM_NEW_PLAYER:
+			snd_play(&click, "click1.wav");
+			wait_form_key_released();
+			snd_wait(&click);
+			snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume / 2));
+			snd_play(&click, "MM_06.wav");
+			if (req_vraag("Weet je zeker dat je de huidige race wil onderbreken?")) {
+				snd_stop(&click);
+				snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume));
+				/* TODO: menu_nieuwesplr (m_nsplr.cpp). */
+				fprintf(stderr, "menu_main: the new player screen is not ported yet\n");
+			}
+			snd_stop(&click);
+			snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume));
+			activate_form(mm_form);
+			break;
 		case MM_CONTROLS:
 		case MM_OPTIONS:
 		case MM_HISCORE:
-		case MM_RESTART:
-		case MM_NEW_PLAYER:
 			snd_play(&click, "click1.wav");
 			fprintf(stderr, "menu_main: control %d is not ported yet\n", r);
 			break;

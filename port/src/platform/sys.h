@@ -20,14 +20,18 @@ enum {
 typedef struct {
 	int mouse_x, mouse_y;  /* in 640x480 screen coordinates */
 	bool mouse_down;       /* left button held */
+	bool mouse_pressed;    /* left button went down since the last poll */
 	bool mouse_clicked;    /* left button released since the last poll */
 	int key;               /* last key pressed since the last poll, KEY_* or ASCII */
+	char text[32];         /* characters typed since the last poll (Windows-1252) */
+	int backspaces;        /* backspace presses since the last poll */
 	bool quit;             /* window closed */
 } sys_input;
 
 typedef struct {
 	int scale;              /* initial window size = 640x480 * scale */
 	bool hidden;            /* no window (screenshots, tests) */
+	const char *script;     /* scripted input, see sys_sdl.c (tests) */
 } sys_options;
 
 bool sys_init(const char *title, const sys_options *opt);
@@ -37,6 +41,13 @@ void sys_present(const uint8_t *pixels, const uint8_t palette[768]);
 /* Gathers input since the last call. */
 void sys_poll(sys_input *in);
 uint32_t sys_ticks(void);
+/* Whether a key (Windows virtual-key code, as the game stores them) is held now. */
+bool keyispressed(int vk);
+/* Typed characters arrive in sys_input.text while text input is on. */
+void sys_text_input(bool on);
 void sys_sleep(uint32_t ms);
+/* The screen the script's "shot" command saves; set by the game. */
+typedef void (*sys_screenshot_fn)(const char *path);
+void sys_set_screenshot(sys_screenshot_fn fn);
 
 #endif

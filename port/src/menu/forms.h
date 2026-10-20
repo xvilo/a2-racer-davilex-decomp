@@ -19,6 +19,7 @@ enum {
 	FORM_DOWN = 10002,
 	FORM_LEFT = 10003,
 	FORM_RIGHT = 10004,
+	FORM_ENTER = 10005,   /* Enter while no button has the focus (e.g. in an edit box) */
 };
 
 /* Control states (set_control_state). */
@@ -42,5 +43,12 @@ void focus_control(int index);
 int get_control_image_index(int anim, int frame);
 /* Draws the active form into the given screen. */
 void draw_form(int which);
+int get_control_type(int index);
+int get_numberofcontrols_inform(void);
+/* Draws a control so that it stands out while help talks about it. */
+void call_help_function(int index);
+void get_edit_box_text(int index, char *buf, int size);
+void set_edit_keys_allowed(const char *keys);
+void wait_form_key_released(void);
 
 #endif

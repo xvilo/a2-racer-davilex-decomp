@@ -26,14 +26,6 @@ dd_info_t	04	char	field_04
 dd_info_t	05	char	field_05	
 dd_info_t	6	-	__size	
 drive_info_t	4	-	__size	
-edit_box_t	00	HGDIOBJ	field_00	
-edit_box_t	14	ulong	field_14	
-edit_box_t	18	ulong	field_18	
-edit_box_t	1c	HGDIOBJ	field_1c	
-edit_box_t	20	ulong	field_20	
-edit_box_t	24	ulong	field_24	
-edit_box_t	28	HGDIOBJ	field_28	
-edit_box_t	2c	-	__size	
 fedit_box_t	14	ulong	field_14	
 fedit_box_t	18	ulong	field_18	
 fedit_box_t	1c	HGDIOBJ	field_1c	
@@ -63,10 +55,6 @@ mc_keyset_t	1e8	-	__size
 mdc_stand_t	00	int*	field_00	
 mdc_stand_t	8	-	__size	
 mem_image_t	1c	-	__size	
-mns_slot_t	00	int	field_00	
-mns_slot_t	4	-	__size	
-mst_slot_t	00	int	field_00	
-mst_slot_t	4	-	__size	
 pf_24_t	00	undefined2	field_00	
 pf_24_t	3	-	__size	
 racer_object_t	20	void*	field_20	

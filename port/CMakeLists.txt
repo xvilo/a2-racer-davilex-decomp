@@ -23,7 +23,11 @@ add_executable(a2racer
 	src/xvga/sound.c
 	src/menu/menu_data.c
 	src/menu/forms.c
+	src/menu/help.c
 	src/menu/m_main.c
+	src/menu/m_start.c
+	src/menu/menu_util.c
+	src/menu/requesters.c
 	src/menu/mysound.c
 	src/menu/optie.c
 	src/menu/slot.c

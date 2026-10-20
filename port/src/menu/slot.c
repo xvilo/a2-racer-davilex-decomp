@@ -155,6 +155,13 @@ const char *slot_naam_string(int index)
 	return s->used ? s->name : "L E E G"; /* "empty" */
 }
 
+const char *slot_level_string(int index)
+{
+	extern const char *level_naam[10];
+	slot_t *s = &slot_list[slot_check_index(index)];
+	return s->used ? level_naam[s->stage] : "";
+}
+
 int slot_count_total_tijd(int index, int stages)
 {
 	slot_t *s = &slot_list[slot_check_index(index)];

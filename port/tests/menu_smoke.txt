@@ -1,0 +1,21 @@
+# Smoke test for the menus with an empty save directory:
+#   a2racer --data <disc> --save <empty dir> --script tests/menu_smoke.txt
+# Screenshots land in the current directory.
+wait 2500
+shot smoke_01_name_prompt.png
+text Tester
+wait 300
+shot smoke_02_name_typed.png
+key enter
+wait 2500
+shot smoke_03_main_menu.png
+key down
+wait 400
+shot smoke_04_focus_moved.png
+click 560 45
+wait 1500
+shot smoke_05_help.png
+key escape
+wait 800
+key escape
+wait 1500

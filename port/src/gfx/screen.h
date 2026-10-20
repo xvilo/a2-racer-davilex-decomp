@@ -43,6 +43,9 @@ void set_mem_image(int which, int image, int x, int y, int flags);
 void blt_scr_2_scr(int src, int dst, int x1, int y1, int x2, int y2, int flags);
 void clear_screen(int which, uint8_t color);
 void set_clip_limit(int x1, int y1, int x2, int y2);
+/* Palette index closest to a COLORREF (0x00BBGGRR), as GDI picks it. */
+uint8_t nearest_color(uint32_t colorref);
+void fill_rect_colorref(int which, int x, int y, int w, int h, uint32_t colorref);
 /* Shows the front screen (the original drew straight into the visible surface). */
 void xvga_show(void);
 

@@ -21,6 +21,7 @@ void xvga_set_font_colors(int index, uint32_t background, uint32_t text);
 /* 1 transparent, 2 opaque (GDI's TRANSPARENT/OPAQUE). */
 void xvga_set_font_bkmode(int index, int mode);
 void xvga_free_font(int index);
+int xvga_get_active_font(void);
 
 int get_string_width(const char *text, int length);
 int get_string_height(const char *text, int length);

@@ -16,7 +16,10 @@ typedef struct {
 
 /* Control kinds in form_t.type. */
 enum {
+	CONTROL_EDITBOX = 0,
 	CONTROL_BUTTON = 1,
+	CONTROL_EDITBOX_READONLY = 3,
+	CONTROL_AREABUTTON = 4,
 };
 
 /* One control on a form; a table ends with a row whose x is -1. */
@@ -29,13 +32,38 @@ typedef struct {
 } form_t;
 
 typedef struct {
-	int image;  /* anim index; frame 0 normal, 1 focused, 3 pressed */
+	int image;  /* anim index; frame 0 normal, 1 pressed, 2 disabled, 3 focused */
 	int width;  /* -1: from the image */
 	int height; /* -1: from the image */
 	char hotkey;
 	int focus_anim; /* anim played while focused, -1 for none */
 	int focus_frame;
 } button_t;
+
+/* A clickable area, e.g. a save slot row (areabutton_t). */
+typedef struct {
+	int width;  /* -1: from the image */
+	int height; /* -1: from the image */
+	int image;  /* anim drawn when the form opens, -1 for none */
+	int field_0c;
+	char hotkey;
+} areabutton_t;
+
+/* A text entry field (edit_box_t). Colours are COLORREFs; create_edit_box sets them. */
+typedef struct {
+	int width, height;
+	int max_chars;
+	int lines;           /* 1: single line */
+	const char *text;    /* initial text */
+	unsigned background, foreground;
+	unsigned focus_background, focus_foreground;
+} edit_box_t;
+
+/* Screen position of a save slot row. */
+typedef struct {
+	int x, y;
+} mst_slot_t;
+typedef mst_slot_t mns_slot_t;
 
 /* Help text for a control; a table ends with control_id -1. */
 typedef struct {

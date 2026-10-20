@@ -12,8 +12,9 @@ The game's own data is not included. Point the port at the original CD, or at a 
 | Main menu screen and buttons (focus, mouse, keys, hotkeys) | done |
 | Main menu: pixel-fade wipe, button entry animation, player info box, stage map, menu music, click sounds | done |
 | Options, controls and save slots in the original file formats (`OPTIE.A2R`, `BEDIEN.A2R`, `SLOT.A2R`) | done |
-| Help voices, other wipe types | to do |
-| Other menus (controls, options, scores, new player, save slots) | to do |
+| Start screen: player slots, new player name entry, delete player, logo intro (`--first`) | done |
+| Spoken help with the dimmed screen; yes/no and text requesters | done |
+| Other menus (controls, options, scores, new player), other wipe types | to do |
 | Movies (Smacker) | to do |
 | Race (A2SPEL: Direct3D execute buffers → OpenGL) | to do |
 
@@ -37,6 +38,8 @@ port/build/a2racer --data /path/to/A2Racer-CD
 | `--fonts <dir>` | A folder with `ariblk.ttf` (Arial Black, the menus' font), if it isn't in the system font folders |
 | `--scale N` | Opens the window at N × 640×480. The window can also be resized freely and keeps 4:3 |
 | `--screenshot file.png` | Draws the main menu, saves it and exits, with no window |
+| `--first` | Starts as the original did right after installing (the logo intro when there are no players) |
+| `--script file` | Scripted input for testing: keys, text, clicks and screenshots on a timeline (see `src/platform/sys_sdl.c` and `tests/menu_smoke.txt`) |
 
 ## Layout
 
@@ -53,4 +56,6 @@ port/build/a2racer --data /path/to/A2Racer-CD
 
 - **Fonts:** text is drawn like the original's GDI output: Arial Black at the same cell heights, unsmoothed, in the nearest palette colour. The port looks for `ariblk.ttf` in the Windows fonts folder, `/usr/share/fonts/truetype/msttcorefonts` (Debian's `ttf-mscorefonts-installer`) and the macOS font folders.
 - **Sprites:** "mem image" numbers start at 1 (image *n* is sprite *n−1* in `A2MRC`), and palette index 255 is transparent.
+- **Focus:** as in the original, controls only take the focus on a click, Tab or the menu's own arrow-key handling; hovering does nothing.
+- **Name entry:** the default name ("Speler") starts selected, so typing replaces it.
 - **Timing:** the original drew wipes as fast as the machine allowed; the port shows each wipe step for 25 ms.

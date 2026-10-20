@@ -184,3 +184,26 @@ slot_t	10c	short[6]	racer_2
 slot_t	118	short[6]	racer_3	
 slot_t	124	short[6]	racer_4	
 slot_t	130	short[6]	racer_5	
+# areabutton_t: packed 17-byte clickable area (areabuts.cpp), pointed to by form_t.control.
+areabutton_t	00	int	width	-1: from the image
+areabutton_t	04	int	height	-1: from the image
+areabutton_t	08	int	image	anim drawn at creation, -1 for none
+areabutton_t	0c	int	field_0c	
+areabutton_t	10	char	hotkey	
+# mst_slot_t / mns_slot_t: screen position of a save slot row (m_start.cpp, m_nsplr.cpp).
+mst_slot_t	00	int	x	
+mst_slot_t	04	int	y	
+mns_slot_t	00	int	x	
+mns_slot_t	04	int	y	
+# edit_box_t: a text entry field (editbox.cpp), pointed to by form_t.control (types 0 and 3).
+edit_box_t	00	int	width	
+edit_box_t	04	int	height	
+edit_box_t	08	int	max_chars	
+edit_box_t	0c	int	lines	1: single line
+edit_box_t	10	char*	text	initial text
+edit_box_t	14	uint	background	COLORREF
+edit_box_t	18	uint	foreground	COLORREF
+edit_box_t	1c	void*	brush	
+edit_box_t	20	uint	focus_background	COLORREF
+edit_box_t	24	uint	focus_foreground	COLORREF
+edit_box_t	28	void*	focus_brush	

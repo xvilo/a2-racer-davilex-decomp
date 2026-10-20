@@ -11,7 +11,9 @@
 #include "gfx/png.h"
 #include "gfx/screen.h"
 #include "menu/forms.h"
+#include "menu/help.h"
 #include "menu/m_main.h"
+#include "menu/m_start.h"
 #include "menu/menu_data.h"
 #include "menu/mysound.h"
 #include "menu/optie.h"
@@ -21,6 +23,11 @@
 #include "xvga/font.h"
 #include "xvga/sound.h"
 
+static void save_front_screen(const char *path)
+{
+	png_write_indexed(path, screen.pixels[SCREEN_FRONT], SCREEN_W, SCREEN_H, screen.palette);
+}
+
 static void usage(void)
 {
 	fprintf(stderr,
@@ -29,7 +36,9 @@ static void usage(void)
 		"  --save <dir>         where options and save slots go (default: user data folder)\n"
 		"  --fonts <dir>        folder with ariblk.ttf (Arial Black) if not found otherwise\n"
 		"  --scale <n>          window size as a multiple of 640x480\n"
-		"  --screenshot <file>  open the main menu, save it as PNG and exit\n");
+		"  --first              start as after installing (the logo intro when no players)\n"
+		"  --screenshot <file>  open the main menu, save it as PNG and exit\n"
+		"  --script <file>      scripted input for testing (see platform/sys_sdl.c)\n");
 }
 
 /* win_open_menu's fonts: Arial Black in five sizes, transparent background. */
@@ -46,8 +55,9 @@ static void load_menu_fonts(void)
 int main(int argc, char **argv)
 {
 	game_t g = { 0 };
-	sys_options opt = { 1, false };
+	sys_options opt = { 1, false, NULL };
 	const char *save_dir = NULL, *font_dir = NULL;
+	int first = 0;
 	g.data_dir = getenv("A2_DATA");
 	for (int i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "--data") && i + 1 < argc)
@@ -58,6 +68,10 @@ int main(int argc, char **argv)
 			font_dir = argv[++i];
 		else if (!strcmp(argv[i], "--scale") && i + 1 < argc)
 			opt.scale = atoi(argv[++i]);
+		else if (!strcmp(argv[i], "--first"))
+			first = 1;
+		else if (!strcmp(argv[i], "--script") && i + 1 < argc)
+			opt.script = argv[++i];
 		else if (!strcmp(argv[i], "--screenshot") && i + 1 < argc)
 			g.screenshot = argv[++i];
 		else {
@@ -77,6 +91,7 @@ int main(int argc, char **argv)
 	opt.hidden = g.screenshot != NULL;
 	if (!sys_init("A2 Racer", &opt))
 		return 1;
+	sys_set_screenshot(save_front_screen);
 	fileio_init(save_dir);
 	forms_init(&g.menu_sprites, anims);
 	font_init(font_dir);
@@ -91,6 +106,9 @@ int main(int argc, char **argv)
 	if (slot_list[last].used)
 		set_active_slot(last);
 	load_menu_fonts();
+	set_help_key(0x0d);
+	set_help_key(0x20);
+	set_help_key(0x1b);
 
 	int result = 0;
 	if (g.screenshot) {
@@ -99,7 +117,11 @@ int main(int argc, char **argv)
 			SCREEN_H, screen.palette) ? 1 : 0;
 	}
 	else {
-		int r = menu_main(&g);
+		/* win_handle_menu: the start screen, then the main menu. TODO: handle_game,
+		 * which shows the results when coming back from a race. */
+		int r = MENU_EXIT;
+		if (menu_start(&g, first))
+			r = menu_main(&g);
 		if (r == MENU_START_RACE)
 			printf("start race: the race (A2SPEL) is not ported yet\n");
 		/* win_close_menu */

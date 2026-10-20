@@ -135,29 +135,17 @@ void xvga_set_font_bkmode(int index, int mode)
 		fonts[index].bkmode = mode;
 }
 
+int xvga_get_active_font(void)
+{
+	return active_font;
+}
+
 void xvga_free_font(int index)
 {
 	if (index >= 0 && index < MAX_FONTS && fonts[index].font) {
 		TTF_CloseFont(fonts[index].font);
 		fonts[index].font = NULL;
 	}
-}
-
-/* The palette entry closest to a COLORREF, as GDI picks for a palette device. */
-static uint8_t nearest_color(uint32_t colorref)
-{
-	int r = colorref & 0xFF, g = colorref >> 8 & 0xFF, b = colorref >> 16 & 0xFF;
-	int best = 0, best_d = 1 << 30;
-	for (int i = 0; i < 256; i++) {
-		int dr = screen.palette[i * 3] - r, dg = screen.palette[i * 3 + 1] - g,
-			db = screen.palette[i * 3 + 2] - b;
-		int d = dr * dr + dg * dg + db * db;
-		if (d < best_d) {
-			best_d = d;
-			best = i;
-		}
-	}
-	return (uint8_t)best;
 }
 
 int get_string_width(const char *text, int length)

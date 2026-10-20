@@ -19,6 +19,7 @@ void set_active_slot(int index);
 void update_active_slot_optie(void);
 void update_active_slot_bediening(void);
 const char *slot_naam_string(int index);
+const char *slot_level_string(int index);
 const char *slot_tijd_string(int index);
 int slot_count_total_tijd(int index, int stages);
 /* racer 0..4 for the rivals, 5 for the player. */

@@ -20,6 +20,12 @@ LAYOUTS = {
     'form_t': (28, '<iiiIiiI', ('x', 'y', 'type', 'control', 'state', 'field_14', 'hwnd')),
     'button_t': (21, '<iiibii', ('image', 'width', 'height', 'hotkey', 'focus_anim', 'focus_frame')),
     'help_t': (8, '<iI', ('control_id', 'text')),
+    'areabutton_t': (17, '<iiiib', ('width', 'height', 'image', 'field_0c', 'hotkey')),
+    'mst_slot_t': (8, '<ii', ('x', 'y')),
+    'edit_box_t': (44, '<iiiiIIIIIII', ('width', 'height', 'max_chars', 'lines', 'text',
+                                       'background', 'foreground', 'brush', 'focus_background',
+                                       'focus_foreground', 'focus_brush')),
+    'mns_slot_t': (8, '<ii', ('x', 'y')),
 }
 
 
@@ -118,6 +124,8 @@ def main(binary, symbols, out):
                     parts.append(r if r else f'NULL /* {v:#x} */')
                 elif f == 'text':
                     parts.append(c_string(read, v) if v else 'NULL')
+                elif f in ('brush', 'focus_brush'):
+                    continue
                 elif f == 'hwnd':
                     continue
                 elif f == 'hotkey':

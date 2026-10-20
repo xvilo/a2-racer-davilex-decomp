@@ -144,3 +144,28 @@ void xvga_show(void)
 {
 	sys_present(screen.pixels[SCREEN_FRONT], screen.palette);
 }
+
+uint8_t nearest_color(uint32_t colorref)
+{
+	int r = colorref & 0xFF, g = colorref >> 8 & 0xFF, b = colorref >> 16 & 0xFF;
+	int best = 0, best_d = 1 << 30;
+	for (int i = 0; i < 256; i++) {
+		int dr = screen.palette[i * 3] - r, dg = screen.palette[i * 3 + 1] - g,
+			db = screen.palette[i * 3 + 2] - b;
+		int d = dr * dr + dg * dg + db * db;
+		if (d < best_d) {
+			best_d = d;
+			best = i;
+		}
+	}
+	return (uint8_t)best;
+}
+
+void fill_rect_colorref(int which, int x, int y, int w, int h, uint32_t colorref)
+{
+	uint8_t c = nearest_color(colorref);
+	for (int row = y < 0 ? 0 : y; row < y + h && row < SCREEN_H; row++) {
+		for (int col = x < 0 ? 0 : x; col < x + w && col < SCREEN_W; col++)
+			screen.pixels[which][row * SCREEN_W + col] = c;
+	}
+}
