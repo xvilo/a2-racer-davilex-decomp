@@ -51,7 +51,7 @@ For each module the script runs `rea analyze` (Ghidra provider, with a snapshot 
 
 ## Port
 
-`port/` is a clean C rewrite on SDL2 for Windows, Linux and macOS, built from the decompiled reference. The main menu already runs; see [port/README.md](port/README.md).
+`port/` is a clean C rewrite on SDL2 and OpenGL for Windows, Linux and macOS, built from the decompiled reference. The menus, movies and the race all run; see [port/README.md](port/README.md).
 
 ## Game data
 

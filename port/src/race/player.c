@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 #include "menu/infio.h"
@@ -214,13 +215,19 @@ static void update_accelerator(int input)
 
 /* A port-only test aid (A2_AUTOPILOT=1): keeps the car in the lane it starts in,
  * below police-alerting speed, so scripts can drive a whole stage. */
+#define RACE_AUTOPILOT_PATIENCE 30
 static int autopilot = -1;
 static float autopilot_lane;
+static float autopilot_speed;
 
 static int autopilot_steer(void)
 {
-	if (autopilot < 0)
-		autopilot = getenv("A2_AUTOPILOT") != NULL;
+	if (autopilot < 0) {
+		const char *mode = getenv("A2_AUTOPILOT");
+		autopilot = mode != NULL;
+		/* "fast": full throttle, police or not. */
+		autopilot_speed = mode && !strcmp(mode, "fast") ? 16.0f : 9.0f;
+	}
 	if (!autopilot)
 		return 0;
 	const weg_chunk_t *ch = &weg_chunks[player_chunk];
@@ -228,6 +235,23 @@ static int autopilot_steer(void)
 	float lateral = (player_x - c->x) * ch->side[0] + (player_z - c->z) * ch->side[2];
 	if (autopilot_lane == 0.0f)
 		autopilot_lane = lateral;
+	/* The autopilot can't steer for the fuel pickups: it keeps the tank full. */
+	fuel = 300;
+	/* Stuck behind slower traffic for a second: the next lane on the same side. */
+	static int blocked;
+	if (race_running && player_speed < 6.0f)
+		blocked++;
+	else
+		blocked = 0;
+	if (blocked > RACE_AUTOPILOT_PATIENCE) {
+		static const float lanes[3] = { 30.0f, 60.0f, 85.0f };
+		float side = autopilot_lane < 0.0f ? -1.0f : 1.0f;
+		int i = 0;
+		while (i < 3 && lanes[i] < fabsf(autopilot_lane) - 1.0f)
+			i++;
+		autopilot_lane = side * lanes[(i + 1) % 3];
+		blocked = 0;
+	}
 	/* Aim 160 ahead on the road at the lane's offset. */
 	int ahead = player_chunk + (track_info[track_index].direction == 1 ? 2 : -2);
 	if (ahead < 0)
@@ -299,7 +323,7 @@ void handle_player_controls(void)
 	}
 
 	int input;
-	if (keyispressed_1(key_gas, device) || (joystick_buttons & 1) || (autopilot && player_speed < 9.0f)) {
+	if (keyispressed_1(key_gas, device) || (joystick_buttons & 1) || (autopilot && player_speed < autopilot_speed)) {
 		input = 1;
 		accelerator_input = 1;
 	}

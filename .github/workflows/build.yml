@@ -20,17 +20,22 @@ jobs:
       - name: Report compiler errors
         if: failure()
         run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
+      - name: Package
+        run: |
+          mkdir -p dist/a2racer
+          cp port/build/a2racer port/README.md dist/a2racer/
+          tar -C dist -czf a2racer-linux-x86_64.tar.gz a2racer
       - uses: actions/upload-artifact@v4
         with:
           name: a2racer-linux-x86_64
-          path: port/build/a2racer
+          path: a2racer-linux-x86_64.tar.gz
 
   macos:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
       - name: Dependencies
-        run: brew install sdl2 sdl2_ttf
+        run: brew install sdl2 sdl2_ttf dylibbundler
       - name: Build
         run: |
           cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release
@@ -39,10 +44,17 @@ jobs:
       - name: Report compiler errors
         if: failure()
         run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
+      - name: Package with its libraries
+        run: |
+          mkdir -p dist/a2racer
+          cp port/build/a2racer port/README.md dist/a2racer/
+          dylibbundler -od -b -x dist/a2racer/a2racer -d dist/a2racer/libs -p @executable_path/libs/
+          codesign --force --sign - dist/a2racer/libs/*.dylib dist/a2racer/a2racer
+          (cd dist && zip -r ../a2racer-macos-arm64.zip a2racer)
       - uses: actions/upload-artifact@v4
         with:
           name: a2racer-macos-arm64
-          path: port/build/a2racer
+          path: a2racer-macos-arm64.zip
 
   windows-mingw:
     runs-on: windows-2022
@@ -55,6 +67,7 @@ jobs:
         with:
           msystem: UCRT64
           install: >-
+            zip
             mingw-w64-ucrt-x86_64-gcc
             mingw-w64-ucrt-x86_64-cmake
             mingw-w64-ucrt-x86_64-ninja
@@ -70,13 +83,14 @@ jobs:
         run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
       - name: Package with its DLLs
         run: |
-          mkdir dist
-          cp port/build/a2racer.exe dist/
-          ldd port/build/a2racer.exe | awk '/ucrt64/ { print $3 }' | xargs -r cp -t dist/
+          mkdir -p dist/a2racer
+          cp port/build/a2racer.exe port/README.md dist/a2racer/
+          ldd port/build/a2racer.exe | awk '/ucrt64/ { print $3 }' | xargs -r cp -t dist/a2racer/
+          (cd dist && zip -r ../a2racer-windows-x86_64.zip a2racer)
       - uses: actions/upload-artifact@v4
         with:
           name: a2racer-windows-x86_64
-          path: dist/
+          path: a2racer-windows-x86_64.zip
 
   windows-msvc:
     runs-on: windows-2022
@@ -95,3 +109,26 @@ jobs:
         if: failure()
         shell: bash
         run: grep -E "error|warning|undefined reference|multiple definition" build.log | head -50 | sed 's/^/::error::/' || true
+
+  # Every push to main replaces the "latest" pre-release with these builds, so they can
+  # be downloaded without a GitHub account.
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [linux, macos, windows-mingw, windows-msvc]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish the latest build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest dist/* --target "$GITHUB_SHA" --prerelease \
+            --title "Latest build" \
+            --notes "Automatic build of the port from ${GITHUB_SHA::7}. The game's data is not included: run it with --data pointing at the original A2 Racer CD (or a copy of its files). See README.md in each archive."
