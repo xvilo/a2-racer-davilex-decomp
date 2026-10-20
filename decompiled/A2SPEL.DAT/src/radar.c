@@ -342,9 +342,9 @@ void __watcall draw_radar_contents_1(void)
           fVar4 = fVar4 / (float10)12.0;
           chp = CHP();
           iVar1 = local_24;
-          opponent_index = cos_table;
+          opponent_index = sin_table;
           fVar5 = ((float10)*(float *)(chp + 0xc) - (float10)player_z) / (float10)12.0;
-          pfVar3 = (float *)(sin_table + local_24);
+          pfVar3 = (float *)(cos_table + local_24);
           CHP();
           fVar6 = (float10)radar_center_x +
                   (fVar4 * (float10)*pfVar3 - fVar5 * (float10)*(float *)(opponent_index + iVar1));
@@ -472,7 +472,7 @@ void __watcall draw_radar_contents_2(void)
           CHP();
           iVar1 = local_24;
           fVar5 = ((float10)opponent[opponent_index].z - (float10)player_z) / (float10)12.0;
-          pfVar3 = (float *)(sin_table + local_24);
+          pfVar3 = (float *)(cos_table + local_24);
           opponent_index = CHP();
           fVar6 = (float10)radar_center_x +
                   (fVar4 * (float10)*pfVar3 - fVar5 * (float10)*(float *)(opponent_index + iVar1));

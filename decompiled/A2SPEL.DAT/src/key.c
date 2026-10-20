@@ -74,9 +74,9 @@ void __watcall rotate_matrix_x(float *a_val,float *b_val,uint param_3)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[10] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
+  b_val[10] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   b_val[5] = b_val[10];
-  b_val[6] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
+  b_val[6] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   b_val[9] = -b_val[6];
   matrix_multiply(a_val,b_val);
   return;
@@ -104,9 +104,9 @@ void __watcall rotate_matrix_y(float *a_val,float *b_val,uint param_3)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[10] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
+  b_val[10] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   *b_val = b_val[10];
-  b_val[8] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
+  b_val[8] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   b_val[2] = -b_val[8];
   matrix_multiply(a_val,b_val);
   return;
@@ -134,9 +134,9 @@ void __watcall rotate_matrix_z(float *a_val,float *b_val,uint param_3)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[5] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
+  b_val[5] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   *b_val = b_val[5];
-  b_val[1] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
+  b_val[1] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   b_val[4] = -b_val[1];
   matrix_multiply(a_val,b_val);
   return;

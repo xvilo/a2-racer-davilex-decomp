@@ -40,9 +40,9 @@ undefined4 __watcall collide_racer_with_road_edge(int opponent_index)
          vertices3d[weg_sections[weg_section_idx].point].z;
     iVar5 = iVar4;
   } while (iVar4 != 0x30);
-  fVar1 = *(float *)(sin_table + (local_30 & 0x3ff) * 4);
+  fVar1 = *(float *)(cos_table + (local_30 & 0x3ff) * 4);
   local_28 = fVar1;
-  fVar2 = *(float *)(cos_table + (local_30 & 0x3ff) * 4);
+  fVar2 = *(float *)(sin_table + (local_30 & 0x3ff) * 4);
   local_24 = fVar2;
   local_2c = fVar1 * opponent_data[opponent_index].offset_z +
              -fVar2 * opponent_data[opponent_index].offset_x;
@@ -133,9 +133,9 @@ void __watcall collide_player_with_track_ends(void)
            vertices3d[weg_sections[weg_section_idx].point].z;
       iVar5 = iVar4;
     } while (iVar4 != 0x30);
-    fVar1 = *(float *)(sin_table + (local_28 & 0x3ff) * 4);
+    fVar1 = *(float *)(cos_table + (local_28 & 0x3ff) * 4);
     local_20 = fVar1;
-    fVar2 = *(float *)(cos_table + (local_28 & 0x3ff) * 4);
+    fVar2 = *(float *)(sin_table + (local_28 & 0x3ff) * 4);
     local_1c = fVar2;
     local_24 = fVar2 * opponent_data->offset_z + fVar1 * opponent_data->offset_x;
     local_18 = local_24;

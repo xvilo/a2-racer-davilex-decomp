@@ -298,8 +298,8 @@ void __watcall update_racer_corners(int opponent_index)
   uint uVar3;
   
   uVar3 = opponent_data[opponent_index].heading & 0x3ff;
-  fVar1 = *(float *)(cos_table + uVar3 * 4);
-  fVar2 = *(float *)(sin_table + uVar3 * 4);
+  fVar1 = *(float *)(sin_table + uVar3 * 4);
+  fVar2 = *(float *)(cos_table + uVar3 * 4);
   *(float *)&opponent_data[opponent_index].field_0x58 =
        (opponent_data[opponent_index].field_88 * fVar2 -
        opponent_data[opponent_index].field_90 * fVar1) + opponent_data[opponent_index].x;

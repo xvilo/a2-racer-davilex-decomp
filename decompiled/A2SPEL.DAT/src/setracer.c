@@ -502,8 +502,8 @@ int __watcall get_racer_lane(int racer)
   vertex3d_index = weg_sections[opponent_data[racer].chunk].point;
   i = 0;
   fVar1 = (opponent_data[racer].z - vertices3d[vertex3d_index].z) *
-          *(float *)(sin_table + uVar2 * 4) +
-          -*(float *)(cos_table + uVar2 * 4) *
+          *(float *)(cos_table + uVar2 * 4) +
+          -*(float *)(sin_table + uVar2 * 4) *
           (opponent_data[racer].x - vertices3d[vertex3d_index].x);
   vertex3d_index = 0;
   while( true ) {

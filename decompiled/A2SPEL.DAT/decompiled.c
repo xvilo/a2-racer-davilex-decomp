@@ -1334,8 +1334,8 @@ void __watcall update_camera_chase(void)
   float local_1c;
   
   roll_val = (player_heading + 0x100U & 0x3ff) * 4;
-  local_3c = *(float *)(roll_val + sin_table);
-  local_38 = *(float *)(roll_val + cos_table);
+  local_3c = *(float *)(roll_val + cos_table);
+  local_38 = *(float *)(roll_val + sin_table);
   local_30 = local_3c * 8.0;
   local_34 = local_38 * 8.0;
   player_chunk = update_chunk_for_position(player_chunk,player_x,player_z);
@@ -1358,7 +1358,7 @@ void __watcall update_camera_chase(void)
   local_c8 = (float)(float10)CONCAT64(extraout_var_01,road_height_at_result) - local_1c;
   z_val_3 = z_val_3 - z_val;
   normalize_vector(&x_val_3);
-  roll_val = sin_table;
+  roll_val = cos_table;
   camera_lag_y = 3.0 - player_speed;
   if (camera_lag_y < 1.0) {
     camera_lag_y = 1.0;
@@ -1370,7 +1370,7 @@ void __watcall update_camera_chase(void)
   chp = CHP();
   camera_heading_int = (int)ROUND(fVar3);
   local_60 = *(float *)(roll_val + chp * 4) * 4.0;
-  local_5c = *(float *)(cos_table + chp * 4) * 4.0;
+  local_5c = *(float *)(sin_table + chp * 4) * 4.0;
   x_val = player_x - local_60;
   z_val = player_z - local_5c;
   road_height_at_result = road_height_at(player_chunk,x_val,z_val);
@@ -1389,7 +1389,7 @@ void __watcall update_camera_chase(void)
   roll_val = CHP();
   camera_pitch_int = (int)ROUND(fVar3);
   local_2c = *(float *)(roll_val + uVar1 * 4);
-  local_28 = *(float *)(cos_table + uVar1 * 4);
+  local_28 = *(float *)(sin_table + uVar1 * 4);
   local_40 = -(local_2c * camera_distance + player_x);
   camera_x = (local_40 - camera_x) * 0.25 + camera_x;
   camera_y = (-(player_y + camera_height) - camera_y) * 0.25 + camera_y;
@@ -1426,11 +1426,11 @@ void __watcall update_camera_chase(void)
     local_8c = (double)local_28;
   }
   update_visible_tiles(x_val_2,z_val_2);
-  chp = sin_table;
-  roll_val = cos_table;
+  chp = cos_table;
+  roll_val = sin_table;
   iVar2 = (player_heading - 0x100U & 0x3ff) * 4;
   fVar4 = -(float10)camera_x;
-  fVar3 = (float10)*(float *)(sin_table + iVar2) * (float10)30.0 * (float10)10.0 + fVar4;
+  fVar3 = (float10)*(float *)(cos_table + iVar2) * (float10)30.0 * (float10)10.0 + fVar4;
   CHP();
   local_50 = (int)ROUND(fVar3);
   fVar5 = -(float10)camera_z;
@@ -1520,8 +1520,8 @@ void __watcall update_camera_overhead(void)
   float local_1c;
   
   roll_val = (player_heading + 0x100U & 0x3ff) * 4;
-  local_3c = *(float *)(roll_val + sin_table);
-  local_38 = *(float *)(roll_val + cos_table);
+  local_3c = *(float *)(roll_val + cos_table);
+  local_38 = *(float *)(roll_val + sin_table);
   local_30 = local_3c * 8.0;
   local_34 = local_38 * 8.0;
   player_chunk = update_chunk_for_position(player_chunk,player_x,player_z);
@@ -1544,7 +1544,7 @@ void __watcall update_camera_overhead(void)
   local_c8 = (float)(float10)CONCAT64(extraout_var_01,road_height_at_result) - local_1c;
   z_val = z_val - z_val_3;
   normalize_vector(&x_val);
-  roll_val = sin_table;
+  roll_val = cos_table;
   camera_lag_y = 3.0 - player_speed;
   if (camera_lag_y < 1.0) {
     camera_lag_y = 1.0;
@@ -1556,7 +1556,7 @@ void __watcall update_camera_overhead(void)
   chp = CHP();
   camera_heading_int = (int)ROUND(fVar3);
   local_60 = *(float *)(roll_val + chp * 4) * 4.0;
-  local_5c = *(float *)(cos_table + chp * 4) * 4.0;
+  local_5c = *(float *)(sin_table + chp * 4) * 4.0;
   x_val_3 = player_x - local_60;
   z_val_3 = player_z - local_5c;
   road_height_at_result = road_height_at(player_chunk,x_val_3,z_val_3);
@@ -1575,7 +1575,7 @@ void __watcall update_camera_overhead(void)
   roll_val = CHP();
   camera_pitch_int = (int)ROUND(fVar3);
   local_2c = *(float *)(roll_val + uVar1 * 4);
-  local_28 = *(float *)(cos_table + uVar1 * 4);
+  local_28 = *(float *)(sin_table + uVar1 * 4);
   local_40 = -(local_2c * camera_distance + player_x);
   camera_x = (local_40 - camera_x) * 0.25 + camera_x;
   camera_y = (-(player_y + camera_height) - camera_y) * 0.25 + camera_y;
@@ -1612,11 +1612,11 @@ void __watcall update_camera_overhead(void)
     local_8c = (double)local_28;
   }
   update_visible_tiles(x_val_4,z_val_4);
-  chp = sin_table;
-  roll_val = cos_table;
+  chp = cos_table;
+  roll_val = sin_table;
   iVar2 = (player_heading - 0x100U & 0x3ff) * 4;
   fVar4 = -(float10)camera_x;
-  fVar3 = (float10)*(float *)(sin_table + iVar2) * (float10)30.0 * (float10)20.0 + fVar4;
+  fVar3 = (float10)*(float *)(cos_table + iVar2) * (float10)30.0 * (float10)20.0 + fVar4;
   CHP();
   local_50 = (int)ROUND(fVar3);
   fVar5 = -(float10)camera_z;
@@ -1702,8 +1702,8 @@ void __watcall update_camera_cockpit(void)
   float z_val_2;
   
   uVar1 = player_heading + 0x100U & 0x3ff;
-  local_28 = *(float *)(sin_table + uVar1 * 4);
-  local_24 = *(float *)(cos_table + uVar1 * 4);
+  local_28 = *(float *)(cos_table + uVar1 * 4);
+  local_24 = *(float *)(sin_table + uVar1 * 4);
   local_2c = local_28 * 8.0;
   local_34 = local_24 * 8.0;
   player_chunk = update_chunk_for_position(player_chunk,player_x,player_z);
@@ -1737,7 +1737,7 @@ void __watcall update_camera_cockpit(void)
   chp = CHP();
   camera_heading_int = (int)ROUND(fVar7);
   local_48 = *(float *)(chp + uVar1 * 4) * 4.0;
-  local_40 = *(float *)(cos_table + uVar1 * 4) * 4.0;
+  local_40 = *(float *)(sin_table + uVar1 * 4) * 4.0;
   x_val_4 = player_x - local_48;
   z_val_2 = player_z - local_40;
   road_height_at_result = road_height_at(player_chunk,x_val_4,z_val_2);
@@ -1780,11 +1780,11 @@ void __watcall update_camera_cockpit(void)
     local_80 = (double)local_24;
   }
   update_visible_tiles(x_val,z_val);
-  chp_2 = sin_table;
-  chp = cos_table;
+  chp_2 = cos_table;
+  chp = sin_table;
   iVar2 = (player_heading - 0x100U & 0x3ff) * 4;
   fVar3 = -(float10)camera_x;
-  fVar7 = (float10)*(float *)(iVar2 + sin_table) * (float10)30.0 * (float10)10.0 + fVar3;
+  fVar7 = (float10)*(float *)(iVar2 + cos_table) * (float10)30.0 * (float10)10.0 + fVar3;
   CHP();
   local_30 = (int)ROUND(fVar7);
   fVar4 = -(float10)camera_z;
@@ -1844,8 +1844,8 @@ place_camera_behind(float param_1,float param_2,float param_3,undefined4 param_4
   float10 fVar12;
   
   uVar4 = param_5 + 0x100 & 0x3ff;
-  fVar1 = -(*(float *)(sin_table + uVar4 * 4) * camera_distance + param_1);
-  fVar2 = -(*(float *)(cos_table + uVar4 * 4) * camera_distance + param_3);
+  fVar1 = -(*(float *)(cos_table + uVar4 * 4) * camera_distance + param_1);
+  fVar2 = -(*(float *)(sin_table + uVar4 * 4) * camera_distance + param_3);
   return_zero_float(-fVar1,-fVar2);
   camera_x = (fVar1 - camera_x) * 0.25 + camera_x;
   camera_y = (float)((-((float10)param_2 + (float10)camera_height + in_ST0 * (float10)2.0) -
@@ -1868,11 +1868,11 @@ place_camera_behind(float param_1,float param_2,float param_3,undefined4 param_4
   fVar6 = -(float10)camera_z / (float10)30.0;
   CHP();
   update_visible_tiles((int)ROUND(fVar5),(int)ROUND(fVar6));
-  iVar3 = sin_table;
-  roll_val = cos_table;
+  iVar3 = cos_table;
+  roll_val = sin_table;
   uVar4 = param_5 - 0x100 & 0x3ff;
   fVar7 = -(float10)camera_x;
-  fVar5 = (float10)*(float *)(sin_table + uVar4 * 4) * (float10)30.0 * (float10)5.0 + fVar7;
+  fVar5 = (float10)*(float *)(cos_table + uVar4 * 4) * (float10)30.0 * (float10)5.0 + fVar7;
   CHP();
   fVar8 = -(float10)camera_z;
   fVar6 = (float10)*(float *)(roll_val + uVar4 * 4) * (float10)30.0 * (float10)5.0 + fVar8;
@@ -1951,8 +1951,8 @@ void __watcall FUN_00405058(int opponent_index,int *param_2,uint *param_3,int *p
   local_14 = x_val;
   x_val = road_height_at(chunk,x_val,z_val);
   local_18 = (float)(float10)CONCAT64(extraout_var,x_val);
-  x_val_2 = local_14 + *(float *)(sin_table + (*param_3 & 0x3ff) * 4) * 8.0;
-  z_val_2 = *(float *)(cos_table + (*param_3 & 0x3ff) * 4) * 8.0 + z_val;
+  x_val_2 = local_14 + *(float *)(cos_table + (*param_3 & 0x3ff) * 4) * 8.0;
+  z_val_2 = *(float *)(sin_table + (*param_3 & 0x3ff) * 4) * 8.0 + z_val;
   x_val = road_height_at(chunk,x_val_2,z_val_2);
   x_val_2 = x_val_2 - local_14;
   local_3c = (float)(float10)CONCAT64(extraout_var_00,x_val) - local_18;
@@ -1962,8 +1962,8 @@ void __watcall FUN_00405058(int opponent_index,int *param_2,uint *param_3,int *p
   CHP();
   *param_2 = (int)ROUND(fVar2);
   uVar1 = *param_3 + 0x100 & 0x3ff;
-  local_1c = *(float *)(sin_table + uVar1 * 4) * 4.0;
-  local_20 = *(float *)(cos_table + uVar1 * 4) * 4.0;
+  local_1c = *(float *)(cos_table + uVar1 * 4) * 4.0;
+  local_20 = *(float *)(sin_table + uVar1 * 4) * 4.0;
   x_val_3 = local_14 + local_1c;
   z_val_3 = z_val + local_20;
   x_val = road_height_at(chunk,x_val_3,z_val_3);
@@ -2122,10 +2122,10 @@ int __watcall create_opponent(int param_1,undefined4 param_2,int param_3)
   opponent_data[opponent_index].offset_x = 0.0;
   opponent_data[opponent_index].offset_z = 0.0;
   opponent_data[opponent_index].field_18 =
-       *(float *)((opponent_data[opponent_index].heading & 0x3ffU) * 4 + sin_table);
+       *(float *)((opponent_data[opponent_index].heading & 0x3ffU) * 4 + cos_table);
   opponent_data[opponent_index].field_1c = 0;
   opponent_data[opponent_index].field_20 =
-       *(float *)(cos_table + (opponent_data[opponent_index].heading & 0x3ffU) * 4);
+       *(float *)(sin_table + (opponent_data[opponent_index].heading & 0x3ffU) * 4);
   if (opponent_data[opponent_index].field_e4 == 3) {
     uVar2 = rand();
     opponent_data[opponent_index].acceleration = 0.2 - (float)((int)uVar2 % 5) / 10.0;
@@ -3041,10 +3041,10 @@ void __watcall update_racers(void)
     }
 LAB_00407392:
     opponent_data[iVar3].field_18 =
-         *(float *)(sin_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
+         *(float *)(cos_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
     opponent_data[iVar3].field_1c = 0;
     opponent_data[iVar3].field_20 =
-         *(float *)(cos_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
+         *(float *)(sin_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
     opponent_data[iVar3].offset_x =
          opponent_data[iVar3].field_18 * opponent_data[iVar3].speed + opponent_data[iVar3].push_x;
     opponent_data[iVar3].offset_z =
@@ -4882,8 +4882,8 @@ void __watcall update_racer_corners(int opponent_index)
   uint uVar3;
   
   uVar3 = opponent_data[opponent_index].heading & 0x3ff;
-  fVar1 = *(float *)(cos_table + uVar3 * 4);
-  fVar2 = *(float *)(sin_table + uVar3 * 4);
+  fVar1 = *(float *)(sin_table + uVar3 * 4);
+  fVar2 = *(float *)(cos_table + uVar3 * 4);
   *(float *)&opponent_data[opponent_index].field_0x58 =
        (opponent_data[opponent_index].field_88 * fVar2 -
        opponent_data[opponent_index].field_90 * fVar1) + opponent_data[opponent_index].x;
@@ -7255,9 +7255,9 @@ void __watcall draw_radar_contents_1(void)
           fVar4 = fVar4 / (float10)12.0;
           chp = CHP();
           iVar1 = local_24;
-          opponent_index = cos_table;
+          opponent_index = sin_table;
           fVar5 = ((float10)*(float *)(chp + 0xc) - (float10)player_z) / (float10)12.0;
-          pfVar3 = (float *)(sin_table + local_24);
+          pfVar3 = (float *)(cos_table + local_24);
           CHP();
           fVar6 = (float10)radar_center_x +
                   (fVar4 * (float10)*pfVar3 - fVar5 * (float10)*(float *)(opponent_index + iVar1));
@@ -7385,7 +7385,7 @@ void __watcall draw_radar_contents_2(void)
           CHP();
           iVar1 = local_24;
           fVar5 = ((float10)opponent[opponent_index].z - (float10)player_z) / (float10)12.0;
-          pfVar3 = (float *)(sin_table + local_24);
+          pfVar3 = (float *)(cos_table + local_24);
           opponent_index = CHP();
           fVar6 = (float10)radar_center_x +
                   (fVar4 * (float10)*pfVar3 - fVar5 * (float10)*(float *)(opponent_index + iVar1));
@@ -8689,8 +8689,8 @@ int __watcall get_racer_lane(int racer)
   vertex3d_index = weg_sections[opponent_data[racer].chunk].point;
   i = 0;
   fVar1 = (opponent_data[racer].z - vertices3d[vertex3d_index].z) *
-          *(float *)(sin_table + uVar2 * 4) +
-          -*(float *)(cos_table + uVar2 * 4) *
+          *(float *)(cos_table + uVar2 * 4) +
+          -*(float *)(sin_table + uVar2 * 4) *
           (opponent_data[racer].x - vertices3d[vertex3d_index].x);
   vertex3d_index = 0;
   while( true ) {
@@ -9456,9 +9456,9 @@ undefined4 __watcall collide_racer_with_road_edge(int opponent_index)
          vertices3d[weg_sections[weg_section_idx].point].z;
     iVar5 = iVar4;
   } while (iVar4 != 0x30);
-  fVar1 = *(float *)(sin_table + (local_30 & 0x3ff) * 4);
+  fVar1 = *(float *)(cos_table + (local_30 & 0x3ff) * 4);
   local_28 = fVar1;
-  fVar2 = *(float *)(cos_table + (local_30 & 0x3ff) * 4);
+  fVar2 = *(float *)(sin_table + (local_30 & 0x3ff) * 4);
   local_24 = fVar2;
   local_2c = fVar1 * opponent_data[opponent_index].offset_z +
              -fVar2 * opponent_data[opponent_index].offset_x;
@@ -9549,9 +9549,9 @@ void __watcall collide_player_with_track_ends(void)
            vertices3d[weg_sections[weg_section_idx].point].z;
       iVar5 = iVar4;
     } while (iVar4 != 0x30);
-    fVar1 = *(float *)(sin_table + (local_28 & 0x3ff) * 4);
+    fVar1 = *(float *)(cos_table + (local_28 & 0x3ff) * 4);
     local_20 = fVar1;
-    fVar2 = *(float *)(cos_table + (local_28 & 0x3ff) * 4);
+    fVar2 = *(float *)(sin_table + (local_28 & 0x3ff) * 4);
     local_1c = fVar2;
     local_24 = fVar2 * opponent_data->offset_z + fVar1 * opponent_data->offset_x;
     local_18 = local_24;
@@ -19345,12 +19345,12 @@ void __watcall init_math3d(void)
   float10 fVar5;
   int i;
   
-  cos_table = LocalAlloc(0x40,0x1000);
-  if (cos_table == (HLOCAL)0x0) {
+  sin_table = LocalAlloc(0x40,0x1000);
+  if (sin_table == (HLOCAL)0x0) {
     fatal_exit(s__s__d____error_allocating_cos_si_0044d307,s_math3d_cpp_0044d2fc,0x38);
   }
   pvVar1 = LocalAlloc(0x40,0x1000);
-  sin_table = pvVar1;
+  cos_table = pvVar1;
   if (pvVar1 == (HLOCAL)0x0) {
     pvVar1 = (HLOCAL)fatal_exit(s__s__d____error_allocating_cos_si_0044d33c,s_math3d_cpp_0044d331,
                                 0x3c);
@@ -19363,9 +19363,9 @@ void __watcall init_math3d(void)
     fsin_reduced_result = fsin_reduced(pvVar1);
     fcos_reduced(fsin_reduced_result);
     i = i + 1;
-    *(float *)(iVar3 + (int)cos_table) = (float)fVar4;
-    pvVar1 = sin_table;
-    *(float *)(iVar3 + (int)sin_table) = (float)fVar5;
+    *(float *)(iVar3 + (int)sin_table) = (float)fVar4;
+    pvVar1 = cos_table;
+    *(float *)(iVar3 + (int)cos_table) = (float)fVar5;
     iVar3 = iVar3 + 4;
   } while (i < 0x400);
   DAT_004765a4 = 1;
@@ -19431,8 +19431,8 @@ void __watcall compute_height_map_row(int param_1)
   normalize_vector(&local_40);
   do {
     iVar1 = (j & 0x3ff) * 4;
-    local_58[3] = *(float *)(iVar1 + sin_table) * 10.0;
-    local_44 = *(float *)(iVar1 + cos_table) * 10.0;
+    local_58[3] = *(float *)(iVar1 + cos_table) * 10.0;
+    local_44 = *(float *)(iVar1 + sin_table) * 10.0;
     local_48 = -(local_44 * local_1c + local_20 * local_58[3] + local_24) / local_18;
     local_34 = local_58[3];
     local_30 = local_44;
@@ -19443,8 +19443,8 @@ void __watcall compute_height_map_row(int param_1)
     iVar1 = CHP();
     local_28 = (float)(int)ROUND(fVar3);
     *(float *)(iVar1 + iVar2) = local_28;
-    local_58[3] = *(float *)(iVar2 + sin_table) * 10.0;
-    local_44 = *(float *)(iVar2 + cos_table) * 10.0;
+    local_58[3] = *(float *)(iVar2 + cos_table) * 10.0;
+    local_44 = *(float *)(iVar2 + sin_table) * 10.0;
     local_48 = -(local_44 * local_1c + local_20 * local_58[3] + local_24) / local_18;
     local_34 = local_58[3];
     local_30 = local_44;
@@ -19830,9 +19830,9 @@ void __watcall rotate_matrix_x(float *a_val,float *b_val,uint param_3)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[10] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
+  b_val[10] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   b_val[5] = b_val[10];
-  b_val[6] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
+  b_val[6] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   b_val[9] = -b_val[6];
   matrix_multiply(a_val,b_val);
   return;
@@ -19860,9 +19860,9 @@ void __watcall rotate_matrix_y(float *a_val,float *b_val,uint param_3)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[10] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
+  b_val[10] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   *b_val = b_val[10];
-  b_val[8] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
+  b_val[8] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   b_val[2] = -b_val[8];
   matrix_multiply(a_val,b_val);
   return;
@@ -19890,9 +19890,9 @@ void __watcall rotate_matrix_z(float *a_val,float *b_val,uint param_3)
     pfVar1 = (float *)((int)pfVar1 + 1);
     pfVar2 = (float *)((int)pfVar2 + 1);
   }
-  b_val[5] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
+  b_val[5] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
   *b_val = b_val[5];
-  b_val[1] = *(float *)(cos_table + (param_3 & 0x3ff) * 4);
+  b_val[1] = *(float *)(sin_table + (param_3 & 0x3ff) * 4);
   b_val[4] = -b_val[1];
   matrix_multiply(a_val,b_val);
   return;

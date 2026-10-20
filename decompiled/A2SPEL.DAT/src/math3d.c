@@ -14,12 +14,12 @@ void __watcall init_math3d(void)
   float10 fVar5;
   int i;
   
-  cos_table = LocalAlloc(0x40,0x1000);
-  if (cos_table == (HLOCAL)0x0) {
+  sin_table = LocalAlloc(0x40,0x1000);
+  if (sin_table == (HLOCAL)0x0) {
     fatal_exit(s__s__d____error_allocating_cos_si_0044d307,s_math3d_cpp_0044d2fc,0x38);
   }
   pvVar1 = LocalAlloc(0x40,0x1000);
-  sin_table = pvVar1;
+  cos_table = pvVar1;
   if (pvVar1 == (HLOCAL)0x0) {
     pvVar1 = (HLOCAL)fatal_exit(s__s__d____error_allocating_cos_si_0044d33c,s_math3d_cpp_0044d331,
                                 0x3c);
@@ -32,9 +32,9 @@ void __watcall init_math3d(void)
     fsin_reduced_result = fsin_reduced(pvVar1);
     fcos_reduced(fsin_reduced_result);
     i = i + 1;
-    *(float *)(iVar3 + (int)cos_table) = (float)fVar4;
-    pvVar1 = sin_table;
-    *(float *)(iVar3 + (int)sin_table) = (float)fVar5;
+    *(float *)(iVar3 + (int)sin_table) = (float)fVar4;
+    pvVar1 = cos_table;
+    *(float *)(iVar3 + (int)cos_table) = (float)fVar5;
     iVar3 = iVar3 + 4;
   } while (i < 0x400);
   DAT_004765a4 = 1;
@@ -100,8 +100,8 @@ void __watcall compute_height_map_row(int param_1)
   normalize_vector(&local_40);
   do {
     iVar1 = (j & 0x3ff) * 4;
-    local_58[3] = *(float *)(iVar1 + sin_table) * 10.0;
-    local_44 = *(float *)(iVar1 + cos_table) * 10.0;
+    local_58[3] = *(float *)(iVar1 + cos_table) * 10.0;
+    local_44 = *(float *)(iVar1 + sin_table) * 10.0;
     local_48 = -(local_44 * local_1c + local_20 * local_58[3] + local_24) / local_18;
     local_34 = local_58[3];
     local_30 = local_44;
@@ -112,8 +112,8 @@ void __watcall compute_height_map_row(int param_1)
     iVar1 = CHP();
     local_28 = (float)(int)ROUND(fVar3);
     *(float *)(iVar1 + iVar2) = local_28;
-    local_58[3] = *(float *)(iVar2 + sin_table) * 10.0;
-    local_44 = *(float *)(iVar2 + cos_table) * 10.0;
+    local_58[3] = *(float *)(iVar2 + cos_table) * 10.0;
+    local_44 = *(float *)(iVar2 + sin_table) * 10.0;
     local_48 = -(local_44 * local_1c + local_20 * local_58[3] + local_24) / local_18;
     local_34 = local_58[3];
     local_30 = local_44;

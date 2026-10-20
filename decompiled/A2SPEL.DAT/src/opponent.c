@@ -140,10 +140,10 @@ int __watcall create_opponent(int param_1,undefined4 param_2,int param_3)
   opponent_data[opponent_index].offset_x = 0.0;
   opponent_data[opponent_index].offset_z = 0.0;
   opponent_data[opponent_index].field_18 =
-       *(float *)((opponent_data[opponent_index].heading & 0x3ffU) * 4 + sin_table);
+       *(float *)((opponent_data[opponent_index].heading & 0x3ffU) * 4 + cos_table);
   opponent_data[opponent_index].field_1c = 0;
   opponent_data[opponent_index].field_20 =
-       *(float *)(cos_table + (opponent_data[opponent_index].heading & 0x3ffU) * 4);
+       *(float *)(sin_table + (opponent_data[opponent_index].heading & 0x3ffU) * 4);
   if (opponent_data[opponent_index].field_e4 == 3) {
     uVar2 = rand();
     opponent_data[opponent_index].acceleration = 0.2 - (float)((int)uVar2 % 5) / 10.0;
@@ -1059,10 +1059,10 @@ void __watcall update_racers(void)
     }
 LAB_00407392:
     opponent_data[iVar3].field_18 =
-         *(float *)(sin_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
+         *(float *)(cos_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
     opponent_data[iVar3].field_1c = 0;
     opponent_data[iVar3].field_20 =
-         *(float *)(cos_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
+         *(float *)(sin_table + (opponent_data[iVar3].heading + 0x100U & 0x3ff) * 4);
     opponent_data[iVar3].offset_x =
          opponent_data[iVar3].field_18 * opponent_data[iVar3].speed + opponent_data[iVar3].push_x;
     opponent_data[iVar3].offset_z =
