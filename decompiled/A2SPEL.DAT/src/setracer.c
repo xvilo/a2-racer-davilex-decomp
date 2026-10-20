@@ -222,7 +222,7 @@ void __watcall start_camera_intro(void)
   undefined4 unaff_ECX;
   
   set_camera_position(1);
-  racers[player_index].visible = '\x01';
+  objects3d[player_index].visible = '\x01';
   camera_height = 350.0;
   camera_distance = -31.0;
   atan_lookup_result = atan_lookup(atan_table_id,0xc1f80000,0x43af0000,unaff_ECX,350.0);
@@ -279,7 +279,7 @@ void __watcall stop_player_car(void)
 
 {
   player_speed = 0.0;
-  opponent_data[(int)racers[player_index].opponent].speed = 0.0;
+  opponent_data[(int)objects3d[player_index].opponent].speed = 0.0;
   controls_enabled = 0;
   DAT_00475a28 = 0;
   start_countdown(10);
@@ -501,24 +501,24 @@ int __watcall get_racer_lane(int racer)
 {
   float fVar1;
   uint uVar2;
-  int iVar3;
+  int vertex3d_index;
   int i;
   
   uVar2 = weg_sections[opponent_data[racer].chunk].heading & 0x3ff;
-  iVar3 = weg_sections[opponent_data[racer].chunk].point * 0x21;
+  vertex3d_index = weg_sections[opponent_data[racer].chunk].point;
   i = 0;
-  fVar1 = (opponent_data[racer].z - *(float *)(iVar3 + 8 + weg_points)) *
+  fVar1 = (opponent_data[racer].z - vertices3d[vertex3d_index].z) *
           *(float *)(sin_table + uVar2 * 4) +
           -*(float *)(cos_table + uVar2 * 4) *
-          (opponent_data[racer].x - *(float *)(iVar3 + weg_points));
-  iVar3 = 0;
+          (opponent_data[racer].x - vertices3d[vertex3d_index].x);
+  vertex3d_index = 0;
   while( true ) {
-    if (0x2b < iVar3) {
+    if (0x2b < vertex3d_index) {
       return -1;
     }
-    if ((*(float *)((int)&lane_boundaries + iVar3) <= fVar1) &&
-       (fVar1 < *(float *)((int)&FLOAT_004590e4 + iVar3))) break;
-    iVar3 = iVar3 + 4;
+    if ((*(float *)((int)&lane_boundaries + vertex3d_index) <= fVar1) &&
+       (fVar1 < *(float *)((int)&FLOAT_004590e4 + vertex3d_index))) break;
+    vertex3d_index = vertex3d_index + 4;
     i = i + 1;
   }
   return i;

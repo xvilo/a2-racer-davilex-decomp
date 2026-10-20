@@ -23,7 +23,7 @@ void __watcall reset_anim_base(void)
 
 /* ==== 0042afd7 add_anim_base ==== */
 
-void __watcall add_anim_base(anim_t *anim)
+void __watcall add_anim_base(anim_t *anim_val)
 
 {
   int iVar1;
@@ -34,10 +34,10 @@ void __watcall add_anim_base(anim_t *anim)
   i = 0;
   iVar3 = 0;
   do {
-    if (anim->frame_count <= i) {
+    if (anim_val->frame_count <= i) {
       return;
     }
-    iVar1 = *(int *)((int)&anim->frames->image + iVar3);
+    iVar1 = *(int *)((int)&anim_val->frames->image + iVar3);
     for (iVar2 = 0; iVar2 < anim_base_ptr * 4; iVar2 = iVar2 + 4) {
       if (iVar1 == *(int *)((int)anim_base + iVar2)) goto LAB_0042b009;
     }
@@ -52,11 +52,11 @@ LAB_0042b009:
 
 /* ==== 0042b02b add_array_to_anim_base ==== */
 
-void __watcall add_array_to_anim_base(anim_t *anim,long *param_2)
+void __watcall add_array_to_anim_base(anim_t *anim_val,long *param_2)
 
 {
   for (; *param_2 != -1; param_2 = param_2 + 1) {
-    add_anim_base(anim + *param_2);
+    add_anim_base(anim_val + *param_2);
   }
   return;
 }
@@ -64,7 +64,7 @@ void __watcall add_array_to_anim_base(anim_t *anim,long *param_2)
 
 /* ==== 0042b048 add_demi_array_to_anim_base ==== */
 
-void __watcall add_demi_array_to_anim_base(anim_t *anim,long *param_2)
+void __watcall add_demi_array_to_anim_base(anim_t *anim_val,long *param_2)
 
 {
   int iVar1;
@@ -74,14 +74,14 @@ void __watcall add_demi_array_to_anim_base(anim_t *anim,long *param_2)
   
   for (; anim_index = *param_2, anim_index != -1; param_2 = param_2 + 1) {
     iVar1 = 0;
-    for (i = 0; (int)i < anim[anim_index].frame_count; i = i + 1) {
+    for (i = 0; (int)i < anim_val[anim_index].frame_count; i = i + 1) {
       if ((i & 1) == 0) {
-        unaff_ESI = *(undefined4 *)((int)&(anim[anim_index].frames)->image + iVar1);
+        unaff_ESI = *(undefined4 *)((int)&(anim_val[anim_index].frames)->image + iVar1);
       }
-      *(undefined4 *)((int)&(anim[anim_index].frames)->image + iVar1) = unaff_ESI;
+      *(undefined4 *)((int)&(anim_val[anim_index].frames)->image + iVar1) = unaff_ESI;
       iVar1 = iVar1 + 8;
     }
-    add_anim_base(anim + *param_2);
+    add_anim_base(anim_val + *param_2);
   }
   return;
 }

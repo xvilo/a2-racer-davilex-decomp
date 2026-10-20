@@ -3,27 +3,27 @@
 
 /* ==== 0042be90 alloc_frames3d ==== */
 
-undefined4 __watcall alloc_frames3d(int param_1)
+int __watcall alloc_frames3d(int count)
 
 {
   int iVar1;
   int extraout_EDX;
   int i;
   
-  if (DAT_00480d74 == 0) {
-    frames3d = LocalAlloc(0x40,param_1 * 0x11);
-    if (frames3d == (HLOCAL)0x0) {
+  if (frames3d_initialized == 0) {
+    frames3d = LocalAlloc(0x40,count * 0x11);
+    if (frames3d == (frame3d_t *)0x0) {
       debugmsg(s__s__d____not_enough_memory_for_f_00451b2c);
       return 2000;
     }
-    debugmsg(s__d_frames_initialized_00451b54,param_1);
-    DAT_00480d74 = 1;
+    debugmsg(s__d_frames_initialized_00451b54,count);
+    frames3d_initialized = 1;
     iVar1 = 0;
-    DAT_00480d70 = param_1;
-    for (i = extraout_EDX; i < DAT_00480d70; i = i + 1) {
-      *(undefined4 *)((int)frames3d + iVar1) = 0;
-      *(undefined4 *)((int)frames3d + iVar1 + 8) = 0;
-      *(undefined1 *)((int)frames3d + iVar1 + 0x10) = 0;
+    frame3d_capacity = count;
+    for (i = extraout_EDX; i < frame3d_capacity; i = i + 1) {
+      *(undefined4 *)((int)&frames3d->vertex_count + iVar1) = 0;
+      *(undefined4 *)((int)&frames3d->triangle_count + iVar1) = 0;
+      (&frames3d->in_use)[iVar1] = '\0';
       iVar1 = iVar1 + 0x11;
     }
   }
@@ -38,15 +38,15 @@ void __watcall free_frames3d(void)
 {
   HLOCAL pvVar1;
   
-  if (DAT_00480d74 != 0) {
+  if (frames3d_initialized != 0) {
     pvVar1 = LocalFree(frames3d);
     if (pvVar1 != (HLOCAL)0x0) {
       debugmsg(s__s__d____error_deallocating_fram_00451b6c);
       return;
     }
     debugmsg(s_Frame_array_freed_00451b91);
-    DAT_00480d70 = 0;
-    DAT_00480d74 = 0;
+    frame3d_capacity = 0;
+    frames3d_initialized = 0;
   }
   return;
 }
@@ -63,11 +63,11 @@ int __watcall find_free_frame3d(void)
   i = 0;
   iVar1 = 0;
   while( true ) {
-    if (DAT_00480d70 * 0x11 <= iVar1) {
+    if (frame3d_capacity * 0x11 <= iVar1) {
       fatal_exit(s__s__d____no_more_free_frames_00451bb0,s_frame3d_cpp_00451ba4,0x62);
       return 0;
     }
-    if (*(char *)(frames3d + 0x10 + iVar1) == '\0') break;
+    if ((&frames3d->in_use)[iVar1] == '\0') break;
     iVar1 = iVar1 + 0x11;
     i = i + 1;
   }
@@ -82,9 +82,9 @@ int __watcall get_new_frame3d(void)
 {
   int free_frame3d_val;
   
-  if (DAT_00480d78 < DAT_00480d70) {
-    free_frame3d_val = DAT_00480d78;
-    DAT_00480d78 = DAT_00480d78 + 1;
+  if (next_frame3d < frame3d_capacity) {
+    free_frame3d_val = next_frame3d;
+    next_frame3d = next_frame3d + 1;
     return free_frame3d_val;
   }
   free_frame3d_val = find_free_frame3d();
@@ -94,88 +94,82 @@ int __watcall get_new_frame3d(void)
 
 /* ==== 0042bfee init_frame3d ==== */
 
-int __watcall init_frame3d(void)
+int __watcall init_frame3d(int vertex_count,int triangle_count)
 
 {
-  int in_EAX;
   int arg2;
-  HLOCAL pvVar1;
-  int new_triangles;
-  int unaff_EDX;
-  int extraout_EDX;
+  int *piVar1;
   int iVar2;
+  int extraout_EDX;
   int iVar3;
   
   arg2 = get_new_frame3d();
-  pvVar1 = LocalAlloc(0x40,in_EAX << 2);
-  *(HLOCAL *)(arg2 * 0x11 + 4 + frames3d) = pvVar1;
-  if (pvVar1 == (HLOCAL)0x0) {
+  piVar1 = LocalAlloc(0x40,vertex_count << 2);
+  frames3d[arg2].vertices = piVar1;
+  if (piVar1 == (int *)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_f_00451bdb,s_frame3d_cpp_00451bcf,0x7c);
   }
-  debugmsg(s_frame__d_used__d_vertices_00451c03,arg2,in_EAX);
-  pvVar1 = LocalAlloc(0x40,unaff_EDX << 2);
-  *(HLOCAL *)(frames3d + 0xc + arg2 * 0x11) = pvVar1;
-  if (pvVar1 == (HLOCAL)0x0) {
+  debugmsg(s_frame__d_used__d_vertices_00451c03,arg2,vertex_count);
+  piVar1 = LocalAlloc(0x40,triangle_count << 2);
+  frames3d[arg2].triangles = piVar1;
+  if (piVar1 == (int *)0x0) {
     fatal_exit(s__s__d____not_enough_memory_for_f_00451c2b,s_frame3d_cpp_00451c1f,0x83);
   }
-  debugmsg(s_frame__d_used__d_triangles_00451c53,arg2,unaff_EDX);
-  for (iVar2 = extraout_EDX; iVar2 < in_EAX * 4; iVar2 = iVar2 + 4) {
-    iVar3 = get_new_vertices();
-    *(int *)(iVar2 + *(int *)(arg2 * 0x11 + 4 + frames3d)) = iVar3;
-    *(undefined1 *)
-     (weg_points + 0x20 + *(int *)(iVar2 + *(int *)(arg2 * 0x11 + 4 + frames3d)) * 0x21) = 1;
+  debugmsg(s_frame__d_used__d_triangles_00451c53,arg2,triangle_count);
+  for (iVar3 = extraout_EDX; iVar3 < vertex_count * 4; iVar3 = iVar3 + 4) {
+    iVar2 = get_new_vertices();
+    *(int *)(iVar3 + (int)frames3d[arg2].vertices) = iVar2;
+    vertices3d[*(int *)(iVar3 + (int)frames3d[arg2].vertices)].in_use = '\x01';
   }
-  iVar2 = arg2 * 0x11;
-  for (iVar3 = 0; iVar3 < unaff_EDX * 4; iVar3 = iVar3 + 4) {
-    new_triangles = get_new_triangles();
-    *(int *)(iVar3 + *(int *)(iVar2 + 0xc + frames3d)) = new_triangles;
-    *(undefined1 *)(*(int *)(iVar3 + *(int *)(iVar2 + 0xc + frames3d)) * 9 + 8 + triangles3d) = 1;
+  for (iVar3 = 0; iVar3 < triangle_count * 4; iVar3 = iVar3 + 4) {
+    iVar2 = get_new_triangles();
+    *(int *)(iVar3 + (int)frames3d[arg2].triangles) = iVar2;
+    triangles3d[*(int *)(iVar3 + (int)frames3d[arg2].triangles)].in_use = '\x01';
   }
-  *(int *)(iVar2 + frames3d) = in_EAX;
-  *(int *)(iVar2 + 8 + frames3d) = unaff_EDX;
-  *(undefined1 *)(iVar2 + 0x10 + frames3d) = 1;
+  frames3d[arg2].vertex_count = (float)vertex_count;
+  frames3d[arg2].triangle_count = triangle_count;
+  frames3d[arg2].in_use = '\x01';
   return arg2;
 }
 
 
 /* ==== 0042c151 free_frame3d ==== */
 
-void __watcall free_frame3d(int param_1)
+void __watcall free_frame3d(int frame)
 
 {
   int *piVar1;
+  frame3d_t *frame3d;
   HLOCAL pvVar2;
-  int iVar3;
   int i;
-  int iVar4;
+  int iVar3;
   
-  if (*(char *)(frames3d + 0x10 + param_1 * 0x11) != '\0') {
-    iVar4 = 0;
-    for (i = 0; piVar1 = (int *)(frames3d + param_1 * 0x11), i < *piVar1; i = i + 1) {
-      piVar1 = (int *)(iVar4 + piVar1[1]);
-      iVar4 = iVar4 + 4;
-      *(undefined1 *)(weg_points + 0x20 + *piVar1 * 0x21) = 0;
+  if (frames3d[frame].in_use != '\0') {
+    iVar3 = 0;
+    for (i = 0; frame3d = frames3d + frame, i < (int)frame3d->vertex_count; i = i + 1) {
+      piVar1 = (int *)(iVar3 + (int)frame3d->vertices);
+      iVar3 = iVar3 + 4;
+      vertices3d[*piVar1].in_use = '\0';
     }
-    pvVar2 = LocalFree((HLOCAL)piVar1[1]);
+    pvVar2 = LocalFree(frame3d->vertices);
     if (pvVar2 != (HLOCAL)0x0) {
-      fatal_exit(s__s__d____error_vertices_in_freei_00451c7c,param_1,s_frame3d_cpp_00451c70,0xac);
+      fatal_exit(s__s__d____error_vertices_in_freei_00451c7c,frame,s_frame3d_cpp_00451c70,0xac);
     }
-    iVar4 = 0;
-    debugmsg(s_frame__d_freed_vertex_array_00451cab,param_1);
-    for (i = 0; iVar3 = frames3d + param_1 * 0x11, i < *(int *)(iVar3 + 8); i = i + 1) {
-      piVar1 = (int *)(iVar4 + *(int *)(iVar3 + 0xc));
-      iVar4 = iVar4 + 4;
-      *(undefined1 *)(triangles3d + 8 + *piVar1 * 9) = 0;
+    iVar3 = 0;
+    debugmsg(s_frame__d_freed_vertex_array_00451cab,frame);
+    for (i = 0; i < frames3d[frame].triangle_count; i = i + 1) {
+      piVar1 = (int *)(iVar3 + (int)frames3d[frame].triangles);
+      iVar3 = iVar3 + 4;
+      triangles3d[*piVar1].in_use = '\0';
     }
-    pvVar2 = LocalFree(*(HLOCAL *)(iVar3 + 0xc));
+    pvVar2 = LocalFree(frames3d[frame].triangles);
     if (pvVar2 != (HLOCAL)0x0) {
-      fatal_exit(s__s__d____error_triangles_in_free_00451cd6,param_1,s_frame3d_cpp_00451cca,0xb8);
+      fatal_exit(s__s__d____error_triangles_in_free_00451cd6,frame,s_frame3d_cpp_00451cca,0xb8);
     }
-    debugmsg(s_frame__d_freed_triangle_array_00451d06,param_1);
-    i = param_1 * 0x11;
-    *(undefined4 *)(frames3d + i) = 0;
-    *(undefined4 *)(frames3d + 8 + i) = 0;
-    *(undefined1 *)(frames3d + 0x10 + i) = 0;
+    debugmsg(s_frame__d_freed_triangle_array_00451d06,frame);
+    frames3d[frame].vertex_count = 0.0;
+    frames3d[frame].triangle_count = 0;
+    frames3d[frame].in_use = '\0';
   }
   return;
 }

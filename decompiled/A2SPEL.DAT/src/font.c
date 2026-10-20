@@ -77,9 +77,9 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
   tagRECT tStack_68;
   tagRECT tStack_58;
   tagRECT tStack_48;
-  tagSIZE size_3;
-  tagSIZE size_2;
   tagSIZE size;
+  tagSIZE size_2;
+  tagSIZE size_3;
   undefined1 *local_20;
   HDC local_1c;
   tagSIZE *size_4;
@@ -107,10 +107,10 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       SetTextColor(local_1c,*(COLORREF *)(&DAT_00459714 + xvga_font_index * 0x10));
       SetBkColor(local_1c,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
       SetBkMode(local_1c,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
-      size_4 = &size_3;
+      size_4 = &size;
       iVar2 = lstrlenA(aCStack_1f8);
       GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
-      SetRect(&tStack_48,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
+      SetRect(&tStack_48,param_2,param_3,size.cx + param_2,size.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_48,aCStack_1f8,UVar3,pIVar4);
@@ -137,10 +137,10 @@ int __cdecl win_print_xy(int param_1,int param_2,int param_3,char *param_4,...)
       SetTextColor(local_1c,*(COLORREF *)(&DAT_00459714 + xvga_font_index * 0x10));
       SetBkColor(local_1c,*(COLORREF *)(&DAT_00459710 + xvga_font_index * 0x10));
       SetBkMode(local_1c,*(int *)(&font_bk_modes + xvga_font_index * 0x10));
-      size_4 = &size;
+      size_4 = &size_3;
       iVar2 = lstrlenA(aCStack_1f8);
       GetTextExtentPoint32A(local_1c,aCStack_1f8,iVar2,size_4);
-      SetRect(&tStack_58,param_2,param_3,size.cx + param_2,size.cy + param_3);
+      SetRect(&tStack_58,param_2,param_3,size_3.cx + param_2,size_3.cy + param_3);
       pIVar4 = (INT *)0x0;
       UVar3 = lstrlenA(aCStack_1f8);
       ExtTextOutA(local_1c,param_2,param_3,0,&tStack_58,aCStack_1f8,UVar3,pIVar4);

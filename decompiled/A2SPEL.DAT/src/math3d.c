@@ -415,9 +415,6 @@ void __watcall vector_subtract(float *out,float *a,float *b)
 void __watcall vertex_edge_vector(float *out,int v1,int v2)
 
 {
-  int iVar1;
-  int iVar2;
-  
   if ((v1 < 0) || (vertex_capacity < v1)) {
     fatal_exit(s__s__d___illegal_vertex__v1__inde_0044dc1d,s_math3d_cpp_0044dc12,0x284,v1,
                vertex_capacity);
@@ -426,11 +423,9 @@ void __watcall vertex_edge_vector(float *out,int v1,int v2)
     fatal_exit(s__s__d___illegal_vertex__v2__inde_0044dc57,s_math3d_cpp_0044dc4c,0x287,v2,
                vertex_capacity);
   }
-  iVar1 = v1 * 0x21;
-  iVar2 = v2 * 0x21;
-  *out = *(float *)(iVar1 + weg_points) - *(float *)(weg_points + iVar2);
-  out[1] = *(float *)(iVar1 + 4 + weg_points) - *(float *)(weg_points + 4 + iVar2);
-  store_vertex_z(iVar2,iVar1,weg_points,(int)out);
+  *out = vertices3d[v1].x - vertices3d[v2].x;
+  out[1] = vertices3d[v1].y - vertices3d[v2].y;
+  store_vertex_z(v2 * 0x21,v1 * 0x21,vertices3d,(int)out);
   return;
 }
 

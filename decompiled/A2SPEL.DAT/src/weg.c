@@ -33,11 +33,11 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
 {
   uint uVar1;
   __iobuf *p_Var2;
+  int vertex3d_index;
   int iVar3;
   DWORD DVar4;
-  int iVar5;
   int i;
-  DWORD DVar6;
+  DWORD DVar5;
   char local_134 [120];
   char local_bc [120];
   int local_44;
@@ -46,8 +46,8 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
   char local_38 [4];
   int local_34;
   uint ini_value_setting;
-  int new_vertices;
-  int new_vertices_2;
+  int vertex3d_index_2;
+  int vertex3d_index_3;
   int local_24;
   int local_20;
   int local_1c;
@@ -66,45 +66,48 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
     param_2 = ((local_44 + -1) / 2) * 2;
   }
   alloc_weg_vertices(local_44,param_2);
-  new_vertices_2 = get_new_vertices();
-  iVar5 = new_vertices_2 * 0x21;
-  *(undefined1 *)(weg_points + 0x20 + iVar5) = 1;
-  new_vertices = get_new_vertices();
-  local_34 = new_vertices * 0x21;
-  *(undefined1 *)(weg_points + local_34 + 0x20) = 1;
-  *(undefined4 *)(weg_points + 4 + iVar5) = 0;
-  *(undefined4 *)(weg_points + local_34 + 4) = 0;
+  vertex3d_index = get_new_vertices();
+  vertices3d[vertex3d_index].in_use = '\x01';
+  vertex3d_index_3 = vertex3d_index;
+  vertex3d_index_2 = get_new_vertices();
+  local_34 = vertex3d_index_2 * 0x21;
+  vertices3d[vertex3d_index_2].in_use = '\x01';
+  vertices3d[vertex3d_index].y = 0.0;
+  vertices3d[vertex3d_index_2].y = 0.0;
   debugmsg(s_loading___s____d_chunks_0044ca85,filename_val,local_44);
-  fread((char *)(weg_points + iVar5),1,4,(int *)p_Var2);
-  fread((char *)(weg_points + iVar5 + 8),1,4,(int *)p_Var2);
+  fread((char *)(vertices3d + vertex3d_index),1,4,(int *)p_Var2);
+  fread((char *)&vertices3d[vertex3d_index].z,1,4,(int *)p_Var2);
   fread(local_38,1,4,(int *)p_Var2);
   fread((char *)&local_40,1,4,(int *)p_Var2);
   fread((char *)&local_3c,1,4,(int *)p_Var2);
   fread(local_bc,local_3c,4,(int *)p_Var2);
-  local_20 = iVar5;
+  local_20 = vertex3d_index * 0x21;
   fread(local_134,local_3c,4,(int *)p_Var2);
-  *(float *)(weg_points + 4 + iVar5) = (float)local_40;
-  iVar5 = 0;
+  vertices3d[vertex3d_index].y = (float)local_40;
+  vertex3d_index = 0;
   local_18 = local_34;
   local_1c = local_34;
   for (i = 0; i < local_44 + -1; i = i + 1) {
-    fread((char *)(weg_points + local_1c),1,4,(int *)p_Var2);
-    fread((char *)(weg_points + local_1c + 8),1,4,(int *)p_Var2);
+    fread((char *)((int)&vertices3d->x + local_1c),1,4,(int *)p_Var2);
+    fread((char *)((int)&vertices3d->z + local_1c),1,4,(int *)p_Var2);
     fread(local_38,1,4,(int *)p_Var2);
     fread((char *)&local_40,1,4,(int *)p_Var2);
     fread((char *)&local_3c,1,4,(int *)p_Var2);
     fread(local_bc,local_3c,4,(int *)p_Var2);
     fread(local_134,local_3c,4,(int *)p_Var2);
-    *(float *)(weg_points + local_1c + 4) = (float)local_40;
+    *(float *)((int)&vertices3d->y + local_1c) = (float)local_40;
     if ((p_Var2->field_0c & 0x20) != 0) {
       fatal_exit(s__s__d____error_reading_weg_data_f_0044caa6,s_weg_cpp_0044ca9e,0xb8,filename_val);
     }
-    iVar3 = build_weg_sections(new_vertices_2,new_vertices,local_3c,2);
-    *(int *)(weg_chunk_quads + iVar5) = iVar3;
-    *(undefined4 *)(weg_points + local_20) = *(undefined4 *)(local_18 + weg_points);
-    *(undefined4 *)(weg_points + local_20 + 4) = *(undefined4 *)(local_18 + weg_points + 4);
-    iVar5 = iVar5 + 4;
-    *(undefined4 *)(weg_points + local_20 + 8) = *(undefined4 *)(local_18 + weg_points + 8);
+    iVar3 = build_weg_sections(vertex3d_index_3,vertex3d_index_2,local_3c,2);
+    *(int *)(weg_chunk_quads + vertex3d_index) = iVar3;
+    *(undefined4 *)((int)&vertices3d->x + local_20) =
+         *(undefined4 *)((int)&vertices3d->x + local_18);
+    *(undefined4 *)((int)&vertices3d->y + local_20) =
+         *(undefined4 *)((int)&vertices3d->y + local_18);
+    vertex3d_index = vertex3d_index + 4;
+    *(undefined4 *)((int)&vertices3d->z + local_20) =
+         *(undefined4 *)((int)&vertices3d->z + local_18);
   }
   xvga_src_fclose(p_Var2);
   if (default_material == -1) {
@@ -118,9 +121,10 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
     fatal_exit(s__s__d____could_not_open_weg_data_0044cb18,s_weg_cpp_0044cb10,0xcd,filename_val);
   }
   fread((char *)&local_44,1,4,(int *)p_Var2);
-  iVar5 = new_vertices_2 * 0x21;
-  fread((char *)(weg_points + iVar5),1,4,(int *)p_Var2);
-  fread((char *)(weg_points + iVar5 + 8),1,4,(int *)p_Var2);
+  i = vertex3d_index_3;
+  vertex3d_index = vertex3d_index_3 * 0x21;
+  fread((char *)(vertices3d + vertex3d_index_3),1,4,(int *)p_Var2);
+  fread((char *)&vertices3d[i].z,1,4,(int *)p_Var2);
   fread(local_38,1,4,(int *)p_Var2);
   fread((char *)&local_40,1,4,(int *)p_Var2);
   fread((char *)&local_3c,1,4,(int *)p_Var2);
@@ -128,28 +132,28 @@ undefined4 __watcall load_weg_data(char *filename_val,int param_2)
   fread(local_134,local_3c,4,(int *)p_Var2);
   debugmsg(s_creating_the_weg_execute_buffers_0044cb44);
   i = 0;
-  local_24 = iVar5;
-  for (DVar6 = 0; (int)DVar6 < local_44 + -1; DVar6 = DVar6 + 1) {
-    fread((char *)(weg_points + local_24),1,4,(int *)p_Var2);
-    fread((char *)(weg_points + local_24 + 8),1,4,(int *)p_Var2);
+  local_24 = vertex3d_index;
+  for (DVar5 = 0; (int)DVar5 < local_44 + -1; DVar5 = DVar5 + 1) {
+    fread((char *)((int)&vertices3d->x + local_24),1,4,(int *)p_Var2);
+    fread((char *)((int)&vertices3d->z + local_24),1,4,(int *)p_Var2);
     fread(local_38,1,4,(int *)p_Var2);
     fread((char *)&local_40,1,4,(int *)p_Var2);
     fread((char *)&local_3c,1,4,(int *)p_Var2);
     fread(local_bc,local_3c,4,(int *)p_Var2);
     fread(local_134,local_3c,4,(int *)p_Var2);
     uVar1 = ini_value_setting;
-    compute_weg_normals(DVar6,DVar6 + 1,local_3c);
+    compute_weg_normals(DVar5,DVar5 + 1,local_3c);
     if (uVar1 == 0) {
-      DVar4 = build_weg_execute_buffers(DVar6,(int)local_3c / 2,(DWORD)local_bc,(int)local_134);
+      DVar4 = build_weg_execute_buffers(DVar5,(int)local_3c / 2,(DWORD)local_bc,(int)local_134);
       iVar3 = *(int *)(weg_chunk_quads + i) * 0x38;
-      iVar5 = weg_chunks;
+      vertex3d_index = weg_chunks;
     }
     else {
-      DVar4 = build_weg_execute_buffers(DVar6,local_3c,(DWORD)local_bc,(int)local_134);
-      iVar5 = *(int *)(weg_chunk_quads + i) * 0x38;
+      DVar4 = build_weg_execute_buffers(DVar5,local_3c,(DWORD)local_bc,(int)local_134);
+      vertex3d_index = *(int *)(weg_chunk_quads + i) * 0x38;
       iVar3 = weg_chunks;
     }
-    *(DWORD *)(iVar5 + 0x34 + iVar3) = DVar4;
+    *(DWORD *)(vertex3d_index + 0x34 + iVar3) = DVar4;
     i = i + 4;
   }
   debugmsg(s_Finished_creating_the_weg_execut_0044cb66);
@@ -207,32 +211,28 @@ int __watcall alloc_weg_lanes(int param_1)
     *(int *)((int)&weg_sections[weg_lane_chunks].point + iVar3) = new_vertices;
     piVar1 = (int *)((int)&weg_sections[weg_lane_chunks].point + iVar3);
     iVar3 = iVar3 + 4;
-    *(undefined1 *)(weg_points + 0x20 + *piVar1 * 0x21) = 1;
+    vertices3d[*piVar1].in_use = '\x01';
   } while (iVar3 != 0xc);
   for (iVar3 = 0; iVar3 < param_1 * 4; iVar3 = iVar3 + 4) {
     new_vertices = get_new_vertices();
     *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_1) = new_vertices;
-    *(undefined1 *)
-     (weg_points + 0x20 + *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_1) * 0x21) = 1;
+    vertices3d[*(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_1)].in_use = '\x01';
   }
   for (iVar3 = 0; iVar3 < param_1 * 4; iVar3 = iVar3 + 4) {
     new_vertices = get_new_vertices();
     *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_2) = new_vertices;
-    *(undefined1 *)
-     (weg_points + 0x20 + *(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_2) * 0x21) = 1;
+    vertices3d[*(int *)(iVar3 + (int)weg_sections[weg_lane_chunks].buffer_2)].in_use = '\x01';
   }
   iVar3 = 0;
   do {
     new_vertices = get_new_vertices();
     *(int *)((int)&weg_sections[weg_lane_chunks].field_1c + iVar3) = new_vertices;
-    *(undefined1 *)
-     (weg_points + 0x20 + *(int *)((int)&weg_sections[weg_lane_chunks].field_1c + iVar3) * 0x21) = 1
-    ;
+    vertices3d[*(int *)((int)&weg_sections[weg_lane_chunks].field_1c + iVar3)].in_use = '\x01';
     new_vertices = get_new_vertices();
     *(int *)((int)&weg_sections[weg_lane_chunks].field_0c + iVar3) = new_vertices;
     piVar1 = (int *)((int)&weg_sections[weg_lane_chunks].field_0c + iVar3);
     iVar3 = iVar3 + 4;
-    *(undefined1 *)(*piVar1 * 0x21 + 0x20 + weg_points) = 1;
+    vertices3d[*piVar1].in_use = '\x01';
   } while (iVar3 != 0x10);
   iVar3 = weg_lane_chunks;
   weg_lane_chunks = weg_lane_chunks + 1;
@@ -314,15 +314,11 @@ void __watcall compute_weg_normals(int param_1,int param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
+  int *piVar2;
   float local_54 [3];
   float local_48;
   float local_44;
-  undefined4 local_40;
+  float local_40;
   float local_3c [3];
   int local_30;
   int local_2c;
@@ -332,110 +328,107 @@ void __watcall compute_weg_normals(int param_1,int param_2,int param_3)
   int local_1c;
   int local_18;
   int local_14;
+  int vertex3d_index;
+  int vertex3d_index_2;
+  int vertex3d_index_3;
   
   local_24 = param_1 << 2;
   local_28 = param_2 << 2;
   local_1c = (param_3 + -1) * 4;
   local_14 = 0;
   while (local_14 < local_1c) {
-    piVar6 = (int *)((int)weg_sections
+    piVar2 = (int *)((int)weg_sections
                           [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_24) * 0x38)].
                           buffer_2 + local_14);
-    iVar1 = *piVar6;
-    iVar2 = piVar6[1];
-    piVar6 = (int *)((int)weg_sections
+    vertex3d_index_3 = *piVar2;
+    vertex3d_index_2 = piVar2[1];
+    piVar2 = (int *)((int)weg_sections
                           [*(int *)(*(int *)(weg_chunk_quads + local_28) * 0x38 + 8 + weg_chunks)].
                           buffer_2 + local_14);
-    iVar3 = *piVar6;
-    iVar4 = piVar6[1];
-    vertex_edge_vector(local_3c,iVar2,iVar1);
-    vertex_edge_vector(local_54,iVar3,iVar1);
+    vertex3d_index = *piVar2;
+    iVar1 = piVar2[1];
+    vertex_edge_vector(local_3c,vertex3d_index_2,vertex3d_index_3);
+    vertex_edge_vector(local_54,vertex3d_index,vertex3d_index_3);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    iVar5 = iVar1 * 0x21;
-    *(float *)(iVar5 + 0xc + weg_points) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
-    *(undefined4 *)(iVar5 + weg_points + 0x14) = local_40;
-    vertex_edge_vector(local_3c,iVar1,iVar2);
-    vertex_edge_vector(local_54,iVar4,iVar2);
+    vertices3d[vertex3d_index_3].nx = local_48;
+    vertices3d[vertex3d_index_3].ny = ABS(local_44);
+    vertices3d[vertex3d_index_3].nz = local_40;
+    vertex_edge_vector(local_3c,vertex3d_index_3,vertex3d_index_2);
+    vertex_edge_vector(local_54,iVar1,vertex3d_index_2);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    iVar5 = iVar2 * 0x21;
-    *(float *)(iVar5 + 0xc + weg_points) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
-    *(undefined4 *)(iVar5 + weg_points + 0x14) = local_40;
-    vertex_edge_vector(local_3c,iVar4,iVar3);
-    iVar5 = iVar3 * 0x21;
-    vertex_edge_vector(local_54,iVar1,iVar3);
+    vertices3d[vertex3d_index_2].nx = local_48;
+    vertices3d[vertex3d_index_2].ny = ABS(local_44);
+    vertices3d[vertex3d_index_2].nz = local_40;
+    vertex_edge_vector(local_3c,iVar1,vertex3d_index);
+    vertex_edge_vector(local_54,vertex3d_index_3,vertex3d_index);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    *(float *)(weg_points + 0xc + iVar5) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
-    *(undefined4 *)(weg_points + 0x14 + iVar5) = local_40;
-    vertex_edge_vector(local_3c,iVar2,iVar4);
-    vertex_edge_vector(local_54,iVar3,iVar4);
+    vertices3d[vertex3d_index].nx = local_48;
+    vertices3d[vertex3d_index].ny = ABS(local_44);
+    vertices3d[vertex3d_index].nz = local_40;
+    vertex_edge_vector(local_3c,vertex3d_index_2,iVar1);
+    vertex_edge_vector(local_54,vertex3d_index,iVar1);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    *(float *)(weg_points + 0xc + iVar5) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
+    vertices3d[vertex3d_index].nx = local_48;
+    vertices3d[vertex3d_index].ny = ABS(local_44);
     local_14 = local_14 + 4;
-    *(undefined4 *)(iVar5 + weg_points + 0x14) = local_40;
+    vertices3d[vertex3d_index].nz = local_40;
   }
   local_2c = param_1 << 2;
   local_30 = param_2 << 2;
   local_20 = (param_3 + -1) * 4;
   local_18 = 0;
   while (local_18 < local_20) {
-    piVar6 = (int *)((int)weg_sections
+    piVar2 = (int *)((int)weg_sections
                           [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_2c) * 0x38)].
                           buffer_1 + local_18);
-    iVar1 = *piVar6;
-    iVar2 = piVar6[1];
-    piVar6 = (int *)((int)weg_sections
+    vertex3d_index_3 = *piVar2;
+    vertex3d_index_2 = piVar2[1];
+    piVar2 = (int *)((int)weg_sections
                           [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + local_30) * 0x38)].
                           buffer_1 + local_18);
-    iVar3 = *piVar6;
-    iVar4 = piVar6[1];
-    vertex_edge_vector(local_3c,iVar2,iVar1);
-    vertex_edge_vector(local_54,iVar3,iVar1);
+    vertex3d_index = *piVar2;
+    iVar1 = piVar2[1];
+    vertex_edge_vector(local_3c,vertex3d_index_2,vertex3d_index_3);
+    vertex_edge_vector(local_54,vertex3d_index,vertex3d_index_3);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    iVar5 = iVar1 * 0x21;
-    *(float *)(iVar5 + 0xc + weg_points) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
-    *(undefined4 *)(iVar5 + weg_points + 0x14) = local_40;
-    vertex_edge_vector(local_3c,iVar1,iVar2);
-    vertex_edge_vector(local_54,iVar4,iVar2);
+    vertices3d[vertex3d_index_3].nx = local_48;
+    vertices3d[vertex3d_index_3].ny = ABS(local_44);
+    vertices3d[vertex3d_index_3].nz = local_40;
+    vertex_edge_vector(local_3c,vertex3d_index_3,vertex3d_index_2);
+    vertex_edge_vector(local_54,iVar1,vertex3d_index_2);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    iVar5 = iVar2 * 0x21;
-    *(float *)(iVar5 + 0xc + weg_points) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
-    *(undefined4 *)(iVar5 + weg_points + 0x14) = local_40;
-    vertex_edge_vector(local_3c,iVar4,iVar3);
-    iVar5 = iVar3 * 0x21;
-    vertex_edge_vector(local_54,iVar1,iVar3);
+    vertices3d[vertex3d_index_2].nx = local_48;
+    vertices3d[vertex3d_index_2].ny = ABS(local_44);
+    vertices3d[vertex3d_index_2].nz = local_40;
+    vertex_edge_vector(local_3c,iVar1,vertex3d_index);
+    vertex_edge_vector(local_54,vertex3d_index_3,vertex3d_index);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    *(float *)(iVar5 + 0xc + weg_points) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
-    *(undefined4 *)(iVar5 + 0x14 + weg_points) = local_40;
-    vertex_edge_vector(local_3c,iVar2,iVar4);
-    vertex_edge_vector(local_54,iVar3,iVar4);
+    vertices3d[vertex3d_index].nx = local_48;
+    vertices3d[vertex3d_index].ny = ABS(local_44);
+    vertices3d[vertex3d_index].nz = local_40;
+    vertex_edge_vector(local_3c,vertex3d_index_2,iVar1);
+    vertex_edge_vector(local_54,vertex3d_index,iVar1);
     normalize_vector(local_3c);
     normalize_vector(local_54);
     cross_product(&local_48,local_54,local_3c);
-    *(float *)(iVar5 + 0xc + weg_points) = local_48;
-    *(float *)(iVar5 + 0x10 + weg_points) = ABS(local_44);
+    vertices3d[vertex3d_index].nx = local_48;
+    vertices3d[vertex3d_index].ny = ABS(local_44);
     local_18 = local_18 + 4;
-    *(undefined4 *)(iVar5 + weg_points + 0x14) = local_40;
+    vertices3d[vertex3d_index].nz = local_40;
   }
   return;
 }
@@ -445,21 +438,20 @@ void __watcall compute_weg_normals(int param_1,int param_2,int param_3)
 
 /* WARNING: Type propagation algorithm not settling */
 
-int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4)
+int __watcall build_weg_sections(int vertex3d_index_3,int vertex3d_index_4,int param_3,int param_4)
 
 {
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
+  float *pfVar1;
+  float fVar2;
+  int vertex3d_index_2;
+  int vertex3d_index;
   int i;
+  int iVar3;
   int j;
-  int iVar5;
-  int iVar6;
-  undefined4 *puVar7;
-  float *pfVar8;
-  undefined4 *puVar9;
-  byte bVar10;
+  vertex3d_t *pvVar4;
+  float *pfVar5;
+  vertex3d_t *pvVar6;
+  byte bVar7;
   float afStackY_1054 [1008];
   float local_78;
   float local_74;
@@ -468,17 +460,17 @@ int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4
   float local_68;
   float local_64;
   float local_60;
-  undefined4 local_5c;
+  float local_5c;
   float local_58;
-  undefined4 local_40;
+  float local_40;
   int weg_section_idx;
   float local_1c;
   float local_18;
   float local_14;
   float local_10;
   
-  bVar10 = 0;
-  local_40 = 0;
+  bVar7 = 0;
+  local_40 = 0.0;
   if (weg_data_loaded == 0) {
     fatal_exit(s__s__d____error_weg_not_initializ_0044cf3f,s_weg_cpp_0044cf37,0x22d);
   }
@@ -488,27 +480,28 @@ int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4
                weg_section_count);
   }
   i = weg_section_idx * 0x38;
-  *(int *)(i + 0xc + weg_chunks) = param_1;
-  *(int *)(i + 0x10 + weg_chunks) = param_2;
+  *(int *)(i + 0xc + weg_chunks) = vertex3d_index_3;
+  *(int *)(i + 0x10 + weg_chunks) = vertex3d_index_4;
   *(int *)(i + weg_chunks) = param_4;
-  iVar2 = alloc_weg_lanes(param_3);
-  *(int *)(i + 8 + weg_chunks) = iVar2;
-  pfVar4 = (float *)(weg_points + param_2 * 0x21);
-  j = param_1 * 0x21;
-  local_6c = *pfVar4 - *(float *)(weg_points + j);
-  local_68 = pfVar4[1] - *(float *)(weg_points + 4 + j);
-  local_64 = pfVar4[2] - *(float *)(weg_points + 8 + j);
-  iVar6 = iVar2;
-  iVar3 = interpolate_weg_point
-                    (param_2 * 0x21,iVar2,iVar2,i,*(float *)(weg_points + j),
-                     *(float *)(weg_points + 8 + j),*pfVar4,pfVar4[2]);
-  iVar6 = iVar2 * 0x14 + iVar6;
-  (&weg_sections->heading)[iVar6] = iVar3;
+  vertex3d_index_2 = alloc_weg_lanes(param_3);
+  *(int *)(i + 8 + weg_chunks) = vertex3d_index_2;
+  pvVar4 = vertices3d + vertex3d_index_4;
+  local_6c = pvVar4->x - vertices3d[vertex3d_index_3].x;
+  local_68 = pvVar4->y - vertices3d[vertex3d_index_3].y;
+  local_64 = pvVar4->z - vertices3d[vertex3d_index_3].z;
+  j = vertex3d_index_2;
+  vertex3d_index =
+       interpolate_weg_point
+                 (vertex3d_index_4 * 0x21,vertex3d_index_2,vertex3d_index_2,i,
+                  vertices3d[vertex3d_index_3].x,vertices3d[vertex3d_index_3].z,pvVar4->x,pvVar4->z)
+  ;
+  j = vertex3d_index_2 * 0x14 + j;
+  (&weg_sections->heading)[j] = vertex3d_index;
   normalize_vector(&stack0xffffff94);
-  fVar1 = local_64 * 0.0 + local_6c * 0.0 + local_68;
-  local_78 = 0.0 - local_6c * fVar1;
-  local_74 = 1.0 - local_68 * fVar1;
-  local_70 = 0.0 - fVar1 * local_64;
+  fVar2 = local_64 * 0.0 + local_6c * 0.0 + local_68;
+  local_78 = 0.0 - local_6c * fVar2;
+  local_74 = 1.0 - local_68 * fVar2;
+  local_70 = 0.0 - fVar2 * local_64;
   normalize_vector(&stack0xffffff88);
   cross_product(&stack0xffffffa0,&stack0xffffff88,&stack0xffffff94);
   normalize_vector(&stack0xffffffa0);
@@ -516,251 +509,244 @@ int __watcall build_weg_sections(int param_1,int param_2,int param_3,int param_4
   weg_sections[*(int *)(i + 8 + weg_chunks)].plane_b = local_74;
   weg_sections[*(int *)(i + 8 + weg_chunks)].plane_c = local_70;
   weg_sections[*(int *)(i + 8 + weg_chunks)].plane_d =
-       -((&weg_sections->plane_c)[iVar6] * *(float *)(weg_points + 8 + j) +
-        (&weg_sections->plane_a)[iVar6] * *(float *)(weg_points + j) +
-        (&weg_sections->plane_b)[iVar6] * *(float *)(weg_points + 4 + j));
-  if ((&weg_sections->plane_b)[iVar6] == 0.0) {
+       -((&weg_sections->plane_c)[j] * vertices3d[vertex3d_index_3].z +
+        (&weg_sections->plane_a)[j] * vertices3d[vertex3d_index_3].x +
+        (&weg_sections->plane_b)[j] * vertices3d[vertex3d_index_3].y);
+  if ((&weg_sections->plane_b)[j] == 0.0) {
     debugmsg(s_error_nul_b_0044cfab);
-    (&weg_sections->plane_b)[iVar6] = 0.1;
+    (&weg_sections->plane_b)[j] = 0.1;
   }
-  iVar5 = weg_section_idx * 0x38;
-  pfVar4 = (float *)(weg_chunks + 0x1c + iVar5);
-  pfVar8 = pfVar4 + (uint)bVar10 * -2 + 1;
-  *pfVar4 = local_60;
-  *pfVar8 = *(float *)((int)&stack0xffffffa4 + (uint)bVar10 * -8);
-  pfVar8[(uint)bVar10 * -2 + 1] =
-       *(float *)((int)&stack0xffffffa8 + (uint)bVar10 * -8 + (uint)bVar10 * -8);
-  pfVar4 = (float *)(weg_chunks + 0x28 + iVar5);
-  pfVar8 = pfVar4 + (uint)bVar10 * -2 + 1;
-  *pfVar4 = local_6c;
-  *pfVar8 = *(float *)((int)&stack0xffffff98 + (uint)bVar10 * -8);
-  pfVar8[(uint)bVar10 * -2 + 1] =
-       *(float *)((int)&stack0xffffff9c + (uint)bVar10 * -8 + (uint)bVar10 * -8);
-  iVar2 = param_1 * 0x21;
-  j = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].point * 0x21;
-  *(undefined4 *)(weg_points + j) = *(undefined4 *)(weg_points + iVar2);
-  *(undefined4 *)(j + 8 + weg_points) = *(undefined4 *)(iVar2 + 8 + weg_points);
-  *(undefined4 *)(j + 4 + weg_points) = *(undefined4 *)(iVar2 + 4 + weg_points);
-  *(float *)(weg_points + 0xc + j) = local_78;
-  *(float *)(weg_points + 0x10 + j) = local_74;
-  *(float *)(weg_points + 0x14 + j) = local_70;
-  *(undefined4 *)(j + 0x1c + weg_points) = local_40;
-  *(undefined4 *)(j + 0x18 + weg_points) = 0;
-  fVar1 = ((float)param_4 + 2.0) * 30.0;
-  j = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_04;
-  iVar6 = j * 0x21;
-  *(float *)(weg_points + iVar6) = fVar1 * local_60 + *(float *)(weg_points + iVar2);
-  *(float *)(iVar6 + 8 + weg_points) = fVar1 * local_58 + *(float *)(iVar2 + 8 + weg_points);
-  *(undefined4 *)(weg_points + 4 + iVar6) = *(undefined4 *)(weg_points + 4 + iVar2);
-  *(float *)(weg_points + 0xc + iVar6) = local_78;
-  *(float *)(weg_points + 0x10 + iVar6) = local_74;
-  *(float *)(weg_points + 0x14 + iVar6) = local_70;
-  *(undefined4 *)(iVar6 + 0x1c + weg_points) = local_40;
-  *(undefined4 *)(iVar6 + 0x18 + weg_points) = 0x3f800000;
-  iVar6 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_08;
-  iVar3 = iVar6 * 0x21;
-  *(float *)(weg_points + iVar3) = *(float *)(weg_points + iVar2) - fVar1 * local_60;
-  *(float *)(weg_points + 8 + iVar3) = *(float *)(weg_points + 8 + iVar2) - fVar1 * local_58;
-  *(undefined4 *)(iVar3 + 4 + weg_points) = *(undefined4 *)(iVar2 + 4 + weg_points);
-  *(float *)(weg_points + 0xc + iVar3) = local_78;
-  *(float *)(weg_points + 0x10 + iVar3) = local_74;
-  *(float *)(weg_points + 0x14 + iVar3) = local_70;
-  *(undefined4 *)(weg_points + 0x1c + iVar3) = local_40;
-  *(undefined4 *)(iVar3 + 0x18 + weg_points) = 0x3f800000;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_0c * 0x21;
-  puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].field_08 * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  iVar3 = weg_section_idx * 0x38;
+  pfVar1 = (float *)(weg_chunks + 0x1c + iVar3);
+  pfVar5 = pfVar1 + (uint)bVar7 * -2 + 1;
+  *pfVar1 = local_60;
+  *pfVar5 = *(float *)((int)&stack0xffffffa4 + (uint)bVar7 * -8);
+  pfVar5[(uint)bVar7 * -2 + 1] =
+       *(float *)((int)&stack0xffffffa8 + (uint)bVar7 * -8 + (uint)bVar7 * -8);
+  pfVar1 = (float *)(weg_chunks + 0x28 + iVar3);
+  pfVar5 = pfVar1 + (uint)bVar7 * -2 + 1;
+  *pfVar1 = local_6c;
+  *pfVar5 = *(float *)((int)&stack0xffffff98 + (uint)bVar7 * -8);
+  pfVar5[(uint)bVar7 * -2 + 1] =
+       *(float *)((int)&stack0xffffff9c + (uint)bVar7 * -8 + (uint)bVar7 * -8);
+  j = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].point;
+  vertices3d[j].x = vertices3d[vertex3d_index_3].x;
+  vertices3d[j].z = vertices3d[vertex3d_index_3].z;
+  vertices3d[j].y = vertices3d[vertex3d_index_3].y;
+  vertices3d[j].nx = local_78;
+  vertices3d[j].ny = local_74;
+  vertices3d[j].nz = local_70;
+  vertices3d[j].tv = local_40;
+  vertices3d[j].tu = 0.0;
+  fVar2 = ((float)param_4 + 2.0) * 30.0;
+  j = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_04;
+  vertices3d[j].x = fVar2 * local_60 + vertices3d[vertex3d_index_3].x;
+  vertices3d[j].z = fVar2 * local_58 + vertices3d[vertex3d_index_3].z;
+  vertices3d[j].y = vertices3d[vertex3d_index_3].y;
+  vertices3d[j].nx = local_78;
+  vertices3d[j].ny = local_74;
+  vertices3d[j].nz = local_70;
+  vertices3d[j].tv = local_40;
+  vertices3d[j].tu = 1.0;
+  vertex3d_index_2 = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_08;
+  vertices3d[vertex3d_index_2].x = vertices3d[vertex3d_index_3].x - fVar2 * local_60;
+  vertices3d[vertex3d_index_2].z = vertices3d[vertex3d_index_3].z - fVar2 * local_58;
+  vertices3d[vertex3d_index_2].y = vertices3d[vertex3d_index_3].y;
+  vertices3d[vertex3d_index_2].nx = local_78;
+  vertices3d[vertex3d_index_2].ny = local_74;
+  vertices3d[vertex3d_index_2].nz = local_70;
+  vertices3d[vertex3d_index_2].tv = local_40;
+  vertices3d[vertex3d_index_2].tu = 1.0;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_0c;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].field_08;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_10 * 0x21;
-  puVar7 = (undefined4 *)(weg_sections[weg_section_idx].field_08 * 0x21 + weg_points);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_10;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].field_08;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
-  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
-  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_1c * 0x21;
-  puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].field_04 * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  vertices3d[vertex3d_index].x = local_78 * 5.0 + vertices3d[vertex3d_index].x;
+  vertices3d[vertex3d_index].y = local_74 * 5.0 + vertices3d[vertex3d_index].y;
+  vertices3d[vertex3d_index].z = local_70 * 5.0 + vertices3d[vertex3d_index].z;
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_1c;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].field_04;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_20 * 0x21;
-  puVar7 = (undefined4 *)(weg_sections[weg_section_idx].field_04 * 0x21 + weg_points);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_20;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].field_04;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
-  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
-  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_14 * 0x21;
-  puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  vertices3d[vertex3d_index].x = local_78 * 5.0 + vertices3d[vertex3d_index].x;
+  vertices3d[vertex3d_index].y = local_74 * 5.0 + vertices3d[vertex3d_index].y;
+  vertices3d[vertex3d_index].z = local_70 * 5.0 + vertices3d[vertex3d_index].z;
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_14;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].point;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(iVar3 + weg_points) = *(float *)(iVar2 + weg_points) - local_60 * 5.0;
-  *(float *)(iVar3 + 8 + weg_points) = *(float *)(iVar2 + 8 + weg_points) - local_58 * 5.0;
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_18 * 0x21;
-  puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  vertices3d[vertex3d_index].x = vertices3d[vertex3d_index_3].x - local_60 * 5.0;
+  vertices3d[vertex3d_index].z = vertices3d[vertex3d_index_3].z - local_58 * 5.0;
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_18;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].point;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(weg_points + iVar3) = *(float *)(weg_points + iVar2) - local_60 * 5.0;
-  *(float *)(weg_points + 8 + iVar3) = *(float *)(weg_points + 8 + iVar2) - local_58 * 5.0;
-  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
-  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
-  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_24 * 0x21;
-  puVar7 = (undefined4 *)(weg_sections[weg_section_idx].point * 0x21 + weg_points);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  vertices3d[vertex3d_index].x = vertices3d[vertex3d_index_3].x - local_60 * 5.0;
+  vertices3d[vertex3d_index].z = vertices3d[vertex3d_index_3].z - local_58 * 5.0;
+  vertices3d[vertex3d_index].x = local_78 * 5.0 + vertices3d[vertex3d_index].x;
+  vertices3d[vertex3d_index].y = local_74 * 5.0 + vertices3d[vertex3d_index].y;
+  vertices3d[vertex3d_index].z = local_70 * 5.0 + vertices3d[vertex3d_index].z;
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_24;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].point;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(weg_points + iVar3) = local_60 * 5.0 + *(float *)(weg_points + iVar2);
-  *(float *)(weg_points + 8 + iVar3) = local_58 * 5.0 + *(float *)(weg_points + 8 + iVar2);
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  iVar3 = weg_sections[*(int *)(weg_chunks + 8 + iVar5)].field_28 * 0x21;
-  puVar7 = (undefined4 *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-  puVar9 = (undefined4 *)(weg_points + iVar3);
+  vertices3d[vertex3d_index].x = local_60 * 5.0 + vertices3d[vertex3d_index_3].x;
+  vertices3d[vertex3d_index].z = local_58 * 5.0 + vertices3d[vertex3d_index_3].z;
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  vertex3d_index = weg_sections[*(int *)(weg_chunks + 8 + iVar3)].field_28;
+  pvVar4 = vertices3d + weg_sections[weg_section_idx].point;
+  pvVar6 = vertices3d + vertex3d_index;
   for (i = 8; i != 0; i = i + -1) {
-    *puVar9 = *puVar7;
-    puVar7 = puVar7 + (uint)bVar10 * -2 + 1;
-    puVar9 = puVar9 + (uint)bVar10 * -2 + 1;
+    pvVar6->x = pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -8 + 4);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -8 + 4);
   }
   for (i = 0; i != 0; i = i + -1) {
-    *(undefined1 *)puVar9 = *(undefined1 *)puVar7;
-    puVar7 = (undefined4 *)((int)puVar7 + (uint)bVar10 * -2 + 1);
-    puVar9 = (undefined4 *)((int)puVar9 + (uint)bVar10 * -2 + 1);
+    *(undefined1 *)&pvVar6->x = *(undefined1 *)&pvVar4->x;
+    pvVar4 = (vertex3d_t *)((int)pvVar4 + (uint)bVar7 * -2 + 1);
+    pvVar6 = (vertex3d_t *)((int)pvVar6 + (uint)bVar7 * -2 + 1);
   }
-  *(float *)(iVar3 + weg_points) = local_78 * 5.0 + *(float *)(iVar3 + weg_points);
-  *(float *)(iVar3 + 4 + weg_points) = local_74 * 5.0 + *(float *)(iVar3 + 4 + weg_points);
-  *(float *)(iVar3 + 8 + weg_points) = local_70 * 5.0 + *(float *)(iVar3 + 8 + weg_points);
-  *(float *)(weg_points + iVar3) = local_60 * 5.0 + *(float *)(weg_points + iVar2);
-  *(float *)(iVar3 + 8 + weg_points) = local_58 * 5.0 + *(float *)(iVar2 + 8 + weg_points);
-  *(float *)(weg_points + 0xc + iVar3) = local_60;
-  *(undefined4 *)(weg_points + 0x10 + iVar3) = local_5c;
-  *(float *)(iVar3 + weg_points + 0x14) = local_58;
-  j = j * 0x21;
-  local_18 = *(float *)(weg_points + j);
-  local_10 = *(float *)(weg_points + 8 + j);
-  pfVar4 = (float *)(iVar6 * 0x21 + weg_points);
-  iVar6 = 0;
-  local_14 = *pfVar4;
-  local_1c = pfVar4[2];
+  vertices3d[vertex3d_index].x = local_78 * 5.0 + vertices3d[vertex3d_index].x;
+  vertices3d[vertex3d_index].y = local_74 * 5.0 + vertices3d[vertex3d_index].y;
+  vertices3d[vertex3d_index].z = local_70 * 5.0 + vertices3d[vertex3d_index].z;
+  vertices3d[vertex3d_index].x = local_60 * 5.0 + vertices3d[vertex3d_index_3].x;
+  vertices3d[vertex3d_index].z = local_58 * 5.0 + vertices3d[vertex3d_index_3].z;
+  vertices3d[vertex3d_index].nx = local_60;
+  vertices3d[vertex3d_index].ny = local_5c;
+  vertices3d[vertex3d_index].nz = local_58;
+  local_18 = vertices3d[j].x;
+  local_10 = vertices3d[j].z;
+  vertex3d_index = 0;
+  local_14 = vertices3d[vertex3d_index_2].x;
+  local_1c = vertices3d[vertex3d_index_2].z;
   for (j = 0; j < param_3; j = j + 1) {
-    iVar3 = *(int *)(iVar6 + (int)weg_sections[*(int *)(weg_chunks + iVar5 + 8)].buffer_1);
-    i = iVar3 * 0x21;
-    *(float *)(weg_points + i) = local_14;
-    *(float *)(weg_points + 8 + i) = local_1c;
+    vertex3d_index_2 =
+         *(int *)(vertex3d_index + (int)weg_sections[*(int *)(weg_chunks + iVar3 + 8)].buffer_1);
+    vertices3d[vertex3d_index_2].x = local_14;
+    vertices3d[vertex3d_index_2].z = local_1c;
     local_14 = local_14 - local_60 * 60.0;
     local_1c = local_1c - local_58 * 60.0;
     if (j == 0) {
-      *(undefined4 *)(weg_points + 4 + i) = *(undefined4 *)(iVar2 + 4 + weg_points);
+      vertices3d[vertex3d_index_2].y = vertices3d[vertex3d_index_3].y;
     }
     else {
-      *(undefined4 *)(weg_points + 4 + i) = 0;
+      vertices3d[vertex3d_index_2].y = 0.0;
     }
-    iVar3 = iVar3 * 0x21;
-    *(undefined4 *)(weg_points + 0xc + iVar3) = 0;
-    *(undefined4 *)(weg_points + 0x10 + iVar3) = 0x3f800000;
-    iVar6 = iVar6 + 4;
-    *(undefined4 *)(weg_points + 0x14 + iVar3) = 0;
+    vertices3d[vertex3d_index_2].nx = 0.0;
+    vertices3d[vertex3d_index_2].ny = 1.0;
+    vertex3d_index = vertex3d_index + 4;
+    vertices3d[vertex3d_index_2].nz = 0.0;
   }
-  iVar6 = 0;
+  vertex3d_index_2 = 0;
   for (j = 0; j < param_3; j = j + 1) {
-    iVar2 = *(int *)((int)weg_sections[*(int *)(weg_chunks + weg_section_idx * 0x38 + 8)].buffer_2 +
-                    iVar6);
-    iVar3 = iVar2 * 0x21;
-    *(float *)(weg_points + iVar3) = local_18;
-    *(float *)(weg_points + 8 + iVar3) = local_10;
+    vertex3d_index =
+         *(int *)((int)weg_sections[*(int *)(weg_chunks + weg_section_idx * 0x38 + 8)].buffer_2 +
+                 vertex3d_index_2);
+    vertices3d[vertex3d_index].x = local_18;
+    vertices3d[vertex3d_index].z = local_10;
     local_18 = local_60 * 60.0 + local_18;
     local_10 = local_58 * 60.0 + local_10;
     if (j == 0) {
-      *(undefined4 *)(weg_points + 4 + iVar3) = *(undefined4 *)(weg_points + 4 + param_1 * 0x21);
+      vertices3d[vertex3d_index].y = vertices3d[vertex3d_index_3].y;
     }
     else {
-      *(undefined4 *)(weg_points + 4 + iVar3) = 0;
+      vertices3d[vertex3d_index].y = 0.0;
     }
-    iVar2 = iVar2 * 0x21;
-    *(undefined4 *)(weg_points + 0xc + iVar2) = 0;
-    *(undefined4 *)(weg_points + 0x10 + iVar2) = 0x3f800000;
-    iVar6 = iVar6 + 4;
-    *(undefined4 *)(weg_points + 0x14 + iVar2) = 0;
+    vertices3d[vertex3d_index].nx = 0.0;
+    vertices3d[vertex3d_index].ny = 1.0;
+    vertex3d_index_2 = vertex3d_index_2 + 4;
+    vertices3d[vertex3d_index].nz = 0.0;
   }
   return weg_section_idx;
 }
@@ -773,12 +759,11 @@ void __watcall compute_road_height(undefined4 param_1)
 {
   bool bVar1;
   int iVar2;
-  int point_in_view_quad_result;
-  float *pfVar3;
+  vertex3d_t *vertex3d;
   int i;
-  int iVar4;
+  int iVar3;
+  float10 fVar4;
   float10 fVar5;
-  float10 fVar6;
   int weg_section_idx;
   
   bVar1 = true;
@@ -786,65 +771,58 @@ void __watcall compute_road_height(undefined4 param_1)
     fatal_exit(s__s__d____error_weg_not_initializ_0044cfe1,s_weg_cpp_0044cfd9,0x371);
   }
   i = 0;
-  iVar4 = 0;
+  iVar3 = 0;
   do {
     if (DAT_00476588 + -2 <= i) {
       return;
     }
-    *(undefined4 *)(weg_chunk_vertex_lists + iVar4) = 0;
-    weg_section_idx = *(int *)(*(int *)(weg_chunk_quads + iVar4) * 0x38 + 8 + weg_chunks);
-    pfVar3 = (float *)(weg_sections[weg_section_idx].point * 0x21 + weg_points);
-    fVar5 = (float10)pfVar3[2];
+    *(undefined4 *)(weg_chunk_vertex_lists + iVar3) = 0;
+    weg_section_idx = *(int *)(*(int *)(weg_chunk_quads + iVar3) * 0x38 + 8 + weg_chunks);
+    vertex3d = vertices3d + weg_sections[weg_section_idx].point;
+    fVar4 = (float10)vertex3d->z;
     CHP();
-    fVar6 = (float10)*pfVar3;
+    fVar5 = (float10)vertex3d->x;
     CHP();
-    iVar2 = point_in_view_quad((int)ROUND(fVar6),(int)ROUND(fVar5));
-    point_in_view_quad_result = weg_points;
+    iVar2 = point_in_view_quad((int)ROUND(fVar5),(int)ROUND(fVar4));
+    vertex3d = vertices3d;
     if (iVar2 == 0) {
-      fVar5 = (float10)*(float *)(weg_points + 8 +
-                                 *(int *)((int)weg_sections[weg_section_idx].buffer_2 + 0x28) * 0x21
-                                 );
+      fVar4 = (float10)vertices3d[*(int *)((int)weg_sections[weg_section_idx].buffer_2 + 0x28)].z;
       iVar2 = CHP();
-      fVar6 = (float10)*(float *)(point_in_view_quad_result + iVar2);
+      fVar5 = (float10)*(float *)((int)&vertex3d->x + iVar2);
       CHP();
-      iVar2 = point_in_view_quad((int)ROUND(fVar6),(int)ROUND(fVar5));
-      point_in_view_quad_result = weg_points;
+      iVar2 = point_in_view_quad((int)ROUND(fVar5),(int)ROUND(fVar4));
+      vertex3d = vertices3d;
       if (iVar2 != 0) goto LAB_004200ee;
-      fVar5 = (float10)*(float *)(weg_points + 8 +
-                                 *(int *)((int)weg_sections[weg_section_idx].buffer_1 + 0x28) * 0x21
-                                 );
+      fVar4 = (float10)vertices3d[*(int *)((int)weg_sections[weg_section_idx].buffer_1 + 0x28)].z;
       iVar2 = CHP();
-      fVar6 = (float10)*(float *)(point_in_view_quad_result + iVar2);
+      fVar5 = (float10)*(float *)((int)&vertex3d->x + iVar2);
       CHP();
-      point_in_view_quad_result = point_in_view_quad((int)ROUND(fVar6),(int)ROUND(fVar5));
-      if (point_in_view_quad_result != 0) goto LAB_004200ee;
+      iVar2 = point_in_view_quad((int)ROUND(fVar5),(int)ROUND(fVar4));
+      if (iVar2 != 0) goto LAB_004200ee;
     }
     else {
 LAB_004200ee:
-      pfVar3 = (float *)(weg_points + weg_sections[weg_section_idx].point * 0x21);
-      if (((((((float)view_min_x < *pfVar3) && (*pfVar3 < (float)view_max_x)) &&
-            ((float)view_min_z < pfVar3[2])) && (pfVar3[2] < (float)view_max_z)) ||
-          (((((pfVar3 = (float *)(weg_points + weg_sections[weg_section_idx].field_04 * 0x21),
-              (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
-             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))) ||
-            (((pfVar3 = (float *)(weg_points + weg_sections[weg_section_idx].field_08 * 0x21),
-              (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
-             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))))) ||
-           (((((pfVar3 = (float *)(weg_points +
-                                  *(int *)((int)weg_sections[weg_section_idx].buffer_2 + 0x28) *
-                                  0x21), (float)view_min_x < *pfVar3 &&
-               (*pfVar3 < (float)view_max_x)) && ((float)view_min_z < pfVar3[2])) &&
-             (pfVar3[2] < (float)view_max_z)) ||
-            (((pfVar3 = (float *)(weg_points +
-                                 *(int *)((int)weg_sections[weg_section_idx].buffer_1 + 0x28) * 0x21
-                                 ), (float)view_min_x < *pfVar3 && (*pfVar3 < (float)view_max_x)) &&
-             (((float)view_min_z < pfVar3[2] && (pfVar3[2] < (float)view_max_z)))))))))) &&
-         (*(undefined4 *)(weg_chunk_vertex_lists + iVar4) = 1, DAT_00476598 = i, bVar1)) {
+      vertex3d = vertices3d + weg_sections[weg_section_idx].point;
+      if (((((((float)view_min_x < vertex3d->x) && (vertex3d->x < (float)view_max_x)) &&
+            ((float)view_min_z < vertex3d->z)) && (vertex3d->z < (float)view_max_z)) ||
+          (((((vertex3d = vertices3d + weg_sections[weg_section_idx].field_04,
+              (float)view_min_x < vertex3d->x && (vertex3d->x < (float)view_max_x)) &&
+             (((float)view_min_z < vertex3d->z && (vertex3d->z < (float)view_max_z)))) ||
+            (((vertex3d = vertices3d + weg_sections[weg_section_idx].field_08,
+              (float)view_min_x < vertex3d->x && (vertex3d->x < (float)view_max_x)) &&
+             (((float)view_min_z < vertex3d->z && (vertex3d->z < (float)view_max_z)))))) ||
+           (((((vertex3d = vertices3d + *(int *)((int)weg_sections[weg_section_idx].buffer_2 + 0x28)
+               , (float)view_min_x < vertex3d->x && (vertex3d->x < (float)view_max_x)) &&
+              ((float)view_min_z < vertex3d->z)) && (vertex3d->z < (float)view_max_z)) ||
+            (((vertex3d = vertices3d + *(int *)((int)weg_sections[weg_section_idx].buffer_1 + 0x28),
+              (float)view_min_x < vertex3d->x && (vertex3d->x < (float)view_max_x)) &&
+             (((float)view_min_z < vertex3d->z && (vertex3d->z < (float)view_max_z)))))))))) &&
+         (*(undefined4 *)(weg_chunk_vertex_lists + iVar3) = 1, DAT_00476598 = i, bVar1)) {
         bVar1 = false;
         DAT_00476594 = i;
       }
     }
-    iVar4 = iVar4 + 4;
+    iVar3 = iVar3 + 4;
     i = i + 1;
   } while( true );
 }
@@ -858,32 +836,34 @@ debug_weg_position(undefined4 param_1,undefined4 param_2,undefined4 param_3,unde
 
 {
   int iVar1;
-  int iVar2;
-  float *pfVar3;
-  uint uVar4;
-  float10 fVar5;
+  vertex3d_t *vertex3d;
+  uint uVar2;
+  float10 fVar3;
+  float10 fVar4;
   
   if (weg_data_loaded == 0) {
     fatal_exit(s__s__d____error_weg_not_initializ_0044d00e,s_weg_cpp_0044d006,0x3c5);
   }
-  uVar4 = 0;
-  iVar2 = (DAT_00476588 + -2) * 4;
+  uVar2 = 0;
+  iVar1 = (DAT_00476588 + -2) * 4;
   while( true ) {
-    if (iVar2 <= (int)uVar4) {
+    if (iVar1 <= (int)uVar2) {
       return 0;
     }
-    iVar1 = weg_sections[*(int *)(*(int *)(weg_chunk_quads + uVar4) * 0x38 + 8 + weg_chunks)].point
-            * 0x21;
-    pfVar3 = (float *)(weg_points + iVar1);
-    fVar5 = ((float10)param_5 - (float10)*pfVar3) * ((float10)param_5 - (float10)*pfVar3) +
-            ((float10)param_6 - (float10)pfVar3[2]) * ((float10)param_6 - (float10)pfVar3[2]);
-    sqrt_checked(iVar1,pfVar3,uVar4,iVar2);
-    if (fVar5 < (float10)param_7) break;
-    uVar4 = uVar4 + 4;
+    vertex3d = vertices3d +
+               weg_sections[*(int *)(*(int *)(weg_chunk_quads + uVar2) * 0x38 + 8 + weg_chunks)].
+               point;
+    fVar3 = (float10)param_6 - (float10)vertex3d->z;
+    fVar4 = (float10)param_5 - (float10)vertex3d->x;
+    fVar3 = fVar4 * fVar4 + fVar3 * fVar3;
+    sqrt_checked(weg_sections[*(int *)(*(int *)(weg_chunk_quads + uVar2) * 0x38 + 8 + weg_chunks)].
+                 point * 0x21,vertex3d,uVar2,iVar1);
+    if (fVar3 < (float10)param_7) break;
+    uVar2 = uVar2 + 4;
   }
   debugmsg(s___5_2f__5_2f______5_2f__5_2f___5_0044d033,(double)param_5,(double)param_6,
-           (double)*pfVar3,(double)pfVar3[2],(double)(float)fVar5,(double)param_7,(float)fVar5,
-           param_2,param_4,param_3);
+           (double)vertex3d->x,(double)vertex3d->z,(double)(float)fVar3,(double)param_7,(float)fVar3
+           ,param_2,param_4,param_3);
   return 1;
 }
 
@@ -938,24 +918,25 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   IDirect3DExecuteBufferVtbl *pIVar1;
   HRESULT HVar2;
   char *d3d_error_string_result;
-  IDirect3DExecuteBuffer *pIVar3;
   int k;
-  undefined4 *puVar4;
+  IDirect3DExecuteBuffer *pIVar3;
+  vertex3d_t *vertex3d;
   int j;
   int i;
+  short sVar4;
   short sVar5;
-  short sVar6;
   DWORD arg4;
+  float *pfVar6;
   IDirect3DExecuteBuffer *pIVar7;
   byte bVar8;
   D3DEXECUTEDATA DStack_134;
-  undefined4 uStack_100;
-  undefined4 uStack_fc;
-  undefined4 uStack_f8;
+  float fStack_100;
+  float fStack_fc;
+  float fStack_f8;
   undefined4 local_f0;
   undefined4 local_ec;
-  undefined4 uStack_e8;
-  undefined4 uStack_e4;
+  float fStack_e8;
+  float fStack_e4;
   D3DEXECUTEBUFFERDESC d3_dexecutebufferdesc;
   IDirect3DExecuteBuffer *direct3_d_execute_buffer;
   IDirect3DExecuteBuffer *pIStack_c8;
@@ -1056,26 +1037,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
     do {
       k = *(int *)((int)&weg_sections
                          [*(int *)(*(int *)(weg_chunk_quads + iStack_6c) * 0x38 + 8 + weg_chunks)].
-                         point + j) * 0x21;
-      *(float *)(k + 0x18 + weg_points) = fStack_2c;
-      *(float *)(k + 0x1c + weg_points) = fStack_b0;
-      puVar4 = (undefined4 *)(k + weg_points);
-      uStack_100 = *puVar4;
-      uStack_fc = puVar4[1];
-      uStack_f8 = puVar4[2];
+                         point + j);
+      vertices3d[k].tu = fStack_2c;
+      vertices3d[k].tv = fStack_b0;
+      vertex3d = vertices3d + k;
+      fStack_100 = vertex3d->x;
+      fStack_fc = vertex3d->y;
+      fStack_f8 = vertex3d->z;
       fStack_2c = fStack_2c + 1.0;
-      uStack_e8 = puVar4[6];
-      uStack_e4 = puVar4[7];
-      puVar4 = &uStack_100;
+      fStack_e8 = vertex3d->tu;
+      fStack_e4 = vertex3d->tv;
+      pfVar6 = &fStack_100;
       pIVar3 = pIStack_c8;
       for (k = 8; k != 0; k = k + -1) {
-        pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-        puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+        pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+        pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
         pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
       }
       for (k = 0; k != 0; k = k + -1) {
-        *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-        puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+        *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+        pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
         pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
       }
       j = j + 4;
@@ -1093,26 +1074,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
     do {
       k = *(int *)((int)&weg_sections
                          [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_64) * 0x38)].
-                         point + j) * 0x21;
-      *(float *)(k + 0x18 + weg_points) = fStack_30;
-      *(float *)(k + 0x1c + weg_points) = fStack_34;
-      puVar4 = (undefined4 *)(k + weg_points);
-      uStack_100 = *puVar4;
-      uStack_fc = puVar4[1];
-      uStack_f8 = puVar4[2];
+                         point + j);
+      vertices3d[k].tu = fStack_30;
+      vertices3d[k].tv = fStack_34;
+      vertex3d = vertices3d + k;
+      fStack_100 = vertex3d->x;
+      fStack_fc = vertex3d->y;
+      fStack_f8 = vertex3d->z;
       fStack_30 = fStack_30 + 1.0;
-      uStack_e8 = puVar4[6];
-      uStack_e4 = puVar4[7];
-      puVar4 = &uStack_100;
+      fStack_e8 = vertex3d->tu;
+      fStack_e4 = vertex3d->tv;
+      pfVar6 = &fStack_100;
       pIVar3 = pIStack_c8;
       for (k = 8; k != 0; k = k + -1) {
-        pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-        puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+        pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+        pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
         pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
       }
       for (k = 0; k != 0; k = k + -1) {
-        *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-        puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+        *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+        pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
         pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
       }
       j = j + 8;
@@ -1129,26 +1110,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = (&weg_sections
           [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].
-          field_0c)[m] * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
+          field_0c)[m];
+    vertices3d[k].tu = *(float *)((int)&tile_u_coords + j);
+    vertices3d[k].tv = *(float *)((int)&tile_v_coords + j);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
     j = j + 4;
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     m = m + 1;
@@ -1160,26 +1141,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = *(int *)((int)&weg_sections
                        [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
-                       .field_0c + iStack_5c) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
+                       .field_0c + iStack_5c);
+    vertices3d[k].tu = *(float *)(j + 0x4768b8);
+    vertices3d[k].tv = *(float *)(j + 0x4768c8);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
     j = j + -4;
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     iStack_5c = iStack_5c + 4;
@@ -1192,25 +1173,25 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = (&weg_sections
           [*(int *)(*(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38 + 8 + weg_chunks)].
-          field_14)[n] * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+          field_14)[n];
+    vertices3d[k].tu = *(float *)((int)&tile_u_coords + j);
+    vertices3d[k].tv = *(float *)((int)&tile_v_coords + j);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     j = j + 4;
@@ -1223,26 +1204,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = *(int *)((int)&weg_sections
                        [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
-                       .field_14 + iStack_58) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
+                       .field_14 + iStack_58);
+    vertices3d[k].tu = *(float *)(j + 0x4768b8);
+    vertices3d[k].tv = *(float *)(j + 0x4768c8);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
     j = j + -4;
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     iStack_58 = iStack_58 + 4;
@@ -1255,26 +1236,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = (&weg_sections
           [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].
-          field_1c)[iStack_28] * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
+          field_1c)[iStack_28];
+    vertices3d[k].tu = *(float *)((int)&tile_u_coords + j);
+    vertices3d[k].tv = *(float *)((int)&tile_v_coords + j);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
     j = j + 4;
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     iStack_28 = iStack_28 + 1;
@@ -1286,26 +1267,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = *(int *)((int)&weg_sections
                        [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
-                       .field_1c + iStack_54) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
+                       .field_1c + iStack_54);
+    vertices3d[k].tu = *(float *)(j + 0x4768b8);
+    vertices3d[k].tv = *(float *)(j + 0x4768c8);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
     j = j + -4;
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     iStack_54 = iStack_54 + 4;
@@ -1318,25 +1299,25 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = (&weg_sections
           [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + DStack_134.dwSize * 4) * 0x38)].
-          field_24)[iStack_b4] * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)((int)&tile_u_coords + j);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)((int)&tile_v_coords + j);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+          field_24)[iStack_b4];
+    vertices3d[k].tu = *(float *)((int)&tile_u_coords + j);
+    vertices3d[k].tv = *(float *)((int)&tile_v_coords + j);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     j = j + 4;
@@ -1349,26 +1330,26 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   do {
     k = *(int *)((int)&weg_sections
                        [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_a4 * 4) * 0x38)]
-                       .field_24 + iStack_50) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = *(undefined4 *)(j + 0x4768b8);
-    *(undefined4 *)(k + 0x1c + weg_points) = *(undefined4 *)(j + 0x4768c8);
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
+                       .field_24 + iStack_50);
+    vertices3d[k].tu = *(float *)(j + 0x4768b8);
+    vertices3d[k].tv = *(float *)(j + 0x4768c8);
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
     j = j + -4;
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar3 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar3->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar3 = pIVar3 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar3->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar3 = (IDirect3DExecuteBuffer *)((int)pIVar3 + (uint)bVar8 * -2 + 1);
     }
     iStack_50 = iStack_50 + 4;
@@ -1388,98 +1369,98 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
     pIVar3 = pIStack_c8;
     k = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_7c) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_48 + 4) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&tile_u_coords)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&tile_v_coords)[j * 8];
-    puVar4 = (undefined4 *)(weg_points + k);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+                      buffer_1 + iStack_48 + 4);
+    vertices3d[k].tu = (float)(&tile_u_coords)[j * 8];
+    vertices3d[k].tv = (float)(&tile_v_coords)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar7 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIStack_c8 + 8;
     k = *(int *)((int)weg_sections
                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_7c) * 0x38)].
-                      buffer_1 + iStack_48) * 0x21;
+                      buffer_1 + iStack_48);
     i = i + 4;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767dc)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767ec)[j * 8];
-    puVar4 = (undefined4 *)(weg_points + k);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    vertices3d[k].tu = (float)(&DAT_004767dc)[j * 8];
+    vertices3d[k].tv = (float)(&DAT_004767ec)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     for (k = 8; k != 0; k = k + -1) {
-      pIStack_c8->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIStack_c8->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIStack_c8 = pIStack_c8 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIStack_c8->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIStack_c8->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIStack_c8 = (IDirect3DExecuteBuffer *)((int)pIStack_c8 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIVar3 + 0x10;
     k = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_74) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_48 + 4) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = (&DAT_004767e4)[j * 8];
-    *(undefined4 *)(k + 0x1c + weg_points) = (&DAT_004767f4)[j * 8];
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+                      buffer_1 + iStack_48 + 4);
+    vertices3d[k].tu = (float)(&DAT_004767e4)[j * 8];
+    vertices3d[k].tv = (float)(&DAT_004767f4)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar7 = pIVar3 + 0x10;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIVar3 + 0x18;
     k = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_74) * 0x38 + 8 + weg_chunks)].
-                      buffer_1 + iStack_48) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767e0)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767f0)[j * 8];
-    puVar4 = (undefined4 *)(weg_points + k);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
+                      buffer_1 + iStack_48);
+    vertices3d[k].tu = (float)(&DAT_004767e0)[j * 8];
+    vertices3d[k].tv = (float)(&DAT_004767f0)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
     iStack_48 = iStack_48 + 4;
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar7 = pIVar3 + 0x18;
     for (j = 8; j != 0; j = j + -1) {
-      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (j = 0; j != 0; j = j + -1) {
-      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIVar3 + 0x20;
@@ -1498,97 +1479,97 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
     pIVar3 = pIStack_c8;
     k = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_78) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_3c) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = (&tile_u_coords)[j * 8];
-    *(undefined4 *)(k + 0x1c + weg_points) = (&tile_v_coords)[j * 8];
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+                      buffer_2 + iStack_3c);
+    vertices3d[k].tu = (float)(&tile_u_coords)[j * 8];
+    vertices3d[k].tv = (float)(&tile_v_coords)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar7 = pIStack_c8;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIStack_c8 + 8;
     k = *(int *)((int)weg_sections
                       [*(int *)(weg_chunks + 8 + *(int *)(weg_chunk_quads + iStack_78) * 0x38)].
-                      buffer_2 + iStack_3c + 4) * 0x21;
+                      buffer_2 + iStack_3c + 4);
     i = i + 4;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767dc)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767ec)[j * 8];
-    puVar4 = (undefined4 *)(weg_points + k);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+    vertices3d[k].tu = (float)(&DAT_004767dc)[j * 8];
+    vertices3d[k].tv = (float)(&DAT_004767ec)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     for (k = 8; k != 0; k = k + -1) {
-      pIStack_c8->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIStack_c8->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIStack_c8 = pIStack_c8 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIStack_c8->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIStack_c8->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIStack_c8 = (IDirect3DExecuteBuffer *)((int)pIStack_c8 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIVar3 + 0x10;
     k = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_70) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_3c) * 0x21;
-    *(undefined4 *)(k + 0x18 + weg_points) = (&DAT_004767e4)[j * 8];
-    *(undefined4 *)(k + 0x1c + weg_points) = (&DAT_004767f4)[j * 8];
-    puVar4 = (undefined4 *)(k + weg_points);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+                      buffer_2 + iStack_3c);
+    vertices3d[k].tu = (float)(&DAT_004767e4)[j * 8];
+    vertices3d[k].tv = (float)(&DAT_004767f4)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar7 = pIVar3 + 0x10;
     for (k = 8; k != 0; k = k + -1) {
-      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (k = 0; k != 0; k = k + -1) {
-      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIVar3 + 0x18;
     k = *(int *)((int)weg_sections
                       [*(int *)(*(int *)(weg_chunk_quads + iStack_70) * 0x38 + 8 + weg_chunks)].
-                      buffer_2 + iStack_3c + 4) * 0x21;
-    *(undefined4 *)(weg_points + 0x18 + k) = (&DAT_004767e0)[j * 8];
-    *(undefined4 *)(weg_points + 0x1c + k) = (&DAT_004767f0)[j * 8];
-    puVar4 = (undefined4 *)(weg_points + k);
-    uStack_100 = *puVar4;
-    uStack_fc = puVar4[1];
-    uStack_f8 = puVar4[2];
-    uStack_e8 = puVar4[6];
-    uStack_e4 = puVar4[7];
-    puVar4 = &uStack_100;
+                      buffer_2 + iStack_3c + 4);
+    vertices3d[k].tu = (float)(&DAT_004767e0)[j * 8];
+    vertices3d[k].tv = (float)(&DAT_004767f0)[j * 8];
+    vertex3d = vertices3d + k;
+    fStack_100 = vertex3d->x;
+    fStack_fc = vertex3d->y;
+    fStack_f8 = vertex3d->z;
+    fStack_e8 = vertex3d->tu;
+    fStack_e4 = vertex3d->tv;
+    pfVar6 = &fStack_100;
     pIVar7 = pIVar3 + 0x18;
     for (j = 8; j != 0; j = j + -1) {
-      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*puVar4;
-      puVar4 = puVar4 + (uint)bVar8 * -2 + 1;
+      pIVar7->lpVtbl = (IDirect3DExecuteBufferVtbl *)*pfVar6;
+      pfVar6 = pfVar6 + (uint)bVar8 * -2 + 1;
       pIVar7 = pIVar7 + (uint)bVar8 * -2 + 1;
     }
     for (j = 0; j != 0; j = j + -1) {
-      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)puVar4;
-      puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar8 * -2 + 1);
+      *(undefined1 *)&pIVar7->lpVtbl = *(undefined1 *)pfVar6;
+      pfVar6 = (float *)((int)pfVar6 + (uint)bVar8 * -2 + 1);
       pIVar7 = (IDirect3DExecuteBuffer *)((int)pIVar7 + (uint)bVar8 * -2 + 1);
     }
     pIStack_c8 = pIVar3 + 0x20;
@@ -1740,7 +1721,7 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
   *(undefined2 *)&pIStack_c8[0x20].lpVtbl = 0x14;
   j = 0x18;
   *(undefined2 *)&pIStack_c8[0x1f].lpVtbl = 0x15;
-  sVar6 = 0x1b;
+  sVar5 = 0x1b;
   pIVar3 = pIStack_c8 + 0x21;
   pIStack_c8 = pIStack_c8 + 1;
   for (i = 0; i < param_2 + -1; i = i + 1) {
@@ -1748,17 +1729,17 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
       fatal_exit(s__s__d____error_creating_weg_eb___0044d219,s_weg_cpp_0044d211,0x623,
                  DStack_134.dwSize,j,direct3_d_execute_buffer_vtbl);
     }
-    sVar5 = (short)j;
-    *(short *)&pIVar3->lpVtbl = sVar5;
+    sVar4 = (short)j;
+    *(short *)&pIVar3->lpVtbl = sVar4;
     *(undefined2 *)((int)&pIVar3[1].lpVtbl + 2) = 0x700;
-    *(short *)&pIVar3[1].lpVtbl = sVar6;
-    *(short *)((int)&pIVar3->lpVtbl + 2) = sVar5 + 2;
+    *(short *)&pIVar3[1].lpVtbl = sVar5;
+    *(short *)((int)&pIVar3->lpVtbl + 2) = sVar4 + 2;
     *(undefined2 *)((int)&pIVar3[3].lpVtbl + 2) = 0x700;
-    *(short *)&pIVar3[2].lpVtbl = sVar5;
-    *(short *)((int)&pIVar3[2].lpVtbl + 2) = sVar6;
-    sVar6 = sVar6 + 4;
+    *(short *)&pIVar3[2].lpVtbl = sVar4;
+    *(short *)((int)&pIVar3[2].lpVtbl + 2) = sVar5;
+    sVar5 = sVar5 + 4;
     j = j + 4;
-    *(short *)&pIVar3[3].lpVtbl = sVar5 + 1;
+    *(short *)&pIVar3[3].lpVtbl = sVar4 + 1;
     pIVar3 = pIVar3 + 4;
   }
   k = j + 3;
@@ -1767,17 +1748,17 @@ DWORD __watcall build_weg_execute_buffers(DWORD param_1,int param_2,DWORD param_
       fatal_exit(s__s__d____error_creating_weg_eb___0044d276,s_weg_cpp_0044d26e,0x637,
                  DStack_134.dwSize,j,direct3_d_execute_buffer_vtbl);
     }
-    sVar6 = (short)j;
-    *(short *)&pIVar3->lpVtbl = sVar6;
+    sVar5 = (short)j;
+    *(short *)&pIVar3->lpVtbl = sVar5;
     *(undefined2 *)((int)&pIVar3[1].lpVtbl + 2) = 0x700;
     *(short *)&pIVar3[1].lpVtbl = (short)k;
-    *(short *)((int)&pIVar3->lpVtbl + 2) = sVar6 + 2;
+    *(short *)((int)&pIVar3->lpVtbl + 2) = sVar5 + 2;
     *(undefined2 *)((int)&pIVar3[3].lpVtbl + 2) = 0x700;
-    *(short *)&pIVar3[2].lpVtbl = sVar6;
+    *(short *)&pIVar3[2].lpVtbl = sVar5;
     *(short *)((int)&pIVar3[2].lpVtbl + 2) = (short)k;
     k = k + 4;
     j = j + 4;
-    *(short *)&pIVar3[3].lpVtbl = sVar6 + 1;
+    *(short *)&pIVar3[3].lpVtbl = sVar5 + 1;
     pIVar3 = pIVar3 + 4;
   }
   *(undefined1 *)&pIVar3->lpVtbl = 0xb;

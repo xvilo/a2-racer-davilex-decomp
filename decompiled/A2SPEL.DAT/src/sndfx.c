@@ -86,12 +86,12 @@ void __watcall start_object_sound(int slot,int object)
   int iVar2;
   float10 fVar3;
   float in_stack_00000010;
-  racer_object_t *racer_object;
+  object3d_t *object3d;
   
-  racer_object = racers;
+  object3d = objects3d;
   fVar3 = (float10)in_stack_00000010;
   opponent_index = CHP();
-  opponent_index = *(int *)((int)racer_object + (object * 0x50 - opponent_index) + 0x37);
+  opponent_index = *(int *)((int)object3d + (object * 0x50 - opponent_index) + 0x37);
   iVar2 = (&volume_by_distance)[(int)ROUND(fVar3)] - volume_attenuation;
   if (engine_sound_enabled == 0) {
     return;

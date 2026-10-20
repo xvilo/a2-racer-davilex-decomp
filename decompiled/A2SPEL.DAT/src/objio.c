@@ -17,8 +17,8 @@ void __watcall resolve_collision(int racer_a,int racer_b)
   opponent_t *opponent_index;
   opponent_t *opponent_index_2;
   
-  opponent_index_2 = racers[racer_a].opponent;
-  opponent_index = racers[racer_b].opponent;
+  opponent_index_2 = objects3d[racer_a].opponent;
+  opponent_index = objects3d[racer_b].opponent;
   fVar1 = opponent_data[(int)opponent_index_2].offset_x;
   fVar2 = opponent_data[(int)opponent_index_2].offset_z;
   fVar4 = opponent_data[(int)opponent_index_2].mass + opponent_data[(int)opponent_index].mass;
@@ -73,71 +73,66 @@ void __watcall resolve_collision(int racer_a,int racer_b)
 
 /* ==== 0040a17d compute_object_bounds ==== */
 
-undefined4 __watcall compute_object_bounds(int racer_object_index)
+undefined4 __watcall compute_object_bounds(int object3d_index)
 
 {
   opponent_t *arg2;
-  int iVar1;
   int i;
-  racer_object_t *racer_object;
-  int *piVar2;
-  float *pfVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
-  int iVar7;
-  float10 fVar8;
+  object3d_t *object3d;
+  vertex3d_t *vertex3d;
+  int iVar1;
+  int iVar2;
+  float10 fVar3;
   undefined8 debugmsg_result;
   float local_28;
   float local_24;
   float local_20;
   float local_1c;
+  vertex3d_t *frame3d_index;
+  vertex3d_t *vertex3d_index;
   
-  racer_object = racers + racer_object_index;
+  object3d = objects3d + object3d_index;
   local_20 = 0.0;
   local_1c = 0.0;
-  uVar5 = *(uint *)(*(int *)(anims3d + racer_object->anim * 9 + 4) + racer_object->frame * 4);
-  arg2 = racer_object->opponent;
+  frame3d_index = (vertex3d_t *)anims3d[object3d->anim].frames[object3d->frame];
+  arg2 = object3d->opponent;
   local_28 = 10000.0;
   local_24 = 10000.0;
   if (((int)arg2 < 0) || (opponent_count < (int)arg2)) {
     fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443be6,arg2,opponent_count);
   }
-  iVar6 = 0;
-  iVar1 = uVar5 * 0x11;
-  iVar7 = 0;
-  for (i = 0; piVar2 = (int *)(frames3d + iVar1), i < *piVar2; i = i + 1) {
-    uVar5 = *(uint *)(iVar7 + piVar2[1]);
-    if (*(char *)(weg_points + 0x20 + iVar6) != '\0') {
-      pfVar3 = (float *)(weg_points + uVar5 * 0x21);
-      if (*pfVar3 < local_28) {
-        local_28 = *pfVar3;
+  iVar1 = 0;
+  iVar2 = 0;
+  vertex3d = frame3d_index;
+  for (i = 0; i < (int)frames3d[(int)frame3d_index].vertex_count; i = i + 1) {
+    vertex3d_index = *(vertex3d_t **)(iVar2 + (int)frames3d[(int)frame3d_index].vertices);
+    vertex3d = vertex3d_index;
+    if ((&vertices3d->in_use)[iVar1] != '\0') {
+      if (vertices3d[(int)vertex3d_index].x < local_28) {
+        local_28 = vertices3d[(int)vertex3d_index].x;
       }
-      iVar4 = uVar5 * 0x21 + weg_points;
-      if (*(float *)(iVar4 + 8) < local_24) {
-        local_24 = *(float *)(iVar4 + 8);
+      if (vertices3d[(int)vertex3d_index].z < local_24) {
+        local_24 = vertices3d[(int)vertex3d_index].z;
       }
-      pfVar3 = (float *)(uVar5 * 0x21 + weg_points);
-      if (local_20 < *pfVar3) {
-        local_20 = *pfVar3;
+      if (local_20 < vertices3d[(int)vertex3d_index].x) {
+        local_20 = vertices3d[(int)vertex3d_index].x;
       }
-      iVar4 = uVar5 * 0x21 + weg_points;
-      uVar5 = weg_points;
-      if (local_1c < *(float *)(iVar4 + 8)) {
-        local_1c = *(float *)(iVar4 + 8);
+      vertex3d = vertices3d;
+      if (local_1c < vertices3d[(int)vertex3d_index].z) {
+        local_1c = vertices3d[(int)vertex3d_index].z;
       }
     }
-    iVar6 = iVar6 + 0x21;
-    iVar7 = iVar7 + 4;
+    iVar1 = iVar1 + 0x21;
+    iVar2 = iVar2 + 4;
   }
   debugmsg_result =
-       debugmsg(s_Bounding_rectangle_for_object__d_00443c0e,racer_object_index,
-                SUB84((double)local_28,0),(int)((ulonglong)(double)local_28 >> 0x20),
-                SUB84((double)local_24,0),(int)((ulonglong)(double)local_24 >> 0x20),
-                SUB84((double)local_20,0),(int)((ulonglong)(double)local_20 >> 0x20),
-                SUB84((double)local_1c,0),(int)((ulonglong)(double)local_1c >> 0x20));
-  fVar8 = (float10)local_1c * (float10)local_1c + (float10)local_20 * (float10)local_20;
-  sqrt_checked((int)debugmsg_result,(int)((ulonglong)debugmsg_result >> 0x20),uVar5,i);
+       debugmsg(s_Bounding_rectangle_for_object__d_00443c0e,object3d_index,SUB84((double)local_28,0)
+                ,(int)((ulonglong)(double)local_28 >> 0x20),SUB84((double)local_24,0),
+                (int)((ulonglong)(double)local_24 >> 0x20),SUB84((double)local_20,0),
+                (int)((ulonglong)(double)local_20 >> 0x20),SUB84((double)local_1c,0),
+                (int)((ulonglong)(double)local_1c >> 0x20));
+  fVar3 = (float10)local_1c * (float10)local_1c + (float10)local_20 * (float10)local_20;
+  sqrt_checked((int)debugmsg_result,(int)((ulonglong)debugmsg_result >> 0x20),(uint)vertex3d,i);
   opponent_data[(int)arg2].field_88 = local_28;
   *(undefined4 *)&opponent_data[(int)arg2].field_0x8c = 0;
   opponent_data[(int)arg2].field_90 = local_24;
@@ -150,8 +145,8 @@ undefined4 __watcall compute_object_bounds(int racer_object_index)
   opponent_data[(int)arg2].field_ac = local_28;
   *(undefined4 *)&opponent_data[(int)arg2].field_0xb0 = 0;
   opponent_data[(int)arg2].field_b4 = local_1c;
-  opponent_data[(int)arg2].radius = (float)fVar8;
-  debugmsg(s_radius_for_object__d_____f__00443c40,racer_object_index,
+  opponent_data[(int)arg2].radius = (float)fVar3;
+  debugmsg(s_radius_for_object__d_____f__00443c40,object3d_index,
            SUB84((double)opponent_data[(int)arg2].radius,0),
            (int)((ulonglong)(double)opponent_data[(int)arg2].radius >> 0x20));
   return 0;
@@ -192,8 +187,8 @@ int __watcall racers_collide(int racer_a,int racer_b)
   int local_1c;
   int local_18;
   
-  arg2 = racers[racer_a].opponent;
-  arg2_00 = racers[racer_b].opponent;
+  arg2 = objects3d[racer_a].opponent;
+  arg2_00 = objects3d[racer_b].opponent;
   local_18 = 0;
   if (((int)arg2 < 0) || (opponent_count < (int)arg2)) {
     fatal_exit(s__s__d__Illegal_opponent_nr__d__m_00443d41,arg2,opponent_count);
@@ -802,51 +797,47 @@ int __watcall update_race(undefined4 param_1,int frame_val,int param_3,int param
 
 /* ==== 0040cb06 load_object_file ==== */
 
-int __watcall load_object_file(char *filename_val)
+int __watcall load_object_file(char *filename)
 
 {
   __iobuf *file;
-  uint count_read;
   int i;
   int j;
   int *piVar1;
   int iVar2;
-  int local_2c;
-  int local_28;
+  int vertex_count_val;
+  int triangle_count_val;
   int new_object3d;
   int local_20;
   int local_1c;
   
-  file = xvga_src_fopen(filename_val);
+  file = xvga_src_fopen(filename);
   if (file == (__iobuf *)0x0) {
-    fatal_exit(s__s__d____Unable_to_load_object__c_004440e0,s_objio_cpp_004440d6,0x6c,filename_val);
+    fatal_exit(s__s__d____Unable_to_load_object__c_004440e0,s_objio_cpp_004440d6,0x6c,filename);
   }
-  fread((char *)&local_2c,1,4,(int *)file);
-  count_read = fread((char *)&local_28,1,4,(int *)file);
-  i = get_new_object3d(count_read);
-  racers[i].in_use = '\x01';
+  fread((char *)&vertex_count_val,1,4,(int *)file);
+  fread((char *)&triangle_count_val,1,4,(int *)file);
+  i = get_new_object3d();
+  objects3d[i].in_use = '\x01';
   new_object3d = i;
-  j = init_static_anim3d(1,local_2c,local_28);
-  racers[i].anim = j;
-  racers[i].frame = 0;
+  j = init_static_anim3d(1,vertex_count_val,triangle_count_val);
+  objects3d[i].anim = j;
+  objects3d[i].frame = 0;
   iVar2 = 0;
   local_1c = i * 0x4b;
-  for (j = 0; j < local_2c; j = j + 1) {
-    piVar1 = (int *)((int)&racers->anim + local_1c);
-    piVar1 = (int *)(iVar2 + *(int *)(frames3d + 4 +
-                                     *(int *)(*(int *)(*piVar1 * 9 + 4 + anims3d) + piVar1[1] * 4) *
-                                     0x11));
+  for (j = 0; j < vertex_count_val; j = j + 1) {
+    piVar1 = (int *)((int)&objects3d->anim + local_1c);
+    piVar1 = (int *)(iVar2 + (int)frames3d[anims3d[*piVar1].frames[piVar1[1]]].vertices);
     iVar2 = iVar2 + 4;
-    fread((char *)(weg_points + *piVar1 * 0x21),1,0x21,(int *)file);
+    fread((char *)(vertices3d + *piVar1),1,0x21,(int *)file);
   }
   local_20 = new_object3d * 0x4b;
   j = 0;
-  for (i = 0; i < local_28; i = i + 1) {
-    piVar1 = (int *)((int)&racers->anim + local_20);
-    piVar1 = (int *)(j + *(int *)(*(int *)(*(int *)(anims3d + *piVar1 * 9 + 4) + piVar1[1] * 4) *
-                                  0x11 + 0xc + frames3d));
+  for (i = 0; i < triangle_count_val; i = i + 1) {
+    piVar1 = (int *)((int)&objects3d->anim + local_20);
+    piVar1 = (int *)(j + (int)frames3d[anims3d[*piVar1].frames[piVar1[1]]].triangles);
     j = j + 4;
-    fread((char *)(triangles3d + *piVar1 * 9),1,9,(int *)file);
+    fread((char *)(triangles3d + *piVar1),1,9,(int *)file);
   }
   xvga_src_fclose(file);
   return new_object3d;
@@ -862,8 +853,8 @@ void __watcall load_object_mesh(int object,char *filename)
   int i;
   int *piVar1;
   int iVar2;
-  int local_24;
-  int local_20;
+  int vertex_count_val;
+  int triangle_count_val;
   int local_1c;
   int local_18;
   
@@ -871,29 +862,26 @@ void __watcall load_object_mesh(int object,char *filename)
   if (file == (__iobuf *)0x0) {
     fatal_exit(s__s__d____Unable_to_load_object__c_0044411d,s_objio_cpp_00444113,0x9e,filename);
   }
-  fread((char *)&local_24,1,4,(int *)file);
-  fread((char *)&local_20,1,4,(int *)file);
-  racers[object].in_use = '\x01';
-  i = init_frame3d();
+  fread((char *)&vertex_count_val,1,4,(int *)file);
+  fread((char *)&triangle_count_val,1,4,(int *)file);
+  objects3d[object].in_use = '\x01';
+  i = init_frame3d(vertex_count_val,triangle_count_val);
   iVar2 = 0;
-  *(int *)(*(int *)(anims3d + 4 + racers[object].anim * 9) + racers[object].frame * 4) = i;
+  anims3d[objects3d[object].anim].frames[objects3d[object].frame] = i;
   local_18 = object * 0x4b;
-  for (i = 0; i < local_24; i = i + 1) {
-    piVar1 = (int *)((int)&racers->anim + local_18);
-    piVar1 = (int *)(*(int *)(*(int *)(*(int *)(*piVar1 * 9 + 4 + anims3d) + piVar1[1] * 4) * 0x11 +
-                              4 + frames3d) + iVar2);
+  for (i = 0; i < vertex_count_val; i = i + 1) {
+    piVar1 = (int *)((int)&objects3d->anim + local_18);
+    piVar1 = (int *)((int)frames3d[anims3d[*piVar1].frames[piVar1[1]]].vertices + iVar2);
     iVar2 = iVar2 + 4;
-    fread((char *)(weg_points + *piVar1 * 0x21),1,0x21,(int *)file);
+    fread((char *)(vertices3d + *piVar1),1,0x21,(int *)file);
   }
   local_1c = object * 0x4b;
   iVar2 = 0;
-  for (i = 0; i < local_20; i = i + 1) {
-    piVar1 = (int *)((int)&racers->anim + local_1c);
-    piVar1 = (int *)(iVar2 + *(int *)(frames3d + 0xc +
-                                     *(int *)(*(int *)(*piVar1 * 9 + 4 + anims3d) + piVar1[1] * 4) *
-                                     0x11));
+  for (i = 0; i < triangle_count_val; i = i + 1) {
+    piVar1 = (int *)((int)&objects3d->anim + local_1c);
+    piVar1 = (int *)(iVar2 + (int)frames3d[anims3d[*piVar1].frames[piVar1[1]]].triangles);
     iVar2 = iVar2 + 4;
-    fread((char *)(triangles3d + *piVar1 * 9),1,9,(int *)file);
+    fread((char *)(triangles3d + *piVar1),1,9,(int *)file);
   }
   xvga_src_fclose(file);
   return;

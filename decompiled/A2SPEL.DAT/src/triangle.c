@@ -3,25 +3,25 @@
 
 /* ==== 0042c8e0 alloc_triangles ==== */
 
-undefined4 __watcall alloc_triangles(int param_1)
+int __watcall alloc_triangles(int count)
 
 {
   int i;
   int extraout_EDX;
   int iVar1;
   
-  if (DAT_00480d84 == 0) {
-    triangles3d = LocalAlloc(0x40,param_1 * 9);
-    if (triangles3d == (HLOCAL)0x0) {
+  if (triangles_initialized == 0) {
+    triangles3d = LocalAlloc(0x40,count * 9);
+    if (triangles3d == (triangle3d_t *)0x0) {
       debugmsg(s__s__d____not_enough_memory_for_t_00451d28);
       return 2000;
     }
-    debugmsg(s__d_triangles_initialized_00451d53,param_1);
-    DAT_00480d84 = 1;
+    debugmsg(s__d_triangles_initialized_00451d53,count);
+    triangles_initialized = 1;
     iVar1 = extraout_EDX;
-    DAT_00480d80 = param_1;
-    for (i = 0; i < DAT_00480d80; i = i + 1) {
-      *(undefined1 *)(iVar1 + 8 + (int)triangles3d) = 0;
+    triangle_capacity = count;
+    for (i = 0; i < triangle_capacity; i = i + 1) {
+      (&triangles3d->in_use)[iVar1] = '\0';
       iVar1 = iVar1 + 9;
     }
   }
@@ -36,15 +36,15 @@ void __watcall free_triangles(void)
 {
   HLOCAL pvVar1;
   
-  if (DAT_00480d84 != 0) {
+  if (triangles_initialized != 0) {
     pvVar1 = LocalFree(triangles3d);
     if (pvVar1 != (HLOCAL)0x0) {
       debugmsg(s__s__d____error_freeing_triangles_00451d6e);
       return;
     }
     debugmsg(s_Triangle_array_freed_00451d92);
-    DAT_00480d80 = 0;
-    DAT_00480d84 = 0;
+    triangle_capacity = 0;
+    triangles_initialized = 0;
   }
   return;
 }
@@ -61,11 +61,11 @@ int __watcall find_free_triangles(void)
   i = 0;
   iVar1 = 0;
   while( true ) {
-    if (DAT_00480d80 * 9 <= iVar1) {
+    if (triangle_capacity * 9 <= iVar1) {
       fatal_exit(s__s__d____no_more_free_triangles_00451db5,s_triangle_cpp_00451da8,0x5b);
       return 0;
     }
-    if (*(char *)(triangles3d + 8 + iVar1) == '\0') break;
+    if ((&triangles3d->in_use)[iVar1] == '\0') break;
     iVar1 = iVar1 + 9;
     i = i + 1;
   }
@@ -80,9 +80,9 @@ int __watcall get_new_triangles(void)
 {
   int free_triangles_val;
   
-  if (DAT_00480d88 < DAT_00480d80) {
-    free_triangles_val = DAT_00480d88;
-    DAT_00480d88 = DAT_00480d88 + 1;
+  if (next_triangle < triangle_capacity) {
+    free_triangles_val = next_triangle;
+    next_triangle = next_triangle + 1;
     return free_triangles_val;
   }
   free_triangles_val = find_free_triangles();

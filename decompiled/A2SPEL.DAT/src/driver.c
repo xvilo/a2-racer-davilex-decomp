@@ -956,7 +956,7 @@ undefined4 __watcall drive_traffic(int param_1)
     piVar13[1] = local_34[4];
     piVar13[2] = (int)(float)*(int *)(piVar13[5] * 0xc + 8 + driver_lane_data);
     if (opponent->max_speed == 0.0) {
-      racers[opponent->object].needs_update = -1;
+      objects3d[opponent->object].update_interval = -1;
     }
   }
   debugmsg(s_Racer_logic_activated_00444c86);

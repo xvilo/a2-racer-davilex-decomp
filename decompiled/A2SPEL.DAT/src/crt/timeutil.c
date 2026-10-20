@@ -73,16 +73,16 @@ int __watcall calc_yday(int param_1,int param_2)
 undefined4 __watcall check_order(int param_1,int param_2,int param_3)
 
 {
-  int yday_2;
   int yday;
+  int yday_2;
   
   if (*(int *)(param_2 + 0x10) < *(int *)(param_1 + 0x10)) {
     return 1;
   }
   if (*(int *)(param_2 + 0x10) <= *(int *)(param_1 + 0x10)) {
-    yday_2 = calc_yday(param_1,param_3);
-    yday = calc_yday(param_2,param_3);
-    if (yday < yday_2) {
+    yday = calc_yday(param_1,param_3);
+    yday_2 = calc_yday(param_2,param_3);
+    if (yday_2 < yday) {
       return 1;
     }
   }

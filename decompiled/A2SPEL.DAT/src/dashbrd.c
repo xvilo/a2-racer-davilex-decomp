@@ -173,10 +173,10 @@ void __watcall draw_time_left(void)
 {
   int frame;
   ulonglong uVar1;
-  int frame_index;
   int frame_index_2;
-  int frame_index_3;
+  int frame_index;
   int frame_index_4;
+  int frame_index_3;
   int iVar2;
   int frame_index_5;
   int unaff_ESI;
@@ -196,20 +196,19 @@ void __watcall draw_time_left(void)
           ((ulonglong)(uint)((int)((longlong)time_left / 0x3c) >> 0x1f) << 0x20 |
           (longlong)time_left / 0x3c & 0xffffffffU) % 0x3c;
   frame_index_5 = (int)uVar1;
-  frame_index = (int)((longlong)time_left / 0xe10);
-  frame_index_2 =
-       (int)((longlong)
-             ((ulonglong)(uint)(iVar2 >> 0x1f) << 0x20 | (longlong)time_left % 0x3c & 0xffffffffU) /
-            10);
-  frame_index_3 =
+  frame_index_2 = (int)((longlong)time_left / 0xe10);
+  frame_index = (int)((longlong)
+                      ((ulonglong)(uint)(iVar2 >> 0x1f) << 0x20 |
+                      (longlong)time_left % 0x3c & 0xffffffffU) / 10);
+  frame_index_4 =
        (int)((longlong)((ulonglong)(uint)(frame_index_5 >> 0x1f) << 0x20 | uVar1 & 0xffffffff) / 10)
   ;
-  frame_index_5 = frame_index_5 + frame_index_3 * -10;
-  frame_index_4 =
+  frame_index_5 = frame_index_5 + frame_index_4 * -10;
+  frame_index_3 =
        (int)((longlong)
-             ((ulonglong)(uint)(frame_index >> 0x1f) << 0x20 |
+             ((ulonglong)(uint)(frame_index_2 >> 0x1f) << 0x20 |
              (longlong)time_left / 0xe10 & 0xffffffffU) / 10);
-  frame_index = frame_index + frame_index_4 * -10;
+  frame_index_2 = frame_index_2 + frame_index_3 * -10;
   if (screen_resolution == 0) {
     unaff_EDI = 0x42;
     unaff_ESI = 0x18;
@@ -230,37 +229,37 @@ void __watcall draw_time_left(void)
   check_dashboard_frame(frame);
   set_mem_image(dashboard_surface,frame,iStack_38,iStack_48,2);
   if (screen_resolution == 0) {
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_4].image,unaff_EDI,
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_3].image,unaff_EDI,
                   unaff_ESI,0);
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index].image,
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_2].image,
                   unaff_EDI + 0x14,unaff_ESI,0);
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_3].image,
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_4].image,
                   unaff_EDI + 0x39,unaff_ESI,0);
     set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_5].image,
                   unaff_EDI + 0x4e,unaff_ESI,0);
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_2].image,
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index].image,
                   unaff_EDI + 0x71,unaff_ESI,0);
     frame_val = xvga_anims[anim_index].frames;
-    frame_index = unaff_EDI + 0x86;
+    frame_index_2 = unaff_EDI + 0x86;
   }
   else {
     if (screen_resolution != 1) {
       return;
     }
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_4].image,unaff_EDI,
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_3].image,unaff_EDI,
                   unaff_ESI,0);
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index].image,unaff_EDI + 10,
-                  unaff_ESI,0);
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_3].image,
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_2].image,
+                  unaff_EDI + 10,unaff_ESI,0);
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_4].image,
                   unaff_EDI + 0x1a,unaff_ESI,0);
     set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_5].image,
                   unaff_EDI + 0x24,unaff_ESI,0);
-    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index_2].image,
+    set_mem_image(dashboard_surface,xvga_anims[anim_index].frames[frame_index].image,
                   unaff_EDI + 0x34,unaff_ESI,0);
     frame_val = xvga_anims[anim_index].frames;
-    frame_index = unaff_EDI + 0x3e;
+    frame_index_2 = unaff_EDI + 0x3e;
   }
-  set_mem_image(dashboard_surface,frame_val[iVar2 + frame_index_2 * -10].image,frame_index,unaff_ESI
+  set_mem_image(dashboard_surface,frame_val[iVar2 + frame_index * -10].image,frame_index_2,unaff_ESI
                 ,0);
   return;
 }

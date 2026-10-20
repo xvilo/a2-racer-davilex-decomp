@@ -1028,6 +1028,7 @@ address	type	value
 00446c12	string	setting static object position\n
 00446c32	string	create execute buffer object..\n
 00446c52	string	done creating execute buffer object..\n
+00446c81	string	pion.cpp
 00446c8a	string	 %s(%d) : Illegal object number (%d)\n
 00446cb0	string	pion.cpp
 00446cb9	string	 %s(%d) : D3DError Getting matrix : %s\n

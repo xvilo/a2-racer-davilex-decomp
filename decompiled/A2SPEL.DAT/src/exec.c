@@ -435,9 +435,10 @@ void __watcall render_3d_frame(void)
   }
   iVar2 = 0;
   for (arg4 = 0; arg4 < object_count; arg4 = arg4 + 1) {
-    if (((&racers->in_use)[iVar2] != '\0') && ((&racers->visible)[iVar2] != '\0')) {
+    if (((&objects3d->in_use)[iVar2] != '\0') && ((&objects3d->visible)[iVar2] != '\0')) {
       HVar1 = (*d3d_device->lpVtbl->Execute)
-                        (d3d_device,*(IDirect3DExecuteBuffer **)((int)&racers->field_30 + iVar2),
+                        (d3d_device,
+                         *(IDirect3DExecuteBuffer **)((int)&objects3d->exec_buffer + iVar2),
                          d3d_viewport,1);
       if (HVar1 != 0) {
         d3d_error_string_result = d3d_error_string(HVar1);
@@ -460,228 +461,223 @@ void __watcall render_3d_frame(void)
 
 /* ==== 0041d654 build_object_execute_buffer ==== */
 
-void __watcall build_object_execute_buffer(int racer_object_index)
+void __watcall build_object_execute_buffer(int object)
 
 {
-  DWORD *pDVar1;
-  HRESULT HVar2;
+  HRESULT HVar1;
   char *d3d_error_string_result;
-  int m;
-  undefined4 *puVar3;
+  float *pfVar2;
   int k;
+  int m;
   int arg4;
-  undefined4 *puVar4;
-  int iVar5;
-  int i;
   int j;
+  int i;
   DWORD arg4_00;
-  byte bVar6;
+  vertex3d_t *pvVar3;
+  float *pfVar4;
+  byte bVar5;
   D3DEXECUTEDATA DStack_a0;
-  undefined4 uStack_70;
-  undefined4 uStack_6c;
-  undefined4 uStack_68;
+  float fStack_70;
+  float fStack_6c;
+  float fStack_68;
   undefined4 uStack_60;
   undefined4 uStack_5c;
-  undefined4 uStack_58;
-  undefined4 uStack_54;
+  float fStack_58;
+  float fStack_54;
   D3DEXECUTEBUFFERDESC d3_dexecutebufferdesc;
   IDirect3DExecuteBuffer *direct3_d_execute_buffer;
-  undefined4 *puStack_38;
-  undefined4 *puStack_34;
-  int local_30;
-  DWORD local_2c;
-  DWORD local_28;
+  float *pfStack_38;
+  float *pfStack_34;
+  int frame3d_index;
+  int local_2c;
+  float local_28;
   int iStack_24;
-  undefined4 *puStack_20;
-  undefined4 *puStack_1c;
+  float *pfStack_20;
+  float *pfStack_1c;
   
-  bVar6 = 0;
-  if ((racer_object_index < 0) || (object_count < racer_object_index)) {
-    fatal_exit(s__s__d____error_illegal_object_in_0044c78f,s_exec_cpp_0044c786,0x1ca,
-               racer_object_index,object_count);
+  bVar5 = 0;
+  if ((object < 0) || (object_count < object)) {
+    fatal_exit(s__s__d____error_illegal_object_in_0044c78f,s_exec_cpp_0044c786,0x1ca,object,
+               object_count);
   }
-  local_30 = *(int *)(*(int *)(anims3d + 4 + racers[racer_object_index].anim * 9) +
-                     racers[racer_object_index].frame * 4);
-  pDVar1 = (DWORD *)(local_30 * 0x11 + frames3d);
-  local_28 = *pDVar1;
-  local_2c = pDVar1[2];
+  frame3d_index = anims3d[objects3d[object].anim].frames[objects3d[object].frame];
+  local_28 = frames3d[frame3d_index].vertex_count;
+  local_2c = frames3d[frame3d_index].triangle_count;
   debugmsg(s_nb_verts____d_0044c7c0,local_28);
   debugmsg(s_nb_tris____d_0044c7cf,local_2c);
   if (max_vertex_count < arg4) {
-    fatal_exit(s__s__d____Too_many_vertices___d__i_0044c7e6,s_exec_cpp_0044c7dd,0x1d4,arg4,
-               racer_object_index);
+    fatal_exit(s__s__d____Too_many_vertices___d__i_0044c7e6,s_exec_cpp_0044c7dd,0x1d4,arg4,object);
   }
-  arg4_00 = local_28 * 0x20 + 0x88 + local_2c * 8;
+  arg4_00 = (int)local_28 * 0x20 + 0x88 + local_2c * 8;
   if (max_buffer_size < (int)arg4_00) {
-    fatal_exit(s__s__d____Execbuffer_too_large____0044c81d,s_exec_cpp_0044c814,0x1e4,arg4_00,
-               racer_object_index);
+    fatal_exit(s__s__d____Execbuffer_too_large____0044c81d,s_exec_cpp_0044c814,0x1e4,arg4_00,object)
+    ;
   }
   memset(&d3_dexecutebufferdesc.dwSize,0,0x14);
   d3_dexecutebufferdesc.dwSize = 0x14;
   d3_dexecutebufferdesc.dwFlags = 1;
   d3_dexecutebufferdesc.dwBufferSize = arg4_00;
-  HVar2 = (*d3d_device->lpVtbl->CreateExecuteBuffer)
+  HVar1 = (*d3d_device->lpVtbl->CreateExecuteBuffer)
                     (d3d_device,&d3_dexecutebufferdesc,&direct3_d_execute_buffer,(void *)0x0);
-  if (HVar2 != 0) {
-    d3d_error_string_result = d3d_error_string(HVar2);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d___D3DError_Create_Execbuff_0044c858,s_exec_cpp_0044c84f,0x1ed,
                d3d_error_string_result);
   }
-  HVar2 = (*direct3_d_execute_buffer->lpVtbl->Lock)(direct3_d_execute_buffer,&d3_dexecutebufferdesc)
+  HVar1 = (*direct3_d_execute_buffer->lpVtbl->Lock)(direct3_d_execute_buffer,&d3_dexecutebufferdesc)
   ;
-  if (HVar2 != 0) {
-    d3d_error_string_result = d3d_error_string(HVar2);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d___D3DError_Lock_Execbuffer_0044c88b,s_exec_cpp_0044c882,0x1f1,
                d3d_error_string_result);
   }
-  puStack_38 = d3_dexecutebufferdesc.lpData;
-  puStack_1c = d3_dexecutebufferdesc.lpData;
+  pfStack_38 = d3_dexecutebufferdesc.lpData;
+  pfStack_1c = d3_dexecutebufferdesc.lpData;
   memset(d3_dexecutebufferdesc.lpData,0,arg4_00);
-  i = local_30 * 0x11;
-  if (*(char *)(i + 0x10 + frames3d) == '\0') {
+  if (frames3d[frame3d_index].in_use == '\0') {
     fatal_exit(s__s__d____error_this_object_frame_0044c8bc,s_exec_cpp_0044c8b3,0x210);
   }
   else {
-    iStack_24 = i;
-    iVar5 = 0;
-    for (j = 0; j < *(int *)(frames3d + i); j = j + 1) {
-      m = *(int *)(iVar5 + ((int *)(frames3d + i))[1]) * 0x21;
-      puStack_20 = puStack_1c + 8;
-      if (DAT_004764f4 == 0) {
-        puVar4 = (undefined4 *)(weg_points + m);
-        uStack_70 = *puVar4;
-        uStack_6c = puVar4[1];
-        uStack_68 = puVar4[2];
+    iStack_24 = frame3d_index * 0x11;
+    j = 0;
+    for (i = 0; i < (int)frames3d[frame3d_index].vertex_count; i = i + 1) {
+      m = *(int *)(j + (int)frames3d[frame3d_index].vertices);
+      pfStack_20 = pfStack_1c + 8;
+      if (d3d_lighting == 0) {
+        pvVar3 = vertices3d + m;
+        fStack_70 = pvVar3->x;
+        fStack_6c = pvVar3->y;
+        fStack_68 = pvVar3->z;
         uStack_60 = 0xffffffff;
         uStack_5c = 0xffffffff;
-        uStack_58 = puVar4[6];
-        uStack_54 = puVar4[7];
-        puVar4 = &uStack_70;
+        fStack_58 = pvVar3->tu;
+        fStack_54 = pvVar3->tv;
+        pfVar4 = &fStack_70;
         for (m = 8; m != 0; m = m + -1) {
-          *puStack_1c = *puVar4;
-          puVar4 = puVar4 + (uint)bVar6 * -2 + 1;
-          puStack_1c = puStack_1c + (uint)bVar6 * -2 + 1;
+          *pfStack_1c = *pfVar4;
+          pfVar4 = pfVar4 + (uint)bVar5 * -2 + 1;
+          pfStack_1c = pfStack_1c + (uint)bVar5 * -2 + 1;
         }
         for (m = 0; m != 0; m = m + -1) {
-          *(undefined1 *)puStack_1c = *(undefined1 *)puVar4;
-          puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar6 * -2 + 1);
-          puStack_1c = (undefined4 *)((int)puStack_1c + (uint)bVar6 * -2 + 1);
+          *(undefined1 *)pfStack_1c = *(undefined1 *)pfVar4;
+          pfVar4 = (float *)((int)pfVar4 + (uint)bVar5 * -2 + 1);
+          pfStack_1c = (float *)((int)pfStack_1c + (uint)bVar5 * -2 + 1);
         }
-        puStack_1c = puStack_20;
+        pfStack_1c = pfStack_20;
       }
       else {
-        puVar4 = (undefined4 *)(weg_points + m);
+        pvVar3 = vertices3d + m;
         for (k = 8; k != 0; k = k + -1) {
-          *puStack_1c = *puVar4;
-          puVar4 = puVar4 + (uint)bVar6 * -2 + 1;
-          puStack_1c = puStack_1c + (uint)bVar6 * -2 + 1;
+          *pfStack_1c = pvVar3->x;
+          pvVar3 = (vertex3d_t *)((int)pvVar3 + (uint)bVar5 * -8 + 4);
+          pfStack_1c = pfStack_1c + (uint)bVar5 * -2 + 1;
         }
         for (m = 0; m != 0; m = m + -1) {
-          *(undefined1 *)puStack_1c = *(undefined1 *)puVar4;
-          puVar4 = (undefined4 *)((int)puVar4 + (uint)bVar6 * -2 + 1);
-          puStack_1c = (undefined4 *)((int)puStack_1c + (uint)bVar6 * -2 + 1);
+          *(undefined1 *)pfStack_1c = *(undefined1 *)&pvVar3->x;
+          pvVar3 = (vertex3d_t *)((int)pvVar3 + (uint)bVar5 * -2 + 1);
+          pfStack_1c = (float *)((int)pfStack_1c + (uint)bVar5 * -2 + 1);
         }
-        puStack_1c = puStack_20;
+        pfStack_1c = pfStack_20;
       }
-      iVar5 = iVar5 + 4;
-      puStack_1c = puStack_20;
+      j = j + 4;
+      pfStack_1c = pfStack_20;
     }
   }
-  *(undefined1 *)puStack_1c = 5;
-  *(undefined1 *)((int)puStack_1c + 1) = 0xc;
-  puStack_34 = puStack_1c;
-  *(undefined2 *)((int)puStack_1c + 2) = 2;
-  puStack_1c[2] = DAT_004764bc;
-  puStack_1c[3] = racers[racer_object_index].field_24;
-  puStack_1c[1] = DAT_004764b8;
-  puStack_1c[5] = DAT_004764cc;
-  puStack_1c[6] = DAT_004764c8;
-  puStack_1c[4] = DAT_004764c4;
-  puStack_1c = puStack_1c + 7;
+  *(undefined1 *)pfStack_1c = 5;
+  *(undefined1 *)((int)pfStack_1c + 1) = 0xc;
+  pfStack_34 = pfStack_1c;
+  *(undefined2 *)((int)pfStack_1c + 2) = 2;
+  pfStack_1c[2] = (float)DAT_004764bc;
+  pfStack_1c[3] = objects3d[object].matrix;
+  pfStack_1c[1] = (float)DAT_004764b8;
+  pfStack_1c[5] = (float)DAT_004764cc;
+  pfStack_1c[6] = (float)DAT_004764c8;
+  pfStack_1c[4] = (float)DAT_004764c4;
+  pfStack_1c = pfStack_1c + 7;
   if (default_material == -1) {
     fatal_exit(s__s__d____xvga_material_not_initi_0044c8fa,s_exec_cpp_0044c8f1,0x220);
   }
-  *(undefined1 *)puStack_1c = 7;
-  *(undefined1 *)((int)puStack_1c + 1) = 8;
-  *(undefined2 *)((int)puStack_1c + 2) = 1;
-  *(undefined1 *)(puStack_1c + 1) = 1;
-  puStack_1c[2] = default_material;
-  *(undefined1 *)(puStack_1c + 3) = 0xe;
-  *(undefined1 *)((int)puStack_1c + 0xd) = 0x18;
-  *(undefined2 *)((int)puStack_1c + 0xe) = 1;
-  puStack_1c[4] = 3;
-  puStack_1c[5] = 0x1fff000;
-  puStack_1c[6] = 0x800;
-  puStack_1c[7] = 0x800;
-  puStack_1c[8] = 0;
-  puStack_1c[9] = 0;
-  *(undefined1 *)(puStack_1c + 10) = 9;
-  *(undefined1 *)((int)puStack_1c + 0x29) = 0x10;
-  *(undefined2 *)((int)puStack_1c + 0x2a) = 1;
-  if (DAT_004764f4 == 0) {
-    puStack_1c[0xb] = 1;
-    *(undefined2 *)(puStack_1c + 0xc) = 0;
-    *(undefined2 *)((int)puStack_1c + 0x32) = 0;
-    puStack_1c[0xe] = 0;
+  *(undefined1 *)pfStack_1c = 7;
+  *(undefined1 *)((int)pfStack_1c + 1) = 8;
+  *(undefined2 *)((int)pfStack_1c + 2) = 1;
+  *(undefined1 *)(pfStack_1c + 1) = 1;
+  pfStack_1c[2] = (float)default_material;
+  *(undefined1 *)(pfStack_1c + 3) = 0xe;
+  *(undefined1 *)((int)pfStack_1c + 0xd) = 0x18;
+  *(undefined2 *)((int)pfStack_1c + 0xe) = 1;
+  pfStack_1c[4] = 4.2039e-45;
+  pfStack_1c[5] = 9.401659e-38;
+  pfStack_1c[6] = 2.86986e-42;
+  pfStack_1c[7] = 2.86986e-42;
+  pfStack_1c[8] = 0.0;
+  pfStack_1c[9] = 0.0;
+  *(undefined1 *)(pfStack_1c + 10) = 9;
+  *(undefined1 *)((int)pfStack_1c + 0x29) = 0x10;
+  *(undefined2 *)((int)pfStack_1c + 0x2a) = 1;
+  if (d3d_lighting == 0) {
+    pfStack_1c[0xb] = 1.4013e-45;
+    *(undefined2 *)(pfStack_1c + 0xc) = 0;
+    *(undefined2 *)((int)pfStack_1c + 0x32) = 0;
+    pfStack_1c[0xe] = 0.0;
   }
   else {
-    puStack_1c[0xb] = 0;
-    *(undefined2 *)(puStack_1c + 0xc) = 0;
-    *(undefined2 *)((int)puStack_1c + 0x32) = 0;
-    puStack_1c[0xe] = 0;
+    pfStack_1c[0xb] = 0.0;
+    *(undefined2 *)(pfStack_1c + 0xc) = 0;
+    *(undefined2 *)((int)pfStack_1c + 0x32) = 0;
+    pfStack_1c[0xe] = 0.0;
   }
-  puStack_1c[0xd] = local_28;
-  puVar4 = puStack_1c + 0xf;
-  if (racers[racer_object_index].field_2c != -1) {
-    *(undefined1 *)(puStack_1c + 0xf) = 8;
-    *(undefined1 *)((int)puStack_1c + 0x3d) = 8;
-    *(undefined2 *)((int)puStack_1c + 0x3e) = 1;
-    *(undefined1 *)(puStack_1c + 0x10) = 1;
-    puStack_1c[0x11] = *(undefined4 *)(texture_table + racers[racer_object_index].field_2c * 0xc);
-    puVar4 = puStack_1c + 0x12;
+  pfStack_1c[0xd] = local_28;
+  pfVar4 = pfStack_1c + 0xf;
+  if (objects3d[object].texture != -1) {
+    *(undefined1 *)(pfStack_1c + 0xf) = 8;
+    *(undefined1 *)((int)pfStack_1c + 0x3d) = 8;
+    *(undefined2 *)((int)pfStack_1c + 0x3e) = 1;
+    *(undefined1 *)(pfStack_1c + 0x10) = 1;
+    pfStack_1c[0x11] = *(float *)(texture_table + objects3d[object].texture * 0xc);
+    pfVar4 = pfStack_1c + 0x12;
   }
-  puStack_1c = puVar4;
-  if (((uint)puStack_1c & 7) == 0) {
-    *(undefined1 *)puStack_1c = 3;
-    *(undefined1 *)((int)puStack_1c + 1) = 8;
-    *(undefined2 *)((int)puStack_1c + 2) = 0;
-    puStack_1c = puStack_1c + 1;
+  pfStack_1c = pfVar4;
+  if (((uint)pfStack_1c & 7) == 0) {
+    *(undefined1 *)pfStack_1c = 3;
+    *(undefined1 *)((int)pfStack_1c + 1) = 8;
+    *(undefined2 *)((int)pfStack_1c + 2) = 0;
+    pfStack_1c = pfStack_1c + 1;
   }
-  puVar4 = puStack_1c + 1;
-  *(undefined1 *)puStack_1c = 3;
-  *(undefined1 *)((int)puStack_1c + 1) = 8;
-  *(short *)((int)puStack_1c + 2) = (short)local_2c;
-  puVar3 = puVar4;
-  if (*(char *)(frames3d + 0x10 + local_30 * 0x11) != '\0') {
-    iVar5 = 0;
-    for (i = 0; j = frames3d + local_30 * 0x11, i < *(int *)(j + 8); i = i + 1) {
-      j = *(int *)(*(int *)(j + 0xc) + iVar5) * 9;
-      *(undefined2 *)puVar3 = *(undefined2 *)(triangles3d + j);
-      *(undefined2 *)((int)puVar3 + 2) = *(undefined2 *)(triangles3d + 2 + j);
-      *(undefined2 *)(puVar3 + 1) = *(undefined2 *)(triangles3d + 4 + j);
-      iVar5 = iVar5 + 4;
-      *(undefined2 *)((int)puVar3 + 6) = *(undefined2 *)(triangles3d + 6 + j);
-      puVar3 = puVar3 + 2;
+  pfVar4 = pfStack_1c + 1;
+  *(undefined1 *)pfStack_1c = 3;
+  *(undefined1 *)((int)pfStack_1c + 1) = 8;
+  *(short *)((int)pfStack_1c + 2) = (short)local_2c;
+  pfVar2 = pfVar4;
+  if (frames3d[frame3d_index].in_use != '\0') {
+    i = 0;
+    for (j = 0; j < frames3d[frame3d_index].triangle_count; j = j + 1) {
+      m = *(int *)((int)frames3d[frame3d_index].triangles + i);
+      *(ushort *)pfVar2 = triangles3d[m].v1;
+      *(ushort *)((int)pfVar2 + 2) = triangles3d[m].v2;
+      *(ushort *)(pfVar2 + 1) = triangles3d[m].v3;
+      i = i + 4;
+      *(ushort *)((int)pfVar2 + 6) = triangles3d[m].flags;
+      pfVar2 = pfVar2 + 2;
     }
   }
-  *(undefined1 *)puVar3 = 0xb;
-  *(undefined1 *)((int)puVar3 + 1) = 0;
-  *(undefined2 *)((int)puVar3 + 2) = 0;
-  puStack_1c = puVar4;
+  *(undefined1 *)pfVar2 = 0xb;
+  *(undefined1 *)((int)pfVar2 + 1) = 0;
+  *(undefined2 *)((int)pfVar2 + 2) = 0;
+  pfStack_1c = pfVar4;
   (*direct3_d_execute_buffer->lpVtbl->Unlock)(direct3_d_execute_buffer);
-  puVar4 = puStack_38;
+  pfVar4 = pfStack_38;
   memset(&DStack_a0.dwSize,0,0x30);
-  DStack_a0.dwVertexCount = local_28;
+  DStack_a0.dwVertexCount = (DWORD)local_28;
   DStack_a0.dwSize = 0x30;
-  DStack_a0.dwInstructionOffset = (int)puStack_34 - (int)puVar4;
-  DStack_a0.dwInstructionLength = (int)puVar3 + (4 - (int)puStack_34);
-  HVar2 = (*direct3_d_execute_buffer->lpVtbl->SetExecuteData)(direct3_d_execute_buffer,&DStack_a0);
-  if (HVar2 != 0) {
-    d3d_error_string_result = d3d_error_string(HVar2);
+  DStack_a0.dwInstructionOffset = (int)pfStack_34 - (int)pfVar4;
+  DStack_a0.dwInstructionLength = (int)pfVar2 + (4 - (int)pfStack_34);
+  HVar1 = (*direct3_d_execute_buffer->lpVtbl->SetExecuteData)(direct3_d_execute_buffer,&DStack_a0);
+  if (HVar1 != 0) {
+    d3d_error_string_result = d3d_error_string(HVar1);
     fatal_exit(s__s__d____D3DError_Set_ExecData___0044c92c,s_exec_cpp_0044c923,0x261,
                d3d_error_string_result);
   }
-  racers[racer_object_index].field_30 = direct3_d_execute_buffer;
+  objects3d[object].exec_buffer = direct3_d_execute_buffer;
   return;
 }
 

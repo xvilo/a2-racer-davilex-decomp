@@ -3,23 +3,24 @@
 
 /* ==== 00429ecc init_animations ==== */
 
-int __watcall init_animations(anim_t *anim_2)
+int __watcall init_animations(anim_t *anim_val_2)
 
 {
-  anim_t *anim;
+  anim_t *anim_val;
   int i;
   
   max_anim_ptr = 0;
-  for (anim = anim_2; (anim->mode != -1 && (anim->frame_count != -1)); anim = anim + 1) {
+  for (anim_val = anim_val_2; (anim_val->mode != -1 && (anim_val->frame_count != -1));
+      anim_val = anim_val + 1) {
     max_anim_ptr = max_anim_ptr + 1;
   }
   i = alloc_animations(max_anim_ptr);
   if (i == 0) {
     for (i = 0; i < max_anim_ptr; i = i + 1) {
-      xvga_anims[i].frame_count = anim_2->frame_count;
-      xvga_anims[i].mode = anim_2->mode;
-      xvga_anims[i].frames = anim_2->frames;
-      anim_2 = anim_2 + 1;
+      xvga_anims[i].frame_count = anim_val_2->frame_count;
+      xvga_anims[i].mode = anim_val_2->mode;
+      xvga_anims[i].frames = anim_val_2->frames;
+      anim_val_2 = anim_val_2 + 1;
     }
     i = 0;
     init_animation_ok = 1;

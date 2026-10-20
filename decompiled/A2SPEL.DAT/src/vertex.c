@@ -3,25 +3,25 @@
 
 /* ==== 00425cfc alloc_vertices ==== */
 
-undefined4 __watcall alloc_vertices(int param_1)
+int __watcall alloc_vertices(int count)
 
 {
   int i;
   int extraout_EDX;
   int iVar1;
   
-  if (DAT_004767d0 == 0) {
-    weg_points = LocalAlloc(0x40,param_1 * 0x21);
-    if (weg_points == (HLOCAL)0x0) {
+  if (vertices_initialized == 0) {
+    vertices3d = LocalAlloc(0x40,count * 0x21);
+    if (vertices3d == (vertex3d_t *)0x0) {
       debugmsg(s__s__d____not_enough_memory_for_v_0044f914);
       return 2000;
     }
-    debugmsg(s__d_vertices_initialized_0044f93e,param_1);
-    DAT_004767d0 = 1;
+    debugmsg(s__d_vertices_initialized_0044f93e,count);
+    vertices_initialized = 1;
     iVar1 = extraout_EDX;
-    vertex_capacity = param_1;
+    vertex_capacity = count;
     for (i = 0; i < vertex_capacity; i = i + 1) {
-      *(undefined1 *)(iVar1 + 0x20 + (int)weg_points) = 0;
+      (&vertices3d->in_use)[iVar1] = '\0';
       iVar1 = iVar1 + 0x21;
     }
   }
@@ -36,15 +36,15 @@ void __watcall free_vertices(void)
 {
   HLOCAL pvVar1;
   
-  if (DAT_004767d0 != 0) {
-    pvVar1 = LocalFree(weg_points);
+  if (vertices_initialized != 0) {
+    pvVar1 = LocalFree(vertices3d);
     if (pvVar1 != (HLOCAL)0x0) {
       debugmsg(s__s__d____error_freeing_triangles_0044f958);
       return;
     }
     debugmsg(s_Vertex_array_freed_0044f97c);
     vertex_capacity = 0;
-    DAT_004767d0 = 0;
+    vertices_initialized = 0;
   }
   return;
 }
@@ -65,7 +65,7 @@ int __watcall find_free_vertices(void)
       fatal_exit(s__s__d____no_more_free_vertices_0044f99b,s_vertex_cpp_0044f990,0x5b);
       return 0;
     }
-    if (*(char *)(weg_points + 0x20 + iVar1) == '\0') break;
+    if ((&vertices3d->in_use)[iVar1] == '\0') break;
     iVar1 = iVar1 + 0x21;
     i = i + 1;
   }
@@ -80,9 +80,9 @@ int __watcall get_new_vertices(void)
 {
   int free_vertices_val;
   
-  if (DAT_004767d4 < vertex_capacity) {
-    free_vertices_val = DAT_004767d4;
-    DAT_004767d4 = DAT_004767d4 + 1;
+  if (next_vertex < vertex_capacity) {
+    free_vertices_val = next_vertex;
+    next_vertex = next_vertex + 1;
     return free_vertices_val;
   }
   free_vertices_val = find_free_vertices();

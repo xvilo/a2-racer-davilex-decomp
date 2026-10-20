@@ -70,7 +70,7 @@ opponent_t	cc	int	target_lane
 opponent_t	d0	int	prev_waypoint	
 opponent_t	d4	int	waypoint	
 opponent_t	d8	int	direction	0 or 1, driving direction along the road
-opponent_t	dc	int	object	index into racers (the 3D object)
+opponent_t	dc	int	object	index into objects3d (the 3D object)
 opponent_t	e0	int	field_e0	
 opponent_t	e4	int	field_e4	
 opponent_t	e8	int	active	
@@ -79,25 +79,56 @@ opponent_t	f0	float	push_z
 opponent_t	f4	float	offset_x	
 opponent_t	f8	float	offset_z	
 opponent_t	fc	int	heading_delta	
-# racer_object_t: one 0x4b-byte (packed) entry per 3D object; racers points to an array.
-racer_object_t	00	int	anim	index into anims3d
-racer_object_t	04	int	frame	
-racer_object_t	08	float	field_08	
-racer_object_t	0c	float	field_0c	
-racer_object_t	10	float	field_10	
-racer_object_t	14	float	field_14	
-racer_object_t	18	float	field_18	
-racer_object_t	1c	float	field_1c	
-racer_object_t	24	int	field_24	
-racer_object_t	2c	int	field_2c	
-racer_object_t	34	uchar	in_use	
-racer_object_t	35	uchar	visible	cleared for the player's car in cockpit view
-racer_object_t	36	uchar	field_36	
-racer_object_t	37	int	opponent	index into opponent_data
-racer_object_t	3b	int	field_3b	
-racer_object_t	3f	int	field_3f	
-racer_object_t	43	int	field_43	
-racer_object_t	47	int	needs_update	
+# object3d_t: one 0x4b-byte (packed) 3D object (object3d.cpp); objects3d points to an
+# array. Cars, pionnen, bonus items and static scenery are all objects.
+object3d_t	00	int	anim	index into anims3d
+object3d_t	04	int	frame	frame of that anim
+object3d_t	08	float	x	position
+object3d_t	0c	float	y	
+object3d_t	10	float	z	
+object3d_t	14	float	vx	velocity, used by knocked-over pionnen
+object3d_t	18	float	vy	
+object3d_t	1c	float	vz	
+object3d_t	20	void*	update	called every update_interval frames (execute_object_buffers)
+object3d_t	24	uint	matrix	D3DMATRIXHANDLE of the world matrix
+object3d_t	28	int	field_28	
+object3d_t	2c	int	texture	index into texture_table, -1 for none
+object3d_t	30	IDirect3DExecuteBuffer*	exec_buffer	built by build_object_execute_buffer
+object3d_t	34	uchar	in_use	
+object3d_t	35	uchar	visible	cleared for the player's car in cockpit view
+object3d_t	36	uchar	field_36	
+object3d_t	37	int	opponent	index into opponent_data
+object3d_t	3b	int	field_3b	
+object3d_t	3f	int	field_3f	
+object3d_t	43	int	field_43	
+object3d_t	47	int	update_interval	frames between update calls, <= 0 never
+# anim3d_t: 9-byte (packed) list of frames (anim3d.cpp); anims3d points to an array.
+anim3d_t	00	int	frame_count	
+anim3d_t	04	int*	frames	indices into frames3d
+anim3d_t	08	uchar	in_use	
+# frame3d_t: 0x11-byte (packed) mesh (frame3d.cpp): vertices and triangles from the pools.
+frame3d_t	00	int	vertex_count	
+frame3d_t	04	int*	vertices	indices into vertices3d
+frame3d_t	08	int	triangle_count	
+frame3d_t	0c	int*	triangles	indices into triangles3d
+frame3d_t	10	uchar	in_use	
+# vertex3d_t: 0x21-byte (packed) vertex (vertex.cpp): a D3DVERTEX and an in-use flag.
+# .d3d files store them as is.
+vertex3d_t	00	float	x	
+vertex3d_t	04	float	y	
+vertex3d_t	08	float	z	
+vertex3d_t	0c	float	nx	normal
+vertex3d_t	10	float	ny	
+vertex3d_t	14	float	nz	
+vertex3d_t	18	float	tu	texture coordinates
+vertex3d_t	1c	float	tv	
+vertex3d_t	20	uchar	in_use	
+# triangle3d_t: 9-byte (packed) triangle (triangle.cpp): a D3DTRIANGLE and an in-use flag.
+triangle3d_t	00	ushort	v1	indices into the frame's vertex list
+triangle3d_t	02	ushort	v2	
+triangle3d_t	04	ushort	v3	
+triangle3d_t	06	ushort	flags	D3DTRIFLAG_*
+triangle3d_t	08	uchar	in_use	
 # weg_section_t: one 0x54-byte road section; weg_sections points to an array.
 weg_section_t	00	int	point	index into weg_points
 weg_section_t	04	int	field_04	

@@ -166,11 +166,10 @@ int __watcall get_xvga_palette(tagPALETTEENTRY *paletteentry,int param_2,int par
 
 void __watcall
 set_xvga_palette_flag
-          (tagPALETTEENTRY *paletteentry_2,int paletteentry_index,int param_3,int param_4,
-          int param_5)
+          (tagPALETTEENTRY *paletteentry,int paletteentry_index,int param_3,int param_4,int param_5)
 
 {
-  tagPALETTEENTRY *paletteentry;
+  tagPALETTEENTRY *paletteentry_2;
   int i;
   
   if (palette_ignore == 0) {
@@ -188,13 +187,13 @@ set_xvga_palette_flag
     if (((param_4 != 0) && (param_4 != 0x40)) && (param_4 != 0x80)) {
       fatal_exit(s__s__d____illegal_flag_value__d_0044b3e7,s_pal_cpp_0044b3df,0xbe,param_4);
     }
-    paletteentry = paletteentry_2 + paletteentry_index;
+    paletteentry_2 = paletteentry + paletteentry_index;
     for (i = paletteentry_index; i < paletteentry_index + param_3; i = i + 1) {
-      paletteentry->peFlags = (BYTE)param_4;
-      paletteentry = paletteentry + 1;
+      paletteentry_2->peFlags = (BYTE)param_4;
+      paletteentry_2 = paletteentry_2 + 1;
     }
     if (param_5 != 0) {
-      set_xvga_palette(paletteentry_2,paletteentry_index,param_3);
+      set_xvga_palette(paletteentry,paletteentry_index,param_3);
     }
   }
   return;

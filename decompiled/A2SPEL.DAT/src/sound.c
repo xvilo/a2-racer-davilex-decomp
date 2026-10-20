@@ -1890,7 +1890,7 @@ int __watcall get_3dlistener_velocity_1(float *param_1,float *param_2,float *par
 
 /* ==== 0041b2ca set_3dlistener_orientation ==== */
 
-int __watcall set_3dlistener_orientation(_D3DVECTOR *d3_dvector_2,_D3DVECTOR *d3_dvector)
+int __watcall set_3dlistener_orientation(_D3DVECTOR *d3_dvector,_D3DVECTOR *d3_dvector_2)
 
 {
   HRESULT HVar1;
@@ -1898,8 +1898,8 @@ int __watcall set_3dlistener_orientation(_D3DVECTOR *d3_dvector_2,_D3DVECTOR *d3
   
   if (init_sound_ok != 0) {
     HVar1 = (*ds3d_listener->lpVtbl->SetOrientation)
-                      (ds3d_listener,d3_dvector_2->x,d3_dvector_2->y,d3_dvector_2->z,d3_dvector->x,
-                       d3_dvector->y,d3_dvector->z,0);
+                      (ds3d_listener,d3_dvector->x,d3_dvector->y,d3_dvector->z,d3_dvector_2->x,
+                       d3_dvector_2->y,d3_dvector_2->z,0);
     if (HVar1 != 0) {
       arg4 = ds_error_string(HVar1);
       fatal_exit(s__s__d____error_set_listener_orie_0044ac99,s_sound_cpp_0044ac8f,0x650,arg4);

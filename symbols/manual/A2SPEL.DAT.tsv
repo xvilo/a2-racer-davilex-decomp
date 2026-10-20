@@ -59,7 +59,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 00402f3f	function	start_engine_sounds
 00457728	data	camera_position				int
 0045b22c	data	player_index				int
-00476774	data	racers				racer_object_t*	
+00476774	data	objects3d				object3d_t*	
 00458c38	data	track_index				int
 00458c64	data	race_state				int
 00458c68	data	race_finished_ok				int
@@ -114,7 +114,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 004070df	function	check_opponent_collisions					
 00476570	data	weg_chunks					
 00476560	data	weg_sections				weg_section_t*	
-004767c8	data	weg_points					
+004767c8	data	vertices3d				vertex3d_t*	
 00476578	data	weg_data_loaded				int	
 00475ac8	data	active_opponent_count				int	
 00475ac0	data	active_opponent_list					
@@ -174,7 +174,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 00458c50	data	race_running				int	
 00458c60	data	controls_enabled				int	
 # --- objio.cpp: object file loading ------------------------------------------------
-0040cb06	function	load_object_file					
+0040cb06	function	load_object_file	__watcall	int	char*:filename		
 0040cc82	function	load_object_mesh	__watcall	void	int:object|char*:filename		
 # --- opponent map lifetime --------------------------------------------------------
 004731f8	data	opponent_map_allocated				int	
@@ -292,7 +292,7 @@ address	kind	name	cc	ret	params	dtype	mangled
 0041cc58	function	init_render_state_defaults	__watcall	void	-		
 0041cfed	function	apply_render_states					
 0041d341	function	create_frame_execute_buffer					
-0041d654	function	build_object_execute_buffer					
+0041d654	function	build_object_execute_buffer	__watcall	void	int:object		
 # --- wegtools.cpp / weg.cpp: the road ("weg") ------------------------------------------
 0041dcc0	function	point_side_of_line					
 0041dd0c	function	point_side_of_chunk_edge					
@@ -331,33 +331,33 @@ address	kind	name	cc	ret	params	dtype	mangled
 0042369d	function	rotate_matrix_z					
 # --- object3d.cpp / anim3d.cpp / frame3d.cpp / vertex.cpp / triangle.cpp ---------------
 004238d5	function	object3d_nop	__watcall	void	-		
-004238d8	function	alloc_objects3d					
-00423a64	function	find_free_object3d					
-00423aeb	function	get_new_object3d					
-00423d2c	function	set_object3d_matrix					
-00423f75	function	check_objects3d_visibility					
+004238d8	function	alloc_objects3d	__watcall	int	int:count		
+00423a64	function	find_free_object3d	__watcall	int	-		
+00423aeb	function	get_new_object3d	__watcall	int	-		
+00423d2c	function	set_object3d_matrix	__watcall	void	int:object|D3DMATRIX*:matrix		
+00423f75	function	check_objects3d_visibility	__watcall	void	int:min_x|int:min_z|int:max_x|int:max_z		
 00424003	function	execute_object_buffers	__watcall	void	-		
-0042407c	function	alloc_3d_arrays
-0042410e	function	free_3d_arrays					
-00424165	function	find_free_anim3d					
-004241c8	function	get_new_anim3d					
-004242bc	function	init_static_anim3d					
-0042438b	function	init_anim3d					
-00424415	function	free_anim3d					
-0042be90	function	alloc_frames3d					
-0042bf2d	function	free_frames3d					
-0042bf82	function	find_free_frame3d					
-0042bfcd	function	get_new_frame3d					
-0042bfee	function	init_frame3d					
-0042c151	function	free_frame3d
-00425cfc	function	alloc_vertices					
-00425d7a	function	free_vertices					
-00425dcf	function	find_free_vertices					
-00425e1a	function	get_new_vertices					
-0042c8e0	function	alloc_triangles					
-0042c95e	function	free_triangles					
-0042c9b3	function	find_free_triangles					
-0042c9fe	function	get_new_triangles					
+0042407c	function	alloc_3d_arrays	__watcall	int	int:anim_count|int:frame_count|int:vertex_count|int:triangle_count		
+0042410e	function	free_3d_arrays	__watcall	void	-		
+00424165	function	find_free_anim3d	__watcall	int	-		
+004241c8	function	get_new_anim3d	__watcall	int	-		
+004242bc	function	init_static_anim3d	__watcall	int	int:frame_count|int:vertex_count|int:triangle_count		
+0042438b	function	init_anim3d	__watcall	int	int:frame_count		
+00424415	function	free_anim3d	__watcall	void	int:anim		
+0042be90	function	alloc_frames3d	__watcall	int	int:count		
+0042bf2d	function	free_frames3d	__watcall	void	-		
+0042bf82	function	find_free_frame3d	__watcall	int	-		
+0042bfcd	function	get_new_frame3d	__watcall	int	-		
+0042bfee	function	init_frame3d	__watcall	int	int:vertex_count|int:triangle_count		
+0042c151	function	free_frame3d	__watcall	void	int:frame		
+00425cfc	function	alloc_vertices	__watcall	int	int:count		
+00425d7a	function	free_vertices	__watcall	void	-		
+00425dcf	function	find_free_vertices	__watcall	int	-		
+00425e1a	function	get_new_vertices	__watcall	int	-		
+0042c8e0	function	alloc_triangles	__watcall	int	int:count		
+0042c95e	function	free_triangles	__watcall	void	-		
+0042c9b3	function	find_free_triangles	__watcall	int	-		
+0042c9fe	function	get_new_triangles	__watcall	int	-		
 # --- texture.cpp / light.cpp / material.cpp -------------------------------------------
 0042451c	function	alloc_texture_formats					
 00424580	function	add_texture_format					
@@ -423,9 +423,9 @@ address	kind	name	cc	ret	params	dtype	mangled
 0043ef1f	function	crt_return_zero_2	__watcall	int	-		
 0043f45d	function	crt_return_zero_3	__watcall	int	-		
 # --- globals, most-used first ---------------------------------------------------------
-00476788	data	anims3d					
-00480d6c	data	frames3d					
-00480d7c	data	triangles3d					
+00476788	data	anims3d				anim3d_t*	
+00480d6c	data	frames3d				frame3d_t*	
+00480d7c	data	triangles3d				triangle3d_t*	
 00476584	data	weg_chunk_quads					
 0047656c	data	weg_lane_chunks				int	
 00476574	data	weg_section_count				int	
@@ -528,3 +528,32 @@ address	kind	name	cc	ret	params	dtype	mangled
 00475a50	data	time_now				int	
 00477054	data	view_matrix					
 004833cc	data	getch_buffer_count				int	
+# --- object update callbacks (object3d_t.update; only referenced as data) ---------------
+00402468	function	update_player_object	__watcall	int	int:object		
+0040654b	function	update_opponent_object	__watcall	int	int:object		
+00412e6a	function	update_bonus_object	__watcall	int	int:object		
+004140f4	function	update_pion_object	__watcall	int	int:object		
+004080bd	function	update_static_object	__watcall	int	int:object		
+00408370	function	update_sky_object	__watcall	int	int:object		
+00408481	function	update_static_object_26	__watcall	int	int:object		
+00408607	function	update_static_object_27	__watcall	int	int:object		
+00408754	function	update_static_object_28	__watcall	int	int:object		
+004088a5	function	update_static_object_29	__watcall	int	int:object		
+004089ef	function	update_static_object_2a	__watcall	int	int:object		
+00408b40	function	update_static_object_2b	__watcall	int	int:object		
+0041c580	function	enum_d3d_devices_callback					
+# --- 3D pool bookkeeping ----------------------------------------------------------------
+004767d0	data	vertices_initialized				int	
+004767d4	data	next_vertex				int	
+00480d84	data	triangles_initialized				int	
+00480d80	data	triangle_capacity				int	
+00480d88	data	next_triangle				int	
+00480d74	data	frames3d_initialized				int	
+00480d70	data	frame3d_capacity				int	
+00480d78	data	next_frame3d				int	
+00476790	data	arrays3d_initialized				int	
+0047678c	data	anim3d_capacity				int	
+00476794	data	next_anim3d				int	
+00476780	data	next_object3d				int	
+00476784	data	object_update_counter				int	
+004764f4	data	d3d_lighting				int	

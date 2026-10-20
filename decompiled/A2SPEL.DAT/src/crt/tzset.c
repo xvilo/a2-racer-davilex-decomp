@@ -25,32 +25,32 @@ undefined1 * __watcall tryOSTimeZone(void)
 
 {
   undefined4 in_EAX;
-  undefined1 *time_zone_information_2;
+  undefined1 *time_zone_information;
   undefined1 *puVar1;
   WCHAR *pWVar2;
   char cVar3;
-  _TIME_ZONE_INFORMATION time_zone_information;
+  _TIME_ZONE_INFORMATION time_zone_information_2;
   
   puVar1 = (undefined1 *)CONCAT22((short)((uint)in_EAX >> 0x10),CONCAT11(tzFlag,(char)in_EAX));
   if (((tzFlag & 1) == 0) || ((tzFlag & 2) == 0)) {
     tzFlag = tzFlag | 2;
-    time_zone_information_2 = (undefined1 *)GetTimeZoneInformation(&time_zone_information);
+    time_zone_information = (undefined1 *)GetTimeZoneInformation(&time_zone_information_2);
     puVar1 = (undefined1 *)0x0;
-    if (time_zone_information_2 != (undefined1 *)0x0) {
-      if (time_zone_information_2 < (undefined1 *)0x2) {
+    if (time_zone_information != (undefined1 *)0x0) {
+      if (time_zone_information < (undefined1 *)0x2) {
         _daylight = 0;
       }
       else {
-        if (time_zone_information_2 != (undefined1 *)0x2) {
-          return time_zone_information_2;
+        if (time_zone_information != (undefined1 *)0x2) {
+          return time_zone_information;
         }
         _daylight = 1;
-        dst_adjust = time_zone_information.DaylightBias * -0x3c;
+        dst_adjust = time_zone_information_2.DaylightBias * -0x3c;
       }
       cVar3 = ' ';
-      timezone = (time_zone_information.StandardBias + time_zone_information.Bias) * 0x3c;
+      timezone = (time_zone_information_2.StandardBias + time_zone_information_2.Bias) * 0x3c;
       puVar1 = &stzone;
-      for (pWVar2 = time_zone_information.StandardName; *pWVar2 != L'\0'; pWVar2 = pWVar2 + 1) {
+      for (pWVar2 = time_zone_information_2.StandardName; *pWVar2 != L'\0'; pWVar2 = pWVar2 + 1) {
         if (cVar3 == ' ') {
           *puVar1 = (char)*pWVar2;
           puVar1 = puVar1 + 1;
@@ -60,7 +60,7 @@ undefined1 * __watcall tryOSTimeZone(void)
       cVar3 = ' ';
       *puVar1 = 0;
       puVar1 = &dtzone;
-      for (pWVar2 = time_zone_information.DaylightName; *pWVar2 != L'\0'; pWVar2 = pWVar2 + 1) {
+      for (pWVar2 = time_zone_information_2.DaylightName; *pWVar2 != L'\0'; pWVar2 = pWVar2 + 1) {
         if (cVar3 == ' ') {
           *puVar1 = (char)*pWVar2;
           puVar1 = puVar1 + 1;

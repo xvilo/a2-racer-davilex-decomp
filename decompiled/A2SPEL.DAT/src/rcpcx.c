@@ -40,12 +40,12 @@ int __watcall read_pcx_8_to_16_line(short *param_1,__iobuf *file,int param_3)
 
 /* ==== 00417ba5 read_pcx_8_to_24_line ==== */
 
-int __watcall read_pcx_8_to_24_line(pf_24_t *pf_24,__iobuf *file,int param_3)
+int __watcall read_pcx_8_to_24_line(pf_24_t *pf_24_2,__iobuf *file,int param_3)
 
 {
   byte bVar2;
   uint uVar1;
-  pf_24_t *pf_24_2;
+  pf_24_t *pf_24;
   int j;
   int i;
   byte bVar3;
@@ -60,21 +60,21 @@ int __watcall read_pcx_8_to_24_line(pf_24_t *pf_24,__iobuf *file,int param_3)
     if ((char)uVar1 == -0x40) {
       uVar1 = fgetc(file);
       local_14 = translate_pixel(uVar1 & 0xff,8);
-      pf_24_2 = pf_24 + i;
+      pf_24 = pf_24_2 + i;
       for (j = 0; j < (int)(uint)(bVar2 & 0x3f); j = j + 1) {
         i = i + 1;
-        pf_24_2->field_00 = (undefined2)local_14;
-        *(undefined1 *)((int)pf_24_2 + (uint)bVar3 * -4 + 2) =
+        pf_24->field_00 = (undefined2)local_14;
+        *(undefined1 *)((int)pf_24 + (uint)bVar3 * -4 + 2) =
              *(undefined1 *)((int)&local_14 + (uint)bVar3 * -4 + 2);
-        pf_24_2 = pf_24_2 + 1;
+        pf_24 = pf_24 + 1;
       }
     }
     else {
       local_14 = translate_pixel((uint)bVar2,8);
-      pf_24_2 = pf_24 + i;
+      pf_24 = pf_24_2 + i;
       i = i + 1;
-      pf_24_2->field_00 = (undefined2)local_14;
-      *(undefined1 *)((int)pf_24_2 + (uint)bVar3 * -4 + 2) =
+      pf_24->field_00 = (undefined2)local_14;
+      *(undefined1 *)((int)pf_24 + (uint)bVar3 * -4 + 2) =
            *(undefined1 *)((int)&local_14 + (uint)bVar3 * -4 + 2);
     }
   } while (i < param_3);
@@ -119,7 +119,7 @@ int __watcall read_pcx_line(uchar *param_1,__iobuf *file,int param_3)
 void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
 
 {
-  pf_24_t *pf_24;
+  pf_24_t *pf_24_2;
   int k;
   int i;
   int j;
@@ -128,30 +128,30 @@ void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
     param_3 = xvga_screen_ysize;
   }
   if (pf_conversion_mode == 0) {
-    pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
+    pf_24_2 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (k = 0; k < param_3; k = k + 1) {
-      read_pcx_line((uchar *)pf_24,file,param_2);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + xvga_buffer_screen_pitch);
+      read_pcx_line((uchar *)pf_24_2,file,param_2);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + xvga_buffer_screen_pitch);
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
-    pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
+    pf_24_2 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (i = 0; i < param_3; i = i + 1) {
-      read_pcx_8_to_16_line((short *)pf_24,file,param_2);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + xvga_buffer_screen_pitch);
+      read_pcx_8_to_16_line((short *)pf_24_2,file,param_2);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + xvga_buffer_screen_pitch);
     }
   }
   else {
     if (pf_conversion_mode != 2) {
       return;
     }
-    pf_24 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
+    pf_24_2 = (pf_24_t *)get_surface_ptr(xvga_buffer_screen);
     for (j = 0; j < param_3; j = j + 1) {
-      read_pcx_8_to_24_line(pf_24,file,param_2);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + xvga_buffer_screen_pitch);
+      read_pcx_8_to_24_line(pf_24_2,file,param_2);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + xvga_buffer_screen_pitch);
     }
   }
-  reset_surface_ptr_1(xvga_buffer_screen,pf_24);
+  reset_surface_ptr_1(xvga_buffer_screen,pf_24_2);
   return;
 }
 
@@ -163,7 +163,7 @@ void __watcall unpack_pcx_file_screen(__iobuf *file,int param_2,int param_3)
 void __watcall unpack_pcx_file_screen_1(int param_1,__iobuf *file,int param_3,int param_4)
 
 {
-  pf_24_t *pf_24;
+  pf_24_t *pf_24_2;
   int i;
   int j;
   int k;
@@ -180,30 +180,30 @@ void __watcall unpack_pcx_file_screen_1(int param_1,__iobuf *file,int param_3,in
   }
   local_10 = i;
   if (pf_conversion_mode == 0) {
-    pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
+    pf_24_2 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (i = 0; i < param_4; i = i + 1) {
-      read_pcx_line((uchar *)pf_24,file,param_3);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_10);
+      read_pcx_line((uchar *)pf_24_2,file,param_3);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + local_10);
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
-    pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
+    pf_24_2 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (j = 0; j < param_4; j = j + 1) {
-      read_pcx_8_to_16_line((short *)pf_24,file,param_3);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_10);
+      read_pcx_8_to_16_line((short *)pf_24_2,file,param_3);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + local_10);
     }
   }
   else {
     if (pf_conversion_mode != 2) {
       return;
     }
-    pf_24 = (pf_24_t *)get_surface_ptr_1(param_1);
+    pf_24_2 = (pf_24_t *)get_surface_ptr_1(param_1);
     for (k = 0; k < param_4; k = k + 1) {
-      read_pcx_8_to_24_line(pf_24,file,param_3);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_10);
+      read_pcx_8_to_24_line(pf_24_2,file,param_3);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + local_10);
     }
   }
-  reset_surface_ptr(param_1,pf_24);
+  reset_surface_ptr(param_1,pf_24_2);
   return;
 }
 
@@ -217,37 +217,37 @@ unpack_pcx_file_surface
           (IDirectDrawSurface *direct_draw_surface,__iobuf *file,int param_3,int param_4)
 
 {
-  pf_24_t *pf_24;
+  pf_24_t *pf_24_2;
   int local_1c;
   int i;
   int j;
   int k;
   
   if (pf_conversion_mode == 0) {
-    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
+    pf_24_2 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
     for (k = 0; k < param_4; k = k + 1) {
-      read_pcx_line((uchar *)pf_24,file,param_3);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_1c);
+      read_pcx_line((uchar *)pf_24_2,file,param_3);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + local_1c);
     }
   }
   else if ((uint)pf_conversion_mode < 2) {
-    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
+    pf_24_2 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
     for (j = 0; j < param_4; j = j + 1) {
-      read_pcx_8_to_16_line((short *)pf_24,file,param_3);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_1c);
+      read_pcx_8_to_16_line((short *)pf_24_2,file,param_3);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + local_1c);
     }
   }
   else {
     if (pf_conversion_mode != 2) {
       return;
     }
-    pf_24 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
+    pf_24_2 = (pf_24_t *)get_surface_ptr_3(direct_draw_surface,&local_1c);
     for (i = 0; i < param_4; i = i + 1) {
-      read_pcx_8_to_24_line(pf_24,file,param_3);
-      pf_24 = (pf_24_t *)((int)&pf_24->field_00 + local_1c);
+      read_pcx_8_to_24_line(pf_24_2,file,param_3);
+      pf_24_2 = (pf_24_t *)((int)&pf_24_2->field_00 + local_1c);
     }
   }
-  reset_surface_ptr_1(direct_draw_surface,pf_24);
+  reset_surface_ptr_1(direct_draw_surface,pf_24_2);
   return;
 }
 
@@ -692,7 +692,7 @@ load_pcx_file_surface_2(char *filename_val,int *param_2,int *param_3,int param_4
 /* ==== 00418a87 load_pcx_file_surface_3 ==== */
 
 int __watcall
-load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surface_2,int param_3)
+load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surface_3,int param_3)
 
 {
   int iVar1;
@@ -715,7 +715,7 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
   RECT rect_2;
   int local_1c;
   int local_18;
-  IDirectDrawSurface *direct_draw_surface_3;
+  IDirectDrawSurface *direct_draw_surface_2;
   
   file = xvga_src_fopen(filename_val);
   if (file == (__iobuf *)0x0) {
@@ -745,7 +745,7 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
     debugmsg(s__s__d____header_read__004492e8,s_rcpcx_cpp_004492de,0x276);
     if ((file->field_0c & 0x20) == 0) {
       debugmsg(s__s__d____no_error_header_read__0044930b,s_rcpcx_cpp_00449301,0x27c);
-      get_surface_info(direct_draw_surface_2,&local_1c,&local_18);
+      get_surface_info(direct_draw_surface_3,&local_1c,&local_18);
       if ((local_bc == '\n') && (local_bb == '\x05')) {
         rect_2.right = ((int)sStack_b4 - (int)sStack_b8) + 1;
         rect_2.top = 0;
@@ -757,19 +757,19 @@ load_pcx_file_surface_3(char *filename_val,IDirectDrawSurface *direct_draw_surfa
         rect.right = local_1c;
         rect_2.bottom = iVar4;
         direct_draw_surface = create_surface(rect_2.right,iVar4);
-        direct_draw_surface_3 = direct_draw_surface;
+        direct_draw_surface_2 = direct_draw_surface;
         debugmsg(s_creation_succesfull_0044932d);
         unpack_pcx_file_surface(direct_draw_surface,file,local_7c >> 0x10,iVar4);
         debugmsg(s_blitting_to_destination_00449342);
-        HVar3 = (*direct_draw_surface_2->lpVtbl->Blt)
-                          (direct_draw_surface_2,&rect,direct_draw_surface,&rect_2,0,(DDBLTFX *)0x0)
+        HVar3 = (*direct_draw_surface_3->lpVtbl->Blt)
+                          (direct_draw_surface_3,&rect,direct_draw_surface,&rect_2,0,(DDBLTFX *)0x0)
         ;
         if (HVar3 != 0) {
           arg4 = dd_error_string(HVar3);
           fatal_exit(s__s__d____blitting_error___s__00449365,s_rcpcx_cpp_0044935b,0x294,arg4);
         }
         debugmsg(s_Release_buffer_surface_00449384);
-        (*direct_draw_surface_3->lpVtbl->Release)(direct_draw_surface_3);
+        (*direct_draw_surface_2->lpVtbl->Release)(direct_draw_surface_2);
       }
       debugmsg(s__s__d____closing_004493a6,s_rcpcx_cpp_0044939c,0x29a);
       iVar4 = 0;
