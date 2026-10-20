@@ -6,6 +6,9 @@
 #ifndef A2_SOUND_H
 #define A2_SOUND_H
 
+#include <stddef.h>
+#include <stdint.h>
+
 #include "res/archive.h"
 
 /* DSBPLAY_LOOPING */
@@ -24,5 +27,7 @@ void stop_all_sound_buffers(void);
 int set_sound_buffer_vol(int index, int volume);
 int get_sound_buffer_vol(int index);
 int max_sound_buffer_count(void);
+/* Plays signed 16-bit PCM (copied); returns the buffer index or -1. */
+int play_pcm(const int16_t *samples, size_t frames, int rate, int channels, int volume);
 
 #endif

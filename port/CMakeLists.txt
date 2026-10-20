@@ -15,6 +15,8 @@ add_executable(a2racer
 	src/platform/sys_sdl.c
 	src/res/archive.c
 	src/res/pcx.c
+	src/res/smacker.c
+	src/movie/movies.c
 	src/gfx/screen.c
 	src/gfx/png.c
 	src/gfx/wipes.c

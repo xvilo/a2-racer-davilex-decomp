@@ -18,6 +18,7 @@
 #include "menu/mysound.h"
 #include "menu/optie.h"
 #include "menu/score.h"
+#include "movie/movies.h"
 #include "menu/slot.h"
 #include "platform/sys.h"
 #include "xvga/fileio.h"
@@ -37,7 +38,7 @@ static void usage(void)
 		"  --save <dir>         where options and save slots go (default: user data folder)\n"
 		"  --fonts <dir>        folder with ariblk.ttf (Arial Black) if not found otherwise\n"
 		"  --scale <n>          window size as a multiple of 640x480\n"
-		"  --first              start as after installing (the logo intro when no players)\n"
+
 		"  --screenshot <file>  open the main menu, save it as PNG and exit\n"
 		"  --script <file>      scripted input for testing (see platform/sys_sdl.c)\n");
 }
@@ -58,7 +59,9 @@ int main(int argc, char **argv)
 	game_t g = { 0 };
 	sys_options opt = { 1, false, NULL };
 	const char *save_dir = NULL, *font_dir = NULL;
-	int first = 0;
+	/* The launcher passes FIRST on the first menu run of a session: with no players yet,
+	 * that shows the logo intro. */
+	int first = 1;
 	g.data_dir = getenv("A2_DATA");
 	for (int i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "--data") && i + 1 < argc)
@@ -69,8 +72,6 @@ int main(int argc, char **argv)
 			font_dir = argv[++i];
 		else if (!strcmp(argv[i], "--scale") && i + 1 < argc)
 			opt.scale = atoi(argv[++i]);
-		else if (!strcmp(argv[i], "--first"))
-			first = 1;
 		else if (!strcmp(argv[i], "--script") && i + 1 < argc)
 			opt.script = argv[++i];
 		else if (!strcmp(argv[i], "--screenshot") && i + 1 < argc)
@@ -119,13 +120,16 @@ int main(int argc, char **argv)
 			SCREEN_H, screen.palette) ? 1 : 0;
 	}
 	else {
-		/* win_handle_menu: the start screen, then the main menu. TODO: handle_game,
-		 * which shows the results when coming back from a race. */
+		/* The launcher (A2.EXE): the intro film, then the menu; after the menu the exit
+		 * film. TODO: the race, and handle_game's results when coming back from it. */
+		play_movie(g.data_dir, "a2intro.smk");
 		int r = MENU_EXIT;
 		if (menu_start(&g, first))
 			r = menu_main(&g);
 		if (r == MENU_START_RACE)
 			printf("start race: the race (A2SPEL) is not ported yet\n");
+		if (!sys_quit_requested())
+			play_movie(g.data_dir, "a2exit.smk");
 		/* win_close_menu */
 		save_optie();
 		save_bedien();

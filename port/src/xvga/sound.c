@@ -261,3 +261,54 @@ int max_sound_buffer_count(void)
 {
 	return max_sound_buffers;
 }
+
+/* PCM from elsewhere (the movies' sound): one sample slot, replaced on each call. */
+int play_pcm(const int16_t *pcm, size_t frames, int rate, int channels, int volume)
+{
+	if (!init_sound_ok || !frames)
+		return -1;
+	SDL_AudioCVT cvt;
+	SDL_BuildAudioCVT(&cvt, AUDIO_S16SYS, (Uint8)channels, rate, AUDIO_S16SYS, 2, spec.freq);
+	size_t len = frames * (size_t)channels * 2;
+	cvt.len = (int)len;
+	cvt.buf = SDL_malloc(len * (size_t)(cvt.len_mult > 0 ? cvt.len_mult : 1));
+	memcpy(cvt.buf, pcm, len);
+	if (cvt.needed)
+		SDL_ConvertAudio(&cvt);
+	SDL_LockAudioDevice(device);
+	int si = -1;
+	for (int i = 0; i < sample_count; i++) {
+		if (!strcmp(samples[i].name, "<pcm>"))
+			si = i;
+	}
+	if (si < 0 && sample_count < MAX_SAMPLES)
+		si = sample_count++;
+	int b = si < 0 ? -1 : get_free_buffer();
+	if (b < 0 && si >= 0)
+		b = delete_sound_buffer(-1);
+	if (b < 0) {
+		SDL_UnlockAudioDevice(device);
+		SDL_free(cvt.buf);
+		return -1;
+	}
+	/* Stop any buffer still playing the old PCM before its data goes. */
+	for (int i = 0; i < max_sound_buffers; i++) {
+		if (buffers[i].sample == si) {
+			buffers[i].playing = 0;
+			buffers[i].sample = -1;
+		}
+	}
+	SDL_free(samples[si].data);
+	snprintf(samples[si].name, sizeof samples[si].name, "<pcm>");
+	samples[si].data = cvt.buf;
+	samples[si].len = cvt.needed ? (Uint32)cvt.len_cvt : (Uint32)len;
+	snprintf(buffers[b].name, sizeof buffers[b].name, "<pcm>");
+	buffers[b].sample = si;
+	buffers[b].pos = 0;
+	buffers[b].looping = 0;
+	buffers[b].volume = volume;
+	buffers[b].use_count = 1000000;
+	buffers[b].playing = 1;
+	SDL_UnlockAudioDevice(device);
+	return b;
+}
