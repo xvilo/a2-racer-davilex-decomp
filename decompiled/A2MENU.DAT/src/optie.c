@@ -24,8 +24,6 @@ void __watcall load_tmp_optie(char *filename)
 
 /* ==== 00401afe init_optie ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall init_optie(void)
 
 {
@@ -35,16 +33,16 @@ void __watcall init_optie(void)
   file_exist_result = file_exist(s_OPTIE_A2R_004259a6);
   if (file_exist_result == 0) {
     debugmsg(s_Creating_option_file__s_OPTIE_A2_004259b0);
-    _opties = 1;
-    DAT_00437222._2_2_ = 0;
-    DAT_00437222._0_2_ = 1;
-    DAT_00437228._0_2_ = 0;
-    DAT_00437228._2_2_ = 0;
-    DAT_0043722c._0_2_ = 1;
-    DAT_00437226 = 1;
-    DAT_0043722c._2_2_ = 0;
-    DAT_00437230._0_2_ = 3;
-    DAT_00437230._2_2_ = 4;
+    opties.view = 1;
+    opties.sound = 0;
+    opties.resolution = 1;
+    opties.horizon = 0;
+    opties.dashboard = 0;
+    opties.detail = 1;
+    opties.display_mode = 1;
+    opties.camera = 0;
+    opties.music_volume = 3;
+    opties.effects_volume = 4;
     save_optie();
     return;
   }

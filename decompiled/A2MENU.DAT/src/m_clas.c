@@ -24,37 +24,34 @@ int __watcall mdc_compare_score(void *param_1,void *param_2)
 void __watcall mdc_create_huidige_stand(void)
 
 {
-  int slot_check_index_result;
+  int slot_index;
   int *extraout_EDX;
   
   debugmsg(s__s__d___mdc_create_huidige_stand_00428cbf,s_m_clas_cpp_00428cb4,0x85);
-  slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428ce5,0x86);
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428ce5,0x86);
   mdc_stand_list[0].field_00 =
-       (int *)slot_count_total_tijd
-                        (active_slot,
-                         *(int *)(&slot_list[0].field_0x5c + slot_check_index_result * 0x13c) >>
-                         0x10);
-  slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428cf0,0x87);
-  mdc_stand_list[0]._4_4_ = slot_check_index_result * 0x13c + 0x437296;
+       (int *)slot_count_total_tijd(active_slot,*(int *)&slot_list[slot_index].field_0x5c >> 0x10);
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428cf0,0x87);
+  mdc_stand_list[0]._4_4_ = slot_index * 0x13c + 0x437296;
   mdc_stand_list[1].field_00._0_1_ = 1;
-  slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428cfb,0x89);
-  mdc_stand_list[1]._1_4_ = slot_count_total_tijd_speler(slot_check_index_result,0);
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428cfb,0x89);
+  mdc_stand_list[1]._1_4_ = slot_count_total_tijd_speler(slot_index,0);
   mdc_stand_list[2].field_00._1_1_ = 0;
   mdc_stand_list._13_4_ = speler_namen[0];
-  slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d06,0x8c);
-  mdc_stand_list[2]._2_4_ = slot_count_total_tijd_speler(slot_check_index_result,1);
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428d06,0x8c);
+  mdc_stand_list[2]._2_4_ = slot_count_total_tijd_speler(slot_index,1);
   mdc_stand_list[3].field_00._2_1_ = 0;
   mdc_stand_list._22_4_ = speler_namen[1];
-  slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d11,0x8f);
-  mdc_stand_list[3]._3_4_ = slot_count_total_tijd_speler(slot_check_index_result,2);
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428d11,0x8f);
+  mdc_stand_list[3]._3_4_ = slot_count_total_tijd_speler(slot_index,2);
   mdc_stand_list._31_4_ = speler_namen[2];
   mdc_stand_list[4].field_00._3_1_ = 0;
-  slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d1c,0x92);
-  mdc_stand_list[4]._4_4_ = slot_count_total_tijd_speler(slot_check_index_result,3);
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428d1c,0x92);
+  mdc_stand_list[4]._4_4_ = slot_count_total_tijd_speler(slot_index,3);
   mdc_stand_list[5]._4_1_ = 0;
   mdc_stand_list[5].field_00 = (int *)speler_namen[3];
-  slot_check_index_result = slot_check_index(active_slot,s_m_clas_cpp_00428d27,0x95);
-  mdc_stand_list._45_4_ = slot_count_total_tijd_speler(slot_check_index_result,4);
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428d27,0x95);
+  mdc_stand_list._45_4_ = slot_count_total_tijd_speler(slot_index,4);
   mdc_stand_list[6]._5_1_ = 0;
   mdc_stand_list[6]._1_4_ = speler_namen[4];
   debugmsg(s_Done_initializing_current_score_t_00428d32);
@@ -137,19 +134,19 @@ void __watcall mdc_display_score(void)
 void __watcall mdc_open_screen(void)
 
 {
-  int iVar1;
+  int slot_index;
   char *filename;
   
-  iVar1 = slot_check_index(active_slot,s_m_clas_cpp_00428d95,0xe8);
-  if (*(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10 < 6) {
+  slot_index = slot_check_index(active_slot,s_m_clas_cpp_00428d95,0xe8);
+  if (*(int *)&slot_list[slot_index].field_0x5c >> 0x10 < 6) {
     filename = s_TStand_pcx_00428dac;
   }
   else {
     filename = s_TStand2_pcx_00428da0;
   }
   load_pcx_file_1(2,filename,0x1f);
-  iVar1 = use_mdc_menu_cfg_anims();
-  if (iVar1 != 0) {
+  slot_index = use_mdc_menu_cfg_anims();
+  if (slot_index != 0) {
     fatal_exit(s__s__d____Could_not_load_mdc_menu_00428dc2,s_m_clas_cpp_00428db7,0xee);
   }
   hide_mouse();

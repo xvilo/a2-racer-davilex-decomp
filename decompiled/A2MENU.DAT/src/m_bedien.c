@@ -97,7 +97,7 @@ void __watcall load_ckey(void)
       iVar2 = 0;
     }
     i = i + 1;
-    config_key[iVar2 * 6 + 5].field_00 = *(int *)((int)&DAT_00437244 + iVar1);
+    config_key[iVar2 * 6 + 5].field_00 = *(int *)(&control.field_0xc + iVar1);
     iVar1 = iVar1 + 4;
   } while (i < 4);
   return;
@@ -120,7 +120,7 @@ void __watcall save_ckey(void)
       iVar2 = 0;
     }
     i = i + 1;
-    *(int *)((int)&DAT_00437244 + iVar1) = config_key[iVar2 * 6 + 5].field_00;
+    *(int *)(&control.field_0xc + iVar1) = config_key[iVar2 * 6 + 5].field_00;
     iVar1 = iVar1 + 4;
   } while (i < 4);
   return;
@@ -240,7 +240,7 @@ int __watcall ckey_defined(int param_1)
     if (0xf < iVar1) {
       return -1;
     }
-    if (param_1 == *(int *)((int)&DAT_00437244 + iVar1)) break;
+    if (param_1 == *(int *)(&control.field_0xc + iVar1)) break;
     iVar1 = iVar1 + 4;
     i = i + 1;
   }
@@ -365,8 +365,6 @@ void __watcall mc_animate_close_textbox(void)
 
 /* ==== 00405fec config_keys ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall config_keys(void)
 
 {
@@ -381,7 +379,7 @@ int __watcall config_keys(void)
   mc_animate_open_textbox();
   i = 0;
   iVar2 = 0;
-  snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10) / 2) * -500 + -100);
+  snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10) / 2) * -500 + -100);
   clear_all_ckey();
   do {
     if (3 < i) {
@@ -389,7 +387,7 @@ int __watcall config_keys(void)
       mc_print_text_bar(s__s_00427c28,s_De_toetsen_zijn_ingesteld__00427c0d);
       snd_wait(local_20);
       mc_animate_close_textbox();
-      snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
+      snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10)) * -500 + -100);
       return 1;
     }
     print_keys();
@@ -410,7 +408,7 @@ int __watcall config_keys(void)
           print_keys();
           mc_animate_close_textbox();
           snd_wait(local_20 + 1);
-          snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
+          snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10)) * -500 + -100);
           return 0;
         }
         snd_play(local_20 + 1,s_click3_wav_00427bad);
@@ -624,8 +622,6 @@ void __watcall mc_close_screen(void)
 
 /* ==== 0040654d menu_bedien ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 int __watcall menu_bedien(void)
 
 {
@@ -684,7 +680,7 @@ LAB_00406669:
             help = mc_help;
           }
           play_help(help,1);
-          snd_set_volume(&mm_tune_buffer,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
+          snd_set_volume(&mm_tune_buffer,(4 - ((int)opties._14_4_ >> 0x10)) * -500 + -100);
           goto LAB_0040688e;
         }
         snd_play(&local_1c,s_click2_wav_00427e09);

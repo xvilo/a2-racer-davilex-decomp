@@ -309,7 +309,14 @@ public class ApplyWatcom extends GhidraScript {
 			for (String[] c : auto.getOrDefault(name, List.of())) {
 				int off = Integer.parseInt(c[1], 16);
 				if (c[3].equals("__size")) {
-					size = Math.max(size, off);
+					// A hand-written layout defines the size; inferred ones may be an
+					// array's extent.
+					if (!manual.containsKey(name)) {
+						size = Math.max(size, off);
+					}
+					continue;
+				}
+				if (manual.containsKey(name) && off >= size) {
 					continue;
 				}
 				DataType dt = resolveArray(c[2]);

@@ -24,10 +24,10 @@ void __watcall mc_active_form(void)
   form_t *form;
   
   destroy_form();
-  if (DAT_00437226 == 0) {
+  if (opties.display_mode == 0) {
     form = mo_form_3D;
   }
-  else if ((DAT_00437226 < 2) || (DAT_00437226 != 2)) {
+  else if (((ushort)opties.display_mode < 2) || (opties.display_mode != 2)) {
     form = mo_form_320;
   }
   else {
@@ -63,24 +63,22 @@ void __watcall mc_display_geluid(void)
   af_image = mo_af_image(0x43,4,s_m_opties_cpp_00428080,0x191);
   set_mem_image(1,af_image,0x15d,0x134,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(DAT_00437222 >> 0x10 == 1),s_m_opties_cpp_0042808d,0x198);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._2_4_ >> 0x10 == 1),s_m_opties_cpp_0042808d,0x198);
   set_mem_image(1,af_image,0x14a,0xf6,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(DAT_00437222 >> 0x10 == 3),s_m_opties_cpp_0042809a,0x19e);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._2_4_ >> 0x10 == 3),s_m_opties_cpp_0042809a,0x19e);
   set_mem_image(1,af_image,0x14a,0x10b,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(DAT_00437222 >> 0x10 == 0),s_m_opties_cpp_004280a7,0x1a4);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._2_4_ >> 0x10 == 0),s_m_opties_cpp_004280a7,0x1a4);
   set_mem_image(1,af_image,0x14a,0x120,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(DAT_00437222 >> 0x10 == 2),s_m_opties_cpp_004280b4,0x1aa);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._2_4_ >> 0x10 == 2),s_m_opties_cpp_004280b4,0x1aa);
   set_mem_image(1,af_image,0x14a,0x135,iVar1);
   return;
 }
 
 
 /* ==== 00406b09 mc_display_horizon ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall mc_display_horizon(void)
 
@@ -98,18 +96,16 @@ void __watcall mc_display_horizon(void)
   af_image = mo_af_image(0x45,2,s_m_opties_cpp_004280db,0x1c3);
   set_mem_image(1,af_image,0x15d,0xb8,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(_DAT_00437226 >> 0x10 == 1),s_m_opties_cpp_004280e8,0x1c9);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._6_4_ >> 0x10 == 1),s_m_opties_cpp_004280e8,0x1c9);
   set_mem_image(1,af_image,0x14a,0xa5,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(_DAT_00437226 >> 0x10 == 0),s_m_opties_cpp_004280f5,0x1cf);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._6_4_ >> 0x10 == 0),s_m_opties_cpp_004280f5,0x1cf);
   set_mem_image(1,af_image,0x14a,0xb9,iVar1);
   return;
 }
 
 
 /* ==== 00406c0b mc_display_detail ==== */
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __watcall mc_display_detail(void)
 
@@ -127,10 +123,11 @@ void __watcall mc_display_detail(void)
   af_image = mo_af_image(0x44,2,s_m_opties_cpp_0042811c,0x1e7);
   set_mem_image(1,af_image,0x228,0x179,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(ram0x0043722a >> 0x10 == 1),s_m_opties_cpp_00428129,0x1ed);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._10_4_ >> 0x10 == 1),s_m_opties_cpp_00428129,0x1ed)
+  ;
   set_mem_image(1,af_image,0x215,0x165,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(ram0x0043722a >> 0x10 == 0),s_m_opties_cpp_00428136,499);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._10_4_ >> 0x10 == 0),s_m_opties_cpp_00428136,499);
   set_mem_image(1,af_image,0x215,0x17a,iVar1);
   return;
 }
@@ -154,10 +151,10 @@ void __watcall mc_display_dashbord(void)
   af_image = mo_af_image(0x46,2,s_m_opties_cpp_0042815d,0x20b);
   set_mem_image(1,af_image,0x15d,0x179,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(DAT_00437228 >> 0x10 == 1),s_m_opties_cpp_0042816a,0x211);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._8_4_ >> 0x10 == 1),s_m_opties_cpp_0042816a,0x211);
   set_mem_image(1,af_image,0x14a,0x165,iVar1);
   iVar1 = 2;
-  af_image = mo_af_image(0x3b,(uint)(DAT_00437228 >> 0x10 == 0),s_m_opties_cpp_00428177,0x217);
+  af_image = mo_af_image(0x3b,(uint)((int)opties._8_4_ >> 0x10 == 0),s_m_opties_cpp_00428177,0x217);
   set_mem_image(1,af_image,0x14a,0x17a,iVar1);
   return;
 }
@@ -171,14 +168,14 @@ void __watcall mc_display_inhoud(void)
   hide_mouse();
   blt_scr_2_scr(2,1,0xe6,0x96,600,0x19a,0);
   mc_display_geluid();
-  if (DAT_00437226 == 0) {
+  if (opties.display_mode == 0) {
     mc_display_dashbord();
     mc_display_horizon();
   }
-  else if (DAT_00437226 < 2) {
+  else if ((ushort)opties.display_mode < 2) {
     mc_display_detail();
   }
-  else if (DAT_00437226 == 2) {
+  else if (opties.display_mode == 2) {
     mc_display_horizon();
     mc_display_detail();
     mc_display_dashbord();
@@ -199,16 +196,16 @@ void __watcall mc_display_snd_setting(void)
   int iVar1;
   int iVar2;
   
-  i = DAT_00437222 >> 0x10;
+  i = (int)opties._2_4_ >> 0x10;
   hide_mouse();
   iVar1 = 2;
   i = mo_af_image(0x36,(uint)(i != 2),s_m_opties_cpp_00428184,0x247);
   set_mem_image(1,i,0,0x78,iVar1);
-  if (DAT_00437222 >> 0x10 != 2) {
+  if ((int)opties._2_4_ >> 0x10 != 2) {
     iVar1 = 0x2e;
     i = 0;
     do {
-      if (((short)DAT_00437230 < i) || (DAT_00437222 >> 0x10 == 1)) {
+      if ((opties.music_volume < i) || ((int)opties._2_4_ >> 0x10 == 1)) {
         anim_index = 0x38;
       }
       else {
@@ -217,7 +214,7 @@ void __watcall mc_display_snd_setting(void)
       iVar2 = 2;
       anim_index = mo_af_image(anim_index,i,s_m_opties_cpp_00428191,0x250);
       set_mem_image(1,anim_index,iVar1,0x9f,iVar2);
-      if ((DAT_00437230._2_2_ < i) || (DAT_00437222 >> 0x10 == 3)) {
+      if ((opties.effects_volume < i) || ((int)opties._2_4_ >> 0x10 == 3)) {
         anim_index = 0x38;
       }
       else {
@@ -246,11 +243,11 @@ void __watcall mc_display_tableau(void)
   int iVar1;
   
   frame_index = 0;
-  if (DAT_00437226 != 0) {
-    if (DAT_00437226 < 2) {
+  if (opties.display_mode != 0) {
+    if ((ushort)opties.display_mode < 2) {
       frame_index = 1;
     }
-    else if (DAT_00437226 == 2) {
+    else if (opties.display_mode == 2) {
       frame_index = 2;
     }
   }

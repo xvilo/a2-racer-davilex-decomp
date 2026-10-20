@@ -142,3 +142,45 @@ anim_t	08	frame_t*	frames
 # frame_t: one animation frame.
 frame_t	00	int	duration	ticks the frame stays up
 frame_t	04	int	image	mem image index
+# opties_t: the option settings, saved as OPTIE.A2R (20 bytes) and in each save slot.
+opties_t	00	short	view	
+opties_t	02	short	resolution	
+opties_t	04	short	sound	0 music and effects, 1 effects only, 2 off, 3 music only
+opties_t	06	short	display_mode	
+opties_t	08	short	horizon	
+opties_t	0a	short	dashboard	
+opties_t	0c	short	detail	
+opties_t	0e	short	camera	
+opties_t	10	short	music_volume	0..4
+opties_t	12	short	effects_volume	0..4
+# bedien_t: control settings (bedien.cpp), saved as BEDIEN.A2R and in each save slot.
+# Keys are Windows virtual-key codes.
+bedien_t	00	int	control_type	0 keyboard, 1 joypad, 2 steering wheel
+bedien_t	04	int	field_04	0 by default
+bedien_t	08	int	field_08	1 by default
+bedien_t	0c	int	key_left	VK_LEFT
+bedien_t	10	int	key_right	VK_RIGHT
+bedien_t	14	int	key_gas	VK_UP
+bedien_t	18	int	key_brake	VK_DOWN
+bedien_t	1c	int	key_action1	VK_SPACE
+bedien_t	20	int	key_action2	VK_RETURN
+# slot_t: one of ten player save slots (slot.cpp); results are kept per stage (6).
+slot_t	00	uchar	used	
+slot_t	01	uchar	save_order	1 = least recently saved
+slot_t	02	opties_t	opties	
+slot_t	16	bedien_t	control	
+slot_t	3a	char[32]	name	
+slot_t	5e	short	stage	current stage, 0..5
+slot_t	60	int[6]	time	own time per stage
+slot_t	78	int	money	1000 at the start
+slot_t	7c	short[6]	position	finishing position per stage, 6 = not raced
+slot_t	88	int[6]	time_racer_1	
+slot_t	a0	int[6]	time_racer_2	
+slot_t	b8	int[6]	time_racer_3	
+slot_t	d0	int[6]	time_racer_4	
+slot_t	e8	int[6]	time_racer_5	
+slot_t	100	short[6]	racer_1	
+slot_t	10c	short[6]	racer_2	
+slot_t	118	short[6]	racer_3	
+slot_t	124	short[6]	racer_4	
+slot_t	130	short[6]	racer_5	

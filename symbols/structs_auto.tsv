@@ -18,13 +18,6 @@ __iobuf	0d	uchar	field_0d
 __iobuf	10	int	field_10	
 __iobuf	14	uint	field_14	
 __iobuf	18	-	__size	
-bedien_t	00	char	field_00	
-bedien_t	01	uchar	field_01	
-bedien_t	02	short	field_02	
-bedien_t	04	char	field_04	
-bedien_t	05	char	field_05	
-bedien_t	06	short	field_06	
-bedien_t	8	-	__size	
 controls_t	00	void*	field_00	
 controls_t	4	-	__size	
 dd_info_t	02	char	field_02	
@@ -74,7 +67,6 @@ mns_slot_t	00	int	field_00
 mns_slot_t	4	-	__size	
 mst_slot_t	00	int	field_00	
 mst_slot_t	4	-	__size	
-opties_t	1	-	__size	
 pf_24_t	00	undefined2	field_00	
 pf_24_t	3	-	__size	
 racer_object_t	20	void*	field_20	
@@ -86,8 +78,6 @@ single_score_t	22	int	field_22
 single_score_t	26	short	field_26	
 single_score_t	28	undefined4	field_28	
 single_score_t	2c	-	__size	
-slot_t	02	bedien_t	field_02	
-slot_t	c58	-	__size	
 snd_buf_t	38	-	__size	
 sound_info_t	02	char	field_02	
 sound_info_t	03	char	field_03	

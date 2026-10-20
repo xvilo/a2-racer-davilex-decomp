@@ -3,99 +3,97 @@
 
 /* ==== 0040ad6c reset_infio ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall reset_infio(void)
 
 {
   undefined2 *puVar1;
+  int slot_index_2;
+  int slot_index;
   int iVar2;
-  int iVar3;
-  int iVar4;
   
   infio.race_finished = '\0';
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_00429904,0x45);
-  infio.money = *(int *)(&slot_list[0].field_0x78 + iVar2 * 0x13c);
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429904,0x45);
+  infio.money = slot_list[slot_index_2].money;
   infio.active_slot = (short)active_slot;
-  infio.sound = DAT_00437222._2_2_;
-  infio.resolution = (short)DAT_00437222;
-  infio.view = _opties;
+  infio.sound = opties.sound;
+  infio.resolution = opties.resolution;
+  infio.view = opties.view;
   infio.control_type._0_1_ = control.field_00;
   infio.control_type._1_1_ = control.field_01;
-  infio.display_mode = DAT_00437226;
-  infio.horizon = (short)DAT_00437228;
-  infio.dashboard = DAT_00437228._2_2_;
-  infio.detail = (short)DAT_0043722c;
-  infio.camera = DAT_0043722c._2_2_;
-  infio.music_volume = (short)DAT_00437230;
-  infio.effects_volume = DAT_00437230._2_2_;
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_0042990d,0x52);
-  infio.stage = *(short *)(&slot_list[0].field_0x5e + iVar2 * 0x13c);
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_00429916,0x53);
-  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
+  infio.display_mode = opties.display_mode;
+  infio.horizon = opties.horizon;
+  infio.dashboard = opties.dashboard;
+  infio.detail = opties.detail;
+  infio.camera = opties.camera;
+  infio.music_volume = opties.music_volume;
+  infio.effects_volume = opties.effects_volume;
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_0042990d,0x52);
+  infio.stage = slot_list[slot_index_2].stage;
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429916,0x53);
+  if (*(int *)&slot_list[slot_index_2].field_0x5c >> 0x10 < 1) {
     infio.position = 6;
   }
   else {
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_0042991f,0x53);
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429931,0x53);
-    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
-                             s_spel_cpp_00429928,0x53);
-    infio.position = *(short *)(iVar2 * 0x13c + 0x4372d8 + iVar3 * 2);
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_0042991f,0x53);
+    slot_index = slot_check_index(active_slot,s_spel_cpp_00429931,0x53);
+    slot_index = slot_check_level((*(int *)&slot_list[slot_index].field_0x5c >> 0x10) + -1,
+                                  s_spel_cpp_00429928,0x53);
+    infio.position = *(short *)(slot_index_2 * 0x13c + 0x4372d8 + slot_index * 2);
   }
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_0042993a,0x54);
-  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_0042993a,0x54);
+  if (*(int *)&slot_list[slot_index_2].field_0x5c >> 0x10 < 1) {
     infio.racer_1 = 1;
   }
   else {
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_00429943,0x54);
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429955,0x54);
-    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
-                             s_spel_cpp_0042994c,0x54);
-    infio.racer_1 = *(short *)(iVar2 * 0x13c + 0x43735c + iVar3 * 2);
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429943,0x54);
+    slot_index = slot_check_index(active_slot,s_spel_cpp_00429955,0x54);
+    slot_index = slot_check_level((*(int *)&slot_list[slot_index].field_0x5c >> 0x10) + -1,
+                                  s_spel_cpp_0042994c,0x54);
+    infio.racer_1 = *(short *)(slot_index_2 * 0x13c + 0x43735c + slot_index * 2);
   }
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_0042995e,0x55);
-  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_0042995e,0x55);
+  if (*(int *)&slot_list[slot_index_2].field_0x5c >> 0x10 < 1) {
     infio.racer_2 = 2;
   }
   else {
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_00429967,0x55);
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429979,0x55);
-    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
-                             s_spel_cpp_00429970,0x55);
-    infio.racer_2 = *(short *)(iVar2 * 0x13c + 0x437368 + iVar3 * 2);
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429967,0x55);
+    slot_index = slot_check_index(active_slot,s_spel_cpp_00429979,0x55);
+    slot_index = slot_check_level((*(int *)&slot_list[slot_index].field_0x5c >> 0x10) + -1,
+                                  s_spel_cpp_00429970,0x55);
+    infio.racer_2 = *(short *)(slot_index_2 * 0x13c + 0x437368 + slot_index * 2);
   }
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_00429982,0x56);
-  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429982,0x56);
+  if (*(int *)&slot_list[slot_index_2].field_0x5c >> 0x10 < 1) {
     infio.racer_3 = 3;
   }
   else {
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_0042998b,0x56);
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_0042999d,0x56);
-    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
-                             s_spel_cpp_00429994,0x56);
-    infio.racer_3 = *(short *)(iVar2 * 0x13c + 0x437374 + iVar3 * 2);
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_0042998b,0x56);
+    slot_index = slot_check_index(active_slot,s_spel_cpp_0042999d,0x56);
+    slot_index = slot_check_level((*(int *)&slot_list[slot_index].field_0x5c >> 0x10) + -1,
+                                  s_spel_cpp_00429994,0x56);
+    infio.racer_3 = *(short *)(slot_index_2 * 0x13c + 0x437374 + slot_index * 2);
   }
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_004299a6,0x57);
-  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_004299a6,0x57);
+  if (*(int *)&slot_list[slot_index_2].field_0x5c >> 0x10 < 1) {
     infio.racer_4 = 4;
   }
   else {
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_004299af,0x57);
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_004299c1,0x57);
-    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
-                             s_spel_cpp_004299b8,0x57);
-    infio.racer_4 = *(short *)(iVar2 * 0x13c + 0x437380 + iVar3 * 2);
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_004299af,0x57);
+    slot_index = slot_check_index(active_slot,s_spel_cpp_004299c1,0x57);
+    slot_index = slot_check_level((*(int *)&slot_list[slot_index].field_0x5c >> 0x10) + -1,
+                                  s_spel_cpp_004299b8,0x57);
+    infio.racer_4 = *(short *)(slot_index_2 * 0x13c + 0x437380 + slot_index * 2);
   }
-  iVar2 = slot_check_index(active_slot,s_spel_cpp_004299ca,0x58);
-  if (*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10 < 1) {
+  slot_index_2 = slot_check_index(active_slot,s_spel_cpp_004299ca,0x58);
+  if (*(int *)&slot_list[slot_index_2].field_0x5c >> 0x10 < 1) {
     infio.racer_5 = 5;
   }
   else {
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_004299d3,0x58);
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_004299e5,0x58);
-    iVar3 = slot_check_level((*(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10) + -1,
-                             s_spel_cpp_004299dc,0x58);
-    infio.racer_5 = *(short *)(iVar2 * 0x13c + 0x43738c + iVar3 * 2);
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_004299d3,0x58);
+    slot_index = slot_check_index(active_slot,s_spel_cpp_004299e5,0x58);
+    slot_index = slot_check_level((*(int *)&slot_list[slot_index].field_0x5c >> 0x10) + -1,
+                                  s_spel_cpp_004299dc,0x58);
+    infio.racer_5 = *(short *)(slot_index_2 * 0x13c + 0x43738c + slot_index * 2);
   }
   infio.time = 0;
   infio.time_racer_1 = 0;
@@ -105,15 +103,15 @@ void __watcall reset_infio(void)
   infio.time_racer_5 = 0;
   infio.final = 0;
   infio.ended_by = 0;
-  iVar3 = 0;
-  iVar2 = 0;
+  slot_index = 0;
+  slot_index_2 = 0;
   do {
-    iVar4 = iVar2 + 2;
-    puVar1 = (undefined2 *)((int)&DAT_00437244 + iVar3);
-    iVar3 = iVar3 + 4;
-    *(undefined2 *)((int)&infio.key_left + iVar2) = *puVar1;
-    iVar2 = iVar4;
-  } while (iVar4 != 0xc);
+    iVar2 = slot_index_2 + 2;
+    puVar1 = (undefined2 *)(&control.field_0xc + slot_index);
+    slot_index = slot_index + 4;
+    *(undefined2 *)((int)&infio.key_left + slot_index_2) = *puVar1;
+    slot_index_2 = iVar2;
+  } while (iVar2 != 0xc);
   return;
 }
 
@@ -125,10 +123,10 @@ void __watcall reset_infio(void)
 int __watcall handle_game(void)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  int slot_index;
+  int slot_index_3;
+  int slot_index_2;
+  int slot_index_4;
   char *extraout_EDX;
   int extraout_EDX_00;
   int local_18;
@@ -138,93 +136,92 @@ int __watcall handle_game(void)
   debugmsg(s__>_HANDLE_GAME_<*_004299ee);
   if (infio.race_finished != '\0') {
     infio.race_finished = '\0';
-    iVar1 = slot_check_index(active_slot,s_spel_cpp_00429a04,0x73);
-    iVar1 = *(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c);
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_00429a0d,0x74);
-    iVar3 = active_slot;
-    *(short *)(&slot_list[0].field_0x5e + iVar2 * 0x13c) =
-         *(short *)(&slot_list[0].field_0x5e + iVar2 * 0x13c) + 1;
-    iVar3 = slot_check_index(iVar3,s_spel_cpp_00429a16,0x75);
-    *(int *)(&slot_list[0].field_0x78 + iVar3 * 0x13c) = infio.money;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a1f,0x76);
-    iVar1 = iVar1 >> 0x10;
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a28,0x76);
-    *(int *)(iVar3 * 0x13c + 0x4372bc + iVar2 * 4) = infio.time;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a31,0x77);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a3a,0x77);
-    *(short *)(iVar3 * 0x13c + 0x4372d8 + iVar2 * 2) = infio.position;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a43,0x78);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a4c,0x78);
-    *(short *)(iVar3 * 0x13c + 0x43735c + iVar2 * 2) = infio.racer_1;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a55,0x79);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a5e,0x79);
-    *(short *)(iVar3 * 0x13c + 0x437368 + iVar2 * 2) = infio.racer_2;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a67,0x7a);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a70,0x7a);
-    *(short *)(iVar3 * 0x13c + 0x437374 + iVar2 * 2) = infio.racer_3;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a79,0x7b);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a82,0x7b);
-    *(short *)(iVar3 * 0x13c + 0x437380 + iVar2 * 2) = infio.racer_4;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a8b,0x7c);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429a94,0x7c);
-    *(short *)(iVar3 * 0x13c + 0x43738c + iVar2 * 2) = infio.racer_5;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429a9d,0x7d);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aa6,0x7d);
-    *(int *)(iVar3 * 0x13c + 0x4372e4 + iVar2 * 4) = infio.time_racer_1;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429aaf,0x7e);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429ab8,0x7e);
-    *(int *)(iVar3 * 0x13c + 0x4372fc + iVar2 * 4) = infio.time_racer_2;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ac1,0x7f);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aca,0x7f);
-    *(int *)(iVar3 * 0x13c + 0x437314 + iVar2 * 4) = infio.time_racer_3;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ad3,0x80);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429adc,0x80);
-    *(int *)(iVar3 * 0x13c + 0x43732c + iVar2 * 4) = infio.time_racer_4;
-    iVar3 = slot_check_index(active_slot,s_spel_cpp_00429ae5,0x81);
-    iVar2 = slot_check_level(iVar1,s_spel_cpp_00429aee,0x81);
-    *(uint *)(iVar2 * 4 + 0x437344 + iVar3 * 0x13c) =
+    slot_index = slot_check_index(active_slot,s_spel_cpp_00429a04,0x73);
+    slot_index = *(int *)&slot_list[slot_index].field_0x5c;
+    slot_index_3 = slot_check_index(active_slot,s_spel_cpp_00429a0d,0x74);
+    slot_index_2 = active_slot;
+    slot_list[slot_index_3].stage = slot_list[slot_index_3].stage + 1;
+    slot_index_2 = slot_check_index(slot_index_2,s_spel_cpp_00429a16,0x75);
+    slot_list[slot_index_2].money = infio.money;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a1f,0x76);
+    slot_index = slot_index >> 0x10;
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429a28,0x76);
+    *(int *)(slot_index_2 * 0x13c + 0x4372bc + slot_index_3 * 4) = infio.time;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a31,0x77);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429a3a,0x77);
+    *(short *)(slot_index_2 * 0x13c + 0x4372d8 + slot_index_3 * 2) = infio.position;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a43,0x78);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429a4c,0x78);
+    *(short *)(slot_index_2 * 0x13c + 0x43735c + slot_index_3 * 2) = infio.racer_1;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a55,0x79);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429a5e,0x79);
+    *(short *)(slot_index_2 * 0x13c + 0x437368 + slot_index_3 * 2) = infio.racer_2;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a67,0x7a);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429a70,0x7a);
+    *(short *)(slot_index_2 * 0x13c + 0x437374 + slot_index_3 * 2) = infio.racer_3;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a79,0x7b);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429a82,0x7b);
+    *(short *)(slot_index_2 * 0x13c + 0x437380 + slot_index_3 * 2) = infio.racer_4;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a8b,0x7c);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429a94,0x7c);
+    *(short *)(slot_index_2 * 0x13c + 0x43738c + slot_index_3 * 2) = infio.racer_5;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429a9d,0x7d);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429aa6,0x7d);
+    *(int *)(slot_index_2 * 0x13c + 0x4372e4 + slot_index_3 * 4) = infio.time_racer_1;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429aaf,0x7e);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429ab8,0x7e);
+    *(int *)(slot_index_2 * 0x13c + 0x4372fc + slot_index_3 * 4) = infio.time_racer_2;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429ac1,0x7f);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429aca,0x7f);
+    *(int *)(slot_index_2 * 0x13c + 0x437314 + slot_index_3 * 4) = infio.time_racer_3;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429ad3,0x80);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429adc,0x80);
+    *(int *)(slot_index_2 * 0x13c + 0x43732c + slot_index_3 * 4) = infio.time_racer_4;
+    slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429ae5,0x81);
+    slot_index_3 = slot_check_level(slot_index,s_spel_cpp_00429aee,0x81);
+    *(uint *)(slot_index_3 * 4 + 0x437344 + slot_index_2 * 0x13c) =
          CONCAT22(infio.time_racer_5._2_2_,(undefined2)infio.time_racer_5);
     snd_play_looping(&local_18,s_rock_wav_00429af7);
-    menu_display_stand(iVar1);
+    menu_display_stand(slot_index);
     menu_display_classe();
-    iVar3 = slot_check_index(iVar1,s_spel_cpp_00429b00,0x85);
-    debugmsg(s_slot__d__tijd__d_____d_00429b09,active_slot,iVar1,
-             *(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c) >> 0x10);
-    iVar3 = slot_check_index(active_slot,extraout_EDX,0x89);
-    iVar3 = *(int *)(&slot_list[0].field_0x78 + iVar3 * 0x13c);
-    iVar2 = slot_check_index(active_slot,s_spel_cpp_00429b2b,0x87);
-    iVar4 = slot_check_level(iVar1,s_spel_cpp_00429b34,0x87);
-    iVar2 = *(int *)(iVar2 * 0x13c + 0x4372bc + iVar4 * 4);
-    iVar4 = slot_check_index(active_slot,s_spel_cpp_00429b3d,0x86);
-    add_new_levelscore(&slot_list[0].field_0x3a + iVar4 * 0x13c,iVar2,iVar1,iVar3);
-    iVar3 = get_last_entered_levelscore(iVar1);
-    debugmsg(s_Level_score_added_at__d_00429b46,iVar3);
+    slot_index_2 = slot_check_index(slot_index,s_spel_cpp_00429b00,0x85);
+    debugmsg(s_slot__d__tijd__d_____d_00429b09,active_slot,slot_index,
+             *(int *)&slot_list[slot_index_2].field_0x5c >> 0x10);
+    slot_index_2 = slot_check_index(active_slot,extraout_EDX,0x89);
+    slot_index_2 = slot_list[slot_index_2].money;
+    slot_index_3 = slot_check_index(active_slot,s_spel_cpp_00429b2b,0x87);
+    slot_index_4 = slot_check_level(slot_index,s_spel_cpp_00429b34,0x87);
+    slot_index_3 = *(int *)(slot_index_3 * 0x13c + 0x4372bc + slot_index_4 * 4);
+    slot_index_4 = slot_check_index(active_slot,s_spel_cpp_00429b3d,0x86);
+    add_new_levelscore(slot_list[slot_index_4].name,slot_index_3,slot_index,slot_index_2);
+    slot_index_2 = get_last_entered_levelscore(slot_index);
+    debugmsg(s_Level_score_added_at__d_00429b46,slot_index_2);
     if ((-1 < extraout_EDX_00) && (extraout_EDX_00 < 10)) {
-      menu_display_score(iVar1);
+      menu_display_score(slot_index);
     }
     do {
-      iVar1 = snd_fade_out(&local_18);
-    } while (iVar1 != 0);
+      slot_index = snd_fade_out(&local_18);
+    } while (slot_index != 0);
     debugmsg(s_Local_Level_Menu_Displayed_00429b60);
-    iVar1 = slot_check_index(active_slot,s_spel_cpp_00429b7d,0x91);
-    if (5 < *(int *)(&slot_list[0].field_0x5c + iVar1 * 0x13c) >> 0x10) {
+    slot_index = slot_check_index(active_slot,s_spel_cpp_00429b7d,0x91);
+    if (5 < *(int *)&slot_list[slot_index].field_0x5c >> 0x10) {
       debugmsg(s_Last_Level_00429b86);
       movie_play_outtro();
       clear_screen(2,0);
       handle_wipe(2,3,600);
       clear_screen(1,0);
-      iVar1 = slot_check_index(active_slot,s_spel_cpp_00429b93,0x9b);
-      iVar1 = *(int *)(&slot_list[0].field_0x78 + iVar1 * 0x13c);
-      iVar3 = slot_check_index(active_slot,s_spel_cpp_00429b9c,0x9a);
-      iVar3 = *(int *)(&slot_list[0].field_0x5c + iVar3 * 0x13c);
-      iVar2 = slot_check_index(active_slot,s_spel_cpp_00429ba5,0x99);
-      iVar2 = slot_count_total_tijd
-                        (active_slot,*(int *)(&slot_list[0].field_0x5c + iVar2 * 0x13c) >> 0x10);
-      iVar4 = slot_check_index(active_slot,s_spel_cpp_00429bae,0x98);
-      add_new_hiscore(&slot_list[0].field_0x3a + iVar4 * 0x13c,iVar2,iVar3 >> 0x10,iVar1);
-      iVar1 = get_last_entered_hiscore();
-      debugmsg(s_Last_Level_added_at__d_00429bb7,iVar1);
-      if ((-1 < iVar1) && (iVar1 < 10)) {
+      slot_index = slot_check_index(active_slot,s_spel_cpp_00429b93,0x9b);
+      slot_index = slot_list[slot_index].money;
+      slot_index_2 = slot_check_index(active_slot,s_spel_cpp_00429b9c,0x9a);
+      slot_index_2 = *(int *)&slot_list[slot_index_2].field_0x5c;
+      slot_index_3 = slot_check_index(active_slot,s_spel_cpp_00429ba5,0x99);
+      slot_index_3 = slot_count_total_tijd
+                               (active_slot,*(int *)&slot_list[slot_index_3].field_0x5c >> 0x10);
+      slot_index_4 = slot_check_index(active_slot,s_spel_cpp_00429bae,0x98);
+      add_new_hiscore(slot_list[slot_index_4].name,slot_index_3,slot_index_2 >> 0x10,slot_index);
+      slot_index = get_last_entered_hiscore();
+      debugmsg(s_Last_Level_added_at__d_00429bb7,slot_index);
+      if ((-1 < slot_index) && (slot_index < 10)) {
         menu_display_score(-1);
       }
       clear_slot(active_slot);

@@ -24,8 +24,6 @@ void __watcall load_tmp_bedien(char *filename)
 
 /* ==== 00401c5e init_bedien ==== */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void __watcall init_bedien(void)
 
 {
@@ -43,13 +41,13 @@ void __watcall init_bedien(void)
     control.field_00 = '\0';
     control.field_01 = '\0';
     control.field_02 = 0;
-    _DAT_00437240 = 1;
-    DAT_00437248 = 0x27;
-    _DAT_00437250 = 0x28;
-    DAT_00437244 = 0x25;
-    _DAT_00437258 = 0xd;
-    DAT_0043724c = 0x26;
-    _DAT_00437254 = 0x20;
+    control._8_4_ = 1;
+    control._16_4_ = 0x27;
+    control._24_4_ = 0x28;
+    control._12_4_ = 0x25;
+    control._32_4_ = 0xd;
+    control._20_4_ = 0x26;
+    control._28_4_ = 0x20;
     save_bedien();
   }
   else {

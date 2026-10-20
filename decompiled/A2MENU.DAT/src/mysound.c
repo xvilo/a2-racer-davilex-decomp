@@ -56,11 +56,11 @@ void __watcall snd_play(int *param_1,char *filename)
     *param_1 = -1;
     return;
   }
-  if (DAT_00437222 >> 0x10 != 2) {
+  if ((int)opties._2_4_ >> 0x10 != 2) {
     snd_stop(param_1);
     play_sound_buffer_1_result = play_sound_buffer_1(filename,0);
     *param_1 = play_sound_buffer_1_result;
-    snd_set_volume(param_1,(4 - (DAT_00437230 >> 0x10)) * -500 + -100);
+    snd_set_volume(param_1,(4 - ((int)opties._16_4_ >> 0x10)) * -500 + -100);
   }
   return;
 }
@@ -79,11 +79,11 @@ void __watcall snd_play_looping(int *param_1,char *filename)
     *param_1 = -1;
     return;
   }
-  if (DAT_00437222 >> 0x10 != 2) {
+  if ((int)opties._2_4_ >> 0x10 != 2) {
     snd_stop(param_1);
     play_sound_buffer_1_result = play_sound_buffer_1(filename,1);
     *param_1 = play_sound_buffer_1_result;
-    snd_set_volume(param_1,(4 - (ram0x0043722e >> 0x10)) * -500 + -100);
+    snd_set_volume(param_1,(4 - ((int)opties._14_4_ >> 0x10)) * -500 + -100);
   }
   return;
 }
@@ -101,7 +101,7 @@ void __watcall snd_wait(int *param_1)
   iVar1 = snd_valid_buffer(arg2);
   if (iVar1 != 0) {
     debugmsg(s_snd_buffer____d_00429c70,arg2);
-    if (DAT_00437222 >> 0x10 != 2) {
+    if ((int)opties._2_4_ >> 0x10 != 2) {
       while( true ) {
         iVar1 = sound_buffer_busy(arg2);
         if (iVar1 == 0) break;
@@ -128,7 +128,7 @@ int __watcall snd_fade_out(int *param_1)
   arg2 = *param_1;
   iVar1 = snd_valid_buffer(arg2);
   if (iVar1 != 0) {
-    if (DAT_00437222 >> 0x10 == 2) {
+    if ((int)opties._2_4_ >> 0x10 == 2) {
       snd_stop(param_1);
     }
     else {
@@ -162,7 +162,7 @@ int __watcall snd_set_volume(int *param_1,int param_2)
   iVar1 = *param_1;
   snd_valid_buffer_result = snd_valid_buffer(iVar1);
   if (snd_valid_buffer_result != 0) {
-    if (DAT_00437222 >> 0x10 != 2) {
+    if ((int)opties._2_4_ >> 0x10 != 2) {
       set_sound_buffer_vol(iVar1,param_2);
       return 1;
     }
@@ -184,7 +184,7 @@ int __watcall snd_get_volume(int *param_1)
   iVar1 = *param_1;
   snd_valid_buffer_result = snd_valid_buffer(iVar1);
   if (snd_valid_buffer_result != 0) {
-    if (DAT_00437222 >> 0x10 != 2) {
+    if ((int)opties._2_4_ >> 0x10 != 2) {
       iVar1 = get_sound_buffer_vol(iVar1);
       return iVar1;
     }

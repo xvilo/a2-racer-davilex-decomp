@@ -17,12 +17,23 @@ add_executable(a2racer
 	src/res/pcx.c
 	src/gfx/screen.c
 	src/gfx/png.c
+	src/gfx/wipes.c
+	src/xvga/fileio.c
+	src/xvga/font.c
+	src/xvga/sound.c
 	src/menu/menu_data.c
 	src/menu/forms.c
 	src/menu/m_main.c
+	src/menu/mysound.c
+	src/menu/optie.c
+	src/menu/slot.c
+	src/menu/txttool.c
 )
 target_include_directories(a2racer PRIVATE src)
 target_link_libraries(a2racer PRIVATE SDL2::SDL2 SDL2_ttf::SDL2_ttf)
+if(NOT WIN32)
+	target_link_libraries(a2racer PRIVATE m)
+endif()
 if(TARGET SDL2::SDL2main)
 	target_link_libraries(a2racer PRIVATE SDL2::SDL2main)
 endif()

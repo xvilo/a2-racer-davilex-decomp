@@ -8,8 +8,8 @@ void __watcall mdt_display_stand(int param_1,int param_2,int param_3,int param_4
 {
   char *pcVar1;
   int slot_check_level_result;
-  int iVar2;
-  char *pcVar3;
+  int slot_index;
+  char *pcVar2;
   int arg5;
   char local_30 [4];
   int local_2c;
@@ -42,80 +42,81 @@ void __watcall mdt_display_stand(int param_1,int param_2,int param_3,int param_4
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428aa8,0x8a);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428ab4,0x8a);
-      iVar2 = 0;
-      pcVar3 = local_30;
-      if (arg5 == *(int *)(&slot_list[0].field_0x7a + slot_check_level_result * 2 + local_2c) >>
-                  0x10) {
+      slot_index = 0;
+      pcVar2 = local_30;
+      if (arg5 == *(int *)((int)slot_list[0].position + slot_check_level_result * 2 + local_2c + -2)
+                  >> 0x10) {
         local_14 = local_24;
-        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428ac0,0x8c);
-        pcVar3 = &slot_list[0].field_0x3a + iVar2 * 0x13c;
-        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428acc,0x8d);
+        slot_index = slot_check_index(active_slot,s_m_stand_cpp_00428ac0,0x8c);
+        pcVar2 = slot_list[slot_index].name;
+        slot_index = slot_check_index(active_slot,s_m_stand_cpp_00428acc,0x8d);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428ad8,0x8d);
-        iVar2 = *(int *)(iVar2 * 0x13c + 0x4372bc + slot_check_level_result * 4);
+        slot_index = *(int *)(slot_index * 0x13c + 0x4372bc + slot_check_level_result * 4);
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428ae4,0x8f);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428af0,0x8f);
       pcVar1 = speler_namen[0];
-      if (arg5 == *(int *)(&slot_list[0].field_0xfe + slot_check_level_result * 2 + local_2c) >>
-                  0x10) {
-        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428afc,0x91);
+      if (arg5 == *(int *)((int)slot_list[0].racer_1 + slot_check_level_result * 2 + local_2c + -2)
+                  >> 0x10) {
+        slot_index = slot_check_index(active_slot,s_m_stand_cpp_00428afc,0x91);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b08,0x91);
-        iVar2 = *(int *)(iVar2 * 0x13c + 0x4372e4 + slot_check_level_result * 4);
-        pcVar3 = pcVar1;
+        slot_index = *(int *)(slot_index * 0x13c + 0x4372e4 + slot_check_level_result * 4);
+        pcVar2 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b14,0x93);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b20,0x93);
       pcVar1 = speler_namen[1];
-      if (arg5 == *(int *)(&slot_list[0].field_0x10a + slot_check_level_result * 2 + local_2c) >>
-                  0x10) {
-        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b2c,0x95);
+      if (arg5 == *(int *)((int)slot_list[0].racer_1 + slot_check_level_result * 2 + local_2c + 10)
+                  >> 0x10) {
+        slot_index = slot_check_index(active_slot,s_m_stand_cpp_00428b2c,0x95);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b38,0x95);
-        iVar2 = *(int *)(iVar2 * 0x13c + 0x4372fc + slot_check_level_result * 4);
-        pcVar3 = pcVar1;
+        slot_index = *(int *)(slot_index * 0x13c + 0x4372fc + slot_check_level_result * 4);
+        pcVar2 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b44,0x97);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b50,0x97);
       pcVar1 = speler_namen[2];
-      if (arg5 == *(int *)(&slot_list[0].field_0x116 + slot_check_level_result * 2 + local_2c) >>
-                  0x10) {
-        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b5c,0x99);
+      if (arg5 == *(int *)((int)slot_list[0].racer_2 + slot_check_level_result * 2 + local_2c + 10)
+                  >> 0x10) {
+        slot_index = slot_check_index(active_slot,s_m_stand_cpp_00428b5c,0x99);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b68,0x99);
-        iVar2 = *(int *)(iVar2 * 0x13c + 0x437314 + slot_check_level_result * 4);
-        pcVar3 = pcVar1;
+        slot_index = *(int *)(slot_index * 0x13c + 0x437314 + slot_check_level_result * 4);
+        pcVar2 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428b74,0x9b);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b80,0x9b);
       pcVar1 = speler_namen[3];
-      if (arg5 == *(int *)(&slot_list[0].field_0x122 + slot_check_level_result * 2 + local_2c) >>
-                  0x10) {
-        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428b8c,0x9d);
+      if (arg5 == *(int *)((int)slot_list[0].racer_3 + slot_check_level_result * 2 + local_2c + 10)
+                  >> 0x10) {
+        slot_index = slot_check_index(active_slot,s_m_stand_cpp_00428b8c,0x9d);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428b98,0x9d);
-        iVar2 = *(int *)(iVar2 * 0x13c + 0x43732c + slot_check_level_result * 4);
-        pcVar3 = pcVar1;
+        slot_index = *(int *)(slot_index * 0x13c + 0x43732c + slot_check_level_result * 4);
+        pcVar2 = pcVar1;
       }
       local_2c = slot_check_index(active_slot,s_m_stand_cpp_00428ba4,0x9f);
       local_2c = local_2c * 0x13c;
       slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428bb0,0x9f);
       pcVar1 = speler_namen[4];
-      if (arg5 == *(int *)(&slot_list[0].field_0x12e + slot_check_level_result * 2 + local_2c) >>
-                  0x10) {
-        iVar2 = slot_check_index(active_slot,s_m_stand_cpp_00428bbc,0xa1);
+      if (arg5 == *(int *)((int)slot_list[0].racer_4 + slot_check_level_result * 2 + local_2c + 10)
+                  >> 0x10) {
+        slot_index = slot_check_index(active_slot,s_m_stand_cpp_00428bbc,0xa1);
         slot_check_level_result = slot_check_level(param_1,s_m_stand_cpp_00428bc8,0xa1);
-        iVar2 = *(int *)(iVar2 * 0x13c + 0x437344 + slot_check_level_result * 4);
-        pcVar3 = pcVar1;
+        slot_index = *(int *)(slot_index * 0x13c + 0x437344 + slot_check_level_result * 4);
+        pcVar2 = pcVar1;
       }
       xvga_set_font_colors(2,local_14,local_14);
       slot_check_level_result = local_10;
       win_print_xy(1,local_18,local_10,s__d_00428bd4,arg5);
-      win_print_xy(1,local_28,slot_check_level_result,s__s_00428bd7,pcVar3);
-      win_print_xy(1,local_1c,slot_check_level_result,s___2_2du__2_2dm__2_2ds_00428bda,iVar2 / 0xe10
-                   ,(int)((longlong)
-                          ((ulonglong)(uint)((int)((longlong)iVar2 / 0x3c) >> 0x1f) << 0x20 |
-                          (longlong)iVar2 / 0x3c & 0xffffffffU) % 0x3c),iVar2 % 0x3c);
+      win_print_xy(1,local_28,slot_check_level_result,s__s_00428bd7,pcVar2);
+      win_print_xy(1,local_1c,slot_check_level_result,s___2_2du__2_2dm__2_2ds_00428bda,
+                   slot_index / 0xe10,
+                   (int)((longlong)
+                         ((ulonglong)(uint)((int)((longlong)slot_index / 0x3c) >> 0x1f) << 0x20 |
+                         (longlong)slot_index / 0x3c & 0xffffffffU) % 0x3c),slot_index % 0x3c);
       arg5 = arg5 + 1;
       local_10 = slot_check_level_result + 0x19;
     } while (arg5 < 7);
