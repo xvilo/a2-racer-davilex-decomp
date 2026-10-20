@@ -1,0 +1,97 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake libsdl2-dev libsdl2-ttf-dev
+      - name: Build
+        run: |
+          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build port/build -j 4 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
+      - name: Report compiler errors
+        if: failure()
+        run: grep -E "error|warning" build.log | head -50 | sed 's/^/::error::/' || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: a2racer-linux-x86_64
+          path: port/build/a2racer
+
+  macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependencies
+        run: brew install sdl2 sdl2_ttf
+      - name: Build
+        run: |
+          cmake -S port -B port/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build port/build -j 4 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
+      - name: Report compiler errors
+        if: failure()
+        run: grep -E "error|warning" build.log | head -50 | sed 's/^/::error::/' || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: a2racer-macos-arm64
+          path: port/build/a2racer
+
+  windows-mingw:
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-SDL2
+            mingw-w64-ucrt-x86_64-SDL2_ttf
+      - name: Build
+        run: |
+          cmake -S port -B port/build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build port/build 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
+      - name: Report compiler errors
+        if: failure()
+        run: grep -E "error|warning" build.log | head -50 | sed 's/^/::error::/' || true
+      - name: Package with its DLLs
+        run: |
+          mkdir dist
+          cp port/build/a2racer.exe dist/
+          ldd port/build/a2racer.exe | awk '/ucrt64/ { print $3 }' | xargs -r cp -t dist/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: a2racer-windows-x86_64
+          path: dist/
+
+  windows-msvc:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependencies
+        shell: pwsh
+        run: vcpkg install sdl2:x64-windows sdl2-ttf:x64-windows
+      - name: Build
+        shell: bash
+        run: |
+          cmake -S port -B port/build -DCMAKE_TOOLCHAIN_FILE="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          cmake --build port/build --config Release 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
+      - name: Report compiler errors
+        if: failure()
+        shell: bash
+        run: grep -E "error|warning" build.log | head -50 | sed 's/^/::error::/' || true
