@@ -2,6 +2,10 @@
 //! menu (A2MENU.DAT) and race (A2SPEL.DAT) as separate programs; the start-up follows
 //! A2MENU.DAT's WinMain and win_open_menu.
 
+// A release build on Windows is a GUI program, as the original: no console window. Errors
+// are shown in a message box (fatal).
+#![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
+
 mod game;
 mod gfx;
 mod menu;
@@ -28,7 +32,7 @@ use menu::m_main::{MENU_EXIT, MENU_START_RACE};
 use menu::Menu;
 use movie::movies::play_movie;
 use platform::sys::{sys_init, sys_quit_requested, sys_set_screenshot, sys_shutdown, SysOptions, SCREEN_H, SCREEN_W};
-use res::archive::{NamedArchive, SpriteArchive};
+use res::archive::{find_file_ci, NamedArchive, SpriteArchive};
 use res::discimage::{disc_image_unpack, is_disc_image};
 use xvga::fileio::fileio_init;
 use xvga::font::{font_init, font_shutdown, xvga_load_font, xvga_set_font_bkmode, xvga_set_font_colors};
@@ -41,9 +45,18 @@ fn save_front_screen(path: &Path) {
     });
 }
 
-fn usage() {
-    eprintln!(
-        "usage: a2racer --data <disc image or directory> [options]
+/// A fatal error: on the console, and on Windows (where a double-clicked game has no
+/// console) in a message box.
+fn fatal(msg: &str) -> i32 {
+    eprintln!("{msg}");
+    #[cfg(windows)]
+    let _ = sdl2::messagebox::show_simple_message_box(sdl2::messagebox::MessageBoxFlag::ERROR, "A2 Racer", msg, None);
+    1
+}
+
+fn usage() -> i32 {
+    fatal(
+        "usage: a2racer [--data] <disc image or directory> [options]
   --data <dir|image>   the A2 Racer CD image (.bin/.iso) or a copy of its files
   --save <dir>         where options and save slots go (default: user data folder)
   --fonts <dir>        folder with ariblk.ttf (Arial Black) if not found otherwise
@@ -53,8 +66,64 @@ fn usage() {
                        (1..6) with made-up times, to test what follows
   --race-view <stage>  fly along a stage's road (1..6; tests the 3D code)
   --screenshot <file>  open the main menu, save it as PNG and exit
-  --script <file>      scripted input for testing (see platform/sys.rs)"
+  --script <file>      scripted input for testing (see platform/sys.rs)
+
+Without --data the game looks for its files itself: unpacked from a CD image on an
+earlier run, next to a2racer (the CD's files, a folder with them, or a .bin/.iso), and
+on a CD in a drive.",
     );
+    2
+}
+
+/// The user's data folder (saves, and the files unpacked from a CD image).
+fn pref_dir() -> PathBuf {
+    sdl2::filesystem::pref_path("Davilex", "A2 Racer").map(PathBuf::from).unwrap_or_else(|_| ".".into())
+}
+
+/// Where the game's files are when --data isn't given (the game double-clicked).
+fn find_data() -> Option<PathBuf> {
+    let has_game = |d: &Path| find_file_ci(d, "A2MRCS.IND").is_some();
+    // Unpacked from a CD image on an earlier run.
+    let disc = pref_dir().join("disc");
+    if has_game(&disc) {
+        return Some(disc);
+    }
+    // Next to the executable, or in the current folder: the CD's files, a folder with
+    // them, or a CD image.
+    let mut dirs: Vec<PathBuf> = Vec::new();
+    if let Some(d) = std::env::current_exe().ok().and_then(|e| e.parent().map(Path::to_path_buf)) {
+        dirs.push(d);
+    }
+    if let Ok(d) = std::env::current_dir() {
+        dirs.push(d);
+    }
+    for d in &dirs {
+        if has_game(d) {
+            return Some(d.clone());
+        }
+        let Ok(entries) = std::fs::read_dir(d) else { continue };
+        let mut entries: Vec<PathBuf> = entries.flatten().map(|e| e.path()).collect();
+        entries.sort();
+        if let Some(p) = entries.iter().find(|p| p.is_dir() && has_game(p)) {
+            return Some(p.clone());
+        }
+        if let Some(p) = entries.iter().find(|p| p.is_file() && is_disc_image(p)) {
+            return Some(p.clone());
+        }
+    }
+    // The CD in a drive.
+    let mut drives: Vec<PathBuf> = Vec::new();
+    if cfg!(windows) {
+        drives.extend((b'D'..=b'Z').map(|c| PathBuf::from(format!("{}:\\", c as char))));
+    } else {
+        let user = std::env::var("USER").unwrap_or_default();
+        for base in ["/Volumes".to_string(), format!("/media/{user}"), format!("/run/media/{user}"), "/media".into(), "/mnt".into()] {
+            if let Ok(entries) = std::fs::read_dir(base) {
+                drives.extend(entries.flatten().map(|e| e.path()));
+            }
+        }
+    }
+    drives.into_iter().find(|d| has_game(d))
 }
 
 /// win_open_menu's fonts: Arial Black in five sizes, transparent background.
@@ -177,6 +246,8 @@ fn parse_args() -> Option<Args> {
             "--race-view" => a.race_view = Some(value()?.parse::<i32>().ok()? - 1),
             "--fake-race" => a.fake_race = value()?.parse().ok()?,
             "--screenshot" => a.screenshot = Some(value()?.into()),
+            // A bare path: the CD image or folder dropped onto the executable.
+            p if !p.starts_with('-') => a.data = Some(p.into()),
             _ => return None,
         }
     }
@@ -184,39 +255,47 @@ fn parse_args() -> Option<Args> {
 }
 
 fn main() {
+    // A crash shows its message too.
+    #[cfg(windows)]
+    {
+        let default = std::panic::take_hook();
+        std::panic::set_hook(Box::new(move |info| {
+            default(info);
+            fatal(&format!("A2 Racer stopped with an error:\n\n{info}"));
+        }));
+    }
     std::process::exit(run());
 }
 
 fn run() -> i32 {
     let Some(args) = parse_args() else {
-        usage();
-        return 2;
+        return usage();
     };
-    let Some(mut data_dir) = args.data.clone() else {
-        usage();
-        return 2;
+    let Some(mut data_dir) = args.data.clone().or_else(find_data) else {
+        return fatal(
+            "Can't find the A2 Racer game files.\n\n\
+             Put a2racer next to the A2 Racer CD image (.bin or .iso) or a copy of the CD's \
+             files, insert the CD, or drag the CD image onto a2racer.\n\n\
+             From a command line: a2racer --data <CD image or folder>",
+        );
     };
     // A CD image instead of a folder: its files are unpacked once into the user's data
     // folder.
     if is_disc_image(&data_dir) {
-        let pref = sdl2::filesystem::pref_path("Davilex", "A2 Racer").map(PathBuf::from).unwrap_or_else(|_| ".".into());
-        let disc = pref.join("disc");
+        let disc = pref_dir().join("disc");
         if let Err(e) = disc_image_unpack(&data_dir, &disc) {
-            eprintln!("{e}");
-            return 1;
+            return fatal(&e);
         }
         data_dir = disc;
     }
     let (Some(menu_files), Some(menu_sprites)) =
         (NamedArchive::open(&data_dir, "A2MRCS"), SpriteArchive::open(&data_dir, "A2MRC"))
     else {
-        eprintln!("cannot read A2MRCS/A2MRC archives in {}", data_dir.display());
-        return 1;
+        return fatal(&format!("Cannot read the A2MRCS/A2MRC archives in {}.", data_dir.display()));
     };
     let opt = SysOptions { scale: args.scale, hidden: args.screenshot.is_some(), script: args.script.clone() };
     if let Err(e) = sys_init("A2 Racer", &opt) {
-        eprintln!("{e}");
-        return 1;
+        return fatal(&e);
     }
     sys_set_screenshot(save_front_screen);
     fileio_init(args.save.clone());

@@ -8,7 +8,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::sync::{Arc, Mutex, MutexGuard};
 
-use sdl2::audio::{AudioCVT, AudioCallback, AudioDevice, AudioFormat, AudioSpecDesired, AudioSpecWAV};
+use sdl2::audio::{AudioCallback, AudioDevice, AudioFormat, AudioSpecDesired, AudioSpecWAV};
 use sdl2::rwops::RWops;
 
 use crate::platform::sys::sdl;
@@ -142,10 +142,39 @@ impl Sound {
         self.mixer.lock().unwrap()
     }
 
-    fn convert(&self, data: Vec<u8>, format: AudioFormat, channels: u8, rate: i32) -> Option<Vec<i16>> {
-        let cvt = AudioCVT::new(format, channels, rate, AudioFormat::s16_sys(), 2, self.freq).ok()?;
-        let bytes = cvt.convert(data);
-        Some(bytes.chunks_exact(2).map(|b| i16::from_ne_bytes([b[0], b[1]])).collect())
+    /// To the device's format through an SDL_AudioStream. (Not SDL_AudioCVT: SDL declares
+    /// that struct packed only for GCC and Clang, so the MSVC-built SDL on Windows wrote
+    /// past the binding's smaller copy of it and broke the stack.)
+    fn convert(&self, mut data: Vec<u8>, format: AudioFormat, channels: u8, rate: i32) -> Option<Vec<i16>> {
+        use sdl2::sys;
+        let frame_bytes = ((format as i32 & 0xff) / 8) as usize * channels as usize;
+        if frame_bytes == 0 || rate <= 0 {
+            return None;
+        }
+        let frames = data.len() / frame_bytes;
+        let want = (frames as u64 * self.freq as u64 / rate as u64) as usize * 2;
+        // SDL 2's stream keeps the resampler's last block back even when flushed: a
+        // stretch of silence after the sound pushes it out, and is cut off again below.
+        let silence = if format == AudioFormat::U8 { 0x80 } else { 0 };
+        data.resize(data.len() + 4096 * frame_bytes, silence);
+        let dst = AudioFormat::s16_sys() as i32 as u16;
+        // SAFETY: the stream is used only here and freed at the end; the buffers are
+        // valid for the lengths passed.
+        unsafe {
+            let stream = sys::SDL_NewAudioStream(format as i32 as u16, channels, rate, dst, 2, self.freq);
+            if stream.is_null() {
+                return None;
+            }
+            let ok = sys::SDL_AudioStreamPut(stream, data.as_ptr().cast(), data.len() as i32) == 0 && sys::SDL_AudioStreamFlush(stream) == 0;
+            let mut out = vec![0i16; if ok { sys::SDL_AudioStreamAvailable(stream).max(0) as usize / 2 } else { 0 }];
+            let got = sys::SDL_AudioStreamGet(stream, out.as_mut_ptr().cast(), (out.len() * 2) as i32);
+            sys::SDL_FreeAudioStream(stream);
+            if !ok || got < 0 {
+                return None;
+            }
+            out.truncate((got as usize / 2).min(want));
+            Some(out)
+        }
     }
 
     /// load_wave_file: the WAV from the archive, converted to the device format.
