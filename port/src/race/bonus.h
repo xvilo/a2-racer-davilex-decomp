@@ -10,6 +10,8 @@ enum {
 	BONUS_MONEY = 3,
 };
 
+extern int time_bonus;
+
 void bonus_add_time(void);
 void bonus_add_fuel(void);
 void bonus_add_money(void);

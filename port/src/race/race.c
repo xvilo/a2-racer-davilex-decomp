@@ -357,6 +357,7 @@ static void init_race_settings(void)
 {
 	init_infio();
 	if (!race_disc_ini("A2.INI")) {
+		time_bonus = (int)read_ini_value_setting("BONUS", "TIME") * 0x3c;
 		/* TRACK/START1..3: the time limits of stages 1..3, and 4..6 driving them back. */
 		int start[3] = {
 			(int)read_ini_value_setting("TRACK", "START1") * 0x3c,

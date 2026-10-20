@@ -27,16 +27,17 @@ static int bonus_allocated;
 /* What was last collected (unused by the original once written). */
 static char bonus_status[8] = "None";
 
+int time_bonus = 300; /* seconds; BONUS/TIME minutes in A2.INI replace it */
+
 /* The static object types of the pickups. */
 #define BONUS_OBJECT_MONEY 0x18
 #define BONUS_OBJECT_FUEL 0x19
 #define BONUS_OBJECT_TIME 0x1a
 
-#define TIME_BONUS 300 /* DAT_00459130 */
 
 void bonus_add_time(void)
 {
-	time_left += TIME_BONUS;
+	time_left += time_bonus;
 	play_sound_effect(0x1c, 0);
 }
 
