@@ -11,6 +11,7 @@
 #include "menu/menu_data.h"
 #include "menu/menu_util.h"
 #include "menu/m_bedien.h"
+#include "menu/m_nsplr.h"
 #include "menu/m_opties.h"
 #include "menu/m_score.h"
 #include "menu/mysound.h"
@@ -255,8 +256,10 @@ int menu_main(game_t *g)
 			if (req_vraag("Weet je zeker dat je de huidige race wil onderbreken?")) {
 				snd_stop(&click);
 				snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume));
-				/* TODO: menu_nieuwesplr (m_nsplr.cpp). */
-				fprintf(stderr, "menu_main: the new player screen is not ported yet\n");
+				mm_close_screen(0);
+				menu_nieuwesplr(game, &mm_tune_buffer);
+				mm_open_screen_1(0);
+				break;
 			}
 			snd_stop(&click);
 			snd_set_volume(&mm_tune_buffer, snd_volume_for_level(opties.music_volume));

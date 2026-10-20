@@ -26,6 +26,7 @@ add_executable(a2racer
 	src/menu/help.c
 	src/menu/m_bedien.c
 	src/menu/m_main.c
+	src/menu/m_nsplr.c
 	src/menu/m_opties.c
 	src/menu/m_score.c
 	src/menu/m_start.c

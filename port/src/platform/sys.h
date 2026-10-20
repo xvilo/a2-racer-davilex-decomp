@@ -40,6 +40,8 @@ void sys_shutdown(void);
 void sys_present(const uint8_t *pixels, const uint8_t palette[768]);
 /* Gathers input since the last call. */
 void sys_poll(sys_input *in);
+/* The window was closed (or the process asked to stop); stays true from then on. */
+bool sys_quit_requested(void);
 uint32_t sys_ticks(void);
 /* Whether a key (Windows virtual-key code, as the game stores them) is held now. */
 bool keyispressed(int vk);

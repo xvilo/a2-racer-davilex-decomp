@@ -16,6 +16,8 @@ static bool headless;
 /* Mouse state survives across sys_input structs: the game polls from many nested loops. */
 static int mouse_x, mouse_y;
 static bool mouse_down;
+/* A quit request stays set: menus nested several deep must all see it. */
+static bool quit_requested;
 
 /* Scripted input for tests: one command per line, run in order as time passes.
  *   wait <ms>         pause the script
@@ -216,7 +218,7 @@ void sys_poll(sys_input *in)
 	while (SDL_PollEvent(&e)) {
 		switch (e.type) {
 		case SDL_QUIT:
-			in->quit = true;
+			quit_requested = true;
 			break;
 		case SDL_MOUSEMOTION:
 			mouse_x = e.motion.x;
@@ -263,6 +265,7 @@ void sys_poll(sys_input *in)
 	in->mouse_x = mouse_x;
 	in->mouse_y = mouse_y;
 	in->mouse_down = mouse_down;
+	in->quit = quit_requested;
 }
 
 /* Windows virtual-key codes to SDL scancodes, for the keys the game asks about. */
@@ -291,6 +294,11 @@ static SDL_Scancode vk_to_scancode(int vk)
 	case 0x28: return SDL_SCANCODE_DOWN;
 	default: return SDL_SCANCODE_UNKNOWN;
 	}
+}
+
+bool sys_quit_requested(void)
+{
+	return quit_requested;
 }
 
 bool keyispressed(int vk)
