@@ -15,7 +15,8 @@ The game's own data is not included. Point the port at the original CD, or at a 
 | Start screen: player slots, new player name entry, delete player, logo intro (`--first`) | done |
 | Spoken help with the dimmed screen; yes/no and text requesters | done |
 | Options menu (display mode, sound, horizon, detail, dashboard, volumes; cancel restores) | done |
-| Other menus (controls, scores, new player), other wipe types | to do |
+| Controls menu (keyboard/joypad/wheel, key configuration with duplicate warning) | done |
+| Other menus (scores, new player), other wipe types | to do |
 | Movies (Smacker) | to do |
 | Race (A2SPEL: Direct3D execute buffers → OpenGL) | to do |
 
