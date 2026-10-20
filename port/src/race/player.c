@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #include "menu/infio.h"
 #include "platform/sys.h"
 #include "race/camera.h"
@@ -205,6 +206,37 @@ static void update_accelerator(int input)
 		set_engine_sound(engine_rpm, boost_freq, boost_vol);
 }
 
+/* A port-only test aid (A2_AUTOPILOT=1): keeps the car in the lane it starts in,
+ * below police-alerting speed, so scripts can drive a whole stage. */
+static int autopilot = -1;
+static float autopilot_lane;
+
+static int autopilot_steer(void)
+{
+	if (autopilot < 0)
+		autopilot = getenv("A2_AUTOPILOT") != NULL;
+	if (!autopilot)
+		return 0;
+	const weg_chunk_t *ch = &weg_chunks[player_chunk];
+	const vertex3d_t *c = &vertices3d[weg_sections[ch->section].point];
+	float lateral = (player_x - c->x) * ch->side[0] + (player_z - c->z) * ch->side[2];
+	if (autopilot_lane == 0.0f)
+		autopilot_lane = lateral;
+	/* Aim 160 ahead on the road at the lane's offset. */
+	int ahead = player_chunk + (track_info[track_index].direction == 1 ? 2 : -2);
+	if (ahead < 0)
+		ahead = 0;
+	if (ahead >= weg_chunk_count)
+		ahead = weg_chunk_count - 1;
+	const weg_chunk_t *ah = &weg_chunks[ahead];
+	const vertex3d_t *a = &vertices3d[weg_sections[ah->section].point];
+	float tx = a->x + ah->side[0] * autopilot_lane - player_x;
+	float tz = a->z + ah->side[2] * autopilot_lane - player_z;
+	int h = (player_heading + 0x100) & ANGLE_MASK;
+	float cross = cos_table[h] * tz - sin_table[h] * tx;
+	return cross > 2.0f ? -1 : cross < -2.0f ? 1 : 0;
+}
+
 void handle_player_controls(void)
 {
 	if (!engine_started && race_running) {
@@ -214,9 +246,10 @@ void handle_player_controls(void)
 	if (!controls_enabled)
 		return;
 	/* TODO: joypad and steering wheel (control types 2 and 3). */
-	if (keyispressed(key_left))
+	int steer = autopilot_steer();
+	if (keyispressed(key_left) || steer < 0)
 		update_steering(1);
-	else if (keyispressed(key_right))
+	else if (keyispressed(key_right) || steer > 0)
 		update_steering(2);
 	else
 		update_steering(3);
@@ -231,7 +264,7 @@ void handle_player_controls(void)
 	}
 
 	int input;
-	if (keyispressed(key_gas)) {
+	if (keyispressed(key_gas) || (autopilot && player_speed < 9.0f)) {
 		input = 1;
 		accelerator_input = 1;
 	}

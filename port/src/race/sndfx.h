@@ -6,6 +6,7 @@
 void play_sound_effect(int effect, int loop);
 void play_bump_sound(void);
 void play_bump3_sound(void);
+void play_crash_sound(void);
 void start_engine_sounds(void);
 /* Pitch and volume of the engine for the gearbox step's rpm. */
 void set_engine_sound(int rpm, int boost_freq, int boost_vol);

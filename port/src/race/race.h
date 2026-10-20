@@ -53,6 +53,9 @@ int set_race_state(int state);
 
 /* setracer.cpp: for each of the six racers (player first) its place, 1..6. */
 const int *compute_race_ranking(void);
+/* A racer's place now (1..6). */
+int get_racer_entry(int racer);
+void set_racer_finish_time(int racer);
 /* Wall-clock seconds, as the original's time(). */
 int race_time_now(void);
 

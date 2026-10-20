@@ -57,6 +57,14 @@ int collide_racer_with_road_edge(int opponent);
 void collide_player_with_track_ends(void);
 /* The lane (0..10) a car is in, or -1 off the road. */
 int get_racer_lane(int opponent);
+extern int police_max_speed, racer_speed;
+
+/* A car of a type (index into car_types) for a kind of driver; returns its object. */
+int create_opponent(int car_type, int kind);
+void place_opponent(int opponent, int direction, int chunk, int lane, float along);
+void scatter_traffic(int first, int margin);
+void init_active_opponent_list(int size);
+void mark_active_racers(void);
 /* Moves every car one frame; the player first (update_racers). */
 void update_racers(void);
 

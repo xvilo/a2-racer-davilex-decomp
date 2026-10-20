@@ -10,6 +10,7 @@
 #include "platform/gl.h"
 #include "platform/sys.h"
 #include "race/camera.h"
+#include "race/driver.h"
 #include "race/object3d.h"
 #include "race/opponent.h"
 #include "race/player.h"
@@ -201,13 +202,13 @@ const int *compute_race_ranking(void)
 	return ranking;
 }
 
-static int get_racer_entry(int racer)
+int get_racer_entry(int racer)
 {
 	const int *r = compute_race_ranking();
 	return r ? r[racer] : racer + 1;
 }
 
-static void set_racer_finish_time(int racer)
+void set_racer_finish_time(int racer)
 {
 	if (racer_times[racer].finish_time == 0) {
 		racer_times[racer].finish_time = race_time_now() - racer_times[racer].start;
@@ -241,9 +242,60 @@ static void set_racer_start_position(int racer, int position, int start_chunk)
 	float side = position % 2 == 1 ? 1.0f : -1.0f;
 	int chunk = start_chunk - ((position - 1) / 2 + 1) * sign;
 	lane += (position % 2) * sign;
-	if (racer == 0)
+	if (racer == 0) {
 		load_player_object(direction, chunk, lane, side * offset);
-	/* TODO: the rivals (place_opponent) */
+	}
+	else {
+		place_opponent(racer, direction, chunk, lane, side * offset);
+		driver_list[opponent_data[racer].field_e0].speed = (float)racer_speed;
+	}
+}
+
+/* The racers 1..5, police and traffic (create_all_opponents): opponent numbers 1..5 are
+ * the rivals, then the police, then the civilians in turn of car type. */
+static void create_all_opponents(void)
+{
+	create_opponent(0x15, DRIVER_RIVAL);
+	create_opponent(0x12, DRIVER_RIVAL);
+	create_opponent(0x11, DRIVER_RIVAL);
+	create_opponent(0x16, DRIVER_RIVAL);
+	create_opponent(0x14, DRIVER_RIVAL);
+	for (int i = 0; i < police_count; i++)
+		create_opponent(0xc, DRIVER_POLICE);
+	for (int j = 0, type = 0; j < civilian_count; j++) {
+		create_opponent(type, DRIVER_CIVILIAN);
+		do {
+			if (++type == 0x10)
+				type = 0;
+		} while (type == 4 || type == 0xc);
+	}
+}
+
+static void place_rival_racers(int start_chunk)
+{
+	set_racer_start_position(1, infio.racer_1, start_chunk);
+	set_racer_start_position(2, infio.racer_2, start_chunk);
+	set_racer_start_position(3, infio.racer_3, start_chunk);
+	set_racer_start_position(4, infio.racer_4, start_chunk);
+	set_racer_start_position(5, infio.racer_5, start_chunk);
+}
+
+/* A police car parked on the hard shoulder (the two outer lanes). */
+static void set_police_car(int police, int chunk)
+{
+	int direction = track_info[track_index].direction;
+	int lane = direction == 0 ? 10 - rand() % 2 : rand() % 2;
+	place_opponent(police + 6, direction, chunk, lane, 0.0f);
+}
+
+/* Spread along the road, one per stretch of (chunks / police / 2) or so. */
+static void place_police_cars(void)
+{
+	int stretch = weg_chunk_count / (police_count * 2), chunk = 0;
+	for (int police = 0; police < police_count; police++) {
+		chunk += rand() % stretch + stretch;
+		set_police_car(police, chunk);
+	}
 }
 
 static int player_at_finish(void)
@@ -258,11 +310,21 @@ static void set_all_objects(void)
 	int position = infio.position;
 	if (track_info[track_index].direction == 0) {
 		set_racer_start_position(0, position, weg_chunk_count - 0xf);
+		create_all_opponents();
+		place_rival_racers(weg_chunk_count - 0xf);
+		place_police_cars();
+		scatter_traffic(police_count + 6, 0x1e);
+		/* TODO: place_random_pionnen */
 		place_static_object_on_road(0x17, 0xf, 1, 1, 0x3c);
 		place_static_object_on_road(0x16, weg_chunk_count - 0x10, 1, 1, 0x3c);
 	}
 	else {
 		set_racer_start_position(0, position, 0xf);
+		create_all_opponents();
+		place_rival_racers(0xf);
+		place_police_cars();
+		scatter_traffic(police_count + 6, 0x1e);
+		/* TODO: place_random_pionnen */
 		place_static_object_on_road(0x16, 0x10, 2, 1, 0x3c);
 		place_static_object_on_road(0x17, weg_chunk_count - 0xf, 2, 1, 0x3c);
 	}
@@ -443,8 +505,30 @@ static void update_race(void)
 
 /* --- WinMain --------------------------------------------------------------------- */
 
+/* WinMain's A2.INI settings. It reads POLICE<n> and CIVIL<n> before the stage is known,
+ * so stage 1's numbers count for every stage; kept. */
+static void read_tweaks(void)
+{
+	police_count = 8;
+	civilian_count = 0x96;
+	if (race_disc_ini("A2.INI"))
+		return;
+	racer_range = (int)read_ini_value_setting("TWEAK", "RACERRANGE");
+	racer_high_speed = (float)read_ini_value_setting("TWEAK", "RACERHIGHSPEED");
+	racer_low_speed = (float)read_ini_value_setting("TWEAK", "RACERLOWSPEED");
+	police_count = (int)read_ini_value_setting("TWEAK", "POLICE0");
+	civilian_count = (int)read_ini_value_setting("TWEAK", "CIVIL0");
+	police_max_speed = (int)read_ini_value_setting("RACE", "POLICESPEED");
+	racer_speed = (int)read_ini_value_setting("RACE", "RACERSPEED");
+	if (police_count == 0)
+		police_count = 8;
+	if (civilian_count == 0)
+		civilian_count = 0x96;
+}
+
 static int run(game_t *g)
 {
+	read_tweaks();
 	init_race_settings();
 	init_math3d();
 	alloc_textures(0x50);
@@ -462,10 +546,13 @@ static int run(game_t *g)
 	load_static_object_textures();
 	road_texture = load_texture("2baans.pcx", 0);
 	grass_texture = load_texture("grass2.pcx", 0);
-	if (init_opponents(police_count + 0x38 + civilian_count + 400))
+	if (init_opponents(police_count + 0x38 + civilian_count))
 		return 1;
 	if (load_weg_data(track_info[track_index].track, 0x14))
 		return 1;
+	init_opponent_map();
+	init_drivers(opponent_count, 5, police_count);
+	init_active_opponent_list(opponent_count);
 	init_cameras();
 	init_controls();
 	if (horizon_on)
@@ -491,6 +578,7 @@ static int run(game_t *g)
 		render_3d_frame();
 		update_race();
 		sys_gl_swap();
+		mark_active_racers();
 		if (keyispressed(0x50) && race_state == RACE_RUNNING) {
 			while (keyispressed(0x50)) {
 				sys_poll(&in);
@@ -550,6 +638,12 @@ static int run(game_t *g)
 	return 0;
 }
 
+static void free_race(void)
+{
+	exit_drivers();
+	exit_opponent_map();
+}
+
 int race_main(game_t *g)
 {
 	if (!sys_gl()) {
@@ -559,6 +653,7 @@ int race_main(game_t *g)
 	if (race_files_open(g->data_dir))
 		return 1;
 	int r = run(g);
+	free_race();
 	exit_opponents();
 	free_weg_data();
 	free_objects3d();

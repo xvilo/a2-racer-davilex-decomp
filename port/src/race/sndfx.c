@@ -14,6 +14,10 @@ void play_bump3_sound(void)
 {
 }
 
+void play_crash_sound(void)
+{
+}
+
 void start_engine_sounds(void)
 {
 }
