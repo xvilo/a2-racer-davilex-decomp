@@ -15,14 +15,17 @@
 #include "menu/m_main.h"
 #include "menu/m_start.h"
 #include "menu/menu_data.h"
+#include "menu/infio.h"
 #include "menu/mysound.h"
 #include "menu/optie.h"
 #include "menu/score.h"
-#include "movie/movies.h"
 #include "menu/slot.h"
+#include "menu/spel.h"
+#include "movie/movies.h"
 #include "platform/sys.h"
 #include "xvga/fileio.h"
 #include "xvga/font.h"
+#include "xvga/inifile.h"
 #include "xvga/sound.h"
 
 static void save_front_screen(const char *path)
@@ -39,6 +42,8 @@ static void usage(void)
 		"  --fonts <dir>        folder with ariblk.ttf (Arial Black) if not found otherwise\n"
 		"  --scale <n>          window size as a multiple of 640x480\n"
 
+		"  --fake-race <pos>    instead of the race (not ported yet), finish it at this\n"
+		"                       position (1..6) with made-up times, to test what follows\n"
 		"  --screenshot <file>  open the main menu, save it as PNG and exit\n"
 		"  --script <file>      scripted input for testing (see platform/sys_sdl.c)\n");
 }
@@ -54,6 +59,83 @@ static void load_menu_fonts(void)
 	}
 }
 
+/* win_open_menu: the settings, save slots, scores and INFIO.INI from disk. */
+static void win_open_menu(void)
+{
+	clear_screen(0, 0);
+	clear_screen(2, 0);
+	clear_screen(1, 0);
+	init_optie();
+	init_bedien();
+	init_slotdbase();
+	init_scoredbase();
+	init_infio();
+	int last = get_last_saved_slot();
+	if (slot_list[last].used)
+		set_active_slot(last);
+	set_help_key(0x0d);
+	set_help_key(0x20);
+	set_help_key(0x1b);
+}
+
+/* win_close_menu: everything back to disk, for the race and the next menu run. */
+static void win_close_menu(void)
+{
+	clear_screen(0, 0);
+	clear_screen(2, 0);
+	clear_screen(1, 0);
+	save_optie();
+	save_bedien();
+	update_active_slot_optie();
+	save_slotdbase();
+	save_scoredbase();
+	save_infio();
+	clear_help_keys();
+}
+
+/* win_handle_menu: one run of the menu. Coming back from a race, handle_game shows the
+ * result first and goes on to the main menu, or to the player choice when the series
+ * is over. Returns MENU_START_RACE or MENU_EXIT. */
+static int win_handle_menu(game_t *g, int first)
+{
+	win_open_menu();
+	if (first || !handle_game(g)) {
+		if (!menu_start(g, first)) {
+			win_close_menu();
+			return MENU_EXIT;
+		}
+	}
+	int r = menu_main(g);
+	reset_infio();
+	win_close_menu();
+	return r;
+}
+
+/* A2SPEL.DAT's place. With --fake-race, a finished race is written to INFIO.INI the
+ * way the race would: the player at `position`, the rivals in the other places. */
+static void run_race(int position)
+{
+	if (position < 1 || position > 6) {
+		printf("start race: the race (A2SPEL) is not ported yet\n");
+		return;
+	}
+	init_infio();
+	int16_t *racer = &infio.racer_1;
+	int32_t *time = &infio.time_racer_1;
+	int place = 1;
+	infio.race_finished = 1;
+	infio.position = (int16_t)position;
+	infio.time = 240 + position * 7;
+	for (int r = 0; r < 5; r++, place++) {
+		if (place == position)
+			place++;
+		racer[r] = (int16_t)place;
+		time[r] = 240 + place * 7;
+	}
+	infio.money += 500;
+	save_infio();
+}
+
 int main(int argc, char **argv)
 {
 	game_t g = { 0 };
@@ -62,6 +144,7 @@ int main(int argc, char **argv)
 	/* The launcher passes FIRST on the first menu run of a session: with no players yet,
 	 * that shows the logo intro. */
 	int first = 1;
+	int fake_race = 0;
 	g.data_dir = getenv("A2_DATA");
 	for (int i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "--data") && i + 1 < argc)
@@ -74,6 +157,8 @@ int main(int argc, char **argv)
 			opt.scale = atoi(argv[++i]);
 		else if (!strcmp(argv[i], "--script") && i + 1 < argc)
 			opt.script = argv[++i];
+		else if (!strcmp(argv[i], "--fake-race") && i + 1 < argc)
+			fake_race = atoi(argv[++i]);
 		else if (!strcmp(argv[i], "--screenshot") && i + 1 < argc)
 			g.screenshot = argv[++i];
 		else {
@@ -98,44 +183,35 @@ int main(int argc, char **argv)
 	forms_init(&g.menu_sprites, anims);
 	font_init(font_dir);
 
-	/* WinMain: sound (40 buffers), then win_open_menu: settings, slots, fonts. */
+	/* WinMain: sound (40 buffers) and the fonts, kept for the whole session. */
 	if (g.screenshot || xvga_init_sound(0x28, &g.menu_files))
 		mysnd_state = 1;
-	init_optie();
-	init_bedien();
-	init_slotdbase();
-	init_scoredbase();
-	int last = get_last_saved_slot();
-	if (slot_list[last].used)
-		set_active_slot(last);
 	load_menu_fonts();
-	set_help_key(0x0d);
-	set_help_key(0x20);
-	set_help_key(0x1b);
 
 	int result = 0;
 	if (g.screenshot) {
+		win_open_menu();
 		mm_open_screen(&g);
 		result = png_write_indexed(g.screenshot, screen.pixels[SCREEN_FRONT], SCREEN_W,
 			SCREEN_H, screen.palette) ? 1 : 0;
 	}
 	else {
-		/* The launcher (A2.EXE): the intro film, then the menu; after the menu the exit
-		 * film. TODO: the race, and handle_game's results when coming back from it. */
+		/* The launcher (A2.EXE): the intro film, then the menu and the race in turn until
+		 * the player leaves the menu, then the exit film. */
 		play_movie(g.data_dir, "a2intro.smk");
-		int r = MENU_EXIT;
-		if (menu_start(&g, first))
-			r = menu_main(&g);
-		if (r == MENU_START_RACE)
-			printf("start race: the race (A2SPEL) is not ported yet\n");
+		while (win_handle_menu(&g, first) == MENU_START_RACE && !sys_quit_requested()) {
+			first = 0;
+			run_race(fake_race);
+			/* After the last stage, won: the winner's film. */
+			set_ini_filename("INFIO.INI");
+			int stage = (int)read_ini_value_setting("GAME", "ETAPPE");
+			int finished = (int)read_ini_value_setting("GAME", "RACE_KLAAR");
+			int position = (int)read_ini_value_setting("GAME", "POSITIE");
+			if (stage == 5 && finished && position)
+				play_movie(g.data_dir, "a2win.smk");
+		}
 		if (!sys_quit_requested())
 			play_movie(g.data_dir, "a2exit.smk");
-		/* win_close_menu */
-		save_optie();
-		save_bedien();
-		update_active_slot_optie();
-		save_slotdbase();
-		save_scoredbase();
 	}
 	font_shutdown();
 	xvga_exit_sound();

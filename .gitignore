@@ -13,3 +13,4 @@ build/
 *.cue
 disc/
 original/
+__pycache__/

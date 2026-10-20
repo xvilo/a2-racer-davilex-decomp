@@ -21,16 +21,20 @@ add_executable(a2racer
 	src/gfx/png.c
 	src/gfx/wipes.c
 	src/xvga/fileio.c
+	src/xvga/inifile.c
 	src/xvga/font.c
 	src/xvga/sound.c
 	src/menu/menu_data.c
 	src/menu/forms.c
 	src/menu/help.c
+	src/menu/infio.c
 	src/menu/m_bedien.c
+	src/menu/m_clas.c
 	src/menu/m_main.c
 	src/menu/m_nsplr.c
 	src/menu/m_opties.c
 	src/menu/m_score.c
+	src/menu/m_stand.c
 	src/menu/m_start.c
 	src/menu/menu_util.c
 	src/menu/requesters.c
@@ -38,6 +42,7 @@ add_executable(a2racer
 	src/menu/mysound.c
 	src/menu/optie.c
 	src/menu/slot.c
+	src/menu/spel.c
 	src/menu/txttool.c
 )
 target_include_directories(a2racer PRIVATE src)

@@ -19,6 +19,7 @@
 #include "menu/requesters.h"
 #include "menu/score.h"
 #include "menu/slot.h"
+#include "menu/spel.h"
 #include "menu/txttool.h"
 #include "platform/sys.h"
 #include "xvga/fileio.h"
@@ -229,6 +230,7 @@ int menu_main(game_t *g)
 			snd_play(&click, "click1.wav");
 			wait_form_key_released();
 			snd_wait(&click);
+			reset_infio();
 			result = MENU_START_RACE;
 			running = 0;
 			break;

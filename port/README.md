@@ -18,7 +18,7 @@ The game's own data is not included. Point the port at the original CD, or at a 
 | Controls menu (keyboard/joypad/wheel, key configuration with duplicate warning) | done |
 | Score screens (overall and per-stage top tens, default names from the original, `SCORE.A2R`) | done |
 | New-player screen (switch or create a player; cancel restores the slots) | done |
-| Post-race screens (standings, results, `INFIO.INI` hand-over) | to do |
+| Post-race: stage result, overall classification, stage and series high scores, end of the series; `INFIO.INI` hand-over between menu and race | done (tested with `--fake-race`) |
 | Movies: own Smacker 2 decoder (video, palette, compressed audio); intro and exit films, skippable as in the original | done |
 | Race (A2SPEL: Direct3D execute buffers → OpenGL) | to do |
 
@@ -42,6 +42,7 @@ port/build/a2racer --data /path/to/A2Racer-CD
 | `--fonts <dir>` | A folder with `ariblk.ttf` (Arial Black, the menus' font), if it isn't in the system font folders |
 | `--scale N` | Opens the window at N × 640×480. The window can also be resized freely and keeps 4:3 |
 | `--screenshot file.png` | Draws the main menu, saves it and exits, with no window |
+| `--fake-race N` | Until the race is ported: "drives" each race at position N (1–6) with made-up times, to test the screens after a race |
 | `--script file` | Scripted input for testing: keys, text, clicks and screenshots on a timeline (see `src/platform/sys_sdl.c` and `tests/menu_smoke.txt`) |
 
 ## Layout
@@ -63,4 +64,5 @@ port/build/a2racer --data /path/to/A2Racer-CD
 - **Focus:** as in the original, controls only take the focus on a click, Tab or the menu's own arrow-key handling; hovering does nothing.
 - **Name entry:** the default name ("Speler") starts selected, so typing replaces it.
 - **Wipes:** only the pixel fade (type 3) is used by the game, so the other wipe types are not ported.
+- **INFIO.INI:** the menu and the race were separate programs that talked through `INFIO.INI`. The port keeps that file (in the save folder) and the launcher's loop: menu, race, the winner's film after a won final stage, menu again.
 - **Timing:** the original drew wipes as fast as the machine allowed; the port shows each wipe step for 25 ms.
