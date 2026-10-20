@@ -47,7 +47,9 @@ jobs:
           run() {
             log=$1; shift
             if ! "$@" > "$log" 2>&1; then
-              tail -40 "$log" | sed 's/^/::error::/'
+              # At most 10 annotations show per step: the errors first.
+              { grep -iE -A4 "CMake Error|error:" "$log" || tail -10 "$log"; } | grep -v '^--$' | head -10 | tr -d '\r' | sed 's/^/::error::/'
+              tail -60 "$log"
               exit 1
             fi
           }
