@@ -32,6 +32,19 @@ The game's own data is not included. Point the port at the original CD, or at a 
 
 Ready-made builds of the latest commit are on the [latest release](https://github.com/xvilo/a2-racer-davilex-decomp/releases/tag/latest): Windows (x86-64, SDL built in), macOS (one universal executable for Apple Silicon and Intel, SDL built in) and Linux (x86-64, SDL built in; runs on glibc 2.35 and later, e.g. Ubuntu 22.04+). Unpack and run `a2racer --data /path/to/A2RACER.BIN` (the CD image, `.bin` or `.iso`), or point `--data` at a folder with the CD's files. The macOS build isn't notarised, so macOS stops a downloaded copy: run `xattr -dr com.apple.quarantine /path/to/a2racer` once after unpacking.
 
+## In the browser
+
+Every push to main also puts a WebAssembly build on [GitHub Pages](https://xvilo.github.io/a2-racer-davilex-decomp/). Choose the CD image (`.bin` or `.iso`) on the page, and optionally `ariblk.ttf` for the menus' text. The image is read in the browser and unpacked once into its IndexedDB storage, together with the saves, so later visits start straight away. Nothing is sent to a server.
+
+Building it needs [Emscripten](https://emscripten.org/docs/getting_started/downloads.html) (`emcc` on the PATH) and `rustup target add wasm32-unknown-emscripten`:
+
+```bash
+port/web/build.sh                          # into port/target/web
+python3 -m http.server -d port/target/web  # then open http://localhost:8000
+```
+
+The link flags are in `.cargo/config.toml`. In the browser SDL2 comes from Emscripten's ports, and Emscripten emulates the fixed-function OpenGL on WebGL 1. Asyncify lets the game's own loops, which sleep and poll as on Windows, return control to the browser on each sleep and each frame. Asyncify can't suspend through wasm exception handlers, so the web build is built with `panic=abort`. `web/index.html` is the page: it handles the file choice and the storage and starts the game.
+
 ## Build
 
 You need Rust (stable, via [rustup](https://rustup.rs)). The race needs an OpenGL 2.1 driver at run time; the port loads the GL functions through SDL, so nothing links against OpenGL. Text is drawn with [fontdue](https://crates.io/crates/fontdue), so SDL2_ttf isn't needed.
@@ -62,6 +75,7 @@ port/target/release/a2racer --data /path/to/A2Racer-CD
 |---|---|
 | `src/main.rs` | Entry point; takes the launcher's place (A2.EXE) |
 | `src/platform/` | SDL2: window, presenting the 8-bit screen, OpenGL, input, time |
+| `web/` | The browser version's page and build script |
 | `src/res/` | Archive, PCX, disc image and Smacker loaders |
 | `src/gfx/` | The 640×480 8-bit screens with their palette, wipes, and a PNG writer |
 | `src/xvga/` | The parts of Davilex's xvga library: save files, INI files, fonts, sound buffers, joysticks |

@@ -286,6 +286,9 @@ fn run() -> i32 {
         if let Err(e) = disc_image_unpack(&data_dir, &disc) {
             return fatal(&e);
         }
+        // In the browser the uploaded image sits in memory; its files are kept instead.
+        #[cfg(target_os = "emscripten")]
+        let _ = std::fs::remove_file(&data_dir);
         data_dir = disc;
     }
     let (Some(menu_files), Some(menu_sprites)) =

@@ -79,7 +79,27 @@ macro_rules! gl_functions {
 
         static FUNCTIONS: OnceLock<Functions> = OnceLock::new();
 
+        // In the browser the functions are Emscripten's (WebGL with the fixed-function
+        // emulation), linked by name: its GetProcAddress only knows the ones linked in.
+        #[cfg(target_os = "emscripten")]
+        mod linked {
+            use super::*;
+            extern "system" {
+                $(
+                    #[link_name = concat!("gl", stringify!($name))]
+                    pub fn $name($($arg: $ty),*) $(-> $ret)?;
+                )*
+            }
+        }
+
+        #[cfg(target_os = "emscripten")]
+        pub fn gl_load(_get: impl Fn(&str) -> *const c_void) -> Result<(), String> {
+            let _ = FUNCTIONS.set(Functions { $($name: linked::$name,)* });
+            Ok(())
+        }
+
         /// Loads the functions for the current context; the first one missing is the error.
+        #[cfg(not(target_os = "emscripten"))]
         pub fn gl_load(get: impl Fn(&str) -> *const c_void) -> Result<(), String> {
             let f = Functions {
                 $($name: {
@@ -108,7 +128,6 @@ gl_functions! {
     Viewport(x: GLint, y: GLint, w: GLsizei, h: GLsizei);
     Scissor(x: GLint, y: GLint, w: GLsizei, h: GLsizei);
     ClearColor(r: GLfloat, g: GLfloat, b: GLfloat, a: GLfloat);
-    ClearDepth(d: GLdouble);
     Clear(mask: GLbitfield);
     Enable(cap: GLenum);
     Disable(cap: GLenum);
@@ -147,7 +166,6 @@ gl_functions! {
     Fogf(pname: GLenum, param: GLfloat);
     Fogfv(pname: GLenum, params: *const GLfloat);
     ReadPixels(x: GLint, y: GLint, w: GLsizei, h: GLsizei, format: GLenum, ty: GLenum, pixels: *mut c_void);
-    ReadBuffer(mode: GLenum);
     GetError() -> GLenum;
     GetString(name: GLenum) -> *const u8;
 }

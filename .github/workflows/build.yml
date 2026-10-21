@@ -130,6 +130,45 @@ jobs:
           name: a2racer-windows-x86_64
           path: a2racer-windows-x86_64.zip
 
+  # The browser version (port/web): WebAssembly through Emscripten. The player picks
+  # their own CD image on the page; nothing of the game's data is published.
+  web:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 6.0.13
+      - name: Toolchain
+        run: rustup target add wasm32-unknown-emscripten
+      - name: Build
+        run: |
+          port/web/build.sh 2>&1 | tee port/build.log
+          exit ${PIPESTATUS[0]}
+      - name: Report compiler errors
+        if: failure()
+        run: grep -E "^(error|warning)" -A3 port/build.log | head -40 | sed 's/^/::error::/' || true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: port/target/web
+
+  # Every push to main puts the browser version on GitHub Pages.
+  pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: web
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
   # Every push to main replaces the "latest" pre-release with these builds, so they can
   # be downloaded without a GitHub account. A version tag (pushed, made with a release,
   # or given to a run started by hand) gets its builds attached to its own release.

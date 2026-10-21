@@ -1,0 +1,24 @@
+# The web build (web/build.sh): SDL2 from Emscripten's ports, the fixed-function
+# OpenGL the race uses emulated on WebGL 1, and Asyncify so that the game's own loops
+# (which sleep and poll as on Windows) can hand control back to the browser.
+[target.wasm32-unknown-emscripten]
+rustflags = [
+    # Asyncify can't suspend through wasm exception handlers: no unwinding.
+    "-C", "panic=abort",
+    "-C", "link-arg=-sUSE_SDL=2",
+    "-C", "link-arg=-sLEGACY_GL_EMULATION",
+    "-C", "link-arg=-sMAX_WEBGL_VERSION=1",
+    "-C", "link-arg=-sASYNCIFY",
+    "-C", "link-arg=-sASYNCIFY_STACK_SIZE=131072",
+    "-C", "link-arg=-sSTACK_SIZE=4MB",
+    "-C", "link-arg=-sALLOW_MEMORY_GROWTH",
+    "-C", "link-arg=-sINITIAL_MEMORY=128MB",
+    "-C", "link-arg=-sMAXIMUM_MEMORY=2GB",
+    "-C", "link-arg=-sFORCE_FILESYSTEM",
+    "-C", "link-arg=-lidbfs.js",
+    "-C", "link-arg=-sINVOKE_RUN=0",
+    "-C", "link-arg=-sEXIT_RUNTIME",
+    "-C", "link-arg=-sENVIRONMENT=web",
+    "-C", "link-arg=-sEXPORTED_RUNTIME_METHODS=callMain,FS,IDBFS",
+    "-C", "link-arg=-O3",
+]

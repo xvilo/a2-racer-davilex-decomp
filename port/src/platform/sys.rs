@@ -132,18 +132,26 @@ pub fn sys_init(title: &str, opt: &SysOptions) -> Result<(), String> {
     }
     let video = sdl.video()?;
     let attr = video.gl_attr();
-    attr.set_context_profile(GLProfile::Compatibility);
-    attr.set_context_version(2, 1);
+    // In the browser: WebGL 1 (OpenGL ES 2), on which Emscripten emulates the fixed
+    // function pipeline.
+    if cfg!(target_os = "emscripten") {
+        attr.set_context_profile(GLProfile::GLES);
+        attr.set_context_version(2, 0);
+    } else {
+        attr.set_context_profile(GLProfile::Compatibility);
+        attr.set_context_version(2, 1);
+    }
     attr.set_depth_size(24);
     attr.set_double_buffer(true);
     let scale = opt.scale.max(1);
-    let window = video
-        .window(title, SCREEN_W as u32 * scale, SCREEN_H as u32 * scale)
-        .position_centered()
-        .resizable()
-        .opengl()
-        .build()
-        .map_err(|e| e.to_string())?;
+    let mut builder = video.window(title, SCREEN_W as u32 * scale, SCREEN_H as u32 * scale);
+    builder.position_centered().opengl();
+    // In the browser the page scales the canvas; a resizable window would follow the
+    // canvas' size on the page and draw the 640x480 pixels at uneven widths.
+    if !cfg!(target_os = "emscripten") {
+        builder.resizable();
+    }
+    let window = builder.build().map_err(|e| e.to_string())?;
     let gl_context = window.gl_create_context()?;
     gl_load(|name| video.gl_get_proc_address(name) as *const c_void)?;
     let _ = video.gl_set_swap_interval(1);
@@ -154,6 +162,9 @@ pub fn sys_init(title: &str, opt: &SysOptions) -> Result<(), String> {
         BindTexture(GL_TEXTURE_2D, screen_texture);
         TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        // 640x480 isn't a power of two: WebGL 1 only samples such textures when clamped.
+        TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA as GLint, SCREEN_W as GLsizei, SCREEN_H as GLsizei, 0, GL_RGBA,
             GL_UNSIGNED_BYTE, std::ptr::null());
     }
@@ -428,6 +439,7 @@ pub fn sys_present(pixels: &[u8], palette: &[u8]) {
         p.draw_screen(false);
         p.swap();
     });
+    yield_frame();
 }
 
 /// OpenGL drawing (the race) is available.
@@ -479,6 +491,7 @@ pub fn sys_gl_overlay(pixels: &[u8], palette: &[u8], transparent: u8) {
 
 pub fn sys_gl_swap() {
     with(|p| p.swap());
+    yield_frame();
 }
 
 fn map_key(k: Keycode) -> i32 {
@@ -564,8 +577,29 @@ pub fn sys_ticks() -> u32 {
     START.get_or_init(std::time::Instant::now).elapsed().as_millis() as u32
 }
 
+#[cfg(not(target_os = "emscripten"))]
 pub fn sys_sleep(ms: u32) {
     std::thread::sleep(std::time::Duration::from_millis(ms as u64));
+}
+
+#[cfg(target_os = "emscripten")]
+extern "C" {
+    fn emscripten_sleep(ms: u32);
+}
+
+/// In the browser the game's loops run on the page's only thread: sleeping (Asyncify)
+/// hands control back to the browser, which then shows the frame and delivers input.
+#[cfg(target_os = "emscripten")]
+pub fn sys_sleep(ms: u32) {
+    // SAFETY: built with -sASYNCIFY, so the call may suspend and resume the program.
+    unsafe { emscripten_sleep(ms) };
+}
+
+/// After each frame: in the browser the picture only appears once the browser gets
+/// control back, also in loops that don't sleep (the race).
+fn yield_frame() {
+    #[cfg(target_os = "emscripten")]
+    sys_sleep(0);
 }
 
 /// Windows virtual-key codes to SDL scancodes, for the keys the game asks about.

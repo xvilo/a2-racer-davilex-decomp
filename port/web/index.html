@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A2 Racer</title>
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    --bg: #101418; --panel: #1a2027; --line: #2c353f; --text: #e8edf2; --muted: #93a1ae;
+    --accent: #ffb000; --accent-text: #1a1200; --bad: #ff6b5b; --good: #6bd38a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  header { width: 100%; max-width: 960px; padding: 16px 16px 8px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  h1 { margin: 0; font-size: 22px; letter-spacing: .02em; }
+  header span { color: var(--muted); font-size: 13px; }
+  header a { color: var(--muted); margin-left: auto; font-size: 13px; }
+  main { width: 100%; max-width: 960px; padding: 0 16px 16px; }
+  #stage { position: relative; width: 100%; aspect-ratio: 4 / 3; background: #000; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; outline: none; }
+  #setup {
+    position: absolute; inset: 0; overflow: auto; padding: 24px;
+    display: flex; flex-direction: column; justify-content: center; gap: 14px;
+    background: linear-gradient(160deg, #18212b, #0c0f12);
+  }
+  #setup[hidden] { display: none; }
+  #setup p { margin: 0; color: var(--muted); max-width: 60ch; }
+  .pick {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 14px; border: 1px dashed var(--line); border-radius: 6px; background: var(--panel);
+  }
+  .pick.drag { border-color: var(--accent); }
+  .pick b { min-width: 9em; }
+  .pick .state { color: var(--muted); font-size: 13px; flex: 1; min-width: 12em; }
+  .pick .state.ok { color: var(--good); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  button, label.btn {
+    font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 5px; padding: 6px 14px; cursor: pointer;
+  }
+  button:hover, label.btn:hover { border-color: var(--muted); }
+  button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; padding: 8px 22px; }
+  button:disabled { opacity: .45; cursor: default; }
+  input[type=file] { display: none; }
+  #status { color: var(--muted); font-size: 13px; }
+  #status.bad { color: var(--bad); }
+  #bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; padding-top: 10px; color: var(--muted); font-size: 13px; }
+  #bar .keys { flex: 1; min-width: 14em; }
+  pre#log { white-space: pre-wrap; max-height: 9em; overflow: auto; margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+  pre#log:empty { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>A2 Racer</h1>
+  <span>Davilex, 1997, ported to Rust and WebAssembly</span>
+  <a href="https://github.com/xvilo/a2-racer-davilex-decomp">source</a>
+</header>
+<main>
+  <div id="stage">
+    <canvas id="canvas" width="640" height="480" tabindex="-1" oncontextmenu="event.preventDefault()"></canvas>
+    <div id="setup">
+      <p>The game's data isn't included. Choose your own A2 Racer CD image. It stays in this browser:
+         it is unpacked once and kept in the browser's storage, together with your saves. Nothing is uploaded to a server.</p>
+      <div class="pick" id="pick-disc">
+        <b>CD image</b>
+        <span class="state" id="disc-state">Not chosen: a .bin (raw 2352-byte sectors) or an .iso</span>
+        <label class="btn">Choose…<input type="file" id="disc-file" accept=".bin,.iso,.BIN,.ISO"></label>
+      </div>
+      <div class="pick" id="pick-font">
+        <b>Arial Black</b>
+        <span class="state" id="font-state">Optional: ariblk.ttf, for the menus' text (Windows has it in C:\Windows\Fonts)</span>
+        <label class="btn">Choose…<input type="file" id="font-file" accept=".ttf,.TTF"></label>
+      </div>
+      <div class="row">
+        <button class="primary" id="play" disabled>Play</button>
+        <button id="forget" hidden>Forget stored files</button>
+        <span id="status">Loading…</span>
+      </div>
+    </div>
+  </div>
+  <div id="bar">
+    <span class="keys">Arrow keys drive; Esc pauses and goes back. Click the picture first so it gets the keys.</span>
+    <button id="fullscreen" disabled>Full screen</button>
+  </div>
+  <pre id="log"></pre>
+</main>
+<script>
+// The game's user data folder (SDL_GetPrefPath in the browser) lives in IndexedDB.
+const ROOT = '/libsdl';
+const PREF = ROOT + '/Davilex/A2 Racer';
+const DISC = PREF + '/disc';
+const FONTS = PREF + '/fonts';
+
+const $ = id => document.getElementById(id);
+const status = (text, bad) => { $('status').textContent = text; $('status').classList.toggle('bad', !!bad); };
+const log = text => { const l = $('log'); l.textContent += text + '\n'; l.scrollTop = l.scrollHeight; };
+
+let discFile = null;
+let fontFile = null;
+let running = false;
+let syncing = false;
+
+function exists(path) {
+  try { FS.stat(path); return true; } catch (e) { return false; }
+}
+
+function hasDisc() {
+  return exists(DISC) && FS.readdir(DISC).some(n => n.toUpperCase() === 'A2MRCS.IND');
+}
+
+function hasFont() {
+  return exists(FONTS + '/ariblk.ttf');
+}
+
+function mkdirs(path) {
+  let p = '';
+  for (const part of path.split('/').filter(Boolean)) {
+    p += '/' + part;
+    if (!exists(p)) FS.mkdir(p);
+  }
+}
+
+function sync() {
+  return new Promise(resolve => {
+    if (syncing) return resolve();
+    syncing = true;
+    FS.syncfs(false, err => { syncing = false; if (err) log('storage: ' + err); resolve(); });
+  });
+}
+
+function refresh() {
+  const disc = hasDisc();
+  $('disc-state').textContent = discFile ? discFile.name + ' (' + (discFile.size / 1048576).toFixed(0) + ' MB)'
+    : disc ? 'Stored in this browser' : 'Not chosen: a .bin (raw 2352-byte sectors) or an .iso';
+  $('disc-state').classList.toggle('ok', !!discFile || disc);
+  $('font-state').textContent = fontFile ? fontFile.name : hasFont() ? 'Stored in this browser'
+    : 'Optional: ariblk.ttf, for the menus\' text (Windows has it in C:\\Windows\\Fonts)';
+  $('font-state').classList.toggle('ok', !!fontFile || hasFont());
+  $('play').disabled = !(discFile || disc);
+  $('forget').hidden = !(disc || hasFont());
+  status(discFile || disc ? 'Ready.' : 'Choose the CD image to play.');
+}
+
+function setDisc(f) { if (f) { discFile = f; refresh(); } }
+function setFont(f) { if (f) { fontFile = f; refresh(); } }
+
+$('disc-file').onchange = e => setDisc(e.target.files[0]);
+$('font-file').onchange = e => setFont(e.target.files[0]);
+for (const [id, set] of [['pick-disc', setDisc], ['pick-font', setFont]]) {
+  const el = $(id);
+  el.ondragover = e => { e.preventDefault(); el.classList.add('drag'); };
+  el.ondragleave = () => el.classList.remove('drag');
+  el.ondrop = e => { e.preventDefault(); el.classList.remove('drag'); set(e.dataTransfer.files[0]); };
+}
+
+$('forget').onclick = async () => {
+  if (!confirm('Remove the unpacked CD files and the font from this browser? Your saves are kept.')) return;
+  const rm = dir => {
+    if (!exists(dir)) return;
+    for (const n of FS.readdir(dir)) {
+      if (n === '.' || n === '..') continue;
+      const p = dir + '/' + n;
+      FS.isDir(FS.stat(p).mode) ? rm(p) : FS.unlink(p);
+    }
+    FS.rmdir(dir);
+  };
+  rm(DISC); rm(FONTS);
+  await sync();
+  refresh();
+};
+
+$('fullscreen').onclick = () => Module.requestFullscreen(false, false);
+
+$('play').onclick = async () => {
+  $('play').disabled = true;
+  const args = ['--fonts', FONTS, '--scale', '2'];
+  try {
+    mkdirs(FONTS);
+    if (fontFile) {
+      status('Storing the font…');
+      FS.writeFile(FONTS + '/ariblk.ttf', new Uint8Array(await fontFile.arrayBuffer()));
+    }
+    if (discFile) {
+      status('Reading the CD image…');
+      mkdirs('/upload');
+      const path = '/upload/' + discFile.name.replace(/[^\w.-]/g, '_');
+      FS.writeFile(path, new Uint8Array(await discFile.arrayBuffer()));
+      args.unshift('--data', path);
+      status('Unpacking the CD image (once)…');
+    }
+  } catch (e) {
+    status('Could not read the file: ' + e, true);
+    $('play').disabled = false;
+    return;
+  }
+  // Let the status paint before the (blocking) unpacking starts.
+  await new Promise(r => setTimeout(r, 50));
+  running = true;
+  $('setup').hidden = true;
+  $('fullscreen').disabled = false;
+  $('canvas').focus();
+  Module.callMain(args);
+};
+
+// Saves are written by the game whenever it likes; store them regularly.
+setInterval(() => { if (running) sync(); }, 3000);
+document.addEventListener('visibilitychange', () => { if (document.hidden && running) sync(); });
+
+var Module = {
+  canvas: $('canvas'),
+  print: text => console.log(text),
+  printErr: text => { console.warn(text); log(text); },
+  preRun: [() => {
+    FS.mkdir(ROOT);
+    FS.mount(IDBFS, {}, ROOT);
+    addRunDependency('idbfs');
+    FS.syncfs(true, err => {
+      if (err) log('storage: ' + err);
+      removeRunDependency('idbfs');
+    });
+  }],
+  onRuntimeInitialized: refresh,
+  onExit: async code => {
+    running = false;
+    await sync();
+    $('fullscreen').disabled = true;
+    $('setup').hidden = false;
+    discFile = null;
+    refresh();
+    $('play').hidden = true;
+    status(code === 0 ? 'The game has ended. Reload the page to play again.'
+      : 'The game stopped (see the messages below). Reload the page to try again.', code !== 0);
+  },
+  onAbort: what => { status('The game crashed: ' + what, true); $('setup').hidden = false; },
+};
+window.addEventListener('error', e => log(String(e.message)));
+</script>
+<script src="a2racer.js" async></script>
+</body>
+</html>
