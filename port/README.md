@@ -34,7 +34,7 @@ Ready-made builds of the latest commit are on the [latest release](https://githu
 
 ## In the browser
 
-Every push to main also puts a WebAssembly build on [GitHub Pages](https://xvilo.github.io/a2-racer-davilex-decomp/). Choose the CD image (`.bin` or `.iso`) on the page, and optionally `ariblk.ttf` for the menus' text. The image is read in the browser and unpacked once into its IndexedDB storage, together with the saves, so later visits start straight away. Nothing is sent to a server.
+Every push to main also puts a WebAssembly build on [GitHub Pages](https://xvilo.github.io/a2-racer-davilex-decomp/). On a first visit the page downloads the CD image from the [Internet Archive](https://archive.org/details/a2-racer-amst) and checks its SHA-1 hash. If that download fails, or you click "Use my own file", you choose your own CD image (`.bin` or `.iso`) instead. `ariblk.ttf` for the menus' text is optional. The image is unpacked once into the browser's IndexedDB storage, together with the saves, so later visits start straight away. Nothing is sent to a server.
 
 Building it needs [Emscripten](https://emscripten.org/docs/getting_started/downloads.html) (`emcc` on the PATH) and `rustup target add wasm32-unknown-emscripten`:
 

@@ -35,7 +35,9 @@
     display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     padding: 12px 14px; border: 1px dashed var(--line); border-radius: 6px; background: var(--panel);
   }
+  .pick[hidden] { display: none; }
   .pick.drag { border-color: var(--accent); }
+  progress { flex: 1; min-width: 8em; accent-color: var(--accent); }
   .pick b { min-width: 9em; }
   .pick .state { color: var(--muted); font-size: 13px; flex: 1; min-width: 12em; }
   .pick .state.ok { color: var(--good); }
@@ -66,9 +68,16 @@
   <div id="stage">
     <canvas id="canvas" width="640" height="480" tabindex="-1" oncontextmenu="event.preventDefault()"></canvas>
     <div id="setup">
-      <p>The game's data isn't included. Choose your own A2 Racer CD image. It stays in this browser:
-         it is unpacked once and kept in the browser's storage, together with your saves. Nothing is uploaded to a server.</p>
-      <div class="pick" id="pick-disc">
+      <p>The game's data isn't part of this site. The page downloads the CD image from the
+         <a href="https://archive.org/details/a2-racer-amst" style="color:inherit">Internet Archive</a>, or you choose your own copy.
+         It is unpacked once and kept in this browser's storage, together with your saves. Nothing is uploaded to a server.</p>
+      <div class="pick" id="fetch" hidden>
+        <b>CD image</b>
+        <span class="state" id="fetch-state">Downloading from the Internet Archive…</span>
+        <progress id="fetch-bar" max="1" value="0"></progress>
+        <button id="fetch-cancel">Use my own file</button>
+      </div>
+      <div class="pick" id="pick-disc" hidden>
         <b>CD image</b>
         <span class="state" id="disc-state">Not chosen: a .bin (raw 2352-byte sectors) or an .iso</span>
         <label class="btn">Choose…<input type="file" id="disc-file" accept=".bin,.iso,.BIN,.ISO"></label>
@@ -98,11 +107,19 @@ const PREF = ROOT + '/Davilex/A2 Racer';
 const DISC = PREF + '/disc';
 const FONTS = PREF + '/fonts';
 
+// Without a stored disc the page first fetches the CD image from the Internet Archive
+// (its /cors/ path allows other sites to fetch it); the hash makes sure it is that image.
+const ARCHIVE_URL = 'https://archive.org/cors/a2-racer-amst/A2RACER_AMST.BIN';
+const ARCHIVE_SIZE = 108768240;
+const ARCHIVE_SHA1 = 'f6356a0fab92af69f0e5c254f7b727aae2c52691';
+
 const $ = id => document.getElementById(id);
 const status = (text, bad) => { $('status').textContent = text; $('status').classList.toggle('bad', !!bad); };
 const log = text => { const l = $('log'); l.textContent += text + '\n'; l.scrollTop = l.scrollHeight; };
 
+// A chosen File, or the download: { name, size, data }.
 let discFile = null;
+let download = null;
 let fontFile = null;
 let running = false;
 let syncing = false;
@@ -145,8 +162,49 @@ function refresh() {
   $('font-state').classList.toggle('ok', !!fontFile || hasFont());
   $('play').disabled = !(discFile || disc);
   $('forget').hidden = !(disc || hasFont());
-  status(discFile || disc ? 'Ready.' : 'Choose the CD image to play.');
+  $('fetch').hidden = !download;
+  $('pick-disc').hidden = !!download;
+  status(download ? 'Downloading the CD image…' : discFile || disc ? 'Ready.' : 'Choose the CD image to play.');
 }
+
+async function downloadDisc() {
+  download = new AbortController();
+  refresh();
+  let error = null;
+  try {
+    const r = await fetch(ARCHIVE_URL, { signal: download.signal });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = new Uint8Array(ARCHIVE_SIZE);
+    const reader = r.body.getReader();
+    let n = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (n + value.length > data.length) throw new Error('the file is larger than expected');
+      data.set(value, n);
+      n += value.length;
+      $('fetch-bar').value = n / ARCHIVE_SIZE;
+      $('fetch-state').textContent = 'Downloading from the Internet Archive: '
+        + (n / 1048576).toFixed(0) + ' of ' + (ARCHIVE_SIZE / 1048576).toFixed(0) + ' MB';
+    }
+    if (n !== ARCHIVE_SIZE) throw new Error('the download stopped early');
+    $('fetch-state').textContent = 'Checking the download…';
+    const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-1', data))]
+      .map(b => b.toString(16).padStart(2, '0')).join('');
+    if (hash !== ARCHIVE_SHA1) throw new Error('it is not the expected CD image');
+    if (!discFile) discFile = { name: 'A2RACER_AMST.BIN from the Internet Archive', size: n, data };
+  } catch (e) {
+    if (!download.signal.aborted) error = e;
+  }
+  download = null;
+  refresh();
+  if (error) {
+    log('download: ' + (error.message || error));
+    status('The download didn\'t work. Choose the CD image yourself.', true);
+  }
+}
+
+$('fetch-cancel').onclick = () => download && download.abort();
 
 function setDisc(f) { if (f) { discFile = f; refresh(); } }
 function setFont(f) { if (f) { fontFile = f; refresh(); } }
@@ -190,8 +248,9 @@ $('play').onclick = async () => {
     if (discFile) {
       status('Reading the CD image…');
       mkdirs('/upload');
-      const path = '/upload/' + discFile.name.replace(/[^\w.-]/g, '_');
-      FS.writeFile(path, new Uint8Array(await discFile.arrayBuffer()));
+      const path = '/upload/' + (discFile.data ? 'A2RACER_AMST.BIN' : discFile.name.replace(/[^\w.-]/g, '_'));
+      FS.writeFile(path, discFile.data || new Uint8Array(await discFile.arrayBuffer()));
+      discFile = null;
       args.unshift('--data', path);
       status('Unpacking the CD image (once)…');
     }
@@ -226,7 +285,7 @@ var Module = {
       removeRunDependency('idbfs');
     });
   }],
-  onRuntimeInitialized: refresh,
+  onRuntimeInitialized: () => { refresh(); if (!hasDisc()) downloadDisc(); },
   onExit: async code => {
     running = false;
     await sync();
